@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/screens/pao.dart';
-import 'package:mem_plus_plus/models/PAOData.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import 'package:mem_plus_plus/screens/paoEditScreen.dart';
+import 'package:mem_plus_plus/screens/paoPracticeScreen.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -11,52 +9,77 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// TODO:
+
 class _MyHomePageState extends State<MyHomePage> {
-
-  SharedPreferences sharedPreferences;
-  List<PAOData> paoData;
-  String spKey = 'test';
-  PAOData paoData1 = new PAOData('00', 'Ozzy Osbourne', 'rocking out a concert', 'rock guitar', 10);
-  PAOData paoData2 = new PAOData('01', 'Prairie Johnson', 'dancing metaphorically', 'halo', 40);
-  PAOData paoData3 = new PAOData('02', 'Orlando Bloom', 'walking the plank', 'pirate sword / eyepatch', 70);
-  PAOData paoData4 = new PAOData('03', 'Thomas Nguyenfa', 'jetskiing', 'jetski, pharmacy drugs', 90);
-  var defaultPAOData = [
-    PAOData('00', 'Ozzy Osbourne', 'rocking out a concert', 'rock guitar', 0),
-    PAOData('00', 'Ozzy Osbourne', 'rocking out a concert', 'rock guitar', 0),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    getSharedPrefs();
-  }
-
-  Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      paoData = json.decode(prefs.getString(spKey));
-    });
-  }
+  double headerSize = 30;
+  double itemSize = 24;
 
   @override
   Widget build(BuildContext context) {
-    print('testing testing');
-    print(paoData);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('MEM++ Homepage'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            PAOView(paoData: paoData1,),
-            PAOView(paoData: paoData2,),
-            PAOView(paoData: paoData3,),
-            PAOView(paoData: paoData4,),
-          ],
+        appBar: AppBar(
+          title: Text('MEM++ Homepage'),
         ),
-      ),
-    );
+        body: Container(
+          padding: EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'TODO:',
+                style: TextStyle(fontSize: headerSize),
+              ),
+              Container(
+                height: 10,
+              ),
+              FlatButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PAOEditScreen()));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.amber[100],
+                      border: Border.all(),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    child: Text(
+                      'PAO Edit',
+                      style: TextStyle(fontSize: itemSize),
+                    ),
+                  )),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PAOPracticeScreen()));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.amber[100],
+                    border: Border.all(),
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  child: Text(
+                    'PAO Practice',
+                    style: TextStyle(fontSize: itemSize),
+                  ),
+                )
+              ),
+              Container(
+                height: 30,
+              ),
+              Text(
+                'Review:',
+                style: TextStyle(fontSize: headerSize),
+              ),
+              Container(
+                height: 10,
+              ),
+            ],
+          ),
+        ));
   }
 }
