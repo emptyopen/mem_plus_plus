@@ -28,8 +28,9 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     paoData = (json.decode(prefs.getString(paoKey)) as List)
           .map((i) => PAOData.fromJson(i))
           .toList();
-    paoData = shuffle(paoData);
-    print(paoData[0].person);
+    setState(() {
+      paoData = shuffle(paoData);
+    });
   }
 
   List<PAOFlashCard> getPAOFlashCards() {
@@ -56,7 +57,6 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('practice screen build');
     return Scaffold(
       appBar: AppBar(
         title: Text('PAO: practice'),

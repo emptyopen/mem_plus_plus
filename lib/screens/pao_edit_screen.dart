@@ -64,7 +64,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PAO: edit'),
+        title: Text('PAO: view/edit'),
       ),
       body: Center(
         child: ListView(

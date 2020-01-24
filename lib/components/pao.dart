@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'standard.dart';
 
 class PAOFlashCard extends StatefulWidget {
   final PAOData paoData;
@@ -12,51 +13,83 @@ class PAOFlashCard extends StatefulWidget {
 }
 
 class _PAOFlashCardState extends State<PAOFlashCard> {
+  bool done = false;
   bool guessed = true;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(),
-      ),
-      padding: EdgeInsets.all(20),
-      child: Column(
-        children: <Widget>[
-          Text(
-            widget.paoData.digits,
-            style: TextStyle(fontSize: 28),
-          ),
-          guessed
-              ? FlatButton(
-                  onPressed: () {
-                    setState(() {
-                      guessed = false;
-                    });
-                  },
-                  child: Text(
-                    'REVEAL',
-                    style: TextStyle(fontSize: 24),
-                  ))
-              : Container(),
-          guessed
-              ? Container()
-              : Row(
-                  children: <Widget>[
-                    FlatButton(
+    return done
+        ? Container()
+        : Container(
+            decoration: BoxDecoration(
+              border: Border.all(),
+            ),
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  widget.paoData.digits,
+                  style: TextStyle(fontSize: 34),
+                ),
+                guessed
+                    ? FlatButton(
                         onPressed: () {
                           setState(() {
-                            guessed = true;
+                            guessed = false;
                           });
                         },
-                        child: Text('Got it')),
-                    FlatButton(
-                        onPressed: null, child: Text('Didn\'t got it :('))
-                  ],
-                )
-        ],
-      ),
-    );
+                        child: BasicContainer(
+                          text: 'Reveal',
+                          color: Colors.amber[50],
+                          fontSize: 18,
+                        ))
+                    : Container(),
+                guessed
+                    ? Container()
+                    : Column(
+                        children: <Widget>[
+                          Text(
+                            widget.paoData.person,
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Text(
+                            '${widget.paoData.action} • ${widget.paoData.object}',
+                            style: TextStyle(fontSize: 22),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FlatButton(
+                                  onPressed: () {
+                                    // TODO: add message on the bottom for information regarding familiarity
+                                    setState(() {
+                                      done = true;
+                                    });
+                                  },
+                                  child: BasicContainer(
+                                    text: 'Got it',
+                                    color: Colors.green[50],
+                                    fontSize: 18,
+                                  )),
+                              FlatButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      done = true;
+                                    });
+                                  },
+                                  child: BasicContainer(
+                                    text: 'Didn\'t got it',
+                                    color: Colors.red[50],
+                                    fontSize: 18,
+                                  ))
+                            ],
+                          ),
+                        ],
+                      )
+              ],
+            ),
+          );
   }
 }
 

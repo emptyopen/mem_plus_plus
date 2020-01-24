@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/screens/paoEditScreen.dart';
-import 'package:mem_plus_plus/screens/paoPracticeScreen.dart';
+import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/screens/welcome_screen.dart';
+import 'package:mem_plus_plus/screens/single_digit_edit_screen.dart';
+import 'package:mem_plus_plus/screens/single_digit_practice_screen.dart';
+import 'package:mem_plus_plus/screens/pao_edit_screen.dart';
+import 'package:mem_plus_plus/screens/pao_practice_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -9,7 +13,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO:
+// TODO: generalize component like the flatbutton with default arguments
+// pulse animator for beginning skip option
 
 class _MyHomePageState extends State<MyHomePage> {
   double headerSize = 30;
@@ -27,46 +32,39 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'TODO:',
+                'To-do:',
                 style: TextStyle(fontSize: headerSize),
               ),
               Container(
                 height: 10,
               ),
-              FlatButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PAOEditScreen()));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.amber[100],
-                      border: Border.all(),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    child: Text(
-                      'PAO Edit',
-                      style: TextStyle(fontSize: itemSize),
-                    ),
-                  )),
-              FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PAOPracticeScreen()));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.amber[100],
-                    border: Border.all(),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                  child: Text(
-                    'PAO Practice',
-                    style: TextStyle(fontSize: itemSize),
-                  ),
-                )
+              MainMenuOption(
+                icon: Icon(Icons.filter_1),
+                text: 'Single Digit [View/Edit]',
+                color: Colors.amber[100],
+                route: SingleDigitEditScreen(),
+                fontSize: itemSize,
+              ),
+              MainMenuOption(
+                icon: Icon(Icons.filter_1),
+                text: 'Single Digit [Practice]',
+                color: Colors.amber[200],
+                route: SingleDigitPracticeScreen(),
+                fontSize: itemSize,
+              ),
+              MainMenuOption(
+                icon: Icon(Icons.filter_2),
+                text: 'PAO [View/Edit]',
+                color: Colors.blue[100],
+                route: PAOEditScreen(),
+                fontSize: itemSize,
+              ),
+              MainMenuOption(
+                icon: Icon(Icons.filter_2),
+                text: 'PAO [Practice]',
+                color: Colors.blue[200],
+                route: PAOPracticeScreen(),
+                fontSize: itemSize,
               ),
               Container(
                 height: 30,
@@ -77,6 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 height: 10,
+              ),
+              MainMenuOption(
+                icon: Icon(Icons.filter),
+                text: 'Welcome',
+                color: Colors.green[100],
+                route: WelcomeScreen(),
+                fontSize: itemSize,
               ),
             ],
           ),
