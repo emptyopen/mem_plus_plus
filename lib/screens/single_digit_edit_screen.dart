@@ -22,15 +22,8 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     getSharedPrefs();
   }
 
-  callback(newSingleDigitData) {
-    setState(() {
-      singleDigitData = newSingleDigitData;
-    });
-  }
-
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove(singleDigitKey);
     if (prefs.getKeys().contains(singleDigitKey)) {
       print('found existing');
       setState(() {
@@ -41,10 +34,15 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     } else {
       print('setting to default');
       setState(() {
-        singleDigitData = defaultSingleDigitData;
-        prefs.setString(singleDigitKey, json.encode(singleDigitData));
+        prefs.setString(singleDigitKey, json.encode(defaultSingleDigitData));
       });
     }
+  }
+
+  callback(newSingleDigitData) {
+    setState(() {
+      singleDigitData = newSingleDigitData;
+    });
   }
 
   List<SingleDigitView> getSingleDigitViews() {
@@ -120,7 +118,8 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
                         'hero, 1 could be bread (bun), etc. \n    You can really assign anything '
                         'to any digit, it just makes it easier to remember (initially) if you have some kind of pattern. '
                         'Make sure that the objects don\'t overlap conceptually, as much as possible! And don\'t forget, '
-                          'when you edit a digit, that will reset your familiarity for that object back to zero!',
+                          'when you edit a digit, that will reset your familiarity for that object back to zero! '
+                          'Familiarity is listed on the far right of the tiles. ',
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 16),
                       ),

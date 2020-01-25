@@ -15,6 +15,8 @@ class PAOFlashCard extends StatefulWidget {
 class _PAOFlashCardState extends State<PAOFlashCard> {
   bool done = false;
   bool guessed = true;
+  String paoKey = 'pao';
+  SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +63,30 @@ class _PAOFlashCardState extends State<PAOFlashCard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               FlatButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     // TODO: add message on the bottom for information regarding familiarity
+                                    print(
+                                        'increasing familiarity for ${widget.paoData.digits}');
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var paoData =
+                                        (json.decode(prefs.getString(paoKey))
+                                                as List)
+                                            .map((i) => PAOData.fromJson(i))
+                                            .toList();
+                                    int currIndex =
+                                        int.parse(widget.paoData.digits);
+                                    PAOData updatedPAOEntry =
+                                        paoData[currIndex];
+                                    if (updatedPAOEntry.familiarity + 10 <=
+                                        100) {
+                                      updatedPAOEntry.familiarity += 10;
+                                    } else {
+                                      updatedPAOEntry.familiarity = 100;
+                                    }
+                                    paoData[currIndex] = updatedPAOEntry;
+                                    prefs.setString(
+                                        paoKey, json.encode(paoData));
                                     setState(() {
                                       done = true;
                                     });
@@ -73,7 +97,29 @@ class _PAOFlashCardState extends State<PAOFlashCard> {
                                     fontSize: 18,
                                   )),
                               FlatButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    // TODO: add message on the bottom for information regarding familiarity
+                                    print(
+                                        'increasing familiarity for ${widget.paoData.digits}');
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var paoData =
+                                        (json.decode(prefs.getString(paoKey))
+                                                as List)
+                                            .map((i) => PAOData.fromJson(i))
+                                            .toList();
+                                    int currIndex =
+                                        int.parse(widget.paoData.digits);
+                                    PAOData updatedPAOEntry =
+                                        paoData[currIndex];
+                                    if (updatedPAOEntry.familiarity - 5 >= 0) {
+                                      updatedPAOEntry.familiarity -= 5;
+                                    } else {
+                                      updatedPAOEntry.familiarity = 0;
+                                    }
+                                    paoData[currIndex] = updatedPAOEntry;
+                                    prefs.setString(
+                                        paoKey, json.encode(paoData));
                                     setState(() {
                                       done = true;
                                     });
@@ -112,7 +158,6 @@ class _PAOViewState extends State<PAOView> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     personTextController.dispose();
     actionTextController.dispose();
     objectTextController.dispose();
@@ -232,6 +277,19 @@ class _PAOViewState extends State<PAOView> {
       ),
     );
 
+    Color getColorFromFamiliarity(int familiarity) {
+      if (familiarity < 25) {
+        return Colors.red;
+      } else if (familiarity < 50) {
+        return Colors.orange;
+      } else if (familiarity < 75) {
+        return Colors.blue;
+      } else if (familiarity < 100) {
+        return Colors.green;
+      }
+      return Colors.grey;
+    }
+
     return Center(
       child: Card(
           child: Stack(
@@ -254,6 +312,27 @@ class _PAOViewState extends State<PAOView> {
                   showDialog(context: context, child: dialog);
                 }),
           ),
+          Positioned(
+            child: Container(
+              child: Center(
+                child: Text(
+                  '${widget.paoData.familiarity}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 14,
+                      color:
+                          getColorFromFamiliarity(widget.paoData.familiarity)),
+                ),
+              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  border: Border.all(color: Colors.grey, width: 0.5)),
+              height: 25,
+              width: 25,
+            ),
+            right: 8,
+            bottom: 22,
+          )
         ],
       )),
     );

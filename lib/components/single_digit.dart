@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'standard.dart';
+import 'dart:math';
 
 class SingleDigitFlashCard extends StatefulWidget {
   final SingleDigitData singleDigitData;
@@ -15,6 +16,8 @@ class SingleDigitFlashCard extends StatefulWidget {
 class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
   bool done = false;
   bool guessed = true;
+  String singleDigitKey = 'singleDigit';
+  SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +60,30 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               FlatButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     // TODO: add message on the bottom for information regarding familiarity
-                                    print('increasing familiarity for ${widget.singleDigitData.digits}');
+                                    print(
+                                        'increasing familiarity for ${widget.singleDigitData.digits}');
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var singleDigitData = (json.decode(
+                                                prefs.getString(singleDigitKey))
+                                            as List)
+                                        .map((i) => SingleDigitData.fromJson(i))
+                                        .toList();
+                                    int currIndex = int.parse(
+                                        widget.singleDigitData.digits);
+                                    SingleDigitData updatedSingleDigitEntry =
+                                        singleDigitData[currIndex];
+                                    if (updatedSingleDigitEntry.familiarity + 10 <= 100) {
+                                      updatedSingleDigitEntry.familiarity += 10;
+                                    } else {
+                                      updatedSingleDigitEntry.familiarity = 100;
+                                    }
+                                    singleDigitData[currIndex] =
+                                        updatedSingleDigitEntry;
+                                    prefs.setString(singleDigitKey,
+                                        json.encode(singleDigitData));
                                     setState(() {
                                       done = true;
                                     });
@@ -70,16 +94,39 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                                     fontSize: 18,
                                   )),
                               FlatButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    // TODO: add message on the bottom for information regarding familiarity
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    print(
+                                      'decreasing familiarity for ${widget.singleDigitData.digits}');
+                                    var singleDigitData = (json.decode(
+                                                prefs.getString(singleDigitKey))
+                                            as List)
+                                        .map((i) => SingleDigitData.fromJson(i))
+                                        .toList();
+                                    int currIndex = int.parse(
+                                        widget.singleDigitData.digits);
+                                    SingleDigitData updatedSingleDigitEntry =
+                                        singleDigitData[currIndex];
+                                    if (updatedSingleDigitEntry.familiarity - 5 >= 0) {
+                                      updatedSingleDigitEntry.familiarity -= 5;
+                                    } else {
+                                      updatedSingleDigitEntry.familiarity = 0;
+                                    }
+                                    singleDigitData[currIndex] =
+                                        updatedSingleDigitEntry;
+                                    prefs.setString(singleDigitKey,
+                                        json.encode(singleDigitData));
                                     setState(() {
                                       done = true;
                                     });
                                   },
-                                child: BasicContainer(
-                                  text: 'Didn\'t got it',
-                                  color: Colors.red[50],
-                                  fontSize: 18,
-                                ))
+                                  child: BasicContainer(
+                                    text: 'Didn\'t got it',
+                                    color: Colors.red[50],
+                                    fontSize: 18,
+                                  ))
                             ],
                           ),
                         ],
@@ -180,11 +227,23 @@ class _SingleDigitViewState extends State<SingleDigitView> {
       ),
     );
 
+    Color getColorFromFamiliarity(int familiarity) {
+      if (familiarity < 25) {
+        return Colors.red;
+      } else if (familiarity < 50) {
+        return Colors.orange;
+      } else if (familiarity < 75) {
+        return Colors.blue;
+      } else if (familiarity < 100) {
+        return Colors.green;
+      }
+      return Colors.grey;
+    }
+
     return Center(
       child: Card(
           child: Stack(
         children: <Widget>[
-          // TODO add overlay of familiarity somewhere
           ListTile(
             leading: Text(
               '${widget.singleDigitData.digits}',
@@ -198,6 +257,30 @@ class _SingleDigitViewState extends State<SingleDigitView> {
                   showDialog(context: context, child: dialog);
                 }),
           ),
+          Positioned(
+            child: Container(
+              child: Center(
+                child: Text(
+                  '${widget.singleDigitData.familiarity}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: getColorFromFamiliarity(widget.singleDigitData.familiarity)
+                  ),
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                  border: Border.all(
+                color: Colors.grey,
+                    width: 0.5
+              )),
+              height: 25,
+              width: 25,
+            ),
+            right: 8,
+            bottom: 15,
+          )
         ],
       )),
     );

@@ -132,11 +132,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       'and the benefits pay for life! Besides, the '
       'point of this app is to make it as easy as possible to break into this. '
       'Trust me, once you\'ve achieved some proficiency in the some of these systems, '
-      'you\'ll be glad you did. \n    Never pull out a credit card, a passport, or a license for those pesky numbers'
+      'you\'ll be glad you did. \n    Never pull out a credit card, a passport, or a license for those pesky numbers '
       'and expiration dates. Remember everyone\'s name at a new party, '
       'and put on a performace by memorizing a deck of cards in less than '
       'a minute. Never again walk into a room and forget what you needed to do. Save yourself the hassle of running '
-      'around the supermarket with your phone out. Recall your parking spot in the huge garage with ease. \n\n'
+      'around the supermarket with your phone out. Recall your parking spot in the huge structure with ease. \n\n'
       '    Believe in yourself. Invest in yourself.',
       style: TextStyle(fontSize: 17),
     ),
@@ -202,6 +202,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               )
                             : headers[info.index],
                         position: info.position,
+                        translationFactor: 200,
                       ),
                       info.index == 0
                           ? SizedBox(
@@ -211,7 +212,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ParallaxContainer(
                         child: icons[info.index],
                         position: info.position,
-                        translationFactor: 300,
+                        translationFactor: 50,
                       ),
                       SizedBox(
                         height: 10,
@@ -226,7 +227,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               )
                             : information[info.index],
                         position: info.position,
-                        translationFactor: 10,
+                        translationFactor: 100,
                       ),
                       info.index != headers.length - 1
                           ? Container()
