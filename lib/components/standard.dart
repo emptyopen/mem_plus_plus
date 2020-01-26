@@ -26,19 +26,18 @@ class BasicContainer extends StatelessWidget {
 
 class MainMenuOption extends StatelessWidget {
 
-  MainMenuOption({Key key, this.icon = const Icon(Icons.access_alarm), this.text, this.color, this.route, this.fontSize});
+  MainMenuOption({Key key, this.icon = const Icon(Icons.access_alarm), this.text, this.color, this.route});
 
   final Icon icon;
-  final String text;
+  final Widget text;
   final Color color;
   final Widget route;
-  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
         onPressed: () {
-          Navigator.push(context,
+          final result = Navigator.push(context,
               MaterialPageRoute(builder: (context) => route));
         },
         child: Container(
@@ -52,10 +51,7 @@ class MainMenuOption extends StatelessWidget {
             children: <Widget>[
               icon,
               SizedBox(width: 20,),
-              Text(
-                text,
-                style: TextStyle(fontSize: fontSize),
-              ),
+              text,
             ],
           ),
         ));

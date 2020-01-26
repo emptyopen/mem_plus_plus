@@ -20,7 +20,7 @@ class Activity {
 }
 
 class ActivityMenuButton {
-  String text;
+  Widget text;
   Widget route;
   Icon icon;
   Color color;
@@ -32,7 +32,7 @@ var defaultActivityStates = {
   'Welcome': Activity('review', true, DateTime.now()),
   'SingleDigitEdit': Activity('todo', true, DateTime.now()),
   'SingleDigitPractice': Activity('todo', true, DateTime.now()),
-  'SingleDigitMultipleChoiceTest': Activity('todo', false, DateTime.now()),
+  'SingleDigitMultipleChoiceTest': Activity('todo', true, DateTime.now()),
   'SingleDigitTimeTestPrep': Activity('todo', false, DateTime.now()),
   'SingleDigitTimeTest': Activity('todo', false, DateTime.now()),
   'AlphabetEdit': Activity('todo', false, DateTime.now()),

@@ -6,10 +6,11 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 
 import 'package:mem_plus_plus/screens/welcome_screen.dart';
-import 'package:mem_plus_plus/screens/single_digit_edit_screen.dart';
-import 'package:mem_plus_plus/screens/single_digit_practice_screen.dart';
-import 'package:mem_plus_plus/screens/pao_edit_screen.dart';
-import 'package:mem_plus_plus/screens/pao_practice_screen.dart';
+import 'package:mem_plus_plus/screens/single_digit/single_digit_edit_screen.dart';
+import 'package:mem_plus_plus/screens/single_digit/single_digit_practice_screen.dart';
+import 'package:mem_plus_plus/screens/single_digit/single_digit_multiple_choice_test_screen.dart';
+import 'package:mem_plus_plus/screens/pao/pao_edit_screen.dart';
+import 'package:mem_plus_plus/screens/pao/pao_practice_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -18,9 +19,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: implement tests
-// - store level (0-9, etc), which specifies what is unlocked
-// - store state of each "activity": to-do/review, and visible_after (date)
+// TODO: implement tests, further screens
+// TODO: increase flow so that upon completion of a task, level up
 
 class _MyHomePageState extends State<MyHomePage> {
   int level = 0;
@@ -56,34 +56,46 @@ class _MyHomePageState extends State<MyHomePage> {
   // TODO: integrate this into the actual activityState model?
   var activityMenuButtonMap = {
     'Welcome': ActivityMenuButton(
-      text: 'Welcome',
+      text: Text('Welcome',
+        style: TextStyle(fontSize: 24),),
       route: WelcomeScreen(),
       icon: Icon(Icons.filter),
       color: Colors.green[100]
     ),
     'SingleDigitEdit': ActivityMenuButton(
-      text: 'Single Digit [View/Edit]',
+      text: Text('Single Digit [View/Edit]',
+        style: TextStyle(fontSize: 24),),
       route: SingleDigitEditScreen(),
       icon: Icon(Icons.filter_1),
       color: Colors.amber[100]
     ),
     'SingleDigitPractice': ActivityMenuButton(
-      text: 'Single Digit [Practice]',
+      text: Text('Single Digit [Practice]',
+        style: TextStyle(fontSize: 24),),
       route: SingleDigitPracticeScreen(),
       icon: Icon(Icons.filter_1),
       color: Colors.amber[200]
     ),
+    'SingleDigitMultipleChoiceTest': ActivityMenuButton(
+      text: Text('Single Digit [MC Test]',
+      style: TextStyle(fontSize: 24),),
+      route: SingleDigitMultipleChoiceTestScreen(),
+      icon: Icon(Icons.filter_1),
+      color: Colors.amber[300]
+    ),
     'PAOEdit': ActivityMenuButton(
-      text: 'PAO [View/Edit]',
+      text: Text('PAO [View/Edit]',
+        style: TextStyle(fontSize: 24),),
       route: PAOEditScreen(),
       icon: Icon(Icons.filter_2),
-      color: Colors.amber[100]
+      color: Colors.blue[100]
     ),
     'PAOPractice': ActivityMenuButton(
-      text: 'PAO [Practice]',
+      text: Text('PAO [Practice]',
+        style: TextStyle(fontSize: 24),),
       route: PAOPracticeScreen(),
       icon: Icon(Icons.filter_2),
-      color: Colors.amber[200]
+      color: Colors.blue[200]
     ),
   };
 
@@ -97,12 +109,16 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // level
-    prefs.remove(levelKey);
+    if (true) {
+      prefs.remove(levelKey);
+    }
+    if (true) {
+      prefs.remove(activityStatesKey);
+    }
     if (prefs.getKeys().contains(levelKey)) {
-      print('found existing level');
       setState(() {
         level = prefs.getInt(levelKey);
-        print('level is $level');
+        print('found existing level: $level');
       });
     } else {
       int defaultLevel = 2;
@@ -124,17 +140,22 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       print('setting activity states to default');
       setState(() {
-        prefs.setString(activityStatesKey, json.encode(defaultActivityStates.map(
+        activityStates = defaultActivityStates;
+        prefs.setString(activityStatesKey, json.encode(activityStates.map(
           (k, v) => MapEntry(k, v.toJson())
         ),));
       });
     }
 
-    // set unlocked activities
+    // set unlocked activites
+    setUnlockedActivities();
+  }
+
+  void setUnlockedActivities() {
+    var unlockedActivities = [];
     setState(() {
 
       // filter unlocked activities by level
-      var unlockedActivities = [];
       for (var activity_groups in unlockMap.keys.toList().sublist(0, level + 1)) {
         for (String activity in unlockMap[activity_groups]) {
           unlockedActivities.add(activity);
@@ -150,7 +171,17 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }
     });
-    print(availableActivities);
+
+    print('unlocked activities: $unlockedActivities');
+    print('available activites: $availableActivities');
+  }
+
+  callback(int newLevel) {
+    print('wow got it');
+    print(newLevel);
+    setState(() {
+      level = newLevel;
+    });
   }
 
   List<Widget> getTodo() {
@@ -163,7 +194,22 @@ class _MyHomePageState extends State<MyHomePage> {
           route: activityMenuButtonMap[activity].route,
           icon: activityMenuButtonMap[activity].icon,
           color: activityMenuButtonMap[activity].color,
-          fontSize: itemSize,
+        ));
+      }
+    }
+    return mainMenuOptions;
+  }
+
+  List<Widget> getReview() {
+    // iterate over all unlocked activities, and determine which belong in to-do
+    List<MainMenuOption> mainMenuOptions = [];
+    for (String activity in availableActivities) {
+      if (activityStates[activity] != null && activityStates[activity].state == 'review') {
+        mainMenuOptions.add(MainMenuOption(
+          text: activityMenuButtonMap[activity].text,
+          route: activityMenuButtonMap[activity].route,
+          icon: activityMenuButtonMap[activity].icon,
+          color: activityMenuButtonMap[activity].color,
         ));
       }
     }
@@ -201,12 +247,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 height: 10,
               ),
-              MainMenuOption(
-                icon: Icon(Icons.filter),
-                text: 'Welcome',
-                color: Colors.green[100],
-                route: WelcomeScreen(),
-                fontSize: itemSize,
+              Column(
+                children: getReview(),
               ),
             ],
           ),

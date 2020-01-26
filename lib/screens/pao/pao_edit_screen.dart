@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/pao.dart';
+import 'package:mem_plus_plus/components/pao/pao_data.dart';
+import 'package:mem_plus_plus/components/pao/pao_edit_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -30,14 +31,14 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getKeys().contains(paoKey)) {
-      print('found existing');
+      print('found existing paoData');
       setState(() {
         paoData = (json.decode(prefs.getString(paoKey)) as List)
           .map((i) => PAOData.fromJson(i))
           .toList();
       });
     } else {
-      print('setting to default');
+      print('setting paoData to default');
       setState(() {
         paoData = defaultPAOData;
         prefs.setString(paoKey, json.encode(paoData));
@@ -45,19 +46,19 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     }
   }
 
-  List<PAOView> getPAOViews() {
-    List<PAOView> paoViews = [];
+  List<PAOEditCard> getPAOEditCards() {
+    List<PAOEditCard> paoEditCards = [];
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
-        PAOView paoView = PAOView(
+        PAOEditCard paoEditCard = PAOEditCard(
           paoData: PAOData(paoData[i].digits, paoData[i].person,
             paoData[i].action, paoData[i].object, paoData[i].familiarity),
           callback: callback,
         );
-        paoViews.add(paoView);
+        paoEditCards.add(paoEditCard);
       }
     }
-    return paoViews;
+    return paoEditCards;
   }
 
   @override
@@ -68,7 +69,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
       ),
       body: Center(
         child: ListView(
-          children: getPAOViews(),
+          children: getPAOEditCards(),
         )),
     );
   }

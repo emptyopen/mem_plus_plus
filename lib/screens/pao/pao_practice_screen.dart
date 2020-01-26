@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/pao.dart';
+import 'package:mem_plus_plus/components/pao/pao_data.dart';
+import 'package:mem_plus_plus/components/pao/pao_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
