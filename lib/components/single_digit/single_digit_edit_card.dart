@@ -45,9 +45,9 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
                 textAlign: TextAlign.center,
                 controller: objectTextController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(5),
-                  border: OutlineInputBorder(),
-                  hintText: '${widget.singleDigitData.object}'),
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(),
+                    hintText: '${widget.singleDigitData.object}'),
               ),
             ),
             Container(
@@ -55,39 +55,39 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
               height: 10,
             ),
             FlatButton(
-              onPressed: () async {
-                SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-                var singleDigitData =
-                (json.decode(prefs.getString(singleDigitKey)) as List)
-                  .map((i) => SingleDigitData.fromJson(i))
-                  .toList();
-                int currIndex = int.parse(widget.singleDigitData.digits);
-                SingleDigitData updatedSingleDigitEntry =
-                singleDigitData[currIndex];
-                if (objectTextController.text != '') {
-                  updatedSingleDigitEntry.object = objectTextController.text;
-                  updatedSingleDigitEntry.familiarity = 0;
-                  objectTextController.text = '';
-                  print(
-                    'will update $currIndex to: ${updatedSingleDigitEntry.object}');
-                }
-                singleDigitData[currIndex] = updatedSingleDigitEntry;
-                prefs.setString(singleDigitKey, json.encode(singleDigitData));
-                widget.callback(singleDigitData);
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                child: Text(
-                  'Save',
-                  style: TextStyle(fontSize: 18.0),
-                ),
-              ))
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  var singleDigitData =
+                      (json.decode(prefs.getString(singleDigitKey)) as List)
+                          .map((i) => SingleDigitData.fromJson(i))
+                          .toList();
+                  int currIndex = int.parse(widget.singleDigitData.digits);
+                  SingleDigitData updatedSingleDigitEntry =
+                      singleDigitData[currIndex];
+                  if (objectTextController.text != '') {
+                    updatedSingleDigitEntry.object = objectTextController.text;
+                    updatedSingleDigitEntry.familiarity = 0;
+                    objectTextController.text = '';
+                    print(
+                        'will update $currIndex to: ${updatedSingleDigitEntry.object}');
+                  }
+                  singleDigitData[currIndex] = updatedSingleDigitEntry;
+                  prefs.setString(singleDigitKey, json.encode(singleDigitData));
+                  widget.callback(singleDigitData);
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  child: Text(
+                    'Save',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ))
           ],
         ),
       ),
@@ -108,44 +108,44 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
 
     return Center(
       child: Card(
-        child: Stack(
-          children: <Widget>[
-            ListTile(
-              leading: Text(
-                '${widget.singleDigitData.digits}',
-                style: TextStyle(fontSize: 26),
-              ),
-              title: Text('${widget.singleDigitData.object}',
+          child: Stack(
+        children: <Widget>[
+          ListTile(
+            leading: Text(
+              '${widget.singleDigitData.digits}',
+              style: TextStyle(fontSize: 26),
+            ),
+            title: Text('${widget.singleDigitData.object}',
                 style: TextStyle(fontSize: 20)),
-              trailing: FlatButton(
+            trailing: FlatButton(
                 child: Text('Edit', style: TextStyle(color: Colors.cyan)),
                 onPressed: () {
                   showDialog(context: context, child: dialog);
                 }),
-            ),
-            Positioned(
-              child: Container(
-                child: Center(
-                  child: Text(
-                    '${widget.singleDigitData.familiarity}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+          ),
+          Positioned(
+            child: Container(
+              child: Center(
+                child: Text(
+                  '${widget.singleDigitData.familiarity}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
                       fontSize: 14,
                       color: getColorFromFamiliarity(
-                        widget.singleDigitData.familiarity)),
-                  ),
+                          widget.singleDigitData.familiarity)),
                 ),
-                decoration: BoxDecoration(
+              ),
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   border: Border.all(color: Colors.grey, width: 0.5)),
-                height: 25,
-                width: 25,
-              ),
-              right: 8,
-              bottom: 15,
-            )
-          ],
-        )),
+              height: 25,
+              width: 25,
+            ),
+            right: 8,
+            bottom: 15,
+          )
+        ],
+      )),
     );
   }
 }

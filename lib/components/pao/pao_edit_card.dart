@@ -65,9 +65,9 @@ class _PAOEditCardState extends State<PAOEditCard> {
                 textAlign: TextAlign.center,
                 controller: actionTextController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(5),
-                  border: OutlineInputBorder(),
-                  hintText: '${widget.paoData.action}'),
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(),
+                    hintText: '${widget.paoData.action}'),
               ),
             ),
             Padding(
@@ -80,9 +80,9 @@ class _PAOEditCardState extends State<PAOEditCard> {
                 textAlign: TextAlign.center,
                 controller: objectTextController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(5),
-                  border: OutlineInputBorder(),
-                  hintText: '${widget.paoData.object}'),
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(),
+                    hintText: '${widget.paoData.object}'),
               ),
             ),
             Container(
@@ -90,52 +90,52 @@ class _PAOEditCardState extends State<PAOEditCard> {
               height: 10,
             ),
             FlatButton(
-              onPressed: () async {
-                SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-                var paoData = (json.decode(prefs.getString(paoKey)) as List)
-                  .map((i) => PAOData.fromJson(i))
-                  .toList();
-                int currIndex = int.parse(widget.paoData.digits);
-                PAOData updatedPAOEntry = paoData[currIndex];
-                bool resetFamiliarity = false;
-                if (personTextController.text != '') {
-                  updatedPAOEntry.person = personTextController.text;
-                  resetFamiliarity = true;
-                  personTextController.text = '';
-                }
-                if (actionTextController.text != '') {
-                  updatedPAOEntry.action = actionTextController.text;
-                  resetFamiliarity = true;
-                  actionTextController.text = '';
-                }
-                if (objectTextController.text != '') {
-                  updatedPAOEntry.object = objectTextController.text;
-                  resetFamiliarity = true;
-                  objectTextController.text = '';
-                }
-                print(
-                  'will update $currIndex to: ${updatedPAOEntry.person} | ${updatedPAOEntry.action} | ${updatedPAOEntry.object}');
-                if (resetFamiliarity) {
-                  print('will reset fam');
-                  //updatedPAOEntry.familiarity = 0;
-                }
-                paoData[currIndex] = updatedPAOEntry;
-                prefs.setString(paoKey, json.encode(paoData));
-                widget.callback(paoData);
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                child: Text(
-                  'Save',
-                  style: TextStyle(fontSize: 18.0),
-                ),
-              ))
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  var paoData = (json.decode(prefs.getString(paoKey)) as List)
+                      .map((i) => PAOData.fromJson(i))
+                      .toList();
+                  int currIndex = int.parse(widget.paoData.digits);
+                  PAOData updatedPAOEntry = paoData[currIndex];
+                  bool resetFamiliarity = false;
+                  if (personTextController.text != '') {
+                    updatedPAOEntry.person = personTextController.text;
+                    resetFamiliarity = true;
+                    personTextController.text = '';
+                  }
+                  if (actionTextController.text != '') {
+                    updatedPAOEntry.action = actionTextController.text;
+                    resetFamiliarity = true;
+                    actionTextController.text = '';
+                  }
+                  if (objectTextController.text != '') {
+                    updatedPAOEntry.object = objectTextController.text;
+                    resetFamiliarity = true;
+                    objectTextController.text = '';
+                  }
+                  print(
+                      'will update $currIndex to: ${updatedPAOEntry.person} | ${updatedPAOEntry.action} | ${updatedPAOEntry.object}');
+                  if (resetFamiliarity) {
+                    print('will reset fam');
+                    //updatedPAOEntry.familiarity = 0;
+                  }
+                  paoData[currIndex] = updatedPAOEntry;
+                  prefs.setString(paoKey, json.encode(paoData));
+                  widget.callback(paoData);
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  child: Text(
+                    'Save',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ))
           ],
         ),
       ),
@@ -156,49 +156,49 @@ class _PAOEditCardState extends State<PAOEditCard> {
 
     return Center(
       child: Card(
-        child: Stack(
-          children: <Widget>[
-            // TODO add overlay of familiarity somewhere
-            ListTile(
-              leading: Text(
-                '${widget.paoData.digits}',
-                style: TextStyle(fontSize: 26),
-              ),
-              title: Text('${widget.paoData.person}',
+          child: Stack(
+        children: <Widget>[
+          // TODO add overlay of familiarity somewhere
+          ListTile(
+            leading: Text(
+              '${widget.paoData.digits}',
+              style: TextStyle(fontSize: 26),
+            ),
+            title: Text('${widget.paoData.person}',
                 style: TextStyle(fontSize: 20)),
-              subtitle: Text(
-                '${widget.paoData.action} • ${widget.paoData.object}',
-                style: TextStyle(fontSize: 16),
-              ),
-              trailing: FlatButton(
+            subtitle: Text(
+              '${widget.paoData.action} • ${widget.paoData.object}',
+              style: TextStyle(fontSize: 16),
+            ),
+            trailing: FlatButton(
                 child: Text('Edit', style: TextStyle(color: Colors.cyan)),
                 onPressed: () {
                   showDialog(context: context, child: dialog);
                 }),
-            ),
-            Positioned(
-              child: Container(
-                child: Center(
-                  child: Text(
-                    '${widget.paoData.familiarity}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+          ),
+          Positioned(
+            child: Container(
+              child: Center(
+                child: Text(
+                  '${widget.paoData.familiarity}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
                       fontSize: 14,
                       color:
-                      getColorFromFamiliarity(widget.paoData.familiarity)),
-                  ),
+                          getColorFromFamiliarity(widget.paoData.familiarity)),
                 ),
-                decoration: BoxDecoration(
+              ),
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   border: Border.all(color: Colors.grey, width: 0.5)),
-                height: 25,
-                width: 25,
-              ),
-              right: 8,
-              bottom: 22,
-            )
-          ],
-        )),
+              height: 25,
+              width: 25,
+            ),
+            right: 8,
+            bottom: 22,
+          )
+        ],
+      )),
     );
   }
 }

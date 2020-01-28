@@ -27,8 +27,8 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // assume data exists
     paoData = (json.decode(prefs.getString(paoKey)) as List)
-          .map((i) => PAOData.fromJson(i))
-          .toList();
+        .map((i) => PAOData.fromJson(i))
+        .toList();
     setState(() {
       paoData = shuffle(paoData);
     });
@@ -38,7 +38,9 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     List<PAOFlashCard> paoFlashCards = [];
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
-        PAOFlashCard paoFlashCard = PAOFlashCard(paoData: paoData[i],);
+        PAOFlashCard paoFlashCard = PAOFlashCard(
+          paoData: paoData[i],
+        );
         paoFlashCards.add(paoFlashCard);
       }
     }
@@ -63,9 +65,9 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
         title: Text('PAO: practice'),
       ),
       body: Center(
-        child: ListView(
-          children: getPAOFlashCards(),
-        )),
+          child: ListView(
+        children: getPAOFlashCards(),
+      )),
     );
   }
 }

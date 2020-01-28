@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 
-
 class SingleDigitTimedTestPrepScreen extends StatefulWidget {
   @override
-  _SingleDigitTimedTestPrepScreenState createState() => _SingleDigitTimedTestPrepScreenState();
+  _SingleDigitTimedTestPrepScreenState createState() =>
+      _SingleDigitTimedTestPrepScreenState();
 }
 
-class _SingleDigitTimedTestPrepScreenState extends State<SingleDigitTimedTestPrepScreen> {
+class _SingleDigitTimedTestPrepScreenState
+    extends State<SingleDigitTimedTestPrepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Single digit: timed test preparation'), actions: <Widget>[
-        // action button
-        IconButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            Navigator.of(context).push(PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (BuildContext context, _, __) {
-                return SingleDigitTimedTestPrepScreenHelp();
-              }));
-          },
-        ),
-      ]),
-      body: Center(
-        child: Text('hi')),
+      appBar: AppBar(
+          title: Text('Single digit: timed test preparation'),
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return SingleDigitTimedTestPrepScreenHelp();
+                    }));
+              },
+            ),
+          ]),
+      body: Center(child: Text('hi')),
     );
   }
 }
@@ -34,26 +36,26 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color.fromRGBO(0, 0, 0, 0.7),
-      child: Stack(
-        children: <Widget>[
-          Container(
-            color: Colors.transparent,
-            constraints: BoxConstraints.expand(),
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 350,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                    child: Text(
-                      '    Welcome to your first timed test! \n\n'
+        color: Color.fromRGBO(0, 0, 0, 0.7),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              color: Colors.transparent,
+              constraints: BoxConstraints.expand(),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 350,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                      child: Text(
+                        '    Welcome to your first timed test! \n\n'
                         '    Here we are going to present you with a 4 digit number. '
                         'Your goal is to memorize the number by converting the 4 digits '
                         'to their associated object. Then imagine a scene where the objects '
@@ -71,19 +73,19 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
                         'you up in the clouds, about to take this test. A huge timer clock is above you... ah, '
                         'yes, this is the place to take a timed test. And the first thing that happens is you '
                         'drop your pencil, and it rockets towards the earth, skewering that swan...',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 14),
+                      ),
                     ),
                   ),
-                ),
-                PopButton(
-                  widget: Text('OK'),
-                  color: Colors.amber[300],
-                )
-              ],
+                  PopButton(
+                    widget: Text('OK'),
+                    color: Colors.amber[300],
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
-      ));
+          ],
+        ));
   }
 }

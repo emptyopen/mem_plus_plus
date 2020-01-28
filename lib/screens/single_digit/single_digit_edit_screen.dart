@@ -27,8 +27,8 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-        .map((i) => SingleDigitData.fromJson(i))
-        .toList();
+          .map((i) => SingleDigitData.fromJson(i))
+          .toList();
     });
   }
 
@@ -111,8 +111,8 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
                         'hero, 1 could be bread (bun), etc. \n    You can really assign anything '
                         'to any digit, it just makes it easier to remember (initially) if you have some kind of pattern. '
                         'Make sure that the objects don\'t overlap conceptually, as much as possible! And don\'t forget, '
-                          'when you edit a digit, that will reset your familiarity for that object back to zero! '
-                          'Familiarity is listed on the far right of the tiles. ',
+                        'when you edit a digit, that will reset your familiarity for that object back to zero! '
+                        'Familiarity is listed on the far right of the tiles. ',
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 16),
                       ),

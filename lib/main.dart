@@ -8,12 +8,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MEM++',
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-        fontFamily: 'Rajdhani'
-      ),
+      theme: ThemeData(primarySwatch: Colors.amber, fontFamily: 'Rajdhani'),
       home: MyHomePage(),
     );
   }
 }
-

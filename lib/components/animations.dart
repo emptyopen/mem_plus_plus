@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
 
 class StaggerAnimation extends StatelessWidget {
-  StaggerAnimation({Key key, this.widget, this.controller, this.begin, this.end})
-    : opacity = Tween<double>(
-    begin: 0,
-    end: 1,
-  ).animate(
-    CurvedAnimation(
-      parent: controller,
-      curve: Interval(
-        begin,
-        end,
-        curve: Curves.ease,
-      ),
-    ),
-  ),
-      padding = EdgeInsetsTween(
-        begin: const EdgeInsets.fromLTRB(10, 50, 10, 10),
-        end: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-      ).animate(
-        CurvedAnimation(
-          parent: controller,
-          curve: Interval(
-            begin,
-            end,
-            curve: Curves.ease,
+  StaggerAnimation(
+      {Key key, this.widget, this.controller, this.begin, this.end})
+      : opacity = Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: Interval(
+              begin,
+              end,
+              curve: Curves.ease,
+            ),
           ),
         ),
-      ),
-      super(key: key);
+        padding = EdgeInsetsTween(
+          begin: const EdgeInsets.fromLTRB(10, 50, 10, 10),
+          end: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: Interval(
+              begin,
+              end,
+              curve: Curves.ease,
+            ),
+          ),
+        ),
+        super(key: key);
 
   final Widget widget;
   final double begin;
@@ -55,20 +56,20 @@ class StaggerAnimation extends StatelessWidget {
 
 class MenuAnimation extends StatelessWidget {
   MenuAnimation({Key key, this.widget, this.controller, this.begin, this.end})
-    : opacity = Tween<double>(
-    begin: 0,
-    end: 1,
-  ).animate(
-    CurvedAnimation(
-      parent: controller,
-      curve: Interval(
-        begin,
-        end,
-        curve: Curves.ease,
-      ),
-    ),
-  ),
-      super(key: key);
+      : opacity = Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: Interval(
+              begin,
+              end,
+              curve: Curves.ease,
+            ),
+          ),
+        ),
+        super(key: key);
 
   final Widget widget;
   final double begin;

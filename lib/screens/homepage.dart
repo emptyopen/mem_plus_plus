@@ -91,13 +91,13 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Icon(Icons.filter_1),
           color: Colors.amber[300]),
       'SingleDigitTimedTestPrep': ActivityMenuButton(
-        text: Text(
-          'Single Digit [Timed Test]',
-          style: TextStyle(fontSize: 23),
-        ),
-        route: SingleDigitTimedTestPrepScreen(),
-        icon: Icon(Icons.filter_1),
-        color: Colors.amber[400]),
+          text: Text(
+            'Single Digit [Timed Test]',
+            style: TextStyle(fontSize: 23),
+          ),
+          route: SingleDigitTimedTestPrepScreen(),
+          icon: Icon(Icons.filter_1),
+          color: Colors.amber[400]),
       'PAOEdit': ActivityMenuButton(
           text: Text(
             'PAO [View/Edit]',
@@ -121,10 +121,10 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // level
-    if (false) {
+    if (true) {
       prefs.remove(levelKey);
     }
-    if (false) {
+    if (true) {
       prefs.remove(activityStatesKey);
     }
     if (prefs.getKeys().contains(levelKey)) {
@@ -170,10 +170,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void setUnlockedActivities() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     level = prefs.getInt(levelKey);
-    var rawMap = json.decode(prefs.getString(activityStatesKey))
-    as Map<String, dynamic>;
-    activityStates =
-      rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
+    var rawMap =
+        json.decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
+    activityStates = rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
     var unlockedActivities = [];
     setState(() {
       // filter unlocked activities by level

@@ -34,8 +34,8 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
       print('found existing paoData');
       setState(() {
         paoData = (json.decode(prefs.getString(paoKey)) as List)
-          .map((i) => PAOData.fromJson(i))
-          .toList();
+            .map((i) => PAOData.fromJson(i))
+            .toList();
       });
     } else {
       print('setting paoData to default');
@@ -52,7 +52,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
       for (int i = 0; i < paoData.length; i++) {
         PAOEditCard paoEditCard = PAOEditCard(
           paoData: PAOData(paoData[i].digits, paoData[i].person,
-            paoData[i].action, paoData[i].object, paoData[i].familiarity),
+              paoData[i].action, paoData[i].object, paoData[i].familiarity),
           callback: callback,
         );
         paoEditCards.add(paoEditCard);
@@ -68,9 +68,9 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
         title: Text('PAO: view/edit'),
       ),
       body: Center(
-        child: ListView(
-          children: getPAOEditCards(),
-        )),
+          child: ListView(
+        children: getPAOEditCards(),
+      )),
     );
   }
 }

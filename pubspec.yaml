@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.4.2
   transformer_page_view: ^0.1.6
+  gson: ^0.1.2
 
 dev_dependencies:
   flutter_test:

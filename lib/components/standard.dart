@@ -25,8 +25,13 @@ class BasicContainer extends StatelessWidget {
 }
 
 class MainMenuOption extends StatelessWidget {
-
-  MainMenuOption({Key key, this.icon = const Icon(Icons.access_alarm), this.text, this.color, this.route, this.firstView});
+  MainMenuOption(
+      {Key key,
+      this.icon = const Icon(Icons.access_alarm),
+      this.text,
+      this.color,
+      this.route,
+      this.firstView});
 
   final Icon icon;
   final Widget text;
@@ -40,54 +45,52 @@ class MainMenuOption extends StatelessWidget {
       children: <Widget>[
         FlatButton(
             onPressed: () {
-              final result = Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => route));
+              final result = Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => route));
             },
             child: Container(
               decoration: BoxDecoration(
                 color: color,
-                border: Border.all(
-                  width: 2
-                ),
+                border: Border.all(width: 2),
                 borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
               padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Row(
                 children: <Widget>[
                   icon,
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   text,
                 ],
               ),
             )),
-        firstView ?
-        Positioned(
-          child: Container(
-            width: 20,
-            height: 20,
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 2
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              color: Colors.black,
-            ),
-            child: Center(
-              child: Text('!!',
-              style: TextStyle(fontSize: 14,
-              color: Colors.white),),
-            ),
-          ),
-          left: 5,
-          top: 10
-        ) : Container()
+        firstView
+            ? Positioned(
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    color: Colors.black,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '!!',
+                      style: TextStyle(fontSize: 14, color: Colors.white),
+                    ),
+                  ),
+                ),
+                left: 5,
+                top: 10)
+            : Container()
       ],
     );
   }
 }
 
 class PopButton extends StatelessWidget {
-
   PopButton({Key key, this.widget, this.color});
 
   final Widget widget;
@@ -96,17 +99,16 @@ class PopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          border: Border.all(),
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-        ),
-        padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-        child: widget
-      ));
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Container(
+            decoration: BoxDecoration(
+              color: color,
+              border: Border.all(),
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+            child: widget));
   }
 }

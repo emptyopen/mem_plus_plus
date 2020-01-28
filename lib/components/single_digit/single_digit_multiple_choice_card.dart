@@ -40,33 +40,42 @@ class _SingleDigitMultipleChoiceCardState
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      singleDigitDataList = (json.decode(prefs.getString(singleDigitKey)) as List)
-        .map((i) => SingleDigitData.fromJson(i))
-        .toList();
+      singleDigitDataList =
+          (json.decode(prefs.getString(singleDigitKey)) as List)
+              .map((i) => SingleDigitData.fromJson(i))
+              .toList();
       // loop until you find 3 random different numbers
       List<String> notAllowed = [widget.singleDigitData.digits];
       while (fakeSingleDigitChoice1 == null) {
-        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        SingleDigitData candidate =
+            singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
         if (!notAllowed.contains(candidate.digits)) {
           fakeSingleDigitChoice1 = candidate;
           notAllowed.add(candidate.digits);
         }
       }
       while (fakeSingleDigitChoice2 == null) {
-        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        SingleDigitData candidate =
+            singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
         if (!notAllowed.contains(candidate.digits)) {
           fakeSingleDigitChoice2 = candidate;
           notAllowed.add(candidate.digits);
         }
       }
       while (fakeSingleDigitChoice3 == null) {
-        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        SingleDigitData candidate =
+            singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
         if (!notAllowed.contains(candidate.digits)) {
           fakeSingleDigitChoice3 = candidate;
           notAllowed.add(candidate.digits);
         }
       }
-      shuffledOptions = [widget.singleDigitData, fakeSingleDigitChoice1, fakeSingleDigitChoice2, fakeSingleDigitChoice3];
+      shuffledOptions = [
+        widget.singleDigitData,
+        fakeSingleDigitChoice1,
+        fakeSingleDigitChoice2,
+        fakeSingleDigitChoice3
+      ];
       shuffledOptions = shuffle(shuffledOptions);
     });
   }
@@ -82,7 +91,7 @@ class _SingleDigitMultipleChoiceCardState
     return items;
   }
 
-  void checkResult (int index) {
+  void checkResult(int index) {
     if (shuffledOptions[index].digits == widget.singleDigitData.digits) {
       final snackBar = SnackBar(
         content: Text(
@@ -130,8 +139,11 @@ class _SingleDigitMultipleChoiceCardState
             child: Column(
               children: <Widget>[
                 Container(
-                  child: Center(child: Text(widget.singleDigitData.digits,
-                  style: TextStyle(fontSize: 30),)),
+                  child: Center(
+                      child: Text(
+                    widget.singleDigitData.digits,
+                    style: TextStyle(fontSize: 30),
+                  )),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,9 +154,14 @@ class _SingleDigitMultipleChoiceCardState
                         onPressed: () => checkResult(0),
                         child: Container(
                           padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(5))),
-                          child: Text(shuffledOptions[0].object,
-                          style: TextStyle(fontSize: 20),),
+                          decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Text(
+                            shuffledOptions[0].object,
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ),
                     ),
@@ -154,9 +171,14 @@ class _SingleDigitMultipleChoiceCardState
                         onPressed: () => checkResult(1),
                         child: Container(
                           padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(5))),
-                          child: Text(shuffledOptions[1].object,
-                            style: TextStyle(fontSize: 20),),
+                          decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Text(
+                            shuffledOptions[1].object,
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ),
                     ),
@@ -171,9 +193,14 @@ class _SingleDigitMultipleChoiceCardState
                         onPressed: () => checkResult(2),
                         child: Container(
                           padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(5))),
-                          child: Text(shuffledOptions[2].object,
-                            style: TextStyle(fontSize: 20),),
+                          decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Text(
+                            shuffledOptions[2].object,
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ),
                     ),
@@ -183,9 +210,14 @@ class _SingleDigitMultipleChoiceCardState
                         onPressed: () => checkResult(3),
                         child: Container(
                           padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(5))),
-                          child: Text(shuffledOptions[3].object,
-                            style: TextStyle(fontSize: 20),),
+                          decoration: BoxDecoration(
+                              border: Border.all(),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Text(
+                            shuffledOptions[3].object,
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ),
                     ),

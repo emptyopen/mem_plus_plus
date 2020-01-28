@@ -1,4 +1,5 @@
-var flow = ['welcome',
+var flow = [
+  'welcome',
   'single digits edit',
   'single digits practice',
   'letters edit',
