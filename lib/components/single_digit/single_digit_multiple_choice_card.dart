@@ -6,8 +6,9 @@ import 'dart:math';
 
 class SingleDigitMultipleChoiceCard extends StatefulWidget {
   final SingleDigitData singleDigitData;
+  final Function(BuildContext, bool) callback;
 
-  SingleDigitMultipleChoiceCard({this.singleDigitData});
+  SingleDigitMultipleChoiceCard({this.singleDigitData, this.callback});
 
   @override
   _SingleDigitMultipleChoiceCardState createState() =>
@@ -17,7 +18,6 @@ class SingleDigitMultipleChoiceCard extends StatefulWidget {
 class _SingleDigitMultipleChoiceCardState
     extends State<SingleDigitMultipleChoiceCard> {
   bool done = false;
-  int score = 0;
   int attempts = 0;
   SingleDigitData fakeSingleDigitChoice1;
   SingleDigitData fakeSingleDigitChoice2;
@@ -40,7 +40,6 @@ class _SingleDigitMultipleChoiceCardState
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      print('setting to 0');
       singleDigitDataList = (json.decode(prefs.getString(singleDigitKey)) as List)
         .map((i) => SingleDigitData.fromJson(i))
         .toList();
@@ -97,23 +96,8 @@ class _SingleDigitMultipleChoiceCardState
       );
       Scaffold.of(context).showSnackBar(snackBar);
       setState(() {
-        print(score);
-        score = score + 1;
-        print(score);
+        widget.callback(context, true);
         done = true;
-        if (score == 10) {
-          final snackBar = SnackBar(
-            content: Text(
-              'You aced it! Head to the main menu to see what you\'ve unlocked!',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            duration: Duration(seconds: 10),
-            backgroundColor: Colors.black,
-          );
-          Scaffold.of(context).showSnackBar(snackBar);
-        }
       });
     } else {
       final snackBar = SnackBar(
@@ -128,23 +112,9 @@ class _SingleDigitMultipleChoiceCardState
       );
       Scaffold.of(context).showSnackBar(snackBar);
       setState(() {
+        widget.callback(context, false);
         done = true;
       });
-    }
-    attempts += 1;
-    if (attempts == 10) {
-      final snackBar = SnackBar(
-        content: Text(
-          'Try again! You got this. Score: $score/10',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        // TODO: add action here for quick redo
-        duration: Duration(seconds: 10),
-        backgroundColor: Colors.red[200],
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 

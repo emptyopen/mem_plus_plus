@@ -3,6 +3,7 @@ import 'single_digit_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:convert';
+import 'package:mem_plus_plus/components/activities.dart';
 
 class SingleDigitFlashCard extends StatefulWidget {
   final SingleDigitData singleDigitData;
@@ -21,7 +22,39 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
   int familiarityDecrease = 25;
   String singleDigitKey = 'singleDigit';
   String levelKey = 'level';
+  String activityStatesKey = 'activityStates';
   SharedPreferences sharedPreferences;
+
+  void updateLevel() async {
+    // TODO make this universally accessible function?
+    SharedPreferences prefs =
+      await SharedPreferences.getInstance();
+    print('setting level to 2');
+    prefs.setInt(levelKey, 2);
+    widget.callback(2);
+
+
+    // update activity state to first time view
+    var rawMap = json.decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
+    Map<String, Activity> activityStates = rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
+
+    // update states for old activites to review
+    Activity singleDigitEdit = activityStates['SingleDigitEdit'];
+    singleDigitEdit.state = 'review';
+    activityStates['SingleDigitEdit'] = singleDigitEdit;
+    Activity singleDigitPractice = activityStates['SingleDigitPractice'];
+    singleDigitPractice.state = 'review';
+    activityStates['SingleDigitPractice'] = singleDigitPractice;
+
+    // add firstView to new activity
+    Activity singleDigitMultipleChoiceTest = activityStates['SingleDigitMultipleChoiceTest'];
+    singleDigitMultipleChoiceTest.firstView = true;
+    activityStates['SingleDigitMultipleChoiceTest'] = singleDigitMultipleChoiceTest;
+
+    prefs.setString(activityStatesKey, json.encode(activityStates.map(
+        (k, v) => MapEntry(k, v.toJson())
+    ),));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,12 +142,9 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                         for (SingleDigitData singleDigitEntry in singleDigitData) {
                           familiaritySum += singleDigitEntry.familiarity;
                         }
-                        if (familiaritySum == 1000 && prefs.getInt(levelKey) == 2) {
-                          print('setting level to 3');
+                        if (familiaritySum == 1000 && prefs.getInt(levelKey) == 1) {
                           levelUp = true;
-                          prefs.setInt(levelKey, 3);
-                          print(widget.callback);
-                          widget.callback(3);
+                          updateLevel();
                         }
                       } else if (updatedSingleDigitEntry
                         .familiarity ==

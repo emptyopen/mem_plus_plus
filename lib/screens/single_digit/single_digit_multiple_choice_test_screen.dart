@@ -17,6 +17,8 @@ class _SingleDigitMultipleChoiceTestScreenState extends State<SingleDigitMultipl
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
   String singleDigitKey = 'singleDigit';
+  int score = 0;
+  int attempts = 0;
 
   @override
   void initState() {
@@ -34,6 +36,41 @@ class _SingleDigitMultipleChoiceTestScreenState extends State<SingleDigitMultipl
     });
   }
 
+  void callback(BuildContext context, bool success) {
+    if (success) {
+      score += 1;
+      if (score == 10) {
+        final snackBar = SnackBar(
+          content: Text(
+            'You aced it! Head to the main menu to see what you\'ve unlocked!',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          duration: Duration(seconds: 10),
+          backgroundColor: Colors.black,
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
+      }
+    }
+    attempts += 1;
+
+    if (attempts == 10 && score < 10) {
+      final snackBar = SnackBar(
+        content: Text(
+          'Try again! You got this. Score: $score/10',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        // TODO: add action here for quick redo
+        duration: Duration(seconds: 10),
+        backgroundColor: Colors.red[200],
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
+  }
+
   List<SingleDigitMultipleChoiceCard> getSingleDigitMultipleChoiceCards() {
     List<SingleDigitMultipleChoiceCard> singleDigitMultipleChoiceCards = [];
     if (singleDigitData != null) {
@@ -41,6 +78,7 @@ class _SingleDigitMultipleChoiceTestScreenState extends State<SingleDigitMultipl
         SingleDigitMultipleChoiceCard singleDigitView = SingleDigitMultipleChoiceCard(
           singleDigitData: SingleDigitData(singleDigitData[i].digits,
             singleDigitData[i].object, singleDigitData[i].familiarity),
+          callback: callback,
         );
         singleDigitMultipleChoiceCards.add(singleDigitView);
       }
