@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/activities.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BasicContainer extends StatelessWidget {
   BasicContainer({Key key, this.text, this.color, this.fontSize});
@@ -25,30 +28,53 @@ class BasicContainer extends StatelessWidget {
 }
 
 class MainMenuOption extends StatelessWidget {
-  MainMenuOption(
-      {Key key,
-      this.icon = const Icon(Icons.access_alarm),
-      this.text,
-      this.color,
-      this.route,
-      this.firstView});
-
+  final Activity activity;
   final Icon icon;
   final Widget text;
   final Color color;
   final Widget route;
-  final bool firstView;
+  final String activityStatesKey = 'ActivityStates';
+  final Function() callback;
+
+  MainMenuOption({
+    Key key,
+    this.activity,
+    this.icon = const Icon(Icons.access_alarm),
+    this.text,
+    this.color,
+    this.route,
+    this.callback,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         FlatButton(
-            onPressed: () {
+            onPressed: () async {
+              if (activity.firstView) {
+                // TODO: universal
+                print('will remove firstView');
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                var rawMap = json.decode(prefs.getString(activityStatesKey))
+                    as Map<String, dynamic>;
+                Map<String, Activity> activityStates =
+                    rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
+                print(activityStates['SingleDigitPractice'].visible);
+                print(activity.name);
+                activityStates[activity.name].firstView = false;
+                callback();
+                prefs.setString(
+                    activityStatesKey,
+                    json.encode(
+                      activityStates.map((k, v) => MapEntry(k, v.toJson())),
+                    ));
+              }
               final result = Navigator.push(
                   context, MaterialPageRoute(builder: (context) => route));
             },
             child: Container(
+              height: 45,
               decoration: BoxDecoration(
                 color: color,
                 border: Border.all(width: 2),
@@ -65,7 +91,7 @@ class MainMenuOption extends StatelessWidget {
                 ],
               ),
             )),
-        firstView
+        activity.firstView
             ? Positioned(
                 child: Container(
                   width: 20,

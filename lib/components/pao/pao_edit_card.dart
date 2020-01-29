@@ -17,7 +17,7 @@ class _PAOEditCardState extends State<PAOEditCard> {
   final personTextController = TextEditingController();
   final actionTextController = TextEditingController();
   final objectTextController = TextEditingController();
-  final String paoKey = 'pao';
+  final String paoKey = 'Pao';
   SharedPreferences sharedPreferences;
 
   @override

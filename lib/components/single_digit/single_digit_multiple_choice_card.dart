@@ -29,7 +29,7 @@ class _SingleDigitMultipleChoiceCardState
     SingleDigitData('0', 'ball', 0),
     SingleDigitData('0', 'ball', 0),
   ];
-  String singleDigitKey = 'singleDigit';
+  String singleDigitKey = 'SingleDigit';
 
   @override
   void initState() {

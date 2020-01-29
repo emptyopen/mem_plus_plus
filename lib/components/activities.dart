@@ -1,41 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:gson/gson.dart';
-
-//activityMenuButtonMap = {
-//'Welcome': ActivityMenuButton(
-//text: Text(
-//'Welcome',
-//style: TextStyle(fontSize: 24),
-//),
-//route: WelcomeScreen(),
-//icon: Icon(Icons.filter),
-//color: Colors.green[100]),
 
 class Activity {
+  String name;
   String state;
   bool visible;
   DateTime visibleAfter;
   bool firstView;
-  Widget menuText;
 
-  Activity(this.state, this.visible, this.visibleAfter, this.firstView,
-      this.menuText);
+  Activity(this.name, this.state, this.visible, this.visibleAfter, this.firstView);
 
   Map<String, dynamic> toJson() => {
+        'name': name,
         'state': state,
         'visible': visible,
         'visibleAfter': visibleAfter.toIso8601String(),
         'firstView': firstView,
-        'menuText': gson.encode(menuText),
       };
 
   factory Activity.fromJson(Map<String, dynamic> json) {
     return new Activity(
-        json['state'],
-        json['visible'],
-        DateTime.parse(json['visibleAfter']),
-        json['firstView'],
-        gson.decode(json['menuText']));
+      json['name'],
+      json['state'],
+      json['visible'],
+      DateTime.parse(json['visibleAfter']),
+      json['firstView'],
+    );
   }
 }
 
@@ -49,31 +38,21 @@ class ActivityMenuButton {
 }
 
 var defaultActivityStates = {
-  'Welcome': Activity('review', true, DateTime.now(), false, Text('welcome')),
-  'SingleDigitEdit':
-      Activity('todo', true, DateTime.now(), false, Text('test')),
-  'SingleDigitPractice':
-      Activity('todo', true, DateTime.now(), false, Text('test')),
+  'Welcome': Activity('Welcome', 'review', true, DateTime.now(), false),
+  'SingleDigitEdit': Activity('SingleDigitEdit', 'todo', true, DateTime.now(), false),
+  'SingleDigitPractice': Activity('SingleDigitPractice', 'todo', true, DateTime.now(), false),
   'SingleDigitMultipleChoiceTest':
-      Activity('todo', true, DateTime.now(), false, Text('test')),
-  'SingleDigitTimedTestPrep':
-      Activity('todo', true, DateTime.now(), false, Text('test')),
-  'SingleDigitTimedTest':
-      Activity('todo', false, DateTime.now(), false, Text('test')),
-  'AlphabetEdit': Activity('todo', false, DateTime.now(), false, Text('test')),
-  'AlphabetPractice':
-      Activity('todo', false, DateTime.now(), false, Text('test')),
-  'AlphabetMultipleChoiceTest':
-      Activity('todo', false, DateTime.now(), false, Text('test')),
-  'AlphabetTimedTestPrep':
-      Activity('todo', false, DateTime.now(), false, Text('test')),
-  'AlphabetTimedTest':
-      Activity('todo', false, DateTime.now(), false, Text('test')),
-  'PAOEdit': Activity('todo', false, DateTime.now(), false, Text('test')),
-  'PAOPractice': Activity('todo', false, DateTime.now(), false, Text('test')),
-  'PAOMultipleChoiceTest':
-      Activity('todo', false, DateTime.now(), false, Text('test')),
-  'PAOTimedTestPrep':
-      Activity('todo', false, DateTime.now(), false, Text('test')),
-  'PAOTimedTest': Activity('todo', false, DateTime.now(), false, Text('test')),
+      Activity('SingleDigitMultipleChoiceTest', 'todo', true, DateTime.now(), false),
+  'SingleDigitTimedTestPrep': Activity('SingleDigitTimedTestPrep', 'todo', true, DateTime.now(), false),
+  'SingleDigitTimedTest': Activity('SingleDigitTimedTest', 'todo', false, DateTime.now(), false),
+  'AlphabetEdit': Activity('AlphabetEdit', 'todo', false, DateTime.now(), false),
+  'AlphabetPractice': Activity('AlphabetPractice', 'todo', false, DateTime.now(), false),
+  'AlphabetMultipleChoiceTest': Activity('AlphabetMultipleChoiceTest', 'todo', false, DateTime.now(), false),
+  'AlphabetTimedTestPrep': Activity('AlphabetTimedTestPrep', 'todo', false, DateTime.now(), false),
+  'AlphabetTimedTest': Activity('AlphabetTimedTest', 'todo', false, DateTime.now(), false),
+  'PAOEdit': Activity('PAOEdit', 'todo', false, DateTime.now(), false),
+  'PAOPractice': Activity('PAOPractice', 'todo', false, DateTime.now(), false),
+  'PAOMultipleChoiceTest': Activity('PAOMultipleChoiceTest', 'todo', false, DateTime.now(), false),
+  'PAOTimedTestPrep': Activity('PAOTimedTestPrep', 'todo', false, DateTime.now(), false),
+  'PAOTimedTest': Activity('PAOTimedTest', 'todo', false, DateTime.now(), false),
 };

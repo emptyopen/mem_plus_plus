@@ -15,7 +15,7 @@ class SingleDigitEditCard extends StatefulWidget {
 
 class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
   final objectTextController = TextEditingController();
-  final String singleDigitKey = 'singleDigit';
+  final String singleDigitKey = 'SingleDigit';
   SharedPreferences sharedPreferences;
 
   @override

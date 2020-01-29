@@ -16,7 +16,7 @@ class PAOFlashCard extends StatefulWidget {
 class _PAOFlashCardState extends State<PAOFlashCard> {
   bool done = false;
   bool guessed = true;
-  String paoKey = 'pao';
+  String paoKey = 'Pao';
   SharedPreferences sharedPreferences;
 
   @override

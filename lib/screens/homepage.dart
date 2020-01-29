@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
-
 import 'package:mem_plus_plus/screens/welcome_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_edit_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_practice_screen.dart';
@@ -21,14 +20,12 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: implement timed tests, leveling up integration testing
-
 class _MyHomePageState extends State<MyHomePage> {
   int level = 0;
-  List<String> availableActivities = [];
-  String levelKey = 'level';
+  String levelKey = 'Level';
   Map<String, Activity> activityStates = {};
-  String activityStatesKey = 'activityStates';
+  String activityStatesKey = 'ActivityStates';
+  List<String> availableActivities = [];
   double headerSize = 30;
   double itemSize = 24;
   Map activityMenuButtonMap;
@@ -53,78 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     getSharedPrefs();
-
-    // TODO: integrate this into the actual activityState model?
-    activityMenuButtonMap = {
-      'Welcome': ActivityMenuButton(
-          text: Text(
-            'Welcome',
-            style: TextStyle(fontSize: 24),
-          ),
-          route: WelcomeScreen(),
-          icon: Icon(Icons.filter),
-          color: Colors.green[100]),
-      'SingleDigitEdit': ActivityMenuButton(
-          text: Text(
-            'Single Digit [View/Edit]',
-            style: TextStyle(fontSize: 24),
-          ),
-          route: SingleDigitEditScreen(),
-          icon: Icon(Icons.filter_1),
-          color: Colors.amber[100]),
-      'SingleDigitPractice': ActivityMenuButton(
-          text: Text(
-            'Single Digit [Practice]',
-            style: TextStyle(fontSize: 24),
-          ),
-          route: SingleDigitPracticeScreen(
-            parentCallback: callback,
-          ),
-          icon: Icon(Icons.filter_1),
-          color: Colors.amber[200]),
-      'SingleDigitMultipleChoiceTest': ActivityMenuButton(
-          text: Text(
-            'Single Digit [MC Test]',
-            style: TextStyle(fontSize: 24),
-          ),
-          route: SingleDigitMultipleChoiceTestScreen(),
-          icon: Icon(Icons.filter_1),
-          color: Colors.amber[300]),
-      'SingleDigitTimedTestPrep': ActivityMenuButton(
-          text: Text(
-            'Single Digit [Timed Test]',
-            style: TextStyle(fontSize: 23),
-          ),
-          route: SingleDigitTimedTestPrepScreen(),
-          icon: Icon(Icons.filter_1),
-          color: Colors.amber[400]),
-      'PAOEdit': ActivityMenuButton(
-          text: Text(
-            'PAO [View/Edit]',
-            style: TextStyle(fontSize: 24),
-          ),
-          route: PAOEditScreen(),
-          icon: Icon(Icons.filter_2),
-          color: Colors.blue[100]),
-      'PAOPractice': ActivityMenuButton(
-          text: Text(
-            'PAO [Practice]',
-            style: TextStyle(fontSize: 24),
-          ),
-          route: PAOPracticeScreen(),
-          icon: Icon(Icons.filter_2),
-          color: Colors.blue[200]),
-    };
+    initializeActivityMenuButtonMap();
   }
 
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // level
-    if (true) {
+    if (false) {
       prefs.remove(levelKey);
-    }
-    if (true) {
       prefs.remove(activityStatesKey);
     }
     if (prefs.getKeys().contains(levelKey)) {
@@ -136,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
       int defaultLevel = 1;
       print('setting level to default, $defaultLevel');
       setState(() {
-        // TODO: temporary, should be 0
         prefs.setInt(levelKey, defaultLevel);
         level = defaultLevel;
       });
@@ -156,14 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         activityStates = defaultActivityStates;
         prefs.setString(
-            activityStatesKey,
-            json.encode(
-              activityStates.map((k, v) => MapEntry(k, v.toJson())),
-            ));
+          activityStatesKey,
+          json.encode(
+            activityStates.map((k, v) => MapEntry(k, v.toJson())),
+          )
+        );
       });
     }
 
-    // set unlocked activites
+    // set unlocked activities
     setUnlockedActivities();
   }
 
@@ -197,12 +131,19 @@ class _MyHomePageState extends State<MyHomePage> {
     print('available activites: $availableActivities');
   }
 
-  callback(int newLevel) {
-    print('wow got it');
+  levelCallback(int newLevel) {
+    print('level on main page');
     setState(() {
-      level = newLevel;
+      if (newLevel != null) {
+        level = newLevel;
+      }
       setUnlockedActivities();
     });
+  }
+
+  activitiesCallback() {
+    print('activities on main page');
+    setUnlockedActivities();
   }
 
   List<Widget> getTodo() {
@@ -211,11 +152,12 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activityStates[activity] != null &&
           activityStates[activity].state == 'todo') {
         mainMenuOptions.add(MainMenuOption(
+          callback: activitiesCallback,
+          activity: activityStates[activity],
           text: activityMenuButtonMap[activity].text,
           route: activityMenuButtonMap[activity].route,
           icon: activityMenuButtonMap[activity].icon,
           color: activityMenuButtonMap[activity].color,
-          firstView: activityStates[activity].firstView,
         ));
       }
     }
@@ -228,11 +170,12 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activityStates[activity] != null &&
           activityStates[activity].state == 'review') {
         mainMenuOptions.add(MainMenuOption(
+          callback: activitiesCallback,
+          activity: activityStates[activity],
           text: activityMenuButtonMap[activity].text,
           route: activityMenuButtonMap[activity].route,
           icon: activityMenuButtonMap[activity].icon,
           color: activityMenuButtonMap[activity].color,
-          firstView: activityStates[activity].firstView,
         ));
       }
     }
@@ -276,5 +219,78 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ));
+  }
+
+  void initializeActivityMenuButtonMap() {
+    activityMenuButtonMap = {
+      'Welcome': ActivityMenuButton(
+          text: Text(
+            'Welcome',
+            style: TextStyle(fontSize: 24),
+          ),
+          route: WelcomeScreen(),
+          icon: Icon(Icons.filter),
+          color: Colors.green[100]),
+      'SingleDigitEdit': ActivityMenuButton(
+          text: Text(
+            'Single Digit [View/Edit]',
+            style: TextStyle(fontSize: 24),
+          ),
+          route: SingleDigitEditScreen(),
+          icon: Icon(Icons.filter_1),
+          color: Colors.amber[100]),
+      'SingleDigitPractice': ActivityMenuButton(
+          text: Text(
+            'Single Digit [Practice]',
+            style: TextStyle(fontSize: 24),
+          ),
+          route: SingleDigitPracticeScreen(
+            callback: levelCallback,
+          ),
+          icon: Icon(Icons.filter_1),
+          color: Colors.amber[200]),
+      'SingleDigitMultipleChoiceTest': ActivityMenuButton(
+          text: Text(
+            'Single Digit [MC Test]',
+            style: TextStyle(fontSize: 24),
+          ),
+          route: SingleDigitMultipleChoiceTestScreen(),
+          icon: Icon(Icons.filter_1),
+          color: Colors.amber[300]),
+      'SingleDigitTimedTestPrep': ActivityMenuButton(
+          text: Text(
+            'Single Digit [Timed Test Prep]',
+            style: TextStyle(fontSize: 19),
+          ),
+          route: SingleDigitTimedTestPrepScreen(
+            callback: levelCallback,
+          ),
+          icon: Icon(Icons.filter_1),
+          color: Colors.amber[400]),
+      'SingleDigitTimedTest': ActivityMenuButton(
+        text: Text(
+          'Single Digit [Timed Test]',
+          style: TextStyle(fontSize: 22),
+        ),
+        route: SingleDigitTimedTestScreen(),
+        icon: Icon(Icons.filter_1),
+        color: Colors.amber[400]),
+      'PAOEdit': ActivityMenuButton(
+          text: Text(
+            'PAO [View/Edit]',
+            style: TextStyle(fontSize: 24),
+          ),
+          route: PAOEditScreen(),
+          icon: Icon(Icons.filter_2),
+          color: Colors.blue[100]),
+      'PAOPractice': ActivityMenuButton(
+          text: Text(
+            'PAO [Practice]',
+            style: TextStyle(fontSize: 24),
+          ),
+          route: PAOPracticeScreen(),
+          icon: Icon(Icons.filter_2),
+          color: Colors.blue[200]),
+    };
   }
 }

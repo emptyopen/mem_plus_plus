@@ -7,9 +7,9 @@ import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 
 class SingleDigitPracticeScreen extends StatefulWidget {
-  final Function(int) parentCallback;
+  final Function(int) callback;
 
-  SingleDigitPracticeScreen({this.parentCallback});
+  SingleDigitPracticeScreen({this.callback});
 
   @override
   _SingleDigitPracticeScreenState createState() =>
@@ -19,7 +19,7 @@ class SingleDigitPracticeScreen extends StatefulWidget {
 class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'singleDigit';
+  String singleDigitKey = 'SingleDigit';
 
   @override
   void initState() {
@@ -40,17 +40,21 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
 
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // assume data exists
-    singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-        .map((i) => SingleDigitData.fromJson(i))
-        .toList();
     setState(() {
+      if (prefs.getString(singleDigitKey) == null) {
+        singleDigitData = defaultSingleDigitData;
+        prefs.setString(singleDigitKey, json.encode(singleDigitData));
+      } else {
+        singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
+          .map((i) => SingleDigitData.fromJson(i))
+          .toList();
+      }
       singleDigitData = shuffle(singleDigitData);
     });
   }
 
   callback(int newLevel) {
-    widget.parentCallback(newLevel);
+    widget.callback(newLevel);
   }
 
   List<SingleDigitFlashCard> getSingleDigitFlashCards() {

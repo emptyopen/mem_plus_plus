@@ -7,7 +7,9 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:math';
 
 class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
-  SingleDigitMultipleChoiceTestScreen({Key key}) : super(key: key);
+  final Function() callback;
+
+  SingleDigitMultipleChoiceTestScreen({this.callback});
 
   @override
   _SingleDigitMultipleChoiceTestScreenState createState() =>
@@ -18,7 +20,7 @@ class _SingleDigitMultipleChoiceTestScreenState
     extends State<SingleDigitMultipleChoiceTestScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'singleDigit';
+  String singleDigitKey = 'SingleDigit';
   int score = 0;
   int attempts = 0;
 

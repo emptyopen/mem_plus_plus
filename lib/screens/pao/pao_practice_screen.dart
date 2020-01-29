@@ -15,7 +15,7 @@ class PAOPracticeScreen extends StatefulWidget {
 class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<PAOData> paoData;
-  String paoKey = 'pao';
+  String paoKey = 'Pao';
 
   @override
   void initState() {

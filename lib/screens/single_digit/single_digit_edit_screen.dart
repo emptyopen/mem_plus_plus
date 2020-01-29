@@ -15,7 +15,7 @@ class SingleDigitEditScreen extends StatefulWidget {
 class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'singleDigit';
+  String singleDigitKey = 'SingleDigit';
 
   @override
   void initState() {
@@ -26,9 +26,14 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
+      if (prefs.getString(singleDigitKey) == null) {
+        singleDigitData = defaultSingleDigitData;
+        prefs.setString(singleDigitKey, json.encode(singleDigitData));
+      } else {
+        singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
           .map((i) => SingleDigitData.fromJson(i))
           .toList();
+      }
     });
   }
 

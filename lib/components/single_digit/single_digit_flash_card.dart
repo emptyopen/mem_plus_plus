@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/activities.dart';
+import 'package:mem_plus_plus/services/prefs_services.dart';
 
 class SingleDigitFlashCard extends StatefulWidget {
   final SingleDigitData singleDigitData;
@@ -20,17 +21,17 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
   bool guessed = true;
   int familiarityIncrease = 40;
   int familiarityDecrease = 25;
-  String singleDigitKey = 'singleDigit';
-  String levelKey = 'level';
-  String activityStatesKey = 'activityStates';
+  String singleDigitKey = 'SingleDigit';
+  String levelKey = 'Level';
+  String activityStatesKey = 'ActivityStates';
   SharedPreferences sharedPreferences;
+  final prefss = PrefsUpdater();
 
   void updateLevel() async {
     // TODO make this universally accessible function?
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print('setting level to 2');
     prefs.setInt(levelKey, 2);
-    widget.callback(2);
 
     // update activity state to first time view
     var rawMap =
@@ -47,17 +48,20 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
     activityStates['SingleDigitPractice'] = singleDigitPractice;
 
     // add firstView to new activity
-    Activity singleDigitMultipleChoiceTest =
-        activityStates['SingleDigitMultipleChoiceTest'];
-    singleDigitMultipleChoiceTest.firstView = true;
-    activityStates['SingleDigitMultipleChoiceTest'] =
-        singleDigitMultipleChoiceTest;
+//    Activity singleDigitMultipleChoiceTest =
+//        activityStates['SingleDigitMultipleChoiceTest'];
+//    singleDigitMultipleChoiceTest.firstView = true;
+//    activityStates['SingleDigitMultipleChoiceTest'] =
+//        singleDigitMultipleChoiceTest;
+    prefss.updateActivityFirstView('SingleDigitMultipleChoiceTest', true);
 
     prefs.setString(
         activityStatesKey,
         json.encode(
           activityStates.map((k, v) => MapEntry(k, v.toJson())),
         ));
+
+    widget.callback(2);
   }
 
   @override
