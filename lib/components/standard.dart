@@ -54,14 +54,11 @@ class MainMenuOption extends StatelessWidget {
             onPressed: () async {
               if (activity.firstView) {
                 // TODO: universal
-                print('will remove firstView');
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 var rawMap = json.decode(prefs.getString(activityStatesKey))
                     as Map<String, dynamic>;
                 Map<String, Activity> activityStates =
                     rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
-                print(activityStates['SingleDigitPractice'].visible);
-                print(activity.name);
                 activityStates[activity.name].firstView = false;
                 callback();
                 prefs.setString(

@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'single_digit_data.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/prefs_services.dart';
 
-class SingleDigitFlashCard extends StatefulWidget {
-  final SingleDigitData singleDigitData;
+class AlphabetFlashCard extends StatefulWidget {
+  final AlphabetData alphabetData;
   final Function() callback;
 
-  SingleDigitFlashCard({this.singleDigitData, this.callback});
+  AlphabetFlashCard({this.alphabetData, this.callback});
 
   @override
-  _SingleDigitFlashCardState createState() => _SingleDigitFlashCardState();
+  _AlphabetFlashCardState createState() => _AlphabetFlashCardState();
 }
 
-class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
+class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
   bool done = false;
   bool guessed = true;
   int familiarityIncrease = 40;
   int familiarityDecrease = 25;
-  String singleDigitKey = 'SingleDigit';
+  String alphabetKey = 'Alphabet';
   String levelKey = 'Level';
   String activityStatesKey = 'ActivityStates';
   SharedPreferences sharedPreferences;
@@ -29,9 +29,9 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
   void updateLevel() async {
 
     await prefs.updateLevel(2);
-    await prefs.updateActivityState('SingleDigitEdit', 'review');
-    await prefs.updateActivityState('SingleDigitPractice', 'review');
-    await prefs.updateActivityFirstView('SingleDigitMultipleChoiceTest', true);
+    await prefs.updateActivityState('AlphabetEdit', 'review');
+    await prefs.updateActivityState('AlphabetPractice', 'review');
+    await prefs.updateActivityFirstView('AlphabetMultipleChoiceTest', true);
 
     widget.callback();
   }
@@ -49,7 +49,7 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  widget.singleDigitData.digits,
+                  widget.alphabetData.digits,
                   style: TextStyle(fontSize: 34),
                 ),
                 guessed
@@ -70,7 +70,7 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                     : Column(
                         children: <Widget>[
                           Text(
-                            widget.singleDigitData.object,
+                            widget.alphabetData.object,
                             style: TextStyle(fontSize: 24),
                           ),
                           Row(
@@ -81,29 +81,29 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                                     bool levelUp = false;
                                     SharedPreferences prefs =
                                         await SharedPreferences.getInstance();
-                                    var singleDigitData = (json.decode(
-                                                prefs.getString(singleDigitKey))
+                                    var alphabetData = (json.decode(
+                                                prefs.getString(alphabetKey))
                                             as List)
-                                        .map((i) => SingleDigitData.fromJson(i))
+                                        .map((i) => AlphabetData.fromJson(i))
                                         .toList();
                                     int currIndex = int.parse(
-                                        widget.singleDigitData.digits);
-                                    SingleDigitData updatedSingleDigitEntry =
-                                        singleDigitData[currIndex];
+                                        widget.alphabetData.digits);
+                                    AlphabetData updatedAlphabetEntry =
+                                        alphabetData[currIndex];
                                     int previousFamiliarity =
-                                        singleDigitData[currIndex].familiarity;
-                                    if (updatedSingleDigitEntry.familiarity +
+                                        alphabetData[currIndex].familiarity;
+                                    if (updatedAlphabetEntry.familiarity +
                                             familiarityIncrease <=
                                         100) {
-                                      updatedSingleDigitEntry.familiarity +=
+                                      updatedAlphabetEntry.familiarity +=
                                           familiarityIncrease;
                                     } else {
-                                      updatedSingleDigitEntry.familiarity = 100;
+                                      updatedAlphabetEntry.familiarity = 100;
                                     }
-                                    singleDigitData[currIndex] =
-                                        updatedSingleDigitEntry;
-                                    prefs.setString(singleDigitKey,
-                                        json.encode(singleDigitData));
+                                    alphabetData[currIndex] =
+                                        updatedAlphabetEntry;
+                                    prefs.setString(alphabetKey,
+                                        json.encode(alphabetData));
                                     setState(() {
                                       done = true;
                                     });
@@ -111,31 +111,31 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                                     // Snackbar
                                     Color snackBarColor = Colors.green[200];
                                     String snackBarText =
-                                        'Familiarity for digit ${updatedSingleDigitEntry.digits} increased (now ${updatedSingleDigitEntry.familiarity})!';
+                                        'Familiarity for digit ${updatedAlphabetEntry.digits} increased (now ${updatedAlphabetEntry.familiarity})!';
                                     if (previousFamiliarity < 100 &&
-                                        updatedSingleDigitEntry.familiarity ==
+                                        updatedAlphabetEntry.familiarity ==
                                             100) {
                                       snackBarText =
-                                          'Familiarity for digit ${updatedSingleDigitEntry.digits} maxed out! Great job!';
+                                          'Familiarity for digit ${updatedAlphabetEntry.digits} maxed out! Great job!';
                                       snackBarColor = Colors.amber[200];
 
                                       // Check for level up!!
                                       int familiaritySum = 0;
-                                      for (SingleDigitData singleDigitEntry
-                                          in singleDigitData) {
+                                      for (AlphabetData alphabetEntry
+                                          in alphabetData) {
                                         familiaritySum +=
-                                            singleDigitEntry.familiarity;
+                                            alphabetEntry.familiarity;
                                       }
                                       if (familiaritySum == 1000 &&
                                           prefs.getInt(levelKey) == 1) {
                                         levelUp = true;
                                         updateLevel();
                                       }
-                                    } else if (updatedSingleDigitEntry
+                                    } else if (updatedAlphabetEntry
                                             .familiarity ==
                                         100) {
                                       snackBarText =
-                                          'Familiarity for digit already ${updatedSingleDigitEntry.digits} maxed out!';
+                                          'Familiarity for digit already ${updatedAlphabetEntry.digits} maxed out!';
                                       snackBarColor = Colors.amber[200];
                                     }
                                     final snackBar = SnackBar(
@@ -173,38 +173,38 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                                   onPressed: () async {
                                     SharedPreferences prefs =
                                         await SharedPreferences.getInstance();
-                                    var singleDigitData = (json.decode(
-                                                prefs.getString(singleDigitKey))
+                                    var alphabetData = (json.decode(
+                                                prefs.getString(alphabetKey))
                                             as List)
-                                        .map((i) => SingleDigitData.fromJson(i))
+                                        .map((i) => AlphabetData.fromJson(i))
                                         .toList();
                                     int currIndex = int.parse(
-                                        widget.singleDigitData.digits);
-                                    SingleDigitData updatedSingleDigitEntry =
-                                        singleDigitData[currIndex];
-                                    if (updatedSingleDigitEntry.familiarity -
+                                        widget.alphabetData.digits);
+                                    AlphabetData updatedAlphabetEntry =
+                                        alphabetData[currIndex];
+                                    if (updatedAlphabetEntry.familiarity -
                                             familiarityDecrease >=
                                         0) {
-                                      updatedSingleDigitEntry.familiarity -=
+                                      updatedAlphabetEntry.familiarity -=
                                           familiarityDecrease;
                                     } else {
-                                      updatedSingleDigitEntry.familiarity = 0;
+                                      updatedAlphabetEntry.familiarity = 0;
                                     }
-                                    singleDigitData[currIndex] =
-                                        updatedSingleDigitEntry;
-                                    prefs.setString(singleDigitKey,
-                                        json.encode(singleDigitData));
+                                    alphabetData[currIndex] =
+                                        updatedAlphabetEntry;
+                                    prefs.setString(alphabetKey,
+                                        json.encode(alphabetData));
                                     setState(() {
                                       done = true;
                                     });
 
                                     // Snackbar
                                     String snackBarText =
-                                        'Familiarity for digit ${updatedSingleDigitEntry.digits} decreased by $familiarityDecrease to ${updatedSingleDigitEntry.familiarity}!';
-                                    if (updatedSingleDigitEntry.familiarity ==
+                                        'Familiarity for digit ${updatedAlphabetEntry.digits} decreased by $familiarityDecrease to ${updatedAlphabetEntry.familiarity}!';
+                                    if (updatedAlphabetEntry.familiarity ==
                                         0) {
                                       snackBarText =
-                                          'Familiarity for digit ${updatedSingleDigitEntry.digits} can\'t go lower!';
+                                          'Familiarity for digit ${updatedAlphabetEntry.digits} can\'t go lower!';
                                     }
                                     final snackBar = SnackBar(
                                       content: Text(

@@ -10,6 +10,11 @@ import 'package:mem_plus_plus/screens/single_digit/single_digit_practice_screen.
 import 'package:mem_plus_plus/screens/single_digit/single_digit_multiple_choice_test_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_timed_test_screen.dart';
+import 'package:mem_plus_plus/screens/alphabet/alphabet_edit_screen.dart';
+import 'package:mem_plus_plus/screens/alphabet/alphabet_practice_screen.dart';
+import 'package:mem_plus_plus/screens/alphabet/alphabet_multiple_choice_test_screen.dart';
+import 'package:mem_plus_plus/screens/alphabet/alphabet_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/alphabet/alphabet_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_edit_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_practice_screen.dart';
 
@@ -39,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
     5: ['AlphabetMultipleChoiceTest'],
     6: ['AlphabetTimedTestPrep', 'AlphabetTimedTest'],
     7: ['PAOEdit', 'PAOPractice'],
-    8: ['PAOTestMultipleChoiceTest', 'PAOTimedTestPrep', 'PAOTimedTest'],
+    8: ['PAOMultipleChoiceTest', 'PAOTimedTestPrep', 'PAOTimedTest'],
     9: ['FaceTestPrep', 'FaceTest'],
     // premium paywall here?
     10: ['DeckEdit', 'DeckPractice'],
@@ -53,14 +58,31 @@ class _MyHomePageState extends State<MyHomePage> {
     initializeActivityMenuButtonMap();
   }
 
+  resetKeys() async {
+    int defaultLevel = 1;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(levelKey);
+    prefs.remove(activityStatesKey);
+    setState(() {
+      prefs.setInt(levelKey, defaultLevel);
+      level = defaultLevel;
+      activityStates = defaultActivityStates;
+      prefs.setString(
+        activityStatesKey,
+        json.encode(
+          activityStates.map((k, v) => MapEntry(k, v.toJson())),
+        )
+      );
+    });
+
+    setUnlockedActivities();
+  }
+
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // level
-    if (false) {
-      prefs.remove(levelKey);
-      prefs.remove(activityStatesKey);
-    }
     if (prefs.getKeys().contains(levelKey)) {
       setState(() {
         level = prefs.getInt(levelKey);
@@ -126,23 +148,11 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }
     });
-
-    print('unlocked activities: $unlockedActivities');
-    print('available activites: $availableActivities');
+    print(activityStates.map((k, v) => MapEntry(k, '${v.state} | ${v.visible} | ${v.firstView}')));
   }
 
-  levelCallback(int newLevel) {
-    print('level on main page');
-    setState(() {
-      if (newLevel != null) {
-        level = newLevel;
-      }
-      setUnlockedActivities();
-    });
-  }
-
-  activitiesCallback() {
-    print('activities on main page');
+  callback() {
+    print('main callback ');
     setUnlockedActivities();
   }
 
@@ -152,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activityStates[activity] != null &&
           activityStates[activity].state == 'todo') {
         mainMenuOptions.add(MainMenuOption(
-          callback: activitiesCallback,
+          callback: callback,
           activity: activityStates[activity],
           text: activityMenuButtonMap[activity].text,
           route: activityMenuButtonMap[activity].route,
@@ -170,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activityStates[activity] != null &&
           activityStates[activity].state == 'review') {
         mainMenuOptions.add(MainMenuOption(
-          callback: activitiesCallback,
+          callback: callback,
           activity: activityStates[activity],
           text: activityMenuButtonMap[activity].text,
           route: activityMenuButtonMap[activity].route,
@@ -216,6 +226,10 @@ class _MyHomePageState extends State<MyHomePage> {
               Column(
                 children: getReview(),
               ),
+              FlatButton(
+                onPressed: () => resetKeys(),
+                child: Text('reset'),
+              )
             ],
           ),
         ));
@@ -245,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
             style: TextStyle(fontSize: 24),
           ),
           route: SingleDigitPracticeScreen(
-            callback: levelCallback,
+            callback: callback,
           ),
           icon: Icon(Icons.filter_1),
           color: Colors.amber[200]),
@@ -254,7 +268,9 @@ class _MyHomePageState extends State<MyHomePage> {
             'Single Digit [MC Test]',
             style: TextStyle(fontSize: 24),
           ),
-          route: SingleDigitMultipleChoiceTestScreen(),
+          route: SingleDigitMultipleChoiceTestScreen(
+            callback: callback,
+          ),
           icon: Icon(Icons.filter_1),
           color: Colors.amber[300]),
       'SingleDigitTimedTestPrep': ActivityMenuButton(
@@ -263,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
             style: TextStyle(fontSize: 19),
           ),
           route: SingleDigitTimedTestPrepScreen(
-            callback: levelCallback,
+            callback: callback,
           ),
           icon: Icon(Icons.filter_1),
           color: Colors.amber[400]),
@@ -272,7 +288,57 @@ class _MyHomePageState extends State<MyHomePage> {
           'Single Digit [Timed Test]',
           style: TextStyle(fontSize: 22),
         ),
-        route: SingleDigitTimedTestScreen(),
+        route: SingleDigitTimedTestScreen(
+          callback: callback,
+        ),
+        icon: Icon(Icons.filter_1),
+        color: Colors.amber[400]),
+      'AlphabetEdit': ActivityMenuButton(
+        text: Text(
+          'Single Digit [View/Edit]',
+          style: TextStyle(fontSize: 24),
+        ),
+        route: AlphabetEditScreen(),
+        icon: Icon(Icons.filter_1),
+        color: Colors.amber[100]),
+      'AlphabetPractice': ActivityMenuButton(
+        text: Text(
+          'Single Digit [Practice]',
+          style: TextStyle(fontSize: 24),
+        ),
+        route: AlphabetPracticeScreen(
+          callback: callback,
+        ),
+        icon: Icon(Icons.filter_1),
+        color: Colors.amber[200]),
+      'AlphabetMultipleChoiceTest': ActivityMenuButton(
+        text: Text(
+          'Single Digit [MC Test]',
+          style: TextStyle(fontSize: 24),
+        ),
+        route: AlphabetMultipleChoiceTestScreen(
+          callback: callback,
+        ),
+        icon: Icon(Icons.filter_1),
+        color: Colors.amber[300]),
+      'AlphabetTimedTestPrep': ActivityMenuButton(
+        text: Text(
+          'Single Digit [Timed Test Prep]',
+          style: TextStyle(fontSize: 19),
+        ),
+        route: AlphabetTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: Icon(Icons.filter_1),
+        color: Colors.amber[400]),
+      'AlphabetTimedTest': ActivityMenuButton(
+        text: Text(
+          'Single Digit [Timed Test]',
+          style: TextStyle(fontSize: 22),
+        ),
+        route: AlphabetTimedTestScreen(
+          callback: callback,
+        ),
         icon: Icon(Icons.filter_1),
         color: Colors.amber[400]),
       'PAOEdit': ActivityMenuButton(

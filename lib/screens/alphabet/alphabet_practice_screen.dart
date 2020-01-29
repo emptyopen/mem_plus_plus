@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_flash_card.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 
-class SingleDigitPracticeScreen extends StatefulWidget {
+class AlphabetPracticeScreen extends StatefulWidget {
   final Function() callback;
 
-  SingleDigitPracticeScreen({this.callback});
+  AlphabetPracticeScreen({this.callback});
 
   @override
-  _SingleDigitPracticeScreenState createState() =>
-      _SingleDigitPracticeScreenState();
+  _AlphabetPracticeScreenState createState() =>
+      _AlphabetPracticeScreenState();
 }
 
-class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
+class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   SharedPreferences sharedPreferences;
-  List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'SingleDigit';
+  List<AlphabetData> alphabetData;
+  String alphabetKey = 'Alphabet';
 
   @override
   void initState() {
@@ -41,15 +41,15 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getString(singleDigitKey) == null) {
-        singleDigitData = defaultSingleDigitData;
-        prefs.setString(singleDigitKey, json.encode(singleDigitData));
+      if (prefs.getString(alphabetKey) == null) {
+        alphabetData = defaultAlphabetData;
+        prefs.setString(alphabetKey, json.encode(alphabetData));
       } else {
-        singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-          .map((i) => SingleDigitData.fromJson(i))
+        alphabetData = (json.decode(prefs.getString(alphabetKey)) as List)
+          .map((i) => AlphabetData.fromJson(i))
           .toList();
       }
-      singleDigitData = shuffle(singleDigitData);
+      alphabetData = shuffle(alphabetData);
     });
   }
 
@@ -57,18 +57,18 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     widget.callback();
   }
 
-  List<SingleDigitFlashCard> getSingleDigitFlashCards() {
-    List<SingleDigitFlashCard> singleDigitFlashCards = [];
-    if (singleDigitData != null) {
-      for (int i = 0; i < singleDigitData.length; i++) {
-        SingleDigitFlashCard singleDigitFlashCard = SingleDigitFlashCard(
-          singleDigitData: singleDigitData[i],
+  List<AlphabetFlashCard> getAlphabetFlashCards() {
+    List<AlphabetFlashCard> alphabetFlashCards = [];
+    if (alphabetData != null) {
+      for (int i = 0; i < alphabetData.length; i++) {
+        AlphabetFlashCard alphabetFlashCard = AlphabetFlashCard(
+          alphabetData: alphabetData[i],
           callback: callback,
         );
-        singleDigitFlashCards.add(singleDigitFlashCard);
+        alphabetFlashCards.add(alphabetFlashCard);
       }
     }
-    return singleDigitFlashCards;
+    return alphabetFlashCards;
   }
 
   @override
@@ -83,7 +83,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
-                    return SingleDigitFlashCardScreenHelp();
+                    return AlphabetFlashCardScreenHelp();
                   }));
             },
           ),
@@ -95,13 +95,13 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
       ),
       body: Center(
           child: ListView(
-        children: getSingleDigitFlashCards(),
+        children: getAlphabetFlashCards(),
       )),
     );
   }
 }
 
-class SingleDigitFlashCardScreenHelp extends StatelessWidget {
+class AlphabetFlashCardScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(

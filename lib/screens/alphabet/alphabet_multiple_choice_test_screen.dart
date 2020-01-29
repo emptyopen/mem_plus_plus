@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_multiple_choice_card.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_multiple_choice_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/prefs_services.dart';
 
-class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
+class AlphabetMultipleChoiceTestScreen extends StatefulWidget {
   final Function() callback;
 
-  SingleDigitMultipleChoiceTestScreen({this.callback});
+  AlphabetMultipleChoiceTestScreen({this.callback});
 
   @override
-  _SingleDigitMultipleChoiceTestScreenState createState() =>
-      _SingleDigitMultipleChoiceTestScreenState();
+  _AlphabetMultipleChoiceTestScreenState createState() =>
+      _AlphabetMultipleChoiceTestScreenState();
 }
 
-class _SingleDigitMultipleChoiceTestScreenState
-    extends State<SingleDigitMultipleChoiceTestScreen> {
-  List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'SingleDigit';
+class _AlphabetMultipleChoiceTestScreenState
+    extends State<AlphabetMultipleChoiceTestScreen> {
+  List<AlphabetData> alphabetData;
+  String alphabetKey = 'Alphabet';
   int score = 0;
   int attempts = 0;
 
@@ -33,10 +33,10 @@ class _SingleDigitMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-          .map((i) => SingleDigitData.fromJson(i))
+      alphabetData = (json.decode(prefs.getString(alphabetKey)) as List)
+          .map((i) => AlphabetData.fromJson(i))
           .toList();
-      singleDigitData = shuffle(singleDigitData);
+      alphabetData = shuffle(alphabetData);
     });
   }
 
@@ -46,9 +46,9 @@ class _SingleDigitMultipleChoiceTestScreenState
       if (score == 10) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-        await prefs.updateActivityFirstView('SingleDigitTimedTestPrep', true);
-        await prefs.updateActivityState('SingleDigitMultipleChoiceTest', 'review');
+        await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
+        await prefs.updateActivityFirstView('AlphabetTimedTestPrep', true);
+        await prefs.updateActivityState('AlphabetMultipleChoiceTest', 'review');
         await prefs.updateLevel(3);
         widget.callback();
         // Snackbar
@@ -83,20 +83,20 @@ class _SingleDigitMultipleChoiceTestScreenState
     }
   }
 
-  List<SingleDigitMultipleChoiceCard> getSingleDigitMultipleChoiceCards() {
-    List<SingleDigitMultipleChoiceCard> singleDigitMultipleChoiceCards = [];
-    if (singleDigitData != null) {
-      for (int i = 0; i < singleDigitData.length; i++) {
-        SingleDigitMultipleChoiceCard singleDigitView =
-            SingleDigitMultipleChoiceCard(
-          singleDigitData: SingleDigitData(singleDigitData[i].digits,
-              singleDigitData[i].object, singleDigitData[i].familiarity),
+  List<AlphabetMultipleChoiceCard> getAlphabetMultipleChoiceCards() {
+    List<AlphabetMultipleChoiceCard> alphabetMultipleChoiceCards = [];
+    if (alphabetData != null) {
+      for (int i = 0; i < alphabetData.length; i++) {
+        AlphabetMultipleChoiceCard alphabetView =
+            AlphabetMultipleChoiceCard(
+          alphabetData: AlphabetData(alphabetData[i].digits,
+              alphabetData[i].object, alphabetData[i].familiarity),
           callback: callback,
         );
-        singleDigitMultipleChoiceCards.add(singleDigitView);
+        alphabetMultipleChoiceCards.add(alphabetView);
       }
     }
-    return singleDigitMultipleChoiceCards;
+    return alphabetMultipleChoiceCards;
   }
 
   List shuffle(List items) {
@@ -123,20 +123,20 @@ class _SingleDigitMultipleChoiceTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitMultipleChoiceScreenHelp();
+                      return AlphabetMultipleChoiceScreenHelp();
                     }));
               },
             ),
           ]),
       body: Center(
           child: ListView(
-        children: getSingleDigitMultipleChoiceCards(),
+        children: getAlphabetMultipleChoiceCards(),
       )),
     );
   }
 }
 
-class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
+class AlphabetMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(

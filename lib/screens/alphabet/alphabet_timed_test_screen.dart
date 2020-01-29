@@ -3,23 +3,23 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/services/prefs_services.dart';
 
-class SingleDigitTimedTestScreen extends StatefulWidget {
+class AlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
 
-  SingleDigitTimedTestScreen({this.callback});
+  AlphabetTimedTestScreen({this.callback});
 
   @override
-  _SingleDigitTimedTestScreenState createState() =>
-      _SingleDigitTimedTestScreenState();
+  _AlphabetTimedTestScreenState createState() =>
+      _AlphabetTimedTestScreenState();
 }
 
-class _SingleDigitTimedTestScreenState
-    extends State<SingleDigitTimedTestScreen> {
+class _AlphabetTimedTestScreenState
+    extends State<AlphabetTimedTestScreen> {
   String digit1 = '';
   String digit2 = '';
   String digit3 = '';
   String digit4 = '';
-  String singleDigitTestActiveKey = 'SingleDigitTestActive';
+  String alphabetTestActiveKey = 'AlphabetTestActive';
   final textController = TextEditingController();
   PrefsUpdater prefs = PrefsUpdater();
 
@@ -39,27 +39,38 @@ class _SingleDigitTimedTestScreenState
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       // grab the digits
-      digit1 = prefs.getString('singleDigitTestDigit1');
-      digit2 = prefs.getString('singleDigitTestDigit2');
-      digit3 = prefs.getString('singleDigitTestDigit3');
-      digit4 = prefs.getString('singleDigitTestDigit4');
+      digit1 = prefs.getString('alphabetTestDigit1');
+      digit2 = prefs.getString('alphabetTestDigit2');
+      digit3 = prefs.getString('alphabetTestDigit3');
+      digit4 = prefs.getString('alphabetTestDigit4');
       print('real answer: $digit1$digit2$digit3$digit4');
     });
   }
 
-  Future<bool> checkAnswer() async {
+  void checkAnswer() async {
     print('testing: $digit1$digit2$digit3$digit4 vs ${textController.text}');
     if (textController.text == '$digit1$digit2$digit3$digit4') {
       await prefs.updateLevel(4);
-      await prefs.updateActivityState('SingleDigitTimedTest', 'review');
-      await prefs.updateActivityVisible('SingleDigitTimedTest', false);
-      await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
+      await prefs.updateActivityState('AlphabetTimedTest', 'review');
+      await prefs.updateActivityVisible('AlphabetTimedTest', false);
+      await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
       widget.callback();
-      return true;
+      final snackBar = SnackBar(
+        content: Text(
+          'Awesome Job! Head back to the main menu to check out the new system you\'ve unlocked!',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.black,
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
     } else {
       print('failure');
-      return false;
     }
+    textController.text = '';
+    Navigator.pop(context);
   }
 
   @override
@@ -73,7 +84,7 @@ class _SingleDigitTimedTestScreenState
             Navigator.of(context).push(PageRouteBuilder(
                 opaque: false,
                 pageBuilder: (BuildContext context, _, __) {
-                  return SingleDigitTimedTestScreenHelp();
+                  return AlphabetTimedTestScreenHelp();
                 }));
           },
         ),
@@ -113,23 +124,7 @@ class _SingleDigitTimedTestScreenState
                   ),
                   border: Border.all()),
               child: FlatButton(
-                  onPressed: () {
-                    checkAnswer();
-                    final snackBar = SnackBar(
-                      content: Text(
-                        'Awesome Job! Head back to the main menu to check out the new system you\'ve unlocked!',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      duration: Duration(seconds: 10),
-                      backgroundColor: Colors.black,
-                    );
-                    Scaffold.of(context).showSnackBar(snackBar);
-                    textController.text = '';
-                    print('yo');
-                    Navigator.pop(context);
-                    },
+                  onPressed: () => checkAnswer(),
                   child: Text(
                     'Submit',
                     style: TextStyle(fontSize: 30),
@@ -142,7 +137,7 @@ class _SingleDigitTimedTestScreenState
   }
 }
 
-class SingleDigitTimedTestScreenHelp extends StatelessWidget {
+class AlphabetTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(

@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_flash_card.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_edit_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 
-class SingleDigitPracticeScreen extends StatefulWidget {
-  final Function() callback;
-
-  SingleDigitPracticeScreen({this.callback});
+class AlphabetEditScreen extends StatefulWidget {
+  AlphabetEditScreen({Key key}) : super(key: key);
 
   @override
-  _SingleDigitPracticeScreenState createState() =>
-      _SingleDigitPracticeScreenState();
+  _AlphabetEditScreenState createState() => _AlphabetEditScreenState();
 }
 
-class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
+class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   SharedPreferences sharedPreferences;
-  List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'SingleDigit';
+  List<AlphabetData> alphabetData;
+  String alphabetKey = 'Alphabet';
 
   @override
   void initState() {
@@ -27,81 +23,66 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     getSharedPrefs();
   }
 
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
-  }
-
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (prefs.getString(singleDigitKey) == null) {
-        singleDigitData = defaultSingleDigitData;
-        prefs.setString(singleDigitKey, json.encode(singleDigitData));
+      if (prefs.getString(alphabetKey) == null) {
+        alphabetData = defaultAlphabetData;
+        prefs.setString(alphabetKey, json.encode(alphabetData));
       } else {
-        singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-          .map((i) => SingleDigitData.fromJson(i))
+        alphabetData = (json.decode(prefs.getString(alphabetKey)) as List)
+          .map((i) => AlphabetData.fromJson(i))
           .toList();
       }
-      singleDigitData = shuffle(singleDigitData);
     });
   }
 
-  callback() {
-    widget.callback();
+  callback(newAlphabetData) {
+    setState(() {
+      alphabetData = newAlphabetData;
+    });
   }
 
-  List<SingleDigitFlashCard> getSingleDigitFlashCards() {
-    List<SingleDigitFlashCard> singleDigitFlashCards = [];
-    if (singleDigitData != null) {
-      for (int i = 0; i < singleDigitData.length; i++) {
-        SingleDigitFlashCard singleDigitFlashCard = SingleDigitFlashCard(
-          singleDigitData: singleDigitData[i],
+  List<AlphabetEditCard> getAlphabetEditCards() {
+    List<AlphabetEditCard> alphabetViews = [];
+    if (alphabetData != null) {
+      for (int i = 0; i < alphabetData.length; i++) {
+        AlphabetEditCard alphabetEditCard = AlphabetEditCard(
+          alphabetData: AlphabetData(alphabetData[i].digits,
+              alphabetData[i].object, alphabetData[i].familiarity),
           callback: callback,
         );
-        singleDigitFlashCards.add(singleDigitFlashCard);
+        alphabetViews.add(alphabetEditCard);
       }
     }
-    return singleDigitFlashCards;
+    return alphabetViews;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Single digit: practice'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                  opaque: false,
-                  pageBuilder: (BuildContext context, _, __) {
-                    return SingleDigitFlashCardScreenHelp();
-                  }));
-            },
-          ),
-        ],
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop('test'),
+      appBar: AppBar(title: Text('Single digit: view/edit'), actions: <Widget>[
+        // action button
+        IconButton(
+          icon: Icon(Icons.info),
+          onPressed: () {
+            Navigator.of(context).push(PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (BuildContext context, _, __) {
+                  return AlphabetEditScreenHelp();
+                }));
+          },
         ),
-      ),
+      ]),
       body: Center(
           child: ListView(
-        children: getSingleDigitFlashCards(),
+        children: getAlphabetEditCards(),
       )),
     );
   }
 }
 
-class SingleDigitFlashCardScreenHelp extends StatelessWidget {
+class AlphabetEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -138,13 +119,13 @@ class SingleDigitFlashCardScreenHelp extends StatelessWidget {
                         'when you edit a digit, that will reset your familiarity for that object back to zero! '
                         'Familiarity is listed on the far right of the tiles. ',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
                   PopButton(
                     widget: Text('OK'),
-                    color: Colors.amber,
+                    color: Colors.amber[300],
                   )
                 ],
               ),

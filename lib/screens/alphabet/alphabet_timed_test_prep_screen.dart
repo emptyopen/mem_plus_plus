@@ -4,23 +4,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/prefs_services.dart';
 
-class SingleDigitTimedTestPrepScreen extends StatefulWidget {
+class AlphabetTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  SingleDigitTimedTestPrepScreen({this.callback});
+  AlphabetTimedTestPrepScreen({this.callback});
 
   @override
-  _SingleDigitTimedTestPrepScreenState createState() =>
-      _SingleDigitTimedTestPrepScreenState();
+  _AlphabetTimedTestPrepScreenState createState() =>
+      _AlphabetTimedTestPrepScreenState();
 }
 
-class _SingleDigitTimedTestPrepScreenState
-    extends State<SingleDigitTimedTestPrepScreen> {
+class _AlphabetTimedTestPrepScreenState
+    extends State<AlphabetTimedTestPrepScreen> {
   String digit1 = '';
   String digit2 = '';
   String digit3 = '';
   String digit4 = '';
-  String singleDigitTestActiveKey = 'SingleDigitTimedTestActive';
+  String alphabetTestActiveKey = 'AlphabetTimedTestActive';
   String activityStatesKey = 'ActivityStates';
   PrefsUpdater prefs = PrefsUpdater();
 
@@ -34,8 +34,8 @@ class _SingleDigitTimedTestPrepScreenState
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       // if digits are null, randomize values and store them,
-      // then update DateTime available for singleDigitTest
-      bool sdTestIsActive = prefs.getBool(singleDigitTestActiveKey);
+      // then update DateTime available for alphabetTest
+      bool sdTestIsActive = prefs.getBool(alphabetTestActiveKey);
       if (sdTestIsActive == null || !sdTestIsActive) {
         print('no active test, setting new values');
         var random = new Random();
@@ -43,28 +43,28 @@ class _SingleDigitTimedTestPrepScreenState
         digit2 = random.nextInt(9).toString();
         digit3 = random.nextInt(9).toString();
         digit4 = random.nextInt(9).toString();
-        prefs.setString('singleDigitTestDigit1', digit1);
-        prefs.setString('singleDigitTestDigit2', digit2);
-        prefs.setString('singleDigitTestDigit3', digit3);
-        prefs.setString('singleDigitTestDigit4', digit4);
-        prefs.setBool(singleDigitTestActiveKey, true);
+        prefs.setString('alphabetTestDigit1', digit1);
+        prefs.setString('alphabetTestDigit2', digit2);
+        prefs.setString('alphabetTestDigit3', digit3);
+        prefs.setString('alphabetTestDigit4', digit4);
+        prefs.setBool(alphabetTestActiveKey, true);
       } else {
         print('found active test, restoring values');
-        digit1 = prefs.getString('singleDigitTestDigit1');
-        digit2 = prefs.getString('singleDigitTestDigit2');
-        digit3 = prefs.getString('singleDigitTestDigit3');
-        digit4 = prefs.getString('singleDigitTestDigit4');
+        digit1 = prefs.getString('alphabetTestDigit1');
+        digit2 = prefs.getString('alphabetTestDigit2');
+        digit3 = prefs.getString('alphabetTestDigit3');
+        digit4 = prefs.getString('alphabetTestDigit4');
       }
     });
   }
 
   void updateStatus() async {
-    await prefs.setBool(singleDigitTestActiveKey, false);
-    await prefs.updateActivityState('SingleDigitTimedTestPrep', 'review');
-    await prefs.updateActivityVisible('SingleDigitTimedTestPrep', false);
-    await prefs.updateActivityState('SingleDigitTimedTest', 'todo');
-    await prefs.updateActivityVisible('SingleDigitTimedTest', true);
-    await prefs.updateActivityFirstView('SingleDigitTimedTest', true);
+    await prefs.setBool(alphabetTestActiveKey, false);
+    await prefs.updateActivityState('AlphabetTimedTestPrep', 'review');
+    await prefs.updateActivityVisible('AlphabetTimedTestPrep', false);
+    await prefs.updateActivityState('AlphabetTimedTest', 'todo');
+    await prefs.updateActivityVisible('AlphabetTimedTest', true);
+    await prefs.updateActivityFirstView('AlphabetTimedTest', true);
     widget.callback();
     Navigator.pop(context);
   }
@@ -82,7 +82,7 @@ class _SingleDigitTimedTestPrepScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitTimedTestPrepScreenHelp();
+                      return AlphabetTimedTestPrepScreenHelp();
                     }));
               },
             ),
@@ -169,7 +169,7 @@ class _SingleDigitTimedTestPrepScreenState
   }
 }
 
-class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
+class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(

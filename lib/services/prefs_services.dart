@@ -26,37 +26,57 @@ class PrefsUpdater {
     return null;
   }
 
-  Future<int> getLevel() async {
-    return getSharedPrefs(levelKey);
-  }
-
-  void writeSharedPrefs(String key, Object object) async {
+  Future<void> writeSharedPrefs(String key, Object object) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     switch (key) {
       case 'ActivityStates':
         Map<String, Activity> activityStates = object;
-        prefs.setString(
-          activityStatesKey,
-          json.encode(
-            activityStates.map((k, v) => MapEntry(k, v.toJson())),
-          )
-        );
+        prefs.setString(activityStatesKey, json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
     }
   }
 
-  updateLevel(int newLevel) async {
+  Future<int> getLevel() async {
+    return await getSharedPrefs(levelKey);
+  }
 
+  updateLevel(int newLevel) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (await getLevel() == newLevel - 1) {
+      prefs.setInt(levelKey, newLevel);
+    }
+  }
+
+  setBool(String key, bool newBool) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, newBool);
   }
 
   updateActivityFirstView(String activityName, bool isNew) async {
+    print('setting $activityName first view to $isNew');
     Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
-    Activity singleDigitMultipleChoiceTest = activityStates[activityName];
-    singleDigitMultipleChoiceTest.firstView = isNew;
-    activityStates[activityName] = singleDigitMultipleChoiceTest;
-    writeSharedPrefs(activityStatesKey, activityStates);
+    Activity activity = activityStates[activityName];
+    activity.firstView = isNew;
+    activityStates[activityName] = activity;
+    await writeSharedPrefs(activityStatesKey, activityStates);
   }
 
-  updateActivityVisible(String activityName, bool visible) async {}
+  updateActivityState(String activityName, String state) async {
+    print('setting $activityName state to $state');
+    Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
+    Activity activity = activityStates[activityName];
+    activity.state = state;
+    activityStates[activityName] = activity;
+    await writeSharedPrefs(activityStatesKey, activityStates);
+  }
+
+  updateActivityVisible(String activityName, bool visible) async {
+    print('setting $activityName visible to $visible');
+    Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
+    Activity activity = activityStates[activityName];
+    activity.visible = visible;
+    activityStates[activityName] = activity;
+    await writeSharedPrefs(activityStatesKey, activityStates);
+  }
 
   List shuffle(List items) {
     var random = new Random();

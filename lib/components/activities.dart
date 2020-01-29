@@ -39,8 +39,8 @@ class ActivityMenuButton {
 
 var defaultActivityStates = {
   'Welcome': Activity('Welcome', 'review', true, DateTime.now(), false),
-  'SingleDigitEdit': Activity('SingleDigitEdit', 'todo', true, DateTime.now(), false),
-  'SingleDigitPractice': Activity('SingleDigitPractice', 'todo', true, DateTime.now(), false),
+  'SingleDigitEdit': Activity('SingleDigitEdit', 'todo', true, DateTime.now(), true),
+  'SingleDigitPractice': Activity('SingleDigitPractice', 'todo', true, DateTime.now(), true),
   'SingleDigitMultipleChoiceTest':
       Activity('SingleDigitMultipleChoiceTest', 'todo', true, DateTime.now(), false),
   'SingleDigitTimedTestPrep': Activity('SingleDigitTimedTestPrep', 'todo', true, DateTime.now(), false),
