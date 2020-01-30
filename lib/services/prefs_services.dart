@@ -55,11 +55,6 @@ class PrefsUpdater {
     prefs.setInt(levelKey, newLevel);
   }
 
-  setBool(String key, bool newBool) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(key, newBool);
-  }
-
   updateActivityFirstView(String activityName, bool isNew) async {
     print('setting $activityName first view to $isNew');
     Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
@@ -94,6 +89,26 @@ class PrefsUpdater {
     activity.visibleAfter = visibleAfter;
     activityStates[activityName] = activity;
     await writeSharedPrefs(activityStatesKey, activityStates);
+  }
+
+  Future<void> setBool(String key, bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, value);
+  }
+
+  Future<bool> getBool(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key);
+  }
+
+  Future<void> setString(String key, String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, value);
+  }
+
+  Future<String> getString(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
   }
 
   List shuffle(List items) {

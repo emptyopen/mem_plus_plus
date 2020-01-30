@@ -30,6 +30,7 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
     await prefs.updateLevel(2);
     await prefs.updateActivityState('SingleDigitEdit', 'review');
     await prefs.updateActivityState('SingleDigitPractice', 'review');
+    await prefs.updateActivityVisible('SingleDigitMultipleChoiceTest', true);
     await prefs.updateActivityFirstView('SingleDigitMultipleChoiceTest', true);
 
     widget.callback();

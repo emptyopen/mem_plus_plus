@@ -29,6 +29,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// TODO: first time Welcome Screen
 // TODO: add notifications about newly available activities
 // TODO: add dot and dot-dot vibration for correct/incorrect answers
 
@@ -44,9 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   String activityStatesKey = 'ActivityStates';
   List<String> availableActivities = [];
+  String firstTimeAppKey = 'FirstTimeApp';
   double headerSize = 30;
   double itemSize = 24;
   Map activityMenuButtonMap;
+  bool firstTimeOpeningApp = null;
 
   var unlockMap = {
     0: ['Welcome'],
@@ -74,15 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   resetKeys() async {
-    int defaultLevel = 7;
+    int defaultLevel = 1;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     prefs.remove(levelKey);
     prefs.remove(activityStatesKey);
     setState(() {
       prefs.setInt(levelKey, defaultLevel);
       level = defaultLevel;
-      activityStates = defaultActivityStates2;
+      activityStates = defaultActivityStates1;
       prefs.setString(
         activityStatesKey,
         json.encode(
@@ -96,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('AlphabetData');
+
     // level
     if (prefs.getKeys().contains(levelKey)) {
       setState(() {
@@ -140,13 +144,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void setUnlockedActivities() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // first time opening app, welcome
+    if (prefs.getBool(firstTimeAppKey) == null || prefs.getBool(firstTimeAppKey)) {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) => WelcomeScreen(firstTime: true, callback: callback,)));
+    } else {
+      firstTimeOpeningApp = false;
+    }
+
+    // filter unlocked activities by level
     level = prefs.getInt(levelKey);
     var rawMap =
         json.decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
     activityStates = rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
     var unlockedActivities = [];
     setState(() {
-      // filter unlocked activities by level
       for (var activity_groups
           in unlockMap.keys.toList().sublist(0, level + 1)) {
         for (String activity in unlockMap[activity_groups]) {
@@ -208,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return firstTimeOpeningApp == null ? Scaffold() : Scaffold(
         appBar: AppBar(
           title: Text('MEM++ Homepage'),
         ),

@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/animations.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_services.dart';
 
 class WelcomeScreen extends StatefulWidget {
+  final bool firstTime;
+  final Function callback;
+
+  WelcomeScreen({this.firstTime = false, this.callback});
+
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -13,6 +19,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   AnimationController animationController;
   int _slideIndex = 0;
   final IndexController indexController = IndexController();
+  final firstTimeAppKey = 'FirstTimeApp';
 
   final List<Widget> headers = [
     Text(
@@ -169,6 +176,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     super.dispose();
   }
 
+  void setFirstTimeViewedFalse(BuildContext context) async {
+    if (widget.firstTime) {
+      var prefs = PrefsUpdater();
+      prefs.setBool(firstTimeAppKey, false);
+      widget.callback();
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     TransformerPageView transformerPageView = TransformerPageView(
@@ -238,7 +254,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           ? Container()
                           : ParallaxContainer(
                               child: FlatButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () {
+                                  setFirstTimeViewedFalse(context);
+                                },
                                 child: BasicContainer(
                                   text: 'Main Menu',
                                   color: Colors.amber[50],
@@ -262,7 +280,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         }),
         itemCount: headers.length);
 
-    return Scaffold(
+    return widget.firstTime ? Scaffold(
+      backgroundColor: Colors.white,
+      body: transformerPageView,
+    ) : Scaffold(
       appBar: AppBar(
         title: Text('Welcome'),
       ),
