@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_multiple_choice_card.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_written_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/prefs_services.dart';
 
-class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
+class AlphabetMultipleChoiceTestScreen extends StatefulWidget {
   final Function() callback;
 
-  SingleDigitMultipleChoiceTestScreen({this.callback});
+  AlphabetMultipleChoiceTestScreen({this.callback});
 
   @override
-  _SingleDigitMultipleChoiceTestScreenState createState() =>
-      _SingleDigitMultipleChoiceTestScreenState();
+  _AlphabetMultipleChoiceTestScreenState createState() =>
+      _AlphabetMultipleChoiceTestScreenState();
 }
 
-class _SingleDigitMultipleChoiceTestScreenState
-    extends State<SingleDigitMultipleChoiceTestScreen> {
-  List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'SingleDigit';
+class _AlphabetMultipleChoiceTestScreenState
+    extends State<AlphabetMultipleChoiceTestScreen> {
+  List<AlphabetData> alphabetData;
+  String alphabetKey = 'Alphabet';
   int score = 0;
   int attempts = 0;
 
@@ -33,23 +33,23 @@ class _SingleDigitMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-          .map((i) => SingleDigitData.fromJson(i))
+      alphabetData = (json.decode(prefs.getString(alphabetKey)) as List)
+          .map((i) => AlphabetData.fromJson(i))
           .toList();
-      singleDigitData = shuffle(singleDigitData);
+      alphabetData = shuffle(alphabetData);
     });
   }
 
   void callback(BuildContext context, bool success) async {
     if (success) {
       score += 1;
-      if (score == 10) {
+      if (score == 26) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-        await prefs.updateActivityFirstView('SingleDigitTimedTestPrep', true);
-        await prefs.updateActivityState('SingleDigitMultipleChoiceTest', 'review');
-        await prefs.updateLevel(3);
+        await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
+        await prefs.updateActivityFirstView('AlphabetTimedTestPrep', true);
+        await prefs.updateActivityState('AlphabetWrittenTest', 'review');
+        await prefs.updateLevel(6);
         widget.callback();
         // Snackbar
         final snackBar = SnackBar(
@@ -67,7 +67,7 @@ class _SingleDigitMultipleChoiceTestScreenState
     }
     attempts += 1;
 
-    if (attempts == 10 && score < 10) {
+    if (attempts == 26 && score < 26) {
       final snackBar = SnackBar(
         content: Text(
           'Try again! You got this. Score: $score/10',
@@ -83,20 +83,20 @@ class _SingleDigitMultipleChoiceTestScreenState
     }
   }
 
-  List<SingleDigitMultipleChoiceCard> getSingleDigitMultipleChoiceCards() {
-    List<SingleDigitMultipleChoiceCard> singleDigitMultipleChoiceCards = [];
-    if (singleDigitData != null) {
-      for (int i = 0; i < singleDigitData.length; i++) {
-        SingleDigitMultipleChoiceCard singleDigitView =
-            SingleDigitMultipleChoiceCard(
-          singleDigitData: SingleDigitData(singleDigitData[i].digits,
-              singleDigitData[i].object, singleDigitData[i].familiarity),
+  List<AlphabetWrittenCard> getAlphabetMultipleChoiceCards() {
+    List<AlphabetWrittenCard> alphabetMultipleChoiceCards = [];
+    if (alphabetData != null) {
+      for (int i = 0; i < alphabetData.length; i++) {
+        AlphabetWrittenCard alphabetView =
+            AlphabetWrittenCard(
+          alphabetData: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
+              alphabetData[i].object, alphabetData[i].familiarity),
           callback: callback,
         );
-        singleDigitMultipleChoiceCards.add(singleDigitView);
+        alphabetMultipleChoiceCards.add(alphabetView);
       }
     }
-    return singleDigitMultipleChoiceCards;
+    return alphabetMultipleChoiceCards;
   }
 
   List shuffle(List items) {
@@ -123,20 +123,20 @@ class _SingleDigitMultipleChoiceTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitMultipleChoiceScreenHelp();
+                      return AlphabetMultipleChoiceScreenHelp();
                     }));
               },
             ),
           ]),
       body: Center(
           child: ListView(
-        children: getSingleDigitMultipleChoiceCards(),
+        children: getAlphabetMultipleChoiceCards(),
       )),
     );
   }
 }
 
-class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
+class AlphabetMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -159,10 +159,10 @@ class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
                       child: Text(
-                        '    Welcome to your first multiple choice test! \n\n'
+                        '    Welcome to your first written test! \n\n'
                         '    In this section, you will be tested on your familiarity with '
-                        'each digit. Every time you load this page, the digits will be scattered in a random order, '
-                        'and you simply have to choose the correct object. If you get a perfect score, '
+                        'each letter. Every time you load this page, the letters will be scattered in a random order, '
+                        'and you simply have to write in the correct object. If you get a perfect score, '
                         'the next test will be unlocked! Good luck!',
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 16),

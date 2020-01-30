@@ -6,7 +6,9 @@ import 'dart:convert';
 import 'dart:math';
 
 class PAOPracticeScreen extends StatefulWidget {
-  PAOPracticeScreen({Key key}) : super(key: key);
+  final Function() callback;
+
+  PAOPracticeScreen({this.callback});
 
   @override
   _PAOPracticeScreenState createState() => _PAOPracticeScreenState();
@@ -26,12 +28,16 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // assume data exists
-    paoData = (json.decode(prefs.getString(paoKey)) as List)
+    setState(() {
+      paoData = (json.decode(prefs.getString(paoKey)) as List)
         .map((i) => PAOData.fromJson(i))
         .toList();
-    setState(() {
-      paoData = shuffle(paoData);
+//      paoData = shuffle(paoData);
     });
+  }
+
+  callback() {
+    widget.callback();
   }
 
   List<PAOFlashCard> getPAOFlashCards() {
@@ -40,6 +46,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
       for (int i = 0; i < paoData.length; i++) {
         PAOFlashCard paoFlashCard = PAOFlashCard(
           paoData: paoData[i],
+          callback: callback,
         );
         paoFlashCards.add(paoFlashCard);
       }

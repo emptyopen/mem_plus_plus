@@ -47,19 +47,23 @@ class _SingleDigitTimedTestScreenState
     });
   }
 
-  Future<bool> checkAnswer() async {
-    print('testing: $digit1$digit2$digit3$digit4 vs ${textController.text}');
+  void checkAnswer() async {
     if (textController.text == '$digit1$digit2$digit3$digit4') {
+      print('success');
       await prefs.updateLevel(4);
       await prefs.updateActivityState('SingleDigitTimedTest', 'review');
       await prefs.updateActivityVisible('SingleDigitTimedTest', false);
       await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
+      await prefs.updateActivityVisible('AlphabetEdit', true);
+      await prefs.updateActivityFirstView('AlphabetEdit', true);
+      await prefs.updateActivityVisible('AlphabetPractice', true);
+      await prefs.updateActivityFirstView('AlphabetPractice', true);
       widget.callback();
-      return true;
     } else {
       print('failure');
-      return false;
     }
+    textController.text = '';
+    Navigator.pop(context);
   }
 
   @override
@@ -115,20 +119,6 @@ class _SingleDigitTimedTestScreenState
               child: FlatButton(
                   onPressed: () {
                     checkAnswer();
-                    final snackBar = SnackBar(
-                      content: Text(
-                        'Awesome Job! Head back to the main menu to check out the new system you\'ve unlocked!',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      duration: Duration(seconds: 10),
-                      backgroundColor: Colors.black,
-                    );
-                    Scaffold.of(context).showSnackBar(snackBar);
-                    textController.text = '';
-                    print('yo');
-                    Navigator.pop(context);
                     },
                   child: Text(
                     'Submit',

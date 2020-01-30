@@ -62,7 +62,7 @@ class _AlphabetEditCardState extends State<AlphabetEditCard> {
                       (json.decode(prefs.getString(alphabetKey)) as List)
                           .map((i) => AlphabetData.fromJson(i))
                           .toList();
-                  int currIndex = int.parse(widget.alphabetData.digits);
+                  int currIndex = int.parse(widget.alphabetData.letter);
                   AlphabetData updatedAlphabetEntry =
                       alphabetData[currIndex];
                   if (objectTextController.text != '') {
@@ -112,7 +112,7 @@ class _AlphabetEditCardState extends State<AlphabetEditCard> {
         children: <Widget>[
           ListTile(
             leading: Text(
-              '${widget.alphabetData.digits}',
+              '${widget.alphabetData.letter}',
               style: TextStyle(fontSize: 26),
             ),
             title: Text('${widget.alphabetData.object}',

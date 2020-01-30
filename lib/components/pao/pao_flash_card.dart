@@ -3,11 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'pao_data.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:convert';
+import 'package:mem_plus_plus/services/prefs_services.dart';
 
 class PAOFlashCard extends StatefulWidget {
   final PAOData paoData;
+  final Function() callback;
 
-  PAOFlashCard({this.paoData});
+  PAOFlashCard({this.paoData, this.callback});
 
   @override
   _PAOFlashCardState createState() => _PAOFlashCardState();
@@ -16,8 +18,22 @@ class PAOFlashCard extends StatefulWidget {
 class _PAOFlashCardState extends State<PAOFlashCard> {
   bool done = false;
   bool guessed = true;
-  String paoKey = 'Pao';
-  SharedPreferences sharedPreferences;
+  int familiarityIncrease = 40;
+  int familiarityDecrease = 25;
+  String paoKey = 'PAO';
+  String levelKey = 'Level';
+  final prefs = PrefsUpdater();
+
+  void updateLevel() async {
+
+    await prefs.updateLevel(8);
+    await prefs.updateActivityState('PAOEdit', 'review');
+    await prefs.updateActivityState('PAOPractice', 'review');
+    await prefs.updateActivityFirstView('PAOMultipleChoiceTest', true);
+    await prefs.updateActivityVisible('PAOMultipleChoiceTest', true);
+
+    widget.callback();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,72 +80,152 @@ class _PAOFlashCardState extends State<PAOFlashCard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               FlatButton(
-                                  onPressed: () async {
-                                    // TODO: add message on the bottom for information regarding familiarity
-                                    print(
-                                        'increasing familiarity for ${widget.paoData.digits}');
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    var paoData =
-                                        (json.decode(prefs.getString(paoKey))
-                                                as List)
-                                            .map((i) => PAOData.fromJson(i))
-                                            .toList();
-                                    int currIndex =
-                                        int.parse(widget.paoData.digits);
-                                    PAOData updatedPAOEntry =
-                                        paoData[currIndex];
-                                    if (updatedPAOEntry.familiarity + 10 <=
-                                        100) {
-                                      updatedPAOEntry.familiarity += 10;
-                                    } else {
-                                      updatedPAOEntry.familiarity = 100;
+                                onPressed: () async {
+                                  bool levelUp = false;
+                                  SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                                  var singleDigitData = (json.decode(
+                                    prefs.getString(paoKey))
+                                  as List)
+                                    .map((i) => PAOData.fromJson(i))
+                                    .toList();
+                                  int currIndex = int.parse(
+                                    widget.paoData.digits);
+                                  PAOData updatedSingleDigitEntry =
+                                  singleDigitData[currIndex];
+                                  int previousFamiliarity =
+                                    singleDigitData[currIndex].familiarity;
+                                  if (updatedSingleDigitEntry.familiarity +
+                                    familiarityIncrease <=
+                                    100) {
+                                    updatedSingleDigitEntry.familiarity +=
+                                      familiarityIncrease;
+                                  } else {
+                                    updatedSingleDigitEntry.familiarity = 100;
+                                  }
+                                  singleDigitData[currIndex] =
+                                    updatedSingleDigitEntry;
+                                  prefs.setString(paoKey,
+                                    json.encode(singleDigitData));
+                                  setState(() {
+                                    done = true;
+                                  });
+
+                                  // Snackbar
+                                  Color snackBarColor = Colors.green[200];
+                                  String snackBarText =
+                                    'Familiarity for digits ${updatedSingleDigitEntry.digits} increased (now ${updatedSingleDigitEntry.familiarity})!';
+                                  if (previousFamiliarity < 100 &&
+                                    updatedSingleDigitEntry.familiarity ==
+                                      100) {
+                                    snackBarText =
+                                    'Familiarity for digits ${updatedSingleDigitEntry.digits} maxed out! Great job!';
+                                    snackBarColor = Colors.amber[200];
+
+                                    // Check for level up!!
+                                    int familiaritySum = 0;
+                                    for (PAOData singleDigitEntry
+                                    in singleDigitData) {
+                                      familiaritySum +=
+                                        singleDigitEntry.familiarity;
                                     }
-                                    paoData[currIndex] = updatedPAOEntry;
-                                    prefs.setString(
-                                        paoKey, json.encode(paoData));
-                                    setState(() {
-                                      done = true;
-                                    });
-                                  },
-                                  child: BasicContainer(
-                                    text: 'Got it',
-                                    color: Colors.green[50],
-                                    fontSize: 18,
-                                  )),
+                                    if (familiaritySum == 10000 &&
+                                      prefs.getInt(levelKey) == 7) {
+                                      levelUp = true;
+                                      updateLevel();
+                                    }
+                                  } else if (updatedSingleDigitEntry
+                                    .familiarity ==
+                                    100) {
+                                    snackBarText =
+                                    'Familiarity for digits ${updatedSingleDigitEntry.digits} already maxed out!';
+                                    snackBarColor = Colors.amber[200];
+                                  }
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      snackBarText,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                    backgroundColor: snackBarColor,
+                                  );
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                  if (levelUp) {
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                        'Congratulations, you\'ve leveled up! Head to the main menu to see what you\'ve unlocked!',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      duration: Duration(seconds: 6),
+                                      backgroundColor: Colors.black,
+                                    );
+                                    Scaffold.of(context)
+                                      .showSnackBar(snackBar);
+                                  }
+                                },
+                                child: BasicContainer(
+                                  text: 'Got it',
+                                  color: Colors.green[50],
+                                  fontSize: 18,
+                                )),
                               FlatButton(
-                                  onPressed: () async {
-                                    // TODO: add message on the bottom for information regarding familiarity
-                                    print(
-                                        'increasing familiarity for ${widget.paoData.digits}');
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    var paoData =
-                                        (json.decode(prefs.getString(paoKey))
-                                                as List)
-                                            .map((i) => PAOData.fromJson(i))
-                                            .toList();
-                                    int currIndex =
-                                        int.parse(widget.paoData.digits);
-                                    PAOData updatedPAOEntry =
-                                        paoData[currIndex];
-                                    if (updatedPAOEntry.familiarity - 5 >= 0) {
-                                      updatedPAOEntry.familiarity -= 5;
-                                    } else {
-                                      updatedPAOEntry.familiarity = 0;
-                                    }
-                                    paoData[currIndex] = updatedPAOEntry;
-                                    prefs.setString(
-                                        paoKey, json.encode(paoData));
-                                    setState(() {
-                                      done = true;
-                                    });
-                                  },
-                                  child: BasicContainer(
-                                    text: 'Didn\'t got it',
-                                    color: Colors.red[50],
-                                    fontSize: 18,
-                                  ))
+                                onPressed: () async {
+                                  SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                                  var paoData = (json.decode(
+                                    prefs.getString(paoKey))
+                                  as List)
+                                    .map((i) => PAOData.fromJson(i))
+                                    .toList();
+                                  int currIndex = int.parse(
+                                    widget.paoData.digits);
+                                  PAOData updatedSingleDigitEntry =
+                                  paoData[currIndex];
+                                  if (updatedSingleDigitEntry.familiarity -
+                                    familiarityDecrease >=
+                                    0) {
+                                    updatedSingleDigitEntry.familiarity -=
+                                      familiarityDecrease;
+                                  } else {
+                                    updatedSingleDigitEntry.familiarity = 0;
+                                  }
+                                  paoData[currIndex] =
+                                    updatedSingleDigitEntry;
+                                  prefs.setString(paoKey,
+                                    json.encode(paoData));
+                                  setState(() {
+                                    done = true;
+                                  });
+
+                                  // Snackbar
+                                  String snackBarText =
+                                    'Familiarity for digit ${updatedSingleDigitEntry.digits} decreased by $familiarityDecrease to ${updatedSingleDigitEntry.familiarity}!';
+                                  if (updatedSingleDigitEntry.familiarity ==
+                                    0) {
+                                    snackBarText =
+                                    'Familiarity for digit ${updatedSingleDigitEntry.digits} can\'t go lower!';
+                                  }
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      snackBarText,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                    backgroundColor: Colors.red[200],
+                                  );
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                },
+                                child: BasicContainer(
+                                  text: 'Didn\'t got it',
+                                  color: Colors.red[50],
+                                  fontSize: 18,
+                                ))
                             ],
                           ),
                         ],

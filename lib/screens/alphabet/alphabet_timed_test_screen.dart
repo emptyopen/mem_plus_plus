@@ -13,19 +13,24 @@ class AlphabetTimedTestScreen extends StatefulWidget {
       _AlphabetTimedTestScreenState();
 }
 
-class _AlphabetTimedTestScreenState
-    extends State<AlphabetTimedTestScreen> {
-  String digit1 = '';
-  String digit2 = '';
-  String digit3 = '';
-  String digit4 = '';
+class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
+  String char1 = '';
+  String char2 = '';
+  String char3 = '';
+  String char4 = '';
+  String char5 = '';
+  String char6 = '';
+  String char7 = '';
+  String char8 = '';
   String alphabetTestActiveKey = 'AlphabetTestActive';
-  final textController = TextEditingController();
+  final textController1 = TextEditingController();
+  final textController2 = TextEditingController();
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void dispose() {
-    textController.dispose();
+    textController1.dispose();
+    textController2.dispose();
     super.dispose();
   }
 
@@ -39,44 +44,44 @@ class _AlphabetTimedTestScreenState
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       // grab the digits
-      digit1 = prefs.getString('alphabetTestDigit1');
-      digit2 = prefs.getString('alphabetTestDigit2');
-      digit3 = prefs.getString('alphabetTestDigit3');
-      digit4 = prefs.getString('alphabetTestDigit4');
-      print('real answer: $digit1$digit2$digit3$digit4');
+      char1 = prefs.getString('alphabetTestChar1');
+      char2 = prefs.getString('alphabetTestChar2');
+      char3 = prefs.getString('alphabetTestChar3');
+      char4 = prefs.getString('alphabetTestChar4');
+      char5 = prefs.getString('alphabetTestChar5');
+      char6 = prefs.getString('alphabetTestChar6');
+      char7 = prefs.getString('alphabetTestChar7');
+      char8 = prefs.getString('alphabetTestChar8');
+      print('real answer: $char1$char2$char3$char4 $char5$char6$char7$char8');
     });
   }
 
   void checkAnswer() async {
-    print('testing: $digit1$digit2$digit3$digit4 vs ${textController.text}');
-    if (textController.text == '$digit1$digit2$digit3$digit4') {
-      await prefs.updateLevel(4);
+    if (textController1.text.toLowerCase().trim() ==
+            '$char1$char2$char3$char4'.toLowerCase() &&
+        textController2.text.toLowerCase().trim() == '$char5$char6$char7$char8'.toLowerCase()) {
+      print('success');
+      await prefs.updateLevel(7);
       await prefs.updateActivityState('AlphabetTimedTest', 'review');
       await prefs.updateActivityVisible('AlphabetTimedTest', false);
       await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
+      await prefs.updateActivityVisible('PAOEdit', true);
+      await prefs.updateActivityVisible('PAOPractice', true);
+      await prefs.updateActivityFirstView('PAOEdit', true);
+      await prefs.updateActivityFirstView('PAOPractice', true);
       widget.callback();
-      final snackBar = SnackBar(
-        content: Text(
-          'Awesome Job! Head back to the main menu to check out the new system you\'ve unlocked!',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.black,
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
     } else {
       print('failure');
     }
-    textController.text = '';
+    textController1.text = '';
+    textController2.text = '';
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Single digit: timed test'), actions: <Widget>[
+      appBar: AppBar(title: Text('Alphabet: timed test'), actions: <Widget>[
         // action button
         IconButton(
           icon: Icon(Icons.info),
@@ -95,19 +100,35 @@ class _AlphabetTimedTestScreenState
           children: <Widget>[
             Container(
               child: Text(
-                'Enter the number: ',
+                'Enter the characters: ',
                 style: TextStyle(fontSize: 30),
               ),
             ),
             SizedBox(height: 25),
             Container(
-              width: 100,
+              width: 200,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               child: TextFormField(
-                controller: textController,
+                controller: textController1,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(),
+                    hintText: 'XXXX',
+                    hintStyle: TextStyle(fontSize: 30)),
+              ),
+            ),
+            SizedBox(height: 25),
+            Container(
+              width: 200,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              child: TextFormField(
+                controller: textController2,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(5),
                     border: OutlineInputBorder(),
@@ -118,7 +139,7 @@ class _AlphabetTimedTestScreenState
             SizedBox(height: 50),
             Container(
               decoration: BoxDecoration(
-                color: Colors.amber[100],
+                  color: Colors.amber[100],
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
                   ),

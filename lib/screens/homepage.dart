@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
@@ -12,11 +13,14 @@ import 'package:mem_plus_plus/screens/single_digit/single_digit_timed_test_prep_
 import 'package:mem_plus_plus/screens/single_digit/single_digit_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/alphabet/alphabet_edit_screen.dart';
 import 'package:mem_plus_plus/screens/alphabet/alphabet_practice_screen.dart';
-import 'package:mem_plus_plus/screens/alphabet/alphabet_multiple_choice_test_screen.dart';
+import 'package:mem_plus_plus/screens/alphabet/alphabet_written_test_screen.dart';
 import 'package:mem_plus_plus/screens/alphabet/alphabet_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/alphabet/alphabet_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_edit_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_practice_screen.dart';
+import 'package:mem_plus_plus/screens/pao/pao_multiple_choice_test_screen.dart';
+import 'package:mem_plus_plus/screens/pao/pao_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/pao/pao_timed_test_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -24,6 +28,15 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
+// TODO: add notifications about newly available activities
+// TODO: add dot and dot-dot vibration for correct/incorrect answers
+
+// Nice to have
+// TODO: implement length limits for inputs (like action/object)
+// TODO: make PAO multiple choice tougher with similar digits
+// TODO: fix all flatbuttons
+// TODO: consolidate more stuff (like entire sections - edit,practice,mc,timed)
 
 class _MyHomePageState extends State<MyHomePage> {
   int level = 0;
@@ -41,14 +54,15 @@ class _MyHomePageState extends State<MyHomePage> {
     2: ['SingleDigitMultipleChoiceTest'],
     3: ['SingleDigitTimedTestPrep', 'SingleDigitTimedTest'],
     4: ['AlphabetEdit', 'AlphabetPractice'],
-    5: ['AlphabetMultipleChoiceTest'],
+    5: ['AlphabetWrittenTest'],
     6: ['AlphabetTimedTestPrep', 'AlphabetTimedTest'],
     7: ['PAOEdit', 'PAOPractice'],
-    8: ['PAOMultipleChoiceTest', 'PAOTimedTestPrep', 'PAOTimedTest'],
-    9: ['FaceTestPrep', 'FaceTest'],
+    8: ['PAOMultipleChoiceTest',],
+    9: ['PAOTimedTestPrep', 'PAOTimedTest'],
+    10: ['FaceTestPrep', 'FaceTest'],
     // premium paywall here?
-    10: ['DeckEdit', 'DeckPractice'],
-    11: ['DeckMultipleChoiceTest', 'DeckTimedTestPrep', 'DeckTimedTest'],
+    11: ['DeckEdit', 'DeckPractice'],
+    12: ['DeckMultipleChoiceTest', 'DeckTimedTestPrep', 'DeckTimedTest'],
   };
 
   @override
@@ -56,10 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     getSharedPrefs();
     initializeActivityMenuButtonMap();
+    new Timer.periodic(Duration(seconds: 1), (Timer t) => setState((){}));
   }
 
   resetKeys() async {
-    int defaultLevel = 1;
+    int defaultLevel = 7;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove(levelKey);
@@ -67,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       prefs.setInt(levelKey, defaultLevel);
       level = defaultLevel;
-      activityStates = defaultActivityStates;
+      activityStates = defaultActivityStates2;
       prefs.setString(
         activityStatesKey,
         json.encode(
@@ -81,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    prefs.remove('AlphabetData');
     // level
     if (prefs.getKeys().contains(levelKey)) {
       setState(() {
@@ -109,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       print('setting activity states to default');
       setState(() {
-        activityStates = defaultActivityStates;
+        activityStates = defaultActivityStates2;
         prefs.setString(
           activityStatesKey,
           json.encode(
@@ -142,18 +157,16 @@ class _MyHomePageState extends State<MyHomePage> {
       // iterate through unlocked activities, and check if they are visible
       availableActivities = [];
       for (String activityName in unlockedActivities) {
-        // TODO: also check datetime
         if (activityStates[activityName].visible) {
           availableActivities.add(activityName);
         }
       }
     });
-    print(activityStates.map((k, v) => MapEntry(k, '${v.state} | ${v.visible} | ${v.firstView}')));
   }
 
   callback() {
-    print('main callback ');
     setUnlockedActivities();
+    print(activityStates.map((k, v) => MapEntry(k, '${v.state} | ${v.visible} | ${v.firstView}')));
   }
 
   List<Widget> getTodo() {
@@ -189,6 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
       }
     }
+    mainMenuOptions = mainMenuOptions.reversed.toList();
     return mainMenuOptions;
   }
 
@@ -198,39 +212,41 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text('MEM++ Homepage'),
         ),
-        body: Container(
-          padding: EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'To-do:',
-                style: TextStyle(fontSize: headerSize),
-              ),
-              Container(
-                height: 10,
-              ),
-              Column(
-                children: getTodo(),
-              ),
-              Container(
-                height: 30,
-              ),
-              Text(
-                'Review:',
-                style: TextStyle(fontSize: headerSize),
-              ),
-              Container(
-                height: 10,
-              ),
-              Column(
-                children: getReview(),
-              ),
-              FlatButton(
-                onPressed: () => resetKeys(),
-                child: Text('reset'),
-              )
-            ],
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'To-do:',
+                  style: TextStyle(fontSize: headerSize),
+                ),
+                Container(
+                  height: 10,
+                ),
+                Column(
+                  children: getTodo(),
+                ),
+                Container(
+                  height: 30,
+                ),
+                Text(
+                  'Review:',
+                  style: TextStyle(fontSize: headerSize),
+                ),
+                Container(
+                  height: 10,
+                ),
+                Column(
+                  children: getReview(),
+                ),
+                FlatButton(
+                  onPressed: () => resetKeys(),
+                  child: Text('reset'),
+                )
+              ],
+            ),
           ),
         ));
   }
@@ -295,68 +311,100 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.amber[400]),
       'AlphabetEdit': ActivityMenuButton(
         text: Text(
-          'Single Digit [View/Edit]',
+          'Alphabet [View/Edit]',
           style: TextStyle(fontSize: 24),
         ),
         route: AlphabetEditScreen(),
-        icon: Icon(Icons.filter_1),
-        color: Colors.amber[100]),
+        icon: Icon(Icons.filter_2),
+        color: Colors.blue[100]),
       'AlphabetPractice': ActivityMenuButton(
         text: Text(
-          'Single Digit [Practice]',
+          'Alphabet [Practice]',
           style: TextStyle(fontSize: 24),
         ),
         route: AlphabetPracticeScreen(
           callback: callback,
         ),
-        icon: Icon(Icons.filter_1),
-        color: Colors.amber[200]),
-      'AlphabetMultipleChoiceTest': ActivityMenuButton(
+        icon: Icon(Icons.filter_2),
+        color: Colors.blue[200]),
+      'AlphabetWrittenTest': ActivityMenuButton(
         text: Text(
-          'Single Digit [MC Test]',
+          'Alphabet [Written Test]',
           style: TextStyle(fontSize: 24),
         ),
         route: AlphabetMultipleChoiceTestScreen(
           callback: callback,
         ),
-        icon: Icon(Icons.filter_1),
-        color: Colors.amber[300]),
+        icon: Icon(Icons.filter_2),
+        color: Colors.blue[300]),
       'AlphabetTimedTestPrep': ActivityMenuButton(
         text: Text(
-          'Single Digit [Timed Test Prep]',
-          style: TextStyle(fontSize: 19),
+          'Alphabet [Timed Test Prep]',
+          style: TextStyle(fontSize: 21),
         ),
         route: AlphabetTimedTestPrepScreen(
           callback: callback,
         ),
-        icon: Icon(Icons.filter_1),
-        color: Colors.amber[400]),
+        icon: Icon(Icons.filter_2),
+        color: Colors.blue[400]),
       'AlphabetTimedTest': ActivityMenuButton(
         text: Text(
-          'Single Digit [Timed Test]',
+          'Alphabet [Timed Test]',
           style: TextStyle(fontSize: 22),
         ),
         route: AlphabetTimedTestScreen(
           callback: callback,
         ),
-        icon: Icon(Icons.filter_1),
-        color: Colors.amber[400]),
+        icon: Icon(Icons.filter_2),
+        color: Colors.blue[400]),
       'PAOEdit': ActivityMenuButton(
           text: Text(
             'PAO [View/Edit]',
             style: TextStyle(fontSize: 24),
           ),
           route: PAOEditScreen(),
-          icon: Icon(Icons.filter_2),
-          color: Colors.blue[100]),
+          icon: Icon(Icons.filter_3),
+          color: Colors.pink[100]),
       'PAOPractice': ActivityMenuButton(
           text: Text(
             'PAO [Practice]',
             style: TextStyle(fontSize: 24),
           ),
-          route: PAOPracticeScreen(),
-          icon: Icon(Icons.filter_2),
-          color: Colors.blue[200]),
+          route: PAOPracticeScreen(
+            callback: callback,
+          ),
+          icon: Icon(Icons.filter_3),
+          color: Colors.pink[200]),
+      'PAOMultipleChoiceTest': ActivityMenuButton(
+        text: Text(
+          'PAO [MC Test]',
+          style: TextStyle(fontSize: 24),
+        ),
+        route: PAOMultipleChoiceTestScreen(
+          callback: callback,
+        ),
+        icon: Icon(Icons.filter_3),
+        color: Colors.pink[300]),
+      'PAOTimedTestPrep': ActivityMenuButton(
+        text: Text(
+          'PAO [Timed Test Prep]',
+          style: TextStyle(fontSize: 24),
+        ),
+        route: PAOTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: Icon(Icons.filter_3),
+        color: Colors.pink[400]),
+      'PAOTimedTest': ActivityMenuButton(
+        text: Text(
+          'PAO [Timed Test]',
+          style: TextStyle(fontSize: 24),
+        ),
+        route: PAOTimedTestScreen(
+          callback: callback,
+        ),
+        icon: Icon(Icons.filter_3),
+        color: Colors.pink[400]),
     };
   }
 }

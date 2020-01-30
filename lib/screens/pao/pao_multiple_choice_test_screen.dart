@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
-import 'package:mem_plus_plus/components/alphabet/alphabet_multiple_choice_card.dart';
+import 'package:mem_plus_plus/components/pao/pao_data.dart';
+import 'package:mem_plus_plus/components/pao/pao_multiple_choice_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/prefs_services.dart';
 
-class AlphabetMultipleChoiceTestScreen extends StatefulWidget {
+class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function() callback;
 
-  AlphabetMultipleChoiceTestScreen({this.callback});
+  PAOMultipleChoiceTestScreen({this.callback});
 
   @override
-  _AlphabetMultipleChoiceTestScreenState createState() =>
-      _AlphabetMultipleChoiceTestScreenState();
+  _PAOMultipleChoiceTestScreenState createState() =>
+      _PAOMultipleChoiceTestScreenState();
 }
 
-class _AlphabetMultipleChoiceTestScreenState
-    extends State<AlphabetMultipleChoiceTestScreen> {
-  List<AlphabetData> alphabetData;
-  String alphabetKey = 'Alphabet';
+class _PAOMultipleChoiceTestScreenState
+    extends State<PAOMultipleChoiceTestScreen> {
+  List<PAOData> paoData;
+  String paoKey = 'PAO';
   int score = 0;
   int attempts = 0;
 
@@ -33,23 +33,23 @@ class _AlphabetMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      alphabetData = (json.decode(prefs.getString(alphabetKey)) as List)
-          .map((i) => AlphabetData.fromJson(i))
+      paoData = (json.decode(prefs.getString(paoKey)) as List)
+          .map((i) => PAOData.fromJson(i))
           .toList();
-      alphabetData = shuffle(alphabetData);
+      paoData = shuffle(paoData);
     });
   }
 
   void callback(BuildContext context, bool success) async {
     if (success) {
       score += 1;
-      if (score == 10) {
+      if (score == 100) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
-        await prefs.updateActivityFirstView('AlphabetTimedTestPrep', true);
-        await prefs.updateActivityState('AlphabetMultipleChoiceTest', 'review');
-        await prefs.updateLevel(3);
+        await prefs.updateActivityVisible('PAOTimedTestPrep', true);
+        await prefs.updateActivityFirstView('PAOTimedTestPrep', true);
+        await prefs.updateActivityState('PAOMultipleChoiceTest', 'review');
+        await prefs.updateLevel(9);
         widget.callback();
         // Snackbar
         final snackBar = SnackBar(
@@ -67,10 +67,10 @@ class _AlphabetMultipleChoiceTestScreenState
     }
     attempts += 1;
 
-    if (attempts == 10 && score < 10) {
+    if (attempts == 100 && score < 100) {
       final snackBar = SnackBar(
         content: Text(
-          'Try again! You got this. Score: $score/10',
+          'Try again! You got this. Score: $score/100',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -83,20 +83,20 @@ class _AlphabetMultipleChoiceTestScreenState
     }
   }
 
-  List<AlphabetMultipleChoiceCard> getAlphabetMultipleChoiceCards() {
-    List<AlphabetMultipleChoiceCard> alphabetMultipleChoiceCards = [];
-    if (alphabetData != null) {
-      for (int i = 0; i < alphabetData.length; i++) {
-        AlphabetMultipleChoiceCard alphabetView =
-            AlphabetMultipleChoiceCard(
-          alphabetData: AlphabetData(alphabetData[i].digits,
-              alphabetData[i].object, alphabetData[i].familiarity),
+  List<PAOMultipleChoiceCard> getPAOMultipleChoiceCards() {
+    List<PAOMultipleChoiceCard> paoMultipleChoiceCards = [];
+    if (paoData != null) {
+      for (int i = 0; i < paoData.length; i++) {
+        PAOMultipleChoiceCard paoView =
+            PAOMultipleChoiceCard(
+          paoData: PAOData(paoData[i].digits, paoData[i].person, paoData[i].action,
+              paoData[i].object, paoData[i].familiarity),
           callback: callback,
         );
-        alphabetMultipleChoiceCards.add(alphabetView);
+        paoMultipleChoiceCards.add(paoView);
       }
     }
-    return alphabetMultipleChoiceCards;
+    return paoMultipleChoiceCards;
   }
 
   List shuffle(List items) {
@@ -123,20 +123,20 @@ class _AlphabetMultipleChoiceTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetMultipleChoiceScreenHelp();
+                      return PAOMultipleChoiceScreenHelp();
                     }));
               },
             ),
           ]),
       body: Center(
           child: ListView(
-        children: getAlphabetMultipleChoiceCards(),
+        children: getPAOMultipleChoiceCards(),
       )),
     );
   }
 }
 
-class AlphabetMultipleChoiceScreenHelp extends StatelessWidget {
+class PAOMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -159,11 +159,8 @@ class AlphabetMultipleChoiceScreenHelp extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
                       child: Text(
-                        '    Welcome to your first multiple choice test! \n\n'
-                        '    In this section, you will be tested on your familiarity with '
-                        'each digit. Every time you load this page, the digits will be scattered in a random order, '
-                        'and you simply have to choose the correct object. If you get a perfect score, '
-                        'the next system will be unlocked! Good luck!',
+                        '    Alright! Time for a test on your PAO system. If you get a perfect score, '
+                          'the next test will be unlocked! Good luck!',
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 16),
                       ),

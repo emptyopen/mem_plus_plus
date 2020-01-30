@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'dart:async';
 
 class SingleDigitTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -65,6 +66,8 @@ class _SingleDigitTimedTestPrepScreenState
     await prefs.updateActivityState('SingleDigitTimedTest', 'todo');
     await prefs.updateActivityVisible('SingleDigitTimedTest', true);
     await prefs.updateActivityFirstView('SingleDigitTimedTest', true);
+    await prefs.updateActivityVisibleAfter('SingleDigitTimedTest', DateTime.now().add(Duration(seconds: 10)));
+    Timer(Duration(seconds: 10), widget.callback);
     widget.callback();
     Navigator.pop(context);
   }

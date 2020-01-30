@@ -48,7 +48,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     if (alphabetData != null) {
       for (int i = 0; i < alphabetData.length; i++) {
         AlphabetEditCard alphabetEditCard = AlphabetEditCard(
-          alphabetData: AlphabetData(alphabetData[i].digits,
+          alphabetData: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
               alphabetData[i].object, alphabetData[i].familiarity),
           callback: callback,
         );
@@ -105,19 +105,9 @@ class AlphabetEditScreenHelp extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
                       child: Text(
-                        '    Welcome to your first system! \n\n'
-                        '    The idea behind this system is to link the 9 digits to different objects. '
-                        'Numbers are abstract and difficult to remember, but if we take a number '
-                        'and convert it to an image, especially a strange image, it suddenly '
-                        'becomes much easier to remember. \n    The default values I\'ve inserted here uses the '
-                        'idea of a "shape" pattern. That is, each object corresponds to what the '
-                        'actual digit it represents is shaped like. For example, 0 looks like a '
-                        'ball, 1 like a baseball bat, etc. Another pattern could be "rhyming". 0 could be '
-                        'hero, 1 could be bread (bun), etc. \n    You can really assign anything '
-                        'to any digit, it just makes it easier to remember (initially) if you have some kind of pattern. '
-                        'Make sure that the objects don\'t overlap conceptually, as much as possible! And don\'t forget, '
-                        'when you edit a digit, that will reset your familiarity for that object back to zero! '
-                        'Familiarity is listed on the far right of the tiles. ',
+                        '    OK! Welcome to the 2nd system here at Takao Studios :) \n\n'
+                        '    What we\'re going to do here is just like last time, now with letters of '
+                          'the alphabet! ',
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 16),
                       ),

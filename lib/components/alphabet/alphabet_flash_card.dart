@@ -28,10 +28,11 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
 
   void updateLevel() async {
 
-    await prefs.updateLevel(2);
+    await prefs.updateLevel(5);
     await prefs.updateActivityState('AlphabetEdit', 'review');
     await prefs.updateActivityState('AlphabetPractice', 'review');
-    await prefs.updateActivityFirstView('AlphabetMultipleChoiceTest', true);
+    await prefs.updateActivityVisible('AlphabetWrittenTest', true);
+    await prefs.updateActivityFirstView('AlphabetWrittenTest', true);
 
     widget.callback();
   }
@@ -49,7 +50,7 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  widget.alphabetData.digits,
+                  widget.alphabetData.letter,
                   style: TextStyle(fontSize: 34),
                 ),
                 guessed
@@ -86,8 +87,7 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
                                             as List)
                                         .map((i) => AlphabetData.fromJson(i))
                                         .toList();
-                                    int currIndex = int.parse(
-                                        widget.alphabetData.digits);
+                                    int currIndex = widget.alphabetData.index;
                                     AlphabetData updatedAlphabetEntry =
                                         alphabetData[currIndex];
                                     int previousFamiliarity =
@@ -111,12 +111,12 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
                                     // Snackbar
                                     Color snackBarColor = Colors.green[200];
                                     String snackBarText =
-                                        'Familiarity for digit ${updatedAlphabetEntry.digits} increased (now ${updatedAlphabetEntry.familiarity})!';
+                                        'Familiarity for letter ${updatedAlphabetEntry.letter} increased (now ${updatedAlphabetEntry.familiarity})!';
                                     if (previousFamiliarity < 100 &&
                                         updatedAlphabetEntry.familiarity ==
                                             100) {
                                       snackBarText =
-                                          'Familiarity for digit ${updatedAlphabetEntry.digits} maxed out! Great job!';
+                                          'Familiarity for letter ${updatedAlphabetEntry.letter} maxed out! Great job!';
                                       snackBarColor = Colors.amber[200];
 
                                       // Check for level up!!
@@ -126,8 +126,8 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
                                         familiaritySum +=
                                             alphabetEntry.familiarity;
                                       }
-                                      if (familiaritySum == 1000 &&
-                                          prefs.getInt(levelKey) == 1) {
+                                      if (familiaritySum == 2600 &&
+                                          prefs.getInt(levelKey) == 4) {
                                         levelUp = true;
                                         updateLevel();
                                       }
@@ -135,7 +135,7 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
                                             .familiarity ==
                                         100) {
                                       snackBarText =
-                                          'Familiarity for digit already ${updatedAlphabetEntry.digits} maxed out!';
+                                          'Familiarity for letter already ${updatedAlphabetEntry.letter} maxed out!';
                                       snackBarColor = Colors.amber[200];
                                     }
                                     final snackBar = SnackBar(
@@ -178,8 +178,7 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
                                             as List)
                                         .map((i) => AlphabetData.fromJson(i))
                                         .toList();
-                                    int currIndex = int.parse(
-                                        widget.alphabetData.digits);
+                                    int currIndex = widget.alphabetData.index;
                                     AlphabetData updatedAlphabetEntry =
                                         alphabetData[currIndex];
                                     if (updatedAlphabetEntry.familiarity -
@@ -200,11 +199,11 @@ class _AlphabetFlashCardState extends State<AlphabetFlashCard> {
 
                                     // Snackbar
                                     String snackBarText =
-                                        'Familiarity for digit ${updatedAlphabetEntry.digits} decreased by $familiarityDecrease to ${updatedAlphabetEntry.familiarity}!';
+                                        'Familiarity for digit ${updatedAlphabetEntry.letter} decreased by $familiarityDecrease to ${updatedAlphabetEntry.familiarity}!';
                                     if (updatedAlphabetEntry.familiarity ==
                                         0) {
                                       snackBarText =
-                                          'Familiarity for digit ${updatedAlphabetEntry.digits} can\'t go lower!';
+                                          'Familiarity for digit ${updatedAlphabetEntry.letter} can\'t go lower!';
                                     }
                                     final snackBar = SnackBar(
                                       content: Text(

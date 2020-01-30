@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'dart:async';
 
 class AlphabetTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -16,13 +17,26 @@ class AlphabetTimedTestPrepScreen extends StatefulWidget {
 
 class _AlphabetTimedTestPrepScreenState
     extends State<AlphabetTimedTestPrepScreen> {
-  String digit1 = '';
-  String digit2 = '';
-  String digit3 = '';
-  String digit4 = '';
+  String char1 = '';
+  String char2 = '';
+  String char3 = '';
+  String char4 = '';
+  String char5 = '';
+  String char6 = '';
+  String char7 = '';
+  String char8 = '';
   String alphabetTestActiveKey = 'AlphabetTimedTestActive';
   String activityStatesKey = 'ActivityStates';
   PrefsUpdater prefs = PrefsUpdater();
+  List<String> possibleValues = [
+    'A', 'B', 'C', 'D', 'E', 'F',
+    'G', 'H', 'I', 'J', 'K', 'L',
+    'M', 'N', 'O', 'P', 'Q', 'R',
+    'S', 'T', 'U', 'V', 'W', 'X',
+    'Y', 'Z', '0', '1', '2', '3',
+    '4', '5', '6', '7', '8', '9',
+    '0',
+  ];
 
   @override
   void initState() {
@@ -39,21 +53,33 @@ class _AlphabetTimedTestPrepScreenState
       if (sdTestIsActive == null || !sdTestIsActive) {
         print('no active test, setting new values');
         var random = new Random();
-        digit1 = random.nextInt(9).toString();
-        digit2 = random.nextInt(9).toString();
-        digit3 = random.nextInt(9).toString();
-        digit4 = random.nextInt(9).toString();
-        prefs.setString('alphabetTestDigit1', digit1);
-        prefs.setString('alphabetTestDigit2', digit2);
-        prefs.setString('alphabetTestDigit3', digit3);
-        prefs.setString('alphabetTestDigit4', digit4);
+        char1 = possibleValues[random.nextInt(possibleValues.length)];
+        char2 = possibleValues[random.nextInt(possibleValues.length)];
+        char3 = possibleValues[random.nextInt(possibleValues.length)];
+        char4 = possibleValues[random.nextInt(possibleValues.length)];
+        char5 = possibleValues[random.nextInt(possibleValues.length)];
+        char6 = possibleValues[random.nextInt(possibleValues.length)];
+        char7 = possibleValues[random.nextInt(possibleValues.length)];
+        char8 = possibleValues[random.nextInt(possibleValues.length)];
+        prefs.setString('alphabetTestChar1', char1);
+        prefs.setString('alphabetTestChar2', char2);
+        prefs.setString('alphabetTestChar3', char3);
+        prefs.setString('alphabetTestChar4', char4);
+        prefs.setString('alphabetTestChar5', char5);
+        prefs.setString('alphabetTestChar6', char6);
+        prefs.setString('alphabetTestChar7', char7);
+        prefs.setString('alphabetTestChar8', char8);
         prefs.setBool(alphabetTestActiveKey, true);
       } else {
         print('found active test, restoring values');
-        digit1 = prefs.getString('alphabetTestDigit1');
-        digit2 = prefs.getString('alphabetTestDigit2');
-        digit3 = prefs.getString('alphabetTestDigit3');
-        digit4 = prefs.getString('alphabetTestDigit4');
+        char1 = prefs.getString('alphabetTestChar1');
+        char2 = prefs.getString('alphabetTestChar2');
+        char3 = prefs.getString('alphabetTestChar3');
+        char4 = prefs.getString('alphabetTestChar4');
+        char5 = prefs.getString('alphabetTestChar5');
+        char6 = prefs.getString('alphabetTestChar6');
+        char7 = prefs.getString('alphabetTestChar7');
+        char8 = prefs.getString('alphabetTestChar8');
       }
     });
   }
@@ -65,6 +91,8 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityState('AlphabetTimedTest', 'todo');
     await prefs.updateActivityVisible('AlphabetTimedTest', true);
     await prefs.updateActivityFirstView('AlphabetTimedTest', true);
+    await prefs.updateActivityVisibleAfter('AlphabetTimedTest', DateTime.now().add(Duration(seconds: 10)));
+    Timer(Duration(seconds: 10), widget.callback);
     widget.callback();
     Navigator.pop(context);
   }
@@ -72,27 +100,26 @@ class _AlphabetTimedTestPrepScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Single digit: timed test preparation'),
-          actions: <Widget>[
-            // action button
-            IconButton(
-              icon: Icon(Icons.info),
-              onPressed: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetTimedTestPrepScreenHelp();
-                    }));
-              },
-            ),
-          ]),
+      appBar:
+          AppBar(title: Text('Alphabet: timed test prep'), actions: <Widget>[
+        // action button
+        IconButton(
+          icon: Icon(Icons.info),
+          onPressed: () {
+            Navigator.of(context).push(PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (BuildContext context, _, __) {
+                  return AlphabetTimedTestPrepScreenHelp();
+                }));
+          },
+        ),
+      ]),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Center(
               child: Text(
-            'Your number is: ',
+            'Your sequences are: ',
             style: TextStyle(fontSize: 34),
           )),
           SizedBox(
@@ -102,52 +129,109 @@ class _AlphabetTimedTestPrepScreenState
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: Colors.blue[50],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
                 child: Text(
-                  digit1,
-                  style: TextStyle(fontSize: 44),
+                  char1,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
                 ),
               ),
             ),
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: Colors.blue[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
                 child: Text(
-                  digit2,
-                  style: TextStyle(fontSize: 44),
+                  char2,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
                 ),
               ),
             ),
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[400],
+                  color: Colors.blue[200],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
                 child: Text(
-                  digit3,
-                  style: TextStyle(fontSize: 44),
+                  char3,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
                 ),
               ),
             ),
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[500],
+                  color: Colors.blue[300],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
                 child: Text(
-                  digit4,
-                  style: TextStyle(fontSize: 44),
+                  char4,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                ),
+              ),
+            ),
+          ]),
+          SizedBox(
+            height: 100,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Container(
+              width: 60,
+              decoration: BoxDecoration(
+                color: Colors.blue[50],
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+              child: Center(
+                child: Text(
+                  char5,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                ),
+              ),
+            ),
+            Container(
+              width: 60,
+              decoration: BoxDecoration(
+                color: Colors.blue[100],
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+              child: Center(
+                child: Text(
+                  char6,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                ),
+              ),
+            ),
+            Container(
+              width: 60,
+              decoration: BoxDecoration(
+                color: Colors.blue[200],
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+              child: Center(
+                child: Text(
+                  char7,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                ),
+              ),
+            ),
+            Container(
+              width: 60,
+              decoration: BoxDecoration(
+                color: Colors.blue[300],
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+              child: Center(
+                child: Text(
+                  char8,
+                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
                 ),
               ),
             ),
@@ -157,10 +241,16 @@ class _AlphabetTimedTestPrepScreenState
           ),
           Container(
             width: 200,
-            decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(5))),
+            decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Center(
-              child: FlatButton(onPressed: () => updateStatus(), child: Text('I\'m ready!',
-              style: TextStyle(fontSize: 30),)),
+              child: FlatButton(
+                  onPressed: () => updateStatus(),
+                  child: Text(
+                    'I\'m ready!',
+                    style: TextStyle(fontSize: 30),
+                  )),
             ),
           )
         ],
@@ -192,26 +282,24 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
                       child: Text(
-                        '    Welcome to your first timed test! \n\n'
-                        '    Here we are going to present you with a 4 digit number. '
-                        'Your goal is to memorize the number by converting the 4 digits '
-                        'to their associated objects. Then imagine a scene where the objects '
-                        'are used in order. Once you feel confident, select "I\'m ready!" and the numbers will become unavailable. '
-                        'In a couple hours you will have to decode the scene back into numbers. \n'
-                        '    For example, let\'s look at the number 1234. Under the default '
-                        'system, that would translate to stick, bird, bra, and sailboat. We '
-                        'could imagine a stick falling out of the sky, landing and skewering a bird. Owch! '
-                        'The bird is in a lot of pain. Luckily, it find a bra and makes a tourniquet out of it. '
-                        'Now the bird can make it to the fancy dinner party on the sailboat tonight! Phew! \n'
-                        '    Really think about that scene in your mind, and make it really vivid. Is the bird a '
-                        'swan? How much does that swan squawk when it gets speared out of nowhere? '
-                        'And boy oh boy does that swan want to make it to that party. \n'
-                        '    Now let\'s attach that scene to this quiz. It\'s a timed test, so let\'s imagine '
-                        'you up in the clouds, about to take this test. A huge timer clock is above you... ah, '
-                        'yes, this is the place to take a timed test. And the first thing that happens is you '
-                        'drop your pencil, and it rockets towards the earth, skewering that swan...',
+                        '    You guessed it! Two sequences this time. And now we\'re throwing numbers into the mix as well!\n'
+                          '    As we start to use longer sequences, start to move the scene around. For example, say we have '
+                          'the sequences "GP3D" and "R5ZA". Using default values that is [ghost, panda, bra, dinosaur], and '
+                          '[root, snake, zipper, apple]. Let\'s avoid starting with a ghost of a panda, because we might forget '
+                          'which order they come in (with the PAO system we will avoid this, and that\'s the next system). \n'
+                          '    Alright, so a friendly ghost accidentally bumps into a panda, who is wearing a bra. It looks great! The panda is '
+                          'startled but realizes it\'s late for its meeting with his dinosaur friend. Panda runs over to see '
+                          'the dinosaur, and upon seeing each other, roots from the ground come slithering up, binding them both '
+                          'in place. What is this sorcery? Ah, it\'s simply the magical snakes who are out to get everyone. Drat! And '
+                          'upon closer inspection, all of these snakes have zippers down their bodies. Let\'s pull on them to see what comes '
+                          'out! Ziiiiiiiip! Oh my word, apples keep gushing out! Where do these snakes keep all these apples in their bodies?\n'
+                          '    Simple combinations of letters and numbers will already become useful in your life to remember things like parking '
+                          'spots! Many parking garages or lots have designations like "A2" or "E9". You can imagine an apple being ferociously being '
+                          'eaten in the back seat of your car by an enourmous pidgeon, or an elephant stomping all over your car, with balloons being '
+                          'released from the car with every stomp. A million red balloons! Don\'t forget to really make these scenes wild.\n'
+                          '    Be sure not to confuse zero with O! Zero will have a dot in the character.',
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(fontSize: 13),
                       ),
                     ),
                   ),

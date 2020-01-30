@@ -23,7 +23,6 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
   String singleDigitKey = 'SingleDigit';
   String levelKey = 'Level';
   String activityStatesKey = 'ActivityStates';
-  SharedPreferences sharedPreferences;
   final prefs = PrefsUpdater();
 
   void updateLevel() async {
@@ -135,7 +134,7 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
                                             .familiarity ==
                                         100) {
                                       snackBarText =
-                                          'Familiarity for digit already ${updatedSingleDigitEntry.digits} maxed out!';
+                                          'Familiarity for digit ${updatedSingleDigitEntry.digits} already maxed out!';
                                       snackBarColor = Colors.amber[200];
                                     }
                                     final snackBar = SnackBar(

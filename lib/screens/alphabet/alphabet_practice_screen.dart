@@ -42,9 +42,11 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       if (prefs.getString(alphabetKey) == null) {
+        print('defaulting alphabet');
         alphabetData = defaultAlphabetData;
         prefs.setString(alphabetKey, json.encode(alphabetData));
       } else {
+        print('found alphabet');
         alphabetData = (json.decode(prefs.getString(alphabetKey)) as List)
           .map((i) => AlphabetData.fromJson(i))
           .toList();

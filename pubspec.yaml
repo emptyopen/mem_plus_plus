@@ -12,7 +12,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.4.2
   transformer_page_view: ^0.1.6
-  gson: ^0.1.2
+  csv: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -32,3 +32,9 @@ flutter:
     - family: Comfortaa
       fonts:
         - asset: assets/fonts/Comfortaa.ttf
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+    - family: SpaceMono
+      fonts:
+        - asset: assets/fonts/SpaceMono-Regular.ttf

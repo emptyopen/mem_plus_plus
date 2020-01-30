@@ -32,6 +32,10 @@ class PrefsUpdater {
       case 'ActivityStates':
         Map<String, Activity> activityStates = object;
         prefs.setString(activityStatesKey, json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
+        break;
+      case 'PAO':
+        prefs.setString(key, json.encode(object));
+        break;
     }
   }
 
@@ -41,9 +45,14 @@ class PrefsUpdater {
 
   updateLevel(int newLevel) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (await getLevel() == newLevel - 1) {
-      prefs.setInt(levelKey, newLevel);
-    }
+    // TODO: need to check level!!
+//    if (await getLevel() == newLevel - 1) {
+//      print('updating level!');
+//      prefs.setInt(levelKey, newLevel);
+//    }
+//    print('wrong level to update: ${await getLevel()} $newLevel');
+    print('setting level to $newLevel');
+    prefs.setInt(levelKey, newLevel);
   }
 
   setBool(String key, bool newBool) async {
@@ -74,6 +83,15 @@ class PrefsUpdater {
     Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
     Activity activity = activityStates[activityName];
     activity.visible = visible;
+    activityStates[activityName] = activity;
+    await writeSharedPrefs(activityStatesKey, activityStates);
+  }
+
+  updateActivityVisibleAfter(String activityName, DateTime visibleAfter) async {
+    print('setting $activityName visibleAfter to $visibleAfter');
+    Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
+    Activity activity = activityStates[activityName];
+    activity.visibleAfter = visibleAfter;
     activityStates[activityName] = activity;
     await writeSharedPrefs(activityStatesKey, activityStates);
   }

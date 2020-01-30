@@ -46,68 +46,93 @@ class MainMenuOption extends StatelessWidget {
     this.callback,
   });
 
+  String generateTimeRemaining() {
+    int hours = activity.visibleAfter.difference(DateTime.now()).inHours;
+    int minutes = activity.visibleAfter.difference(DateTime.now()).inMinutes - hours * 60;
+    int seconds = activity.visibleAfter.difference(DateTime.now()).inSeconds - minutes * 60 - hours * 3600 + 1;
+    if (hours > 1) {
+      return 'Available in ${hours}h ${minutes}m';
+    } else if (minutes >= 1) {
+      return 'Available in ${minutes}m ${seconds}s';
+    } else {
+      return 'Available in $seconds seconds!';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         FlatButton(
-            onPressed: () async {
-              if (activity.firstView) {
-                // TODO: universal
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                var rawMap = json.decode(prefs.getString(activityStatesKey))
-                    as Map<String, dynamic>;
-                Map<String, Activity> activityStates =
-                    rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
-                activityStates[activity.name].firstView = false;
-                callback();
-                prefs.setString(
-                    activityStatesKey,
-                    json.encode(
-                      activityStates.map((k, v) => MapEntry(k, v.toJson())),
-                    ));
-              }
-              final result = Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => route));
-            },
-            child: Container(
-              height: 45,
-              decoration: BoxDecoration(
-                color: color,
-                border: Border.all(width: 2),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: color,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(), borderRadius: BorderRadius.circular(5)),
+          onPressed: () async {
+            if (activity.visibleAfter.compareTo(DateTime.now()) > 0) {
+              return null;
+            }
+            if (activity.firstView) {
+              // TODO: universal
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              var rawMap = json.decode(prefs.getString(activityStatesKey))
+                  as Map<String, dynamic>;
+              Map<String, Activity> activityStates =
+                  rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
+              activityStates[activity.name].firstView = false;
+              prefs.setString(
+                  activityStatesKey,
+                  json.encode(
+                    activityStates.map((k, v) => MapEntry(k, v.toJson())),
+                  ));
+              callback();
+            }
+            final result = Navigator.push(
+                context, MaterialPageRoute(builder: (context) => route));
+          },
+          child: Row(
+            children: <Widget>[
+              icon,
+              SizedBox(
+                width: 20,
+                height: 45,
               ),
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-              child: Row(
-                children: <Widget>[
-                  icon,
-                  SizedBox(
-                    width: 20,
-                  ),
-                  text,
-                ],
-              ),
-            )),
+              text,
+            ],
+          ),
+        ),
         activity.firstView
             ? Positioned(
                 child: Container(
-                  width: 20,
-                  height: 20,
+                  width: 10,
+                  height: 10,
                   decoration: BoxDecoration(
                     border: Border.all(width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     color: Colors.black,
                   ),
+                ),
+                left: 8,
+                top: 9)
+            : Container(),
+        activity.visibleAfter.compareTo(DateTime.now()) < 0
+            ? Container()
+            : Positioned(
+                child: Container(
+                  // TODO: this needs to be variable
+                  width: 340,
+                  height: 38,
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 0, 0, 0.85),
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(5)),
                   child: Center(
-                    child: Text(
-                      '!!',
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                  ),
+                      child: Text( generateTimeRemaining(),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  )),
                 ),
                 left: 5,
-                top: 10)
-            : Container()
+                top: 5,
+              )
       ],
     );
   }
