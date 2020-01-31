@@ -46,15 +46,17 @@ class MainMenuOption extends StatelessWidget {
   final Widget route;
   final String activityStatesKey = 'ActivityStates';
   final Function() callback;
+  final bool doubleIcon;
 
   MainMenuOption({
     Key key,
     this.activity,
-    this.icon = const Icon(Icons.access_alarm),
+    this.icon,
     this.text,
     this.color,
     this.route,
     this.callback,
+    this.doubleIcon,
   });
 
   String generateTimeRemaining() {
@@ -73,7 +75,7 @@ class MainMenuOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: 340,
       height: 50,
       child: Stack(
         children: <Widget>[
@@ -108,7 +110,7 @@ class MainMenuOption extends StatelessWidget {
               children: <Widget>[
                 icon,
                 SizedBox(
-                  width: 20,
+                  width: 10,
                   height: 45,
                 ),
                 text,
@@ -134,9 +136,9 @@ class MainMenuOption extends StatelessWidget {
               ? Container()
               : Positioned(
                   child: Container(
-                    width: 290,
-                    height: 37.5,
                     // TODO: this needs to be variable
+                    width: 330,
+                    height: 37.5,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(0, 0, 0, 0.85),
                         border: Border.all(),

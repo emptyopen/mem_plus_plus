@@ -166,6 +166,11 @@ class _SingleDigitTimedTestPrepScreenState
             fontSize: 30,
             padding: 10,
           ),
+          SizedBox(height: 20,),
+          Container(
+            child: Text('(You\'ll be quizzed on this in one hour!)',
+              style: TextStyle(fontSize: 20),),
+          )
         ],
       ),
     );

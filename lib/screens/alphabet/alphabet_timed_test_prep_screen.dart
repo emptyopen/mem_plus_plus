@@ -91,8 +91,8 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityState('AlphabetTimedTest', 'todo');
     await prefs.updateActivityVisible('AlphabetTimedTest', true);
     await prefs.updateActivityFirstView('AlphabetTimedTest', true);
-    await prefs.updateActivityVisibleAfter('AlphabetTimedTest', DateTime.now().add(Duration(seconds: 120)));
-    Timer(Duration(seconds: 120), widget.callback);
+    await prefs.updateActivityVisibleAfter('AlphabetTimedTest', DateTime.now().add(Duration(seconds: 10)));
+    Timer(Duration(seconds: 10), widget.callback);
     widget.callback();
     Navigator.pop(context);
   }
@@ -247,6 +247,11 @@ class _AlphabetTimedTestPrepScreenState
             onPressed: () => updateStatus(),
             padding: 10,
           ),
+          SizedBox(height: 20,),
+          Container(
+            child: Text('(You\'ll be quizzed on this in two hours!)',
+            style: TextStyle(fontSize: 20),),
+          )
         ],
       ),
     );

@@ -99,7 +99,7 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
       } else if (familiarity < 100) {
         return Colors.green;
       }
-      return Colors.grey;
+      return Colors.black;
     }
 
     return Center(
@@ -113,11 +113,16 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
             ),
             title: Text('${widget.singleDigitData.object}',
                 style: TextStyle(fontSize: 20)),
-            trailing: FlatButton(
-                child: Text('Edit', style: TextStyle(color: Colors.cyan)),
-                onPressed: () {
-                  showDialog(context: context, child: dialog);
-                }),
+            trailing: Container(
+              width: 70,
+              child: FlatButton(
+                  child: Text('Edit', style: TextStyle(color: Colors.black)),
+                  color: Colors.amber[100],
+                  shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
+                  onPressed: () {
+                    showDialog(context: context, child: dialog);
+                  }),
+            ),
           ),
           Positioned(
             child: Container(
@@ -126,18 +131,18 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
                   '${widget.singleDigitData.familiarity}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 14,
-                      color: getColorFromFamiliarity(
-                          widget.singleDigitData.familiarity)),
+                    color: Colors.white,
+                      fontSize: 14),
                 ),
               ),
               decoration: BoxDecoration(
+                color: getColorFromFamiliarity(widget.singleDigitData.familiarity),
                   borderRadius: BorderRadius.all(Radius.circular(5)),
-                  border: Border.all(color: Colors.grey, width: 0.5)),
+                  border: Border.all(color: Colors.black, width: 1)),
               height: 25,
               width: 25,
             ),
-            right: 8,
+            right: 2,
             bottom: 15,
           )
         ],

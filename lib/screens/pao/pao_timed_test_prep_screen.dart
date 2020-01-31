@@ -280,6 +280,11 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
                     style: TextStyle(fontSize: 30),
                   )),
             ),
+          ),
+          SizedBox(height: 20,),
+          Container(
+            child: Text('(You\'ll be quizzed on this in four hours!)',
+              style: TextStyle(fontSize: 20),),
           )
         ],
       ),

@@ -142,7 +142,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       'Trust me, once you\'ve achieved some proficiency in the some of these systems, '
       'you\'ll be glad you did. \n    Never pull out a credit card, a passport, or a license for those pesky numbers '
       'and expiration dates. Remember everyone\'s name at a new party, '
-      'and put on a performace by memorizing a deck of cards in less than '
+      'and put on a performance by memorizing a deck of cards in less than '
       'a minute. Never again walk into a room and forget what you needed to do. Save yourself the hassle of running '
       'around the supermarket with your phone out. Recall your parking spot in the huge structure with ease. \n\n'
       '    Believe in yourself. Invest in yourself.',
