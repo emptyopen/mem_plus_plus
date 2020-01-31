@@ -1,8 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
+import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
+import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/activities.dart';
+import 'package:flutter/material.dart';
 
 class PrefsUpdater {
   String activityStatesKey = 'ActivityStates';
@@ -19,7 +22,17 @@ class PrefsUpdater {
         var singleDigitData = (json.decode(prefs.getString(key)) as List)
             .map((i) => SingleDigitData.fromJson(i))
             .toList();
-        return shuffle(singleDigitData);
+        return singleDigitData;
+      case 'Alphabet':
+        var singleDigitData = (json.decode(prefs.getString(key)) as List)
+          .map((i) => AlphabetData.fromJson(i))
+          .toList();
+        return singleDigitData;
+      case 'PAO':
+        var singleDigitData = (json.decode(prefs.getString(key)) as List)
+          .map((i) => PAOData.fromJson(i))
+          .toList();
+        return singleDigitData;
       case 'Level':
         return prefs.getInt(levelKey);
     }
@@ -37,22 +50,6 @@ class PrefsUpdater {
         prefs.setString(key, json.encode(object));
         break;
     }
-  }
-
-  Future<int> getLevel() async {
-    return await getSharedPrefs(levelKey);
-  }
-
-  updateLevel(int newLevel) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // TODO: need to check level!!
-//    if (await getLevel() == newLevel - 1) {
-//      print('updating level!');
-//      prefs.setInt(levelKey, newLevel);
-//    }
-//    print('wrong level to update: ${await getLevel()} $newLevel');
-    print('setting level to $newLevel');
-    prefs.setInt(levelKey, newLevel);
   }
 
   updateActivityFirstView(String activityName, bool isNew) async {
@@ -111,14 +108,39 @@ class PrefsUpdater {
     return prefs.getString(key);
   }
 
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
+  Future<Set<String>> getKeys() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getKeys();
   }
+
+  Future<void> clear() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+}
+
+List shuffle(List items) {
+  var random = new Random();
+  for (var i = items.length - 1; i > 0; i--) {
+    var n = random.nextInt(i + 1);
+    var temp = items[i];
+    items[i] = items[n];
+    items[n] = temp;
+  }
+  return items;
+}
+
+void showSnackBar(BuildContext context, String snackBarText, Color textColor, Color backgroundColor,
+  int durationSeconds) {
+  final snackBar = SnackBar(
+    content: Text(
+      snackBarText,
+      style: TextStyle(
+        color: textColor,
+      ),
+    ),
+    duration: Duration(seconds: durationSeconds),
+    backgroundColor: backgroundColor,
+  );
+  Scaffold.of(context).showSnackBar(snackBar);
 }

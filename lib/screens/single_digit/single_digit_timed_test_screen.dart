@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -50,19 +50,30 @@ class _SingleDigitTimedTestScreenState
   void checkAnswer() async {
     if (textController.text == '$digit1$digit2$digit3$digit4') {
       print('success');
-      await prefs.updateLevel(4);
-      await prefs.updateActivityState('SingleDigitTimedTest', 'review');
+      // every time
       await prefs.updateActivityVisible('SingleDigitTimedTest', false);
       await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-      await prefs.updateActivityVisible('AlphabetEdit', true);
-      await prefs.updateActivityFirstView('AlphabetEdit', true);
-      await prefs.updateActivityVisible('AlphabetPractice', true);
-      await prefs.updateActivityFirstView('AlphabetPractice', true);
+
+      // just first time
+      if (await prefs.getBool('SingleDigitTimedTestComplete') == null) {
+        await prefs.updateActivityState('SingleDigitTimedTest', 'review');
+        await prefs.updateActivityVisible('AlphabetEdit', true);
+        await prefs.updateActivityFirstView('AlphabetEdit', true);
+        await prefs.updateActivityVisible('AlphabetPractice', true);
+        await prefs.updateActivityFirstView('AlphabetPractice', true);
+      }
       widget.callback();
     } else {
       print('failure');
     }
     textController.text = '';
+    Navigator.pop(context);
+  }
+
+  void giveUp() async {
+    await prefs.updateActivityState('SingleDigitTimedTest', 'review');
+    await prefs.updateActivityVisible('SingleDigitTimedTest', false);
+    await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
     Navigator.pop(context);
   }
 
@@ -94,37 +105,44 @@ class _SingleDigitTimedTestScreenState
             ),
             SizedBox(height: 25),
             Container(
-              width: 100,
+              width: 150,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               child: TextFormField(
                 controller: textController,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
+                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(5),
                     border: OutlineInputBorder(),
                     hintText: 'XXXX',
-                    hintStyle: TextStyle(fontSize: 30)),
+                    hintStyle: TextStyle(fontSize: 30, fontFamily: 'SpaceMono')),
               ),
             ),
             SizedBox(height: 50),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.amber[100],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                  border: Border.all()),
-              child: FlatButton(
-                  onPressed: () {
-                    checkAnswer();
-                    },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
+                  color: Colors.grey[200],
+                  onPressed: () => giveUp(),
+                  child: Text(
+                    'Give up',
+                    style: TextStyle(fontSize: 30),
+                  )),
+                SizedBox(width: 25,),
+                FlatButton(
+                  shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
+                  color: Colors.amber[100],
+                  onPressed: () => checkAnswer(),
                   child: Text(
                     'Submit',
                     style: TextStyle(fontSize: 30),
                   )),
-            )
+              ],
+            ),
           ],
         ),
       ),

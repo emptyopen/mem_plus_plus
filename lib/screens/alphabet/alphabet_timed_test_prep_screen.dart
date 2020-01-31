@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 
 class AlphabetTimedTestPrepScreen extends StatefulWidget {
@@ -91,8 +91,8 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityState('AlphabetTimedTest', 'todo');
     await prefs.updateActivityVisible('AlphabetTimedTest', true);
     await prefs.updateActivityFirstView('AlphabetTimedTest', true);
-    await prefs.updateActivityVisibleAfter('AlphabetTimedTest', DateTime.now().add(Duration(seconds: 10)));
-    Timer(Duration(seconds: 10), widget.callback);
+    await prefs.updateActivityVisibleAfter('AlphabetTimedTest', DateTime.now().add(Duration(seconds: 120)));
+    Timer(Duration(seconds: 120), widget.callback);
     widget.callback();
     Navigator.pop(context);
   }
@@ -180,7 +180,7 @@ class _AlphabetTimedTestPrepScreenState
             ),
           ]),
           SizedBox(
-            height: 100,
+            height: 20,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
@@ -237,22 +237,16 @@ class _AlphabetTimedTestPrepScreenState
             ),
           ]),
           SizedBox(
-            height: 100,
+            height: 70,
           ),
-          Container(
-            width: 200,
-            decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Center(
-              child: FlatButton(
-                  onPressed: () => updateStatus(),
-                  child: Text(
-                    'I\'m ready!',
-                    style: TextStyle(fontSize: 30),
-                  )),
-            ),
-          )
+          BasicFlatButton(
+            text: 'I\'m ready!',
+            color: Theme.of(context).primaryColor,
+            splashColor: Colors.blue[200],
+            fontSize: 30,
+            onPressed: () => updateStatus(),
+            padding: 10,
+          ),
         ],
       ),
     );

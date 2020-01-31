@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class PAOTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -85,6 +85,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     await prefs.updateActivityState('PAOTimedTest', 'review');
     await prefs.updateActivityVisible('PAOTimedTest', false);
     await prefs.updateActivityVisible('PAOTimedTestPrep', true);
+    Navigator.pop(context);
   }
 
   @override

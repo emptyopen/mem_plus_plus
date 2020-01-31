@@ -4,6 +4,7 @@ import 'package:mem_plus_plus/components/single_digit/single_digit_edit_card.dar
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitEditScreen extends StatefulWidget {
   SingleDigitEditScreen({Key key}) : super(key: key);
@@ -24,17 +25,14 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (prefs.getString(singleDigitKey) == null) {
-        singleDigitData = defaultSingleDigitData;
-        prefs.setString(singleDigitKey, json.encode(singleDigitData));
-      } else {
-        singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-          .map((i) => SingleDigitData.fromJson(i))
-          .toList();
-      }
-    });
+    var prefs = PrefsUpdater();
+    if (await prefs.getString(singleDigitKey) == null) {
+      singleDigitData = defaultSingleDigitData;
+      await prefs.setString(singleDigitKey, json.encode(singleDigitData));
+    } else {
+      singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
+    }
+    setState(() {});
   }
 
   callback(newSingleDigitData) {
@@ -48,7 +46,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     if (singleDigitData != null) {
       for (int i = 0; i < singleDigitData.length; i++) {
         SingleDigitEditCard singleDigitEditCard = SingleDigitEditCard(
-          singleDigitData: SingleDigitData(singleDigitData[i].digits,
+          singleDigitData: SingleDigitData(singleDigitData[i].index, singleDigitData[i].digits,
               singleDigitData[i].object, singleDigitData[i].familiarity),
           callback: callback,
         );

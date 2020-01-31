@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -39,18 +40,15 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (prefs.getString(singleDigitKey) == null) {
-        singleDigitData = defaultSingleDigitData;
-        prefs.setString(singleDigitKey, json.encode(singleDigitData));
-      } else {
-        singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-          .map((i) => SingleDigitData.fromJson(i))
-          .toList();
-      }
-      singleDigitData = shuffle(singleDigitData);
-    });
+    var prefs = PrefsUpdater();
+    if (await prefs.getString(singleDigitKey) == null) {
+      singleDigitData = defaultSingleDigitData;
+      await prefs.setString(singleDigitKey, json.encode(singleDigitData));
+    } else {
+      singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
+    }
+    singleDigitData = shuffle(singleDigitData);
+    setState(() {});
   }
 
   callback() {
@@ -62,7 +60,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     if (singleDigitData != null) {
       for (int i = 0; i < singleDigitData.length; i++) {
         SingleDigitFlashCard singleDigitFlashCard = SingleDigitFlashCard(
-          singleDigitData: singleDigitData[i],
+          singleDigitEntry: singleDigitData[i],
           callback: callback,
         );
         singleDigitFlashCards.add(singleDigitFlashCard);

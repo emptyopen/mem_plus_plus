@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import 'dart:math';
+import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitMultipleChoiceCard extends StatefulWidget {
   final SingleDigitData singleDigitData;
@@ -11,12 +11,10 @@ class SingleDigitMultipleChoiceCard extends StatefulWidget {
   SingleDigitMultipleChoiceCard({this.singleDigitData, this.callback});
 
   @override
-  _SingleDigitMultipleChoiceCardState createState() =>
-      _SingleDigitMultipleChoiceCardState();
+  _SingleDigitMultipleChoiceCardState createState() => _SingleDigitMultipleChoiceCardState();
 }
 
-class _SingleDigitMultipleChoiceCardState
-    extends State<SingleDigitMultipleChoiceCard> {
+class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoiceCard> {
   bool done = false;
   int attempts = 0;
   SingleDigitData fakeSingleDigitChoice1;
@@ -24,12 +22,13 @@ class _SingleDigitMultipleChoiceCardState
   SingleDigitData fakeSingleDigitChoice3;
   List<SingleDigitData> singleDigitDataList;
   List<SingleDigitData> shuffledOptions = [
-    SingleDigitData('0', 'ball', 0),
-    SingleDigitData('0', 'ball', 0),
-    SingleDigitData('0', 'ball', 0),
-    SingleDigitData('0', 'ball', 0),
+    SingleDigitData(0, '0', 'nothing', 0),
+    SingleDigitData(1, '0', 'nothing', 0),
+    SingleDigitData(2, '0', 'nothing', 0),
+    SingleDigitData(3, '0', 'nothing', 0),
   ];
   String singleDigitKey = 'SingleDigit';
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -38,33 +37,26 @@ class _SingleDigitMultipleChoiceCardState
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    singleDigitDataList = await prefs.getSharedPrefs(singleDigitKey);
     setState(() {
-      singleDigitDataList =
-          (json.decode(prefs.getString(singleDigitKey)) as List)
-              .map((i) => SingleDigitData.fromJson(i))
-              .toList();
       // loop until you find 3 random different numbers
       List<String> notAllowed = [widget.singleDigitData.digits];
       while (fakeSingleDigitChoice1 == null) {
-        SingleDigitData candidate =
-            singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
         if (!notAllowed.contains(candidate.digits)) {
           fakeSingleDigitChoice1 = candidate;
           notAllowed.add(candidate.digits);
         }
       }
       while (fakeSingleDigitChoice2 == null) {
-        SingleDigitData candidate =
-            singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
         if (!notAllowed.contains(candidate.digits)) {
           fakeSingleDigitChoice2 = candidate;
           notAllowed.add(candidate.digits);
         }
       }
       while (fakeSingleDigitChoice3 == null) {
-        SingleDigitData candidate =
-            singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
         if (!notAllowed.contains(candidate.digits)) {
           fakeSingleDigitChoice3 = candidate;
           notAllowed.add(candidate.digits);
@@ -80,46 +72,15 @@ class _SingleDigitMultipleChoiceCardState
     });
   }
 
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
-  }
-
   void checkResult(int index) {
     if (shuffledOptions[index].digits == widget.singleDigitData.digits) {
-      final snackBar = SnackBar(
-        content: Text(
-          'Correct!',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        duration: Duration(seconds: 1),
-        backgroundColor: Colors.green[200],
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
+      showSnackBar(context, 'Correct!', Colors.black, Colors.green[200], 1);
       setState(() {
         widget.callback(context, true);
         done = true;
       });
     } else {
-      final snackBar = SnackBar(
-        content: Text(
-          'Incorrect! ${widget.singleDigitData.digits}: ${widget.singleDigitData.object}',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.red[200],
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
+      showSnackBar(context, 'Incorrect!', Colors.black, Colors.red[200], 2);
       setState(() {
         widget.callback(context, false);
         done = true;
@@ -130,100 +91,74 @@ class _SingleDigitMultipleChoiceCardState
   @override
   Widget build(BuildContext context) {
     return done
-        ? Container()
-        : Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
-            ),
-            padding: EdgeInsets.all(20),
-            child: Column(
+      ? Container()
+      : Container(
+      decoration: BoxDecoration(
+        border: Border.all(),
+      ),
+      padding: EdgeInsets.all(20),
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Center(
+              child: Text(
+                widget.singleDigitData.digits,
+                style: TextStyle(fontSize: 30),
+              )),
+          ),
+          Container(
+            width: 350,
+            height: 100,
+            child: Stack(
               children: <Widget>[
-                Container(
-                  child: Center(
-                      child: Text(
-                    widget.singleDigitData.digits,
-                    style: TextStyle(fontSize: 30),
-                  )),
+                Positioned(
+                  child: BasicFlatButton(
+                    splashColor: Colors.amber[100],
+                    color: Theme.of(context).primaryColor,
+                    text: shuffledOptions[0].object,
+                    fontSize: 18,
+                    onPressed: () => checkResult(0),
+                  ),
+                  top: 5,
+                  left: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: FlatButton(
-                        onPressed: () => checkResult(0),
-                        child: Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          child: Text(
-                            shuffledOptions[0].object,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: FlatButton(
-                        onPressed: () => checkResult(1),
-                        child: Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          child: Text(
-                            shuffledOptions[1].object,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                Positioned(
+                  child: BasicFlatButton(
+                    splashColor: Colors.amber[100],
+                    color: Theme.of(context).primaryColor,
+                    text: shuffledOptions[1].object,
+                    fontSize: 18,
+                    onPressed: () => checkResult(1),
+                  ),
+                  top: 5,
+                  right: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: FlatButton(
-                        onPressed: () => checkResult(2),
-                        child: Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          child: Text(
-                            shuffledOptions[2].object,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: FlatButton(
-                        onPressed: () => checkResult(3),
-                        child: Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          child: Text(
-                            shuffledOptions[3].object,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                Positioned(
+                  child: BasicFlatButton(
+                    splashColor: Colors.amber[100],
+                    color: Theme.of(context).primaryColor,
+                    text: shuffledOptions[2].object,
+                    fontSize: 18,
+                    onPressed: () => checkResult(2),
+                  ),
+                  bottom: 5,
+                  left: 5,
+                ),
+                Positioned(
+                  child: BasicFlatButton(
+                    splashColor: Colors.amber[100],
+                    color: Theme.of(context).primaryColor,
+                    text: shuffledOptions[3].object,
+                    fontSize: 18,
+                    onPressed: () => checkResult(3),
+                  ),
+                  bottom: 5,
+                  right: 5,
                 ),
               ],
-            ));
+            ),
+          ),
+        ],
+      ));
   }
 }

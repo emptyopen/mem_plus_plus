@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_multiple_choice_card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
-import 'dart:math';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
   final Function() callback;
@@ -21,6 +18,7 @@ class _SingleDigitMultipleChoiceTestScreenState
     extends State<SingleDigitMultipleChoiceTestScreen> {
   List<SingleDigitData> singleDigitData;
   String singleDigitKey = 'SingleDigit';
+  String activityCompleteKey = 'SingleDigitMultipleChoiceTestComplete';
   int score = 0;
   int attempts = 0;
 
@@ -31,13 +29,10 @@ class _SingleDigitMultipleChoiceTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      singleDigitData = (json.decode(prefs.getString(singleDigitKey)) as List)
-          .map((i) => SingleDigitData.fromJson(i))
-          .toList();
-      singleDigitData = shuffle(singleDigitData);
-    });
+    var prefs = PrefsUpdater();
+    singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
+    singleDigitData = shuffle(singleDigitData);
+    setState(() {});
   }
 
   void callback(BuildContext context, bool success) async {
@@ -46,23 +41,38 @@ class _SingleDigitMultipleChoiceTestScreenState
       if (score == 10) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-        await prefs.updateActivityFirstView('SingleDigitTimedTestPrep', true);
-        await prefs.updateActivityState('SingleDigitMultipleChoiceTest', 'review');
-        await prefs.updateLevel(3);
-        widget.callback();
-        // Snackbar
-        final snackBar = SnackBar(
-          content: Text(
-            'You aced it! Head to the main menu to see what you\'ve unlocked!',
-            style: TextStyle(
-              color: Colors.white,
+        if (await prefs.getBool(activityCompleteKey) == null) {
+          await prefs.setBool(activityCompleteKey, true);
+          await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
+          await prefs.updateActivityFirstView('SingleDigitTimedTestPrep', true);
+          await prefs.updateActivityState(
+              'SingleDigitMultipleChoiceTest', 'review');
+          widget.callback();
+          // Snackbar
+          final snackBar = SnackBar(
+            content: Text(
+              'You aced it! Head to the main menu to see what you\'ve unlocked!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
-          ),
-          duration: Duration(seconds: 10),
-          backgroundColor: Colors.black,
-        );
-        Scaffold.of(context).showSnackBar(snackBar);
+            duration: Duration(seconds: 10),
+            backgroundColor: Colors.black,
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        } else {
+          final snackBar = SnackBar(
+            content: Text(
+              'You aced it!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            duration: Duration(seconds: 10),
+            backgroundColor: Colors.black,
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        }
       }
     }
     attempts += 1;
@@ -89,7 +99,7 @@ class _SingleDigitMultipleChoiceTestScreenState
       for (int i = 0; i < singleDigitData.length; i++) {
         SingleDigitMultipleChoiceCard singleDigitView =
             SingleDigitMultipleChoiceCard(
-          singleDigitData: SingleDigitData(singleDigitData[i].digits,
+          singleDigitData: SingleDigitData(singleDigitData[i].index, singleDigitData[i].digits,
               singleDigitData[i].object, singleDigitData[i].familiarity),
           callback: callback,
         );
@@ -99,22 +109,19 @@ class _SingleDigitMultipleChoiceTestScreenState
     return singleDigitMultipleChoiceCards;
   }
 
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text('Single digit: multiple choice test'),
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              score = 0;
+              attempts = 0;
+              Navigator.of(context).pop();
+            },
+          ),
           actions: <Widget>[
             // action button
             IconButton(

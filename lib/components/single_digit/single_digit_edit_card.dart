@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitEditCard extends StatefulWidget {
   final SingleDigitData singleDigitData;
@@ -16,12 +16,29 @@ class SingleDigitEditCard extends StatefulWidget {
 class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
   final objectTextController = TextEditingController();
   final String singleDigitKey = 'SingleDigit';
-  SharedPreferences sharedPreferences;
+  final prefs = PrefsUpdater();
 
   @override
   void dispose() {
     objectTextController.dispose();
     super.dispose();
+  }
+
+  void saveItem() async {
+    List<SingleDigitData> singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
+    int currIndex = int.parse(widget.singleDigitData.digits);
+    SingleDigitData updatedSingleDigitEntry =
+    singleDigitData[currIndex];
+    if (objectTextController.text != '') {
+      updatedSingleDigitEntry.object = objectTextController.text;
+      updatedSingleDigitEntry.familiarity = 0;
+      objectTextController.text = '';
+      print('will update $currIndex to: ${updatedSingleDigitEntry.object}');
+    }
+    singleDigitData[currIndex] = updatedSingleDigitEntry;
+    await prefs.setString(singleDigitKey, json.encode(singleDigitData));
+    widget.callback(singleDigitData);
+    Navigator.of(context).pop();
   }
 
   Widget build(BuildContext context) {
@@ -55,28 +72,7 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
               height: 10,
             ),
             FlatButton(
-                onPressed: () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  var singleDigitData =
-                      (json.decode(prefs.getString(singleDigitKey)) as List)
-                          .map((i) => SingleDigitData.fromJson(i))
-                          .toList();
-                  int currIndex = int.parse(widget.singleDigitData.digits);
-                  SingleDigitData updatedSingleDigitEntry =
-                      singleDigitData[currIndex];
-                  if (objectTextController.text != '') {
-                    updatedSingleDigitEntry.object = objectTextController.text;
-                    updatedSingleDigitEntry.familiarity = 0;
-                    objectTextController.text = '';
-                    print(
-                        'will update $currIndex to: ${updatedSingleDigitEntry.object}');
-                  }
-                  singleDigitData[currIndex] = updatedSingleDigitEntry;
-                  prefs.setString(singleDigitKey, json.encode(singleDigitData));
-                  widget.callback(singleDigitData);
-                  Navigator.of(context).pop();
-                },
+                onPressed: () => saveItem(),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(),

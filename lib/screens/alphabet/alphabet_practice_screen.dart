@@ -3,8 +3,8 @@ import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class AlphabetPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -25,17 +25,6 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   void initState() {
     super.initState();
     getSharedPrefs();
-  }
-
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
   }
 
   Future<Null> getSharedPrefs() async {
@@ -64,7 +53,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
     if (alphabetData != null) {
       for (int i = 0; i < alphabetData.length; i++) {
         AlphabetFlashCard alphabetFlashCard = AlphabetFlashCard(
-          alphabetData: alphabetData[i],
+          alphabetEntry: alphabetData[i],
           callback: callback,
         );
         alphabetFlashCards.add(alphabetFlashCard);
@@ -77,7 +66,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Single digit: practice'),
+        title: Text('Alphabet: practice'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info),

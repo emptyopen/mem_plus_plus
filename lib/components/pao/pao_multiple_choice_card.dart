@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
+import 'package:mem_plus_plus/components/standard.dart';
 
 class PAOMultipleChoiceCard extends StatefulWidget {
   final PAOData paoData;
@@ -22,10 +23,10 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
   PAOData fakePAOChoice3;
   List<PAOData> paoDataList;
   List<PAOData> shuffledOptions = [
-    PAOData('0', 'nobody', 'does nothing', 'nothing', 0),
-    PAOData('0', 'nobody', 'does nothing', 'nothing', 0),
-    PAOData('0', 'nobody', 'does nothing', 'nothing', 0),
-    PAOData('0', 'nobody', 'does nothing', 'nothing', 0),
+    PAOData(0, '0', 'nobody', 'does nothing', 'nothing', 0),
+    PAOData(1, '0', 'nobody', 'does nothing', 'nothing', 0),
+    PAOData(2, '0', 'nobody', 'does nothing', 'nothing', 0),
+    PAOData(3, '0', 'nobody', 'does nothing', 'nothing', 0),
   ];
   String paoKey = 'PAO';
 
@@ -145,58 +146,45 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   child: Stack(
                     children: <Widget>[
                       Positioned(
-                        child: FlatButton(
-
+                        child: BasicFlatButton(
                           splashColor: Colors.pink[100],
-                          highlightColor: Colors.transparent,
+                          color: Theme.of(context).primaryColor,
+                          text: shuffledOptions[0].object,
+                          fontSize: 14,
                           onPressed: () => checkResult(0),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: BorderSide()),
-                          child: Text(
-                            shuffledOptions[0].object,
-                            style: TextStyle(fontSize: 14),
-                          ),
                         ),
                         top: 5,
                         left: 5,
                       ),
                       Positioned(
-                        child: FlatButton(
+                        child: BasicFlatButton(
                           splashColor: Colors.pink[100],
-                          highlightColor: Colors.transparent,
+                          color: Theme.of(context).primaryColor,
+                          text: shuffledOptions[1].object,
+                          fontSize: 14,
                           onPressed: () => checkResult(1),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: BorderSide()),
-                          child: Text(
-                            shuffledOptions[1].object,
-                            style: TextStyle(fontSize: 14),
-                          ),
                         ),
                         top: 5,
                         right: 5,
                       ),
                       Positioned(
-                        child: FlatButton(
+                        child: BasicFlatButton(
                           splashColor: Colors.pink[100],
-                          highlightColor: Colors.transparent,
+                          color: Theme.of(context).primaryColor,
+                          text: shuffledOptions[2].object,
+                          fontSize: 14,
                           onPressed: () => checkResult(2),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: BorderSide()),
-                          child: Text(
-                            shuffledOptions[2].object,
-                            style: TextStyle(fontSize: 14),
-                          ),
                         ),
                         bottom: 5,
                         left: 5,
                       ),
                       Positioned(
-                        child: FlatButton(
+                        child: BasicFlatButton(
                           splashColor: Colors.pink[100],
-                          highlightColor: Colors.transparent,
+                          color: Theme.of(context).primaryColor,
+                          text: shuffledOptions[3].object,
+                          fontSize: 14,
                           onPressed: () => checkResult(3),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: BorderSide()),
-                          child: Text(
-                            shuffledOptions[3].object,
-                            style: TextStyle(fontSize: 14),
-                          ),
                         ),
                         bottom: 5,
                         right: 5,

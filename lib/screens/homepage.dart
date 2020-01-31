@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/screens/welcome_screen.dart';
@@ -29,9 +30,9 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: first time Welcome Screen
 // TODO: add notifications about newly available activities
 // TODO: add dot and dot-dot vibration for correct/incorrect answers
+// TODO: consolidate colors
 
 // Nice to have
 // TODO: implement length limits for inputs (like action/object)
@@ -40,8 +41,6 @@ class MyHomePage extends StatefulWidget {
 // TODO: consolidate more stuff (like entire sections - edit,practice,mc,timed)
 
 class _MyHomePageState extends State<MyHomePage> {
-  int level = 0;
-  String levelKey = 'Level';
   Map<String, Activity> activityStates = {};
   String activityStatesKey = 'ActivityStates';
   List<String> availableActivities = [];
@@ -49,24 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double headerSize = 30;
   double itemSize = 24;
   Map activityMenuButtonMap;
-  bool firstTimeOpeningApp = null;
-
-  var unlockMap = {
-    0: ['Welcome'],
-    1: ['SingleDigitEdit', 'SingleDigitPractice'],
-    2: ['SingleDigitMultipleChoiceTest'],
-    3: ['SingleDigitTimedTestPrep', 'SingleDigitTimedTest'],
-    4: ['AlphabetEdit', 'AlphabetPractice'],
-    5: ['AlphabetWrittenTest'],
-    6: ['AlphabetTimedTestPrep', 'AlphabetTimedTest'],
-    7: ['PAOEdit', 'PAOPractice'],
-    8: ['PAOMultipleChoiceTest',],
-    9: ['PAOTimedTestPrep', 'PAOTimedTest'],
-    10: ['FaceTestPrep', 'FaceTest'],
-    // premium paywall here?
-    11: ['DeckEdit', 'DeckPractice'],
-    12: ['DeckMultipleChoiceTest', 'DeckTimedTestPrep', 'DeckTimedTest'],
-  };
+  bool firstTimeOpeningApp;
 
   @override
   void initState() {
@@ -76,45 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
     new Timer.periodic(Duration(seconds: 1), (Timer t) => setState((){}));
   }
 
-  resetKeys() async {
-    int defaultLevel = 1;
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    prefs.remove(levelKey);
-    prefs.remove(activityStatesKey);
-    setState(() {
-      prefs.setInt(levelKey, defaultLevel);
-      level = defaultLevel;
-      activityStates = defaultActivityStates1;
-      prefs.setString(
-        activityStatesKey,
-        json.encode(
-          activityStates.map((k, v) => MapEntry(k, v.toJson())),
-        )
-      );
-    });
-
-    setUnlockedActivities();
-  }
-
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // level
-    if (prefs.getKeys().contains(levelKey)) {
-      setState(() {
-        level = prefs.getInt(levelKey);
-        print('found existing level: $level');
-      });
-    } else {
-      int defaultLevel = 1;
-      print('setting level to default, $defaultLevel');
-      setState(() {
-        prefs.setInt(levelKey, defaultLevel);
-        level = defaultLevel;
-      });
-    }
 
     // activity states, and unlockedActivities
     if (prefs.getKeys().contains(activityStatesKey)) {
@@ -154,27 +99,37 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // filter unlocked activities by level
-    level = prefs.getInt(levelKey);
     var rawMap =
         json.decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
     activityStates = rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
-    var unlockedActivities = [];
     setState(() {
-      for (var activity_groups
-          in unlockMap.keys.toList().sublist(0, level + 1)) {
-        for (String activity in unlockMap[activity_groups]) {
-          unlockedActivities.add(activity);
-        }
-      }
 
       // iterate through unlocked activities, and check if they are visible
       availableActivities = [];
-      for (String activityName in unlockedActivities) {
+      for (String activityName in activityStates.keys) {
         if (activityStates[activityName].visible) {
           availableActivities.add(activityName);
         }
       }
     });
+  }
+
+  resetKeys() async {
+
+    var prefs = PrefsUpdater();
+    await prefs.clear();
+
+    setState(() {
+      activityStates = defaultActivityStates1;
+      prefs.setString(
+        activityStatesKey,
+        json.encode(
+          activityStates.map((k, v) => MapEntry(k, v.toJson())),
+        )
+      );
+    });
+
+    setUnlockedActivities();
   }
 
   callback() {
@@ -229,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Container(
             padding: EdgeInsets.all(30),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
                   'To-do:',
@@ -305,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'SingleDigitTimedTestPrep': ActivityMenuButton(
           text: Text(
             'Single Digit [Timed Test Prep]',
-            style: TextStyle(fontSize: 19),
+            style: TextStyle(fontSize: 21),
           ),
           route: SingleDigitTimedTestPrepScreen(
             callback: callback,

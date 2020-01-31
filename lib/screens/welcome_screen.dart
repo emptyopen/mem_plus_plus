@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/animations.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
+import 'package:flutter/services.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final bool firstTime;
@@ -176,13 +177,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     super.dispose();
   }
 
-  void setFirstTimeViewedFalse(BuildContext context) async {
+  void goToMainMenu(BuildContext context) async {
+    HapticFeedback.lightImpact();
+    HapticFeedback.heavyImpact();
     if (widget.firstTime) {
       var prefs = PrefsUpdater();
       prefs.setBool(firstTimeAppKey, false);
       widget.callback();
-      Navigator.pop(context);
     }
+    Navigator.pop(context);
   }
 
   @override
@@ -250,18 +253,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           : SizedBox(
                               height: 10,
                             ),
+                      SizedBox(height: 20,),
                       info.index != headers.length - 1
                           ? Container()
                           : ParallaxContainer(
-                              child: FlatButton(
-                                onPressed: () {
-                                  setFirstTimeViewedFalse(context);
-                                },
-                                child: BasicContainer(
-                                  text: 'Main Menu',
-                                  color: Colors.amber[50],
-                                  fontSize: 28,
-                                ),
+                              child: BasicFlatButton(
+                                text: 'Main Menu',
+                                color: Colors.amber[50],
+                                splashColor: Colors.amber[200],
+                                onPressed: () => goToMainMenu(context),
+                                padding: 10,
+                                fontSize: 28,
                               ),
                               position: info.position,
                               translationFactor: 300,

@@ -4,8 +4,7 @@ import 'package:mem_plus_plus/components/alphabet/alphabet_written_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
-import 'dart:math';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class AlphabetMultipleChoiceTestScreen extends StatefulWidget {
   final Function() callback;
@@ -46,23 +45,36 @@ class _AlphabetMultipleChoiceTestScreenState
       if (score == 26) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
-        await prefs.updateActivityFirstView('AlphabetTimedTestPrep', true);
-        await prefs.updateActivityState('AlphabetWrittenTest', 'review');
-        await prefs.updateLevel(6);
-        widget.callback();
-        // Snackbar
-        final snackBar = SnackBar(
-          content: Text(
-            'You aced it! Head to the main menu to see what you\'ve unlocked!',
-            style: TextStyle(
-              color: Colors.white,
+        if (await prefs.getBool('AlphabetWrittenTestComplete') == null) {
+          await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
+          await prefs.updateActivityFirstView('AlphabetTimedTestPrep', true);
+          await prefs.updateActivityState('AlphabetWrittenTest', 'review');
+          await prefs.setBool('AlphabetWrittenTestComplete', true);
+          widget.callback();
+          final snackBar = SnackBar(
+            content: Text(
+              'You aced it! Head to the main menu to see what you\'ve unlocked!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
-          ),
-          duration: Duration(seconds: 10),
-          backgroundColor: Colors.black,
-        );
-        Scaffold.of(context).showSnackBar(snackBar);
+            duration: Duration(seconds: 10),
+            backgroundColor: Colors.black,
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        } else {
+          final snackBar = SnackBar(
+            content: Text(
+              'You aced it!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            duration: Duration(seconds: 10),
+            backgroundColor: Colors.black,
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        }
       }
     }
     attempts += 1;
@@ -87,10 +99,12 @@ class _AlphabetMultipleChoiceTestScreenState
     List<AlphabetWrittenCard> alphabetMultipleChoiceCards = [];
     if (alphabetData != null) {
       for (int i = 0; i < alphabetData.length; i++) {
-        AlphabetWrittenCard alphabetView =
-            AlphabetWrittenCard(
-          alphabetData: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
-              alphabetData[i].object, alphabetData[i].familiarity),
+        AlphabetWrittenCard alphabetView = AlphabetWrittenCard(
+          alphabetData: AlphabetData(
+              alphabetData[i].index,
+              alphabetData[i].letter,
+              alphabetData[i].object,
+              alphabetData[i].familiarity),
           callback: callback,
         );
         alphabetMultipleChoiceCards.add(alphabetView);
@@ -99,22 +113,11 @@ class _AlphabetMultipleChoiceTestScreenState
     return alphabetMultipleChoiceCards;
   }
 
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Single digit: multiple choice test'),
+          title: Text('Alphabet: multiple choice test'),
           actions: <Widget>[
             // action button
             IconButton(

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:math';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function() callback;
@@ -21,6 +21,7 @@ class _PAOMultipleChoiceTestScreenState
     extends State<PAOMultipleChoiceTestScreen> {
   List<PAOData> paoData;
   String paoKey = 'PAO';
+  String activityCompleteKey = 'PAOMultipleChoiceTestComplete';
   int score = 0;
   int attempts = 0;
 
@@ -46,23 +47,37 @@ class _PAOMultipleChoiceTestScreenState
       if (score == 100) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        await prefs.updateActivityVisible('PAOTimedTestPrep', true);
-        await prefs.updateActivityFirstView('PAOTimedTestPrep', true);
-        await prefs.updateActivityState('PAOMultipleChoiceTest', 'review');
-        await prefs.updateLevel(9);
-        widget.callback();
-        // Snackbar
-        final snackBar = SnackBar(
-          content: Text(
-            'You aced it! Head to the main menu to see what you\'ve unlocked!',
-            style: TextStyle(
-              color: Colors.white,
+        if (!await prefs.getBool(activityCompleteKey)) {
+          await prefs.setBool(activityCompleteKey, true);
+          await prefs.updateActivityVisible('PAOTimedTestPrep', true);
+          await prefs.updateActivityFirstView('PAOTimedTestPrep', true);
+          await prefs.updateActivityState('PAOMultipleChoiceTest', 'review');
+          widget.callback();
+          // Snackbar
+          final snackBar = SnackBar(
+            content: Text(
+              'You aced it! Head to the main menu to see what you\'ve unlocked!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
-          ),
-          duration: Duration(seconds: 10),
-          backgroundColor: Colors.black,
-        );
-        Scaffold.of(context).showSnackBar(snackBar);
+            duration: Duration(seconds: 10),
+            backgroundColor: Colors.black,
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        } else {
+          final snackBar = SnackBar(
+            content: Text(
+              'You aced it!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            duration: Duration(seconds: 10),
+            backgroundColor: Colors.black,
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        }
       }
     }
     attempts += 1;
@@ -87,10 +102,9 @@ class _PAOMultipleChoiceTestScreenState
     List<PAOMultipleChoiceCard> paoMultipleChoiceCards = [];
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
-        PAOMultipleChoiceCard paoView =
-            PAOMultipleChoiceCard(
-          paoData: PAOData(paoData[i].digits, paoData[i].person, paoData[i].action,
-              paoData[i].object, paoData[i].familiarity),
+        PAOMultipleChoiceCard paoView = PAOMultipleChoiceCard(
+          paoData: PAOData(paoData[i].index, paoData[i].digits, paoData[i].person,
+              paoData[i].action, paoData[i].object, paoData[i].familiarity),
           callback: callback,
         );
         paoMultipleChoiceCards.add(paoView);
@@ -115,6 +129,14 @@ class _PAOMultipleChoiceTestScreenState
     return Scaffold(
       appBar: AppBar(
           title: Text('Single digit: multiple choice test'),
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              score = 0;
+              attempts = 0;
+              Navigator.of(context).pop();
+            },
+          ),
           actions: <Widget>[
             // action button
             IconButton(
@@ -160,7 +182,7 @@ class PAOMultipleChoiceScreenHelp extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
                       child: Text(
                         '    Alright! Time for a test on your PAO system. If you get a perfect score, '
-                          'the next test will be unlocked! Good luck!',
+                        'the next test will be unlocked! Good luck!',
                         textAlign: TextAlign.left,
                         style: TextStyle(fontSize: 16),
                       ),

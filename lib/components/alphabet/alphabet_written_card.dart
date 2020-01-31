@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
+import 'package:mem_plus_plus/components/standard.dart';
 
 class AlphabetWrittenCard extends StatefulWidget {
   final AlphabetData alphabetData;
@@ -53,8 +54,8 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
     return items;
   }
 
-  void checkResult(int index) {
-    if (widget.alphabetData.object == textController.text) {
+  void checkResult() {
+    if (widget.alphabetData.object.toLowerCase() == textController.text.toLowerCase().trim()) {
       final snackBar = SnackBar(
         content: Text(
           'Correct!',
@@ -119,17 +120,11 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
                         border: OutlineInputBorder(),
                       )),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: FlatButton(
-                    onPressed: () => checkResult(0),
-                    child: Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        child: Text('Submit')),
-                  ),
+                BasicFlatButton(
+                  splashColor: Colors.blue[200],
+                  text: 'Submit',
+                  fontSize: 16,
+                  onPressed: () => checkResult(),
                 ),
               ],
             ));

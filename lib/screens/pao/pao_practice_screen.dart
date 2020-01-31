@@ -4,6 +4,7 @@ import 'package:mem_plus_plus/components/pao/pao_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
+import 'package:mem_plus_plus/services/services.dart';
 
 class PAOPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -17,7 +18,7 @@ class PAOPracticeScreen extends StatefulWidget {
 class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<PAOData> paoData;
-  String paoKey = 'Pao';
+  String paoKey = 'PAO';
 
   @override
   void initState() {
@@ -26,14 +27,14 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // assume data exists
-    setState(() {
-      paoData = (json.decode(prefs.getString(paoKey)) as List)
-        .map((i) => PAOData.fromJson(i))
-        .toList();
-//      paoData = shuffle(paoData);
-    });
+    var prefs = PrefsUpdater();
+    if (await prefs.getString(paoKey) == null) {
+      paoData = defaultPAOData;
+      await prefs.setString(paoKey, json.encode(paoData));
+    } else {
+      paoData = await prefs.getSharedPrefs(paoKey);
+    }
+    setState(() {});
   }
 
   callback() {
@@ -45,7 +46,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
         PAOFlashCard paoFlashCard = PAOFlashCard(
-          paoData: paoData[i],
+          paoEntry: paoData[i],
           callback: callback,
         );
         paoFlashCards.add(paoFlashCard);

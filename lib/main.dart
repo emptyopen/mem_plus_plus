@@ -8,7 +8,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MEM++',
-      theme: ThemeData(primarySwatch: Colors.amber, fontFamily: 'Rajdhani'),
+      theme: ThemeData(
+          primaryColor: Colors.grey[300],
+          accentColor: Colors.amber[200],
+          fontFamily: 'Rajdhani'),
       home: MyHomePage(),
     );
   }

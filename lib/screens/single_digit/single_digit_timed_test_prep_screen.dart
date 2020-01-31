@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 
 class SingleDigitTimedTestPrepScreen extends StatefulWidget {
@@ -105,7 +105,7 @@ class _SingleDigitTimedTestPrepScreenState
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: Colors.amber[50],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
@@ -118,7 +118,7 @@ class _SingleDigitTimedTestPrepScreenState
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: Colors.amber[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
@@ -131,7 +131,7 @@ class _SingleDigitTimedTestPrepScreenState
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[400],
+                  color: Colors.amber[200],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
@@ -144,7 +144,7 @@ class _SingleDigitTimedTestPrepScreenState
             Container(
               width: 60,
               decoration: BoxDecoration(
-                  color: Colors.grey[500],
+                  color: Colors.amber[300],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
               child: Center(
@@ -158,14 +158,14 @@ class _SingleDigitTimedTestPrepScreenState
           SizedBox(
             height: 100,
           ),
-          Container(
-            width: 200,
-            decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Center(
-              child: FlatButton(onPressed: () => updateStatus(), child: Text('I\'m ready!',
-              style: TextStyle(fontSize: 30),)),
-            ),
-          )
+          BasicFlatButton(
+            text: 'I\'m ready!',
+            color: Theme.of(context).primaryColor,
+            splashColor: Colors.amber[200],
+            onPressed: () => updateStatus(),
+            fontSize: 30,
+            padding: 10,
+          ),
         ],
       ),
     );

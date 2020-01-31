@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class AlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -61,14 +61,16 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
             '$char1$char2$char3$char4'.toLowerCase() &&
         textController2.text.toLowerCase().trim() == '$char5$char6$char7$char8'.toLowerCase()) {
       print('success');
-      await prefs.updateLevel(7);
       await prefs.updateActivityState('AlphabetTimedTest', 'review');
       await prefs.updateActivityVisible('AlphabetTimedTest', false);
       await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
-      await prefs.updateActivityVisible('PAOEdit', true);
-      await prefs.updateActivityVisible('PAOPractice', true);
-      await prefs.updateActivityFirstView('PAOEdit', true);
-      await prefs.updateActivityFirstView('PAOPractice', true);
+      if (await prefs.getBool('AlphabetTimedTestComplete') == null) {
+        await prefs.updateActivityVisible('PAOEdit', true);
+        await prefs.updateActivityVisible('PAOPractice', true);
+        await prefs.updateActivityFirstView('PAOEdit', true);
+        await prefs.updateActivityFirstView('PAOPractice', true);
+        await prefs.setBool('AlphabetTimedTestComplete', true);
+      }
       widget.callback();
     } else {
       print('failure');
@@ -76,6 +78,15 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     textController1.text = '';
     textController2.text = '';
     Navigator.pop(context);
+    widget.callback();
+  }
+
+  void giveUp() async {
+    await prefs.updateActivityState('AlphabetTimedTest', 'review');
+    await prefs.updateActivityVisible('AlphabetTimedTest', false);
+    await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
+    Navigator.pop(context);
+    widget.callback();
   }
 
   @override
@@ -137,20 +148,28 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
               ),
             ),
             SizedBox(height: 50),
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.amber[100],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                  border: Border.all()),
-              child: FlatButton(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                BasicFlatButton(
+                  text: 'Give up',
+                  color: Theme.of(context).primaryColor,
+                  splashColor: Colors.blue[200],
+                  fontSize: 30,
+                  onPressed: () => giveUp(),
+                  padding: 10,
+                ),
+                SizedBox(width: 25,),
+                BasicFlatButton(
+                  text: 'Submit',
+                  color: Theme.of(context).accentColor,
+                  splashColor: Colors.blue[200],
+                  fontSize: 30,
                   onPressed: () => checkAnswer(),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(fontSize: 30),
-                  )),
-            )
+                  padding: 10,
+                ),
+              ],
+            ),
           ],
         ),
       ),

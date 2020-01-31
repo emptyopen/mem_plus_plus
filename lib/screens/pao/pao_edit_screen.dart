@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:csv/csv.dart';
-import 'package:mem_plus_plus/services/prefs_services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class PAOEditScreen extends StatefulWidget {
   PAOEditScreen({Key key}) : super(key: key);
@@ -32,21 +32,14 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getKeys().contains(paoKey)) {
-      print('found existing paoData');
-      setState(() {
-        paoData = (json.decode(prefs.getString(paoKey)) as List)
-            .map((i) => PAOData.fromJson(i))
-            .toList();
-      });
+    var prefs = PrefsUpdater();
+    if (await prefs.getString(paoKey) == null) {
+      paoData = defaultPAOData;
+      await prefs.setString(paoKey, json.encode(paoData));
     } else {
-      print('setting paoData to default');
-      setState(() {
-        paoData = defaultPAOData;
-        prefs.setString(paoKey, json.encode(paoData));
-      });
+      paoData = await prefs.getSharedPrefs(paoKey);
     }
+    setState(() {});
   }
 
   List<PAOEditCard> getPAOEditCards() {
@@ -54,7 +47,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
         PAOEditCard paoEditCard = PAOEditCard(
-          paoData: PAOData(paoData[i].digits, paoData[i].person,
+          paoData: PAOData(paoData[i].index, paoData[i].digits, paoData[i].person,
               paoData[i].action, paoData[i].object, paoData[i].familiarity),
           callback: callback,
         );
@@ -227,7 +220,7 @@ class _CSVImporterState extends State<CSVImporter> {
                             List<PAOData> paoDataList = [];
                             l.asMap().forEach((k, v) {
                               paoDataList.add(
-                                  PAOData(k.toString(), v[0], v[1], v[2], 0));
+                                  PAOData(k, k.toString(), v[0], v[1], v[2], 0));
                             });
                             updatePAOData(paoDataList);
                             Navigator.pop(context);
