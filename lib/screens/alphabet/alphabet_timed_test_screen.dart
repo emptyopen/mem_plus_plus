@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
 
 class AlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -41,19 +41,19 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      // grab the digits
-      char1 = prefs.getString('alphabetTestChar1');
-      char2 = prefs.getString('alphabetTestChar2');
-      char3 = prefs.getString('alphabetTestChar3');
-      char4 = prefs.getString('alphabetTestChar4');
-      char5 = prefs.getString('alphabetTestChar5');
-      char6 = prefs.getString('alphabetTestChar6');
-      char7 = prefs.getString('alphabetTestChar7');
-      char8 = prefs.getString('alphabetTestChar8');
-      print('real answer: $char1$char2$char3$char4 $char5$char6$char7$char8');
-    });
+    var prefs = PrefsUpdater();
+    prefs.checkFirstTime(context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
+    // grab the digits
+    char1 = await prefs.getString('alphabetTestChar1');
+    char2 = await prefs.getString('alphabetTestChar2');
+    char3 = await prefs.getString('alphabetTestChar3');
+    char4 = await prefs.getString('alphabetTestChar4');
+    char5 = await prefs.getString('alphabetTestChar5');
+    char6 = await prefs.getString('alphabetTestChar6');
+    char7 = await prefs.getString('alphabetTestChar7');
+    char8 = await prefs.getString('alphabetTestChar8');
+    print('real answer: $char1$char2$char3$char4 $char5$char6$char7$char8');
+    setState(() {});
   }
 
   void checkAnswer() async {
@@ -180,41 +180,9 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
 class AlphabetTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                      child: Text(
-                        '    Time to recall your story! \n    If you recall this correctly, you\'ll '
-                        'unlock the next system! Good luck!',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  PopButton(
-                    widget: Text('OK'),
-                    color: Colors.amber[300],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+    return HelpScreen(
+      information: ['    Time to recall your story! If you recall this correctly, you\'ll '
+        'unlock the next system! Good luck!'],
+    );
   }
 }

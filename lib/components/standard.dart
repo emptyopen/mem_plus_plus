@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/activities.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:transformer_page_view/transformer_page_view.dart';
 
 class BasicFlatButton extends StatelessWidget {
 
@@ -157,25 +158,21 @@ class MainMenuOption extends StatelessWidget {
   }
 }
 
-class PopButton extends StatelessWidget {
-  PopButton({Key key, this.widget, this.color});
-
-  final Widget widget;
-  final Color color;
+class OKPopButton extends StatelessWidget {
+  OKPopButton({Key key});
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return BasicFlatButton(
         onPressed: () {
           Navigator.pop(context);
         },
-        child: Container(
-            decoration: BoxDecoration(
-              color: color,
-              border: Border.all(),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-            ),
-            padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-            child: widget));
+        text: 'OK',
+        color: Colors.amber[100],
+        splashColor: Colors.amber[300],
+        fontSize: 20,
+        padding: 10,
+    );
   }
 }
+

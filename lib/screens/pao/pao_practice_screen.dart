@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
 
 class PAOPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -28,6 +29,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
+    prefs.checkFirstTime(context, 'PAOPracticeFirstHelp', PAOPracticeScreenHelp());
     if (await prefs.getString(paoKey) == null) {
       paoData = defaultPAOData;
       await prefs.setString(paoKey, json.encode(paoData));
@@ -71,11 +73,35 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('PAO: practice'),
+        actions: <Widget>[
+          // action button
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              Navigator.of(context).push(PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (BuildContext context, _, __) {
+                  return PAOPracticeScreenHelp();
+                }));
+            },
+          ),
+        ]
       ),
       body: Center(
           child: ListView(
         children: getPAOFlashCards(),
       )),
+    );
+  }
+}
+
+class PAOPracticeScreenHelp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return HelpScreen(
+      information: ['    Get perfect familiarities for each set of digits and '
+        'the first test will be unlocked! Good luck!'],
     );
   }
 }

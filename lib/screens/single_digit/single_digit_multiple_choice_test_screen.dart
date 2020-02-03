@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_multiple_choice_card.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
@@ -30,6 +30,7 @@ class _SingleDigitMultipleChoiceTestScreenState
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
+    prefs.checkFirstTime(context, 'SingleDigitMultipleChoiceTestFirstHelp', SingleDigitMultipleChoiceScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
     setState(() {});
@@ -99,8 +100,11 @@ class _SingleDigitMultipleChoiceTestScreenState
       for (int i = 0; i < singleDigitData.length; i++) {
         SingleDigitMultipleChoiceCard singleDigitView =
             SingleDigitMultipleChoiceCard(
-          singleDigitData: SingleDigitData(singleDigitData[i].index, singleDigitData[i].digits,
-              singleDigitData[i].object, singleDigitData[i].familiarity),
+          singleDigitData: SingleDigitData(
+              singleDigitData[i].index,
+              singleDigitData[i].digits,
+              singleDigitData[i].object,
+              singleDigitData[i].familiarity),
           callback: callback,
         );
         singleDigitMultipleChoiceCards.add(singleDigitView);
@@ -146,44 +150,12 @@ class _SingleDigitMultipleChoiceTestScreenState
 class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                      child: Text(
-                        '    Welcome to your first multiple choice test! \n\n'
-                        '    In this section, you will be tested on your familiarity with '
-                        'each digit. Every time you load this page, the digits will be scattered in a random order, '
-                        'and you simply have to choose the correct object. If you get a perfect score, '
-                        'the next test will be unlocked! Good luck!',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  PopButton(
-                    widget: Text('OK'),
-                    color: Colors.amber[300],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+    return HelpScreen(
+      information: [
+        '    Welcome to your first multiple choice test! In this section, you will be tested on your familiarity with '
+            'each digit. \n    Every time you load this page, the digits will be scattered in a random order, '
+            'and you simply have to choose the correct object. \n    If you get a perfect score, '
+      ],
+    );
   }
 }

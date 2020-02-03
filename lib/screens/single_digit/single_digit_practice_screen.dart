@@ -4,7 +4,7 @@ import 'package:mem_plus_plus/components/single_digit/single_digit_flash_card.da
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitPracticeScreen extends StatefulWidget {
@@ -28,19 +28,9 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     getSharedPrefs();
   }
 
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
-  }
-
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
+    prefs.checkFirstTime(context, 'SingleDigitPracticeFirstHelp', SingleDigitPracticeScreenHelp());
     if (await prefs.getString(singleDigitKey) == null) {
       singleDigitData = defaultSingleDigitData;
       await prefs.setString(singleDigitKey, json.encode(singleDigitData));
@@ -81,7 +71,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
-                    return SingleDigitFlashCardScreenHelp();
+                    return SingleDigitPracticeScreenHelp();
                   }));
             },
           ),
@@ -99,55 +89,19 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   }
 }
 
-class SingleDigitFlashCardScreenHelp extends StatelessWidget {
+class SingleDigitPracticeScreenHelp extends StatelessWidget {
+  final List<String> information = [
+    '    Welcome to your first system! Since you have a complete set of single digits mapped out, you\'re '
+        'now ready to get started with practice! \n    Here you will familiarize yourself '
+        'with the digit-object mapping until you\'ve maxed out your '
+        'familiarity with each digit, upon which the first test will be unlocked! ',
+    '    Try to guess the object before even hitting the reveal button! It\'ll really help you once you get tested.'
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                      child: Text(
-                        '    Welcome to your first system! \n\n'
-                        '    The idea behind this system is to link the 9 digits to different objects. '
-                        'Numbers are abstract and difficult to remember, but if we take a number '
-                        'and convert it to an image, especially a strange image, it suddenly '
-                        'becomes much easier to remember. \n    The default values I\'ve inserted here uses the '
-                        'idea of a "shape" pattern. That is, each object corresponds to what the '
-                        'actual digit it represents is shaped like. For example, 0 looks like a '
-                        'ball, 1 like a baseball bat, etc. Another pattern could be "rhyming". 0 could be '
-                        'hero, 1 could be bread (bun), etc. \n    You can really assign anything '
-                        'to any digit, it just makes it easier to remember (initially) if you have some kind of pattern. '
-                        'Make sure that the objects don\'t overlap conceptually, as much as possible! And don\'t forget, '
-                        'when you edit a digit, that will reset your familiarity for that object back to zero! '
-                        'Familiarity is listed on the far right of the tiles. ',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  PopButton(
-                    widget: Text('OK'),
-                    color: Colors.amber,
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+    return HelpScreen(
+      information: information,
+    );
   }
 }

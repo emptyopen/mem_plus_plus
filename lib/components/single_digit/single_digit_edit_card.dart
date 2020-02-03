@@ -54,7 +54,8 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Object'),
+              child: Text('Object for digit: ${widget.singleDigitData.digits}',
+              style: TextStyle(fontSize: 24),),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -117,7 +118,7 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
               width: 70,
               child: FlatButton(
                   child: Text('Edit', style: TextStyle(color: Colors.black)),
-                  color: Colors.amber[100],
+                  color: Colors.grey[200],
                   shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
                   onPressed: () {
                     showDialog(context: context, child: dialog);
@@ -131,19 +132,19 @@ class _SingleDigitEditCardState extends State<SingleDigitEditCard> {
                   '${widget.singleDigitData.familiarity}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
-                      fontSize: 14),
+                    color: Colors.black,
+                      fontSize: 11),
                 ),
               ),
               decoration: BoxDecoration(
-                color: getColorFromFamiliarity(widget.singleDigitData.familiarity),
+                color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
-                  border: Border.all(color: Colors.black, width: 1)),
+                  border: Border.all(color: getColorFromFamiliarity(widget.singleDigitData.familiarity), width: 2)),
               height: 25,
               width: 25,
             ),
             right: 2,
-            bottom: 15,
+            top: 5  ,
           )
         ],
       )),

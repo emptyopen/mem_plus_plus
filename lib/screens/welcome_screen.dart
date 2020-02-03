@@ -18,7 +18,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   AnimationController animationController;
-  int _slideIndex = 0;
+  int slideIndex = 0;
   final IndexController indexController = IndexController();
   final firstTimeAppKey = 'FirstTimeApp';
 
@@ -97,7 +97,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           'I was resigned to have a terrible memory for the rest of my life. '
           'All I did was encounter these strategies by accident while waiting in line for ramen, '
           'and within months I was able to rapidly improve my memory beyond all recognition.'
-          '\n   If I can do it, so can you. - Matt',
+          '\n   If I can do it, so can you.',
           style: TextStyle(fontSize: 17),
         ),
       ],
@@ -153,8 +153,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       'In the main menu, you will be presented with a TO-DO section and a REVIEW section. \n'
       '    New systems and tasks will show up in the TO-DO section, and all systems you have mastered '
       'will still be available in the REVIEW section. \n'
-      '    When you start a new system, please click the information button in the menu bar '
-      'to find out what\'s going on there. You\'ll know it when you see it! \n\n    Okay, off you go!',
+      '    When you start a new system, click the information button in the menu bar '
+      'if you have any questions getting started. Hopefully the UX is such that you only need to '
+        'consult it as a reference ;)\n\n    Okay, off you go!\n      - Matt',
       style: TextStyle(fontSize: 18),
     ),
   ];
@@ -194,7 +195,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         pageSnapping: true,
         onPageChanged: (index) {
           setState(() {
-            this._slideIndex = index;
+            slideIndex = index;
           });
         },
         loop: false,

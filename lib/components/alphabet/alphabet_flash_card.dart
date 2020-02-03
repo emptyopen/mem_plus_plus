@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
-import 'package:mem_plus_plus/components/flash_card.dart';
+import 'package:mem_plus_plus/components/templates/flash_card.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
 class AlphabetFlashCard extends StatefulWidget {

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_multiple_choice_card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
 
 class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function() callback;
@@ -32,13 +31,13 @@ class _PAOMultipleChoiceTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      paoData = (json.decode(prefs.getString(paoKey)) as List)
-          .map((i) => PAOData.fromJson(i))
-          .toList();
-      paoData = shuffle(paoData);
-    });
+    var prefs = PrefsUpdater();
+    prefs.checkFirstTime(context, 'PAOMultipleChoiceTestFirstHelp', PAOMultipleChoiceScreenHelp());
+    paoData = (json.decode(await prefs.getString(paoKey)) as List)
+        .map((i) => PAOData.fromJson(i))
+        .toList();
+    paoData = shuffle(paoData);
+    setState(() {});
   }
 
   void callback(BuildContext context, bool success) async {
@@ -159,43 +158,12 @@ class _PAOMultipleChoiceTestScreenState
 }
 
 class PAOMultipleChoiceScreenHelp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                      child: Text(
-                        '    Alright! Time for a test on your PAO system. If you get a perfect score, '
-                        'the next test will be unlocked! Good luck!',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  PopButton(
-                    widget: Text('OK'),
-                    color: Colors.amber[300],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+    return HelpScreen(
+      information: ['    Alright! Time for a test on your PAO system. If you get a perfect score, '
+        'the next test will be unlocked! Good luck!'],
+    );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pao_data.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/flash_card.dart';
+import 'package:mem_plus_plus/components/templates/flash_card.dart';
 
 class PAOFlashCard extends StatefulWidget {
   final PAOData paoEntry;

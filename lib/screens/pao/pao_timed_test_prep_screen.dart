@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
 
 class PAOTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -137,46 +136,46 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      // if digits are null, randomize values and store them,
-      // then update DateTime available for paoTest
-      bool sdTestIsActive = prefs.getBool(paoTestActiveKey);
-      if (sdTestIsActive == null || !sdTestIsActive) {
-        print('no active test, setting new values');
-        var random = new Random();
-        digits1 = possibleValues[random.nextInt(possibleValues.length)];
-        digits2 = possibleValues[random.nextInt(possibleValues.length)];
-        digits3 = possibleValues[random.nextInt(possibleValues.length)];
-        digits4 = possibleValues[random.nextInt(possibleValues.length)];
-        digits5 = possibleValues[random.nextInt(possibleValues.length)];
-        digits6 = possibleValues[random.nextInt(possibleValues.length)];
-        digits7 = possibleValues[random.nextInt(possibleValues.length)];
-        digits8 = possibleValues[random.nextInt(possibleValues.length)];
-        digits9 = possibleValues[random.nextInt(possibleValues.length)];
-        prefs.setString('paoTestDigits1', digits1);
-        prefs.setString('paoTestDigits2', digits2);
-        prefs.setString('paoTestDigits3', digits3);
-        prefs.setString('paoTestDigits4', digits4);
-        prefs.setString('paoTestDigits5', digits5);
-        prefs.setString('paoTestDigits6', digits6);
-        prefs.setString('paoTestDigits7', digits7);
-        prefs.setString('paoTestDigits8', digits8);
-        prefs.setString('paoTestDigits9', digits9);
-        prefs.setBool(paoTestActiveKey, true);
-      } else {
-        print('found active test, restoring values');
-        digits1 = prefs.getString('paoTestDigits1');
-        digits2 = prefs.getString('paoTestDigits2');
-        digits3 = prefs.getString('paoTestDigits3');
-        digits4 = prefs.getString('paoTestDigits4');
-        digits5 = prefs.getString('paoTestDigits5');
-        digits6 = prefs.getString('paoTestDigits6');
-        digits7 = prefs.getString('paoTestDigits7');
-        digits8 = prefs.getString('paoTestDigits8');
-        digits9 = prefs.getString('paoTestDigits9');
-      }
-    });
+    var prefs = PrefsUpdater();
+    prefs.checkFirstTime(context, 'PAOTimedTestPrepFirstHelp', PAOTimedTestPrepScreenHelp());
+    // if digits are null, randomize values and store them,
+    // then update DateTime available for paoTest
+    bool sdTestIsActive = await prefs.getBool(paoTestActiveKey);
+    if (sdTestIsActive == null || !sdTestIsActive) {
+      print('no active test, setting new values');
+      var random = new Random();
+      digits1 = possibleValues[random.nextInt(possibleValues.length)];
+      digits2 = possibleValues[random.nextInt(possibleValues.length)];
+      digits3 = possibleValues[random.nextInt(possibleValues.length)];
+      digits4 = possibleValues[random.nextInt(possibleValues.length)];
+      digits5 = possibleValues[random.nextInt(possibleValues.length)];
+      digits6 = possibleValues[random.nextInt(possibleValues.length)];
+      digits7 = possibleValues[random.nextInt(possibleValues.length)];
+      digits8 = possibleValues[random.nextInt(possibleValues.length)];
+      digits9 = possibleValues[random.nextInt(possibleValues.length)];
+      await prefs.setString('paoTestDigits1', digits1);
+      await prefs.setString('paoTestDigits2', digits2);
+      await prefs.setString('paoTestDigits3', digits3);
+      await prefs.setString('paoTestDigits4', digits4);
+      await prefs.setString('paoTestDigits5', digits5);
+      await prefs.setString('paoTestDigits6', digits6);
+      await prefs.setString('paoTestDigits7', digits7);
+      await prefs.setString('paoTestDigits8', digits8);
+      await prefs.setString('paoTestDigits9', digits9);
+      await prefs.setBool(paoTestActiveKey, true);
+    } else {
+      print('found active test, restoring values');
+      digits1 = await prefs.getString('paoTestDigits1');
+      digits2 = await prefs.getString('paoTestDigits2');
+      digits3 = await prefs.getString('paoTestDigits3');
+      digits4 = await prefs.getString('paoTestDigits4');
+      digits5 = await prefs.getString('paoTestDigits5');
+      digits6 = await prefs.getString('paoTestDigits6');
+      digits7 = await prefs.getString('paoTestDigits7');
+      digits8 = await prefs.getString('paoTestDigits8');
+      digits9 = await prefs.getString('paoTestDigits9');
+    }
+    setState(() {});
   }
 
   void updateStatus() async {
@@ -281,10 +280,14 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
                   )),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Container(
-            child: Text('(You\'ll be quizzed on this in four hours!)',
-              style: TextStyle(fontSize: 20),),
+            child: Text(
+              '(You\'ll be quizzed on this in four hours!)',
+              style: TextStyle(fontSize: 20),
+            ),
           )
         ],
       ),
@@ -295,46 +298,17 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
 class PAOTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                      child: Text(
-                        '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '
-                          'and link the scenes together. Remember, person-action-object, and really create a connection '
-                          'between scenes. If the first scene is Galileo cooking fervently with a paintbrush, and the second scene '
-                          'is Sandra Bullock slam-dunking some poker chips, maybe Galileo finishes cooking the dish (full of paint), '
-                          'and Sandra takes a big gulp of it, now paint is all around her mouth! What a messy eater Sandra is. Oh '
-                          'well, she\'s mad about the paint so she\'s going to go dunk some poker chips to cool off.',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ),
-                  PopButton(
-                    widget: Text('OK'),
-                    color: Colors.amber[300],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+    return HelpScreen(
+      information: [
+        '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '
+            'and link the scenes together. Remember, person-action-object, and really create a connection '
+            'between scenes. ',
+        '    If the first scene is Galileo cooking fervently with a paintbrush, and the second scene '
+            'is Sandra Bullock slam-dunking some poker chips, maybe Galileo finishes cooking the dish (full of paint), '
+            'and Sandra takes a big gulp of it, now paint is all around her mouth! What a messy eater Sandra is. Oh '
+            'well, she\'s mad about the paint so she\'s going to go dunk some poker chips to cool off.'
+      ],
+    );
   }
 }
 
@@ -349,8 +323,7 @@ class TimedTestPrepRowContainer extends StatelessWidget {
     return Container(
       width: 70,
       decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.all(Radius.circular(5))),
+          color: color, borderRadius: BorderRadius.all(Radius.circular(5))),
       padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
       child: Center(
         child: Text(

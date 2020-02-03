@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/custom_test_manager_screen.dart';
 import 'package:mem_plus_plus/screens/welcome_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_edit_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_practice_screen.dart';
@@ -30,26 +32,31 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: ensure all buttons are BasicFlatButtons
-// TODO: add celebration/sad art when MC/written test is complete
-// TODO: add notifications about newly available activities
+// TODO: add global celebration animation whenever there is a level up
+// TODO: unlock the ability for personally created tests (credit cards, driver's licence, phone number)
+// TODO: make practice work both ways object -> number / number -> object
+// TODO: make practice unavailable if edit isn't complete
 // TODO: collapse menu items into consolidated versions after complete
 // TODO: roll out for ios Store
+// TODO: add notifications about newly available activities
 
 // Nice to have
 // TODO: implement length limits for inputs (like action/object)
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: fix all flatbuttons
-// TODO: consolidate more stuff (like entire sections - edit,practice,mc,timed)
 // TODO: make vibrations cooler, and more consistent across app?
 // TODO: consolidate colors
 // TODO: make snackbars prettier
+// TODO: written test: allow close enough spelling
+// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
+// TODO: add celebration/sad art when MC/written test is complete
 
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   String activityStatesKey = 'ActivityStates';
   List<String> availableActivities = [];
   String firstTimeAppKey = 'FirstTimeApp';
+  String homepageFirstHelpKey = 'HomepageFirstHelp';
   Map activityMenuButtonMap;
   bool firstTimeOpeningApp;
 
@@ -57,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     getSharedPrefs();
+    checkFirstTime();
     initializeActivityMenuButtonMap();
     new Timer.periodic(Duration(seconds: 1), (Timer t) => setState(() {}));
   }
@@ -119,6 +127,18 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }
     });
+  }
+
+  checkFirstTime() async {
+    var prefs = PrefsUpdater();
+    if (await prefs.getBool(homepageFirstHelpKey) == null) {
+      Navigator.of(context).push(PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) {
+          return HomepageHelp();
+        }));
+      await prefs.setBool(homepageFirstHelpKey, true);
+    }
   }
 
   resetKeys() async {
@@ -187,6 +207,28 @@ class _MyHomePageState extends State<MyHomePage> {
         : Scaffold(
             appBar: AppBar(
               title: Text('MEM++ Homepage'),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.add_box),
+                  onPressed: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return CustomTestManagerScreen();
+                      }));
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.info),
+                  onPressed: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return HomepageHelp();
+                      }));
+                  },
+                ),
+              ],
             ),
             body: SingleChildScrollView(
               child: Container(
@@ -388,5 +430,17 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: timedTestIcon,
           color: Colors.pink[400]),
     };
+  }
+}
+
+class HomepageHelp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return HelpScreen(
+      information: ['    This is the homescreen! The first time you open any screen, the information '
+        'regarding the screen will pop up. Access the information again at any time by clicking the '
+        'info icon in the top right corner! '],
+    );
   }
 }

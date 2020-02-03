@@ -25,7 +25,7 @@ var defaultAlphabetData = [
   AlphabetData(2, 'C', 'chimp', 100),
   AlphabetData(3, 'D', 'dinosaur', 100),
   AlphabetData(4, 'E', 'elephant', 100),
-  AlphabetData(5, 'F', 'fly', 100),
+  AlphabetData(5, 'F', 'flamingo', 100),
   AlphabetData(6, 'G', 'ghost', 100),
   AlphabetData(7, 'H', 'honey', 100),
   AlphabetData(8, 'I', 'igloo', 100),

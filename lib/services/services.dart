@@ -117,6 +117,18 @@ class PrefsUpdater {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
   }
+
+  checkFirstTime(BuildContext context, String firstHelpKey, Widget helpScreen) async {
+    var prefs = PrefsUpdater();
+    if (await prefs.getBool(firstHelpKey) == null) {
+      Navigator.of(context).push(PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) {
+          return helpScreen;
+        }));
+      await prefs.setBool(firstHelpKey, true);
+    }
+  }
 }
 
 List shuffle(List items) {

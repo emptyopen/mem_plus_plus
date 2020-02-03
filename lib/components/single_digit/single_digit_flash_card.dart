@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'single_digit_data.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/flash_card.dart';
+import 'package:mem_plus_plus/components/templates/flash_card.dart';
 
 class SingleDigitFlashCard extends StatefulWidget {
   final SingleDigitData singleDigitEntry;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/templates/help_screen.dart';
 
 class SingleDigitTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -36,14 +35,16 @@ class _SingleDigitTimedTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var prefs = PrefsUpdater();
+    prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp', SingleDigitTimedTestScreenHelp());
+    // grab the digits
+    digit1 = await prefs.getString('singleDigitTestDigit1');
+    digit2 = await prefs.getString('singleDigitTestDigit2');
+    digit3 = await prefs.getString('singleDigitTestDigit3');
+    digit4 = await prefs.getString('singleDigitTestDigit4');
+    print('real answer: $digit1$digit2$digit3$digit4');
     setState(() {
-      // grab the digits
-      digit1 = prefs.getString('singleDigitTestDigit1');
-      digit2 = prefs.getString('singleDigitTestDigit2');
-      digit3 = prefs.getString('singleDigitTestDigit3');
-      digit4 = prefs.getString('singleDigitTestDigit4');
-      print('real answer: $digit1$digit2$digit3$digit4');
+
     });
   }
 
@@ -153,41 +154,9 @@ class _SingleDigitTimedTestScreenState
 class SingleDigitTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                      child: Text(
-                        '    Time to recall your story! \n    If you recall this correctly, you\'ll '
-                        'unlock the next system! Good luck!',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ),
-                  PopButton(
-                    widget: Text('OK'),
-                    color: Colors.amber[300],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+    return HelpScreen(
+      information: ['    Time to recall your story! If you recall this correctly, you\'ll '
+        'unlock the next system! Good luck!'],
+    );
   }
 }
