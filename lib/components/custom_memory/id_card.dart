@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class IDCardInput extends StatefulWidget {
-  final Function(Map) callback;
+  final Function() callback;
 
   IDCardInput({this.callback});
 
@@ -15,6 +16,10 @@ class _IDCardInputState extends State<IDCardInput> {
   final idCardNumberTextController = TextEditingController();
   final idCardExpirationTextController = TextEditingController();
   final idCardOtherTextController = TextEditingController();
+  String spacedRepetitionChoice = '30m-2h-12h-48h';
+  String beginner = '30m-2h-12h-48h';
+  String intermediate = '1h-6h-24h-4d';
+  String expert = '1h-6h-24h-7d-21d';
 
   @override
   void dispose() {
@@ -25,15 +30,34 @@ class _IDCardInputState extends State<IDCardInput> {
     super.dispose();
   }
 
-  sendMemoryBack() {
+  addMemory() async {
+    var prefs = PrefsUpdater();
+    if (idCardNumberTextController.text == '') {
+      print('need number');
+      return false;
+    } else if (idCardExpirationTextController.text == '') {
+      print('need expiration');
+      return false;
+    }
+    var customTests = await prefs.getSharedPrefs('CustomTests') as Map;
+    if (customTests.containsKey(idCardTitleTextController.text)) {
+      print('already have!');
+      return false;
+    }
     Map map = {
       'type': 'ID/Credit Card',
-      'title': idCardTitleTextController,
+      'title': idCardTitleTextController.text,
+      'startDatetime': DateTime.now().toIso8601String(),
+      'spacedRep': 0,
       'number': idCardNumberTextController.text,
       'expiration': idCardExpirationTextController.text,
-      'other': idCardOtherTextController,
+      'other': idCardOtherTextController.text,
+      'spacedRepetition': spacedRepetitionChoice,
     };
-    widget.callback(map);
+    customTests[map['title']] = map;
+    await prefs.writeSharedPrefs('CustomTests', customTests);
+    widget.callback();
+    Navigator.pop(context);
   }
 
   @override
@@ -96,17 +120,31 @@ class _IDCardInputState extends State<IDCardInput> {
             ),
           ),
         ),
-        FlatButton(
-          onPressed: () {
-            if (idCardNumberTextController.text == '') {
-              print('need number');
-            } else if (idCardExpirationTextController.text == '') {
-              print('need expiration');
-            }
-            else {
-              sendMemoryBack();
-            }
+        SizedBox(height: 10,),
+        Text('Spaced Repetition:'),
+        DropdownButton<String>(
+          value: spacedRepetitionChoice,
+          elevation: 16,
+          style: TextStyle(color: Colors.deepPurple),
+          underline: Container(
+            height: 2,
+            color: Colors.deepPurpleAccent,
+          ),
+          onChanged: (String newValue) {
+            setState(() {
+              spacedRepetitionChoice = newValue;
+            });
           },
+          items: <String>[beginner, intermediate, expert]
+            .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value, style: TextStyle(fontSize: 16, fontFamily: 'Rajdhani'),),
+            );
+          }).toList(),
+        ),
+        FlatButton(
+          onPressed: () => addMemory(),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(),
@@ -114,10 +152,10 @@ class _IDCardInputState extends State<IDCardInput> {
             ),
             padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
             child: Text(
-              'Save',
+              'Start',
               style: TextStyle(fontSize: 18.0),
             ),
-          ))
+          )),
       ],
     );
   }

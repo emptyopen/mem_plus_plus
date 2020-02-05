@@ -90,7 +90,9 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('PAO: timed test'), actions: <Widget>[
+      appBar: AppBar(title: Text('PAO: timed test'),
+        backgroundColor: Colors.pink[200],
+        actions: <Widget>[
         // action button
         IconButton(
           icon: Icon(Icons.info),

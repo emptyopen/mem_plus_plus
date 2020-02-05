@@ -60,7 +60,9 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Alphabet: view/edit'), actions: <Widget>[
+      appBar: AppBar(title: Text('Alphabet: view/edit'),
+        backgroundColor: Colors.blue[200],
+        actions: <Widget>[
         // action button
         IconButton(
           icon: Icon(Icons.info),

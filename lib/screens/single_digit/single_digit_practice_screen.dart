@@ -3,7 +3,6 @@ import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'dart:math';
 import 'package:mem_plus_plus/components/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
@@ -76,6 +75,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
             },
           ),
         ],
+        backgroundColor: Colors.amber[200],
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop('test'),

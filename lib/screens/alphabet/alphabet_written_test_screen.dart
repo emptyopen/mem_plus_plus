@@ -117,6 +117,7 @@ class _AlphabetMultipleChoiceTestScreenState
     return Scaffold(
       appBar: AppBar(
           title: Text('Alphabet: multiple choice test'),
+        backgroundColor: Colors.blue[200],
           actions: <Widget>[
             // action button
             IconButton(

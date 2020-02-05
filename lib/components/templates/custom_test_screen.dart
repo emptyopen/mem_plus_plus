@@ -3,17 +3,17 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/help_screen.dart';
 
-class AlphabetTimedTestScreen extends StatefulWidget {
+class CustomTestScreen extends StatefulWidget {
   final Function() callback;
 
-  AlphabetTimedTestScreen({this.callback});
+  CustomTestScreen({this.callback});
 
   @override
-  _AlphabetTimedTestScreenState createState() =>
-      _AlphabetTimedTestScreenState();
+  _CustomTestScreenState createState() =>
+    _CustomTestScreenState();
 }
 
-class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
+class _CustomTestScreenState extends State<CustomTestScreen> {
   String char1 = '';
   String char2 = '';
   String char3 = '';
@@ -42,8 +42,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(
-        context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
+    prefs.checkFirstTime(context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
     // grab the digits
     char1 = await prefs.getString('alphabetTestChar1');
     char2 = await prefs.getString('alphabetTestChar2');
@@ -59,9 +58,8 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
 
   void checkAnswer() async {
     if (textController1.text.toLowerCase().trim() ==
-            '$char1$char2$char3$char4'.toLowerCase() &&
-        textController2.text.toLowerCase().trim() ==
-            '$char5$char6$char7$char8'.toLowerCase()) {
+      '$char1$char2$char3$char4'.toLowerCase() &&
+      textController2.text.toLowerCase().trim() == '$char5$char6$char7$char8'.toLowerCase()) {
       print('success');
       await prefs.updateActivityState('AlphabetTimedTest', 'review');
       await prefs.updateActivityVisible('AlphabetTimedTest', false);
@@ -94,22 +92,19 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Alphabet: timed test'),
-          backgroundColor: Colors.blue[200],
-          actions: <Widget>[
-            // action button
-            IconButton(
-              icon: Icon(Icons.info),
-              onPressed: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetTimedTestScreenHelp();
-                    }));
-              },
-            ),
-          ]),
+      appBar: AppBar(title: Text('Alphabet: timed test'), actions: <Widget>[
+        // action button
+        IconButton(
+          icon: Icon(Icons.info),
+          onPressed: () {
+            Navigator.of(context).push(PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) {
+                return AlphabetTimedTestScreenHelp();
+              }));
+          },
+        ),
+      ]),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -124,32 +119,32 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
             Container(
               width: 200,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
               child: TextFormField(
                 controller: textController1,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
                 decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                    hintText: 'XXXX',
-                    hintStyle: TextStyle(fontSize: 30)),
+                  contentPadding: EdgeInsets.all(5),
+                  border: OutlineInputBorder(),
+                  hintText: 'XXXX',
+                  hintStyle: TextStyle(fontSize: 30)),
               ),
             ),
             SizedBox(height: 25),
             Container(
               width: 200,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
               child: TextFormField(
                 controller: textController2,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
                 decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                    hintText: 'XXXX',
-                    hintStyle: TextStyle(fontSize: 30)),
+                  contentPadding: EdgeInsets.all(5),
+                  border: OutlineInputBorder(),
+                  hintText: 'XXXX',
+                  hintStyle: TextStyle(fontSize: 30)),
               ),
             ),
             SizedBox(height: 50),
@@ -164,9 +159,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                   onPressed: () => giveUp(),
                   padding: 10,
                 ),
-                SizedBox(
-                  width: 25,
-                ),
+                SizedBox(width: 25,),
                 BasicFlatButton(
                   text: 'Submit',
                   color: Theme.of(context).accentColor,
@@ -188,10 +181,8 @@ class AlphabetTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
-      information: [
-        '    Time to recall your story! If you recall this correctly, you\'ll '
-            'unlock the next system! Good luck!'
-      ],
+      information: ['    Time to recall your story! If you recall this correctly, you\'ll '
+        'unlock the next system! Good luck!'],
     );
   }
 }

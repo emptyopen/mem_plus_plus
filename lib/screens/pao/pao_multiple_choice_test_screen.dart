@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_multiple_choice_card.dart';
 import 'dart:convert';
-import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/help_screen.dart';
 
@@ -112,22 +111,12 @@ class _PAOMultipleChoiceTestScreenState
     return paoMultipleChoiceCards;
   }
 
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text('Single digit: multiple choice test'),
+        backgroundColor: Colors.pink[200],
           leading: new IconButton(
             icon: new Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {

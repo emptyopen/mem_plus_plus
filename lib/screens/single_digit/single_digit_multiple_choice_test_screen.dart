@@ -30,7 +30,8 @@ class _SingleDigitMultipleChoiceTestScreenState
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, 'SingleDigitMultipleChoiceTestFirstHelp', SingleDigitMultipleChoiceScreenHelp());
+    prefs.checkFirstTime(context, 'SingleDigitMultipleChoiceTestFirstHelp',
+        SingleDigitMultipleChoiceScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
     setState(() {});
@@ -126,6 +127,7 @@ class _SingleDigitMultipleChoiceTestScreenState
               Navigator.of(context).pop();
             },
           ),
+          backgroundColor: Colors.amber[200],
           actions: <Widget>[
             // action button
             IconButton(

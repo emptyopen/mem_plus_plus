@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-
+import 'dart:convert';
 import 'package:mem_plus_plus/components/custom_memory/id_card.dart';
 import 'package:mem_plus_plus/components/custom_memory/contact.dart';
 import 'package:mem_plus_plus/components/custom_memory/other.dart';
@@ -12,15 +12,31 @@ const String idCardString = 'ID/Credit Card';
 const String recipeString = 'Recipe';
 const String otherString = 'Other';
 
+Map testIconMap = {
+  contactString: Icon(Icons.add),
+  idCardString: Icon(Icons.multiline_chart),
+  recipeString: Icon(Icons.add),
+  otherString: Icon(Icons.add),
+};
+
 class CustomTestManagerScreen extends StatefulWidget {
-  CustomTestManagerScreen({Key key}) : super(key: key);
+  final Function callback;
+
+  CustomTestManagerScreen({Key key, this.callback}) : super(key: key);
 
   @override
   _CustomTestManagerScreenState createState() =>
       _CustomTestManagerScreenState();
 }
 
+// TODO: science!! USE fibonacci numbers?
+// 30m - 2h - 12h - 48h
+// 1h - 6h - 24h - 7d
+// 2h - 24h - 7d - 21d
+
 class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
+  Map customTests = {};
+  String customTestsKey = 'CustomTests';
 
   @override
   void initState() {
@@ -30,41 +46,43 @@ class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
+    prefs.checkFirstTime(
+        context, 'CustomTestManagerFirstHelp', CustomTestManagerScreenHelp());
+
+    if (prefs.getString(customTestsKey) == null) {
+      customTests = {};
+      prefs.setString(customTestsKey, json.encode({}));
+    } else {
+      customTests = json.decode(await prefs.getString(customTestsKey));
+    }
+
     setState(() {});
   }
 
-  // TODO: create dialog popup
-  // types: phone number, credit card / passport (number with expiration), other text
-  // default space-repetitions if select non-custom
-  // TODO: USE fibonacci numbers
-  // 30m - 2h - 12h - 48h
-  // 1h - 6h - 24h - 7d
-  // 2h - 24h - 7d - 21d
+  void callback() async {
+    var prefs = PrefsUpdater();
+    customTests = await prefs.getSharedPrefs(customTestsKey);
+    setState(() {});
+  }
 
-  void callback(Map map) {
-    String memoryType = map['type'];
-    switch (memoryType) {
-      case (contactString):
-        print('it is contact');
-        break;
-      case (idCardString):
-        print('it is ID');
-
-        break;
-      case (recipeString):
-        print('it is recipe');
-        break;
-      default:
-        print('it is other');
-        break;
+  Widget getCustomTests() {
+    List<CustomTestItem> customTestItems = [];
+    for (String customTestKey in customTests.keys) {
+      var customTest = customTests[customTestKey];
+      customTestItems.add(CustomTestItem(
+        customTest: customTest,
+        callback: callback,
+      ));
     }
+    return Column(children: customTestItems);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        appBar: AppBar(title: Text('Custom test management'), actions: <Widget>[
+        appBar: AppBar(title: Text('Custom test management'),
+          backgroundColor: Colors.purple[200],
+          actions: <Widget>[
           // action button
           IconButton(
             icon: Icon(Icons.info),
@@ -84,34 +102,107 @@ class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
               BasicFlatButton(
                 text: 'Add new memory!',
                 onPressed: () {
-                  showDialog(context: context, child: MyDialogContent(
-                    callback: callback,
-                  ));
+                  showDialog(
+                      context: context,
+                      child: MyDialogContent(
+                        callback: callback,
+                      ));
                 },
-                color: Colors.grey[200],
+                color: Colors.purple[100],
                 splashColor: Colors.amber[200],
-                padding: 20,
+                padding: 10,
                 fontSize: 20,
-              )
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              getCustomTests(),
             ],
           ),
         ));
   }
 }
 
-class CustomTestManagerScreenHelp extends StatelessWidget {
+class CustomTestItem extends StatelessWidget {
+  final Map customTest;
+  final Function callback;
+
+  CustomTestItem({this.customTest, this.callback});
+
+  deleteCustomTest() async {
+    var prefs = PrefsUpdater();
+    Map customTests = await prefs.getSharedPrefs('CustomTests');
+    customTests.remove(customTest['title']);
+    prefs.writeSharedPrefs('CustomTests', customTests);
+    callback();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
-      information: ['yo'],
+    return ListTile(
+      leading: testIconMap[customTest['type']],
+      title: Text('${customTest['title']}', style: TextStyle(fontSize: 20)),
+      subtitle: Text(
+        '${customTest['type']}',
+        style: TextStyle(fontSize: 16),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            width: 50,
+            child: FlatButton(
+              child: Icon(
+                Icons.remove_red_eye,
+                color: Colors.deepPurpleAccent,
+              ),
+              onPressed: () => showConfirmDialog(
+                  context,
+                  null,
+                  'Are you sure you\'d like to view this memory? Doing so '
+                  'will reset the spaced repetition schedule back to the beginning!'),
+            ),
+          ),
+          Container(
+            width: 50,
+            child: FlatButton(
+              child: Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              onPressed: () => showConfirmDialog(context, deleteCustomTest,
+                  'Delete memory: ${customTest['title']}?'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
+class CustomTestManagerScreenHelp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return HelpScreen(
+      title: 'Custom Test Manager',
+      information: [
+        '    Welcome to custom test management! A very exciting place. '
+            'Here you can create new memories - learn your real credit cards and IDs, '
+            'friends\' phone numbers and addresses, recipes, and anything else!',
+        '    You can delete a memory by tapping the trash icon, and you can view a memory '
+            'by tapping the eye icon. Tapping the eye icon will also reset the spaced '
+            'repetition schedule, so only do so if you\'ve actually forgotten it!',
+        '    A review on the spaced repetition choices that will be available for these '
+            'custom memories.\n\n  30m-2h-12h-48h: Good for short term memories\n\n'
+            '  1h-6h-24h-4d: Good for medium term memories ()\n\n'
+            '  1h-2h-24h-7d-21d: Good for long term memories (IDs, recipes'
+      ],
+    );
+  }
+}
 
 class MyDialogContent extends StatefulWidget {
-  final Function(Map) callback;
+  final Function() callback;
 
   MyDialogContent({Key key, this.callback});
 
@@ -123,20 +214,18 @@ class _MyDialogContentState extends State<MyDialogContent> {
   String dropdownValue = 'Contact';
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 
-  void callback(Map map) {
-    widget.callback(map);
+  void callback() {
+    widget.callback();
   }
 
   Widget getMemoryType() {
     switch (dropdownValue) {
       case contactString:
-        return ContactInput(
-
-        );
+        return ContactInput();
         break;
       case idCardString:
         return IDCardInput(
@@ -158,39 +247,51 @@ class _MyDialogContentState extends State<MyDialogContent> {
       child: Container(
         height: 350.0,
         width: 300.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            DropdownButton<String>(
-              value: dropdownValue,
-              elevation: 16,
-              style: TextStyle(color: Colors.deepPurple),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              DropdownButton<String>(
+                value: dropdownValue,
+                elevation: 16,
+                style: TextStyle(color: Colors.deepPurple),
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropdownValue = newValue;
+                  });
+                },
+                items: <String>[
+                  contactString,
+                  idCardString,
+                  recipeString,
+                  otherString
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(fontSize: 16, fontFamily: 'Rajdhani'),
+                    ),
+                  );
+                }).toList(),
               ),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValue = newValue;
-                });
-              },
-              items: <String>[contactString, idCardString, recipeString, otherString]
-                .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value, style: TextStyle(fontSize: 16, fontFamily: 'Rajdhani'),),
-                );
-              }).toList(),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              padding: EdgeInsets.all(10),
-              child: getMemoryType()),
-          ],
+              Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: getMemoryType()),
+              SizedBox(
+                height: 20,
+              )
+            ],
+          ),
         ),
       ),
     );

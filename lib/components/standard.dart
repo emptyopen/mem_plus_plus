@@ -3,7 +3,6 @@ import 'package:mem_plus_plus/components/activities.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
 
 class BasicFlatButton extends StatelessWidget {
 
@@ -13,8 +12,9 @@ class BasicFlatButton extends StatelessWidget {
   final double fontSize;
   final Function onPressed;
   final double padding;
+  final Color textColor;
 
-  BasicFlatButton({this.color = Colors.white, this.splashColor, this.text, this.fontSize, this.onPressed, this.padding = 0});
+  BasicFlatButton({this.color = Colors.white, this.splashColor, this.text, this.fontSize, this.onPressed, this.padding = 0, this.textColor = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class BasicFlatButton extends StatelessWidget {
         padding: EdgeInsets.all(padding),
         child: Text(
           text,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: fontSize, color: textColor),
         ),
       ),
     );
@@ -121,7 +121,7 @@ class MainMenuOption extends StatelessWidget {
           activity.firstView
               ? Positioned(
                   child: Container(
-                    width: 45,
+                    width: 40,
                     height: 20,
                     decoration: BoxDecoration(
                       border: Border.all(width: 1),

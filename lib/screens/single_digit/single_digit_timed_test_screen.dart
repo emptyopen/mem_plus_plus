@@ -81,7 +81,9 @@ class _SingleDigitTimedTestScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Single digit: timed test'), actions: <Widget>[
+      appBar: AppBar(title: Text('Single digit: timed test'),
+        backgroundColor: Colors.amber[200],
+        actions: <Widget>[
         // action button
         IconButton(
           icon: Icon(Icons.info),

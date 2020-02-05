@@ -132,20 +132,22 @@ class _AlphabetTimedTestPrepScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: Text('Alphabet: timed test prep'), actions: <Widget>[
-        // action button
-        IconButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return AlphabetTimedTestPrepScreenHelp();
-                }));
-          },
-        ),
-      ]),
+      appBar: AppBar(
+          title: Text('Alphabet: timed test prep'),
+          backgroundColor: Colors.blue[200],
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return AlphabetTimedTestPrepScreenHelp();
+                    }));
+              },
+            ),
+          ]),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -307,7 +309,7 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
             'which order they come in (with the PAO system we will avoid this, and that\'s the next system). \n'
             '    Alright, so a friendly ghost accidentally bumps into a panda, who is wearing a bra. It looks great! The panda is '
             'startled but realizes it\'s late for its meeting with his dinosaur friend. ',
-          '    [root, snake, zipper, apple]\n\n    Panda runs over to see '
+        '    [root, snake, zipper, apple]\n\n    Panda runs over to see '
             'the dinosaur, and upon seeing each other, roots from the ground come slithering up, binding them both '
             'in place. What is this sorcery? Ah, it\'s simply the magical snakes who are out to get everyone. Drat! And '
             'upon closer inspection, all of these snakes have zippers down their bodies. Let\'s pull on them to see what comes '

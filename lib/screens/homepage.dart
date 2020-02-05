@@ -8,7 +8,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/components/templates/help_screen.dart';
 import 'package:mem_plus_plus/screens/custom_test_manager_screen.dart';
-import 'package:mem_plus_plus/screens/welcome_screen.dart';
+import 'package:mem_plus_plus/screens/lessons/welcome_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_edit_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_practice_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_multiple_choice_test_screen.dart';
@@ -57,8 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> availableActivities = [];
   String firstTimeAppKey = 'FirstTimeApp';
   String homepageFirstHelpKey = 'HomepageFirstHelp';
+  String customTestManagerFirstHelpKey = 'CustomTestManagerFirstView';
+  Map customTests;
   Map activityMenuButtonMap;
   bool firstTimeOpeningApp;
+  bool customTestManagerAvailable;
+  bool customTestManagerFirstView;
 
   @override
   void initState() {
@@ -114,6 +118,26 @@ class _MyHomePageState extends State<MyHomePage> {
       firstTimeOpeningApp = false;
     }
 
+    // check if customManager is available, and firstView
+    if (prefs.getBool('CustomTestManagerAvailable') == null) {
+      customTestManagerAvailable = false;
+    } else {
+      customTestManagerAvailable = true;
+    }
+    if (prefs.getBool(customTestManagerFirstHelpKey) == null || prefs.getBool(customTestManagerFirstHelpKey) == false) {
+      customTestManagerFirstView = false;
+    } else {
+      customTestManagerFirstView = true;
+    }
+    // check for custom tests
+    if (prefs.getString('CustomTests') == null) {
+      customTests = {};
+      prefs.setString('CustomTests', json.encode({}));
+    } else {
+      customTests = json.decode(prefs.getString('CustomTests'));
+    }
+    print('customTests: $customTests');
+
     // filter unlocked activities by level
     var rawMap =
         json.decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
@@ -141,6 +165,20 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  checkCustomTestManagerFirstTime() async {
+    var prefs = PrefsUpdater();
+    if (await prefs.getBool(customTestManagerFirstHelpKey) == true) {
+      print('turning off');
+      setState(() {customTestManagerFirstView = false;});
+      await prefs.setBool(customTestManagerFirstHelpKey, false);
+    }
+    Navigator.of(context).push(PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (BuildContext context, _, __) {
+        return CustomTestManagerScreen();
+      }));
+  }
+
   resetKeys() async {
     var prefs = PrefsUpdater();
     await prefs.clear();
@@ -152,6 +190,21 @@ class _MyHomePageState extends State<MyHomePage> {
           json.encode(
             activityStates.map((k, v) => MapEntry(k, v.toJson())),
           ));
+    });
+
+    setUnlockedActivities();
+  }
+
+  maxOutKeys() async {
+    var prefs = PrefsUpdater();
+
+    setState(() {
+      activityStates = defaultActivityStates2;
+      prefs.setString(
+        activityStatesKey,
+        json.encode(
+          activityStates.map((k, v) => MapEntry(k, v.toJson())),
+        ));
     });
 
     setUnlockedActivities();
@@ -208,16 +261,32 @@ class _MyHomePageState extends State<MyHomePage> {
             appBar: AppBar(
               title: Text('MEM++ Homepage'),
               actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.add_box),
-                  onPressed: () {
-                    Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) {
-                        return CustomTestManagerScreen();
-                      }));
-                  },
-                ),
+                customTestManagerAvailable ? Stack(
+                  children: <Widget>[
+                    Center(
+                      child: IconButton(
+                        icon: Icon(Icons.add_box),
+                        color: Colors.deepPurple,
+                        onPressed: () {
+                          checkCustomTestManagerFirstTime();
+                        },
+                      ),
+                    ),
+                    customTestManagerFirstView ? Positioned(
+                      child: Container(
+                        width: 33,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Colors.red[200],
+                        ),
+                        child: Center(child: Text('new!', style: TextStyle(fontSize: 10, fontFamily: 'SpaceMono', color: Colors.black),)),
+                      ),
+                      left: 5,
+                      top: 6) : Container()
+                  ],
+                ) : Container(),
                 IconButton(
                   icon: Icon(Icons.info),
                   onPressed: () {
@@ -259,10 +328,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: getReview(),
                     ),
-                    FlatButton(
+                    BasicFlatButton(
                       onPressed: () => resetKeys(),
-                      child: Text('reset'),
-                    )
+                      text: 'reset',
+                    ),
+                    BasicFlatButton(
+                      onPressed: () => maxOutKeys(),
+                      text: 'max out everything',
+                    ),
                   ],
                 ),
               ),
@@ -438,6 +511,7 @@ class HomepageHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'Homescreen',
       information: ['    This is the homescreen! The first time you open any screen, the information '
         'regarding the screen will pop up. Access the information again at any time by clicking the '
         'info icon in the top right corner! '],

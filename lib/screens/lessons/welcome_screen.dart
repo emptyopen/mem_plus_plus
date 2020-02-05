@@ -136,9 +136,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       style: TextStyle(fontSize: 17),
     ),
     Text(
-      '    A lot of techniques that you will learn require an investment of time. Not much though, '
-      'and the benefits pay for life! Besides, the '
-      'point of this app is to make it as easy as possible to break into this. '
+      '    Don\'t worry, this app is free! Some techniques for specialized situations, '
+        'like memorizing a deck of cards, might be hidden behind '
+        'a paywall down the road. But the only investment you DO need to make is some of your time. It\'ll fly by though, '
+      'and the benefits pay for life! '
       'Trust me, once you\'ve achieved some proficiency in the some of these systems, '
       'you\'ll be glad you did. \n    Never pull out a credit card, a passport, or a license for those pesky numbers '
       'and expiration dates. Remember everyone\'s name at a new party, '

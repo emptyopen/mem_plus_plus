@@ -66,28 +66,31 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('PAO: view/edit'), actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.arrow_downward),
-          onPressed: () {
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return CSVImporter(callback: callback);
-                }));
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return PAOEditScreenHelp();
-                }));
-          },
-        ),
-      ]),
+      appBar: AppBar(
+          title: Text('PAO: view/edit'),
+          backgroundColor: Colors.pink[200],
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.arrow_downward),
+              onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return CSVImporter(callback: callback);
+                    }));
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return PAOEditScreenHelp();
+                    }));
+              },
+            ),
+          ]),
       body: Center(
           child: ListView(
         children: getPAOEditCards(),

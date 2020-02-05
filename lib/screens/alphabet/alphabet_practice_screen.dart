@@ -66,6 +66,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Alphabet: practice'),
+        backgroundColor: Colors.blue[200],
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info),

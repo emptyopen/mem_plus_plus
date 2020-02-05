@@ -70,9 +70,9 @@ var defaultActivityStates2 = {
   'AlphabetWrittenTest': Activity('AlphabetWrittenTest', 'review', true, DateTime.now(), false),
   'AlphabetTimedTestPrep': Activity('AlphabetTimedTestPrep', 'review', true, DateTime.now(), false),
   'AlphabetTimedTest': Activity('AlphabetTimedTest', 'review', false, DateTime.now(), false),
-  'PAOEdit': Activity('PAOEdit', 'todo', true, DateTime.now(), true),
-  'PAOPractice': Activity('PAOPractice', 'todo', true, DateTime.now(), true),
-  'PAOMultipleChoiceTest': Activity('PAOMultipleChoiceTest', 'todo', false, DateTime.now(), true),
-  'PAOTimedTestPrep': Activity('PAOTimedTestPrep', 'todo', false, DateTime.now(), true),
+  'PAOEdit': Activity('PAOEdit', 'review', true, DateTime.now(), false),
+  'PAOPractice': Activity('PAOPractice', 'review', true, DateTime.now(), false),
+  'PAOMultipleChoiceTest': Activity('PAOMultipleChoiceTest', 'review', true, DateTime.now(), false),
+  'PAOTimedTestPrep': Activity('PAOTimedTestPrep', 'todo', true, DateTime.now(), true),
   'PAOTimedTest': Activity('PAOTimedTest', 'todo', false, DateTime.now(), true),
 };

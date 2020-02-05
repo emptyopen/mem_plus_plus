@@ -73,6 +73,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('PAO: practice'),
+        backgroundColor: Colors.pink[200],
         actions: <Widget>[
           // action button
           IconButton(

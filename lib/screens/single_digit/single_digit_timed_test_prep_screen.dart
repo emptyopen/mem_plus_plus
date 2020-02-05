@@ -81,6 +81,7 @@ class _SingleDigitTimedTestPrepScreenState
     return Scaffold(
       appBar: AppBar(
           title: Text('Single digit: timed test preparation'),
+        backgroundColor: Colors.amber[200],
           actions: <Widget>[
             // action button
             IconButton(

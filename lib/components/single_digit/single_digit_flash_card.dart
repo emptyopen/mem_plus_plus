@@ -22,6 +22,12 @@ class _SingleDigitFlashCardState extends State<SingleDigitFlashCard> {
     await prefs.updateActivityState('SingleDigitPractice', 'review');
     await prefs.updateActivityVisible('SingleDigitMultipleChoiceTest', true);
     await prefs.updateActivityFirstView('SingleDigitMultipleChoiceTest', true);
+
+    // todo: this needs to move to end of PAO, just dev for now
+    await prefs.setBool('CustomTestManagerAvailable', true);
+    if (await prefs.getBool('CustomTestManagerFirstView') == null) {
+      await prefs.setBool('CustomTestManagerFirstView', true);
+    }
     widget.callback();
   }
 

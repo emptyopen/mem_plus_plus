@@ -63,7 +63,9 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Single digit: view/edit'), actions: <Widget>[
+      appBar: AppBar(title: Text('Single digit: view/edit'),
+        backgroundColor: Colors.amber[200],
+        actions: <Widget>[
         // action button
         IconButton(
           icon: Icon(Icons.info),
@@ -85,50 +87,8 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
 }
 
 class SingleDigitEditScreenHelp extends StatelessWidget {
-//  final List<Widget> information = [
-//    Column(
-//      children: <Widget>[
-//        Text(
-//          '    Welcome to your first system, the single digit system! '
-//          'The idea behind this system is to link the nine digits (0-9) to different objects. \n'
-//          '    Numbers are abstract and difficult to remember, but if we '
-//          'convert them to images, especially strange and vivid images, they suddenly '
-//          'becomes much easier to remember. For sequences of numbers, we simply string them together '
-//          'into the scenes of a strange story. ',
-//          style: TextStyle(fontSize: 18),
-//          textAlign: TextAlign.left,
-//        ),
-//        SizedBox(
-//          height: 20,
-//        ),
-//        Text(
-//          '(Swipe for more information)',
-//          style: TextStyle(fontSize: 16, color: Colors.grey[500]),
-//          textAlign: TextAlign.center,
-//        ),
-//        Icon(Icons.arrow_forward),
-//      ],
-//    ),
-//    Text(
-//      '    The default values I\'ve inserted here uses the '
-//      'idea of a "shape" pattern. That is, each object corresponds to what the '
-//      'actual digit it represents is shaped like. For example, 1 looks like a '
-//      'stick, 4 like a sailboat. \n    Another pattern could be "rhyming". 2 could be '
-//      'shoe, 5 could be a bee hive. Or maybe you just have a a strong association with a certain '
-//      'object for particular digits! ',
-//      style: TextStyle(fontSize: 18),
-//    ),
-//    Text(
-//      '    You can really assign anything '
-//      'to any digit, it just makes it easier to remember (initially) if you have some kind of pattern. '
-//      'Make sure that the objects don\'t overlap conceptually, as much as possible! \n    It\'s totally '
-//      'ok to change digit associations as you progress, but don\'t forget that '
-//      'when you edit a digit it will reset your familiarity for that object back to zero! '
-//      'Familiarity is listed on the right side of the tiles. ',
-//      style: TextStyle(fontSize: 18),
-//    )
-//  ];
-  var information = [
+
+  final information = [
     '    Welcome to your first system, the single digit system! '
           'The idea behind this system is to link the nine digits (0-9) to different objects. \n'
           '    Numbers are abstract and difficult to remember, but if we '

@@ -6,6 +6,7 @@ import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard.dart';
 
 class PrefsUpdater {
   String activityStatesKey = 'ActivityStates';
@@ -35,6 +36,8 @@ class PrefsUpdater {
         return singleDigitData;
       case 'Level':
         return prefs.getInt(levelKey);
+      case 'CustomTests':
+        return json.decode(prefs.getString(key));
     }
     return null;
   }
@@ -47,6 +50,9 @@ class PrefsUpdater {
         prefs.setString(activityStatesKey, json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
         break;
       case 'PAO':
+        prefs.setString(key, json.encode(object));
+        break;
+      case 'CustomTests':
         prefs.setString(key, json.encode(object));
         break;
     }
@@ -155,4 +161,37 @@ void showSnackBar(BuildContext context, String snackBarText, Color textColor, Co
     backgroundColor: backgroundColor,
   );
   Scaffold.of(context).showSnackBar(snackBar);
+}
+
+void showConfirmDialog(BuildContext context, Function function, String confirmText) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(),
+          borderRadius: BorderRadius.circular(5)
+        ),
+        title: Text('Confirm'),
+        content: Text(confirmText),
+        actions: <Widget>[
+          BasicFlatButton(
+            text: 'Cancel',
+            color: Colors.grey[300],
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          BasicFlatButton(
+            text: 'Confirm',
+            color: Colors.redAccent[100],
+            onPressed: () {
+              function();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

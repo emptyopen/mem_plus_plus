@@ -3,9 +3,10 @@ import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 
 class HelpScreen extends StatefulWidget {
+  final String title;
   final List<String> information;
 
-  HelpScreen({this.information});
+  HelpScreen({this.title = '', this.information});
 
   @override
   _HelpScreenState createState() => _HelpScreenState();
@@ -39,14 +40,18 @@ class _HelpScreenState extends State<HelpScreen> {
         ],
       ));
       widget.information.sublist(1).forEach((f) {
-        informationList.add(Text(f,
-        style: TextStyle(fontSize: 18),
-        textAlign: TextAlign.left,));
+        informationList.add(Text(
+          f,
+          style: TextStyle(fontSize: 18),
+          textAlign: TextAlign.left,
+        ));
       });
     } else {
-      informationList.add(Text(widget.information[0],
+      informationList.add(Text(
+        widget.information[0],
         style: TextStyle(fontSize: 18),
-        textAlign: TextAlign.left,));
+        textAlign: TextAlign.left,
+      ));
     }
   }
 
@@ -73,6 +78,14 @@ class _HelpScreenState extends State<HelpScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      Text(
+                        widget.title,
+                        style: TextStyle(
+                          fontSize: 28,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30,),
                       ParallaxContainer(
                         child: Container(
                             decoration: BoxDecoration(

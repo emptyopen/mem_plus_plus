@@ -195,7 +195,9 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('PAO: timed test prep'), actions: <Widget>[
+      appBar: AppBar(title: Text('PAO: timed test prep'),
+        backgroundColor: Colors.pink[200],
+        actions: <Widget>[
         // action button
         IconButton(
           icon: Icon(Icons.info),
