@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:mem_plus_plus/components/custom_memory/id_card.dart';
 import 'package:mem_plus_plus/components/custom_memory/contact.dart';
 import 'package:mem_plus_plus/components/custom_memory/other.dart';
+import 'dart:async';
 
 const String contactString = 'Contact';
 const String idCardString = 'ID/Credit Card';
@@ -13,10 +14,13 @@ const String recipeString = 'Recipe';
 const String otherString = 'Other';
 
 Map testIconMap = {
-  contactString: Icon(Icons.add),
-  idCardString: Icon(Icons.multiline_chart),
-  recipeString: Icon(Icons.add),
-  otherString: Icon(Icons.add),
+  contactString: Icon(Icons.person_pin, size: 40),
+  idCardString: Icon(
+    Icons.credit_card,
+    size: 40,
+  ),
+  recipeString: Icon(Icons.add, size: 40),
+  otherString: Icon(Icons.add, size: 40),
 };
 
 class CustomTestManagerScreen extends StatefulWidget {
@@ -37,11 +41,16 @@ class CustomTestManagerScreen extends StatefulWidget {
 class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
   Map customTests = {};
   String customTestsKey = 'CustomTests';
+  Column customTestsColumn = Column();
 
   @override
   void initState() {
     super.initState();
     getSharedPrefs();
+    new Timer.periodic(Duration(seconds: 1), (Timer t) {
+      getCustomTests();
+      setState(() {});
+    });
   }
 
   Future<Null> getSharedPrefs() async {
@@ -65,36 +74,39 @@ class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
     setState(() {});
   }
 
-  Widget getCustomTests() {
-    List<CustomTestItem> customTestItems = [];
+  void getCustomTests() {
+    List<CustomTestTile> customTestTiles = [];
     for (String customTestKey in customTests.keys) {
       var customTest = customTests[customTestKey];
-      customTestItems.add(CustomTestItem(
+      customTestTiles.add(CustomTestTile(
         customTest: customTest,
         callback: callback,
       ));
     }
-    return Column(children: customTestItems);
+    setState(() {
+      customTestsColumn = Column(children: customTestTiles);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Custom test management'),
-          backgroundColor: Colors.purple[200],
-          actions: <Widget>[
-          // action button
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                  opaque: false,
-                  pageBuilder: (BuildContext context, _, __) {
-                    return CustomTestManagerScreenHelp();
-                  }));
-            },
-          ),
-        ]),
+        appBar: AppBar(
+            title: Text('Custom test management'),
+            backgroundColor: Colors.purple[200],
+            actions: <Widget>[
+              // action button
+              IconButton(
+                icon: Icon(Icons.info),
+                onPressed: () {
+                  Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return CustomTestManagerScreenHelp();
+                      }));
+                },
+              ),
+            ]),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -116,18 +128,18 @@ class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
               SizedBox(
                 height: 30,
               ),
-              getCustomTests(),
+              customTestsColumn,
             ],
           ),
         ));
   }
 }
 
-class CustomTestItem extends StatelessWidget {
+class CustomTestTile extends StatelessWidget {
   final Map customTest;
   final Function callback;
 
-  CustomTestItem({this.customTest, this.callback});
+  CustomTestTile({this.customTest, this.callback});
 
   deleteCustomTest() async {
     var prefs = PrefsUpdater();
@@ -137,44 +149,53 @@ class CustomTestItem extends StatelessWidget {
     callback();
   }
 
+  String findRemainingTime() {
+    var nextDateTime = findNextDatetime(customTest['startDatetime'], customTest['spacedRepetitionType'], customTest['spacedRep']);
+    var remainingTime = nextDateTime.difference(DateTime.now());
+    return durationToString(remainingTime);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: testIconMap[customTest['type']],
-      title: Text('${customTest['title']}', style: TextStyle(fontSize: 20)),
-      subtitle: Text(
-        '${customTest['type']}',
-        style: TextStyle(fontSize: 16),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            width: 50,
-            child: FlatButton(
-              child: Icon(
-                Icons.remove_red_eye,
-                color: Colors.deepPurpleAccent,
+    return Card(
+      child: ListTile(
+        leading: testIconMap[customTest['type']],
+        title: Text('${customTest['title']}', style: TextStyle(fontSize: 20)),
+        subtitle: Text(
+          '${customTest['type']}\n'
+            'Next checkup in ${findRemainingTime()}',
+          style: TextStyle(fontSize: 16),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              width: 50,
+              child: FlatButton(
+                child: Icon(
+                  Icons.remove_red_eye,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onPressed: () => showConfirmDialog(
+                    context,
+                    null,
+                    'Are you sure you\'d like to view this memory? Doing so '
+                    'will reset the spaced repetition schedule back to the beginning!'),
               ),
-              onPressed: () => showConfirmDialog(
-                  context,
-                  null,
-                  'Are you sure you\'d like to view this memory? Doing so '
-                  'will reset the spaced repetition schedule back to the beginning!'),
             ),
-          ),
-          Container(
-            width: 50,
-            child: FlatButton(
-              child: Icon(
-                Icons.delete,
-                color: Colors.red,
+            Container(
+              width: 50,
+              child: FlatButton(
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+                onPressed: () => showConfirmDialog(context, deleteCustomTest,
+                    'Delete memory: ${customTest['title']}?'),
               ),
-              onPressed: () => showConfirmDialog(context, deleteCustomTest,
-                  'Delete memory: ${customTest['title']}?'),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -211,7 +232,7 @@ class MyDialogContent extends StatefulWidget {
 }
 
 class _MyDialogContentState extends State<MyDialogContent> {
-  String dropdownValue = 'Contact';
+  String dropdownValue = idCardString;
 
   @override
   void initState() {
@@ -225,7 +246,9 @@ class _MyDialogContentState extends State<MyDialogContent> {
   Widget getMemoryType() {
     switch (dropdownValue) {
       case contactString:
-        return ContactInput();
+        return ContactInput(
+          callback: callback,
+        );
         break;
       case idCardString:
         return IDCardInput(

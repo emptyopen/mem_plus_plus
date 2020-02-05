@@ -168,7 +168,6 @@ class _MyHomePageState extends State<MyHomePage> {
   checkCustomTestManagerFirstTime() async {
     var prefs = PrefsUpdater();
     if (await prefs.getBool(customTestManagerFirstHelpKey) == true) {
-      print('turning off');
       setState(() {customTestManagerFirstView = false;});
       await prefs.setBool(customTestManagerFirstHelpKey, false);
     }
@@ -197,6 +196,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   maxOutKeys() async {
     var prefs = PrefsUpdater();
+
+    await prefs.setBool('CustomTestManagerAvailable', true);
+    customTestManagerAvailable = true;
 
     setState(() {
       activityStates = defaultActivityStates2;

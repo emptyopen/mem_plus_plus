@@ -195,3 +195,36 @@ void showConfirmDialog(BuildContext context, Function function, String confirmTe
     },
   );
 }
+
+DateTime findNextDatetime(String startDatetime, String spacedRepetitionType, int spacedRep) {
+
+  String shortTerm = 'short term (1d ~ 1w)';
+  String mediumTerm = 'medium term (1w ~ 3m)';
+  String longTerm = 'long term (3m ~ 1y)';
+  String extraLongTerm = 'extra long term (1y ~ life)';
+
+  // fib: 1 2 3 5 8 13 21 34
+  //  30 60 90 150 210 390 630 1020
+  //  30 120 330 810 1830 4050 8730 18480
+
+  Map termDurationsMap = {
+    shortTerm: [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
+    mediumTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10)],
+    longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
+    extraLongTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90), Duration(days: 180), Duration(days: 400)],
+  };
+  return DateTime.parse(startDatetime).add(termDurationsMap[spacedRepetitionType][spacedRep]);
+}
+
+String durationToString(Duration duration) {
+  int hours = duration.inHours;
+  int minutes = duration.inMinutes - hours * 60;
+  int seconds = duration.inSeconds - minutes * 60 - hours * 3600;
+  if (hours > 1) {
+    return '${hours}h ${minutes}m';
+  } else if (minutes >= 1) {
+    return '${minutes}m ${seconds}s';
+  } else {
+    return '$seconds seconds!';
+  }
+}

@@ -5,6 +5,8 @@ class OtherInput extends StatefulWidget {
   _OtherInputState createState() => _OtherInputState();
 }
 
+// todo: use template
+
 class _OtherInputState extends State<OtherInput> {
 
   final titleTextController = TextEditingController();

@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/activities.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class BasicFlatButton extends StatelessWidget {
 
@@ -61,16 +62,7 @@ class MainMenuOption extends StatelessWidget {
   });
 
   String generateTimeRemaining() {
-    int hours = activity.visibleAfter.difference(DateTime.now()).inHours;
-    int minutes = activity.visibleAfter.difference(DateTime.now()).inMinutes - hours * 60;
-    int seconds = activity.visibleAfter.difference(DateTime.now()).inSeconds - minutes * 60 - hours * 3600;
-    if (hours > 1) {
-      return 'Available in ${hours}h ${minutes}m';
-    } else if (minutes >= 1) {
-      return 'Available in ${minutes}m ${seconds}s';
-    } else {
-      return 'Available in $seconds seconds!';
-    }
+    return durationToString(activity.visibleAfter.difference(DateTime.now()));
   }
 
   @override

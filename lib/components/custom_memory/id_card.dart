@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/custom_memory/custom_memory_template.dart';
 
 class IDCardInput extends StatefulWidget {
   final Function() callback;
@@ -16,10 +17,26 @@ class _IDCardInputState extends State<IDCardInput> {
   final idCardNumberTextController = TextEditingController();
   final idCardExpirationTextController = TextEditingController();
   final idCardOtherTextController = TextEditingController();
-  String spacedRepetitionChoice = '30m-2h-12h-48h';
-  String beginner = '30m-2h-12h-48h';
-  String intermediate = '1h-6h-24h-4d';
-  String expert = '1h-6h-24h-7d-21d';
+  String spacedRepetitionChoice = 'short term (1d ~ 1w)';
+  String shortTerm = 'short term (1d ~ 1w)';
+  String mediumTerm = 'medium term (1w ~ 3m)';
+  String longTerm = 'long term (3m ~ 1y)';
+  String extraLongTerm = 'extra long term (1y ~ life)';
+  final List<MemoryField> memoryFields = [];
+
+  @override
+  void initState() {
+    super.initState();
+    memoryFields.add(MemoryField(
+      text: 'ID title *', controller: idCardTitleTextController));
+    memoryFields.add(MemoryField(
+      text: 'ID number *', controller: idCardNumberTextController));
+    memoryFields.add(MemoryField(
+      text: 'ID expiration *',
+      controller: idCardExpirationTextController));
+    memoryFields.add(MemoryField(
+      text: 'Other', controller: idCardOtherTextController));
+  }
 
   @override
   void dispose() {
@@ -32,10 +49,15 @@ class _IDCardInputState extends State<IDCardInput> {
 
   addMemory() async {
     var prefs = PrefsUpdater();
+    if (idCardTitleTextController.text == '') {
+      print('need title');
+      return false;
+    }
     if (idCardNumberTextController.text == '') {
       print('need number');
       return false;
-    } else if (idCardExpirationTextController.text == '') {
+    }
+    if (idCardExpirationTextController.text == '') {
       print('need expiration');
       return false;
     }
@@ -52,7 +74,7 @@ class _IDCardInputState extends State<IDCardInput> {
       'number': idCardNumberTextController.text,
       'expiration': idCardExpirationTextController.text,
       'other': idCardOtherTextController.text,
-      'spacedRepetition': spacedRepetitionChoice,
+      'spacedRepetitionType': spacedRepetitionChoice,
     };
     customTests[map['title']] = map;
     await prefs.writeSharedPrefs('CustomTests', customTests);
@@ -62,101 +84,9 @@ class _IDCardInputState extends State<IDCardInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text('ID title:'),
-        Container(
-          width: 230,
-          height: 30,
-          child: TextField(
-            textAlign: TextAlign.center,
-            controller: idCardTitleTextController,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(5),
-              border: OutlineInputBorder(),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepPurple))
-            ),
-          ),
-        ),
-        Text('ID number:'),
-        Container(
-          width: 230,
-          height: 30,
-          child: TextField(
-            textAlign: TextAlign.center,
-            controller: idCardNumberTextController,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(5),
-              border: OutlineInputBorder(),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepPurple))
-            ),
-          ),
-        ),
-        Text('ID expiration:'),
-        Container(
-          width: 230,
-          height: 30,
-          child: TextField(
-            textAlign: TextAlign.center,
-            controller: idCardExpirationTextController,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(5),
-              border: OutlineInputBorder(),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepPurple))
-            ),
-          ),
-        ),
-        Text('Other:'),
-        Container(
-          width: 230,
-          height: 30,
-          child: TextField(
-            textAlign: TextAlign.center,
-            controller: idCardOtherTextController,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(5),
-              border: OutlineInputBorder(),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepPurple))
-            ),
-          ),
-        ),
-        SizedBox(height: 10,),
-        Text('Spaced Repetition:'),
-        DropdownButton<String>(
-          value: spacedRepetitionChoice,
-          elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String newValue) {
-            setState(() {
-              spacedRepetitionChoice = newValue;
-            });
-          },
-          items: <String>[beginner, intermediate, expert]
-            .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value, style: TextStyle(fontSize: 16, fontFamily: 'Rajdhani'),),
-            );
-          }).toList(),
-        ),
-        FlatButton(
-          onPressed: () => addMemory(),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-            ),
-            padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-            child: Text(
-              'Start',
-              style: TextStyle(fontSize: 18.0),
-            ),
-          )),
-      ],
+    return CustomerMemoryInput(
+      addMemory: addMemory,
+      memoryFields: memoryFields,
     );
   }
 }
