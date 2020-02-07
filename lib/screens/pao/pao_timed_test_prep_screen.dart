@@ -186,8 +186,8 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     await prefs.updateActivityVisible('PAOTimedTest', true);
     await prefs.updateActivityFirstView('PAOTimedTest', true);
     await prefs.updateActivityVisibleAfter(
-        'PAOTimedTest', DateTime.now().add(Duration(seconds: 10)));
-    Timer(Duration(seconds: 10), widget.callback);
+        'PAOTimedTest', DateTime.now().add(Duration(hours: 4)));
+    Timer(Duration(hours: 4), widget.callback);
     widget.callback();
     Navigator.pop(context);
   }
@@ -305,7 +305,7 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
         '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '
             'and link the scenes together. Remember, person-action-object, and really create a connection '
             'between scenes. ',
-        '    If the first scene is Galileo cooking fervently with a paintbrush, and the second scene '
+        '    If the first scene is Galileo fervently cooking with a paintbrush, and the second scene '
             'is Sandra Bullock slam-dunking some poker chips, maybe Galileo finishes cooking the dish (full of paint), '
             'and Sandra takes a big gulp of it, now paint is all around her mouth! What a messy eater Sandra is. Oh '
             'well, she\'s mad about the paint so she\'s going to go dunk some poker chips to cool off.'

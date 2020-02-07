@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/custom_memory/custom_memory_template.dart';
 
 class IDCardInput extends StatefulWidget {
@@ -12,30 +11,42 @@ class IDCardInput extends StatefulWidget {
 }
 
 class _IDCardInputState extends State<IDCardInput> {
-
+  // TODO move these to template
   final idCardTitleTextController = TextEditingController();
   final idCardNumberTextController = TextEditingController();
   final idCardExpirationTextController = TextEditingController();
   final idCardOtherTextController = TextEditingController();
-  String spacedRepetitionChoice = 'short term (1d ~ 1w)';
-  String shortTerm = 'short term (1d ~ 1w)';
-  String mediumTerm = 'medium term (1w ~ 3m)';
-  String longTerm = 'long term (3m ~ 1y)';
-  String extraLongTerm = 'extra long term (1y ~ life)';
+  final idCardOtherFieldTextController = TextEditingController();
   final List<MemoryField> memoryFields = [];
 
   @override
   void initState() {
     super.initState();
     memoryFields.add(MemoryField(
-      text: 'ID title *', controller: idCardTitleTextController));
+        text: 'ID title',
+        mapKey: 'title',
+        controller: idCardTitleTextController,
+        required: true,
+        inputType: 'string'));
     memoryFields.add(MemoryField(
-      text: 'ID number *', controller: idCardNumberTextController));
+        text: 'ID number',
+        mapKey: 'number',
+        controller: idCardNumberTextController,
+        required: true,
+        inputType: 'string'));
     memoryFields.add(MemoryField(
-      text: 'ID expiration *',
-      controller: idCardExpirationTextController));
+        text: 'ID expiration',
+        mapKey: 'expiration',
+        controller: idCardExpirationTextController,
+        required: false,
+        inputType: 'date'));
     memoryFields.add(MemoryField(
-      text: 'Other', controller: idCardOtherTextController));
+        text: 'Custom field',
+        mapKey: 'other',
+        fieldController: idCardOtherFieldTextController,
+        controller: idCardOtherTextController,
+        required: false,
+        inputType: 'other'));
   }
 
   @override
@@ -44,49 +55,20 @@ class _IDCardInputState extends State<IDCardInput> {
     idCardNumberTextController.dispose();
     idCardExpirationTextController.dispose();
     idCardOtherTextController.dispose();
+    idCardOtherFieldTextController.dispose();
     super.dispose();
   }
 
-  addMemory() async {
-    var prefs = PrefsUpdater();
-    if (idCardTitleTextController.text == '') {
-      print('need title');
-      return false;
-    }
-    if (idCardNumberTextController.text == '') {
-      print('need number');
-      return false;
-    }
-    if (idCardExpirationTextController.text == '') {
-      print('need expiration');
-      return false;
-    }
-    var customTests = await prefs.getSharedPrefs('CustomTests') as Map;
-    if (customTests.containsKey(idCardTitleTextController.text)) {
-      print('already have!');
-      return false;
-    }
-    Map map = {
-      'type': 'ID/Credit Card',
-      'title': idCardTitleTextController.text,
-      'startDatetime': DateTime.now().toIso8601String(),
-      'spacedRep': 0,
-      'number': idCardNumberTextController.text,
-      'expiration': idCardExpirationTextController.text,
-      'other': idCardOtherTextController.text,
-      'spacedRepetitionType': spacedRepetitionChoice,
-    };
-    customTests[map['title']] = map;
-    await prefs.writeSharedPrefs('CustomTests', customTests);
+  callback() {
     widget.callback();
-    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomerMemoryInput(
-      addMemory: addMemory,
+    return CustomMemoryInput(
+      callback: callback,
       memoryFields: memoryFields,
+      memoryType: 'ID/Credit Card',
     );
   }
 }

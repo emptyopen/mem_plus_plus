@@ -32,9 +32,7 @@ class _PAOMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'PAOMultipleChoiceTestFirstHelp', PAOMultipleChoiceScreenHelp());
-    paoData = (json.decode(await prefs.getString(paoKey)) as List)
-        .map((i) => PAOData.fromJson(i))
-        .toList();
+    paoData = await prefs.getSharedPrefs(paoKey);
     paoData = shuffle(paoData);
     setState(() {});
   }

@@ -29,6 +29,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       textAlign: TextAlign.center,
     ),
     Text(
+      'What?',
+      style: TextStyle(fontSize: 32),
+      textAlign: TextAlign.center,
+    ),
+    Text(
       'Myth-busting! (1/2)',
       style: TextStyle(fontSize: 32),
       textAlign: TextAlign.center,
@@ -44,7 +49,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       textAlign: TextAlign.center,
     ),
     Text(
-      'Invest!',
+      'Invest in yourself!',
       style: TextStyle(fontSize: 32),
       textAlign: TextAlign.center,
     ),
@@ -56,7 +61,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   ];
 
   final List<Icon> icons = [
-    Icon(Icons.people, size: 60),
+    Icon(Icons.flight_takeoff, size: 60),
+    Icon(Icons.live_help, size: 60),
     Icon(Icons.cancel, size: 60),
     Icon(Icons.cancel, size: 60),
     Icon(Icons.remove_red_eye, size: 60),
@@ -68,14 +74,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text(
-          'You\'re going to get a superpower! \n\n'
-          'But let\'s resolve some myths first...\n',
+          'So glad you could join us. \n\n'
+          'We\'re going to get you a superpower.\n',
           style: TextStyle(fontSize: 22),
           textAlign: TextAlign.center,
         ),
         Text(
           '(Swipe through this walkthrough)',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: Colors.grey),
           textAlign: TextAlign.center,
         )
       ],
@@ -83,7 +89,24 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text(
+          '    Have you ever immediately forgotten why you walked into a room? Has someone\'s name '
+          'at a party skipped over your brain like a flat stone on a smooth lake? Have you spent more than '
+          '20 minutes looking for your car? Your keys? Forgot that final critical item only after coming home from '
+          'shopping? \n    We\'re going to remedy all that, and much more. Can you imagine a life where you never '
+            'forget anything important? Not only the big stuff - it\'s the small stuff that starts to accumulate. '
+            '\n    I crack a smile every time I have to fill out a customs form. Passport number? Check. Flight code? Got it. '
+            'I mail a package to my friend, and I don\'t have to dig through ancient text conversations to retrieve his address '
+            'because my brain serves it up like a butler.\n'
+          '    Let\'s go bust some myths...',
+          style: TextStyle(fontSize: 17),
+        ),
+      ],
+    ),
+    Column(
+      children: <Widget>[
+        Text(
           '"My memory is bad, and there\'s nothing I can do about it."',
+          textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22),
         ),
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
@@ -93,11 +116,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           '(something which doesn\'t actually exist). '
           'They are just ordinary people who suddenly understand that they are capable, '
           'and make it their responsibility to improve their memory.\n'
-          '    I can tell you from personal experience that at the age of 29 '
+          '    I can tell you from personal experience that at the ripe old age of 29 '
           'I was resigned to have a terrible memory for the rest of my life. '
           'All I did was encounter these strategies by accident while waiting in line for ramen, '
           'and within months I was able to rapidly improve my memory beyond all recognition.'
-          '\n   If I can do it, so can you.',
+          '\n   If I can do it, so can you. ',
           style: TextStyle(fontSize: 17),
         ),
       ],
@@ -106,6 +129,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       children: <Widget>[
         Text(
           '"The brain can only store so much information."',
+          textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22),
         ),
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
@@ -116,8 +140,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           'If you store them correctly, more vital information won\'t get pushed out of your brain.\n'
           '    This is actually a good time to compare our brains to a computer. You wouldn\'t '
           'save every file onto your desktop in a disorganized mess, would you? '
-          'Then let\'s not do that with our memories. You\'ll practice methods to compartmentalize down the line.'
-          '',
+          'Then let\'s not do that with our memories. You\'ll practice methods to compartmentalize down the line.',
           style: TextStyle(fontSize: 17),
         ),
       ],
@@ -137,11 +160,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     ),
     Text(
       '    Don\'t worry, this app is free! Some techniques for specialized situations, '
-        'like memorizing a deck of cards, might be hidden behind '
-        'a paywall down the road. But the only investment you DO need to make is some of your time. It\'ll fly by though, '
-      'and the benefits pay for life! '
-      'Trust me, once you\'ve achieved some proficiency in the some of these systems, '
-      'you\'ll be glad you did. \n    Never pull out a credit card, a passport, or a license for those pesky numbers '
+      'like memorizing a deck of cards, might be hidden behind '
+      'a paywall down the road. But the only investment you DO need to make is some of your time. '
+      'Trust me though, once you\'ve achieved some proficiency in the some of these systems, '
+      'you\'ll be glad you did. The benefits pay for life!\n    Never pull out a credit card, a passport, or a license for those pesky numbers '
       'and expiration dates. Remember everyone\'s name at a new party, '
       'and put on a performance by memorizing a deck of cards in less than '
       'a minute. Never again walk into a room and forget what you needed to do. Save yourself the hassle of running '
@@ -152,11 +174,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Text(
       '    We\'ll start with some basic systems, and as you master them, new ones will unlock. '
       'In the main menu, you will be presented with a TO-DO section and a REVIEW section. \n'
-      '    New systems and tasks will show up in the TO-DO section, and all systems you have mastered '
+      '    New systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
       'will still be available in the REVIEW section. \n'
       '    When you start a new system, click the information button in the menu bar '
       'if you have any questions getting started. Hopefully the UX is such that you only need to '
-        'consult it as a reference ;)\n\n    Okay, off you go!\n      - Matt',
+      'consult it as a reference ;)\n\n    Okay, off you go!\n      - Matt',
       style: TextStyle(fontSize: 18),
     ),
   ];
@@ -229,7 +251,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           ? SizedBox(
                               height: 40,
                             )
-                          : Container(),
+                          : SizedBox(
+                              height: 10,
+                            ),
                       ParallaxContainer(
                         child: icons[info.index],
                         position: info.position,
@@ -255,7 +279,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           : SizedBox(
                               height: 10,
                             ),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       info.index != headers.length - 1
                           ? Container()
                           : ParallaxContainer(
@@ -284,15 +310,18 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         }),
         itemCount: headers.length);
 
-    return widget.firstTime ? Scaffold(
-      backgroundColor: Colors.white,
-      body: transformerPageView,
-    ) : Scaffold(
-      appBar: AppBar(
-        title: Text('Welcome'),
-      ),
-      backgroundColor: Colors.white,
-      body: transformerPageView,
-    );
+    return widget.firstTime
+        ? Scaffold(
+            backgroundColor: Colors.white,
+            body: transformerPageView,
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('Welcome'),
+              backgroundColor: Colors.green[100],
+            ),
+            backgroundColor: Colors.white,
+            body: transformerPageView,
+          );
   }
 }

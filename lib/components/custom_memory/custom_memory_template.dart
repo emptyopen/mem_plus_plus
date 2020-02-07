@@ -1,45 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
-class CustomerMemoryInput extends StatefulWidget {
-  final Function() addMemory;
+String customMemoriesKey = 'CustomMemories';
+
+class CustomMemoryInput extends StatefulWidget {
+  final Function() callback;
   final List<MemoryField> memoryFields;
+  final String memoryType;
 
-  CustomerMemoryInput({this.addMemory, this.memoryFields});
+  CustomMemoryInput({this.callback, this.memoryFields, this.memoryType});
 
   @override
-  _CustomerMemoryInputState createState() => _CustomerMemoryInputState();
+  _CustomMemoryInputState createState() => _CustomMemoryInputState();
 }
 
-class _CustomerMemoryInputState extends State<CustomerMemoryInput> {
+class _CustomMemoryInputState extends State<CustomMemoryInput> {
   // todo: generalize these
-  String spacedRepetitionChoice = 'short term (1d ~ 1w)';
+  String spacedRepetitionChoice = 'long term (3m ~ 1y)';
   String shortTerm = 'short term (1d ~ 1w)';
   String mediumTerm = 'medium term (1w ~ 3m)';
   String longTerm = 'long term (3m ~ 1y)';
   String extraLongTerm = 'extra long term (1y ~ life)';
+  Set errors = Set();
 
   getFields() {
     List<Widget> fieldsList = [];
     widget.memoryFields.forEach((memoryField) {
-      fieldsList.add(Text(
-        '${memoryField.text}',
-        style: TextStyle(fontSize: 20),
-      ));
-      fieldsList.add(
-        Container(
-          width: 230,
+
+      // if other, have field be textfield
+      if (memoryField.inputType == 'other') {
+        fieldsList.add(Container(
+          width: 160,
           height: 30,
-          child: TextField(
-            textAlign: TextAlign.center,
-            controller: memoryField.controller,
-            decoration: InputDecoration(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Flexible(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  controller: memoryField.fieldController,
+                  decoration: InputDecoration(
+                    hintText: memoryField.text,
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepPurple))),
+                ),
+              ),
+              memoryField.required ? Text(' *', style: TextStyle(fontSize: 20),) : Container()
+            ],
+          ),
+        ));
+        fieldsList.add(SizedBox(height: 5,));
+      } else {
+        String title = memoryField.text;
+        if (memoryField.required) {
+          title += ' *';
+        }
+        fieldsList.add(Text(title, style: TextStyle(fontSize: 20)));
+      }
+
+
+      // if required, add error box below
+      if (memoryField.inputType == 'other') {
+        fieldsList.add(
+          Container(
+            width: 230,
+            height: 30,
+            child: TextField(
+              textAlign: TextAlign.center,
+              controller: memoryField.controller,
+              decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(5),
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.deepPurple))),
+                  borderSide: BorderSide(color: Colors.deepPurple))),
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        fieldsList.add(
+          Container(
+            width: 230,
+            height: 30,
+            child: TextField(
+              textAlign: TextAlign.center,
+              controller: memoryField.controller,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(5),
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.deepPurple))),
+            ),
+          ),
+        );
+      }
       fieldsList.add(
         SizedBox(
           height: 10,
@@ -47,6 +102,63 @@ class _CustomerMemoryInputState extends State<CustomerMemoryInput> {
       );
     });
     return fieldsList;
+  }
+
+  addMemory() async {
+    var prefs = PrefsUpdater();
+    errors = Set();
+    String primaryKey = widget.memoryFields[0].controller.text;
+    widget.memoryFields.forEach((memoryField) {
+      if (memoryField.controller.text == '' && memoryField.required) {
+        errors.add('${memoryField.text} required.');
+      }
+      if (memoryField.inputType == 'other' && memoryField.controller.text == '' && memoryField.fieldController.text != '') {
+        errors.add('${memoryField.text} value required.');
+      }
+      if (memoryField.inputType == 'other' && memoryField.controller.text != '' && memoryField.fieldController.text == '') {
+        errors.add('${memoryField.text} title required.');
+      }
+    });
+    setState(() {});
+    // check if we already have the memory
+    var customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
+    if (customMemories.containsKey(primaryKey)) {
+      errors.add('Already have a memory with that name.');
+    }
+    if (errors.length > 0) {
+      return;
+    }
+    Map map = {
+      'type': widget.memoryType,
+      'title': primaryKey,
+      'startDatetime': DateTime.now().toIso8601String(),
+      'latestDatetime': DateTime.now().toIso8601String(),
+      'spacedRepetitionType': spacedRepetitionChoice,
+      'spacedRepetitionLevel': 0,
+    };
+    widget.memoryFields.sublist(1).forEach((nonPrimaryMemoryField) {
+      if (widget.memoryType == 'other') {
+        map[nonPrimaryMemoryField.mapKey + 'Field'] = nonPrimaryMemoryField.fieldController.text;
+        map[nonPrimaryMemoryField.mapKey] = nonPrimaryMemoryField.controller.text;
+      } else {
+        map[nonPrimaryMemoryField.mapKey] = nonPrimaryMemoryField.controller.text;
+      }
+    });
+    customMemories[primaryKey] = map;
+    print(customMemories);
+    await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
+    widget.callback();
+    Navigator.pop(context);
+  }
+
+  getErrors() {
+    List<Text> errorList = [];
+    errors.forEach((e) {
+      errorList.add(Text(e, style: TextStyle(color: Colors.red),));
+    });
+    return Column(
+      children: errorList
+    );
   }
 
   @override
@@ -88,8 +200,9 @@ class _CustomerMemoryInputState extends State<CustomerMemoryInput> {
             );
           }).toList(),
         ),
+        getErrors(),
         FlatButton(
-            onPressed: () => widget.addMemory(),
+            onPressed: () => addMemory(),
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(),
@@ -108,7 +221,11 @@ class _CustomerMemoryInputState extends State<CustomerMemoryInput> {
 
 class MemoryField {
   String text;
+  String mapKey;
   TextEditingController controller;
+  TextEditingController fieldController;
+  bool required;
+  String inputType;
 
-  MemoryField({this.text, this.controller});
+  MemoryField({this.text, this.mapKey, this.controller, this.fieldController, this.required, this.inputType});
 }

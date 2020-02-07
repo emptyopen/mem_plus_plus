@@ -7,7 +7,8 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/components/templates/help_screen.dart';
-import 'package:mem_plus_plus/screens/custom_test_manager_screen.dart';
+import 'package:mem_plus_plus/screens/custom_memory/custom_memory_manager_screen.dart';
+import 'package:mem_plus_plus/screens/custom_memory/custom_memory_test_screen.dart';
 import 'package:mem_plus_plus/screens/lessons/welcome_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_edit_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_practice_screen.dart';
@@ -25,6 +26,13 @@ import 'package:mem_plus_plus/screens/pao/pao_multiple_choice_test_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_timed_test_screen.dart';
 
+const String firstTimeAppKey = 'FirstTimeApp';
+const String homepageFirstHelpKey = 'HomepageFirstHelp';
+const String activityStatesKey = 'ActivityStates';
+const String customMemoriesKey = 'CustomMemories';
+const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
+const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstView';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
 
@@ -33,36 +41,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 // TODO: add global celebration animation whenever there is a level up
-// TODO: unlock the ability for personally created tests (credit cards, driver's licence, phone number)
+// TODO: change custom memory tests to add time only once they are complete, use a 'nextTime'
+// TODO: add date input to custom memories
 // TODO: make practice work both ways object -> number / number -> object
-// TODO: make practice unavailable if edit isn't complete
-// TODO: collapse menu items into consolidated versions after complete
 // TODO: roll out for ios Store
 // TODO: add notifications about newly available activities
 
 // Nice to have
+// TODO: make practice unavailable if edit isn't complete
 // TODO: implement length limits for inputs (like action/object)
 // TODO: make PAO multiple choice tougher with similar digits
-// TODO: fix all flatbuttons
 // TODO: make vibrations cooler, and more consistent across app?
 // TODO: consolidate colors
 // TODO: make snackbars prettier
 // TODO: written test: allow close enough spelling
 // TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 // TODO: add celebration/sad art when MC/written test is complete
+// TODO: collapse menu items into consolidated versions after complete
 
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
-  String activityStatesKey = 'ActivityStates';
   List<String> availableActivities = [];
-  String firstTimeAppKey = 'FirstTimeApp';
-  String homepageFirstHelpKey = 'HomepageFirstHelp';
-  String customTestManagerFirstHelpKey = 'CustomTestManagerFirstView';
-  Map customTests;
+  Map customMemories;
   Map activityMenuButtonMap;
   bool firstTimeOpeningApp;
-  bool customTestManagerAvailable;
-  bool customTestManagerFirstView;
+  bool customMemoryManagerAvailable;
+  bool customMemoryManagerFirstView;
+  final globalKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -102,11 +107,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void setUnlockedActivities() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var prefs = PrefsUpdater();
 
     // first time opening app, welcome
-    if (prefs.getBool(firstTimeAppKey) == null ||
-        prefs.getBool(firstTimeAppKey)) {
+    if (await prefs.getBool(firstTimeAppKey) == null ||
+        await prefs.getBool(firstTimeAppKey)) {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -119,29 +125,27 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // check if customManager is available, and firstView
-    if (prefs.getBool('CustomTestManagerAvailable') == null) {
-      customTestManagerAvailable = false;
+    if (await prefs.getBool('CustomMemoryManagerAvailable') == null) {
+      customMemoryManagerAvailable = false;
     } else {
-      customTestManagerAvailable = true;
+      customMemoryManagerAvailable = true;
     }
-    if (prefs.getBool(customTestManagerFirstHelpKey) == null || prefs.getBool(customTestManagerFirstHelpKey) == false) {
-      customTestManagerFirstView = false;
+    if (await prefs.getBool(customMemoryManagerFirstHelpKey) == null || await prefs.getBool(customMemoryManagerFirstHelpKey) == false) {
+      customMemoryManagerFirstView = false;
     } else {
-      customTestManagerFirstView = true;
+      customMemoryManagerFirstView = true;
     }
+
     // check for custom tests
-    if (prefs.getString('CustomTests') == null) {
-      customTests = {};
-      prefs.setString('CustomTests', json.encode({}));
+    if (prefs.getString(customMemoriesKey) == null) {
+      customMemories = {};
+      await prefs.writeSharedPrefs(customMemoriesKey, {});
     } else {
-      customTests = json.decode(prefs.getString('CustomTests'));
+      customMemories = await prefs.getSharedPrefs(customMemoriesKey);
     }
-    print('customTests: $customTests');
 
     // filter unlocked activities by level
-    var rawMap =
-        json.decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
-    activityStates = rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
+    activityStates = await prefs.getSharedPrefs(activityStatesKey);
     setState(() {
       // iterate through unlocked activities, and check if they are visible
       availableActivities = [];
@@ -165,51 +169,19 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  checkCustomTestManagerFirstTime() async {
+  checkCustomMemoryManagerFirstTime() async {
     var prefs = PrefsUpdater();
-    if (await prefs.getBool(customTestManagerFirstHelpKey) == true) {
-      setState(() {customTestManagerFirstView = false;});
-      await prefs.setBool(customTestManagerFirstHelpKey, false);
+    if (await prefs.getBool(customMemoryManagerFirstHelpKey) == true) {
+      setState(() {customMemoryManagerFirstView = false;});
+      await prefs.setBool(customMemoryManagerFirstHelpKey, false);
     }
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
       pageBuilder: (BuildContext context, _, __) {
-        return CustomTestManagerScreen();
+        return CustomMemoryManagerScreen(
+          callback: callback,
+        );
       }));
-  }
-
-  resetKeys() async {
-    var prefs = PrefsUpdater();
-    await prefs.clear();
-
-    setState(() {
-      activityStates = defaultActivityStates1;
-      prefs.setString(
-          activityStatesKey,
-          json.encode(
-            activityStates.map((k, v) => MapEntry(k, v.toJson())),
-          ));
-    });
-
-    setUnlockedActivities();
-  }
-
-  maxOutKeys() async {
-    var prefs = PrefsUpdater();
-
-    await prefs.setBool('CustomTestManagerAvailable', true);
-    customTestManagerAvailable = true;
-
-    setState(() {
-      activityStates = defaultActivityStates2;
-      prefs.setString(
-        activityStatesKey,
-        json.encode(
-          activityStates.map((k, v) => MapEntry(k, v.toJson())),
-        ));
-    });
-
-    setUnlockedActivities();
   }
 
   callback() {
@@ -218,8 +190,48 @@ class _MyHomePageState extends State<MyHomePage> {
         (k, v) => MapEntry(k, '${v.state} | ${v.visible} | ${v.firstView}')));
   }
 
+  callbackSnackbar(String text, Color textColor, Color backgroundColor, int durationSeconds) {
+    final snackBar = SnackBar(
+      content: Text(
+        text,
+        style: TextStyle(
+          color: textColor,
+        ),
+      ),
+      duration: Duration(seconds: durationSeconds),
+      backgroundColor: backgroundColor,
+    );
+    globalKey.currentState.showSnackBar(snackBar);
+  }
+
   List<Widget> getTodo() {
     List<MainMenuOption> mainMenuOptions = [];
+
+    // custom tests
+    customMemories.forEach((title, memory) {
+      DateTime nextDateTime = findNextDatetime(
+        memory['startDatetime'],
+        memory['spacedRepetitionType'],
+        memory['spacedRepetitionLevel']);
+      var activity = Activity('test', 'todo', true, nextDateTime, false);
+      var customIcon = customMemoryIconMap[memory['type']];
+      mainMenuOptions.add(MainMenuOption(
+        activity: activity,
+        icon: Icon(customIcon),
+        text: Text('${memory['type']}: $title', style: TextStyle(fontSize: 21),),
+        route: CustomMemoryTestScreen(
+          customMemory: memory,
+          callback: callback,
+          callbackSnackbar: callbackSnackbar,
+          globalKey: globalKey,
+        ),
+        callback: callback,
+        color: Colors.purple[400],
+        splashColor: Colors.purple[500],
+      ));
+    });
+
+    // regular activities
     for (String activity in availableActivities) {
       if (activityStates[activity] != null &&
           activityStates[activity].state == 'todo') {
@@ -230,6 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
           route: activityMenuButtonMap[activity].route,
           icon: activityMenuButtonMap[activity].icon,
           color: activityMenuButtonMap[activity].color,
+          splashColor: activityMenuButtonMap[activity].splashColor,
         ));
       }
     }
@@ -248,6 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
           route: activityMenuButtonMap[activity].route,
           icon: activityMenuButtonMap[activity].icon,
           color: activityMenuButtonMap[activity].color,
+          splashColor: activityMenuButtonMap[activity].splashColor,
         ));
       }
     }
@@ -260,21 +274,22 @@ class _MyHomePageState extends State<MyHomePage> {
     return firstTimeOpeningApp == null
         ? Scaffold()
         : Scaffold(
+            key: globalKey,
             appBar: AppBar(
               title: Text('MEM++ Homepage'),
               actions: <Widget>[
-                customTestManagerAvailable ? Stack(
+                customMemoryManagerAvailable ? Stack(
                   children: <Widget>[
                     Center(
                       child: IconButton(
                         icon: Icon(Icons.add_box),
                         color: Colors.deepPurple,
                         onPressed: () {
-                          checkCustomTestManagerFirstTime();
+                          checkCustomMemoryManagerFirstTime();
                         },
                       ),
                     ),
-                    customTestManagerFirstView ? Positioned(
+                    customMemoryManagerFirstView ? Positioned(
                       child: Container(
                         width: 33,
                         height: 16,
@@ -332,7 +347,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     BasicFlatButton(
                       onPressed: () => resetKeys(),
-                      text: 'reset',
+                      text: 'reset everything',
                     ),
                     BasicFlatButton(
                       onPressed: () => maxOutKeys(),
@@ -359,7 +374,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           route: WelcomeScreen(),
           icon: Icon(Icons.filter),
-          color: Colors.green[100]),
+          color: Colors.green[100],
+          splashColor: Colors.green[200]),
       'SingleDigitEdit': ActivityMenuButton(
           text: Text(
             'Single Digit [View/Edit]',
@@ -367,7 +383,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           route: SingleDigitEditScreen(),
           icon: editIcon,
-          color: Colors.amber[100]),
+          color: Colors.amber[100],
+        splashColor: Colors.amber[200]),
       'SingleDigitPractice': ActivityMenuButton(
           text: Text(
             'Single Digit [Practice]',
@@ -377,7 +394,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: practiceIcon,
-          color: Colors.amber[200]),
+          color: Colors.amber[200],
+        splashColor: Colors.amber[300]),
       'SingleDigitMultipleChoiceTest': ActivityMenuButton(
           text: Text(
             'Single Digit [MC Test]',
@@ -387,7 +405,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: multipleChoiceTestIcon,
-          color: Colors.amber[300]),
+          color: Colors.amber[300],
+        splashColor: Colors.amber[400]),
       'SingleDigitTimedTestPrep': ActivityMenuButton(
           text: Text(
             'Single Digit [Timed Test Prep]',
@@ -397,7 +416,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: timedTestPrepIcon,
-          color: Colors.amber[400]),
+          color: Colors.amber[400],
+        splashColor: Colors.amber[500]),
       'SingleDigitTimedTest': ActivityMenuButton(
           text: Text(
             'Single Digit [Timed Test]',
@@ -407,7 +427,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: timedTestIcon,
-          color: Colors.amber[400]),
+          color: Colors.amber[400],
+        splashColor: Colors.amber[500]),
       'AlphabetEdit': ActivityMenuButton(
           text: Text(
             'Alphabet [View/Edit]',
@@ -415,7 +436,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           route: AlphabetEditScreen(),
           icon: editIcon,
-          color: Colors.blue[100]),
+          color: Colors.blue[100],
+        splashColor: Colors.blue[200]),
       'AlphabetPractice': ActivityMenuButton(
           text: Text(
             'Alphabet [Practice]',
@@ -425,7 +447,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: practiceIcon,
-          color: Colors.blue[200]),
+          color: Colors.blue[200],
+        splashColor: Colors.blue[300]),
       'AlphabetWrittenTest': ActivityMenuButton(
           text: Text(
             'Alphabet [Written Test]',
@@ -435,7 +458,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: writtenTestIcon,
-          color: Colors.blue[300]),
+          color: Colors.blue[300],
+        splashColor: Colors.blue[400]),
       'AlphabetTimedTestPrep': ActivityMenuButton(
           text: Text(
             'Alphabet [Timed Test Prep]',
@@ -445,7 +469,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: timedTestPrepIcon,
-          color: Colors.blue[400]),
+          color: Colors.blue[400],
+        splashColor: Colors.blue[500]),
       'AlphabetTimedTest': ActivityMenuButton(
           text: Text(
             'Alphabet [Timed Test]',
@@ -455,7 +480,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: timedTestIcon,
-          color: Colors.blue[400]),
+          color: Colors.blue[400],
+        splashColor: Colors.blue[500]),
       'PAOEdit': ActivityMenuButton(
           text: Text(
             'PAO [View/Edit]',
@@ -463,7 +489,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           route: PAOEditScreen(),
           icon: editIcon,
-          color: Colors.pink[100]),
+          color: Colors.pink[100],
+        splashColor: Colors.pink[200]),
       'PAOPractice': ActivityMenuButton(
           text: Text(
             'PAO [Practice]',
@@ -473,7 +500,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: practiceIcon,
-          color: Colors.pink[200]),
+          color: Colors.pink[200],
+        splashColor: Colors.pink[300]),
       'PAOMultipleChoiceTest': ActivityMenuButton(
           text: Text(
             'PAO [MC Test]',
@@ -483,7 +511,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: multipleChoiceTestIcon,
-          color: Colors.pink[300]),
+          color: Colors.pink[300],
+        splashColor: Colors.pink[400]),
       'PAOTimedTestPrep': ActivityMenuButton(
           text: Text(
             'PAO [Timed Test Prep]',
@@ -493,7 +522,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: timedTestPrepIcon,
-          color: Colors.pink[400]),
+          color: Colors.pink[400],
+        splashColor: Colors.pink[500]),
       'PAOTimedTest': ActivityMenuButton(
           text: Text(
             'PAO [Timed Test]',
@@ -503,8 +533,38 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: timedTestIcon,
-          color: Colors.pink[400]),
+          color: Colors.pink[400],
+        splashColor: Colors.pink[500]),
     };
+  }
+
+  resetKeys() async {
+    var prefs = PrefsUpdater();
+
+    await prefs.clear();
+
+    setState(() {
+      activityStates = defaultActivityStates1;
+      customMemories = {};
+    });
+    await prefs.writeSharedPrefs(activityStatesKey, defaultActivityStates1);
+    await prefs.writeSharedPrefs(customMemoriesKey, {});
+
+    setUnlockedActivities();
+  }
+
+  maxOutKeys() async {
+    var prefs = PrefsUpdater();
+
+    await prefs.setBool(customMemoryManagerAvailableKey, true);
+    customMemoryManagerAvailable = true;
+
+    setState(() {
+      activityStates = defaultActivityStates2;
+    });
+    await prefs.writeSharedPrefs(activityStatesKey, defaultActivityStates2);
+
+    setUnlockedActivities();
   }
 }
 

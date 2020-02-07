@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pao_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import 'package:mem_plus_plus/services/services.dart';
 
 class PAOEditCard extends StatefulWidget {
   final PAOData paoData;
@@ -17,7 +17,7 @@ class _PAOEditCardState extends State<PAOEditCard> {
   final personTextController = TextEditingController();
   final actionTextController = TextEditingController();
   final objectTextController = TextEditingController();
-  final String paoKey = 'Pao';
+  final String paoKey = 'PAO';
   SharedPreferences sharedPreferences;
 
   @override
@@ -91,12 +91,9 @@ class _PAOEditCardState extends State<PAOEditCard> {
             ),
             FlatButton(
                 onPressed: () async {
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  var paoData = (json.decode(prefs.getString(paoKey)) as List)
-                      .map((i) => PAOData.fromJson(i))
-                      .toList();
-                  int currIndex = int.parse(widget.paoData.digits);
+                  var prefs = PrefsUpdater();
+                  List<PAOData> paoData = await prefs.getSharedPrefs(paoKey);
+                  int currIndex = widget.paoData.index;
                   PAOData updatedPAOEntry = paoData[currIndex];
                   bool resetFamiliarity = false;
                   if (personTextController.text != '') {
@@ -114,14 +111,11 @@ class _PAOEditCardState extends State<PAOEditCard> {
                     resetFamiliarity = true;
                     objectTextController.text = '';
                   }
-                  print(
-                      'will update $currIndex to: ${updatedPAOEntry.person} | ${updatedPAOEntry.action} | ${updatedPAOEntry.object}');
                   if (resetFamiliarity) {
-                    print('will reset fam');
-                    //updatedPAOEntry.familiarity = 0;
+                    updatedPAOEntry.familiarity = 0;
                   }
                   paoData[currIndex] = updatedPAOEntry;
-                  prefs.setString(paoKey, json.encode(paoData));
+                  await prefs.writeSharedPrefs(paoKey, paoData);
                   widget.callback(paoData);
                   Navigator.of(context).pop();
                 },

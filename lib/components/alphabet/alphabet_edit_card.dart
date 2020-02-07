@@ -62,15 +62,13 @@ class _AlphabetEditCardState extends State<AlphabetEditCard> {
                       (json.decode(prefs.getString(alphabetKey)) as List)
                           .map((i) => AlphabetData.fromJson(i))
                           .toList();
-                  int currIndex = int.parse(widget.alphabetData.letter);
+                  int currIndex = widget.alphabetData.index;
                   AlphabetData updatedAlphabetEntry =
                       alphabetData[currIndex];
                   if (objectTextController.text != '') {
                     updatedAlphabetEntry.object = objectTextController.text;
                     updatedAlphabetEntry.familiarity = 0;
                     objectTextController.text = '';
-                    print(
-                        'will update $currIndex to: ${updatedAlphabetEntry.object}');
                   }
                   alphabetData[currIndex] = updatedAlphabetEntry;
                   prefs.setString(alphabetKey, json.encode(alphabetData));

@@ -70,8 +70,8 @@ class _SingleDigitTimedTestPrepScreenState
     await prefs.updateActivityVisible('SingleDigitTimedTest', true);
     await prefs.updateActivityFirstView('SingleDigitTimedTest', true);
     await prefs.updateActivityVisibleAfter(
-        'SingleDigitTimedTest', DateTime.now().add(Duration(seconds: 10)));
-    Timer(Duration(seconds: 10), widget.callback);
+        'SingleDigitTimedTest', DateTime.now().add(Duration(hours: 1)));
+    Timer(Duration(hours: 1), widget.callback);
     widget.callback();
     Navigator.pop(context);
   }

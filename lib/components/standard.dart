@@ -39,16 +39,15 @@ class BasicFlatButton extends StatelessWidget {
   }
 }
 
-
 class MainMenuOption extends StatelessWidget {
   final Activity activity;
   final Icon icon;
   final Widget text;
   final Color color;
+  final Color splashColor;
   final Widget route;
-  final String activityStatesKey = 'ActivityStates';
   final Function() callback;
-  final bool doubleIcon;
+  final String activityStatesKey = 'ActivityStates';
 
   MainMenuOption({
     Key key,
@@ -56,9 +55,9 @@ class MainMenuOption extends StatelessWidget {
     this.icon,
     this.text,
     this.color,
+    this.splashColor,
     this.route,
     this.callback,
-    this.doubleIcon,
   });
 
   String generateTimeRemaining() {
@@ -74,6 +73,8 @@ class MainMenuOption extends StatelessWidget {
         children: <Widget>[
           FlatButton(
             color: color,
+            splashColor: splashColor,
+            highlightColor: Colors.transparent,
             shape: RoundedRectangleBorder(
                 side: BorderSide(), borderRadius: BorderRadius.circular(5)),
             onPressed: () async {

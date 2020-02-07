@@ -1,68 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/custom_memory/id_card.dart';
 import 'package:mem_plus_plus/components/custom_memory/contact.dart';
 import 'package:mem_plus_plus/components/custom_memory/other.dart';
 import 'dart:async';
 
-const String contactString = 'Contact';
-const String idCardString = 'ID/Credit Card';
-const String recipeString = 'Recipe';
-const String otherString = 'Other';
-
-Map testIconMap = {
-  contactString: Icon(Icons.person_pin, size: 40),
-  idCardString: Icon(
-    Icons.credit_card,
-    size: 40,
-  ),
-  recipeString: Icon(Icons.add, size: 40),
-  otherString: Icon(Icons.add, size: 40),
-};
-
-class CustomTestManagerScreen extends StatefulWidget {
-  final Function callback;
-
-  CustomTestManagerScreen({Key key, this.callback}) : super(key: key);
-
-  @override
-  _CustomTestManagerScreenState createState() =>
-      _CustomTestManagerScreenState();
-}
-
 // TODO: science!! USE fibonacci numbers?
 // 30m - 2h - 12h - 48h
 // 1h - 6h - 24h - 7d
 // 2h - 24h - 7d - 21d
 
-class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
-  Map customTests = {};
-  String customTestsKey = 'CustomTests';
-  Column customTestsColumn = Column();
+class CustomMemoryManagerScreen extends StatefulWidget {
+  final Function callback;
+
+  CustomMemoryManagerScreen({Key key, this.callback}) : super(key: key);
+
+  @override
+  _CustomMemoryManagerScreenState createState() =>
+      _CustomMemoryManagerScreenState();
+}
+
+class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
+  Map customMemories = {};
+  Column customMemoriesColumn = Column();
 
   @override
   void initState() {
     super.initState();
     getSharedPrefs();
-    new Timer.periodic(Duration(seconds: 1), (Timer t) {
-      getCustomTests();
-      setState(() {});
+    new Timer.periodic(Duration(milliseconds: 100), (Timer t) {
+      getCustomMemories();
+      if (this.mounted) {
+        setState(() {});
+      }
     });
   }
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(
-        context, 'CustomTestManagerFirstHelp', CustomTestManagerScreenHelp());
+        context, 'CustomMemoryManagerFirstHelp', CustomMemoryManagerScreenHelp());
 
-    if (prefs.getString(customTestsKey) == null) {
-      customTests = {};
-      prefs.setString(customTestsKey, json.encode({}));
+    if (prefs.getString(customMemoriesKey) == null) {
+      customMemories = {};
+      prefs.setString(customMemoriesKey, json.encode({}));
     } else {
-      customTests = json.decode(await prefs.getString(customTestsKey));
+      customMemories = json.decode(await prefs.getString(customMemoriesKey));
     }
 
     setState(() {});
@@ -70,29 +56,32 @@ class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
 
   void callback() async {
     var prefs = PrefsUpdater();
-    customTests = await prefs.getSharedPrefs(customTestsKey);
+    customMemories = await prefs.getSharedPrefs(customMemoriesKey);
     setState(() {});
+    widget.callback();
   }
 
-  void getCustomTests() {
-    List<CustomTestTile> customTestTiles = [];
-    for (String customTestKey in customTests.keys) {
-      var customTest = customTests[customTestKey];
-      customTestTiles.add(CustomTestTile(
-        customTest: customTest,
+  void getCustomMemories() {
+    List<CustomMemoryTile> customMemoryTiles = [];
+    for (String customMemoryKey in customMemories.keys) {
+      var customMemory = customMemories[customMemoryKey];
+      customMemoryTiles.add(CustomMemoryTile(
+        customMemory: customMemory,
         callback: callback,
       ));
     }
-    setState(() {
-      customTestsColumn = Column(children: customTestTiles);
-    });
+    if (this.mounted) {
+      setState(() {
+        customMemoriesColumn = Column(children: customMemoryTiles);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('Custom test management'),
+            title: Text('Custom memory management'),
             backgroundColor: Colors.purple[200],
             actions: <Widget>[
               // action button
@@ -102,68 +91,90 @@ class _CustomTestManagerScreenState extends State<CustomTestManagerScreen> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return CustomTestManagerScreenHelp();
+                        return CustomMemoryManagerScreenHelp();
                       }));
                 },
               ),
             ]),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            fit: StackFit.expand,
             children: <Widget>[
-              BasicFlatButton(
-                text: 'Add new memory!',
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      child: MyDialogContent(
-                        callback: callback,
-                      ));
-                },
-                color: Colors.purple[100],
-                splashColor: Colors.amber[200],
-                padding: 10,
-                fontSize: 20,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              customTestsColumn,
+              SingleChildScrollView(child: customMemoriesColumn),
+              Positioned(
+                child: FlatButton(
+                  color: Colors.purple[100],
+                  splashColor: Colors.white,
+                  highlightColor: Colors.transparent,
+                  onPressed: () {
+                    HapticFeedback.heavyImpact();
+                    showDialog(
+                        context: context,
+                        child: MyDialogContent(
+                          callback: callback,
+                        ));
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide()),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                    child: Row(
+                      children: <Widget>[
+                        Center(child: Icon(Icons.add)),
+                        SizedBox(width: 10,),
+                        Text(
+                          'memory',
+                          style: TextStyle(fontSize: 24, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                right: 25,
+                bottom: 25,
+              )
             ],
           ),
         ));
   }
 }
 
-class CustomTestTile extends StatelessWidget {
-  final Map customTest;
+class CustomMemoryTile extends StatelessWidget {
+  final Map customMemory;
   final Function callback;
 
-  CustomTestTile({this.customTest, this.callback});
+  CustomMemoryTile({this.customMemory, this.callback});
 
-  deleteCustomTest() async {
+  deleteCustomMemory() async {
     var prefs = PrefsUpdater();
-    Map customTests = await prefs.getSharedPrefs('CustomTests');
-    customTests.remove(customTest['title']);
-    prefs.writeSharedPrefs('CustomTests', customTests);
+    Map customMemories = await prefs.getSharedPrefs(customMemoriesKey);
+    customMemories.remove(customMemory['title']);
+    prefs.writeSharedPrefs(customMemoriesKey, customMemories);
     callback();
   }
 
   String findRemainingTime() {
-    var nextDateTime = findNextDatetime(customTest['startDatetime'], customTest['spacedRepetitionType'], customTest['spacedRep']);
+    var nextDateTime = findNextDatetime(
+        customMemory['startDatetime'],
+        customMemory['spacedRepetitionType'],
+        customMemory['spacedRepetitionLevel']);
     var remainingTime = nextDateTime.difference(DateTime.now());
-    return durationToString(remainingTime);
+    if (!remainingTime.isNegative) {
+      return 'Available in: ${durationToString(remainingTime)}';
+    }
+    return 'Available! (Main Menu)';
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: testIconMap[customTest['type']],
-        title: Text('${customTest['title']}', style: TextStyle(fontSize: 20)),
+        leading: Icon(customMemoryIconMap[customMemory['type']]),
+        title: Text('${customMemory['title']}', style: TextStyle(fontSize: 20)),
         subtitle: Text(
-          '${customTest['type']}\n'
-            'Next checkup in ${findRemainingTime()}',
+          '${customMemory['type']}\n'
+          '${findRemainingTime()}',
           style: TextStyle(fontSize: 16),
         ),
         trailing: Row(
@@ -174,7 +185,7 @@ class CustomTestTile extends StatelessWidget {
               child: FlatButton(
                 child: Icon(
                   Icons.remove_red_eye,
-                  color: Colors.deepPurpleAccent,
+                  color: Colors.purple[300],
                 ),
                 onPressed: () => showConfirmDialog(
                     context,
@@ -190,34 +201,13 @@ class CustomTestTile extends StatelessWidget {
                   Icons.delete,
                   color: Colors.red,
                 ),
-                onPressed: () => showConfirmDialog(context, deleteCustomTest,
-                    'Delete memory: ${customTest['title']}?'),
+                onPressed: () => showConfirmDialog(context, deleteCustomMemory,
+                    'Delete memory: ${customMemory['title']}?'),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomTestManagerScreenHelp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return HelpScreen(
-      title: 'Custom Test Manager',
-      information: [
-        '    Welcome to custom test management! A very exciting place. '
-            'Here you can create new memories - learn your real credit cards and IDs, '
-            'friends\' phone numbers and addresses, recipes, and anything else!',
-        '    You can delete a memory by tapping the trash icon, and you can view a memory '
-            'by tapping the eye icon. Tapping the eye icon will also reset the spaced '
-            'repetition schedule, so only do so if you\'ve actually forgotten it!',
-        '    A review on the spaced repetition choices that will be available for these '
-            'custom memories.\n\n  30m-2h-12h-48h: Good for short term memories\n\n'
-            '  1h-6h-24h-4d: Good for medium term memories ()\n\n'
-            '  1h-2h-24h-7d-21d: Good for long term memories (IDs, recipes'
-      ],
     );
   }
 }
@@ -255,10 +245,14 @@ class _MyDialogContentState extends State<MyDialogContent> {
           callback: callback,
         );
       case otherString:
-        return OtherInput();
+        return OtherInput(
+          callback: callback,
+        );
         break;
       default:
-        return ContactInput();
+        return OtherInput(
+          callback: callback,
+        );
     }
   }
 
@@ -289,9 +283,8 @@ class _MyDialogContentState extends State<MyDialogContent> {
                   });
                 },
                 items: <String>[
-                  contactString,
                   idCardString,
-                  recipeString,
+                  contactString,
                   otherString
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
@@ -317,6 +310,27 @@ class _MyDialogContentState extends State<MyDialogContent> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomMemoryManagerScreenHelp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return HelpScreen(
+      title: 'Custom Memory Manager',
+      information: [
+        '    Welcome to custom memory management! A very exciting place. '
+          'Here you can create new memories - learn your real credit cards and IDs, '
+          'friends\' phone numbers and addresses, recipes, and anything else!',
+        '    You can delete a memory by tapping the trash icon, and you can view a memory '
+          'by tapping the eye icon. Tapping the eye icon will also reset the spaced '
+          'repetition schedule, so only do so if you\'ve actually forgotten it!',
+        '    A review on the spaced repetition choices that will be available for these '
+          'custom memories.\n\n  30m-2h-12h-48h: Good for short term memories\n\n'
+          '  1h-6h-24h-4d: Good for medium term memories ()\n\n'
+          '  1h-2h-24h-7d-21d: Good for long term memories (IDs, recipes'
+      ],
     );
   }
 }

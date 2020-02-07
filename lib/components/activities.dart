@@ -33,8 +33,9 @@ class ActivityMenuButton {
   Widget route;
   Icon icon;
   Color color;
+  Color splashColor;
 
-  ActivityMenuButton({this.text, this.route, this.icon, this.color});
+  ActivityMenuButton({this.text, this.route, this.icon, this.color, this.splashColor});
 }
 
 var defaultActivityStates1 = {

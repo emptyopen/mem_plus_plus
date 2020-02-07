@@ -31,13 +31,10 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
     prefs.checkFirstTime(context, 'AlphabetPracticeFirstHelp', AlphabetPracticeScreenHelp());
     if (prefs.getString(alphabetKey) == null) {
       print('defaulting alphabet');
-      alphabetData = defaultAlphabetData;
-      prefs.setString(alphabetKey, json.encode(alphabetData));
+      prefs.writeSharedPrefs(alphabetKey, defaultAlphabetData);
     } else {
       print('found alphabet');
-      alphabetData = (json.decode(await prefs.getString(alphabetKey)) as List)
-          .map((i) => AlphabetData.fromJson(i))
-          .toList();
+      alphabetData = await prefs.getSharedPrefs(alphabetKey);
     }
     alphabetData = shuffle(alphabetData);
     setState(() {});

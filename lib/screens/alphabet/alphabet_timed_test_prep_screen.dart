@@ -123,8 +123,8 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityVisible('AlphabetTimedTest', true);
     await prefs.updateActivityFirstView('AlphabetTimedTest', true);
     await prefs.updateActivityVisibleAfter(
-        'AlphabetTimedTest', DateTime.now().add(Duration(seconds: 10)));
-    Timer(Duration(seconds: 10), widget.callback);
+        'AlphabetTimedTest', DateTime.now().add(Duration(hours: 2)));
+    Timer(Duration(hours: 2), widget.callback);
     widget.callback();
     Navigator.pop(context);
   }

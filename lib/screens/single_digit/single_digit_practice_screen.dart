@@ -91,11 +91,11 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
 
 class SingleDigitPracticeScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    Welcome to your first system! Since you have a complete set of single digits mapped out, you\'re '
+    '    Welcome to your first practice! Since you have a complete set of single digits mapped out, you\'re '
         'now ready to get started with practice! \n    Here you will familiarize yourself '
         'with the digit-object mapping until you\'ve maxed out your '
         'familiarity with each digit, upon which the first test will be unlocked! ',
-    '    Try to guess the object before even hitting the reveal button! It\'ll really help you once you get tested.'
+    '    Try to guess the object before even hitting the reveal button! It\'ll help you once you really get tested ;)'
   ];
 
   @override
