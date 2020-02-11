@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 class AlphabetPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -29,13 +28,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'AlphabetPracticeFirstHelp', AlphabetPracticeScreenHelp());
-    if (prefs.getString(alphabetKey) == null) {
-      print('defaulting alphabet');
-      prefs.writeSharedPrefs(alphabetKey, defaultAlphabetData);
-    } else {
-      print('found alphabet');
-      alphabetData = await prefs.getSharedPrefs(alphabetKey);
-    }
+    alphabetData = await prefs.getSharedPrefs(alphabetKey);
     alphabetData = shuffle(alphabetData);
     setState(() {});
   }
@@ -93,8 +86,9 @@ class AlphabetPracticeScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'Alphabet Practice',
       information: [
-        '    Get cracking! ',
+        '    You know the drill, get cracking :) ',
       ],
     );
   }

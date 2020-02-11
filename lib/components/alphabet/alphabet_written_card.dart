@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class AlphabetWrittenCard extends StatefulWidget {
   final AlphabetData alphabetData;
@@ -56,33 +57,13 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
 
   void checkResult() {
     if (widget.alphabetData.object.toLowerCase() == textController.text.toLowerCase().trim()) {
-      final snackBar = SnackBar(
-        content: Text(
-          'Correct!',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        duration: Duration(seconds: 1),
-        backgroundColor: Colors.green[200],
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
+      showSnackBar(context, 'Correct!', Colors.black, Colors.green[200], 1);
       setState(() {
         widget.callback(context, true);
         done = true;
       });
     } else {
-      final snackBar = SnackBar(
-        content: Text(
-          'Incorrect! ${widget.alphabetData.letter}: ${widget.alphabetData.object}',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.red[200],
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
+      showSnackBar(context, 'Incorrect!', Colors.black, Colors.red[200], 2);
       setState(() {
         widget.callback(context, false);
         done = true;

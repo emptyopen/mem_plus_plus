@@ -4,10 +4,12 @@ import 'package:mem_plus_plus/components/single_digit/single_digit_edit_card.dar
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 class SingleDigitEditScreen extends StatefulWidget {
-  SingleDigitEditScreen({Key key}) : super(key: key);
+  final Function callback;
+
+  SingleDigitEditScreen({Key key, this.callback}) : super(key: key);
 
   @override
   _SingleDigitEditScreenState createState() => _SingleDigitEditScreenState();
@@ -17,6 +19,8 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
   String singleDigitKey = 'SingleDigit';
+  String singleDigitEditCompleteKey = 'SingleDigitEditComplete';
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -28,7 +32,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'SingleDigitEditFirstHelp', SingleDigitEditScreenHelp());
     if (await prefs.getString(singleDigitKey) == null) {
-      singleDigitData = defaultSingleDigitData;
+      singleDigitData = defaultSingleDigitData3;
       await prefs.setString(singleDigitKey, json.encode(singleDigitData));
     } else {
       singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
@@ -36,10 +40,39 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     setState(() {});
   }
 
-  callback(newSingleDigitData) {
+  callback(newSingleDigitData) async {
+    var prefs = PrefsUpdater();
+    // check if all data is complete
     setState(() {
       singleDigitData = newSingleDigitData;
     });
+    bool entriesComplete = true;
+    for (int i = 0; i < singleDigitData.length; i++) {
+      if (singleDigitData[i].object == '') {
+        entriesComplete = false;
+      }
+    }
+
+    // check if information is filled out for the first time
+    bool completedOnce = await prefs.getBool(singleDigitEditCompleteKey);
+    if (entriesComplete && completedOnce == null) {
+      await prefs.updateActivityVisible('SingleDigitPractice', true);
+      final snackBar = SnackBar(
+        content: Text(
+          'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Rajdhani',
+            fontSize: 18
+          ),
+        ),
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.amber,
+      );
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+      await prefs.setBool(singleDigitEditCompleteKey, true);
+      widget.callback();
+    }
   }
 
   List<SingleDigitEditCard> getSingleDigitEditCards() {
@@ -63,6 +96,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(title: Text('Single digit: view/edit'),
         backgroundColor: Colors.amber[200],
         actions: <Widget>[
@@ -95,7 +129,7 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
           'convert them to images, especially strange and vivid images, they suddenly '
           'becomes much easier to remember. For sequences of numbers, we simply string them together '
           'into the scenes of a strange story. ',
-    '    The default values I\'ve inserted here uses the '
+    '    The example values I\'ve inserted here uses the '
       'idea of a "shape" pattern. That is, each object corresponds to what the '
       'actual digit it represents is shaped like. For example, 1 looks like a '
       'stick, 4 like a sailboat. \n    Another pattern could be "rhyming". 2 could be '
@@ -112,6 +146,7 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'Single Digit Edit/View',
       information: information,
     );
   }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 class AlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
+  final Function callbackSnackbar;
 
-  AlphabetTimedTestScreen({this.callback});
+  AlphabetTimedTestScreen({this.callback, this.callbackSnackbar});
 
   @override
   _AlphabetTimedTestScreenState createState() =>
@@ -68,18 +69,17 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
       if (await prefs.getBool('AlphabetTimedTestComplete') == null) {
         await prefs.updateActivityVisible('PAOEdit', true);
-        await prefs.updateActivityVisible('PAOPractice', true);
         await prefs.updateActivityFirstView('PAOEdit', true);
-        await prefs.updateActivityFirstView('PAOPractice', true);
         await prefs.setBool('AlphabetTimedTestComplete', true);
       }
-      widget.callback();
+      widget.callbackSnackbar('Congratulations! You\'ve unlocked the PAO system!', Colors.white, Colors.pink, 5);
     } else {
-      print('failure');
+      widget.callbackSnackbar('Incorrect. Keep trying to remember, or give up and try again!', Colors.white, Colors.red, 4);
     }
     textController1.text = '';
     textController2.text = '';
     Navigator.pop(context);
+    widget.callback();
     widget.callback();
   }
 
@@ -87,6 +87,10 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     await prefs.updateActivityState('AlphabetTimedTest', 'review');
     await prefs.updateActivityVisible('AlphabetTimedTest', false);
     await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
+    if (await prefs.getBool('AlphabetTimedTestComplete') == null) {
+      await prefs.updateActivityState('AlphabetTimedTestPrep', 'todo');
+    }
+    widget.callbackSnackbar('Try the timed test again to unlock the next system.', Colors.white, Colors.red, 3);
     Navigator.pop(context);
     widget.callback();
   }
@@ -158,20 +162,18 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
               children: <Widget>[
                 BasicFlatButton(
                   text: 'Give up',
-                  color: Theme.of(context).primaryColor,
-                  splashColor: Colors.blue[200],
-                  fontSize: 30,
+                  fontSize: 24,
+                  color: Colors.grey[200],
+                  splashColor: Colors.blue,
                   onPressed: () => giveUp(),
                   padding: 10,
                 ),
-                SizedBox(
-                  width: 25,
-                ),
+                SizedBox(width: 10,),
                 BasicFlatButton(
                   text: 'Submit',
-                  color: Theme.of(context).accentColor,
-                  splashColor: Colors.blue[200],
-                  fontSize: 30,
+                  fontSize: 24,
+                  color: Colors.blue[200],
+                  splashColor: Colors.blue,
                   onPressed: () => checkAnswer(),
                   padding: 10,
                 ),
@@ -188,6 +190,7 @@ class AlphabetTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'Alphabet Timed Test',
       information: [
         '    Time to recall your story! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!'

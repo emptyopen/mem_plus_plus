@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 class PAOTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -185,9 +185,11 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     await prefs.updateActivityState('PAOTimedTest', 'todo');
     await prefs.updateActivityVisible('PAOTimedTest', true);
     await prefs.updateActivityFirstView('PAOTimedTest', true);
+    //Duration testDuration = Duration(hours: 4);
+    Duration testDuration = Duration(seconds: 5);
     await prefs.updateActivityVisibleAfter(
-        'PAOTimedTest', DateTime.now().add(Duration(hours: 4)));
-    Timer(Duration(hours: 4), widget.callback);
+        'PAOTimedTest', DateTime.now().add(testDuration));
+    Timer(testDuration, widget.callback);
     widget.callback();
     Navigator.pop(context);
   }
@@ -301,6 +303,7 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'PAO Timed Test Preparation',
       information: [
         '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '
             'and link the scenes together. Remember, person-action-object, and really create a connection '

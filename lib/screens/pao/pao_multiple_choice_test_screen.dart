@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_multiple_choice_card.dart';
-import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 class PAOMultipleChoiceTestScreen extends StatefulWidget {
-  final Function() callback;
+  final Function callback;
+  final Function callbackSnackbar;
 
-  PAOMultipleChoiceTestScreen({this.callback});
+  PAOMultipleChoiceTestScreen({this.callback, this.callbackSnackbar});
 
   @override
   _PAOMultipleChoiceTestScreenState createState() =>
@@ -49,48 +49,54 @@ class _PAOMultipleChoiceTestScreenState
           await prefs.updateActivityFirstView('PAOTimedTestPrep', true);
           await prefs.updateActivityState('PAOMultipleChoiceTest', 'review');
           widget.callback();
-          // Snackbar
-          final snackBar = SnackBar(
-            content: Text(
-              'You aced it! Head to the main menu to see what you\'ve unlocked!',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            duration: Duration(seconds: 10),
-            backgroundColor: Colors.black,
-          );
-          Scaffold.of(context).showSnackBar(snackBar);
+          widget.callbackSnackbar('You aced it! You\'ve unlocked the timed test!', Colors.black, Colors.pink, 5);
+          Navigator.pop(context);
+//          // Snackbar
+//          final snackBar = SnackBar(
+//            content: Text(
+//              ,
+//              style: TextStyle(
+//                color: Colors.white,
+//              ),
+//            ),
+//            duration: Duration(seconds: 10),
+//            backgroundColor: Colors.black,
+//          );
+//          Scaffold.of(context).showSnackBar(snackBar);
         } else {
-          final snackBar = SnackBar(
-            content: Text(
-              'You aced it!',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            duration: Duration(seconds: 10),
-            backgroundColor: Colors.black,
-          );
-          Scaffold.of(context).showSnackBar(snackBar);
+          widget.callbackSnackbar('You aced it!', Colors.black, Colors.pink, 3);
+          Navigator.pop(context);
+//          final snackBar = SnackBar(
+//            content: Text(
+//              'You aced it!',
+//              style: TextStyle(
+//                color: Colors.white,
+//              ),
+//            ),
+//            duration: Duration(seconds: 10),
+//            backgroundColor: Colors.black,
+//          );
+//          Scaffold.of(context).showSnackBar(snackBar);
         }
       }
     }
     attempts += 1;
 
     if (attempts == 100 && score < 100) {
-      final snackBar = SnackBar(
-        content: Text(
-          'Try again! You got this. Score: $score/100',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        // TODO: add action here for quick redo
-        duration: Duration(seconds: 10),
-        backgroundColor: Colors.red[200],
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
+      widget.callbackSnackbar('Try again! You got this. Score: $score/100', Colors.black, Colors.red, 5);
+      Navigator.pop(context);
+//      final snackBar = SnackBar(
+//        content: Text(
+//          'Try again! You got this. Score: $score/100',
+//          style: TextStyle(
+//            color: Colors.black,
+//          ),
+//        ),
+//        // TODO: add action here for quick redo
+//        duration: Duration(seconds: 10),
+//        backgroundColor: Colors.red[200],
+//      );
+//      Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 
@@ -149,6 +155,7 @@ class PAOMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'PAO Multiple Choice Test',
       information: ['    Alright! Time for a test on your PAO system. If you get a perfect score, '
         'the next test will be unlocked! Good luck!'],
     );

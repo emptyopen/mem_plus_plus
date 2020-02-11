@@ -8,8 +8,9 @@ import 'package:flutter/services.dart';
 class WelcomeScreen extends StatefulWidget {
   final bool firstTime;
   final Function callback;
+  final Function mainMenuFirstTimeCallback;
 
-  WelcomeScreen({this.firstTime = false, this.callback});
+  WelcomeScreen({this.firstTime = false, this.callback, this.mainMenuFirstTimeCallback});
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -29,17 +30,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       textAlign: TextAlign.center,
     ),
     Text(
-      'What?',
-      style: TextStyle(fontSize: 32),
+      '"Some people are just born with superior memories."',
+      style: TextStyle(fontSize: 28),
       textAlign: TextAlign.center,
     ),
     Text(
-      'Myth-busting! (1/2)',
-      style: TextStyle(fontSize: 32),
+      '"It\'s too late for me, I\'ll never improve my memory."',
+      style: TextStyle(fontSize: 28),
       textAlign: TextAlign.center,
     ),
     Text(
-      'Myth-busting! (2/2)',
+      '"The brain can only store so much information."',
       style: TextStyle(fontSize: 32),
       textAlign: TextAlign.center,
     ),
@@ -62,7 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   final List<Icon> icons = [
     Icon(Icons.flight_takeoff, size: 60),
-    Icon(Icons.live_help, size: 60),
+    Icon(Icons.cancel, size: 60),
     Icon(Icons.cancel, size: 60),
     Icon(Icons.cancel, size: 60),
     Icon(Icons.remove_red_eye, size: 60),
@@ -88,60 +89,40 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     ),
     Column(
       children: <Widget>[
-        Text(
-          '    Have you ever immediately forgotten why you walked into a room? Has someone\'s name '
-          'at a party skipped over your brain like a flat stone on a smooth lake? Have you spent more than '
-          '20 minutes looking for your car? Your keys? Forgot that final critical item only after coming home from '
-          'shopping? \n    We\'re going to remedy all that, and much more. Can you imagine a life where you never '
-            'forget anything important? Not only the big stuff - it\'s the small stuff that starts to accumulate. '
-            '\n    I crack a smile every time I have to fill out a customs form. Passport number? Check. Flight code? Got it. '
-            'I mail a package to my friend, and I don\'t have to dig through ancient text conversations to retrieve his address '
-            'because my brain serves it up like a butler.\n'
-          '    Let\'s go bust some myths...',
-          style: TextStyle(fontSize: 17),
-        ),
-      ],
-    ),
-    Column(
-      children: <Widget>[
-        Text(
-          '"My memory is bad, and there\'s nothing I can do about it."',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 22),
-        ),
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
         Text(
           '    Memory champions have become so in less than a year of training - '
           'and none of them have claimed to have photographic memory '
-          '(something which doesn\'t actually exist). '
-          'They are just ordinary people who suddenly understand that they are capable, '
-          'and make it their responsibility to improve their memory.\n'
-          '    I can tell you from personal experience that at the ripe old age of 29 '
-          'I was resigned to have a terrible memory for the rest of my life. '
-          'All I did was encounter these strategies by accident while waiting in line for ramen, '
-          'and within months I was able to rapidly improve my memory beyond all recognition.'
-          '\n   If I can do it, so can you. ',
-          style: TextStyle(fontSize: 17),
+          '(something which doesn\'t actually exist). \n'
+          '    They are just ordinary people who suddenly understand that they are capable, '
+          'and make it their responsibility to improve their memory.',
+          style: TextStyle(fontSize: 20),
         ),
       ],
     ),
     Column(
       children: <Widget>[
+        Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
         Text(
-          '"The brain can only store so much information."',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 22),
+            '    I can tell you from personal experience that at the ripe old age of 29 '
+            'I was resigned to have a terrible memory for the rest of my life. I had the worst memory '
+              'among all my friends. \n'
+            '    All I did was encounter these strategies by accident while waiting in line for ramen, '
+            'and within months I was able to rapidly improve my memory beyond all recognition.'
+            '\n\n   If I can do it, so can you. ',
+          style: TextStyle(fontSize: 20),
         ),
+      ],
+    ),
+    Column(
+      children: <Widget>[
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
         Text(
           '    Okay, not totally false. The brain does have a limit, but it is far beyond anyone\'s reach - '
           'scientists estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
-          'worry about filling your brain with short term data, or trivial facts (10,000 digits of pi, no problem). '
-          'If you store them correctly, more vital information won\'t get pushed out of your brain.\n'
-          '    This is actually a good time to compare our brains to a computer. You wouldn\'t '
-          'save every file onto your desktop in a disorganized mess, would you? '
-          'Then let\'s not do that with our memories. You\'ll practice methods to compartmentalize down the line.',
-          style: TextStyle(fontSize: 17),
+          'worry about filling your brain with short term data or trivial facts. '
+          'If you store them correctly, vital information won\'t get pushed out of your brain.\n',
+          style: TextStyle(fontSize: 20),
         ),
       ],
     ),
@@ -149,37 +130,23 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       '    You\'ll be surprised at how much more you remember simply by making a conscious effort '
       'to pay attention to things more. Even thinking about your memory like you are now '
       'will in and of itself improve your memory (it\'s all very meta, I know). '
-      'Now, when you visualize in your brain what you\'re paying attention to, really amp up those details. '
-      'Make it zanier and more visceral than real life. Make it sexual, noisy, violent, fragrant. \n'
-      '    Let\'s look at an example. Your friend introduces you to her friend Henry... Henry, Henry, Henry. '
-      'King Henry? Let\'s put a big gold crown on his big ol\' head (in our mind), and watch him sit down on '
-      'his massive thrown. He bellows out to his people, "I AM YOUR KING!" (spit flying everywhere) '
-      '"NOW BEHEAD THEM ALL!!"... and now maybe you\'re not going to have to ask his name '
-      'again in three minutes when you end up talking to him by the fridge.',
-      style: TextStyle(fontSize: 17),
+      '\n    And when you visualize in your brain what you\'re paying attention to, really amp up those details. '
+      'Make it zanier and more visceral than real life.',
+      style: TextStyle(fontSize: 20),
     ),
     Text(
-      '    Don\'t worry, this app is free! Some techniques for specialized situations, '
-      'like memorizing a deck of cards, might be hidden behind '
-      'a paywall down the road. But the only investment you DO need to make is some of your time. '
+      '    Don\'t worry, this app is free! The only investment you need to make is some of your time. '
       'Trust me though, once you\'ve achieved some proficiency in the some of these systems, '
-      'you\'ll be glad you did. The benefits pay for life!\n    Never pull out a credit card, a passport, or a license for those pesky numbers '
-      'and expiration dates. Remember everyone\'s name at a new party, '
-      'and put on a performance by memorizing a deck of cards in less than '
-      'a minute. Never again walk into a room and forget what you needed to do. Save yourself the hassle of running '
-      'around the supermarket with your phone out. Recall your parking spot in the huge structure with ease. \n\n'
-      '    Believe in yourself. Invest in yourself.',
-      style: TextStyle(fontSize: 17),
+      'you\'ll be glad you did. The benefits pay for life!',
+      style: TextStyle(fontSize: 20),
     ),
     Text(
       '    We\'ll start with some basic systems, and as you master them, new ones will unlock. '
-      'In the main menu, you will be presented with a TO-DO section and a REVIEW section. \n'
-      '    New systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
+      'In the main menu, you will be presented with a TO-DO section and a REVIEW section. New '
+        'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
       'will still be available in the REVIEW section. \n'
-      '    When you start a new system, click the information button in the menu bar '
-      'if you have any questions getting started. Hopefully the UX is such that you only need to '
-      'consult it as a reference ;)\n\n    Okay, off you go!\n      - Matt',
-      style: TextStyle(fontSize: 18),
+      '    Okay, off you go!\n      - Matt',
+      style: TextStyle(fontSize: 20),
     ),
   ];
 
@@ -202,12 +169,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   }
 
   void goToMainMenu(BuildContext context) async {
-    HapticFeedback.lightImpact();
     HapticFeedback.heavyImpact();
     if (widget.firstTime) {
       var prefs = PrefsUpdater();
-      prefs.setBool(firstTimeAppKey, false);
+      await prefs.setBool(firstTimeAppKey, false);
       widget.callback();
+      widget.mainMenuFirstTimeCallback();
     }
     Navigator.pop(context);
   }
@@ -231,72 +198,74 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      ParallaxContainer(
-                        child: info.index == 0
-                            ? StaggerAnimation(
-                                widget: headers[info.index],
-                                controller: animationController,
-                                begin: 0,
-                                end: 1,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        ParallaxContainer(
+                          child: info.index == 0
+                              ? StaggerAnimation(
+                                  widget: headers[info.index],
+                                  controller: animationController,
+                                  begin: 0,
+                                  end: 1,
+                                )
+                              : headers[info.index],
+                          position: info.position,
+                          translationFactor: 200,
+                        ),
+                        info.index == 0
+                            ? SizedBox(
+                                height: 40,
                               )
-                            : headers[info.index],
-                        position: info.position,
-                        translationFactor: 200,
-                      ),
-                      info.index == 0
-                          ? SizedBox(
-                              height: 40,
-                            )
-                          : SizedBox(
-                              height: 10,
-                            ),
-                      ParallaxContainer(
-                        child: icons[info.index],
-                        position: info.position,
-                        translationFactor: 50,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ParallaxContainer(
-                        child: info.index == 0
-                            ? StaggerAnimation(
-                                widget: information[info.index],
-                                controller: animationController,
-                                begin: 0.3,
-                                end: 1,
-                              )
-                            : information[info.index],
-                        position: info.position,
-                        translationFactor: 100,
-                      ),
-                      info.index != headers.length - 1
-                          ? Container()
-                          : SizedBox(
-                              height: 10,
-                            ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      info.index != headers.length - 1
-                          ? Container()
-                          : ParallaxContainer(
-                              child: BasicFlatButton(
-                                text: 'Main Menu',
-                                color: Colors.amber[50],
-                                splashColor: Colors.amber[200],
-                                onPressed: () => goToMainMenu(context),
-                                padding: 10,
-                                fontSize: 28,
+                            : SizedBox(
+                                height: 10,
                               ),
-                              position: info.position,
-                              translationFactor: 300,
-                            ),
-                    ],
+                        ParallaxContainer(
+                          child: icons[info.index],
+                          position: info.position,
+                          translationFactor: 50,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ParallaxContainer(
+                          child: info.index == 0
+                              ? StaggerAnimation(
+                                  widget: information[info.index],
+                                  controller: animationController,
+                                  begin: 0.3,
+                                  end: 1,
+                                )
+                              : information[info.index],
+                          position: info.position,
+                          translationFactor: 100,
+                        ),
+                        info.index != headers.length - 1
+                            ? Container()
+                            : SizedBox(
+                                height: 10,
+                              ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        info.index != headers.length - 1
+                            ? Container()
+                            : ParallaxContainer(
+                                child: BasicFlatButton(
+                                  text: 'Main Menu',
+                                  color: Colors.amber[50],
+                                  splashColor: Colors.amber[200],
+                                  onPressed: () => goToMainMenu(context),
+                                  padding: 10,
+                                  fontSize: 28,
+                                ),
+                                position: info.position,
+                                translationFactor: 300,
+                              ),
+                      ],
+                    ),
                   ),
                 ),
               ),

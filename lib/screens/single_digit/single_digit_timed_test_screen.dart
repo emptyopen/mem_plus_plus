@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/components/standard.dart';
 
 class SingleDigitTimedTestScreen extends StatefulWidget {
-  final Function() callback;
+  final Function callback;
+  final Function callbackSnackbar;
 
-  SingleDigitTimedTestScreen({this.callback});
+  SingleDigitTimedTestScreen({this.callback, this.callbackSnackbar});
 
   @override
   _SingleDigitTimedTestScreenState createState() =>
@@ -60,14 +62,13 @@ class _SingleDigitTimedTestScreenState
         await prefs.updateActivityState('SingleDigitTimedTest', 'review');
         await prefs.updateActivityVisible('AlphabetEdit', true);
         await prefs.updateActivityFirstView('AlphabetEdit', true);
-        await prefs.updateActivityVisible('AlphabetPractice', true);
-        await prefs.updateActivityFirstView('AlphabetPractice', true);
       }
-      widget.callback();
+      widget.callbackSnackbar('Congratulations! You\'ve unlocked the Alphabet system!', Colors.white, Colors.blue, 5);
     } else {
-      print('failure');
+      widget.callbackSnackbar('Incorrect. Keep trying to remember, or give up and try again!', Colors.white, Colors.red, 4);
     }
     textController.text = '';
+    widget.callback();
     Navigator.pop(context);
   }
 
@@ -75,7 +76,12 @@ class _SingleDigitTimedTestScreenState
     await prefs.updateActivityState('SingleDigitTimedTest', 'review');
     await prefs.updateActivityVisible('SingleDigitTimedTest', false);
     await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
+    if (await prefs.getBool('SingleDigitTimedTestComplete') == null) {
+      await prefs.updateActivityState('SingleDigitTimedTestPrep', 'todo');
+    }
+    widget.callbackSnackbar('Try the timed test again to unlock the next system.', Colors.white, Colors.red, 3);
     Navigator.pop(context);
+    widget.callback();
   }
 
   @override
@@ -127,23 +133,23 @@ class _SingleDigitTimedTestScreenState
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FlatButton(
-                  shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
+                BasicFlatButton(
+                  text: 'Give up',
+                  fontSize: 24,
                   color: Colors.grey[200],
+                  splashColor: Colors.amber,
                   onPressed: () => giveUp(),
-                  child: Text(
-                    'Give up',
-                    style: TextStyle(fontSize: 30),
-                  )),
-                SizedBox(width: 25,),
-                FlatButton(
-                  shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
-                  color: Colors.amber[100],
+                  padding: 10,
+                ),
+                SizedBox(width: 10,),
+                BasicFlatButton(
+                  text: 'Submit',
+                  fontSize: 24,
+                  color: Colors.amber[200],
+                  splashColor: Colors.amber,
                   onPressed: () => checkAnswer(),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(fontSize: 30),
-                  )),
+                  padding: 10,
+                ),
               ],
             ),
           ],
@@ -157,7 +163,8 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
-      information: ['    Time to recall your story! If you recall this correctly, you\'ll '
+      title: 'Single Digit Timed Test',
+      information: ['    Time to remember your story! If you recall this correctly, you\'ll '
         'unlock the next system! Good luck!'],
     );
   }

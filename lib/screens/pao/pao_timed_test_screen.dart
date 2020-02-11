@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 class PAOTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -201,6 +201,7 @@ class PAOTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'PAO Timed Test',
       information: ['    Time to recall your story! If you recall this correctly, you\'ll '
         'unlock the next system! Good luck!'],
     );

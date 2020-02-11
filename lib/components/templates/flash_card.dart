@@ -29,7 +29,7 @@ class FlashCard extends StatefulWidget {
 class _FlashCardState extends State<FlashCard> {
   bool done = false;
   bool guessed = true;
-  int familiarityIncrease = 40;
+  int familiarityIncrease = 100;
   int familiarityDecrease = 25;
   String activityStatesKey = 'ActivityStates';
   String digitLetter = '';
@@ -77,11 +77,11 @@ class _FlashCardState extends State<FlashCard> {
     // Snackbar
     Color snackBarColor = Colors.green[200];
     String snackBarText =
-        'Familiarity for $digitLetter $value increased (now ${updatedEntry.familiarity})!';
+        'Familiarity for $digitLetter $value increased, now at ${updatedEntry.familiarity}%';
     if (previousFamiliarity < 100 && updatedEntry.familiarity == 100) {
       snackBarText =
           'Familiarity for $digitLetter $value maxed out! Great job!';
-      snackBarColor = Colors.amber[200];
+      snackBarColor = widget.color;
 
       // Check for level up!!
       int familiaritySum = 0;
@@ -94,16 +94,16 @@ class _FlashCardState extends State<FlashCard> {
       }
     } else if (updatedEntry.familiarity == 100) {
       snackBarText = 'Familiarity for letter $value already maxed out!';
-      snackBarColor = Colors.amber[200];
+      snackBarColor = Colors.green[200];
     }
     showSnackBar(context, snackBarText, Colors.black, snackBarColor, 2);
     if (levelUp) {
       showSnackBar(
           context,
           'Congratulations, you\'ve leveled up! Head to the main menu to see what you\'ve unlocked!',
-          Colors.white,
           Colors.black,
-          6);
+          widget.color,
+          10);
     }
   }
 

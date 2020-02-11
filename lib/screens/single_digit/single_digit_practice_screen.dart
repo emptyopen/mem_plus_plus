@@ -3,7 +3,7 @@ import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
 class SingleDigitPracticeScreen extends StatefulWidget {
@@ -30,12 +30,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'SingleDigitPracticeFirstHelp', SingleDigitPracticeScreenHelp());
-    if (await prefs.getString(singleDigitKey) == null) {
-      singleDigitData = defaultSingleDigitData;
-      await prefs.setString(singleDigitKey, json.encode(singleDigitData));
-    } else {
-      singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
-    }
+    singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
     setState(() {});
   }
@@ -91,16 +86,17 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
 
 class SingleDigitPracticeScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    Welcome to your first practice! Since you have a complete set of single digits mapped out, you\'re '
-        'now ready to get started with practice! \n    Here you will familiarize yourself '
+    '    Now that you have a complete set of single digits mapped out, you\'re '
+        'ready to get started with practice! \n    Here you will familiarize yourself '
         'with the digit-object mapping until you\'ve maxed out your '
-        'familiarity with each digit, upon which the first test will be unlocked! ',
+        'familiarity with each digit, after which the first test will be unlocked! ',
     '    Try to guess the object before even hitting the reveal button! It\'ll help you once you really get tested ;)'
   ];
 
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'Single Digit Practice',
       information: information,
     );
   }

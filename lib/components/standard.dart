@@ -61,7 +61,7 @@ class MainMenuOption extends StatelessWidget {
   });
 
   String generateTimeRemaining() {
-    return durationToString(activity.visibleAfter.difference(DateTime.now()));
+    return durationToString(activity.visibleAfterTime.difference(DateTime.now()));
   }
 
   @override
@@ -79,7 +79,7 @@ class MainMenuOption extends StatelessWidget {
                 side: BorderSide(), borderRadius: BorderRadius.circular(5)),
             onPressed: () async {
               HapticFeedback.heavyImpact();
-              if (activity.visibleAfter.compareTo(DateTime.now()) > 0) {
+              if (activity.visibleAfterTime.compareTo(DateTime.now()) > 0) {
                 return null;
               }
               if (activity.firstView) {
@@ -126,11 +126,10 @@ class MainMenuOption extends StatelessWidget {
                   left: 5,
                   top: 6)
               : Container(),
-          activity.visibleAfter.compareTo(DateTime.now()) < 0
+          activity.visibleAfterTime.compareTo(DateTime.now()) < 0
               ? Container()
               : Positioned(
                   child: Container(
-                    // TODO: this needs to be variable
                     width: 330,
                     height: 37.5,
                     decoration: BoxDecoration(
@@ -144,7 +143,7 @@ class MainMenuOption extends StatelessWidget {
                   ),
                   left: 5,
                   top: 5,
-                )
+                ),
         ],
       ),
     );

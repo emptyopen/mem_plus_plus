@@ -14,8 +14,8 @@ String longTerm = 'long term (3m ~ 1y)';
 String extraLongTerm = 'extra long term (1y ~ life)';
 
 Map termDurationsMap = {
-  //shortTerm: [Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1)],
-  shortTerm: [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
+  shortTerm: [Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1)],
+  //shortTerm: [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
   mediumTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10)],
   longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
   extraLongTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90), Duration(days: 180), Duration(days: 400)],
@@ -73,6 +73,12 @@ class PrefsUpdater {
         Map<String, Activity> activityStates = object;
         prefs.setString(activityStatesKey, json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
         break;
+      case 'SingleDigit':
+        prefs.setString(key, json.encode(object));
+        break;
+      case 'Alphabet':
+        prefs.setString(key, json.encode(object));
+        break;
       case 'PAO':
         prefs.setString(key, json.encode(object));
         break;
@@ -113,7 +119,7 @@ class PrefsUpdater {
     print('setting $activityName visibleAfter to $visibleAfter');
     Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
     Activity activity = activityStates[activityName];
-    activity.visibleAfter = visibleAfter;
+    activity.visibleAfterTime = visibleAfter;
     activityStates[activityName] = activity;
     await writeSharedPrefs(activityStatesKey, activityStates);
   }
@@ -179,6 +185,8 @@ void showSnackBar(BuildContext context, String snackBarText, Color textColor, Co
       snackBarText,
       style: TextStyle(
         color: textColor,
+        fontSize: 18,
+        fontFamily: 'Rajdhani',
       ),
     ),
     duration: Duration(seconds: durationSeconds),

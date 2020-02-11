@@ -3,11 +3,13 @@ import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_edit_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
 class AlphabetEditScreen extends StatefulWidget {
-  AlphabetEditScreen({Key key}) : super(key: key);
+  final Function callback;
+
+  AlphabetEditScreen({Key key, this.callback}) : super(key: key);
 
   @override
   _AlphabetEditScreenState createState() => _AlphabetEditScreenState();
@@ -17,6 +19,8 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   SharedPreferences sharedPreferences;
   List<AlphabetData> alphabetData;
   String alphabetKey = 'Alphabet';
+  String alphabetEditCompleteKey = 'AlphabetEditComplete';
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -28,7 +32,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     var prefs = PrefsUpdater();
     await prefs.checkFirstTime(context, 'AlphabetEditFirstHelp', AlphabetEditScreenHelp());
     if (await prefs.getString(alphabetKey) == null) {
-      alphabetData = defaultAlphabetData;
+      alphabetData = defaultAlphabetData3;
       prefs.setString(alphabetKey, json.encode(alphabetData));
     } else {
       alphabetData = await prefs.getSharedPrefs(alphabetKey);
@@ -36,10 +40,39 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     setState(() {});
   }
 
-  callback(newAlphabetData) {
+  callback(newAlphabetData) async {
+    var prefs = PrefsUpdater();
     setState(() {
       alphabetData = newAlphabetData;
     });
+    // check if all data is complete
+    bool entriesComplete = true;
+    for (int i = 0; i < alphabetData.length; i++) {
+      if (alphabetData[i].object == '') {
+        entriesComplete = false;
+      }
+    }
+
+    // check if information is filled out for the first time
+    bool completedOnce = await prefs.getBool(alphabetEditCompleteKey);
+    if (entriesComplete && completedOnce == null) {
+      await prefs.updateActivityVisible('AlphabetPractice', true);
+      final snackBar = SnackBar(
+        content: Text(
+          'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: 'Rajdhani',
+            fontSize: 18
+          ),
+        ),
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.blue,
+      );
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+      await prefs.setBool(alphabetEditCompleteKey, true);
+      widget.callback();
+    }
   }
 
   List<AlphabetEditCard> getAlphabetEditCards() {
@@ -60,6 +93,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(title: Text('Alphabet: view/edit'),
         backgroundColor: Colors.blue[200],
         actions: <Widget>[
@@ -87,7 +121,8 @@ class AlphabetEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
-      information: ['    OK! Welcome to the 2nd system here at Takao Studios :) \n\n'
+      title: 'Alphabet View/Edit',
+      information: ['    OK! Welcome to the 2nd system here at Takao Studios :) \n'
         '    What we\'re going to do here is just like last time, now with letters of '
         'the alphabet! '],
     );

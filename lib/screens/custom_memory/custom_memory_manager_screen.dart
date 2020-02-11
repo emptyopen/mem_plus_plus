@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/custom_memory/id_card.dart';

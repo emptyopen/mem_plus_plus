@@ -57,6 +57,7 @@ class _HelpScreenState extends State<HelpScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     TransformerPageView transformerPageView = TransformerPageView(
         pageSnapping: true,
         onPageChanged: (index) {
@@ -85,13 +86,13 @@ class _HelpScreenState extends State<HelpScreen> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 30,),
+                      SizedBox(height: 10,),
                       ParallaxContainer(
                         child: Container(
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(5)),
-                            padding: EdgeInsets.fromLTRB(20, 40, 20, 40),
+                            padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
                             child: informationList[info.index]),
                         position: info.position,
                         translationFactor: 100,

@@ -3,7 +3,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
-import 'package:mem_plus_plus/components/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 class AlphabetTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -122,9 +122,11 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityState('AlphabetTimedTest', 'todo');
     await prefs.updateActivityVisible('AlphabetTimedTest', true);
     await prefs.updateActivityFirstView('AlphabetTimedTest', true);
+    //Duration testDuration = Duration(hours: 2);
+    Duration testDuration = Duration(seconds: 5);
     await prefs.updateActivityVisibleAfter(
-        'AlphabetTimedTest', DateTime.now().add(Duration(hours: 2)));
-    Timer(Duration(hours: 2), widget.callback);
+        'AlphabetTimedTest', DateTime.now().add(testDuration));
+    Timer(testDuration, widget.callback);
     widget.callback();
     Navigator.pop(context);
   }
@@ -300,16 +302,17 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
+      title: 'Alphabet Timed Test Preparation',
       information: [
         '    You guessed it! Two sequences this time. And now we\'re throwing numbers into the mix as well!\n'
             '    As we start to use longer sequences, start to move the scene around. For example, say we have '
-            'the sequences "GP3D" and "R5ZA". Using default values that is [ghost, panda, bra, dinosaur], and '
+            'the sequences "GP3D" and "R5ZA". Let\'s say that translates to [ghost, panda, bra, dinosaur], and '
             '[root, snake, zipper, apple]. ',
         '    [ghost, panda, bra, dinosaur] \n\n    Let\'s avoid starting with a ghost of a panda, because we might forget '
-            'which order they come in (with the PAO system we will avoid this, and that\'s the next system). \n'
-            '    Alright, so a friendly ghost accidentally bumps into a panda, who is wearing a bra. It looks great! The panda is '
+            'which order they come in (with an upcoming system we will avoid this). \n'
+            '    Alright, so a friendly ghost accidentally bumps into a panda, who is wearing a bra. It looks so great! The panda is '
             'startled but realizes it\'s late for its meeting with his dinosaur friend. ',
-        '    [root, snake, zipper, apple]\n\n    Panda runs over to see '
+        '    [root, snake, zipper, apple]\n\n    Mr. Panda runs over to see '
             'the dinosaur, and upon seeing each other, roots from the ground come slithering up, binding them both '
             'in place. What is this sorcery? Ah, it\'s simply the magical snakes who are out to get everyone. Drat! And '
             'upon closer inspection, all of these snakes have zippers down their bodies. Let\'s pull on them to see what comes '
