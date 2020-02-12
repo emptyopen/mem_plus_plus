@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import 'package:mem_plus_plus/services/services.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 
@@ -29,6 +28,17 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
     PAOData(3, '0', 'nobody', 'does nothing', 'nothing', 0),
   ];
   String paoKey = 'PAO';
+  String mapChoice;
+  var mapChoices = [
+    'digitToPersonActionObject',
+    'personActionObjectToDigit',
+  ];
+  var paoChoices = [
+    'person',
+    'action',
+    'object',
+  ];
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -36,13 +46,50 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
     getSharedPrefs();
   }
 
+  randomPAOChoice(paoEntry) {
+    var paoChoice = paoChoices[Random().nextInt(paoChoices.length)];
+    switch (paoChoice) {
+      case 'person':
+        return paoEntry.person;
+        break;
+      case 'action':
+        return paoEntry.action;
+        break;
+      default:
+        return paoEntry.object;
+        break;
+    }
+  }
+
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      paoDataList = (json.decode(prefs.getString(paoKey)) as List)
-          .map((i) => PAOData.fromJson(i))
-          .toList();
-      // loop until you find 3 random different numbers
+    paoDataList = await prefs.getSharedPrefs(paoKey);
+
+    mapChoice = mapChoices[Random().nextInt(mapChoices.length)];
+
+    if (mapChoice == 'digitToPersonActionObject') {
+      List<int> notAllowed = [widget.paoData.index];
+      while (fakePAOChoice1 == null) {
+        PAOData candidate = paoDataList[Random().nextInt(paoDataList.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakePAOChoice1 = candidate;
+          notAllowed.add(candidate.index);
+        }
+      }
+      while (fakePAOChoice2 == null) {
+        PAOData candidate = paoDataList[Random().nextInt(paoDataList.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakePAOChoice2 = candidate;
+          notAllowed.add(candidate.index);
+        }
+      }
+      while (fakePAOChoice3 == null) {
+        PAOData candidate = paoDataList[Random().nextInt(paoDataList.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakePAOChoice3 = candidate;
+          notAllowed.add(candidate.index);
+        }
+      }
+    } else {
       List<String> notAllowed = [widget.paoData.digits];
       while (fakePAOChoice1 == null) {
         PAOData candidate = paoDataList[Random().nextInt(paoDataList.length)];
@@ -65,6 +112,9 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
           notAllowed.add(candidate.digits);
         }
       }
+    }
+
+    setState(() {
       shuffledOptions = [
         widget.paoData,
         fakePAOChoice1,
@@ -136,7 +186,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                 Container(
                   child: Center(
                       child: Text(
-                    widget.paoData.digits,
+                    mapChoice == 'digitToPersonActionObject' ? widget.paoData.digits : randomPAOChoice(widget.paoData),
                     style: TextStyle(fontSize: 30),
                   )),
                 ),
@@ -149,7 +199,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                         child: BasicFlatButton(
                           splashColor: Colors.pink[100],
                           color: Theme.of(context).primaryColor,
-                          text: shuffledOptions[0].object,
+                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[0]) : shuffledOptions[0].digits,
                           fontSize: 14,
                           onPressed: () => checkResult(0),
                         ),
@@ -160,7 +210,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                         child: BasicFlatButton(
                           splashColor: Colors.pink[100],
                           color: Theme.of(context).primaryColor,
-                          text: shuffledOptions[1].object,
+                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[1]) : shuffledOptions[1].digits,
                           fontSize: 14,
                           onPressed: () => checkResult(1),
                         ),
@@ -171,7 +221,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                         child: BasicFlatButton(
                           splashColor: Colors.pink[100],
                           color: Theme.of(context).primaryColor,
-                          text: shuffledOptions[2].object,
+                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[2]) : shuffledOptions[2].digits,
                           fontSize: 14,
                           onPressed: () => checkResult(2),
                         ),
@@ -182,7 +232,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                         child: BasicFlatButton(
                           splashColor: Colors.pink[100],
                           color: Theme.of(context).primaryColor,
-                          text: shuffledOptions[3].object,
+                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[3]) : shuffledOptions[3].digits,
                           fontSize: 14,
                           onPressed: () => checkResult(3),
                         ),

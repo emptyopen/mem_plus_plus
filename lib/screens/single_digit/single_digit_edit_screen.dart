@@ -32,7 +32,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'SingleDigitEditFirstHelp', SingleDigitEditScreenHelp());
     if (await prefs.getString(singleDigitKey) == null) {
-      singleDigitData = defaultSingleDigitData3;
+      singleDigitData = debugModeEnabled ? defaultSingleDigitData3 : defaultSingleDigitData1;
       await prefs.setString(singleDigitKey, json.encode(singleDigitData));
     } else {
       singleDigitData = await prefs.getSharedPrefs(singleDigitKey);

@@ -8,14 +8,16 @@ import 'package:mem_plus_plus/components/activities.dart';
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 
+bool debugModeEnabled = false;
+
 String shortTerm = 'short term (1d ~ 1w)';
 String mediumTerm = 'medium term (1w ~ 3m)';
 String longTerm = 'long term (3m ~ 1y)';
 String extraLongTerm = 'extra long term (1y ~ life)';
 
 Map termDurationsMap = {
-  shortTerm: [Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1)],
-  //shortTerm: [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
+  shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1)] :
+    [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
   mediumTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10)],
   longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
   extraLongTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90), Duration(days: 180), Duration(days: 400)],

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:edit_distance/edit_distance.dart';
 
 class AlphabetWrittenCard extends StatefulWidget {
   final AlphabetData alphabetData;
@@ -56,8 +57,17 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
   }
 
   void checkResult() {
-    if (widget.alphabetData.object.toLowerCase() == textController.text.toLowerCase().trim()) {
+    Levenshtein d = new Levenshtein();
+    String answer = widget.alphabetData.object.toLowerCase();
+    String guess = textController.text.toLowerCase().trim();
+    if (d.distance(answer, guess) == 0) {
       showSnackBar(context, 'Correct!', Colors.black, Colors.green[200], 1);
+      setState(() {
+        widget.callback(context, true);
+        done = true;
+      });
+    } else if (d.distance(answer, guess) == 1) {
+      showSnackBar(context, 'Close enough!', Colors.black, Colors.green[200], 1);
       setState(() {
         widget.callback(context, true);
         done = true;

@@ -29,6 +29,7 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
   ];
   String singleDigitKey = 'SingleDigit';
   var prefs = PrefsUpdater();
+  int isDigitToObject; // 0 == digitToObject, 1 == objectToDigit
 
   @override
   void initState() {
@@ -38,8 +39,35 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
 
   Future<Null> getSharedPrefs() async {
     singleDigitDataList = await prefs.getSharedPrefs(singleDigitKey);
-    setState(() {
-      // loop until you find 3 random different numbers
+
+    // randomly choose either digit -> object or object -> digit
+    isDigitToObject = Random().nextInt(2);
+    if (isDigitToObject == 0) {
+      // loop until you find 3 random different objects
+      List<String> notAllowed = [widget.singleDigitData.object];
+      while (fakeSingleDigitChoice1 == null) {
+        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        if (!notAllowed.contains(candidate.object)) {
+          fakeSingleDigitChoice1 = candidate;
+          notAllowed.add(candidate.object);
+        }
+      }
+      while (fakeSingleDigitChoice2 == null) {
+        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        if (!notAllowed.contains(candidate.object)) {
+          fakeSingleDigitChoice2 = candidate;
+          notAllowed.add(candidate.object);
+        }
+      }
+      while (fakeSingleDigitChoice3 == null) {
+        SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
+        if (!notAllowed.contains(candidate.object)) {
+          fakeSingleDigitChoice3 = candidate;
+          notAllowed.add(candidate.object);
+        }
+      }
+    } else {
+      // loop until you find 3 random different digits
       List<String> notAllowed = [widget.singleDigitData.digits];
       while (fakeSingleDigitChoice1 == null) {
         SingleDigitData candidate = singleDigitDataList[Random().nextInt(singleDigitDataList.length)];
@@ -62,6 +90,9 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
           notAllowed.add(candidate.digits);
         }
       }
+    }
+
+    setState(() {
       shuffledOptions = [
         widget.singleDigitData,
         fakeSingleDigitChoice1,
@@ -102,7 +133,7 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
           Container(
             child: Center(
               child: Text(
-                widget.singleDigitData.digits,
+                isDigitToObject == 0 ? widget.singleDigitData.digits : widget.singleDigitData.object,
                 style: TextStyle(fontSize: 30),
               )),
           ),
@@ -115,7 +146,7 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
                   child: BasicFlatButton(
                     splashColor: Colors.amber[100],
                     color: Theme.of(context).primaryColor,
-                    text: shuffledOptions[0].object,
+                    text: isDigitToObject == 0 ? shuffledOptions[0].object : shuffledOptions[0].digits,
                     fontSize: 18,
                     onPressed: () => checkResult(0),
                   ),
@@ -126,7 +157,7 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
                   child: BasicFlatButton(
                     splashColor: Colors.amber[100],
                     color: Theme.of(context).primaryColor,
-                    text: shuffledOptions[1].object,
+                    text: isDigitToObject == 0 ? shuffledOptions[1].object : shuffledOptions[1].digits,
                     fontSize: 18,
                     onPressed: () => checkResult(1),
                   ),
@@ -137,7 +168,7 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
                   child: BasicFlatButton(
                     splashColor: Colors.amber[100],
                     color: Theme.of(context).primaryColor,
-                    text: shuffledOptions[2].object,
+                    text: isDigitToObject == 0 ? shuffledOptions[2].object : shuffledOptions[2].digits,
                     fontSize: 18,
                     onPressed: () => checkResult(2),
                   ),
@@ -148,7 +179,7 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
                   child: BasicFlatButton(
                     splashColor: Colors.amber[100],
                     color: Theme.of(context).primaryColor,
-                    text: shuffledOptions[3].object,
+                    text: isDigitToObject == 0 ? shuffledOptions[3].object : shuffledOptions[3].digits,
                     fontSize: 18,
                     onPressed: () => checkResult(3),
                   ),

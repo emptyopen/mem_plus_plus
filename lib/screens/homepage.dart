@@ -41,10 +41,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 // Definitely
-// TODO: test on person, action, object for PAO MC test
-// TODO: make practice work both ways object -> number / number -> object
 // TODO: roll out for ios Store
+// TODO: force user to scroll through information to hit OK (the first time)
+// TODO: make sizes work for iphone 7, and smaller screens
+// TODO: make 'new' symbol sparkle / pulse
+// TODO: show correct answer for tests where you give up
 
+// mc test / written test
+// TODO: full screen flash cards, flip to green correct or red incorrect
+// TODO: auto exit after MC/written test
+// TODO: only show cards that are not 100% familiarity, unless they are all 100% familiarity in which case show all of them
+// TODO: after MC test, show which words were INCORRECT
+
+// TODO: add safe viewing area (for toolbar)
 // TODO: change custom memory tests to add time only once they are complete, use a 'nextTime'
 // TODO: add ability for alphabet to contain up to 3 objects
 // TODO: add global celebration animation whenever there is a level up
@@ -61,6 +70,8 @@ class MyHomePage extends StatefulWidget {
 // TODO: make snackbars prettier
 // TODO: written test: allow close enough spelling
 // TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
+
+// todo:  Brain by Arjun Adamson from the Noun Project
 
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
@@ -82,14 +93,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkForAppUpdate() async {
-    var prefs = PrefsUpdater();
-    String version = '3';
-    if (await prefs.getBool('VERSION-$version') == null) {
-      print('resetting due to new version $version');
-      resetKeys();
-      await prefs.setBool('VERSION-$version', true);
-      setUnlockedActivities();
-    }
+//    var prefs = PrefsUpdater();
+//    String version = '3';
+//    if (await prefs.getBool('VERSION-$version') == null) {
+//      print('resetting due to new version $version');
+//      resetKeys();
+//      await prefs.setBool('VERSION-$version', true);
+//      setUnlockedActivities();
+//    }
   }
 
   Future<Null> getSharedPrefs() async {
@@ -233,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
       mainMenuOptions.add(MainMenuOption(
         activity: activity,
         icon: Icon(customIcon),
-        text: Text('${memory['type']}: $title', style: TextStyle(fontSize: 23),),
+        text: '${memory['type']}: $title',
         route: CustomMemoryTestScreen(
           customMemory: memory,
           callback: callback,
@@ -384,19 +395,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var writtenTestIcon = Icon(Icons.text_format);
     activityMenuButtonMap = {
       'Welcome': ActivityMenuButton(
-          text: Text(
-            'Welcome',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'Welcome',
           route: WelcomeScreen(),
           icon: Icon(Icons.filter),
           color: Colors.green[100],
           splashColor: Colors.green[200]),
       'SingleDigitEdit': ActivityMenuButton(
-          text: Text(
-            'Single Digit [View/Edit]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'Single Digit [View/Edit]',
           route: SingleDigitEditScreen(
             callback: callback,
           ),
@@ -404,10 +409,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.amber[100],
         splashColor: Colors.amber[200]),
       'SingleDigitPractice': ActivityMenuButton(
-          text: Text(
-            'Single Digit [Practice]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'Single Digit [Practice]',
           route: SingleDigitPracticeScreen(
             callback: callback,
           ),
@@ -415,10 +417,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.amber[200],
         splashColor: Colors.amber[300]),
       'SingleDigitMultipleChoiceTest': ActivityMenuButton(
-          text: Text(
-            'Single Digit [MC Test]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'Single Digit [MC Test]',
           route: SingleDigitMultipleChoiceTestScreen(
             callback: callback,
             callbackSnackbar: callbackSnackbar,
@@ -427,10 +426,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.amber[300],
         splashColor: Colors.amber[400]),
       'SingleDigitTimedTestPrep': ActivityMenuButton(
-          text: Text(
-            'Single Digit [Timed Test Prep]',
-            style: TextStyle(fontSize: 21),
-          ),
+          text: 'Single Digit [Test Prep]',
           route: SingleDigitTimedTestPrepScreen(
             callback: callback,
           ),
@@ -438,10 +434,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.amber[400],
         splashColor: Colors.amber[500]),
       'SingleDigitTimedTest': ActivityMenuButton(
-          text: Text(
-            'Single Digit [Timed Test]',
-            style: TextStyle(fontSize: 22),
-          ),
+          text: 'Single Digit [Timed Test]',
           route: SingleDigitTimedTestScreen(
             callback: callback,
             callbackSnackbar: callbackSnackbar,
@@ -450,10 +443,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.amber[400],
         splashColor: Colors.amber[500]),
       'AlphabetEdit': ActivityMenuButton(
-          text: Text(
-            'Alphabet [View/Edit]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'Alphabet [View/Edit]',
           route: AlphabetEditScreen(
             callback: callback,
           ),
@@ -461,10 +451,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.blue[100],
         splashColor: Colors.blue[200]),
       'AlphabetPractice': ActivityMenuButton(
-          text: Text(
-            'Alphabet [Practice]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'Alphabet [Practice]',
           route: AlphabetPracticeScreen(
             callback: callback,
           ),
@@ -472,10 +459,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.blue[200],
         splashColor: Colors.blue[300]),
       'AlphabetWrittenTest': ActivityMenuButton(
-          text: Text(
-            'Alphabet [Written Test]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'Alphabet [Written Test]',
           route: AlphabetWrittenTestScreen(
             callback: callback,
             callbackSnackbar: callbackSnackbar,
@@ -484,10 +468,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.blue[300],
         splashColor: Colors.blue[400]),
       'AlphabetTimedTestPrep': ActivityMenuButton(
-          text: Text(
-            'Alphabet [Timed Test Prep]',
-            style: TextStyle(fontSize: 21),
-          ),
+          text: 'Alphabet [Test Prep]',
           route: AlphabetTimedTestPrepScreen(
             callback: callback,
           ),
@@ -495,10 +476,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.blue[400],
         splashColor: Colors.blue[500]),
       'AlphabetTimedTest': ActivityMenuButton(
-          text: Text(
-            'Alphabet [Timed Test]',
-            style: TextStyle(fontSize: 22),
-          ),
+          text: 'Alphabet [Timed Test]',
           route: AlphabetTimedTestScreen(
             callback: callback,
             callbackSnackbar: callbackSnackbar,
@@ -507,10 +485,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.blue[400],
         splashColor: Colors.blue[500]),
       'PAOEdit': ActivityMenuButton(
-          text: Text(
-            'PAO [View/Edit]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'PAO [View/Edit]',
           route: PAOEditScreen(
             callback: callback,
           ),
@@ -518,10 +493,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.pink[100],
         splashColor: Colors.pink[200]),
       'PAOPractice': ActivityMenuButton(
-          text: Text(
-            'PAO [Practice]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'PAO [Practice]',
           route: PAOPracticeScreen(
             callback: callback,
           ),
@@ -529,10 +501,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.pink[200],
         splashColor: Colors.pink[300]),
       'PAOMultipleChoiceTest': ActivityMenuButton(
-          text: Text(
-            'PAO [MC Test]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'PAO [MC Test]',
           route: PAOMultipleChoiceTestScreen(
             callback: callback,
             callbackSnackbar: callbackSnackbar,
@@ -541,10 +510,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.pink[300],
         splashColor: Colors.pink[400]),
       'PAOTimedTestPrep': ActivityMenuButton(
-          text: Text(
-            'PAO [Timed Test Prep]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'PAO [Test Prep]',
           route: PAOTimedTestPrepScreen(
             callback: callback,
           ),
@@ -552,10 +518,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.pink[400],
         splashColor: Colors.pink[500]),
       'PAOTimedTest': ActivityMenuButton(
-          text: Text(
-            'PAO [Timed Test]',
-            style: TextStyle(fontSize: 24),
-          ),
+          text: 'PAO [Timed Test]',
           route: PAOTimedTestScreen(
             callback: callback,
           ),

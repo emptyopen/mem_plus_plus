@@ -185,8 +185,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     await prefs.updateActivityState('PAOTimedTest', 'todo');
     await prefs.updateActivityVisible('PAOTimedTest', true);
     await prefs.updateActivityFirstView('PAOTimedTest', true);
-    //Duration testDuration = Duration(hours: 4);
-    Duration testDuration = Duration(seconds: 5);
+    Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 4);
     await prefs.updateActivityVisibleAfter(
         'PAOTimedTest', DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);

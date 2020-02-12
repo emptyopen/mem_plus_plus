@@ -291,7 +291,7 @@ class _MyDialogContentState extends State<MyDialogContent> {
                     value: value,
                     child: Text(
                       value,
-                      style: TextStyle(fontSize: 16, fontFamily: 'Rajdhani'),
+                      style: TextStyle(fontSize: 16, fontFamily: 'CabinSketch'),
                     ),
                   );
                 }).toList(),

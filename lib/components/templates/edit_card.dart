@@ -235,15 +235,15 @@ class _EditCardState extends State<EditCard> {
     if (widget.activityKey == 'PAO') {
       bool resetFamiliarity = false;
       if (personTextController.text != '') {
-        updatedEntry.person = personTextController.text;
+        updatedEntry.person = personTextController.text.trim();
         resetFamiliarity = true;
       }
       if (actionTextController.text != '') {
-        updatedEntry.action = actionTextController.text;
+        updatedEntry.action = actionTextController.text.trim();
         resetFamiliarity = true;
       }
       if (objectTextController.text != '') {
-        updatedEntry.object = objectTextController.text;
+        updatedEntry.object = objectTextController.text.trim();
         resetFamiliarity = true;
       }
       if (resetFamiliarity) {
@@ -253,7 +253,7 @@ class _EditCardState extends State<EditCard> {
       await prefs.writeSharedPrefs(widget.activityKey, data);
     } else {
       if (objectTextController.text != '') {
-        updatedEntry.object = objectTextController.text;
+        updatedEntry.object = objectTextController.text.trim();
         updatedEntry.familiarity = 0;
       }
       data[currIndex] = updatedEntry;

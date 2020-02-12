@@ -69,8 +69,7 @@ class _SingleDigitTimedTestPrepScreenState
     await prefs.updateActivityState('SingleDigitTimedTest', 'todo');
     await prefs.updateActivityVisible('SingleDigitTimedTest', true);
     await prefs.updateActivityFirstView('SingleDigitTimedTest', true);
-    //Duration testDuration = Duration(hours: 1);
-    Duration testDuration = Duration(seconds: 5);
+    Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 1);
     await prefs.updateActivityVisibleAfter('SingleDigitTimedTest', DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     widget.callback();

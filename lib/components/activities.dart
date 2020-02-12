@@ -29,7 +29,7 @@ class Activity {
 }
 
 class ActivityMenuButton {
-  Widget text;
+  String text;
   Widget route;
   Icon icon;
   Color color;

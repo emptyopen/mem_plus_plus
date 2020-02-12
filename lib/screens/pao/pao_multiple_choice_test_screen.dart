@@ -51,32 +51,9 @@ class _PAOMultipleChoiceTestScreenState
           widget.callback();
           widget.callbackSnackbar('You aced it! You\'ve unlocked the timed test!', Colors.black, Colors.pink, 5);
           Navigator.pop(context);
-//          // Snackbar
-//          final snackBar = SnackBar(
-//            content: Text(
-//              ,
-//              style: TextStyle(
-//                color: Colors.white,
-//              ),
-//            ),
-//            duration: Duration(seconds: 10),
-//            backgroundColor: Colors.black,
-//          );
-//          Scaffold.of(context).showSnackBar(snackBar);
         } else {
           widget.callbackSnackbar('You aced it!', Colors.black, Colors.pink, 3);
           Navigator.pop(context);
-//          final snackBar = SnackBar(
-//            content: Text(
-//              'You aced it!',
-//              style: TextStyle(
-//                color: Colors.white,
-//              ),
-//            ),
-//            duration: Duration(seconds: 10),
-//            backgroundColor: Colors.black,
-//          );
-//          Scaffold.of(context).showSnackBar(snackBar);
         }
       }
     }
@@ -85,18 +62,6 @@ class _PAOMultipleChoiceTestScreenState
     if (attempts == 100 && score < 100) {
       widget.callbackSnackbar('Try again! You got this. Score: $score/100', Colors.black, Colors.red, 5);
       Navigator.pop(context);
-//      final snackBar = SnackBar(
-//        content: Text(
-//          'Try again! You got this. Score: $score/100',
-//          style: TextStyle(
-//            color: Colors.black,
-//          ),
-//        ),
-//        // TODO: add action here for quick redo
-//        duration: Duration(seconds: 10),
-//        backgroundColor: Colors.red[200],
-//      );
-//      Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 

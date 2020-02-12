@@ -90,6 +90,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
+        SizedBox(height: 10,),
         Text(
           '    Memory champions have become so in less than a year of training - '
           'and none of them have claimed to have photographic memory '
@@ -103,6 +104,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
+        SizedBox(height: 10,),
         Text(
             '    I can tell you from personal experience that at the ripe old age of 29 '
             'I was resigned to have a terrible memory for the rest of my life. I had the worst memory '
@@ -117,6 +119,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
+        SizedBox(height: 10,),
         Text(
           '    Okay, not totally false. The brain does have a limit, but it is far beyond anyone\'s reach - '
           'scientists estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
@@ -142,7 +145,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     ),
     Text(
       '    We\'ll start with some basic systems, and as you master them, new ones will unlock. '
-      'In the main menu, you will be presented with a TO-DO section and a REVIEW section. New '
+      'In the main menu, you will be presented with a TO-DO section and a REVIEW section. \n    New '
         'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
       'will still be available in the REVIEW section. \n'
       '    Okay, off you go!\n      - Matt',
@@ -217,16 +220,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         ),
                         info.index == 0
                             ? SizedBox(
-                                height: 40,
+                                height: 10,
                               )
                             : SizedBox(
                                 height: 10,
                               ),
-                        ParallaxContainer(
-                          child: icons[info.index],
-                          position: info.position,
-                          translationFactor: 50,
-                        ),
+//                        ParallaxContainer(
+//                          child: icons[info.index],
+//                          position: info.position,
+//                          translationFactor: 50,
+//                        ),
                         SizedBox(
                           height: 10,
                         ),

@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class BasicFlatButton extends StatelessWidget {
-
   final Color color;
   final Color splashColor;
   final String text;
@@ -15,7 +15,14 @@ class BasicFlatButton extends StatelessWidget {
   final double padding;
   final Color textColor;
 
-  BasicFlatButton({this.color = Colors.white, this.splashColor, this.text, this.fontSize, this.onPressed, this.padding = 0, this.textColor = Colors.black});
+  BasicFlatButton(
+      {this.color = Colors.white,
+      this.splashColor,
+      this.text,
+      this.fontSize,
+      this.onPressed,
+      this.padding = 0,
+      this.textColor = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,8 @@ class BasicFlatButton extends StatelessWidget {
         HapticFeedback.heavyImpact();
         onPressed();
       },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5), side: BorderSide()),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5), side: BorderSide()),
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: Text(
@@ -42,7 +50,7 @@ class BasicFlatButton extends StatelessWidget {
 class MainMenuOption extends StatelessWidget {
   final Activity activity;
   final Icon icon;
-  final Widget text;
+  final String text;
   final Color color;
   final Color splashColor;
   final Widget route;
@@ -61,14 +69,18 @@ class MainMenuOption extends StatelessWidget {
   });
 
   String generateTimeRemaining() {
-    return durationToString(activity.visibleAfterTime.difference(DateTime.now()));
+    return durationToString(
+        activity.visibleAfterTime.difference(DateTime.now()));
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      width: 340,
       height: 50,
+      width: screenWidth * 0.85,
       child: Stack(
         children: <Widget>[
           FlatButton(
@@ -107,7 +119,19 @@ class MainMenuOption extends StatelessWidget {
                   width: 10,
                   height: 45,
                 ),
-                text,
+                ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: 100.0,
+                      maxWidth: screenWidth * .65,
+                      minHeight: 30.0,
+                      maxHeight: 100.0,
+                    ),
+                    child: AutoSizeText(
+                      text,
+                      style: TextStyle(fontSize: 41),
+                      maxLines: 1,
+                      maxFontSize: 24,
+                    )),
               ],
             ),
           ),
@@ -121,7 +145,14 @@ class MainMenuOption extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                       color: Colors.red[200],
                     ),
-                    child: Center(child: Text('new!', style: TextStyle(fontSize: 12, fontFamily: 'SpaceMono', color: Colors.black),)),
+                    child: Center(
+                        child: Text(
+                      'new!',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'SpaceMono',
+                          color: Colors.black),
+                    )),
                   ),
                   left: 5,
                   top: 6)
@@ -130,14 +161,15 @@ class MainMenuOption extends StatelessWidget {
               ? Container()
               : Positioned(
                   child: Container(
-                    width: 330,
+                    width: screenWidth * 0.7,
                     height: 37.5,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(0, 0, 0, 0.85),
                         border: Border.all(),
                         borderRadius: BorderRadius.circular(5)),
                     child: Center(
-                        child: Text( generateTimeRemaining(),
+                        child: Text(
+                      generateTimeRemaining(),
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
                   ),
@@ -156,15 +188,14 @@ class OKPopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasicFlatButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        text: 'OK',
-        color: Colors.amber[100],
-        splashColor: Colors.amber[300],
-        fontSize: 20,
-        padding: 10,
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      text: 'OK',
+      color: Colors.amber[100],
+      splashColor: Colors.amber[300],
+      fontSize: 20,
+      padding: 10,
     );
   }
 }
-

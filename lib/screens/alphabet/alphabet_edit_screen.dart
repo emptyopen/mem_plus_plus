@@ -32,7 +32,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     var prefs = PrefsUpdater();
     await prefs.checkFirstTime(context, 'AlphabetEditFirstHelp', AlphabetEditScreenHelp());
     if (await prefs.getString(alphabetKey) == null) {
-      alphabetData = defaultAlphabetData3;
+      alphabetData = debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
       prefs.setString(alphabetKey, json.encode(alphabetData));
     } else {
       alphabetData = await prefs.getSharedPrefs(alphabetKey);
