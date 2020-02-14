@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class AlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
-  final Function callbackSnackbar;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  AlphabetTimedTestScreen({this.callback, this.callbackSnackbar});
+  AlphabetTimedTestScreen({this.callback, this.globalKey});
 
   @override
   _AlphabetTimedTestScreenState createState() =>
@@ -23,7 +25,6 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   String char6 = '';
   String char7 = '';
   String char8 = '';
-  String alphabetTestActiveKey = 'AlphabetTestActive';
   final textController1 = TextEditingController();
   final textController2 = TextEditingController();
   PrefsUpdater prefs = PrefsUpdater();
@@ -72,9 +73,22 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         await prefs.updateActivityFirstView('PAOEdit', true);
         await prefs.setBool('AlphabetTimedTestComplete', true);
       }
-      widget.callbackSnackbar('Congratulations! You\'ve unlocked the PAO system!', Colors.white, Colors.pink, 5);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
+        textColor: Colors.white,
+        backgroundColor: colorPAODarker,
+        durationSeconds: 5,
+        isSuper: true,
+      );
     } else {
-      widget.callbackSnackbar('Incorrect. Keep trying to remember, or give up and try again!', Colors.white, Colors.red, 4);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
+        textColor: Colors.black,
+        backgroundColor: colorIncorrect,
+        durationSeconds: 3,
+      );
     }
     textController1.text = '';
     textController2.text = '';
@@ -90,7 +104,13 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     if (await prefs.getBool('AlphabetTimedTestComplete') == null) {
       await prefs.updateActivityState('AlphabetTimedTestPrep', 'todo');
     }
-    widget.callbackSnackbar('Try the timed test again to unlock the next system.', Colors.white, Colors.red, 3);
+    showSnackBar(
+      scaffoldState: widget.globalKey.currentState,
+      snackBarText: 'Try the timed test again to unlock the next system.',
+      textColor: Colors.black,
+      backgroundColor: colorIncorrect,
+      durationSeconds: 3,
+    );
     Navigator.pop(context);
     widget.callback();
   }
@@ -114,72 +134,76 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
               },
             ),
           ]),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: Text(
-                'Enter the characters: ',
-                style: TextStyle(fontSize: 30),
-              ),
-            ),
-            SizedBox(height: 25),
-            Container(
-              width: 200,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: TextFormField(
-                controller: textController1,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                    hintText: 'XXXX',
-                    hintStyle: TextStyle(fontSize: 30)),
-              ),
-            ),
-            SizedBox(height: 25),
-            Container(
-              width: 200,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: TextFormField(
-                controller: textController2,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                    hintText: 'XXXX',
-                    hintStyle: TextStyle(fontSize: 30)),
-              ),
-            ),
-            SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                BasicFlatButton(
-                  text: 'Give up',
-                  fontSize: 24,
-                  color: Colors.grey[200],
-                  splashColor: Colors.blue,
-                  onPressed: () => giveUp(),
-                  padding: 10,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 30,),
+              Container(
+                child: Text(
+                  'Enter the characters: ',
+                  style: TextStyle(fontSize: 30),
                 ),
-                SizedBox(width: 10,),
-                BasicFlatButton(
-                  text: 'Submit',
-                  fontSize: 24,
-                  color: Colors.blue[200],
-                  splashColor: Colors.blue,
-                  onPressed: () => checkAnswer(),
-                  padding: 10,
+              ),
+              SizedBox(height: 25),
+              Container(
+                width: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: TextFormField(
+                  controller: textController1,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(5),
+                      border: OutlineInputBorder(),
+                      hintText: 'XXXX',
+                      hintStyle: TextStyle(fontSize: 30)),
                 ),
-              ],
-            ),
-          ],
+              ),
+              SizedBox(height: 25),
+              Container(
+                width: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: TextFormField(
+                  controller: textController2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(5),
+                      border: OutlineInputBorder(),
+                      hintText: 'XXXX',
+                      hintStyle: TextStyle(fontSize: 30)),
+                ),
+              ),
+              SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  BasicFlatButton(
+                    text: 'Give up',
+                    fontSize: 24,
+                    color: Colors.grey[200],
+                    splashColor: Colors.blue,
+                    onPressed: () => giveUp(),
+                    padding: 10,
+                  ),
+                  SizedBox(width: 10,),
+                  BasicFlatButton(
+                    text: 'Submit',
+                    fontSize: 24,
+                    color: Colors.blue[200],
+                    splashColor: Colors.blue,
+                    onPressed: () => checkAnswer(),
+                    padding: 10,
+                  ),
+                ],
+              ),
+              SizedBox(height: 30,)
+            ],
+          ),
         ),
       ),
     );
@@ -195,6 +219,8 @@ class AlphabetTimedTestScreenHelp extends StatelessWidget {
         '    Time to recall your story! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!'
       ],
+      buttonColor: Colors.blue[100],
+      buttonSplashColor: Colors.blue[300],
     );
   }
 }

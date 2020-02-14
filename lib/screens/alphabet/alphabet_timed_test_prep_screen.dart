@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class AlphabetTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -25,8 +27,6 @@ class _AlphabetTimedTestPrepScreenState
   String char6 = '';
   String char7 = '';
   String char8 = '';
-  String alphabetTestActiveKey = 'AlphabetTimedTestActive';
-  String activityStatesKey = 'ActivityStates';
   PrefsUpdater prefs = PrefsUpdater();
   List<String> possibleValues = [
     'A',
@@ -276,10 +276,15 @@ class _AlphabetTimedTestPrepScreenState
           ),
           BasicFlatButton(
             text: 'I\'m ready!',
-            color: Theme.of(context).primaryColor,
-            splashColor: Colors.blue[200],
+            color: colorSingleDigitLighter,
+            splashColor: colorSingleDigitStandard,
+            onPressed: () => showConfirmDialog(
+              context: context,
+              function: updateStatus,
+              confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+              confirmColor: colorSingleDigitStandard
+            ),
             fontSize: 30,
-            onPressed: () => updateStatus(),
             padding: 10,
           ),
           SizedBox(
@@ -288,7 +293,7 @@ class _AlphabetTimedTestPrepScreenState
           Container(
             child: Text(
               '(You\'ll be quizzed on this in two hours!)',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
           )
         ],
@@ -322,6 +327,8 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
             'released from the car with every stomp. A million red balloons! Don\'t forget to really make these scenes wild.\n'
             '    Be sure not to confuse zero with O! Zero will have a dot in the character.'
       ],
+      buttonColor: Colors.blue[100],
+      buttonSplashColor: Colors.blue[300],
     );
   }
 }

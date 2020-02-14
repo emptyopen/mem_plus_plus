@@ -7,6 +7,8 @@ import 'package:mem_plus_plus/components/custom_memory/id_card.dart';
 import 'package:mem_plus_plus/components/custom_memory/contact.dart';
 import 'package:mem_plus_plus/components/custom_memory/other.dart';
 import 'dart:async';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 // TODO: science!! USE fibonacci numbers?
 // 30m - 2h - 12h - 48h
@@ -82,7 +84,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     return Scaffold(
         appBar: AppBar(
             title: Text('Custom memory management'),
-            backgroundColor: Colors.purple[200],
+            backgroundColor: colorCustomMemoryStandard,
             actions: <Widget>[
               // action button
               IconButton(
@@ -103,9 +105,8 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
               SingleChildScrollView(child: customMemoriesColumn),
               Positioned(
                 child: FlatButton(
-                  color: Colors.purple[100],
-                  splashColor: Colors.white,
-                  highlightColor: Colors.transparent,
+                  color: colorCustomMemoryStandard,
+                  splashColor: colorCustomMemoryDarker,
                   onPressed: () {
                     HapticFeedback.heavyImpact();
                     showDialog(
@@ -185,13 +186,14 @@ class CustomMemoryTile extends StatelessWidget {
               child: FlatButton(
                 child: Icon(
                   Icons.remove_red_eye,
-                  color: Colors.purple[300],
+                  color: colorCustomMemoryStandard,
                 ),
                 onPressed: () => showConfirmDialog(
-                    context,
-                    null,
-                    'Are you sure you\'d like to view this memory? Doing so '
-                    'will reset the spaced repetition schedule back to the beginning!'),
+                    context: context,
+                    function: null,
+                    confirmText: 'Are you sure you\'d like to view this memory? Doing so '
+                    'will reset the spaced repetition schedule back to the beginning!',
+                ),
               ),
             ),
             Container(
@@ -201,8 +203,11 @@ class CustomMemoryTile extends StatelessWidget {
                   Icons.delete,
                   color: Colors.red,
                 ),
-                onPressed: () => showConfirmDialog(context, deleteCustomMemory,
-                    'Delete memory: ${customMemory['title']}?'),
+                onPressed: () => showConfirmDialog(
+                  context: context,
+                  function: deleteCustomMemory,
+                  confirmText: 'Delete memory: ${customMemory['title']}?'
+                ),
               ),
             ),
           ],
@@ -272,10 +277,10 @@ class _MyDialogContentState extends State<MyDialogContent> {
               DropdownButton<String>(
                 value: dropdownValue,
                 elevation: 16,
-                style: TextStyle(color: Colors.deepPurple),
+                style: TextStyle(color: colorCustomMemoryStandard),
                 underline: Container(
                   height: 2,
-                  color: Colors.deepPurpleAccent,
+                  color: colorCustomMemoryStandard,
                 ),
                 onChanged: (String newValue) {
                   setState(() {
@@ -331,6 +336,8 @@ class CustomMemoryManagerScreenHelp extends StatelessWidget {
           '  1h-6h-24h-4d: Good for medium term memories ()\n\n'
           '  1h-2h-24h-7d-21d: Good for long term memories (IDs, recipes'
       ],
+      buttonColor: colorCustomMemoryStandard,
+      buttonSplashColor: colorCustomMemoryDarker,
     );
   }
 }

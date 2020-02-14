@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:edit_distance/edit_distance.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 
 class AlphabetWrittenCard extends StatefulWidget {
   final AlphabetData alphabetData;
@@ -61,19 +62,31 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
     String answer = widget.alphabetData.object.toLowerCase();
     String guess = textController.text.toLowerCase().trim();
     if (d.distance(answer, guess) == 0) {
-      showSnackBar(context, 'Correct!', Colors.black, Colors.green[200], 1);
+      showSnackBar(
+        scaffoldState: Scaffold.of(context),
+        snackBarText: 'Correct!',
+        backgroundColor: colorCorrect,
+        durationSeconds: 1);
       setState(() {
         widget.callback(context, true);
         done = true;
       });
     } else if (d.distance(answer, guess) == 1) {
-      showSnackBar(context, 'Close enough!', Colors.black, Colors.green[200], 1);
+      showSnackBar(
+        scaffoldState: Scaffold.of(context),
+        snackBarText: 'Close enough!',
+        backgroundColor: colorCorrect,
+        durationSeconds: 1);
       setState(() {
         widget.callback(context, true);
         done = true;
       });
     } else {
-      showSnackBar(context, 'Incorrect!', Colors.black, Colors.red[200], 2);
+      showSnackBar(
+        scaffoldState: Scaffold.of(context),
+        snackBarText: 'Incorrect! The correct answer is: ${widget.alphabetData.object}',
+        backgroundColor: colorIncorrect,
+        durationSeconds: 3);
       setState(() {
         widget.callback(context, false);
         done = true;

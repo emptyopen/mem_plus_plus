@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
-import 'package:mem_plus_plus/components/pao/pao_edit_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/components/templates/edit_card.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class PAOEditScreen extends StatefulWidget {
   final Function callback;
@@ -19,8 +20,6 @@ class PAOEditScreen extends StatefulWidget {
 class _PAOEditScreenState extends State<PAOEditScreen> {
   SharedPreferences sharedPreferences;
   List<PAOData> paoData;
-  String paoKey = 'PAO';
-  String paoEditCompleteKey = 'PAOEditComplete';
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -57,7 +56,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
           style: TextStyle(
             color: Colors.white,
-            fontFamily: 'Rajdhani',
+            fontFamily: 'CabinSketch',
             fontSize: 18
           ),
         ),
@@ -82,12 +81,12 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     setState(() {});
   }
 
-  List<PAOEditCard> getPAOEditCards() {
-    List<PAOEditCard> paoEditCards = [];
+  List<EditCard> getPAOEditCards() {
+    List<EditCard> paoEditCards = [];
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
-        PAOEditCard paoEditCard = PAOEditCard(
-          paoData: PAOData(
+        EditCard paoEditCard = EditCard(
+          entry: PAOData(
               paoData[i].index,
               paoData[i].digits,
               paoData[i].person,
@@ -95,6 +94,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
               paoData[i].object,
               paoData[i].familiarity),
           callback: callback,
+          activityKey: 'PAO',
         );
         paoEditCards.add(paoEditCard);
       }
@@ -304,14 +304,14 @@ class PAOEditScreenHelp extends StatelessWidget {
         '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. Again, '
         'you can assign any person, action, and object to any digit, but it\'s a good idea at first '
         'to follow some kind of pattern. ',
-    '    This will take some time to set up! But beleive me, it\'ll be worth it. \n'
+    '    This will take some time to set up! But believe me, it\'ll be worth it. \n'
         '    The person should be associated to its corresponding action and object, '
         'and no two persons, actions, or objects should be too similar (also avoid overlap with '
       'your single digit and alphabet systems!). As a starter pattern, we recommend '
-        'using an initials (OB = Orlando Bloom) pattern. ',
+        'using an initials pattern. ',
     '    The initials pattern proposed in "Remember It!" by Nelsos Dellis has '
-        '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros are an exception because zeros look '
-        'like Os, and Fs and Is are pretty rare in names, so we use (S)ix and (N)ine instead.\n'
+        '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros are an exception because Os, Fs, and Is are '
+      'pretty rare in names, and zeros look like Os, and (S)ix and (N)ine are more common letters in initials.\n'
         '     Using this pattern it becomes '
         'much easier to find famous people/fictional characters with initials like 12=AB=Antonio Banderas.',
     '    This system allows us to memorize sequences of numbers very efficiently. Passport/license IDs, '
@@ -320,7 +320,7 @@ class PAOEditScreenHelp extends StatelessWidget {
     '    For example, for the number 958417 we\'d break it down into 95-84-17, '
         'which under my personal system corresponds to 95 (person) = Tom Brady, 84 (action) = riding a motorcycle, '
         '17 (object) = giant boulder. So my visualized scene would be Tom Brady riding a motorcycle over '
-        'a bunch of giant boulders.',
+        'a bunch of giant boulders. What a sight that would be!',
     '    This system should take a good amount of time setting up before you start trying to master it. Update '
         'the PAO values for your digits until you\'re really happy with the list. Use people you know in real life, '
         'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '
@@ -334,6 +334,8 @@ class PAOEditScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'PAO Edit/View',
       information: information,
+      buttonColor: Colors.pink[100],
+      buttonSplashColor: Colors.pink[300],
     );
   }
 }

@@ -3,12 +3,14 @@ import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_multiple_choice_card.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
-  final Function callbackSnackbar;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  SingleDigitMultipleChoiceTestScreen({this.callback, this.callbackSnackbar});
+  SingleDigitMultipleChoiceTestScreen({this.callback, this.globalKey});
 
   @override
   _SingleDigitMultipleChoiceTestScreenState createState() =>
@@ -18,8 +20,6 @@ class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
 class _SingleDigitMultipleChoiceTestScreenState
     extends State<SingleDigitMultipleChoiceTestScreen> {
   List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'SingleDigit';
-  String activityCompleteKey = 'SingleDigitMultipleChoiceTestComplete';
   int score = 0;
   int attempts = 0;
 
@@ -51,10 +51,20 @@ class _SingleDigitMultipleChoiceTestScreenState
           await prefs.updateActivityState(
               'SingleDigitMultipleChoiceTest', 'review');
           widget.callback();
-          widget.callbackSnackbar('You aced it! You\'ve unlocked the timed test!', Colors.black, Colors.amber, 5);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText: 'You aced it! You\'ve unlocked the timed test!',
+            backgroundColor: colorSingleDigitDarker,
+            durationSeconds: 4,
+          );
           Navigator.pop(context);
         } else {
-          widget.callbackSnackbar('You aced it!', Colors.black, Colors.amber, 3);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText: 'You aced it!',
+            backgroundColor: colorCorrect,
+            durationSeconds: 3,
+          );
           Navigator.pop(context);
         }
       }
@@ -62,7 +72,12 @@ class _SingleDigitMultipleChoiceTestScreenState
     attempts += 1;
 
     if (attempts == 10 && score < 10) {
-      widget.callbackSnackbar('Try again! You got this. Score: $score/10', Colors.black, Colors.red, 5);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Try again! You got this. Score: $score/10',
+        backgroundColor: colorIncorrect,
+        durationSeconds: 4,
+      );
       Navigator.pop(context);
     }
   }
@@ -128,10 +143,12 @@ class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
       title: 'Single Digit Multiple Choice Test',
       information: [
         '    Welcome to your first multiple choice test! In this section, you will be tested on your familiarity with '
-            'each digit. \n    Every time you load this page, the digits will be scattered in a random order, '
-            'and you simply have to choose the correct object. \n    If you get a perfect score, the next test will be unlocked! '
-          'Good luck!'
+            'each digit. \n    Every time you load this page, the digits and objects will be scattered in a random order, '
+            'and you simply have to choose the correct digit or object. If you get a perfect score, the next test will be unlocked! '
+          '\n    Good luck!'
       ],
+      buttonColor: Colors.amber[100],
+      buttonSplashColor: Colors.amber[300],
     );
   }
 }

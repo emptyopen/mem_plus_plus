@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
-import 'package:mem_plus_plus/components/alphabet/alphabet_edit_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/templates/edit_card.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class AlphabetEditScreen extends StatefulWidget {
   final Function callback;
@@ -18,8 +20,6 @@ class AlphabetEditScreen extends StatefulWidget {
 class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   SharedPreferences sharedPreferences;
   List<AlphabetData> alphabetData;
-  String alphabetKey = 'Alphabet';
-  String alphabetEditCompleteKey = 'AlphabetEditComplete';
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -62,12 +62,12 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
           style: TextStyle(
             color: Colors.white,
-            fontFamily: 'Rajdhani',
+            fontFamily: 'CabinSketch',
             fontSize: 18
           ),
         ),
         duration: Duration(seconds: 5),
-        backgroundColor: Colors.blue,
+        backgroundColor: colorAlphabetDarker,
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
       await prefs.setBool(alphabetEditCompleteKey, true);
@@ -75,14 +75,15 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     }
   }
 
-  List<AlphabetEditCard> getAlphabetEditCards() {
-    List<AlphabetEditCard> alphabetViews = [];
+  List<EditCard> getAlphabetEditCards() {
+    List<EditCard> alphabetViews = [];
     if (alphabetData != null) {
       for (int i = 0; i < alphabetData.length; i++) {
-        AlphabetEditCard alphabetEditCard = AlphabetEditCard(
-          alphabetData: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
+        EditCard alphabetEditCard = EditCard(
+          entry: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
               alphabetData[i].object, alphabetData[i].familiarity),
           callback: callback,
+          activityKey: 'Alphabet',
         );
         alphabetViews.add(alphabetEditCard);
       }
@@ -125,6 +126,8 @@ class AlphabetEditScreenHelp extends StatelessWidget {
       information: ['    OK! Welcome to the 2nd system here at Takao Studios :) \n'
         '    What we\'re going to do here is just like last time, now with letters of '
         'the alphabet! '],
+      buttonColor: Colors.blue[100],
+      buttonSplashColor: Colors.blue[300],
     );
   }
 }

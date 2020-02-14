@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/templates/flash_card.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class SingleDigitPracticeScreen extends StatefulWidget {
   final Function() callback;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  SingleDigitPracticeScreen({this.callback});
+  SingleDigitPracticeScreen({this.callback, this.globalKey});
 
   @override
   _SingleDigitPracticeScreenState createState() =>
@@ -19,7 +21,7 @@ class SingleDigitPracticeScreen extends StatefulWidget {
 class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'SingleDigit';
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -28,7 +30,6 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'SingleDigitPracticeFirstHelp', SingleDigitPracticeScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
@@ -39,13 +40,28 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     widget.callback();
   }
 
-  List<SingleDigitFlashCard> getSingleDigitFlashCards() {
-    List<SingleDigitFlashCard> singleDigitFlashCards = [];
+  void nextActivity() async {
+    await prefs.setBool('SingleDigitPracticeComplete', true);
+    await prefs.updateActivityState('SingleDigitEdit', 'review');
+    await prefs.updateActivityState('SingleDigitPractice', 'review');
+    await prefs.updateActivityVisible('SingleDigitMultipleChoiceTest', true);
+    await prefs.updateActivityFirstView('SingleDigitMultipleChoiceTest', true);
+
+    widget.callback();
+  }
+
+  List<FlashCard> getSingleDigitFlashCards() {
+    List<FlashCard> singleDigitFlashCards = [];
     if (singleDigitData != null) {
       for (int i = 0; i < singleDigitData.length; i++) {
-        SingleDigitFlashCard singleDigitFlashCard = SingleDigitFlashCard(
-          singleDigitEntry: singleDigitData[i],
+        FlashCard singleDigitFlashCard = FlashCard(
+          entry: singleDigitData[i],
           callback: callback,
+          globalKey: widget.globalKey,
+          activityKey: 'SingleDigit',
+          nextActivityCallback: nextActivity,
+          familiarityTotal: 1000,
+          color: colorSingleDigitDarker,
         );
         singleDigitFlashCards.add(singleDigitFlashCard);
       }
@@ -98,6 +114,8 @@ class SingleDigitPracticeScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Single Digit Practice',
       information: information,
+      buttonColor: Colors.amber[100],
+      buttonSplashColor: Colors.amber[300],
     );
   }
 }

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 
 class SingleDigitTimedTestScreen extends StatefulWidget {
   final Function callback;
-  final Function callbackSnackbar;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  SingleDigitTimedTestScreen({this.callback, this.callbackSnackbar});
+  SingleDigitTimedTestScreen({this.callback, this.globalKey});
 
   @override
   _SingleDigitTimedTestScreenState createState() =>
@@ -20,7 +21,6 @@ class _SingleDigitTimedTestScreenState
   String digit2 = '';
   String digit3 = '';
   String digit4 = '';
-  String singleDigitTestActiveKey = 'SingleDigitTestActive';
   final textController = TextEditingController();
   PrefsUpdater prefs = PrefsUpdater();
 
@@ -63,9 +63,21 @@ class _SingleDigitTimedTestScreenState
         await prefs.updateActivityVisible('AlphabetEdit', true);
         await prefs.updateActivityFirstView('AlphabetEdit', true);
       }
-      widget.callbackSnackbar('Congratulations! You\'ve unlocked the Alphabet system!', Colors.white, Colors.blue, 5);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the Alphabet system!',
+        textColor: Colors.white,
+        backgroundColor: colorAlphabetDarker,
+        durationSeconds: 5,
+        isSuper: true,
+      );
     } else {
-      widget.callbackSnackbar('Incorrect. Keep trying to remember, or give up and try again!', Colors.white, Colors.red, 4);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
+        backgroundColor: colorIncorrect,
+        durationSeconds: 3,
+      );
     }
     textController.text = '';
     widget.callback();
@@ -79,7 +91,12 @@ class _SingleDigitTimedTestScreenState
     if (await prefs.getBool('SingleDigitTimedTestComplete') == null) {
       await prefs.updateActivityState('SingleDigitTimedTestPrep', 'todo');
     }
-    widget.callbackSnackbar('Try the timed test again to unlock the next system.', Colors.white, Colors.red, 3);
+    showSnackBar(
+      scaffoldState: widget.globalKey.currentState,
+      snackBarText: 'The correct answer was: $digit1$digit2$digit3$digit4\nTry the timed test again to unlock the next system.',
+      backgroundColor: colorIncorrect,
+      durationSeconds: 5
+    );
     Navigator.pop(context);
     widget.callback();
   }
@@ -166,6 +183,8 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
       title: 'Single Digit Timed Test',
       information: ['    Time to remember your story! If you recall this correctly, you\'ll '
         'unlock the next system! Good luck!'],
+      buttonColor: Colors.amber[100],
+      buttonSplashColor: Colors.amber[300],
     );
   }
 }

@@ -7,13 +7,8 @@ import 'dart:math';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-
-bool debugModeEnabled = false;
-
-String shortTerm = 'short term (1d ~ 1w)';
-String mediumTerm = 'medium term (1w ~ 3m)';
-String longTerm = 'long term (3m ~ 1y)';
-String extraLongTerm = 'extra long term (1y ~ life)';
+import 'package:shimmer/shimmer.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 Map termDurationsMap = {
   shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1)] :
@@ -22,11 +17,6 @@ Map termDurationsMap = {
   longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
   extraLongTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90), Duration(days: 180), Duration(days: 400)],
 };
-
-const String contactString = 'Contact';
-const String idCardString = 'ID/Credit Card';
-const String otherString = 'Other';
-const String customMemoriesKey = 'CustomMemories';
 
 Map customMemoryIconMap = {
   contactString: Icons.person_pin,
@@ -180,24 +170,29 @@ List shuffle(List items) {
   return items;
 }
 
-void showSnackBar(BuildContext context, String snackBarText, Color textColor, Color backgroundColor,
-  int durationSeconds) {
+void showSnackBar({ScaffoldState scaffoldState, String snackBarText, Color textColor = Colors.black, Color backgroundColor,
+  int durationSeconds = 3, bool isSuper = false}) {
   final snackBar = SnackBar(
-    content: Text(
-      snackBarText,
-      style: TextStyle(
-        color: textColor,
-        fontSize: 18,
-        fontFamily: 'Rajdhani',
+    content: Shimmer.fromColors(
+      period: Duration(seconds: 3),
+      baseColor: textColor,
+      highlightColor: isSuper ? Colors.greenAccent : textColor,
+      child: Text(
+        snackBarText,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 16,
+          fontFamily: 'CabinSketch',
+        ),
       ),
     ),
     duration: Duration(seconds: durationSeconds),
     backgroundColor: backgroundColor,
   );
-  Scaffold.of(context).showSnackBar(snackBar);
+  scaffoldState.showSnackBar(snackBar);
 }
 
-void showConfirmDialog(BuildContext context, Function function, String confirmText) {
+void showConfirmDialog({BuildContext context, Function function, String confirmText, Color confirmColor = Colors.redAccent}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -218,7 +213,7 @@ void showConfirmDialog(BuildContext context, Function function, String confirmTe
           ),
           BasicFlatButton(
             text: 'Confirm',
-            color: Colors.redAccent[100],
+            color: confirmColor,
             onPressed: () {
               function();
               Navigator.of(context).pop();

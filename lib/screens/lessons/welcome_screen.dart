@@ -4,6 +4,7 @@ import 'package:mem_plus_plus/components/animations.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:flutter/services.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final bool firstTime;
@@ -21,7 +22,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   AnimationController animationController;
   int slideIndex = 0;
   final IndexController indexController = IndexController();
-  final firstTimeAppKey = 'FirstTimeApp';
 
   final List<Widget> headers = [
     Text(

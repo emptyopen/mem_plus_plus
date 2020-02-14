@@ -105,13 +105,21 @@ class _SingleDigitMultipleChoiceCardState extends State<SingleDigitMultipleChoic
 
   void checkResult(int index) {
     if (shuffledOptions[index].digits == widget.singleDigitData.digits) {
-      showSnackBar(context, 'Correct!', Colors.black, Colors.green[200], 1);
+      showSnackBar(
+        scaffoldState: Scaffold.of(context),
+        snackBarText: 'Correct!',
+        backgroundColor: Colors.green[200],
+        durationSeconds: 1);
       setState(() {
         widget.callback(context, true);
         done = true;
       });
     } else {
-      showSnackBar(context, 'Incorrect!', Colors.black, Colors.red[200], 2);
+      showSnackBar(
+        scaffoldState: Scaffold.of(context),
+        snackBarText: 'Incorrect!   ${widget.singleDigitData.digits} = ${widget.singleDigitData.object}',
+        backgroundColor: Colors.red[200],
+        durationSeconds: 3);
       setState(() {
         widget.callback(context, false);
         done = true;

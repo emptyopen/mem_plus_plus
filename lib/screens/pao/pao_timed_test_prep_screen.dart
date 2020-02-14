@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/components/standard.dart';
 
 class PAOTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -23,8 +26,6 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   String digits7 = '';
   String digits8 = '';
   String digits9 = '';
-  String paoTestActiveKey = 'PAOTimedTestActive';
-  String activityStatesKey = 'ActivityStates';
   PrefsUpdater prefs = PrefsUpdater();
   List<String> possibleValues = [
     '00',
@@ -275,12 +276,19 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
                 border: Border.all(),
                 borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Center(
-              child: FlatButton(
-                  onPressed: () => updateStatus(),
-                  child: Text(
-                    'I\'m ready!',
-                    style: TextStyle(fontSize: 30),
-                  )),
+              child: BasicFlatButton(
+                text: 'I\'m ready!',
+                color: colorSingleDigitLighter,
+                splashColor: colorSingleDigitStandard,
+                onPressed: () => showConfirmDialog(
+                  context: context,
+                  function: updateStatus,
+                  confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+                  confirmColor: colorSingleDigitStandard
+                ),
+                fontSize: 30,
+                padding: 10,
+              ),
             ),
           ),
           SizedBox(
@@ -289,7 +297,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
           Container(
             child: Text(
               '(You\'ll be quizzed on this in four hours!)',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
           )
         ],
@@ -309,9 +317,11 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
             'between scenes. ',
         '    If the first scene is Galileo fervently cooking with a paintbrush, and the second scene '
             'is Sandra Bullock slam-dunking some poker chips, maybe Galileo finishes cooking the dish (full of paint), '
-            'and Sandra takes a big gulp of it, now paint is all around her mouth! What a messy eater Sandra is. Oh '
-            'well, she\'s mad about the paint so she\'s going to go dunk some poker chips to cool off.'
+            'and Sandra takes a big gulp of it, now paint is all around her mouth! What a messy eater Sandra is. '
+            'Now she\'s mad about the paint so she\'s going to go dunk some poker chips to cool off.'
       ],
+      buttonColor: Colors.pink[100],
+      buttonSplashColor: Colors.pink[300],
     );
   }
 }

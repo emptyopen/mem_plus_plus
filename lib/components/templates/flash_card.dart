@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 
 class FlashCard extends StatefulWidget {
   final String activityKey;
@@ -13,6 +14,7 @@ class FlashCard extends StatefulWidget {
   final Function() nextActivityCallback;
   final int familiarityTotal;
   final Color color;
+  final GlobalKey<ScaffoldState> globalKey;
 
   FlashCard(
       {this.activityKey,
@@ -20,7 +22,8 @@ class FlashCard extends StatefulWidget {
       this.callback,
       this.nextActivityCallback,
       this.familiarityTotal,
-      this.color});
+      this.color,
+      this.globalKey});
 
   @override
   _FlashCardState createState() => _FlashCardState();
@@ -75,13 +78,13 @@ class _FlashCardState extends State<FlashCard> {
     });
 
     // Snackbar
-    Color snackBarColor = Colors.green[200];
+    Color snackBarColor = colorCorrect;
     String snackBarText =
         'Familiarity for $digitLetter $value increased, now at ${updatedEntry.familiarity}%';
     if (previousFamiliarity < 100 && updatedEntry.familiarity == 100) {
       snackBarText =
           'Familiarity for $digitLetter $value maxed out! Great job!';
-      snackBarColor = widget.color;
+      snackBarColor = colorCorrect;
 
       // Check for level up!!
       int familiaritySum = 0;
@@ -94,16 +97,20 @@ class _FlashCardState extends State<FlashCard> {
       }
     } else if (updatedEntry.familiarity == 100) {
       snackBarText = 'Familiarity for letter $value already maxed out!';
-      snackBarColor = Colors.green[200];
+      snackBarColor = colorCorrect;
     }
-    showSnackBar(context, snackBarText, Colors.black, snackBarColor, 2);
+    showSnackBar(
+      scaffoldState: Scaffold.of(context),
+      snackBarText: snackBarText,
+      backgroundColor: snackBarColor,
+      durationSeconds: 2);
     if (levelUp) {
       showSnackBar(
-          context,
-          'Congratulations, you\'ve leveled up! Head to the main menu to see what you\'ve unlocked!',
-          Colors.black,
-          widget.color,
-          10);
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations, you\'ve leveled up! Next up is a test!',
+          backgroundColor: widget.color,
+          durationSeconds: 5);
+      Navigator.pop(context);
     }
   }
 
@@ -130,7 +137,11 @@ class _FlashCardState extends State<FlashCard> {
     if (updatedEntry.familiarity == 0) {
       snackBarText = 'Familiarity for $digitLetter $value can\'t go lower!';
     }
-    showSnackBar(context, snackBarText, Colors.black, Colors.red[200], 2);
+    showSnackBar(
+      scaffoldState: Scaffold.of(context),
+      snackBarText: snackBarText,
+      backgroundColor: colorIncorrect,
+      durationSeconds: 2);
   }
 
   @override
@@ -178,8 +189,8 @@ class _FlashCardState extends State<FlashCard> {
                             children: <Widget>[
                               BasicFlatButton(
                                 text: 'Next time',
-                                color: Colors.red[50],
-                                splashColor: Colors.red[300],
+                                color: colorIncorrect,
+                                splashColor: colorIncorrectDarker,
                                 onPressed: () => didntGotIt(),
                                 fontSize: 22,
                                 padding: 10,
@@ -187,8 +198,8 @@ class _FlashCardState extends State<FlashCard> {
                               SizedBox(width: 30,),
                               BasicFlatButton(
                                 text: 'Got it!',
-                                color: Colors.green[50],
-                                splashColor: Colors.green[300],
+                                color: colorCorrect,
+                                splashColor: colorCorrectDarker,
                                 onPressed: () => gotIt(),
                                 fontSize: 22,
                                 padding: 10,

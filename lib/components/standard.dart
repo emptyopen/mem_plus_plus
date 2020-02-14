@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BasicFlatButton extends StatelessWidget {
   final Color color;
@@ -76,7 +77,6 @@ class MainMenuOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
       height: 50,
@@ -113,24 +113,27 @@ class MainMenuOption extends StatelessWidget {
                   context, MaterialPageRoute(builder: (context) => route));
             },
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 icon,
-                SizedBox(
-                  width: 10,
-                  height: 45,
-                ),
                 ConstrainedBox(
                     constraints: BoxConstraints(
-                      minWidth: 100.0,
+                      minWidth: screenWidth * .65,
                       maxWidth: screenWidth * .65,
-                      minHeight: 30.0,
-                      maxHeight: 100.0,
+                      minHeight: 45.0,
+                      maxHeight: 45.0,
                     ),
-                    child: AutoSizeText(
-                      text,
-                      style: TextStyle(fontSize: 41),
-                      maxLines: 1,
-                      maxFontSize: 24,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        AutoSizeText(
+                          text,
+                          style: TextStyle(fontSize: 41),
+                          maxLines: 1,
+                          maxFontSize: 24,
+                        ),
+                      ],
                     )),
               ],
             ),
@@ -143,26 +146,31 @@ class MainMenuOption extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(width: 1),
                       borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Colors.red[200],
+                      //color: Color.fromRGBO(255, 105, 180, 1),
+                      color: Color.fromRGBO(255, 255, 255, 0.85),
                     ),
-                    child: Center(
-                        child: Text(
-                      'new!',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: 'SpaceMono',
-                          color: Colors.black),
-                    )),
+                    child: Shimmer.fromColors(
+                      period: Duration(seconds: 3),
+                      baseColor: Colors.black,
+                      highlightColor: Colors.greenAccent,
+                      child: Center(
+                          child: Text(
+                        'new!',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.red),
+                      )),
+                    ),
                   ),
-                  left: 5,
-                  top: 6)
+                  left: 3,
+                  top: 4)
               : Container(),
           activity.visibleAfterTime.compareTo(DateTime.now()) < 0
               ? Container()
               : Positioned(
                   child: Container(
-                    width: screenWidth * 0.7,
-                    height: 37.5,
+                    width: screenWidth * 0.83,
+                    height: 50,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(0, 0, 0, 0.85),
                         border: Border.all(),
@@ -173,8 +181,8 @@ class MainMenuOption extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
                   ),
-                  left: 5,
-                  top: 5,
+                  left: 0,
+                  top: 0,
                 ),
         ],
       ),
@@ -183,7 +191,10 @@ class MainMenuOption extends StatelessWidget {
 }
 
 class OKPopButton extends StatelessWidget {
-  OKPopButton({Key key});
+  final Color color;
+  final Color splashColor;
+
+  OKPopButton({Key key, this.color = Colors.white, this.splashColor = Colors.grey});
 
   @override
   Widget build(BuildContext context) {
@@ -192,8 +203,8 @@ class OKPopButton extends StatelessWidget {
         Navigator.pop(context);
       },
       text: 'OK',
-      color: Colors.amber[100],
-      splashColor: Colors.amber[300],
+      color: color,
+      splashColor: splashColor,
       fontSize: 20,
       padding: 10,
     );

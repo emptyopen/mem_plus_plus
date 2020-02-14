@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
-import 'package:mem_plus_plus/components/pao/pao_flash_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/components/templates/flash_card.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class PAOPracticeScreen extends StatefulWidget {
   final Function() callback;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  PAOPracticeScreen({this.callback});
+  PAOPracticeScreen({this.callback, this.globalKey});
 
   @override
   _PAOPracticeScreenState createState() => _PAOPracticeScreenState();
@@ -18,7 +21,7 @@ class PAOPracticeScreen extends StatefulWidget {
 class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<PAOData> paoData;
-  String paoKey = 'PAO';
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -27,7 +30,6 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     paoData = await prefs.getSharedPrefs(paoKey);
     setState(() {});
   }
@@ -36,13 +38,27 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     widget.callback();
   }
 
-  List<PAOFlashCard> getPAOFlashCards() {
-    List<PAOFlashCard> paoFlashCards = [];
+  void nextActivity() async {
+    await prefs.updateActivityState('PAOEdit', 'review');
+    await prefs.updateActivityState('PAOPractice', 'review');
+    await prefs.updateActivityFirstView('PAOMultipleChoiceTest', true);
+    await prefs.updateActivityVisible('PAOMultipleChoiceTest', true);
+    await prefs.setBool('PAOPracticeComplete', true);
+    widget.callback();
+  }
+
+  List<FlashCard> getPAOFlashCards() {
+    List<FlashCard> paoFlashCards = [];
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
-        PAOFlashCard paoFlashCard = PAOFlashCard(
-          paoEntry: paoData[i],
+        FlashCard paoFlashCard = FlashCard(
+          entry: paoData[i],
           callback: callback,
+          globalKey: widget.globalKey,
+          activityKey: 'PAO',
+          nextActivityCallback: nextActivity,
+          familiarityTotal: 10000,
+          color: colorPAODarker,
         );
         paoFlashCards.add(paoFlashCard);
       }
@@ -97,6 +113,8 @@ class PAOPracticeScreenHelp extends StatelessWidget {
       title: 'PAO Practice',
       information: ['    Get perfect familiarities for each set of digits and '
         'the first test will be unlocked! Good luck!'],
+      buttonColor: Colors.pink[100],
+      buttonSplashColor: Colors.pink[300],
     );
   }
 }

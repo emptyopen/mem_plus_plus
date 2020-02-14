@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/components/standard.dart';
 
 class EditCard extends StatefulWidget {
   final dynamic entry;
@@ -17,6 +18,7 @@ class _EditCardState extends State<EditCard> {
   final actionTextController = TextEditingController();
   final objectTextController = TextEditingController();
   final prefs = PrefsUpdater();
+  bool isPAO = false;
   String leading = '';
   Dialog dialog;
 
@@ -38,57 +40,76 @@ class _EditCardState extends State<EditCard> {
         personTextController.text = widget.entry.person;
         actionTextController.text = widget.entry.action;
         objectTextController.text = widget.entry.object;
+        isPAO = true;
         break;
     }
 
-    if (widget.activityKey == 'PAO') {
-      dialog = Dialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        //this right here
-        child: Container(
-          height: 350.0,
-          width: 300.0,
+    dialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        height: 350.0,
+        width: 300.0,
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              isPAO
+                  ? Column(
+                      children: <Widget>[
+                        SizedBox(height: 30),
+                        Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            'Person',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Container(
+                          height: 40,
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: personTextController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(5),
+                              border: OutlineInputBorder(),
+                              hintText: '${widget.entry.person}',
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            'Action',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Container(
+                          height: 40,
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: actionTextController,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(5),
+                                border: OutlineInputBorder(),
+                                hintText: '${widget.entry.action}'),
+                          ),
+                        )
+                      ],
+                    )
+                  : Container(),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Person'),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: personTextController,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                    hintText: '${widget.entry.person}',
-                  ),
+                padding: EdgeInsets.all(5),
+                child: Text(
+                  'Object',
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Action'),
-              ),
               Container(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: actionTextController,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      border: OutlineInputBorder(),
-                      hintText: '${widget.entry.action}'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Object'),
-              ),
-              Container(
+                height: 40,
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: TextField(
                   textAlign: TextAlign.center,
@@ -99,76 +120,19 @@ class _EditCardState extends State<EditCard> {
                       hintText: '${widget.entry.object}'),
                 ),
               ),
-              Container(
-                width: 5,
-                height: 10,
+              SizedBox(height: 10),
+              BasicFlatButton(
+                text: 'Save',
+                fontSize: 18,
+                onPressed: () => saveItem(),
+                color: Colors.grey[200],
               ),
-              FlatButton(
-                  onPressed: () => saveItem(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    child: Text(
-                      'Save',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                  ))
+              SizedBox(height: 30),
             ],
           ),
         ),
-      );
-    } else {
-      dialog = Dialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        //this right here
-        child: Container(
-          height: 350.0,
-          width: 300.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Object'),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  controller: objectTextController,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      border: OutlineInputBorder(),
-                      hintText: '${widget.entry.object}'),
-                ),
-              ),
-              Container(
-                width: 5,
-                height: 10,
-              ),
-              FlatButton(
-                  onPressed: () => saveItem(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    child: Text(
-                      'Save',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                  ))
-            ],
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 
   @override
@@ -180,6 +144,31 @@ class _EditCardState extends State<EditCard> {
   }
 
   getListTile() {
+    return ListTile(
+      leading: Text(
+        leading,
+        style: TextStyle(fontSize: 26),
+      ),
+      title: isPAO
+          ? Text('${widget.entry.person}', style: TextStyle(fontSize: 20))
+          : Text('${widget.entry.object}', style: TextStyle(fontSize: 20)),
+      subtitle: isPAO
+          ? Text(
+              '${widget.entry.action} • ${widget.entry.object}',
+              style: TextStyle(fontSize: 16),
+            )
+          : Container(),
+      trailing: Container(
+          width: 100,
+          child: BasicFlatButton(
+            text: 'Edit',
+            color: Colors.grey[100],
+            onPressed: () {
+              showDialog(context: context, child: dialog);
+            },
+            fontSize: 18,
+          )),
+    );
     if (widget.activityKey == 'PAO') {
       return ListTile(
         leading: Text(
@@ -195,7 +184,7 @@ class _EditCardState extends State<EditCard> {
           width: 100,
           child: FlatButton(
               child: Text('Edit',
-                  style: TextStyle(fontSize: 18, color: Colors.black)),
+                  style: TextStyle(fontSize: 16, color: Colors.black)),
               color: Colors.grey[100],
               shape: RoundedRectangleBorder(
                   side: BorderSide(), borderRadius: BorderRadius.circular(5)),
@@ -212,17 +201,15 @@ class _EditCardState extends State<EditCard> {
         ),
         title: Text('${widget.entry.object}', style: TextStyle(fontSize: 20)),
         trailing: Container(
-          width: 100,
-          child: FlatButton(
-              child: Text('Edit',
-                  style: TextStyle(fontSize: 18, color: Colors.black)),
+            width: 100,
+            child: BasicFlatButton(
+              text: 'Edit',
               color: Colors.grey[100],
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(), borderRadius: BorderRadius.circular(5)),
               onPressed: () {
                 showDialog(context: context, child: dialog);
-              }),
-        ),
+              },
+              fontSize: 18,
+            )),
       );
     }
   }
@@ -298,7 +285,7 @@ class _EditCardState extends State<EditCard> {
                       color: getColorFromFamiliarity(widget.entry.familiarity),
                       width: 2)),
               height: 25,
-              width: 35,
+              width: 40,
             ),
             right: 2,
             top: 5,

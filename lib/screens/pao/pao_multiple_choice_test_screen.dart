@@ -3,12 +3,14 @@ import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_multiple_choice_card.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
-  final Function callbackSnackbar;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  PAOMultipleChoiceTestScreen({this.callback, this.callbackSnackbar});
+  PAOMultipleChoiceTestScreen({this.callback, this.globalKey});
 
   @override
   _PAOMultipleChoiceTestScreenState createState() =>
@@ -18,8 +20,6 @@ class PAOMultipleChoiceTestScreen extends StatefulWidget {
 class _PAOMultipleChoiceTestScreenState
     extends State<PAOMultipleChoiceTestScreen> {
   List<PAOData> paoData;
-  String paoKey = 'PAO';
-  String activityCompleteKey = 'PAOMultipleChoiceTestComplete';
   int score = 0;
   int attempts = 0;
 
@@ -49,10 +49,22 @@ class _PAOMultipleChoiceTestScreenState
           await prefs.updateActivityFirstView('PAOTimedTestPrep', true);
           await prefs.updateActivityState('PAOMultipleChoiceTest', 'review');
           widget.callback();
-          widget.callbackSnackbar('You aced it! You\'ve unlocked the timed test!', Colors.black, Colors.pink, 5);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText: 'You aced it! You\'ve unlocked the timed test!',
+            textColor: Colors.white,
+            backgroundColor: colorPAOStandard,
+            durationSeconds: 5,
+          );
           Navigator.pop(context);
         } else {
-          widget.callbackSnackbar('You aced it!', Colors.black, Colors.pink, 3);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText: 'You aced it!',
+            textColor: Colors.white,
+            backgroundColor: colorPAOStandard,
+            durationSeconds: 3,
+          );
           Navigator.pop(context);
         }
       }
@@ -60,7 +72,13 @@ class _PAOMultipleChoiceTestScreenState
     attempts += 1;
 
     if (attempts == 100 && score < 100) {
-      widget.callbackSnackbar('Try again! You got this. Score: $score/100', Colors.black, Colors.red, 5);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Try again! You got this. Score: $score/100',
+        textColor: Colors.white,
+        backgroundColor: colorIncorrect,
+        durationSeconds: 5,
+      );
       Navigator.pop(context);
     }
   }
@@ -123,6 +141,8 @@ class PAOMultipleChoiceScreenHelp extends StatelessWidget {
       title: 'PAO Multiple Choice Test',
       information: ['    Alright! Time for a test on your PAO system. If you get a perfect score, '
         'the next test will be unlocked! Good luck!'],
+      buttonColor: Colors.pink[100],
+      buttonSplashColor: Colors.pink[300],
     );
   }
 }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 
 class PAOTimedTestScreen extends StatefulWidget {
   final Function() callback;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  PAOTimedTestScreen({this.callback});
+  PAOTimedTestScreen({this.callback, this.globalKey});
 
   @override
   _PAOTimedTestScreenState createState() =>
@@ -22,7 +25,6 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   String digits7 = '';
   String digits8 = '';
   String digits9 = '';
-  String paoTestActiveKey = 'PAOTestActive';
   final textController1 = TextEditingController();
   final textController2 = TextEditingController();
   final textController3 = TextEditingController();
@@ -63,16 +65,40 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     if (textController1.text.trim() == '$digits1$digits2$digits3' &&
         textController2.text.trim() == '$digits4$digits5$digits6' &&
         textController3.text.trim() == '$digits7$digits8$digits9') {
-      print('success');
-      // await prefs.updateLevel(7);
       await prefs.updateActivityState('PAOTimedTest', 'review');
       await prefs.updateActivityVisible('PAOTimedTest', false);
       await prefs.updateActivityVisible('PAOTimedTestPrep', true);
-      // TODO: next stuff!
+
+      await prefs.setBool('CustomTestManagerAvailable', true);
+      if (await prefs.getBool('CustomTestManagerFirstView') == null) {
+        await prefs.setBool('CustomTestManagerFirstView', true);
+      }
+
       widget.callback();
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',
+        textColor: Colors.white,
+        backgroundColor: Colors.purple,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the XXX system!',
+        textColor: Colors.white,
+        backgroundColor: Colors.teal,
+        durationSeconds: 3,
+        isSuper: true,
+      );
     } else {
-      print('failure');
-      // TODO: snackbar on homescreen?
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
+        textColor: Colors.black,
+        backgroundColor: colorIncorrect,
+        durationSeconds: 4,
+      );
     }
     textController1.text = '';
     textController2.text = '';
@@ -169,23 +195,23 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  FlatButton(
-                    shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
-                    color: Colors.grey[200],
+                  BasicFlatButton(
+                    text: 'Give up',
                     onPressed: () => giveUp(),
-                    child: Text(
-                      'Give up',
-                      style: TextStyle(fontSize: 30),
-                    )),
+                    color: Colors.grey[200],
+                    splashColor: Colors.grey,
+                    padding: 10,
+                    fontSize: 24,
+                  ),
                   SizedBox(width: 25,),
-                  FlatButton(
-                    shape: RoundedRectangleBorder(side: BorderSide(), borderRadius: BorderRadius.circular(5)),
-                    color: Colors.amber[100],
+                  BasicFlatButton(
+                    text: 'Submit',
                     onPressed: () => checkAnswer(),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(fontSize: 30),
-                    )),
+                    color: Colors.pink[200],
+                    splashColor: Colors.pink,
+                    padding: 10,
+                    fontSize: 24,
+                  ),
                 ],
               ),
               SizedBox(height: 50,)
@@ -204,6 +230,8 @@ class PAOTimedTestScreenHelp extends StatelessWidget {
       title: 'PAO Timed Test',
       information: ['    Time to recall your story! If you recall this correctly, you\'ll '
         'unlock the next system! Good luck!'],
+      buttonColor: Colors.pink[100],
+      buttonSplashColor: Colors.pink[300],
     );
   }
 }

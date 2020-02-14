@@ -33,7 +33,7 @@ var defaultSingleDigitData1 = [
 ];
 
 var defaultSingleDigitData3 = [
-  SingleDigitData(0, '0', 'ball', 100),
+  SingleDigitData(0, '0', '', 100),
   SingleDigitData(1, '1', 'stick', 100),
   SingleDigitData(2, '2', 'bird', 100),
   SingleDigitData(3, '3', 'bra', 100),
@@ -42,7 +42,7 @@ var defaultSingleDigitData3 = [
   SingleDigitData(6, '6', 'candle', 100),
   SingleDigitData(7, '7', 'boomerang', 100),
   SingleDigitData(8, '8', 'snowman', 100),
-  SingleDigitData(9, '9', '', 100),
+  SingleDigitData(9, '9', 'balloon', 100),
 ];
 
 var defaultSingleDigitData2 = [

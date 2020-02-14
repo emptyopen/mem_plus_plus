@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class SingleDigitTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -22,8 +24,6 @@ class _SingleDigitTimedTestPrepScreenState
   String digit2 = '';
   String digit3 = '';
   String digit4 = '';
-  String singleDigitTestActiveKey = 'SingleDigitTimedTestActive';
-  String activityStatesKey = 'ActivityStates';
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -165,9 +165,14 @@ class _SingleDigitTimedTestPrepScreenState
           ),
           BasicFlatButton(
             text: 'I\'m ready!',
-            color: Theme.of(context).primaryColor,
-            splashColor: Colors.amber[200],
-            onPressed: () => updateStatus(),
+            color: colorSingleDigitLighter,
+            splashColor: colorSingleDigitStandard,
+            onPressed: () => showConfirmDialog(
+              context: context,
+              function: updateStatus,
+              confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+              confirmColor: colorSingleDigitStandard
+            ),
             fontSize: 30,
             padding: 10,
           ),
@@ -177,7 +182,7 @@ class _SingleDigitTimedTestPrepScreenState
           Container(
             child: Text(
               '(You\'ll be quizzed on this in one hour!)',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
           )
         ],
@@ -196,9 +201,9 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
         'could imagine a stick falling out of the sky, landing and skewering a bird. Ouch! '
         'The bird is in a lot of pain. Luckily, it finds a bra and makes a tourniquet out of it. '
         'Now the bird can make it to the fancy dinner party on the sailboat tonight! Phew!',
-    '    Really think about that scene in your mind, and make it really vivid. Is the bird a '
+    '    Really make that scene vivid! Close your eyes and physically imagine the details in your mind. Is the bird a '
         'swan? How much does that swan squawk when it gets speared out of nowhere? '
-        'And boy oh boy does that swan want to make it to that party.',
+        'Think about all of the swan\'s friends that would be sad if the swan doesn\'t show up.',
         '    Now let\'s attach that scene to this quiz. It\'s a timed test, so let\'s imagine '
         'you up in the clouds, about to take this test. A huge timer clock is above you... ah, '
         'yes, this is the place to take a timed test. And the first thing that happens is you '
@@ -210,6 +215,8 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Single Digit Timed Test Preparation',
       information: information,
+      buttonColor: Colors.amber[100],
+      buttonSplashColor: Colors.amber[300],
     );
   }
 }

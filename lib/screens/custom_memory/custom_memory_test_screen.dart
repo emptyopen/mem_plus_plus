@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-
-String customMemoriesKey = 'CustomMemories';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class CustomMemoryTestScreen extends StatefulWidget {
   final Function callback;
   final Map customMemory;
-  final Function callbackSnackbar;
   final GlobalKey<ScaffoldState> globalKey;
 
-  CustomMemoryTestScreen({Key key, this.callback, this.customMemory, this.callbackSnackbar, this.globalKey})
+  CustomMemoryTestScreen({Key key, this.callback, this.customMemory, this.globalKey})
       : super(key: key);
 
   @override
@@ -58,12 +57,24 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
       // check if beat the last level
       if (memory['spacedRepetitionLevel'] + 1 == termDurationsMap[memory['spacedRepetitionType']].length) {
         customMemories.remove(memory['title']);
-        widget.callbackSnackbar('You\'ve completed this memory! Congratulations, you\'ve burned ${memory['title']} into your memory!', Colors.black, Colors.white, 10);
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'You\'ve completed this memory! Congratulations, you\'ve burned ${memory['title']} into your memory!',
+          textColor: Colors.black,
+          backgroundColor: Colors.white,
+          durationSeconds: 7,
+        );
         Navigator.pop(context);
       } else {
         memory['spacedRepetitionLevel'] += 1;
         customMemories[memory['title']] = memory;
-        widget.callbackSnackbar('Correct! Another test is coming... eventually!', Colors.black, Colors.greenAccent, 5);
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Correct! Another test is coming... eventually!',
+          textColor: Colors.black,
+          backgroundColor: colorCorrect,
+          durationSeconds: 7,
+        );
         Navigator.pop(context);
       }
       await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
@@ -302,6 +313,8 @@ class CustomMemoryTestScreenHelp extends StatelessWidget {
       information: [
         '    This is a custom memory test! Hope you put those scenes somewhere accessible!'
       ],
+      buttonColor: Colors.purple[100],
+      buttonSplashColor: Colors.purple[300],
     );
   }
 }

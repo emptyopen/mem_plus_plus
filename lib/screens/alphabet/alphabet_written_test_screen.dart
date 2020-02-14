@@ -4,12 +4,14 @@ import 'package:mem_plus_plus/components/alphabet/alphabet_written_card.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class AlphabetWrittenTestScreen extends StatefulWidget {
   final Function callback;
-  final Function callbackSnackbar;
+  final GlobalKey<ScaffoldState> globalKey;
 
-  AlphabetWrittenTestScreen({this.callback, this.callbackSnackbar});
+  AlphabetWrittenTestScreen({this.callback, this.globalKey});
 
   @override
   _AlphabetWrittenTestScreenState createState() =>
@@ -19,7 +21,6 @@ class AlphabetWrittenTestScreen extends StatefulWidget {
 class _AlphabetWrittenTestScreenState
     extends State<AlphabetWrittenTestScreen> {
   List<AlphabetData> alphabetData;
-  String alphabetKey = 'Alphabet';
   int score = 0;
   int attempts = 0;
 
@@ -51,10 +52,22 @@ class _AlphabetWrittenTestScreenState
           await prefs.updateActivityState('AlphabetWrittenTest', 'review');
           await prefs.setBool('AlphabetWrittenTestComplete', true);
           widget.callback();
-          widget.callbackSnackbar('You aced it! You\'ve unlocked the timed test!', Colors.white, Colors.blue, 5);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText: 'You aced it! You\'ve unlocked the timed test!',
+            textColor: Colors.black,
+            backgroundColor: colorAlphabetDarker,
+            durationSeconds: 5,
+          );
           Navigator.pop(context);
         } else {
-          widget.callbackSnackbar('You aced it!', Colors.white, Colors.blue, 3);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText: 'You aced it!',
+            textColor: Colors.black,
+            backgroundColor: colorAlphabetStandard,
+            durationSeconds: 3,
+          );
           Navigator.pop(context);
         }
       }
@@ -62,7 +75,13 @@ class _AlphabetWrittenTestScreenState
     attempts += 1;
 
     if (attempts == 26 && score < 26) {
-      widget.callbackSnackbar('Try again! You got this. Score: $score/26', Colors.black, Colors.red, 5);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Try again! You got this. Score: $score/26',
+        textColor: Colors.black,
+        backgroundColor: colorIncorrect,
+        durationSeconds: 4,
+      );
       Navigator.pop(context);
     }
   }
@@ -121,6 +140,8 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
         'each letter. Every time you load this page, the letters will be scattered in a random order, '
         'and you simply have to write in the correct object. If you get a perfect score, '
         'the next test will be unlocked! Good luck!'],
+      buttonColor: Colors.blue[100],
+      buttonSplashColor: Colors.blue[300],
     );
   }
 }

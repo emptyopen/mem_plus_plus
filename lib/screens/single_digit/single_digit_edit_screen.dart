@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_edit_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/components/templates/edit_card.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class SingleDigitEditScreen extends StatefulWidget {
   final Function callback;
@@ -18,8 +20,6 @@ class SingleDigitEditScreen extends StatefulWidget {
 class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
-  String singleDigitKey = 'SingleDigit';
-  String singleDigitEditCompleteKey = 'SingleDigitEditComplete';
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -57,35 +57,29 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     bool completedOnce = await prefs.getBool(singleDigitEditCompleteKey);
     if (entriesComplete && completedOnce == null) {
       await prefs.updateActivityVisible('SingleDigitPractice', true);
-      final snackBar = SnackBar(
-        content: Text(
-          'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Rajdhani',
-            fontSize: 18
-          ),
-        ),
-        duration: Duration(seconds: 5),
-        backgroundColor: Colors.amber,
+      showSnackBar(
+        scaffoldState: _scaffoldKey.currentState,
+        snackBarText: 'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
+        backgroundColor: colorSingleDigitDarker,
+        durationSeconds: 5
       );
-      _scaffoldKey.currentState.showSnackBar(snackBar);
       await prefs.setBool(singleDigitEditCompleteKey, true);
       widget.callback();
     }
   }
 
-  List<SingleDigitEditCard> getSingleDigitEditCards() {
-    List<SingleDigitEditCard> singleDigitViews = [];
+  List<EditCard> getSingleDigitEditCards() {
+    List<EditCard> singleDigitViews = [];
     if (singleDigitData != null) {
       for (int i = 0; i < singleDigitData.length; i++) {
-        SingleDigitEditCard singleDigitEditCard = SingleDigitEditCard(
-          singleDigitData: SingleDigitData(
+        EditCard singleDigitEditCard = EditCard(
+          entry: SingleDigitData(
               singleDigitData[i].index,
               singleDigitData[i].digits,
               singleDigitData[i].object,
               singleDigitData[i].familiarity),
           callback: callback,
+          activityKey: 'SingleDigit',
         );
         singleDigitViews.add(singleDigitEditCard);
       }
@@ -148,6 +142,8 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Single Digit Edit/View',
       information: information,
+      buttonColor: Colors.amber[100],
+      buttonSplashColor: Colors.amber[300],
     );
   }
 }

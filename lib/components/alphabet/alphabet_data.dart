@@ -49,7 +49,7 @@ var defaultAlphabetData1 = [
 ];
 
 var defaultAlphabetData3 = [
-  AlphabetData(0, 'A', 'apple', 100),
+  AlphabetData(0, 'A', '', 100),
   AlphabetData(1, 'B', 'bicycle', 100),
   AlphabetData(2, 'C', 'chimp', 100),
   AlphabetData(3, 'D', 'dinosaur', 100),
@@ -74,7 +74,7 @@ var defaultAlphabetData3 = [
   AlphabetData(22, 'W', 'wagon', 100),
   AlphabetData(23, 'X', 'xylophone', 100),
   AlphabetData(24, 'Y', 'yak', 100),
-  AlphabetData(25, 'Z', '', 100),
+  AlphabetData(25, 'Z', 'zipper', 100),
 ];
 
 var defaultAlphabetData2 = [
