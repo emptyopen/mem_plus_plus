@@ -338,6 +338,7 @@ class CustomMemoryManagerScreenHelp extends StatelessWidget {
       ],
       buttonColor: colorCustomMemoryStandard,
       buttonSplashColor: colorCustomMemoryDarker,
+      firstHelpKey: customMemoryManagerFirstHelpKey,
     );
   }
 }

@@ -35,7 +35,8 @@ class _SingleDigitTimedTestPrepScreenState
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var prefss = PrefsUpdater();
-    prefss.checkFirstTime(context, 'SingleDigitTimedTestPrepFirstHelp', SingleDigitTimedTestPrepScreenHelp());
+    prefss.checkFirstTime(context, 'SingleDigitTimedTestPrepFirstHelp',
+        SingleDigitTimedTestPrepScreenHelp());
     setState(() {
       // if digits are null, randomize values and store them,
       // then update DateTime available for singleDigitTest
@@ -69,8 +70,10 @@ class _SingleDigitTimedTestPrepScreenState
     await prefs.updateActivityState('SingleDigitTimedTest', 'todo');
     await prefs.updateActivityVisible('SingleDigitTimedTest', true);
     await prefs.updateActivityFirstView('SingleDigitTimedTest', true);
-    Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 1);
-    await prefs.updateActivityVisibleAfter('SingleDigitTimedTest', DateTime.now().add(testDuration));
+    Duration testDuration =
+        debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 1);
+    await prefs.updateActivityVisibleAfter(
+        'SingleDigitTimedTest', DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     widget.callback();
     Navigator.pop(context);
@@ -81,7 +84,7 @@ class _SingleDigitTimedTestPrepScreenState
     return Scaffold(
       appBar: AppBar(
           title: Text('Single digit: timed test preparation'),
-        backgroundColor: Colors.amber[200],
+          backgroundColor: Colors.amber[200],
           actions: <Widget>[
             // action button
             IconButton(
@@ -168,11 +171,11 @@ class _SingleDigitTimedTestPrepScreenState
             color: colorSingleDigitLighter,
             splashColor: colorSingleDigitStandard,
             onPressed: () => showConfirmDialog(
-              context: context,
-              function: updateStatus,
-              confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
-              confirmColor: colorSingleDigitStandard
-            ),
+                context: context,
+                function: updateStatus,
+                confirmText:
+                    'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+                confirmColor: colorSingleDigitStandard),
             fontSize: 30,
             padding: 10,
           ),
@@ -192,6 +195,7 @@ class _SingleDigitTimedTestPrepScreenState
 }
 
 class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
+
   final List<String> information = [
     '    Great job so far! Now your goal is to memorize a 4 digit number by converting the digits '
         'to their associated objects and imagining a crazy scene where those objects '
@@ -204,7 +208,7 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
     '    Really make that scene vivid! Close your eyes and physically imagine the details in your mind. Is the bird a '
         'swan? How much does that swan squawk when it gets speared out of nowhere? '
         'Think about all of the swan\'s friends that would be sad if the swan doesn\'t show up.',
-        '    Now let\'s attach that scene to this quiz. It\'s a timed test, so let\'s imagine '
+    '    Now let\'s attach that scene to this quiz. It\'s a timed test, so let\'s imagine '
         'you up in the clouds, about to take this test. A huge timer clock is above you... ah, '
         'yes, this is the place to take a timed test. And the first thing that happens is you '
         'drop your pencil, and it rockets towards the earth, skewering that swan...',
@@ -217,6 +221,7 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
       information: information,
       buttonColor: Colors.amber[100],
       buttonSplashColor: Colors.amber[300],
+      firstHelpKey: singleDigitTimedTestPrepFirstHelpKey,
     );
   }
 }

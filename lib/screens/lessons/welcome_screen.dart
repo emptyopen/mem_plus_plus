@@ -253,6 +253,18 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         SizedBox(
                           height: 20,
                         ),
+                        debugModeEnabled && info.index == 0 ? ParallaxContainer(
+                          child: BasicFlatButton(
+                            text: 'Main Menu',
+                            color: Colors.amber[50],
+                            splashColor: Colors.amber[200],
+                            onPressed: () => goToMainMenu(context),
+                            padding: 10,
+                            fontSize: 28,
+                          ),
+                          position: info.position,
+                          translationFactor: 300,
+                        ) : Container(),
                         info.index != headers.length - 1
                             ? Container()
                             : ParallaxContainer(

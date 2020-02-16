@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class PAOTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -69,18 +70,19 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       await prefs.updateActivityVisible('PAOTimedTest', false);
       await prefs.updateActivityVisible('PAOTimedTestPrep', true);
 
-      await prefs.setBool('CustomTestManagerAvailable', true);
-      if (await prefs.getBool('CustomTestManagerFirstView') == null) {
-        await prefs.setBool('CustomTestManagerFirstView', true);
+      await prefs.setBool(customMemoryManagerAvailableKey, true);
+      if (await prefs.getBool(customMemoryManagerFirstHelpKey) == null) {
+        await prefs.setBool(customMemoryManagerFirstHelpKey, true);
       }
 
       widget.callback();
+
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',
         textColor: Colors.white,
         backgroundColor: Colors.purple,
-        durationSeconds: 3,
+        durationSeconds: 5,
         isSuper: true,
       );
       showSnackBar(
@@ -88,7 +90,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         snackBarText: 'Congratulations! You\'ve unlocked the XXX system!',
         textColor: Colors.white,
         backgroundColor: Colors.teal,
-        durationSeconds: 3,
+        durationSeconds: 5,
         isSuper: true,
       );
     } else {
@@ -97,7 +99,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
         backgroundColor: colorIncorrect,
-        durationSeconds: 4,
+        durationSeconds: 3,
       );
     }
     textController1.text = '';
@@ -232,6 +234,7 @@ class PAOTimedTestScreenHelp extends StatelessWidget {
         'unlock the next system! Good luck!'],
       buttonColor: Colors.pink[100],
       buttonSplashColor: Colors.pink[300],
+      firstHelpKey: paoTimedTestFirstHelpKey,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class SingleDigitTimedTestScreen extends StatefulWidget {
   final Function callback;
@@ -185,6 +186,7 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
         'unlock the next system! Good luck!'],
       buttonColor: Colors.amber[100],
       buttonSplashColor: Colors.amber[300],
+      firstHelpKey: singleDigitTimedTestFirstHelpKey,
     );
   }
 }

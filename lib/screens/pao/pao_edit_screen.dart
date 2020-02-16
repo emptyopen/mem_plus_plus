@@ -7,6 +7,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 
 class PAOEditScreen extends StatefulWidget {
   final Function callback;
@@ -21,6 +22,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   SharedPreferences sharedPreferences;
   List<PAOData> paoData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -29,7 +31,6 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   }
 
   callback(newPaoData) async {
-    var prefs = PrefsUpdater();
     setState(() {
       paoData = newPaoData;
     });
@@ -61,7 +62,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
           ),
         ),
         duration: Duration(seconds: 5),
-        backgroundColor: Colors.blue,
+        backgroundColor: colorPAODarker,
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
       await prefs.setBool(paoEditCompleteKey, true);
@@ -70,7 +71,6 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'PAOEditFirstHelp', PAOEditScreenHelp());
     if (await prefs.getString(paoKey) == null) {
       paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
@@ -336,6 +336,7 @@ class PAOEditScreenHelp extends StatelessWidget {
       information: information,
       buttonColor: Colors.pink[100],
       buttonSplashColor: Colors.pink[300],
+      firstHelpKey: paoEditFirstHelpKey,
     );
   }
 }

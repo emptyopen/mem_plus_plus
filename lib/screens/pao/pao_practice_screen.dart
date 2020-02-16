@@ -115,6 +115,7 @@ class PAOPracticeScreenHelp extends StatelessWidget {
         'the first test will be unlocked! Good luck!'],
       buttonColor: Colors.pink[100],
       buttonSplashColor: Colors.pink[300],
+      firstHelpKey: paoPracticeFirstHelpKey,
     );
   }
 }

@@ -35,10 +35,6 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// Definitely
-// TODO: force user to scroll through information to hit OK (the first time)
-// TODO: add ability to view custom memories
-// TODO: change custom memory tests to add time only once they are complete, use a 'nextTime'
 
 // mc test / written test
 // TODO: full screen flash cards, flip to green correct or red incorrect
@@ -46,14 +42,19 @@ class MyHomePage extends StatefulWidget {
 // TODO: only show cards that are not 100% familiarity, unless they are all 100% familiarity in which case show all of them
 // TODO: after MC test, show which words were INCORRECT
 
+// TODO: notifications
+// TODO: add ability to view custom memories
+// TODO: change custom memory tests to add time only once they are complete, use a 'nextTime'
+
 // other
+// TODO: dark mode button in top right corner
+// TODO: consolidate timed test stuff
 // TODO: add warning about 0 vs O
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up
 // TODO: add date input to custom memories
 // TODO: add notifications about newly available activities
 // TODO: write some lessons, intersperse
-
 
 // Nice to have
 // TODO: add ability for alphabet to contain up to 3 objects
@@ -67,6 +68,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 
 // todo:  Brain by Arjun Adamson from the Noun Project
+// https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
 
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
@@ -144,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // check if customManager is available, and firstView
-    if (await prefs.getBool('CustomMemoryManagerAvailable') == null) {
+    if (await prefs.getBool(customMemoryManagerAvailableKey) == null) {
       customMemoryManagerAvailable = false;
     } else {
       customMemoryManagerAvailable = true;
@@ -341,9 +343,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     //Fireworks(),
-                    Text(
-                      'To-do:',
-                      style: TextStyle(fontSize: 30),
+                    Shimmer.fromColors(
+                      baseColor: Colors.black,
+                      highlightColor: Colors.grey[300],
+                      period: Duration(seconds: 6),
+                      child: Text(
+                        'To-do:',
+                        style: TextStyle(fontSize: 30),
+                      ),
                     ),
                     Container(
                       height: 10,
@@ -559,8 +566,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   maxOutKeys() async {
 
-    //await prefs.setBool(customMemoryManagerAvailableKey, true);
-    //customMemoryManagerAvailable = true;
+    await prefs.setBool(customMemoryManagerAvailableKey, true);
+    customMemoryManagerAvailable = true;
 
     await prefs.writeSharedPrefs(
         activityStatesKey, defaultActivityStatesAllDone);

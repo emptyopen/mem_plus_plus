@@ -195,7 +195,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
               value: value,
               child: Text(
                 value,
-                style: TextStyle(fontSize: 16, fontFamily: 'Rajdhani'),
+                style: TextStyle(fontSize: 16, fontFamily: 'CabinSketch'),
               ),
             );
           }).toList(),

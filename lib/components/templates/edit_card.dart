@@ -48,17 +48,17 @@ class _EditCardState extends State<EditCard> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Container(
-        height: 350.0,
+        height: widget.activityKey == 'PAO' ? 350.0 : 200,
         width: 300.0,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              SizedBox(height: 30),
               isPAO
                   ? Column(
                       children: <Widget>[
-                        SizedBox(height: 30),
                         Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(

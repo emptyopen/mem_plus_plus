@@ -22,6 +22,7 @@ class _SingleDigitMultipleChoiceTestScreenState
   List<SingleDigitData> singleDigitData;
   int score = 0;
   int attempts = 0;
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -30,7 +31,6 @@ class _SingleDigitMultipleChoiceTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'SingleDigitMultipleChoiceTestFirstHelp',
         SingleDigitMultipleChoiceScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
@@ -137,6 +137,7 @@ class _SingleDigitMultipleChoiceTestScreenState
 }
 
 class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
@@ -145,10 +146,11 @@ class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
         '    Welcome to your first multiple choice test! In this section, you will be tested on your familiarity with '
             'each digit. \n    Every time you load this page, the digits and objects will be scattered in a random order, '
             'and you simply have to choose the correct digit or object. If you get a perfect score, the next test will be unlocked! '
-          '\n    Good luck!'
+            '\n    Good luck!'
       ],
       buttonColor: Colors.amber[100],
       buttonSplashColor: Colors.amber[300],
+      firstHelpKey: singleDigitMultipleChoiceFirstHelpKey,
     );
   }
 }

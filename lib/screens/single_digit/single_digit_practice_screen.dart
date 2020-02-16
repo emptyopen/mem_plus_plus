@@ -30,7 +30,8 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, 'SingleDigitPracticeFirstHelp', SingleDigitPracticeScreenHelp());
+    prefs.checkFirstTime(context, 'SingleDigitPracticeFirstHelp',
+        SingleDigitPracticeScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
     setState(() {});
@@ -42,7 +43,6 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
 
   void nextActivity() async {
     await prefs.setBool('SingleDigitPracticeComplete', true);
-    await prefs.updateActivityState('SingleDigitEdit', 'review');
     await prefs.updateActivityState('SingleDigitPractice', 'review');
     await prefs.updateActivityVisible('SingleDigitMultipleChoiceTest', true);
     await prefs.updateActivityFirstView('SingleDigitMultipleChoiceTest', true);
@@ -116,6 +116,7 @@ class SingleDigitPracticeScreenHelp extends StatelessWidget {
       information: information,
       buttonColor: Colors.amber[100],
       buttonSplashColor: Colors.amber[300],
+      firstHelpKey: singleDigitPracticeFirstHelpKey,
     );
   }
 }

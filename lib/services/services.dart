@@ -154,7 +154,7 @@ class PrefsUpdater {
         pageBuilder: (BuildContext context, _, __) {
           return helpScreen;
         }));
-      await prefs.setBool(firstHelpKey, true);
+      //await prefs.setBool(firstHelpKey, true);
     }
   }
 }

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/services.dart';
 
 class HelpScreen extends StatefulWidget {
   final String title;
   final List<String> information;
   final Color buttonColor;
   final Color buttonSplashColor;
+  final String firstHelpKey;
 
-  HelpScreen({this.title = '', this.information, this.buttonColor, this.buttonSplashColor});
+  HelpScreen(
+      {this.title = '',
+      this.information,
+      this.buttonColor,
+      this.buttonSplashColor,
+      this.firstHelpKey});
 
   @override
   _HelpScreenState createState() => _HelpScreenState();
@@ -18,10 +25,15 @@ class _HelpScreenState extends State<HelpScreen> {
   int slideIndex = 0;
   final IndexController indexController = IndexController();
   List<Widget> informationList = [];
+  bool firstHelp = true;
 
   @override
   void initState() {
     super.initState();
+
+    // check if this is first time opening the screen
+    checkFirstHelp();
+
     if (widget.information.length > 1) {
       informationList.add(Column(
         children: <Widget>[
@@ -57,11 +69,15 @@ class _HelpScreenState extends State<HelpScreen> {
     }
   }
 
+  checkFirstHelp() async {
+    var prefs = PrefsUpdater();
+    firstHelp = await prefs.getBool(widget.firstHelpKey) == null;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
 
     TransformerPageView transformerPageView = TransformerPageView(
         pageSnapping: true,
@@ -74,52 +90,71 @@ class _HelpScreenState extends State<HelpScreen> {
         controller: indexController,
         transformer:
             PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
-          return Container(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-              child: SingleChildScrollView(
-                child: Stack(
-                  children: <Widget>[
-                    Column(
+          return Stack(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5)),
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  child: SingleChildScrollView(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: 10,),
-                        slideIndex == 0 ? Column(
-                          children: <Widget>[
-                            Text(
-                              widget.title,
-                              style: TextStyle(
-                                fontSize: 28,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 10,),
-                          ],
-                        ) : Container(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        slideIndex == 0
+                            ? Column(
+                                children: <Widget>[
+                                  Text(
+                                    widget.title,
+                                    style: TextStyle(
+                                      fontSize: 28,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         ParallaxContainer(
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(5)),
-                              padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
-                              child: informationList[info.index]),
+                          child: informationList[info.index],
                           position: info.position,
                           translationFactor: 100,
                         ),
-                        SizedBox(height: 30,),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        ParallaxContainer(
+                          child: firstHelp &&
+                                  slideIndex == widget.information.length - 1
+                              ? HelpOKButton(
+                                  buttonColor: widget.buttonColor,
+                                  buttonSplashColor: widget.buttonSplashColor,
+                                  firstHelpKey: widget.firstHelpKey,
+                                )
+                              : Container(),
+                          position: info.position,
+                          translationFactor: 50,
+                        ),
                       ],
                     ),
-                    Positioned(
-                      child: Text('${info.index + 1}/${widget.information.length}'),
-                      right: 10,
-                      bottom: 10,
-                    )
-                  ],
+                  ),
                 ),
               ),
-            ),
+              Positioned(
+                child: Text('${info.index + 1}/${widget.information.length}'),
+                right: 23,
+                bottom: 17,
+              )
+            ],
           );
         }),
         itemCount: widget.information.length);
@@ -138,7 +173,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 children: <Widget>[
                   Container(
                       width: screenWidth * 0.9,
-                      height: screenHeight * 0.7,
+                      height: 400,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -146,14 +181,45 @@ class _HelpScreenState extends State<HelpScreen> {
                   SizedBox(
                     height: 15,
                   ),
-                  OKPopButton(
-                    color: widget.buttonColor,
-                    splashColor: widget.buttonSplashColor,
-                  )
+                  firstHelp
+                      ? Container()
+                      : HelpOKButton(
+                          buttonColor: widget.buttonColor,
+                          buttonSplashColor: widget.buttonSplashColor,
+                          firstHelpKey: widget.firstHelpKey,
+                        )
                 ],
               ),
             ),
           ],
         ));
+  }
+}
+
+class HelpOKButton extends StatelessWidget {
+  final Color buttonColor;
+  final Color buttonSplashColor;
+  final String firstHelpKey;
+  final prefs = PrefsUpdater();
+
+  HelpOKButton({this.buttonColor, this.buttonSplashColor, this.firstHelpKey});
+
+  updateFirstHelp() async {
+    await prefs.setBool(firstHelpKey, false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BasicFlatButton(
+      onPressed: () {
+        updateFirstHelp();
+        Navigator.pop(context);
+      },
+      text: 'OK',
+      color: buttonColor,
+      splashColor: buttonSplashColor,
+      fontSize: 20,
+      padding: 10,
+    );
   }
 }

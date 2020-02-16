@@ -142,6 +142,7 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
         'the next test will be unlocked! Good luck!'],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
+      firstHelpKey: alphabetWrittenFirstHelpKey,
     );
   }
 }

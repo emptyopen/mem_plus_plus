@@ -270,26 +270,18 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
           SizedBox(
             height: 50,
           ),
-          Container(
-            width: 200,
-            decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Center(
-              child: BasicFlatButton(
-                text: 'I\'m ready!',
-                color: colorSingleDigitLighter,
-                splashColor: colorSingleDigitStandard,
-                onPressed: () => showConfirmDialog(
-                  context: context,
-                  function: updateStatus,
-                  confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
-                  confirmColor: colorSingleDigitStandard
-                ),
-                fontSize: 30,
-                padding: 10,
-              ),
+          BasicFlatButton(
+            text: 'I\'m ready!',
+            color: colorPAOLighter,
+            splashColor: colorPAOStandard,
+            onPressed: () => showConfirmDialog(
+              context: context,
+              function: updateStatus,
+              confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+              confirmColor: colorPAOStandard
             ),
+            fontSize: 30,
+            padding: 10,
           ),
           SizedBox(
             height: 20,
@@ -322,6 +314,7 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
       ],
       buttonColor: Colors.pink[100],
       buttonSplashColor: Colors.pink[300],
+      firstHelpKey: paoTimedTestPrepFirstHelpKey,
     );
   }
 }

@@ -221,6 +221,7 @@ class AlphabetTimedTestScreenHelp extends StatelessWidget {
       ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
+      firstHelpKey: alphabetTimedTestFirstHelpKey,
     );
   }
 }

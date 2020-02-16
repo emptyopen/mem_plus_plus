@@ -276,13 +276,13 @@ class _AlphabetTimedTestPrepScreenState
           ),
           BasicFlatButton(
             text: 'I\'m ready!',
-            color: colorSingleDigitLighter,
-            splashColor: colorSingleDigitStandard,
+            color: colorAlphabetLighter,
+            splashColor: colorAlphabetStandard,
             onPressed: () => showConfirmDialog(
               context: context,
               function: updateStatus,
               confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
-              confirmColor: colorSingleDigitStandard
+              confirmColor: colorAlphabetStandard
             ),
             fontSize: 30,
             padding: 10,
@@ -329,6 +329,7 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
       ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
+      firstHelpKey: alphabetTimedTestPrepFirstHelpKey,
     );
   }
 }

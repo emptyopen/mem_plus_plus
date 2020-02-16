@@ -1,9 +1,8 @@
 // debug mode
-const bool debugModeEnabled = true;
+const bool debugModeEnabled = false;
 
 // general
 const String firstTimeAppKey = 'FirstTimeApp';
-const String homepageFirstHelpKey = 'HomepageFirstHelp';
 const String activityStatesKey = 'ActivityStates';
 const String customMemoriesKey = 'CustomMemories';
 
@@ -25,7 +24,8 @@ const String paoTestActiveKey = 'PAOTestActive';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
-const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstView';
+const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstHelp';
+const String customMemoryTestFirstHelpKey = 'CustomMemoryTestFirstHelp';
 const String shortTerm = 'short term (1d ~ 1w)';
 const String mediumTerm = 'medium term (1w ~ 3m)';
 const String longTerm = 'long term (3m ~ 1y)';
@@ -33,3 +33,22 @@ const String extraLongTerm = 'extra long term (1y ~ life)';
 const String contactString = 'Contact';
 const String idCardString = 'ID/Credit Card';
 const String otherString = 'Other';
+
+// first help
+const String homepageFirstHelpKey = 'HomepageFirstHelp';
+const String singleDigitEditFirstHelpKey = 'SingleDigitEditFirstHelp';
+const String singleDigitPracticeFirstHelpKey = 'SingleDigitPracticeFirstHelp';
+const String singleDigitMultipleChoiceFirstHelpKey = 'SingleDigitMultipleChoiceFirstHelp';
+const String singleDigitTimedTestPrepFirstHelpKey = 'SingleDigitTimedTestPrepFirstHelp';
+const String singleDigitTimedTestFirstHelpKey = 'SingleDigitTimedTestFirstHelp';
+const String alphabetEditFirstHelpKey = 'AlphabetEditFirstHelp';
+const String alphabetPracticeFirstHelpKey = 'AlphabetPracticeFirstHelp';
+const String alphabetWrittenFirstHelpKey = 'AlphabetMultipleChoiceFirstHelp';
+const String alphabetTimedTestPrepFirstHelpKey = 'AlphabetTimedTestPrepFirstHelp';
+const String alphabetTimedTestFirstHelpKey = 'AlphabetTimedTestFirstHelp';
+const String paoEditFirstHelpKey = 'PAOEditFirstHelp';
+const String paoPracticeFirstHelpKey = 'PAOPracticeFirstHelp';
+const String paoMultipleChoiceFirstHelpKey = 'PAOMultipleChoiceFirstHelp';
+const String paoTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
+const String paoTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
+

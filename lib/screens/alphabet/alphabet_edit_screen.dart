@@ -128,6 +128,7 @@ class AlphabetEditScreenHelp extends StatelessWidget {
         'the alphabet! '],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
+      firstHelpKey: alphabetEditFirstHelpKey,
     );
   }
 }

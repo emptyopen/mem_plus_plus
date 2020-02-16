@@ -315,6 +315,7 @@ class CustomMemoryTestScreenHelp extends StatelessWidget {
       ],
       buttonColor: Colors.purple[100],
       buttonSplashColor: Colors.purple[300],
+      firstHelpKey: customMemoryTestFirstHelpKey,
     );
   }
 }
