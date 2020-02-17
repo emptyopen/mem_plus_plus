@@ -25,6 +25,8 @@ class _SingleDigitTimedTestPrepScreenState
   String digit3 = '';
   String digit4 = '';
   PrefsUpdater prefs = PrefsUpdater();
+  Duration testDuration =
+      debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 1);
 
   @override
   void initState() {
@@ -70,11 +72,10 @@ class _SingleDigitTimedTestPrepScreenState
     await prefs.updateActivityState('SingleDigitTimedTest', 'todo');
     await prefs.updateActivityVisible('SingleDigitTimedTest', true);
     await prefs.updateActivityFirstView('SingleDigitTimedTest', true);
-    Duration testDuration =
-        debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 1);
     await prefs.updateActivityVisibleAfter(
         'SingleDigitTimedTest', DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
+    notifyDuration(testDuration, 'Single Digit timed test is ready!', 'Good luck!');
     widget.callback();
     Navigator.pop(context);
   }

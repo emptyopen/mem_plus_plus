@@ -190,6 +190,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     await prefs.updateActivityVisibleAfter(
         'PAOTimedTest', DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
+    notifyDuration(testDuration, 'PAO timed test is ready!', 'Good luck!');
     widget.callback();
     Navigator.pop(context);
   }

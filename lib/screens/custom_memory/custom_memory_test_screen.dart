@@ -67,14 +67,19 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
         Navigator.pop(context);
       } else {
         memory['spacedRepetitionLevel'] += 1;
+        print('yo');
+        var nextDuration = termDurationsMap[memory['spacedRepetitionType']][memory['spacedRepetitionLevel']];
+        print(nextDuration);
+        memory['nextDatetime'] = DateTime.now().add(nextDuration).toIso8601String();
         customMemories[memory['title']] = memory;
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Correct! Another test is coming... eventually!',
+          snackBarText: 'Correct! Another test is coming in ${durationToString(nextDuration)}!',
           textColor: Colors.black,
           backgroundColor: colorCorrect,
           durationSeconds: 7,
         );
+        notifyDuration(nextDuration, 'Ready to be tested on your \'${memory["title"]}\' memory?', 'Good luck!');
         Navigator.pop(context);
       }
       await prefs.writeSharedPrefs(customMemoriesKey, customMemories);

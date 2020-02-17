@@ -126,6 +126,7 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityVisibleAfter(
         'AlphabetTimedTest', DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
+    notifyDuration(testDuration, 'Alphabet timed test is ready!', 'Good luck!');
     widget.callback();
     Navigator.pop(context);
   }

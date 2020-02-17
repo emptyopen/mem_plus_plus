@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Map termDurationsMap = {
   shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1)] :
@@ -173,6 +174,7 @@ List shuffle(List items) {
 void showSnackBar({ScaffoldState scaffoldState, String snackBarText, Color textColor = Colors.black, Color backgroundColor,
   int durationSeconds = 3, bool isSuper = false}) {
   final snackBar = SnackBar(
+    // action: SnackBarAction(label: 'Roger!', onPressed: () => scaffoldState.hideCurrentSnackBar(), textColor: textColor,),
     content: Shimmer.fromColors(
       period: Duration(seconds: 3),
       baseColor: textColor,
@@ -225,14 +227,14 @@ void showConfirmDialog({BuildContext context, Function function, String confirmT
   );
 }
 
-DateTime findNextDatetime(String startDatetime, String spacedRepetitionType, int spacedRepetitionLevel) {
+// DateTime findNextDatetime(String startDatetime, String spacedRepetitionType, int spacedRepetitionLevel) {
 
-  // fib: 1 2 3 5 8 13 21 34
-  //  30 60 90 150 210 390 630 1020
-  //  30 120 330 810 1830 4050 8730 18480
+//   // fib: 1 2 3 5 8 13 21 34
+//   //  30 60 90 150 210 390 630 1020
+//   //  30 120 330 810 1830 4050 8730 18480
 
-  return DateTime.parse(startDatetime).add(termDurationsMap[spacedRepetitionType][spacedRepetitionLevel]);
-}
+//   return DateTime.parse(startDatetime).add(termDurationsMap[spacedRepetitionType][spacedRepetitionLevel]);
+// }
 
 String durationToString(Duration duration) {
   int hours = duration.inHours;
@@ -248,3 +250,43 @@ String durationToString(Duration duration) {
     return '$seconds seconds!';
   }
 }
+
+notify() async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max,
+        priority: Priority.High,
+        ticker: 'ticker',);
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0,
+        'Have you improved your memory todayy?',
+        'Click here to check your to-do list!',
+        platformChannelSpecifics,
+        payload: 'item x');
+  }
+
+  notifyDuration(Duration duration, String title, String subtitle) async {
+    var scheduledNotificationDateTime = DateTime.now().add(duration);
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max,
+        priority: Priority.High,
+        ticker: 'ticker',);
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.schedule(
+        0,
+        title,
+        subtitle,
+        scheduledNotificationDateTime,
+        platformChannelSpecifics,
+        payload: 'SingleDigitTimedTest',
+        );
+  }

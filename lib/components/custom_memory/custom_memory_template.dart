@@ -128,11 +128,11 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
     if (errors.length > 0) {
       return;
     }
+    Duration firstSpacedRepetitionDuration = termDurationsMap[spacedRepetitionChoice][0];
     Map map = {
       'type': widget.memoryType,
       'title': primaryKey,
-      'startDatetime': DateTime.now().toIso8601String(),
-      'latestDatetime': DateTime.now().toIso8601String(),
+      'nextDatetime': DateTime.now().add(firstSpacedRepetitionDuration).toIso8601String(),
       'spacedRepetitionType': spacedRepetitionChoice,
       'spacedRepetitionLevel': 0,
     };
@@ -145,8 +145,8 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       }
     });
     customMemories[primaryKey] = map;
-    print(customMemories);
     await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
+    notifyDuration(firstSpacedRepetitionDuration, 'Ready to be tested on your \'$primaryKey\' memory?', 'Good luck!');
     widget.callback();
     Navigator.pop(context);
   }

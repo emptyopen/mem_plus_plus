@@ -17,6 +17,9 @@ dependencies:
   edit_distance: ^0.4.1
   auto_size_text: ^2.1.0
   shimmer: ^1.0.1
+  flutter_local_notifications: ^1.1.6
+  rxdart: ^0.23.1
+  path_provider: ^1.6.0
 
 dev_dependencies:
   flutter_test:

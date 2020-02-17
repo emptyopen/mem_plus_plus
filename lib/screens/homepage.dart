@@ -4,8 +4,10 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
-
 import 'package:mem_plus_plus/services/services.dart';
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -29,12 +31,17 @@ import 'package:mem_plus_plus/screens/pao/pao_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_timed_test_screen.dart';
 
 class MyHomePage extends StatefulWidget {
+
   MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// TODO: notifications for custom memory timed tests
+// TODO: change custom memory tests to add time only once they are complete, use a 'nextTime'
+
+// TODO: pao didn't show results
 
 // mc test / written test
 // TODO: full screen flash cards, flip to green correct or red incorrect
@@ -42,16 +49,14 @@ class MyHomePage extends StatefulWidget {
 // TODO: only show cards that are not 100% familiarity, unless they are all 100% familiarity in which case show all of them
 // TODO: after MC test, show which words were INCORRECT
 
-// TODO: notifications
 // TODO: add ability to view custom memories
-// TODO: change custom memory tests to add time only once they are complete, use a 'nextTime'
 
 // other
 // TODO: dark mode button in top right corner
-// TODO: consolidate timed test stuff
+// TODO: consolidate timed test stuff INTO SCREENS
 // TODO: add warning about 0 vs O
 // TODO: add safe viewing area (for toolbar)
-// TODO: add global celebration animation whenever there is a level up
+// TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: add date input to custom memories
 // TODO: add notifications about newly available activities
 // TODO: write some lessons, intersperse
@@ -67,7 +72,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: written test: allow close enough spelling
 // TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 
-// todo:  Brain by Arjun Adamson from the Noun Project
+// TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -87,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     checkForAppUpdate();
     getSharedPrefs();
     initializeActivityMenuButtonMap();
+    initializeNotificationsScheduler();
     new Timer.periodic(Duration(seconds: 1), (Timer t) => setState(() {}));
   }
 
@@ -129,7 +135,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void setUnlockedActivities() async {
-
     // if first time opening app, welcome
     if (await prefs.getBool(firstTimeAppKey) == null ||
         await prefs.getBool(firstTimeAppKey)) {
@@ -216,8 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // custom tests
     customMemories.forEach((title, memory) {
-      DateTime nextDateTime = findNextDatetime(memory['startDatetime'],
-          memory['spacedRepetitionType'], memory['spacedRepetitionLevel']);
+      var nextDateTime = DateTime.parse(memory['nextDatetime']);
       var activity = Activity('test', 'todo', true, nextDateTime, false);
       var customIcon = customMemoryIconMap[memory['type']];
       mainMenuOptions.add(MainMenuOption(
@@ -273,6 +277,24 @@ class _MyHomePageState extends State<MyHomePage> {
     return mainMenuOptions;
   }
 
+  initializeNotificationsScheduler() async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    var time = Time(12, 30, 0);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        0,
+        'Have you improved your memory today?',
+        'Click here to check your to-do list!',
+        time,
+        platformChannelSpecifics);
+  }
+
   @override
   Widget build(BuildContext context) {
     return firstTimeOpeningApp == null
@@ -296,30 +318,31 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           customMemoryManagerFirstView
                               ? Positioned(
-                            child: Container(
-                              width: 35,
-                              height: 18,
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 1),
-                                borderRadius: BorderRadius.all(Radius.circular(5)),
-                                //color: Color.fromRGBO(255, 105, 180, 1),
-                                color: Color.fromRGBO(255, 255, 255, 0.85),
-                              ),
-                              child: Shimmer.fromColors(
-                                period: Duration(seconds: 3),
-                                baseColor: Colors.black,
-                                highlightColor: Colors.greenAccent,
-                                child: Center(
-                                  child: Text(
-                                    'new!',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.red),
-                                  )),
-                              ),
-                            ),
-                            left: 3,
-                            top: 4)
+                                  child: Container(
+                                    width: 35,
+                                    height: 18,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(width: 1),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                      //color: Color.fromRGBO(255, 105, 180, 1),
+                                      color:
+                                          Color.fromRGBO(255, 255, 255, 0.85),
+                                    ),
+                                    child: Shimmer.fromColors(
+                                      period: Duration(seconds: 3),
+                                      baseColor: Colors.black,
+                                      highlightColor: Colors.greenAccent,
+                                      child: Center(
+                                          child: Text(
+                                        'new!',
+                                        style: TextStyle(
+                                            fontSize: 12, color: Colors.red),
+                                      )),
+                                    ),
+                                  ),
+                                  left: 3,
+                                  top: 4)
                               : Container()
                         ],
                       )
@@ -342,7 +365,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    //Fireworks(),
+                    // BasicFlatButton(
+                    //   text: 'Notify!',
+                    //   onPressed: () => notifyDuration(Duration(seconds: 4), 'hey', 'yo'),
+                    // ),
+                    // Fireworks(),
                     Shimmer.fromColors(
                       baseColor: Colors.black,
                       highlightColor: Colors.grey[300],
@@ -536,7 +563,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   resetAll() async {
-
     await prefs.clear();
 
     var clearTo = defaultActivityStatesInitial;
@@ -552,7 +578,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   resetActivities() async {
-
     var clearTo = defaultActivityStatesInitial;
 
     setState(() {
@@ -565,7 +590,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   maxOutKeys() async {
-
     await prefs.setBool(customMemoryManagerAvailableKey, true);
     customMemoryManagerAvailable = true;
 

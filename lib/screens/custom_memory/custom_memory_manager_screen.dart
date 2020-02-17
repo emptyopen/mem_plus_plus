@@ -156,11 +156,7 @@ class CustomMemoryTile extends StatelessWidget {
   }
 
   String findRemainingTime() {
-    var nextDateTime = findNextDatetime(
-        customMemory['startDatetime'],
-        customMemory['spacedRepetitionType'],
-        customMemory['spacedRepetitionLevel']);
-    var remainingTime = nextDateTime.difference(DateTime.now());
+    var remainingTime = DateTime.parse(customMemory['nextDatetime']).difference(DateTime.now());
     if (!remainingTime.isNegative) {
       return 'Available in: ${durationToString(remainingTime)}';
     }
@@ -265,7 +261,6 @@ class _MyDialogContentState extends State<MyDialogContent> {
   Widget build(BuildContext context) {
     return new Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      //this right here
       child: Container(
         height: 350.0,
         width: 300.0,

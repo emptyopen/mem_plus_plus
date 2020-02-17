@@ -1,5 +1,5 @@
 // debug mode
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 // general
 const String firstTimeAppKey = 'FirstTimeApp';

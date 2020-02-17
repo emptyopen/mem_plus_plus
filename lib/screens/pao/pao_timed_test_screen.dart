@@ -113,6 +113,12 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     await prefs.updateActivityVisible('PAOTimedTest', false);
     await prefs.updateActivityVisible('PAOTimedTestPrep', true);
     Navigator.pop(context);
+    showSnackBar(
+      scaffoldState: widget.globalKey.currentState,
+      snackBarText: 'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
+      backgroundColor: colorIncorrect,
+      durationSeconds: 15
+    );
   }
 
   @override
