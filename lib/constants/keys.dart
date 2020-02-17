@@ -1,4 +1,4 @@
-// debug mode
+// debug mode - FALSE for production
 const bool debugModeEnabled = true;
 
 // general

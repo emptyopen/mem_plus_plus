@@ -38,27 +38,20 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: notifications for custom memory timed tests
-// TODO: change custom memory tests to add time only once they are complete, use a 'nextTime'
-
-// TODO: pao didn't show results
-
 // mc test / written test
 // TODO: full screen flash cards, flip to green correct or red incorrect
-// TODO: auto exit after MC/written test
 // TODO: only show cards that are not 100% familiarity, unless they are all 100% familiarity in which case show all of them
 // TODO: after MC test, show which words were INCORRECT
 
 // TODO: add ability to view custom memories
 
 // other
-// TODO: dark mode button in top right corner
+// TODO: dark mode button in top right corner (preferences page)
 // TODO: consolidate timed test stuff INTO SCREENS
 // TODO: add warning about 0 vs O
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: add date input to custom memories
-// TODO: add notifications about newly available activities
 // TODO: write some lessons, intersperse
 
 // Nice to have

@@ -6,6 +6,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 
 class AlphabetWrittenTestScreen extends StatefulWidget {
   final Function callback;
@@ -18,9 +19,9 @@ class AlphabetWrittenTestScreen extends StatefulWidget {
       _AlphabetWrittenTestScreenState();
 }
 
-class _AlphabetWrittenTestScreenState
-    extends State<AlphabetWrittenTestScreen> {
+class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   List<AlphabetData> alphabetData;
+  List<bool> results = List.filled(26, null);
   int score = 0;
   int attempts = 0;
 
@@ -32,7 +33,8 @@ class _AlphabetWrittenTestScreenState
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, 'AlphabetWrittenTestFirstHelp', AlphabetWrittenTestScreenHelp());
+    prefs.checkFirstTime(
+        context, alphabetWrittenFirstHelpKey, AlphabetWrittenTestScreenHelp());
     alphabetData = (json.decode(await prefs.getString(alphabetKey)) as List)
         .map((i) => AlphabetData.fromJson(i))
         .toList();
@@ -43,6 +45,7 @@ class _AlphabetWrittenTestScreenState
   void callback(BuildContext context, bool success) async {
     if (success) {
       score += 1;
+      results[attempts] = true;
       if (score == 26) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
@@ -71,6 +74,8 @@ class _AlphabetWrittenTestScreenState
           Navigator.pop(context);
         }
       }
+    } else {
+      results[attempts] = false;
     }
     attempts += 1;
 
@@ -84,6 +89,7 @@ class _AlphabetWrittenTestScreenState
       );
       Navigator.pop(context);
     }
+    setState(() {});
   }
 
   List<AlphabetWrittenCard> getAlphabetWrittenCards() {
@@ -107,27 +113,27 @@ class _AlphabetWrittenTestScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Alphabet: written test'),
-        backgroundColor: Colors.blue[200],
-          actions: <Widget>[
-            // action button
-            IconButton(
-              icon: Icon(Icons.info),
-              onPressed: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetWrittenTestScreenHelp();
-                    }));
-              },
-            ),
-          ]),
-      body: Center(
-          child: ListView(
-        children: getAlphabetWrittenCards(),
-      )),
-    );
+        appBar: AppBar(
+            title: Text('Alphabet: written test'),
+            backgroundColor: Colors.blue[200],
+            actions: <Widget>[
+              // action button
+              IconButton(
+                icon: Icon(Icons.info),
+                onPressed: () {
+                  Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return AlphabetWrittenTestScreenHelp();
+                      }));
+                },
+              ),
+            ]),
+        body: CardTestScreen(
+          getCards: getAlphabetWrittenCards,
+          results: results,
+          numCards: 26,
+        ));
   }
 }
 
@@ -136,10 +142,12 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
   Widget build(BuildContext context) {
     return HelpScreen(
       title: 'Alphabet Written Test',
-      information: ['    Welcome to your first written test! In this section, you will be tested on your familiarity with '
-        'each letter. Every time you load this page, the letters will be scattered in a random order, '
-        'and you simply have to write in the correct object. If you get a perfect score, '
-        'the next test will be unlocked! Good luck!'],
+      information: [
+        '    Welcome to your first written test! In this section, you will be tested on your familiarity with '
+            'each letter. Every time you load this page, the letters will be scattered in a random order, '
+            'and you simply have to write in the correct object. If you get a perfect score, '
+            'the next test will be unlocked! Good luck!'
+      ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
       firstHelpKey: alphabetWrittenFirstHelpKey,

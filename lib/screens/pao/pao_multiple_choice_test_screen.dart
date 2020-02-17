@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 
 class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
@@ -20,6 +21,7 @@ class PAOMultipleChoiceTestScreen extends StatefulWidget {
 class _PAOMultipleChoiceTestScreenState
     extends State<PAOMultipleChoiceTestScreen> {
   List<PAOData> paoData;
+  List<bool> results = List.filled(100, null);
   int score = 0;
   int attempts = 0;
 
@@ -31,7 +33,7 @@ class _PAOMultipleChoiceTestScreenState
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, 'PAOMultipleChoiceTestFirstHelp', PAOMultipleChoiceScreenHelp());
+    prefs.checkFirstTime(context, paoMultipleChoiceFirstHelpKey, PAOMultipleChoiceScreenHelp());
     paoData = await prefs.getSharedPrefs(paoKey);
     paoData = shuffle(paoData);
     setState(() {});
@@ -40,6 +42,7 @@ class _PAOMultipleChoiceTestScreenState
   void callback(BuildContext context, bool success) async {
     if (success) {
       score += 1;
+      results[attempts] = true;
       if (score == 100) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
@@ -68,6 +71,8 @@ class _PAOMultipleChoiceTestScreenState
           Navigator.pop(context);
         }
       }
+    } else {
+      results[attempts] = false;
     }
     attempts += 1;
 
@@ -81,6 +86,7 @@ class _PAOMultipleChoiceTestScreenState
       );
       Navigator.pop(context);
     }
+    setState(() {});
   }
 
   List<PAOMultipleChoiceCard> getPAOMultipleChoiceCards() {
@@ -125,10 +131,11 @@ class _PAOMultipleChoiceTestScreenState
               },
             ),
           ]),
-      body: Center(
-          child: ListView(
-        children: getPAOMultipleChoiceCards(),
-      )),
+          body: CardTestScreen(
+        getCards: getPAOMultipleChoiceCards,
+        results: results,
+        numCards: 100,
+      ),
     );
   }
 }

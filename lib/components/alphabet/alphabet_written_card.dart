@@ -100,8 +100,9 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
     return done
         ? Container()
         : Container(
+              height: 500,
             decoration: BoxDecoration(
-              border: Border.all(),
+              color: Colors.white,
             ),
             padding: EdgeInsets.all(20),
             child: Column(
@@ -113,6 +114,7 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
                     style: TextStyle(fontSize: 30),
                   )),
                 ),
+                SizedBox(height: 30,),
                 Container(
                   width: 250,
                   child: TextField(

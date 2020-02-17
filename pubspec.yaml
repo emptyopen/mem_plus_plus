@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 1.2.1+5
+version: 1.3.0+6
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

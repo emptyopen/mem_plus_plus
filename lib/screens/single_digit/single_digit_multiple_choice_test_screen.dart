@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 
 class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
@@ -20,6 +21,7 @@ class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
 class _SingleDigitMultipleChoiceTestScreenState
     extends State<SingleDigitMultipleChoiceTestScreen> {
   List<SingleDigitData> singleDigitData;
+  List<bool> results = List.filled(10, null);
   int score = 0;
   int attempts = 0;
   var prefs = PrefsUpdater();
@@ -31,7 +33,7 @@ class _SingleDigitMultipleChoiceTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, 'SingleDigitMultipleChoiceTestFirstHelp',
+    prefs.checkFirstTime(context, singleDigitMultipleChoiceFirstHelpKey,
         SingleDigitMultipleChoiceScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
@@ -40,6 +42,7 @@ class _SingleDigitMultipleChoiceTestScreenState
 
   void callback(BuildContext context, bool success) async {
     if (success) {
+      results[attempts] = true;
       score += 1;
       if (score == 10) {
         // update keys
@@ -68,6 +71,8 @@ class _SingleDigitMultipleChoiceTestScreenState
           Navigator.pop(context);
         }
       }
+    } else {
+      results[attempts] = false;
     }
     attempts += 1;
 
@@ -80,6 +85,7 @@ class _SingleDigitMultipleChoiceTestScreenState
       );
       Navigator.pop(context);
     }
+    setState(() {});
   }
 
   List<SingleDigitMultipleChoiceCard> getSingleDigitMultipleChoiceCards() {
@@ -128,16 +134,16 @@ class _SingleDigitMultipleChoiceTestScreenState
               },
             ),
           ]),
-      body: Center(
-          child: ListView(
-        children: getSingleDigitMultipleChoiceCards(),
-      )),
+      body: CardTestScreen(
+        getCards: getSingleDigitMultipleChoiceCards,
+        results: results,
+        numCards: 10,
+      ),
     );
   }
 }
 
 class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return HelpScreen(

@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 
 class PAOMultipleChoiceCard extends StatefulWidget {
   final PAOData paoData;
@@ -177,70 +178,72 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
     return done
         ? Container()
         : Container(
+              height: 500,
             decoration: BoxDecoration(
-              border: Border.all(),
+              color: Colors.white,
             ),
             padding: EdgeInsets.all(20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Container(
-                  child: Center(
-                      child: Text(
-                    mapChoice == 'digitToPersonActionObject' ? widget.paoData.digits : randomPAOChoice(widget.paoData),
-                    style: TextStyle(fontSize: 30),
-                  )),
-                ),
-                Container(
-                  width: 350,
-                  height: 100,
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        child: BasicFlatButton(
-                          splashColor: Colors.pink[100],
-                          color: Theme.of(context).primaryColor,
-                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[0]) : shuffledOptions[0].digits,
-                          fontSize: 14,
-                          onPressed: () => checkResult(0),
-                        ),
-                        top: 5,
-                        left: 5,
-                      ),
-                      Positioned(
-                        child: BasicFlatButton(
-                          splashColor: Colors.pink[100],
-                          color: Theme.of(context).primaryColor,
-                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[1]) : shuffledOptions[1].digits,
-                          fontSize: 14,
-                          onPressed: () => checkResult(1),
-                        ),
-                        top: 5,
-                        right: 5,
-                      ),
-                      Positioned(
-                        child: BasicFlatButton(
-                          splashColor: Colors.pink[100],
-                          color: Theme.of(context).primaryColor,
-                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[2]) : shuffledOptions[2].digits,
-                          fontSize: 14,
-                          onPressed: () => checkResult(2),
-                        ),
-                        bottom: 5,
-                        left: 5,
-                      ),
-                      Positioned(
-                        child: BasicFlatButton(
-                          splashColor: Colors.pink[100],
-                          color: Theme.of(context).primaryColor,
-                          text: mapChoice == 'digitToPersonActionObject' ? randomPAOChoice(shuffledOptions[3]) : shuffledOptions[3].digits,
-                          fontSize: 14,
-                          onPressed: () => checkResult(3),
-                        ),
-                        bottom: 5,
-                        right: 5,
-                      ),
-                    ],
+                Center(
+                  child: Text(
+                    mapChoice == 'digitToPersonActionObject' ? 'Digit:' : 'PAO:',
+                    style: TextStyle(fontSize: 26),
                   ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                    child: Text(
+                  mapChoice == 'digitToPersonActionObject'
+                      ? widget.paoData.digits
+                      : randomPAOChoice(widget.paoData),
+                  style: TextStyle(fontSize: 50),
+                  textAlign: TextAlign.center,
+                )),
+                SizedBox(height: 30,),
+                BasicFlatButton(
+                  splashColor: Colors.pink[100],
+                  color: colorPAOStandard,
+                  text: mapChoice == 'digitToPersonActionObject'
+                      ? randomPAOChoice(shuffledOptions[0])
+                      : shuffledOptions[0].digits,
+                  fontSize: 24,
+                  padding: 5,
+                  onPressed: () => checkResult(0),
+                ),
+                BasicFlatButton(
+                  splashColor: Colors.pink[100],
+                  color: colorPAOStandard,
+                  text: mapChoice == 'digitToPersonActionObject'
+                      ? randomPAOChoice(shuffledOptions[1])
+                      : shuffledOptions[1].digits,
+                  fontSize: 24,
+                  padding: 5,
+                  onPressed: () => checkResult(1),
+                ),
+                BasicFlatButton(
+                  splashColor: Colors.pink[100],
+                  color: colorPAOStandard,
+                  text: mapChoice == 'digitToPersonActionObject'
+                      ? randomPAOChoice(shuffledOptions[2])
+                      : shuffledOptions[2].digits,
+                  fontSize: 24,
+                  padding: 5,
+                  onPressed: () => checkResult(2),
+                ),
+                BasicFlatButton(
+                  splashColor: Colors.pink[100],
+                  color: colorPAOStandard,
+                  text: mapChoice == 'digitToPersonActionObject'
+                      ? randomPAOChoice(shuffledOptions[3])
+                      : shuffledOptions[3].digits,
+                  fontSize: 24,
+                  padding: 5,
+                  onPressed: () => checkResult(3),
                 ),
               ],
             ));
