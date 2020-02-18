@@ -76,7 +76,7 @@ class _OtherInputState extends State<OtherInput> {
     return CustomMemoryInput(
       callback: callback,
       memoryFields: memoryFields,
-      memoryType: 'ID/Credit Card',
+      memoryType: 'Other',
     );
   }
 }

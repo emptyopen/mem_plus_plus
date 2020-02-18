@@ -60,9 +60,10 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'You\'ve completed this memory! Congratulations, you\'ve burned ${memory['title']} into your memory!',
-          textColor: Colors.black,
-          backgroundColor: Colors.white,
+          textColor: Colors.white,
+          backgroundColor: Colors.black,
           durationSeconds: 7,
+          isSuper: true,
         );
         Navigator.pop(context);
       } else {
@@ -77,7 +78,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
           snackBarText: 'Correct! Another test is coming in ${durationToString(nextDuration)}!',
           textColor: Colors.black,
           backgroundColor: colorCorrect,
-          durationSeconds: 7,
+          durationSeconds: 3,
         );
         notifyDuration(nextDuration, 'Ready to be tested on your \'${memory["title"]}\' memory?', 'Good luck!');
         Navigator.pop(context);

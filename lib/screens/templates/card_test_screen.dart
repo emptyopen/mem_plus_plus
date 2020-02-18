@@ -26,7 +26,7 @@ class _CardTestScreenState extends State<CardTestScreen> {
         progressTiles.add(Container(
           height: 40,
           width: tileWidth,
-          decoration: BoxDecoration(color: Colors.grey),
+          decoration: BoxDecoration(color: Colors.grey[300]),
         ));
       } else if (e) {
         progressTiles.add(Container(
@@ -53,8 +53,10 @@ class _CardTestScreenState extends State<CardTestScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: getProgressTiles(),
         ),
-        Stack(
-          children: widget.getCards(),
+        Expanded(
+          child: Stack(
+            children: widget.getCards(),
+          ),
         ),
       ],
     ));

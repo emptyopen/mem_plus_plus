@@ -6,6 +6,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/flash_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 
 class AlphabetPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -20,6 +21,8 @@ class AlphabetPracticeScreen extends StatefulWidget {
 class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<AlphabetData> alphabetData;
+  List<bool> results = List.filled(26, null);
+  int attempts = 0;
   var prefs = PrefsUpdater();
 
   @override
@@ -35,8 +38,15 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
     setState(() {});
   }
 
-  callback() {
+  callback(bool success) {
+    if (success) {
+      results[attempts] = true;
+    } else {
+      results[attempts] = false;
+    }
+    attempts += 1;
     widget.callback();
+    setState(() {});
   }
 
   void nextActivity() async {
@@ -60,6 +70,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
           nextActivityCallback: nextActivity,
           familiarityTotal: 2600,
           color: colorAlphabetDarker,
+          lighterColor: colorAlphabetLighter,
         );
         alphabetFlashCards.add(alphabetFlashCard);
       }
@@ -90,10 +101,11 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
           onPressed: () => Navigator.of(context).pop('test'),
         ),
       ),
-      body: Center(
-          child: ListView(
-        children: getAlphabetFlashCards(),
-      )),
+      body: CardTestScreen(
+          getCards: getAlphabetFlashCards,
+          results: results,
+          numCards: 26,
+        ),
     );
   }
 }

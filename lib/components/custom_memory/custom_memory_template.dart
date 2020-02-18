@@ -137,7 +137,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       'spacedRepetitionLevel': 0,
     };
     widget.memoryFields.sublist(1).forEach((nonPrimaryMemoryField) {
-      if (widget.memoryType == 'other') {
+      if (nonPrimaryMemoryField.inputType == 'other') {
         map[nonPrimaryMemoryField.mapKey + 'Field'] = nonPrimaryMemoryField.fieldController.text;
         map[nonPrimaryMemoryField.mapKey] = nonPrimaryMemoryField.controller.text;
       } else {

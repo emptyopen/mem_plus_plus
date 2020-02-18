@@ -12,7 +12,7 @@ import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Map termDurationsMap = {
-  shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1), Duration(seconds: 1)] :
+  shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 3), Duration(seconds: 5), Duration(seconds: 8), Duration(seconds: 1)] :
     [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
   mediumTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10)],
   longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
@@ -194,7 +194,7 @@ void showSnackBar({ScaffoldState scaffoldState, String snackBarText, Color textC
   scaffoldState.showSnackBar(snackBar);
 }
 
-void showConfirmDialog({BuildContext context, Function function, String confirmText, Color confirmColor = Colors.redAccent}) {
+void showConfirmDialog({BuildContext context, Function function, String confirmText, Color confirmColor = Colors.redAccent, bool isRoute = false}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {

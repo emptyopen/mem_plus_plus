@@ -7,6 +7,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/flash_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 
 class PAOPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -21,6 +22,8 @@ class PAOPracticeScreen extends StatefulWidget {
 class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<PAOData> paoData;
+  List<bool> results = List.filled(100, null);
+  int attempts = 0;
   var prefs = PrefsUpdater();
 
   @override
@@ -34,8 +37,15 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     setState(() {});
   }
 
-  callback() {
+  callback(bool success) {
+    if (success) {
+      results[attempts] = true;
+    } else {
+      results[attempts] = false;
+    }
+    attempts += 1;
     widget.callback();
+    setState(() {});
   }
 
   void nextActivity() async {
@@ -59,6 +69,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
           nextActivityCallback: nextActivity,
           familiarityTotal: 10000,
           color: colorPAODarker,
+          lighterColor: colorPAOLighter,
         );
         paoFlashCards.add(paoFlashCard);
       }
@@ -97,10 +108,11 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
           ),
         ]
       ),
-      body: Center(
-          child: ListView(
-        children: getPAOFlashCards(),
-      )),
+      body: CardTestScreen(
+          getCards: getPAOFlashCards,
+          results: results,
+          numCards: 100,
+        )
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/flash_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 
 class SingleDigitPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -21,6 +22,8 @@ class SingleDigitPracticeScreen extends StatefulWidget {
 class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
+  List<bool> results = List.filled(10, null);
+  int attempts = 0;
   var prefs = PrefsUpdater();
 
   @override
@@ -37,8 +40,15 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     setState(() {});
   }
 
-  callback() {
+  callback(bool success) {
+    if (success) {
+      results[attempts] = true;
+    } else {
+      results[attempts] = false;
+    }
+    attempts += 1;
     widget.callback();
+    setState(() {});
   }
 
   void nextActivity() async {
@@ -62,6 +72,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
           nextActivityCallback: nextActivity,
           familiarityTotal: 1000,
           color: colorSingleDigitDarker,
+          lighterColor: colorSingleDigitLighter,
         );
         singleDigitFlashCards.add(singleDigitFlashCard);
       }
@@ -72,31 +83,31 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Single digit: practice'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                  opaque: false,
-                  pageBuilder: (BuildContext context, _, __) {
-                    return SingleDigitPracticeScreenHelp();
-                  }));
-            },
+        appBar: AppBar(
+          title: Text('Single digit: practice'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return SingleDigitPracticeScreenHelp();
+                    }));
+              },
+            ),
+          ],
+          backgroundColor: Colors.amber[200],
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop('test'),
           ),
-        ],
-        backgroundColor: Colors.amber[200],
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop('test'),
         ),
-      ),
-      body: Center(
-          child: ListView(
-        children: getSingleDigitFlashCards(),
-      )),
-    );
+        body: CardTestScreen(
+          getCards: getSingleDigitFlashCards,
+          results: results,
+          numCards: 10,
+        ));
   }
 }
 

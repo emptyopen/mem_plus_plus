@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-var colorCorrect = Colors.green[200];
-var colorCorrectDarker = Colors.green[300];
+var colorCorrect = Colors.greenAccent[200];
+var colorCorrectDarker = Colors.greenAccent[300];
 
-var colorIncorrect = Colors.red[200];
-var colorIncorrectDarker = Colors.red[300];
+var colorIncorrect = Colors.redAccent[200];
+var colorIncorrectDarker = Colors.redAccent[300];
 
 
 var colorSingleDigitLighter = Colors.amber[100];
