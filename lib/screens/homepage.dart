@@ -40,10 +40,7 @@ class MyHomePage extends StatefulWidget {
 
 // mc test / written test
 // TODO: only show one card at a time
-// TODO: only show cards that are not 100% familiarity, unless they are all 100% familiarity in which case show all of them
 // TODO: after MC test, show which words were INCORRECT
-
-// TODO: add ability to view custom memories
 
 // other
 // TODO: add date input to custom memories

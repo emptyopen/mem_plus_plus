@@ -22,6 +22,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<AlphabetData> alphabetData;
   List<bool> results = List.filled(26, null);
+  List<bool> tempResults = [];
   int attempts = 0;
   var prefs = PrefsUpdater();
 
@@ -32,7 +33,8 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, 'AlphabetPracticeFirstHelp', AlphabetPracticeScreenHelp());
+    prefs.checkFirstTime(
+        context, 'AlphabetPracticeFirstHelp', AlphabetPracticeScreenHelp());
     alphabetData = await prefs.getSharedPrefs(alphabetKey);
     alphabetData = shuffle(alphabetData);
     setState(() {});
@@ -61,20 +63,31 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   List<FlashCard> getAlphabetFlashCards() {
     List<FlashCard> alphabetFlashCards = [];
     if (alphabetData != null) {
+      bool allComplete = true;
       for (int i = 0; i < alphabetData.length; i++) {
-        FlashCard alphabetFlashCard = FlashCard(
-          entry: alphabetData[i],
-          callback: callback,
-          globalKey: widget.globalKey,
-          activityKey: 'Alphabet',
-          nextActivityCallback: nextActivity,
-          familiarityTotal: 2600,
-          color: colorAlphabetDarker,
-          lighterColor: colorAlphabetLighter,
-        );
-        alphabetFlashCards.add(alphabetFlashCard);
+        if (alphabetData[i].familiarity < 100) {
+          allComplete = false;
+        }
+      }
+      for (int i = 0; i < alphabetData.length; i++) {
+        if (alphabetData[i].familiarity < 100 || allComplete) {
+          FlashCard alphabetFlashCard = FlashCard(
+            entry: alphabetData[i],
+            callback: callback,
+            globalKey: widget.globalKey,
+            activityKey: 'Alphabet',
+            nextActivityCallback: nextActivity,
+            familiarityTotal: 2600,
+            color: colorAlphabetDarker,
+            lighterColor: colorAlphabetLighter,
+          );
+          alphabetFlashCards.add(alphabetFlashCard);
+        }
       }
     }
+    setState(() {
+      tempResults = results.sublist(0, alphabetFlashCards.length);
+    });
     return alphabetFlashCards;
   }
 
@@ -102,10 +115,9 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
         ),
       ),
       body: CardTestScreen(
-          getCards: getAlphabetFlashCards,
-          results: results,
-          numCards: 26,
-        ),
+        cards: getAlphabetFlashCards(),
+        results: tempResults,
+      ),
     );
   }
 }

@@ -3,13 +3,11 @@ import 'package:mem_plus_plus/constants/colors.dart';
 
 class CardTestScreen extends StatefulWidget {
   final List results;
-  final Function getCards;
-  final int numCards;
+  final List<Widget> cards;
 
   CardTestScreen({
     this.results,
-    this.getCards,
-    this.numCards,
+    this.cards,
   });
 
   @override
@@ -17,9 +15,22 @@ class CardTestScreen extends StatefulWidget {
 }
 
 class _CardTestScreenState extends State<CardTestScreen> {
+  int numCards = 0;
+  int numCompleted = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      numCards = widget.cards.length;
+    });
+  }
+
   List<Widget> getProgressTiles() {
+    numCards = widget.cards.length;
+    numCompleted = 0;
     var screenWidth = MediaQuery.of(context).size.width;
-    var tileWidth = screenWidth / widget.numCards;
+    var tileWidth = screenWidth / numCards;
     List<Widget> progressTiles = [];
     widget.results.forEach((e) {
       if (e == null) {
@@ -29,18 +40,21 @@ class _CardTestScreenState extends State<CardTestScreen> {
           decoration: BoxDecoration(color: Colors.grey[300]),
         ));
       } else if (e) {
+        numCompleted += 1;
         progressTiles.add(Container(
           height: 40,
           width: tileWidth,
           decoration: BoxDecoration(color: colorCorrect),
         ));
       } else {
+        numCompleted += 1;
         progressTiles.add(Container(
             height: 40,
             width: tileWidth,
             decoration: BoxDecoration(color: colorIncorrect)));
       }
     });
+    setState(() {});
     return progressTiles;
   }
 
@@ -49,13 +63,25 @@ class _CardTestScreenState extends State<CardTestScreen> {
     return Center(
         child: Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: getProgressTiles(),
+        Stack(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: getProgressTiles(),
+            ),
+            Positioned.fill(
+                child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text('$numCompleted/$numCards completed')
+                ),
+            ))
+          ],
         ),
         Expanded(
           child: Stack(
-            children: widget.getCards(),
+            children: widget.cards,
           ),
         ),
       ],

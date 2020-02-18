@@ -23,6 +23,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<PAOData> paoData;
   List<bool> results = List.filled(100, null);
+  List<bool> tempResults = [];
   int attempts = 0;
   var prefs = PrefsUpdater();
 
@@ -51,7 +52,6 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   void nextActivity() async {
     await prefs.updateActivityState('PAOEdit', 'review');
     await prefs.updateActivityState('PAOPractice', 'review');
-    await prefs.updateActivityFirstView('PAOMultipleChoiceTest', true);
     await prefs.updateActivityVisible('PAOMultipleChoiceTest', true);
     await prefs.setBool('PAOPracticeComplete', true);
     widget.callback();
@@ -60,20 +60,31 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   List<FlashCard> getPAOFlashCards() {
     List<FlashCard> paoFlashCards = [];
     if (paoData != null) {
+      bool allComplete = true;
       for (int i = 0; i < paoData.length; i++) {
-        FlashCard paoFlashCard = FlashCard(
-          entry: paoData[i],
-          callback: callback,
-          globalKey: widget.globalKey,
-          activityKey: 'PAO',
-          nextActivityCallback: nextActivity,
-          familiarityTotal: 10000,
-          color: colorPAODarker,
-          lighterColor: colorPAOLighter,
-        );
-        paoFlashCards.add(paoFlashCard);
+        if (paoData[i].familiarity < 100) {
+          allComplete = false;
+        }
+      }
+      for (int i = 0; i < paoData.length; i++) {
+        if (paoData[i].familiarity < 100 || allComplete) {
+          FlashCard paoFlashCard = FlashCard(
+            entry: paoData[i],
+            callback: callback,
+            globalKey: widget.globalKey,
+            activityKey: 'PAO',
+            nextActivityCallback: nextActivity,
+            familiarityTotal: 10000,
+            color: colorPAODarker,
+            lighterColor: colorPAOLighter,
+          );
+          paoFlashCards.add(paoFlashCard);
+        }
       }
     }
+    setState(() {
+      tempResults = results.sublist(0, paoFlashCards.length);
+    });
     return paoFlashCards;
   }
 
@@ -91,40 +102,38 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('PAO: practice'),
-        backgroundColor: Colors.pink[200],
-        actions: <Widget>[
-          // action button
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return PAOPracticeScreenHelp();
-                }));
-            },
-          ),
-        ]
-      ),
-      body: CardTestScreen(
-          getCards: getPAOFlashCards,
-          results: results,
-          numCards: 100,
-        )
-    );
+        appBar: AppBar(
+            title: Text('PAO: practice'),
+            backgroundColor: Colors.pink[200],
+            actions: <Widget>[
+              // action button
+              IconButton(
+                icon: Icon(Icons.info),
+                onPressed: () {
+                  Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return PAOPracticeScreenHelp();
+                      }));
+                },
+              ),
+            ]),
+        body: CardTestScreen(
+          cards: getPAOFlashCards(),
+          results: tempResults,
+        ));
   }
 }
 
 class PAOPracticeScreenHelp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
       title: 'PAO Practice',
-      information: ['    Get perfect familiarities for each set of digits and '
-        'the first test will be unlocked! Good luck!'],
+      information: [
+        '    Get perfect familiarities for each set of digits and '
+            'the first test will be unlocked! Good luck!'
+      ],
       buttonColor: Colors.pink[100],
       buttonSplashColor: Colors.pink[300],
       firstHelpKey: paoPracticeFirstHelpKey,

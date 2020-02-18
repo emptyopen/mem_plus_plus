@@ -130,9 +130,8 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
               ),
             ]),
         body: CardTestScreen(
-          getCards: getAlphabetWrittenCards,
+          cards: getAlphabetWrittenCards(),
           results: results,
-          numCards: 26,
         ));
   }
 }

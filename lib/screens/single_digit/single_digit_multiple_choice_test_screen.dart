@@ -135,9 +135,8 @@ class _SingleDigitMultipleChoiceTestScreenState
             ),
           ]),
       body: CardTestScreen(
-        getCards: getSingleDigitMultipleChoiceCards,
+        cards: getSingleDigitMultipleChoiceCards(),
         results: results,
-        numCards: 10,
       ),
     );
   }

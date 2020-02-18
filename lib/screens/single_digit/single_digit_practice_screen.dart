@@ -23,6 +23,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<SingleDigitData> singleDigitData;
   List<bool> results = List.filled(10, null);
+  List<bool> tempResults = [];
   int attempts = 0;
   var prefs = PrefsUpdater();
 
@@ -55,7 +56,6 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     await prefs.setBool('SingleDigitPracticeComplete', true);
     await prefs.updateActivityState('SingleDigitPractice', 'review');
     await prefs.updateActivityVisible('SingleDigitMultipleChoiceTest', true);
-    await prefs.updateActivityFirstView('SingleDigitMultipleChoiceTest', true);
 
     widget.callback();
   }
@@ -63,20 +63,31 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   List<FlashCard> getSingleDigitFlashCards() {
     List<FlashCard> singleDigitFlashCards = [];
     if (singleDigitData != null) {
+      bool allComplete = true;
       for (int i = 0; i < singleDigitData.length; i++) {
-        FlashCard singleDigitFlashCard = FlashCard(
-          entry: singleDigitData[i],
-          callback: callback,
-          globalKey: widget.globalKey,
-          activityKey: 'SingleDigit',
-          nextActivityCallback: nextActivity,
-          familiarityTotal: 1000,
-          color: colorSingleDigitDarker,
-          lighterColor: colorSingleDigitLighter,
-        );
-        singleDigitFlashCards.add(singleDigitFlashCard);
+        if (singleDigitData[i].familiarity < 100) {
+          allComplete = false;
+        }
+      }
+      for (int i = 0; i < singleDigitData.length; i++) {
+        if (singleDigitData[i].familiarity < 100 || allComplete) {
+          FlashCard singleDigitFlashCard = FlashCard(
+            entry: singleDigitData[i],
+            callback: callback,
+            globalKey: widget.globalKey,
+            activityKey: 'SingleDigit',
+            nextActivityCallback: nextActivity,
+            familiarityTotal: 1000,
+            color: colorSingleDigitDarker,
+            lighterColor: colorSingleDigitLighter,
+          );
+          singleDigitFlashCards.add(singleDigitFlashCard);
+        }
       }
     }
+    setState(() {
+      tempResults = results.sublist(0, singleDigitFlashCards.length);
+    });
     return singleDigitFlashCards;
   }
 
@@ -104,9 +115,8 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
           ),
         ),
         body: CardTestScreen(
-          getCards: getSingleDigitFlashCards,
-          results: results,
-          numCards: 10,
+          cards: getSingleDigitFlashCards(),
+          results: tempResults,
         ));
   }
 }
@@ -117,7 +127,9 @@ class SingleDigitPracticeScreenHelp extends StatelessWidget {
         'ready to get started with practice! \n    Here you will familiarize yourself '
         'with the digit-object mapping until you\'ve maxed out your '
         'familiarity with each digit, after which the first test will be unlocked! ',
-    '    Try to guess the object before even hitting the reveal button! It\'ll help you once you really get tested ;)'
+    '    We\'ll only show cards that are still ranked less than 100 in familiarity (unless all are at 100 familiarity, '
+        'in which case we\'ll show all of them). \n'
+        '    Try to guess the object before even hitting the reveal button! It\'ll help you once you really get tested ;)'
   ];
 
   @override

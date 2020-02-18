@@ -132,9 +132,8 @@ class _PAOMultipleChoiceTestScreenState
             ),
           ]),
           body: CardTestScreen(
-        getCards: getPAOMultipleChoiceCards,
+        cards: getPAOMultipleChoiceCards(),
         results: results,
-        numCards: 100,
       ),
     );
   }

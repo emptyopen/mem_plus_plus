@@ -101,47 +101,55 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
     }
   }
 
+  bool stringsAreEqual(String string1, String string2) {
+    if (string1.toLowerCase().trim() == string2.toLowerCase().trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   checkAnswer() async {
     var memory = widget.customMemory;
     switch (memory['type']) {
       case 'Contact':
         bool success = true;
-        if (memory['birthday'] != '' && field1TextController.text != memory['birthday']) {
+        if (memory['birthday'] != '' && !stringsAreEqual(field1TextController.text, memory['birthday'])) {
           success = false;
         }
-        if (memory['phoneNumber'] != '' && field2TextController.text != memory['phoneNumber']) {
+        if (memory['phoneNumber'] != '' && !stringsAreEqual(field2TextController.text, memory['phoneNumber'])) {
           success = false;
         }
-        if (memory['address'] != '' && field3TextController.text != memory['address']) {
+        if (memory['address'] != '' && !stringsAreEqual(field3TextController.text, memory['address'])) {
           success = false;
         }
-        if (memory['other'] != '' && field4TextController.text != memory['other']) {
+        if (memory['other'] != '' && !stringsAreEqual(field4TextController.text, memory['other'])) {
           success = false;
         }
         checkResult(memory, success);
         break;
       case 'ID/Credit Card':
         bool success = true;
-        if (memory['number'] != '' && field1TextController.text != memory['number']) {
+        if (memory['number'] != '' && !stringsAreEqual(field1TextController.text, memory['number'])) {
           success = false;
         }
-        if (memory['expiration'] != '' && field2TextController.text != memory['expiration']) {
+        if (memory['expiration'] != '' && !stringsAreEqual(field2TextController.text, memory['expiration'])) {
           success = false;
         }
-        if (memory['other'] != '' && field3TextController.text != memory['other']) {
+        if (memory['other'] != '' && !stringsAreEqual(field3TextController.text, memory['other'])) {
           success = false;
         }
         checkResult(memory, success);
         break;
       case 'Other':
         bool success = true;
-        if (memory['other1'] != '' && field1TextController.text != memory['other1']) {
+        if (memory['other1'] != '' && !stringsAreEqual(field1TextController.text, memory['other1'])) {
           success = false;
         }
-        if (memory['other2'] != '' && field2TextController.text != memory['other2']) {
+        if (memory['other2'] != '' && !stringsAreEqual(field2TextController.text, memory['other2'])) {
           success = false;
         }
-        if (memory['other3'] != '' && field3TextController.text != memory['other3']) {
+        if (memory['other3'] != '' && !stringsAreEqual(field3TextController.text, memory['other3'])) {
           success = false;
         }
         checkResult(memory, success);
@@ -293,7 +301,7 @@ class PromptPair extends StatelessWidget {
         Text(title, style: TextStyle(fontSize: 24)),
         Container(
           width: containerWidth,
-          height: 30,
+          height: 40,
           child: TextField(
             textAlign: TextAlign.center,
             controller: textController,
