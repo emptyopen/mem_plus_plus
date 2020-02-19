@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -161,11 +162,11 @@ class _FlashCardState extends State<FlashCard> {
             children: <Widget>[
               Center(
                 child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
+                    decoration: BoxDecoration(color: backgroundColor),
                     height: screenHeight * 0.5,
                     width: screenWidth * 0.7,
                     child: FlipCard(
-                      speed: 300,
+                      speed: 700,
                       front: Container(
                         decoration: BoxDecoration(
                             color: widget.lighterColor,

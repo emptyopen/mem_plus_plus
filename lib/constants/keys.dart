@@ -1,5 +1,12 @@
+import 'package:flutter/material.dart';
+
 // debug mode - FALSE for production
 const bool debugModeEnabled = true;
+Color backgroundColor = Colors.white;
+Color backgroundSemiColor = Colors.grey[200];
+Color backgroundHighlightColor = Colors.black;
+Color backgroundSemiHighlightColor = Colors.grey[800];
+const String darkModeKey = 'DarkMode';
 
 // general
 const String firstTimeAppKey = 'FirstTimeApp';

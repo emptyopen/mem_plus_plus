@@ -50,7 +50,6 @@ class _SingleDigitMultipleChoiceTestScreenState
         if (await prefs.getBool(activityCompleteKey) == null) {
           await prefs.setBool(activityCompleteKey, true);
           await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-          await prefs.updateActivityFirstView('SingleDigitTimedTestPrep', true);
           await prefs.updateActivityState(
               'SingleDigitMultipleChoiceTest', 'review');
           widget.callback();
@@ -112,8 +111,8 @@ class _SingleDigitMultipleChoiceTestScreenState
     return Scaffold(
       appBar: AppBar(
           title: Text('Single digit: multiple choice test'),
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back, color: Colors.black),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
               score = 0;
               attempts = 0;

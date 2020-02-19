@@ -26,37 +26,37 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   final List<Widget> headers = [
     Text(
       'Welcome to MEM++',
-      style: TextStyle(fontSize: 32),
+      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
     Text(
       '"Some people are just born with superior memories."',
-      style: TextStyle(fontSize: 28),
+      style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
     Text(
       '"It\'s too late for me, I\'ll never improve my memory."',
-      style: TextStyle(fontSize: 28),
+      style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
     Text(
       '"The brain can only store so much information."',
-      style: TextStyle(fontSize: 32),
+      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
     Text(
       'Pay attention, and visualize!',
-      style: TextStyle(fontSize: 30),
+      style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
     Text(
       'Invest in yourself!',
-      style: TextStyle(fontSize: 32),
+      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
     Text(
       'How this app works:',
-      style: TextStyle(fontSize: 32),
+      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
   ];
@@ -77,7 +77,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         Text(
           'So glad you could join us. \n\n'
           'We\'re going to get you a superpower.\n',
-          style: TextStyle(fontSize: 22),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
           textAlign: TextAlign.center,
         ),
         Text(
@@ -97,7 +97,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           '(something which doesn\'t actually exist). \n'
           '    They are just ordinary people who suddenly understand that they are capable, '
           'and make it their responsibility to improve their memory.',
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -112,7 +112,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             '    All I did was encounter these strategies by accident while waiting in line for ramen, '
             'and within months I was able to rapidly improve my memory beyond all recognition.'
             '\n\n   If I can do it, so can you. ',
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -125,7 +125,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           'scientists estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
           'worry about filling your brain with short term data or trivial facts. '
           'If you store them correctly, vital information won\'t get pushed out of your brain.\n',
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -135,13 +135,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       'will in and of itself improve your memory (it\'s all very meta, I know). '
       '\n    And when you visualize in your brain what you\'re paying attention to, really amp up those details. '
       'Make it zanier and more visceral than real life.',
-      style: TextStyle(fontSize: 20),
+      style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
     ),
     Text(
       '    Don\'t worry, this app is free! The only investment you need to make is some of your time. '
       'Trust me though, once you\'ve achieved some proficiency in the some of these systems, '
       'you\'ll be glad you did. The benefits pay for life!',
-      style: TextStyle(fontSize: 20),
+      style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
     ),
     Text(
       '    We\'ll start with some basic systems, and as you master them, new ones will unlock. '
@@ -149,7 +149,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
       'will still be available in the REVIEW section. \n'
       '    Okay, off you go!\n      - Matt',
-      style: TextStyle(fontSize: 20),
+      style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
     ),
   ];
 
@@ -198,6 +198,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           return Stack(
             children: <Widget>[
               Container(
+                decoration: BoxDecoration(color: backgroundColor),
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
@@ -285,7 +286,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ),
               ),
               Positioned(
-                child: Text('${info.index + 1}/${headers.length}'),
+                child: Text('${info.index + 1}/${headers.length}', style: TextStyle(color: backgroundHighlightColor),),
                 right: 10,
                 bottom: 10,
               )

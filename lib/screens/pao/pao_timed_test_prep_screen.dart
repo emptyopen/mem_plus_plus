@@ -213,87 +213,90 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
           },
         ),
       ]),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Center(
+      body: Container(
+        decoration: BoxDecoration(color: backgroundColor),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(
+                child: Text(
+              'Your sequences are: ',
+              style: TextStyle(fontSize: 34, color: backgroundHighlightColor),
+            )),
+            SizedBox(
+              height: 50,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              TimedTestPrepRowContainer(
+                digits: digits1,
+                color: Colors.pink[50],
+              ),
+              TimedTestPrepRowContainer(
+                digits: digits2,
+                color: Colors.pink[100],
+              ),
+              TimedTestPrepRowContainer(
+                digits: digits3,
+                color: Colors.pink[200],
+              ),
+            ]),
+            SizedBox(height: 25),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              TimedTestPrepRowContainer(
+                digits: digits4,
+                color: Colors.pink[50],
+              ),
+              TimedTestPrepRowContainer(
+                digits: digits5,
+                color: Colors.pink[100],
+              ),
+              TimedTestPrepRowContainer(
+                digits: digits6,
+                color: Colors.pink[200],
+              ),
+            ]),
+            SizedBox(height: 25),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              TimedTestPrepRowContainer(
+                digits: digits7,
+                color: Colors.pink[50],
+              ),
+              TimedTestPrepRowContainer(
+                digits: digits8,
+                color: Colors.pink[100],
+              ),
+              TimedTestPrepRowContainer(
+                digits: digits9,
+                color: Colors.pink[200],
+              ),
+            ]),
+            SizedBox(
+              height: 50,
+            ),
+            BasicFlatButton(
+              text: 'I\'m ready!',
+              color: colorPAOLighter,
+              splashColor: colorPAOStandard,
+              onPressed: () => showConfirmDialog(
+                context: context,
+                function: updateStatus,
+                confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+                confirmColor: colorPAOStandard
+              ),
+              fontSize: 30,
+              padding: 10,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
               child: Text(
-            'Your sequences are: ',
-            style: TextStyle(fontSize: 34),
-          )),
-          SizedBox(
-            height: 50,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            TimedTestPrepRowContainer(
-              digits: digits1,
-              color: Colors.pink[50],
-            ),
-            TimedTestPrepRowContainer(
-              digits: digits2,
-              color: Colors.pink[100],
-            ),
-            TimedTestPrepRowContainer(
-              digits: digits3,
-              color: Colors.pink[200],
-            ),
-          ]),
-          SizedBox(height: 25),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            TimedTestPrepRowContainer(
-              digits: digits4,
-              color: Colors.pink[50],
-            ),
-            TimedTestPrepRowContainer(
-              digits: digits5,
-              color: Colors.pink[100],
-            ),
-            TimedTestPrepRowContainer(
-              digits: digits6,
-              color: Colors.pink[200],
-            ),
-          ]),
-          SizedBox(height: 25),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            TimedTestPrepRowContainer(
-              digits: digits7,
-              color: Colors.pink[50],
-            ),
-            TimedTestPrepRowContainer(
-              digits: digits8,
-              color: Colors.pink[100],
-            ),
-            TimedTestPrepRowContainer(
-              digits: digits9,
-              color: Colors.pink[200],
-            ),
-          ]),
-          SizedBox(
-            height: 50,
-          ),
-          BasicFlatButton(
-            text: 'I\'m ready!',
-            color: colorPAOLighter,
-            splashColor: colorPAOStandard,
-            onPressed: () => showConfirmDialog(
-              context: context,
-              function: updateStatus,
-              confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
-              confirmColor: colorPAOStandard
-            ),
-            fontSize: 30,
-            padding: 10,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            child: Text(
-              '(You\'ll be quizzed on this in four hours!)',
-              style: TextStyle(fontSize: 18),
-            ),
-          )
-        ],
+                '(You\'ll be quizzed on this in four hours!)',
+                style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -11,6 +11,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/settings_screen.dart';
 import 'package:mem_plus_plus/screens/custom_memory/custom_memory_manager_screen.dart';
 import 'package:mem_plus_plus/screens/custom_memory/custom_memory_test_screen.dart';
 import 'package:mem_plus_plus/screens/lessons/welcome_screen.dart';
@@ -38,7 +39,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: add preferences (dark mode, about author)
+// TODO: add preferences (dark mode, about developer)
 // TODO: move custom memory to floating button
 // TODO: add deck of cards
 // TODO: add faces test
@@ -52,8 +53,10 @@ class MyHomePage extends StatefulWidget {
 // TODO: only show one MC/flash card at a time (performance?)
 // TODO: consolidate all keys (find strings)
 // TODO: crashlytics for IOS
+// TODO: fix buttons getting cut off with scroll in help
 
 // Nice to have
+// TODO: add sounds
 // TODO: after MC test, show which words were INCORRECT
 // TODO: add ability for alphabet to contain up to 3 objects
 // TODO: implement length limits for inputs (like action/object)
@@ -101,6 +104,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool(darkModeKey) == null || !(prefs.getBool(darkModeKey))) {
+      print('setting light');
+      backgroundColor = Colors.white;
+      backgroundHighlightColor = Colors.black;
+      backgroundSemiColor = Colors.grey[200];
+      backgroundSemiHighlightColor = Colors.grey[800];
+    } else {
+      print('setting dark');
+      backgroundColor = Colors.grey[800];
+      backgroundHighlightColor = Colors.white;
+      backgroundSemiColor = Colors.grey[600];
+      backgroundSemiHighlightColor = Colors.grey[200];
+    }
+    setState(() {});
 
     // activity states, and unlockedActivities
     if (prefs.getKeys().contains(activityStatesKey)) {
@@ -341,6 +359,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       )
                     : Container(),
                 IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) {
+                          return SettingsScreen(
+                            resetAll: resetAll,
+                            resetActivities: resetActivities,
+                            maxOutKeys: maxOutKeys,
+                          );
+                        }));
+                  },
+                ),
+                IconButton(
                   icon: Icon(Icons.info),
                   onPressed: () {
                     Navigator.of(context).push(PageRouteBuilder(
@@ -354,6 +386,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             body: SingleChildScrollView(
               child: Container(
+                decoration: BoxDecoration(color: backgroundColor),
                 padding: EdgeInsets.all(30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -362,15 +395,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     //   text: 'Notify!',
                     //   onPressed: () => notifyDuration(Duration(seconds: 4), 'hey', 'yo'),
                     // ),
-                    // Fireworks(),
-                    Shimmer.fromColors(
-                      baseColor: Colors.black,
-                      highlightColor: Colors.grey[300],
-                      period: Duration(seconds: 6),
-                      child: Text(
-                        'To-do:',
-                        style: TextStyle(fontSize: 30),
-                      ),
+                    // Shimmer.fromColors(
+                    //   baseColor: backgroundHighlightColor,
+                    //   highlightColor: backgroundColor,
+                    //   period: Duration(seconds: 6),
+                    //   child: Text(
+                    //     'To-do:',
+                    //     style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
+                    //   ),
+                    // ),
+                    Text(
+                      'To-do:',
+                      style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
                     ),
                     Container(
                       height: 10,
@@ -383,7 +419,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     Text(
                       'Review:',
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
                     ),
                     Container(
                       height: 10,
@@ -391,22 +427,47 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: getReview(),
                     ),
-                    BasicFlatButton(
-                      onPressed: () => resetActivities(),
-                      text: 'reset activites, not data',
-                    ),
-                    BasicFlatButton(
-                      onPressed: () => maxOutKeys(),
-                      text: 'max out everything',
-                    ),
-                    BasicFlatButton(
-                      onPressed: () => resetAll(),
-                      text: 'reset everything',
-                    ),
                   ],
                 ),
               ),
             ));
+  }
+
+  resetAll() async {
+    await prefs.clear();
+
+    var clearTo = defaultActivityStatesInitial;
+
+    setState(() {
+      activityStates = clearTo;
+      customMemories = {};
+    });
+    await prefs.writeSharedPrefs(activityStatesKey, clearTo);
+    await prefs.writeSharedPrefs(customMemoriesKey, {});
+
+    setUnlockedActivities();
+  }
+
+  resetActivities() async {
+    var clearTo = defaultActivityStatesInitial;
+
+    setState(() {
+      activityStates = clearTo;
+      customMemories = {};
+    });
+    await prefs.writeSharedPrefs(activityStatesKey, clearTo);
+
+    setUnlockedActivities();
+  }
+
+  maxOutKeys() async {
+    await prefs.setBool(customMemoryManagerAvailableKey, true);
+    customMemoryManagerAvailable = true;
+
+    await prefs.writeSharedPrefs(
+        activityStatesKey, defaultActivityStatesAllDone);
+
+    setUnlockedActivities();
   }
 
   void initializeActivityMenuButtonMap() {
@@ -553,43 +614,6 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.pink[400],
           splashColor: Colors.pink[500]),
     };
-  }
-
-  resetAll() async {
-    await prefs.clear();
-
-    var clearTo = defaultActivityStatesInitial;
-
-    setState(() {
-      activityStates = clearTo;
-      customMemories = {};
-    });
-    await prefs.writeSharedPrefs(activityStatesKey, clearTo);
-    await prefs.writeSharedPrefs(customMemoriesKey, {});
-
-    setUnlockedActivities();
-  }
-
-  resetActivities() async {
-    var clearTo = defaultActivityStatesInitial;
-
-    setState(() {
-      activityStates = clearTo;
-      customMemories = {};
-    });
-    await prefs.writeSharedPrefs(activityStatesKey, clearTo);
-
-    setUnlockedActivities();
-  }
-
-  maxOutKeys() async {
-    await prefs.setBool(customMemoryManagerAvailableKey, true);
-    customMemoryManagerAvailable = true;
-
-    await prefs.writeSharedPrefs(
-        activityStatesKey, defaultActivityStatesAllDone);
-
-    setUnlockedActivities();
   }
 }
 

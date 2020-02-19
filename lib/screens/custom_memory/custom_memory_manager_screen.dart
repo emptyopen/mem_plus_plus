@@ -99,46 +99,49 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                 },
               ),
             ]),
-        body: Center(
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              SingleChildScrollView(child: customMemoriesColumn),
-              Positioned(
-                child: FlatButton(
-                  color: colorCustomMemoryStandard,
-                  splashColor: colorCustomMemoryDarker,
-                  onPressed: () {
-                    HapticFeedback.heavyImpact();
-                    showDialog(
-                        context: context,
-                        child: MyDialogContent(
-                          callback: callback,
-                        ));
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      side: BorderSide()),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                    child: Row(
-                      children: <Widget>[
-                        Center(child: Icon(Icons.add)),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'memory',
-                          style: TextStyle(fontSize: 24, color: Colors.black),
-                        ),
-                      ],
+        body: Container(
+          decoration: BoxDecoration(color: backgroundColor),
+          child: Center(
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                SingleChildScrollView(child: customMemoriesColumn),
+                Positioned(
+                  child: FlatButton(
+                    color: colorCustomMemoryStandard,
+                    splashColor: colorCustomMemoryDarker,
+                    onPressed: () {
+                      HapticFeedback.heavyImpact();
+                      showDialog(
+                          context: context,
+                          child: MyDialogContent(
+                            callback: callback,
+                          ));
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide()),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      child: Row(
+                        children: <Widget>[
+                          Center(child: Icon(Icons.add)),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'memory',
+                            style: TextStyle(fontSize: 24, color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                right: 25,
-                bottom: 25,
-              )
-            ],
+                  right: 25,
+                  bottom: 25,
+                )
+              ],
+            ),
           ),
         ));
   }
@@ -163,12 +166,13 @@ class CustomMemoryTile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
               side: BorderSide(), borderRadius: BorderRadius.circular(5)),
-          title: Text('Confirm'),
+          title: Text('Confirm', style: TextStyle(color: backgroundHighlightColor),),
           content: Text(
               'Are you sure you\'d like to view this memory? Doing so '
-              'will reset the spaced repetition schedule back to the beginning!'),
+              'will reset the spaced repetition schedule back to the beginning!', style: TextStyle(color: backgroundHighlightColor),),
           actions: <Widget>[
             BasicFlatButton(
               text: 'Cancel',
@@ -210,10 +214,10 @@ class CustomMemoryTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                      width: screenWidth * 0.9,
+                      width: screenWidth * 0.8,
                       height: 400,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: backgroundColor,
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -361,13 +365,14 @@ class CustomMemoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: backgroundSemiColor,
       child: ListTile(
-        leading: Icon(customMemoryIconMap[customMemory['type']]),
-        title: Text('${customMemory['title']}', style: TextStyle(fontSize: 20)),
+        leading: Icon(customMemoryIconMap[customMemory['type']], color: backgroundHighlightColor,),
+        title: Text('${customMemory['title']}', style: TextStyle(fontSize: 20, color: backgroundHighlightColor)),
         subtitle: Text(
           '${customMemory['type']}\n'
           '${findRemainingTime()}',
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
@@ -376,7 +381,7 @@ class CustomMemoryTile extends StatelessWidget {
               width: 50,
               child: FlatButton(
                 child:
-                    Icon(Icons.remove_red_eye, color: colorCustomMemoryDarker),
+                    Icon(Icons.remove_red_eye, color: colorCustomMemoryStandard),
                 onPressed: () => confirmViewCustomMemory(context),
               ),
             ),
@@ -410,13 +415,13 @@ class CustomMemoryViewPair extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(heading, style: TextStyle(fontSize: 22)),
+        Text(heading, style: TextStyle(fontSize: 22, color: backgroundHighlightColor)),
         Container(
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey[300]),
                 borderRadius: BorderRadius.circular(5)),
             padding: EdgeInsets.all(10),
-            child: Text(subHeading, style: TextStyle(fontSize: 24))),
+            child: Text(subHeading, style: TextStyle(fontSize: 24, color: backgroundHighlightColor))),
         SizedBox(
           height: 10,
         ),
@@ -473,6 +478,7 @@ class _MyDialogContentState extends State<MyDialogContent> {
   Widget build(BuildContext context) {
     return new Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      backgroundColor: backgroundColor,
       child: Container(
         height: 350.0,
         width: 300.0,
@@ -481,29 +487,36 @@ class _MyDialogContentState extends State<MyDialogContent> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              DropdownButton<String>(
-                value: dropdownValue,
-                elevation: 16,
-                style: TextStyle(color: colorCustomMemoryStandard),
-                underline: Container(
-                  height: 2,
-                  color: colorCustomMemoryStandard,
+              Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: backgroundColor,
                 ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                  });
-                },
-                items: <String>[idCardString, contactString, otherString]
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: TextStyle(fontSize: 16, fontFamily: 'CabinSketch'),
-                    ),
-                  );
-                }).toList(),
+                child: DropdownButton<String>(
+                  value: dropdownValue,
+                  elevation: 16,
+                  style: TextStyle(color: colorCustomMemoryStandard),
+                  iconEnabledColor: backgroundHighlightColor,
+                  underline: Container(
+                    height: 2,
+                    color: colorCustomMemoryStandard,
+                  ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    });
+                  },
+                  items: <String>[idCardString, contactString, otherString]
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style:
+                            TextStyle(fontSize: 22, fontFamily: 'CabinSketch'),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
               Container(
                   decoration: BoxDecoration(

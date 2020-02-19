@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
@@ -39,7 +40,7 @@ class _HelpScreenState extends State<HelpScreen> {
         children: <Widget>[
           Text(
             widget.information[0],
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
             textAlign: TextAlign.left,
           ),
           SizedBox(
@@ -56,14 +57,14 @@ class _HelpScreenState extends State<HelpScreen> {
       widget.information.sublist(1).forEach((f) {
         informationList.add(Text(
           f,
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
           textAlign: TextAlign.left,
         ));
       });
     } else {
       informationList.add(Text(
         widget.information[0],
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
         textAlign: TextAlign.left,
       ));
     }
@@ -115,6 +116,7 @@ class _HelpScreenState extends State<HelpScreen> {
                                     widget.title,
                                     style: TextStyle(
                                       fontSize: 28,
+                                      color: backgroundHighlightColor
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -150,7 +152,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 ),
               ),
               Positioned(
-                child: Text('${info.index + 1}/${widget.information.length}'),
+                child: Text('${info.index + 1}/${widget.information.length}', style: TextStyle(color: backgroundHighlightColor),),
                 right: 23,
                 bottom: 17,
               )
@@ -175,7 +177,7 @@ class _HelpScreenState extends State<HelpScreen> {
                       width: screenWidth * 0.9,
                       height: 400,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: backgroundColor,
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       child: transformerPageView),
                   SizedBox(

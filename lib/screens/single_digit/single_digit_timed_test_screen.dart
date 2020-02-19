@@ -62,7 +62,6 @@ class _SingleDigitTimedTestScreenState
       if (await prefs.getBool('SingleDigitTimedTestComplete') == null) {
         await prefs.updateActivityState('SingleDigitTimedTest', 'review');
         await prefs.updateActivityVisible('AlphabetEdit', true);
-        await prefs.updateActivityFirstView('AlphabetEdit', true);
       }
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -120,57 +119,61 @@ class _SingleDigitTimedTestScreenState
           },
         ),
       ]),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: Text(
-                'Enter the number: ',
-                style: TextStyle(fontSize: 30),
-              ),
-            ),
-            SizedBox(height: 25),
-            Container(
-              width: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: TextFormField(
-                controller: textController,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                    hintText: 'XXXX',
-                    hintStyle: TextStyle(fontSize: 30, fontFamily: 'SpaceMono')),
-              ),
-            ),
-            SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                BasicFlatButton(
-                  text: 'Give up',
-                  fontSize: 24,
-                  color: Colors.grey[200],
-                  splashColor: Colors.amber,
-                  onPressed: () => giveUp(),
-                  padding: 10,
+      body: Container(
+        decoration: BoxDecoration(color: backgroundColor),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  'Enter the number: ',
+                  style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
                 ),
-                SizedBox(width: 10,),
-                BasicFlatButton(
-                  text: 'Submit',
-                  fontSize: 24,
-                  color: Colors.amber[200],
-                  splashColor: Colors.amber,
-                  onPressed: () => checkAnswer(),
-                  padding: 10,
+              ),
+              SizedBox(height: 25),
+              Container(
+                width: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: TextFormField(
+                  controller: textController,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(5),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundSemiColor)),
+                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
+                      hintText: 'XXXX',
+                      hintStyle: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor)),
                 ),
-              ],
-            ),
-          ],
+              ),
+              SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  BasicFlatButton(
+                    text: 'Give up',
+                    fontSize: 24,
+                    color: Colors.grey[200],
+                    splashColor: Colors.amber,
+                    onPressed: () => giveUp(),
+                    padding: 10,
+                  ),
+                  SizedBox(width: 10,),
+                  BasicFlatButton(
+                    text: 'Submit',
+                    fontSize: 24,
+                    color: Colors.amber[200],
+                    splashColor: Colors.amber,
+                    onPressed: () => checkAnswer(),
+                    padding: 10,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

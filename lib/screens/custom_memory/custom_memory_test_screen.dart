@@ -68,9 +68,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
         Navigator.pop(context);
       } else {
         memory['spacedRepetitionLevel'] += 1;
-        print('yo');
         var nextDuration = termDurationsMap[memory['spacedRepetitionType']][memory['spacedRepetitionLevel']];
-        print(nextDuration);
         memory['nextDatetime'] = DateTime.now().add(nextDuration).toIso8601String();
         customMemories[memory['title']] = memory;
         showSnackBar(

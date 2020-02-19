@@ -110,10 +110,13 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
           },
         ),
       ]),
-      body: Center(
-          child: ListView(
-        children: getAlphabetEditCards(),
-      )),
+      body: Container(
+        decoration: BoxDecoration(color: backgroundColor),
+        child: Center(
+            child: ListView(
+          children: getAlphabetEditCards(),
+        )),
+      ),
     );
   }
 }

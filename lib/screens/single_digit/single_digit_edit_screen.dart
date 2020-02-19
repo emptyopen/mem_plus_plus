@@ -109,10 +109,13 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
               },
             ),
           ]),
-      body: Center(
-          child: ListView(
-        children: getSingleDigitEditCards(),
-      )),
+      body: Container(
+        decoration: BoxDecoration(color: backgroundColor),
+        child: Center(
+            child: ListView(
+          children: getSingleDigitEditCards(),
+        )),
+      ),
     );
   }
 }

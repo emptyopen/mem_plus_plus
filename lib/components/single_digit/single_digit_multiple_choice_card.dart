@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class SingleDigitMultipleChoiceCard extends StatefulWidget {
   final SingleDigitData singleDigitData;
@@ -144,7 +145,7 @@ class _SingleDigitMultipleChoiceCardState
         : Container(
               height: 500,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: backgroundColor,
             ),
             padding: EdgeInsets.all(20),
             child: Column(
@@ -154,7 +155,7 @@ class _SingleDigitMultipleChoiceCardState
                 Center(
                   child: Text(
                     isDigitToObject == 0 ? 'Digit:' : 'Object:',
-                    style: TextStyle(fontSize: 26),
+                    style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
                   ),
                 ),
                 SizedBox(
@@ -165,7 +166,7 @@ class _SingleDigitMultipleChoiceCardState
                     isDigitToObject == 0
                         ? widget.singleDigitData.digits
                         : widget.singleDigitData.object,
-                    style: TextStyle(fontSize: 50),
+                    style: TextStyle(fontSize: 50, color: backgroundHighlightColor),
                   ),
                 ),
                 SizedBox(

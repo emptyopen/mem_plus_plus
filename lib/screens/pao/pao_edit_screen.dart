@@ -131,10 +131,13 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
               },
             ),
           ]),
-      body: Center(
-          child: ListView(
-        children: getPAOEditCards(),
-      )),
+      body: Container(
+        decoration: BoxDecoration(color: backgroundColor),
+        child: Center(
+            child: ListView(
+          children: getPAOEditCards(),
+        )),
+      ),
     );
   }
 }

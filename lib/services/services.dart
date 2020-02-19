@@ -199,12 +199,13 @@ void showConfirmDialog({BuildContext context, Function function, String confirmT
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           side: BorderSide(),
-          borderRadius: BorderRadius.circular(5)
+          borderRadius: BorderRadius.circular(5),
         ),
-        title: Text('Confirm'),
-        content: Text(confirmText),
+        title: Text('Confirm', style: TextStyle(color: backgroundHighlightColor),),
+        content: Text(confirmText, style: TextStyle(color: backgroundHighlightColor),),
         actions: <Widget>[
           BasicFlatButton(
             text: 'Cancel',

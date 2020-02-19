@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class CardTestScreen extends StatefulWidget {
   final List results;
@@ -60,31 +61,34 @@ class _CardTestScreenState extends State<CardTestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      children: <Widget>[
-        Stack(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: getProgressTiles(),
-            ),
-            Positioned.fill(
-                child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text('$numCompleted/$numCards completed')
-                ),
-            ))
-          ],
-        ),
-        Expanded(
-          child: Stack(
-            children: widget.cards,
+    return Container(
+      decoration: BoxDecoration(color: backgroundColor),
+      child: Center(
+          child: Column(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: getProgressTiles(),
+              ),
+              Positioned.fill(
+                  child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text('$numCompleted/$numCards completed')
+                  ),
+              ))
+            ],
           ),
-        ),
-      ],
-    ));
+          Expanded(
+            child: Stack(
+              children: widget.cards,
+            ),
+          ),
+        ],
+      )),
+    );
   }
 }

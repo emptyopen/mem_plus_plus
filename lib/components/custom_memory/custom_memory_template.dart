@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
 String customMemoriesKey = 'CustomMemories';
@@ -26,7 +29,6 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
   getFields() {
     List<Widget> fieldsList = [];
     widget.memoryFields.forEach((memoryField) {
-
       // if other, have field be textfield
       if (memoryField.inputType == 'other') {
         fieldsList.add(Container(
@@ -37,29 +39,43 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
             children: <Widget>[
               Flexible(
                 child: TextField(
+                  style: TextStyle(color: backgroundHighlightColor),
                   textAlign: TextAlign.center,
                   controller: memoryField.fieldController,
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: backgroundSemiColor)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundHighlightColor)),
                     hintText: memoryField.text,
+                    hintStyle: TextStyle(color: backgroundSemiColor),
                     contentPadding: EdgeInsets.all(5),
                     border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.deepPurple))),
+                  ),
                 ),
               ),
-              memoryField.required ? Text(' *', style: TextStyle(fontSize: 20),) : Container()
+              memoryField.required
+                  ? Text(
+                      ' *',
+                      style: TextStyle(
+                          fontSize: 20, color: backgroundHighlightColor),
+                    )
+                  : Container()
             ],
           ),
         ));
-        fieldsList.add(SizedBox(height: 5,));
+        fieldsList.add(SizedBox(
+          height: 5,
+        ));
       } else {
         String title = memoryField.text;
         if (memoryField.required) {
           title += ' *';
         }
-        fieldsList.add(Text(title, style: TextStyle(fontSize: 20)));
+        fieldsList.add(Text(title,
+            style: TextStyle(fontSize: 20, color: backgroundHighlightColor)));
       }
-
 
       // if required, add error box below
       if (memoryField.inputType == 'other') {
@@ -68,13 +84,17 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
             width: 230,
             height: 30,
             child: TextField(
+              style: TextStyle(color: backgroundHighlightColor),
               textAlign: TextAlign.center,
               controller: memoryField.controller,
               decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: backgroundSemiColor)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: backgroundHighlightColor)),
                 contentPadding: EdgeInsets.all(5),
                 border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepPurple))),
+              ),
             ),
           ),
         );
@@ -84,13 +104,17 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
             width: 230,
             height: 30,
             child: TextField(
+              style: TextStyle(color: backgroundHighlightColor),
               textAlign: TextAlign.center,
               controller: memoryField.controller,
               decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: backgroundSemiColor)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: backgroundHighlightColor)),
                 contentPadding: EdgeInsets.all(5),
                 border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepPurple))),
+              ),
             ),
           ),
         );
@@ -112,10 +136,14 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       if (memoryField.controller.text == '' && memoryField.required) {
         errors.add('${memoryField.text} required.');
       }
-      if (memoryField.inputType == 'other' && memoryField.controller.text == '' && memoryField.fieldController.text != '') {
+      if (memoryField.inputType == 'other' &&
+          memoryField.controller.text == '' &&
+          memoryField.fieldController.text != '') {
         errors.add('${memoryField.text} value required.');
       }
-      if (memoryField.inputType == 'other' && memoryField.controller.text != '' && memoryField.fieldController.text == '') {
+      if (memoryField.inputType == 'other' &&
+          memoryField.controller.text != '' &&
+          memoryField.fieldController.text == '') {
         errors.add('${memoryField.text} title required.');
       }
     });
@@ -128,25 +156,31 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
     if (errors.length > 0) {
       return;
     }
-    Duration firstSpacedRepetitionDuration = termDurationsMap[spacedRepetitionChoice][0];
+    Duration firstSpacedRepetitionDuration =
+        termDurationsMap[spacedRepetitionChoice][0];
     Map map = {
       'type': widget.memoryType,
       'title': primaryKey,
-      'nextDatetime': DateTime.now().add(firstSpacedRepetitionDuration).toIso8601String(),
+      'nextDatetime':
+          DateTime.now().add(firstSpacedRepetitionDuration).toIso8601String(),
       'spacedRepetitionType': spacedRepetitionChoice,
       'spacedRepetitionLevel': 0,
     };
     widget.memoryFields.sublist(1).forEach((nonPrimaryMemoryField) {
       if (nonPrimaryMemoryField.inputType == 'other') {
-        map[nonPrimaryMemoryField.mapKey + 'Field'] = nonPrimaryMemoryField.fieldController.text;
-        map[nonPrimaryMemoryField.mapKey] = nonPrimaryMemoryField.controller.text;
+        map[nonPrimaryMemoryField.mapKey + 'Field'] =
+            nonPrimaryMemoryField.fieldController.text;
+        map[nonPrimaryMemoryField.mapKey] =
+            nonPrimaryMemoryField.controller.text;
       } else {
-        map[nonPrimaryMemoryField.mapKey] = nonPrimaryMemoryField.controller.text;
+        map[nonPrimaryMemoryField.mapKey] =
+            nonPrimaryMemoryField.controller.text;
       }
     });
     customMemories[primaryKey] = map;
     await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
-    notifyDuration(firstSpacedRepetitionDuration, 'Ready to be tested on your \'$primaryKey\' memory?', 'Good luck!');
+    notifyDuration(firstSpacedRepetitionDuration,
+        'Ready to be tested on your \'$primaryKey\' memory?', 'Good luck!');
     widget.callback();
     Navigator.pop(context);
   }
@@ -154,11 +188,12 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
   getErrors() {
     List<Text> errorList = [];
     errors.forEach((e) {
-      errorList.add(Text(e, style: TextStyle(color: Colors.red),));
+      errorList.add(Text(
+        e,
+        style: TextStyle(color: Colors.red),
+      ));
     });
-    return Column(
-      children: errorList
-    );
+    return Column(children: errorList);
   }
 
   @override
@@ -168,21 +203,23 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
         Column(
           children: getFields(),
         ),
-        Text('* = required', style: TextStyle(fontSize: 14)),
+        Text('* = required',
+            style: TextStyle(fontSize: 14, color: backgroundHighlightColor)),
         SizedBox(
           height: 10,
         ),
         Text(
           'How long to remember it?',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
         ),
         DropdownButton<String>(
           value: spacedRepetitionChoice,
           elevation: 16,
-          style: TextStyle(color: Colors.deepPurple),
+          style: TextStyle(fontSize: 22, color: colorCustomMemoryStandard),
+          iconEnabledColor: backgroundHighlightColor,
           underline: Container(
             height: 2,
-            color: Colors.deepPurpleAccent,
+            color: colorCustomMemoryStandard,
           ),
           onChanged: (String newValue) {
             setState(() {
@@ -195,25 +232,18 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
               value: value,
               child: Text(
                 value,
-                style: TextStyle(fontSize: 16, fontFamily: 'CabinSketch'),
+                style: TextStyle(fontSize: 20, fontFamily: 'CabinSketch'),
               ),
             );
           }).toList(),
         ),
         getErrors(),
-        FlatButton(
-            onPressed: () => addMemory(),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-              child: Text(
-                'Start',
-                style: TextStyle(fontSize: 18.0),
-              ),
-            )),
+        BasicFlatButton(
+          text: 'Start',
+          onPressed: addMemory,
+          fontSize: 18,
+          color: colorCustomMemoryStandard,
+        ),
       ],
     );
   }
@@ -227,5 +257,11 @@ class MemoryField {
   bool required;
   String inputType;
 
-  MemoryField({this.text, this.mapKey, this.controller, this.fieldController, this.required, this.inputType});
+  MemoryField(
+      {this.text,
+      this.mapKey,
+      this.controller,
+      this.fieldController,
+      this.required,
+      this.inputType});
 }

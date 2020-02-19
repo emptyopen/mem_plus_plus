@@ -4,6 +4,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class PAOMultipleChoiceCard extends StatefulWidget {
   final PAOData paoData;
@@ -180,7 +181,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
         : Container(
               height: 500,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: backgroundColor,
             ),
             padding: EdgeInsets.all(20),
             child: Column(
@@ -190,7 +191,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                 Center(
                   child: Text(
                     mapChoice == 'digitToPersonActionObject' ? 'Digit:' : 'PAO:',
-                    style: TextStyle(fontSize: 26),
+                    style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
                   ),
                 ),
                 SizedBox(
@@ -201,7 +202,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   mapChoice == 'digitToPersonActionObject'
                       ? widget.paoData.digits
                       : randomPAOChoice(widget.paoData),
-                  style: TextStyle(fontSize: 50),
+                  style: TextStyle(fontSize: 50, color: backgroundHighlightColor),
                   textAlign: TextAlign.center,
                 )),
                 SizedBox(height: 30,),
@@ -211,8 +212,8 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   text: mapChoice == 'digitToPersonActionObject'
                       ? randomPAOChoice(shuffledOptions[0])
                       : shuffledOptions[0].digits,
-                  fontSize: 24,
-                  padding: 5,
+                  fontSize: 30,
+                  padding: 10,
                   onPressed: () => checkResult(0),
                 ),
                 BasicFlatButton(
@@ -221,8 +222,8 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   text: mapChoice == 'digitToPersonActionObject'
                       ? randomPAOChoice(shuffledOptions[1])
                       : shuffledOptions[1].digits,
-                  fontSize: 24,
-                  padding: 5,
+                  fontSize: 30,
+                  padding: 10,
                   onPressed: () => checkResult(1),
                 ),
                 BasicFlatButton(
@@ -231,8 +232,8 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   text: mapChoice == 'digitToPersonActionObject'
                       ? randomPAOChoice(shuffledOptions[2])
                       : shuffledOptions[2].digits,
-                  fontSize: 24,
-                  padding: 5,
+                  fontSize: 30,
+                  padding: 10,
                   onPressed: () => checkResult(2),
                 ),
                 BasicFlatButton(
@@ -241,8 +242,8 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   text: mapChoice == 'digitToPersonActionObject'
                       ? randomPAOChoice(shuffledOptions[3])
                       : shuffledOptions[3].digits,
-                  fontSize: 24,
-                  padding: 5,
+                  fontSize: 30,
+                  padding: 10,
                   onPressed: () => checkResult(3),
                 ),
               ],

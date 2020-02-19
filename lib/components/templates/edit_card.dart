@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class EditCard extends StatefulWidget {
   final dynamic entry;
@@ -48,6 +49,7 @@ class _EditCardState extends State<EditCard> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Container(
+        decoration: BoxDecoration(color: backgroundColor),
         height: widget.activityKey == 'PAO' ? 350.0 : 200,
         width: 300.0,
         child: SingleChildScrollView(
@@ -63,16 +65,24 @@ class _EditCardState extends State<EditCard> {
                           padding: EdgeInsets.all(5),
                           child: Text(
                             'Person',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
                           ),
                         ),
                         Container(
+                          decoration: BoxDecoration(color: backgroundColor),
                           height: 40,
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: TextField(
+                            style: TextStyle(color: backgroundHighlightColor),
                             textAlign: TextAlign.center,
                             controller: personTextController,
                             decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: backgroundSemiColor)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: backgroundHighlightColor)),
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(),
                               hintText: '${widget.entry.person}',
@@ -83,16 +93,25 @@ class _EditCardState extends State<EditCard> {
                           padding: EdgeInsets.all(5),
                           child: Text(
                             'Action',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(
+                                fontSize: 20, color: backgroundHighlightColor),
                           ),
                         ),
                         Container(
+                          decoration: BoxDecoration(color: backgroundColor),
                           height: 40,
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                           child: TextField(
+                            style: TextStyle(color: backgroundHighlightColor),
                             textAlign: TextAlign.center,
                             controller: actionTextController,
                             decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: backgroundSemiColor)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: backgroundHighlightColor)),
                                 contentPadding: EdgeInsets.all(5),
                                 border: OutlineInputBorder(),
                                 hintText: '${widget.entry.action}'),
@@ -105,16 +124,23 @@ class _EditCardState extends State<EditCard> {
                 padding: EdgeInsets.all(5),
                 child: Text(
                   'Object',
-                  style: TextStyle(fontSize: 20),
+                  style:
+                      TextStyle(fontSize: 20, color: backgroundHighlightColor),
                 ),
               ),
               Container(
                 height: 40,
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: TextField(
+                  style: TextStyle(color: backgroundHighlightColor),
                   textAlign: TextAlign.center,
                   controller: objectTextController,
                   decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: backgroundSemiColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: backgroundHighlightColor)),
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(),
                       hintText: '${widget.entry.object}'),
@@ -147,71 +173,30 @@ class _EditCardState extends State<EditCard> {
     return ListTile(
       leading: Text(
         leading,
-        style: TextStyle(fontSize: 26),
+        style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
       ),
       title: isPAO
-          ? Text('${widget.entry.person}', style: TextStyle(fontSize: 20))
-          : Text('${widget.entry.object}', style: TextStyle(fontSize: 20)),
+          ? Text('${widget.entry.person}',
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor))
+          : Text('${widget.entry.object}',
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor)),
       subtitle: isPAO
           ? Text(
               '${widget.entry.action} • ${widget.entry.object}',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
             )
           : Container(),
       trailing: Container(
           width: 100,
           child: BasicFlatButton(
             text: 'Edit',
-            color: Colors.grey[100],
+            color: Colors.grey[300],
             onPressed: () {
               showDialog(context: context, child: dialog);
             },
             fontSize: 18,
           )),
     );
-    if (widget.activityKey == 'PAO') {
-      return ListTile(
-        leading: Text(
-          '${widget.entry.digits}',
-          style: TextStyle(fontSize: 26),
-        ),
-        title: Text('${widget.entry.person}', style: TextStyle(fontSize: 20)),
-        subtitle: Text(
-          '${widget.entry.action} • ${widget.entry.object}',
-          style: TextStyle(fontSize: 16),
-        ),
-        trailing: Container(
-          width: 100,
-          child: FlatButton(
-              child: Text('Edit',
-                  style: TextStyle(fontSize: 16, color: Colors.black)),
-              color: Colors.grey[100],
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(), borderRadius: BorderRadius.circular(5)),
-              onPressed: () {
-                showDialog(context: context, child: dialog);
-              }),
-        ),
-      );
-    } else {
-      return ListTile(
-        leading: Text(
-          leading,
-          style: TextStyle(fontSize: 26),
-        ),
-        title: Text('${widget.entry.object}', style: TextStyle(fontSize: 20)),
-        trailing: Container(
-            width: 100,
-            child: BasicFlatButton(
-              text: 'Edit',
-              color: Colors.grey[100],
-              onPressed: () {
-                showDialog(context: context, child: dialog);
-              },
-              fontSize: 18,
-            )),
-      );
-    }
   }
 
   void saveItem() async {
@@ -266,32 +251,34 @@ class _EditCardState extends State<EditCard> {
 
     return Center(
       child: Card(
+          color: backgroundSemiColor,
           child: Stack(
-        children: <Widget>[
-          getListTile(),
-          Positioned(
-            child: Container(
-              child: Center(
-                child: Text(
-                  '${widget.entry.familiarity}%',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.black, fontSize: 12),
+            children: <Widget>[
+              getListTile(),
+              Positioned(
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      '${widget.entry.familiarity}%',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black, fontSize: 12),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      border: Border.all(
+                          color:
+                              getColorFromFamiliarity(widget.entry.familiarity),
+                          width: 2)),
+                  height: 25,
+                  width: 40,
                 ),
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  border: Border.all(
-                      color: getColorFromFamiliarity(widget.entry.familiarity),
-                      width: 2)),
-              height: 25,
-              width: 40,
-            ),
-            right: 2,
-            top: 5,
-          )
-        ],
-      )),
+                right: 2,
+                top: 5,
+              )
+            ],
+          )),
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:edit_distance/edit_distance.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class AlphabetWrittenCard extends StatefulWidget {
   final AlphabetData alphabetData;
@@ -102,7 +103,7 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
         : Container(
               height: 500,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: backgroundColor,
             ),
             padding: EdgeInsets.all(20),
             child: Column(
@@ -111,21 +112,24 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
                   child: Center(
                       child: Text(
                     widget.alphabetData.letter,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30, color: backgroundSemiHighlightColor),
                   )),
                 ),
                 SizedBox(height: 30,),
                 Container(
                   width: 250,
                   child: TextField(
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
                       controller: textController,
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundSemiColor)),
+                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                       )),
                 ),
+                SizedBox(height: 30,),
                 BasicFlatButton(
                   splashColor: Colors.blue[200],
                   text: 'Submit',

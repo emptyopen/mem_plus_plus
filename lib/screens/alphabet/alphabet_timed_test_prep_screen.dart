@@ -150,154 +150,157 @@ class _AlphabetTimedTestPrepScreenState
               },
             ),
           ]),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Center(
+      body: Container(
+        decoration: BoxDecoration(color: backgroundColor),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(
+                child: Text(
+              'Your sequences are: ',
+              style: TextStyle(fontSize: 34, color: backgroundHighlightColor),
+            )),
+            SizedBox(
+              height: 50,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char1,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[100],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char2,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[200],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char3,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[300],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char4,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+            ]),
+            SizedBox(
+              height: 20,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char5,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[100],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char6,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[200],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char7,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                    color: Colors.blue[300],
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: Center(
+                  child: Text(
+                    char8,
+                    style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
+                  ),
+                ),
+              ),
+            ]),
+            SizedBox(
+              height: 70,
+            ),
+            BasicFlatButton(
+              text: 'I\'m ready!',
+              color: colorAlphabetLighter,
+              splashColor: colorAlphabetStandard,
+              onPressed: () => showConfirmDialog(
+                context: context,
+                function: updateStatus,
+                confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+                confirmColor: colorAlphabetStandard
+              ),
+              fontSize: 30,
+              padding: 10,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
               child: Text(
-            'Your sequences are: ',
-            style: TextStyle(fontSize: 34),
-          )),
-          SizedBox(
-            height: 50,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char1,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
+                '(You\'ll be quizzed on this in two hours!)',
+                style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
               ),
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[100],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char2,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
-              ),
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[200],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char3,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
-              ),
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[300],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char4,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
-              ),
-            ),
-          ]),
-          SizedBox(
-            height: 20,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char5,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
-              ),
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[100],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char6,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
-              ),
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[200],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char7,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
-              ),
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.blue[300],
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: Center(
-                child: Text(
-                  char8,
-                  style: TextStyle(fontSize: 44, fontFamily: 'SpaceMono'),
-                ),
-              ),
-            ),
-          ]),
-          SizedBox(
-            height: 70,
-          ),
-          BasicFlatButton(
-            text: 'I\'m ready!',
-            color: colorAlphabetLighter,
-            splashColor: colorAlphabetStandard,
-            onPressed: () => showConfirmDialog(
-              context: context,
-              function: updateStatus,
-              confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
-              confirmColor: colorAlphabetStandard
-            ),
-            fontSize: 30,
-            padding: 10,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            child: Text(
-              '(You\'ll be quizzed on this in two hours!)',
-              style: TextStyle(fontSize: 18),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

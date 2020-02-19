@@ -170,7 +170,7 @@ class MainMenuOption extends StatelessWidget {
               : Positioned(
                   child: Container(
                     width: screenWidth * 0.85,
-                    height: 45,
+                    height: 47,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(0, 0, 0, 0.85),
                         border: Border.all(),

@@ -70,7 +70,6 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
       if (await prefs.getBool('AlphabetTimedTestComplete') == null) {
         await prefs.updateActivityVisible('PAOEdit', true);
-        await prefs.updateActivityFirstView('PAOEdit', true);
         await prefs.setBool('AlphabetTimedTestComplete', true);
       }
       showSnackBar(
@@ -84,7 +83,8 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
+        snackBarText:
+            'Incorrect. Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
         backgroundColor: colorIncorrect,
         durationSeconds: 3,
@@ -134,75 +134,96 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
               },
             ),
           ]),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 30,),
-              Container(
-                child: Text(
-                  'Enter the characters: ',
-                  style: TextStyle(fontSize: 30),
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(color: backgroundColor),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 30,
                 ),
-              ),
-              SizedBox(height: 25),
-              Container(
-                width: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: TextFormField(
-                  controller: textController1,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      border: OutlineInputBorder(),
-                      hintText: 'XXXX',
-                      hintStyle: TextStyle(fontSize: 30)),
-                ),
-              ),
-              SizedBox(height: 25),
-              Container(
-                width: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: TextFormField(
-                  controller: textController2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono'),
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
-                      border: OutlineInputBorder(),
-                      hintText: 'XXXX',
-                      hintStyle: TextStyle(fontSize: 30)),
-                ),
-              ),
-              SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  BasicFlatButton(
-                    text: 'Give up',
-                    fontSize: 24,
-                    color: Colors.grey[200],
-                    splashColor: Colors.blue,
-                    onPressed: () => giveUp(),
-                    padding: 10,
+                Container(
+                  child: Text(
+                    'Enter the characters: ',
+                    style: TextStyle(
+                        fontSize: 30, color: backgroundHighlightColor),
                   ),
-                  SizedBox(width: 10,),
-                  BasicFlatButton(
-                    text: 'Submit',
-                    fontSize: 24,
-                    color: Colors.blue[200],
-                    splashColor: Colors.blue,
-                    onPressed: () => checkAnswer(),
-                    padding: 10,
+                ),
+                SizedBox(height: 25),
+                Container(
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  child: TextFormField(
+                    controller: textController1,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: backgroundSemiColor)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: backgroundHighlightColor)),
+                        contentPadding: EdgeInsets.all(5),
+                        border: OutlineInputBorder(),
+                        hintText: 'XXXX',
+                        hintStyle: TextStyle(fontSize: 30, color: backgroundHighlightColor)),
                   ),
-                ],
-              ),
-              SizedBox(height: 30,)
-            ],
+                ),
+                SizedBox(height: 25),
+                Container(
+                  width: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  child: TextFormField(
+                    controller: textController2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: backgroundSemiColor)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: backgroundHighlightColor)),
+                        contentPadding: EdgeInsets.all(5),
+                        border: OutlineInputBorder(),
+                        hintText: 'XXXX',
+                        hintStyle: TextStyle(fontSize: 30, color: backgroundHighlightColor)),
+                  ),
+                ),
+                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    BasicFlatButton(
+                      text: 'Give up',
+                      fontSize: 24,
+                      color: Colors.grey[200],
+                      splashColor: Colors.blue,
+                      onPressed: () => giveUp(),
+                      padding: 10,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    BasicFlatButton(
+                      text: 'Submit',
+                      fontSize: 24,
+                      color: Colors.blue[200],
+                      splashColor: Colors.blue,
+                      onPressed: () => checkAnswer(),
+                      padding: 10,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                )
+              ],
+            ),
           ),
         ),
       ),
