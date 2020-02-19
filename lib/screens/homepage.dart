@@ -38,20 +38,23 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// mc test / written test
-// TODO: only show one card at a time
-// TODO: after MC test, show which words were INCORRECT
-
-// other
+// TODO: add preferences (dark mode, about author)
+// TODO: move custom memory to floating button
+// TODO: add deck of cards
+// TODO: add faces test
+// TODO: add parking garage test
 // TODO: add date input to custom memories
 // TODO: dark mode button in top right corner (preferences page)
-// TODO: consolidate timed test stuff INTO SCREENS
 // TODO: add warning about 0 vs O
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: write some lessons, intersperse
+// TODO: only show one MC/flash card at a time (performance?)
+// TODO: consolidate all keys (find strings)
+// TODO: crashlytics for IOS
 
 // Nice to have
+// TODO: after MC test, show which words were INCORRECT
 // TODO: add ability for alphabet to contain up to 3 objects
 // TODO: implement length limits for inputs (like action/object)
 // TODO: collapse menu items into consolidated versions after complete

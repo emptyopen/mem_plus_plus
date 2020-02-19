@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "166924790724",
+    "firebase_url": "https://memplusplus-f0212.firebaseio.com",
+    "project_id": "memplusplus-f0212",
+    "storage_bucket": "memplusplus-f0212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166924790724:android:fbce5c24851de30eeed291",
+        "android_client_info": {
+          "package_name": "com.takaomatt.mem_plus_plus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166924790724-rhp02kq5nj13ec1pcfmjvhll17t8ahdt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.takaomatt.mem_plus_plus",
+            "certificate_hash": "9a73e4d2141938b5e9beaa27ca3e22e94505e2f1"
+          }
+        },
+        {
+          "client_id": "166924790724-4c9tqdnnob4a192d3mf3qe9ge59qhhtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEHEVfk0KrNpsxg1xHqQXLP2QRaloQ0Gc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166924790724-4c9tqdnnob4a192d3mf3qe9ge59qhhtu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

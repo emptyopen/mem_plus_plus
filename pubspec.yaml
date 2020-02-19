@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 1.3.0+6
+version: 1.3.3+9
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -9,18 +9,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
-  shared_preferences: ^0.4.2
-  transformer_page_view: ^0.1.6
-  csv: ^4.0.3
-  pimp_my_button: ^1.0.0
-  edit_distance: ^0.4.1
-  auto_size_text: ^2.1.0
-  shimmer: ^1.0.1
-  flutter_local_notifications: ^1.1.6
-  rxdart: ^0.23.1
-  path_provider: ^1.6.0
-  flip_card: ^0.4.4
+  cupertino_icons: 
+  shared_preferences: 
+  transformer_page_view: 
+  csv: 
+  pimp_my_button: 
+  edit_distance: 
+  auto_size_text: 
+  shimmer: 
+  flutter_local_notifications: 
+  rxdart:
+  path_provider:
+  flip_card: 
 
 dev_dependencies:
   flutter_test:
