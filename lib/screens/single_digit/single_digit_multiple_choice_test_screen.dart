@@ -109,6 +109,7 @@ class _SingleDigitMultipleChoiceTestScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Single digit: multiple choice test'),
           leading: IconButton(

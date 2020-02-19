@@ -83,6 +83,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
         appBar: AppBar(
             title: Text('Custom memory management'),
             backgroundColor: colorCustomMemoryStandard,

@@ -297,15 +297,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     return widget.firstTime
         ? Scaffold(
-            backgroundColor: Colors.white,
+          backgroundColor: backgroundColor,
             body: transformerPageView,
           )
         : Scaffold(
+          backgroundColor: backgroundColor,
             appBar: AppBar(
               title: Text('Welcome'),
               backgroundColor: Colors.green[100],
             ),
-            backgroundColor: Colors.white,
             body: transformerPageView,
           );
   }

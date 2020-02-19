@@ -134,6 +134,7 @@ class _AlphabetTimedTestPrepScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Alphabet: timed test prep'),
           backgroundColor: Colors.blue[200],

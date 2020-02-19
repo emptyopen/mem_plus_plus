@@ -57,6 +57,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     bool completedOnce = await prefs.getBool(alphabetEditCompleteKey);
     if (entriesComplete && completedOnce == null) {
       await prefs.updateActivityVisible('AlphabetPractice', true);
+      await prefs.updateActivityState('AlphabetEdit', 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -94,6 +95,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       key: _scaffoldKey,
       appBar: AppBar(title: Text('Alphabet: view/edit'),
         backgroundColor: Colors.blue[200],

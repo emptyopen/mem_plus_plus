@@ -113,6 +113,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
         appBar: AppBar(
             title: Text('Alphabet: written test'),
             backgroundColor: Colors.blue[200],

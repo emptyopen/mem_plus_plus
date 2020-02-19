@@ -83,6 +83,7 @@ class _SingleDigitTimedTestPrepScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Single digit: timed test preparation'),
           backgroundColor: Colors.amber[200],

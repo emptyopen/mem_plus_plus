@@ -261,6 +261,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
         key: globalKey,
         appBar: AppBar(
             title: Text('Custom ${widget.customMemory['type']}: ${widget.customMemory['title']}'),

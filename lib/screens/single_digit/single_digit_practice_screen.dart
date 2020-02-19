@@ -94,6 +94,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
         appBar: AppBar(
           title: Text('Single digit: practice'),
           actions: <Widget>[

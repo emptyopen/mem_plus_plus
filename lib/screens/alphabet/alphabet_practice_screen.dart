@@ -94,6 +94,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text('Alphabet: practice'),
         backgroundColor: Colors.blue[200],

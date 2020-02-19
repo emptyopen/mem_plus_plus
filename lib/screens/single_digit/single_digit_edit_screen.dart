@@ -92,6 +92,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       key: _scaffoldKey,
       appBar: AppBar(
           title: Text('Single digit: view/edit'),

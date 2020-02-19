@@ -52,6 +52,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     bool completedOnce = await prefs.getBool(paoEditCompleteKey);
     if (entriesComplete && completedOnce == null) {
       await prefs.updateActivityVisible('PAOPractice', true);
+      await prefs.updateActivityState('PAOEdit', 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',

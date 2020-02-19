@@ -102,6 +102,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
         appBar: AppBar(
             title: Text('PAO: practice'),
             backgroundColor: Colors.pink[200],

@@ -39,13 +39,12 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: add preferences (dark mode, about developer)
+// TODO: add name (first time, and preferences) - use in local notifications
 // TODO: move custom memory to floating button
 // TODO: add deck of cards
 // TODO: add faces test
 // TODO: add parking garage test
 // TODO: add date input to custom memories
-// TODO: dark mode button in top right corner (preferences page)
 // TODO: add warning about 0 vs O
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
@@ -56,6 +55,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: fix buttons getting cut off with scroll in help
 
 // Nice to have
+// TODO: add about developer to settings
 // TODO: add sounds
 // TODO: after MC test, show which words were INCORRECT
 // TODO: add ability for alphabet to contain up to 3 objects
@@ -311,6 +311,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return firstTimeOpeningApp == null
         ? Scaffold()
         : Scaffold(
+          backgroundColor: backgroundColor,
             key: globalKey,
             appBar: AppBar(
               title: Text('MEM++ Homepage'),

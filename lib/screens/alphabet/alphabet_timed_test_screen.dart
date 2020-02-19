@@ -118,6 +118,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Alphabet: timed test'),
           backgroundColor: Colors.blue[200],

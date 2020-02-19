@@ -107,6 +107,7 @@ class _PAOMultipleChoiceTestScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Single digit: multiple choice test'),
         backgroundColor: Colors.pink[200],
