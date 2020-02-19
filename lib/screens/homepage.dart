@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
     getSharedPrefs();
     initializeActivityMenuButtonMap();
     initializeNotificationsScheduler();
-    new Timer.periodic(Duration(seconds: 1), (Timer t) => setState(() {}));
+    new Timer.periodic(Duration(milliseconds: 100), (Timer t) => setState(() {}));
   }
 
   checkForAppUpdate() async {

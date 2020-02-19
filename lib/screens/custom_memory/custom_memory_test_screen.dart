@@ -78,7 +78,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
           backgroundColor: colorCorrect,
           durationSeconds: 3,
         );
-        notifyDuration(nextDuration, 'Ready to be tested on your \'${memory["title"]}\' memory?', 'Good luck!');
+        notifyDuration(nextDuration, 'Ready to be tested on your \'${memory["title"]}\' memory?', 'Good luck!', homepageKey);
         Navigator.pop(context);
       }
       await prefs.writeSharedPrefs(customMemoriesKey, customMemories);

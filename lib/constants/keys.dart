@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 const String usernameKey = 'Username';
 
@@ -13,6 +13,7 @@ Color backgroundSemiHighlightColor = Colors.grey[800];
 const String darkModeKey = 'DarkMode';
 
 // general
+const String homepageKey = 'Homepage';
 const String firstTimeAppKey = 'FirstTimeApp';
 const String activityStatesKey = 'ActivityStates';
 const String customMemoriesKey = 'CustomMemories';
@@ -54,8 +55,6 @@ const String paoTestActiveKey = 'PAOTestActive';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
-const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstHelp';
-const String customMemoryTestFirstHelpKey = 'CustomMemoryTestFirstHelp';
 const String shortTerm = 'short term (1d ~ 1w)';
 const String mediumTerm = 'medium term (1w ~ 3m)';
 const String longTerm = 'long term (3m ~ 1y)';
@@ -66,6 +65,8 @@ const String otherString = 'Other';
 
 // first help
 const String homepageFirstHelpKey = 'HomepageFirstHelp';
+const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstHelp';
+const String customMemoryTestFirstHelpKey = 'CustomMemoryTestFirstHelp';
 const String singleDigitEditFirstHelpKey = 'SingleDigitEditFirstHelp';
 const String singleDigitPracticeFirstHelpKey = 'SingleDigitPracticeFirstHelp';
 const String singleDigitMultipleChoiceTestFirstHelpKey = 'SingleDigitMultipleChoiceTestFirstHelp';

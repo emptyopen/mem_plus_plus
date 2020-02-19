@@ -174,7 +174,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
     customMemories[primaryKey] = map;
     await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
     notifyDuration(firstSpacedRepetitionDuration,
-        'Ready to be tested on your \'$primaryKey\' memory?', 'Good luck!');
+        'Ready to be tested on your \'$primaryKey\' memory?', 'Good luck!', homepageKey);
     widget.callback();
     Navigator.pop(context);
   }

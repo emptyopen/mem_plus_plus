@@ -265,13 +265,13 @@ notify() async {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
         0,
-        'Have you improved your memory todayy?',
-        'Click here to check your to-do list!',
+        'Test notification',
+        'testing 1 2 3',
         platformChannelSpecifics,
         payload: 'item x');
   }
 
-  notifyDuration(Duration duration, String title, String subtitle) async {
+  notifyDuration(Duration duration, String title, String subtitle, String payload) async {
     var scheduledNotificationDateTime = DateTime.now().add(duration);
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
@@ -288,6 +288,6 @@ notify() async {
         subtitle,
         scheduledNotificationDateTime,
         platformChannelSpecifics,
-        payload: 'SingleDigitTimedTest',
+        payload: payload,
         );
   }
