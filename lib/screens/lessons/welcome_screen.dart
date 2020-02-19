@@ -22,6 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   AnimationController animationController;
   int slideIndex = 0;
   final IndexController indexController = IndexController();
+  var prefs = PrefsUpdater();
 
   final List<Widget> headers = [
     Text(

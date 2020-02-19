@@ -33,7 +33,7 @@ class _SingleDigitMultipleChoiceTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, singleDigitMultipleChoiceFirstHelpKey,
+    prefs.checkFirstTime(context, singleDigitMultipleChoiceTestFirstHelpKey,
         SingleDigitMultipleChoiceScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
@@ -47,11 +47,10 @@ class _SingleDigitMultipleChoiceTestScreenState
       if (score == 10) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        if (await prefs.getBool(activityCompleteKey) == null) {
-          await prefs.setBool(activityCompleteKey, true);
-          await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-          await prefs.updateActivityState(
-              'SingleDigitMultipleChoiceTest', 'review');
+        if (await prefs.getBool(singleDigitMultipleChoiceTestCompleteKey) == null) {
+          await prefs.setBool(singleDigitMultipleChoiceTestCompleteKey, true);
+          await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+          await prefs.updateActivityState(singleDigitMultipleChoiceTestKey, 'review');
           widget.callback();
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
@@ -155,7 +154,7 @@ class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
       ],
       buttonColor: Colors.amber[100],
       buttonSplashColor: Colors.amber[300],
-      firstHelpKey: singleDigitMultipleChoiceFirstHelpKey,
+      firstHelpKey: singleDigitMultipleChoiceTestFirstHelpKey,
     );
   }
 }

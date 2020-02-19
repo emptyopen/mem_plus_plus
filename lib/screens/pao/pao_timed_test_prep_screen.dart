@@ -138,7 +138,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, 'PAOTimedTestPrepFirstHelp', PAOTimedTestPrepScreenHelp());
+    prefs.checkFirstTime(context, paoTimedTestPrepFirstHelpKey, PAOTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for paoTest
     bool sdTestIsActive = await prefs.getBool(paoTestActiveKey);
@@ -181,14 +181,13 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
 
   void updateStatus() async {
     await prefs.setBool(paoTestActiveKey, false);
-    await prefs.updateActivityState('PAOTimedTestPrep', 'review');
-    await prefs.updateActivityVisible('PAOTimedTestPrep', false);
-    await prefs.updateActivityState('PAOTimedTest', 'todo');
-    await prefs.updateActivityVisible('PAOTimedTest', true);
-    await prefs.updateActivityFirstView('PAOTimedTest', true);
+    await prefs.updateActivityState(paoTimedTestPrepKey, 'review');
+    await prefs.updateActivityVisible(paoTimedTestPrepKey, false);
+    await prefs.updateActivityState(paoTimedTestKey, 'todo');
+    await prefs.updateActivityVisible(paoTimedTestKey, true);
     Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 4);
     await prefs.updateActivityVisibleAfter(
-        'PAOTimedTest', DateTime.now().add(testDuration));
+        paoTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'PAO timed test is ready!', 'Good luck!');
     widget.callback();
@@ -281,7 +280,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
               onPressed: () => showConfirmDialog(
                 context: context,
                 function: updateStatus,
-                confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+                confirmText: 'Are you sure you\'d like to start this test? The sequences will no longer be available to view!',
                 confirmColor: colorPAOStandard
               ),
               fontSize: 30,

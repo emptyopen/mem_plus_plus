@@ -38,7 +38,6 @@ class _FlashCardState extends State<FlashCard> {
   bool guessed = true;
   int familiarityIncrease = 100;
   int familiarityDecrease = 25;
-  String activityStatesKey = 'ActivityStates';
   String digitLetter = '';
   String value = '';
   final prefs = PrefsUpdater();
@@ -47,15 +46,15 @@ class _FlashCardState extends State<FlashCard> {
   void initState() {
     super.initState();
     switch (widget.activityKey) {
-      case ('Alphabet'):
+      case (alphabetKey):
         value = (widget.entry as AlphabetData).letter;
         digitLetter = 'letter';
         break;
-      case ('SingleDigit'):
+      case (singleDigitKey):
         value = (widget.entry as SingleDigitData).digits;
         digitLetter = 'digit';
         break;
-      case ('PAO'):
+      case (paoKey):
         value = (widget.entry as PAOData).digits;
         digitLetter = 'digit';
         break;
@@ -196,7 +195,7 @@ class _FlashCardState extends State<FlashCard> {
                         child: Stack(
                           children: <Widget>[
                             Center(
-                              child: widget.activityKey == 'PAO'
+                              child: widget.activityKey == paoKey
                                   ? Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: <Widget>[
@@ -275,68 +274,3 @@ class _FlashCardState extends State<FlashCard> {
           );
   }
 }
-
-// Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: <Widget>[
-//                 Text(
-//                   value,
-//                   style: TextStyle(fontSize: 34),
-//                 ),
-//                 SizedBox(
-//                   height: 50,
-//                 ),
-//                 guessed
-//                     ? BasicFlatButton(
-//                         text: 'Reveal',
-//                         color: Theme.of(context).primaryColor,
-//                         splashColor: widget.color,
-//                         onPressed: () {
-//                           setState(() {
-//                             guessed = false;
-//                           });
-//                         },
-//                         fontSize: 24,
-//                         padding: 10,
-//                       )
-//                     : Container(),
-//                 guessed
-//                     ? Container()
-//                     : Column(
-//                         children: <Widget>[
-//                           Text(
-//                             widget.entry.object,
-//                             style: TextStyle(fontSize: 24),
-//                           ),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             children: <Widget>[
-//                               BasicFlatButton(
-//                                 text: 'Next time',
-//                                 color: colorIncorrect,
-//                                 splashColor: colorIncorrectDarker,
-//                                 onPressed: () => didntGotIt(),
-//                                 fontSize: 22,
-//                                 padding: 10,
-//                               ),
-//                               SizedBox(
-//                                 width: 30,
-//                               ),
-//                               BasicFlatButton(
-//                                 text: 'Got it!',
-//                                 color: colorCorrect,
-//                                 splashColor: colorCorrectDarker,
-//                                 onPressed: () => gotIt(),
-//                                 fontSize: 22,
-//                                 padding: 10,
-//                               ),
-//                             ],
-//                           ),
-//                         ],
-//                       )
-//               ],
-//             ),

@@ -66,9 +66,9 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     if (textController1.text.trim() == '$digits1$digits2$digits3' &&
         textController2.text.trim() == '$digits4$digits5$digits6' &&
         textController3.text.trim() == '$digits7$digits8$digits9') {
-      await prefs.updateActivityState('PAOTimedTest', 'review');
-      await prefs.updateActivityVisible('PAOTimedTest', false);
-      await prefs.updateActivityVisible('PAOTimedTestPrep', true);
+      await prefs.updateActivityState(paoTimedTestKey, 'review');
+      await prefs.updateActivityVisible(paoTimedTestKey, false);
+      await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
 
       await prefs.setBool(customMemoryManagerAvailableKey, true);
       if (await prefs.getBool(customMemoryManagerFirstHelpKey) == null) {
@@ -109,9 +109,9 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   }
 
   void giveUp() async {
-    await prefs.updateActivityState('PAOTimedTest', 'review');
-    await prefs.updateActivityVisible('PAOTimedTest', false);
-    await prefs.updateActivityVisible('PAOTimedTestPrep', true);
+    await prefs.updateActivityState(paoTimedTestKey, 'review');
+    await prefs.updateActivityVisible(paoTimedTestKey, false);
+    await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
     Navigator.pop(context);
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,

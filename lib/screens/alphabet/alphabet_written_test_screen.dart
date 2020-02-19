@@ -34,7 +34,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(
-        context, alphabetWrittenFirstHelpKey, AlphabetWrittenTestScreenHelp());
+        context, alphabetWrittenTestFirstHelpKey, AlphabetWrittenTestScreenHelp());
     alphabetData = (json.decode(await prefs.getString(alphabetKey)) as List)
         .map((i) => AlphabetData.fromJson(i))
         .toList();
@@ -49,11 +49,10 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
       if (score == 26) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        if (await prefs.getBool('AlphabetWrittenTestComplete') == null) {
-          await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
-          await prefs.updateActivityFirstView('AlphabetTimedTestPrep', true);
-          await prefs.updateActivityState('AlphabetWrittenTest', 'review');
-          await prefs.setBool('AlphabetWrittenTestComplete', true);
+        if (await prefs.getBool(alphabetWrittenTestCompleteKey) == null) {
+          await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+          await prefs.updateActivityState(alphabetWrittenTestKey, 'review');
+          await prefs.setBool(alphabetWrittenTestCompleteKey, true);
           widget.callback();
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
@@ -150,7 +149,7 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
       ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
-      firstHelpKey: alphabetWrittenFirstHelpKey,
+      firstHelpKey: alphabetWrittenTestFirstHelpKey,
     );
   }
 }

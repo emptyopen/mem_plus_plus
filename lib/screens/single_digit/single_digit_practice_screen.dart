@@ -53,9 +53,8 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   }
 
   void nextActivity() async {
-    await prefs.setBool('SingleDigitPracticeComplete', true);
-    await prefs.updateActivityState('SingleDigitPractice', 'review');
-    await prefs.updateActivityVisible('SingleDigitMultipleChoiceTest', true);
+    await prefs.updateActivityState(singleDigitPracticeKey, 'review');
+    await prefs.updateActivityVisible(singleDigitMultipleChoiceTestKey, true);
 
     widget.callback();
   }
@@ -75,7 +74,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
             entry: singleDigitData[i],
             callback: callback,
             globalKey: widget.globalKey,
-            activityKey: 'SingleDigit',
+            activityKey: singleDigitKey,
             nextActivityCallback: nextActivity,
             familiarityTotal: 1000,
             color: colorSingleDigitDarker,

@@ -241,7 +241,7 @@ String durationToString(Duration duration) {
   int hours = duration.inHours;
   int minutes = duration.inMinutes - hours * 60;
   int seconds = duration.inSeconds - minutes * 60 - hours * 3600;
-  if (hours > 1) {
+  if (hours >= 1) {
     return '${hours}h ${minutes}m';
   } else if (minutes >= 3) {
     return '$minutes minutes';

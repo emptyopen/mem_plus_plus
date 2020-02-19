@@ -24,6 +24,7 @@ class _PAOMultipleChoiceTestScreenState
   List<bool> results = List.filled(100, null);
   int score = 0;
   int attempts = 0;
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -32,8 +33,7 @@ class _PAOMultipleChoiceTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, paoMultipleChoiceFirstHelpKey, PAOMultipleChoiceScreenHelp());
+    prefs.checkFirstTime(context, paoMultipleChoiceTestFirstHelpKey, PAOMultipleChoiceScreenHelp());
     paoData = await prefs.getSharedPrefs(paoKey);
     paoData = shuffle(paoData);
     setState(() {});
@@ -45,19 +45,17 @@ class _PAOMultipleChoiceTestScreenState
       results[attempts] = true;
       if (score == 100) {
         // update keys
-        PrefsUpdater prefs = PrefsUpdater();
-        if (!await prefs.getBool(activityCompleteKey)) {
-          await prefs.setBool(activityCompleteKey, true);
-          await prefs.updateActivityVisible('PAOTimedTestPrep', true);
-          await prefs.updateActivityFirstView('PAOTimedTestPrep', true);
-          await prefs.updateActivityState('PAOMultipleChoiceTest', 'review');
+        if (await prefs.getBool(paoMultipleChoiceTestCompleteKey) == null) {
+          await prefs.setBool(paoMultipleChoiceTestCompleteKey, true);
+          await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+          await prefs.updateActivityState(paoMultipleChoiceTestKey, 'review');
           widget.callback();
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'You aced it! You\'ve unlocked the timed test!',
             textColor: Colors.white,
             backgroundColor: colorPAOStandard,
-            durationSeconds: 5,
+            durationSeconds: 4,
           );
           Navigator.pop(context);
         } else {
@@ -150,7 +148,7 @@ class PAOMultipleChoiceScreenHelp extends StatelessWidget {
         'the next test will be unlocked! Good luck!'],
       buttonColor: Colors.pink[100],
       buttonSplashColor: Colors.pink[300],
-      firstHelpKey: paoMultipleChoiceFirstHelpKey,
+      firstHelpKey: paoMultipleChoiceTestFirstHelpKey,
     );
   }
 }

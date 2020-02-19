@@ -55,13 +55,11 @@ class _SingleDigitTimedTestScreenState
     if (textController.text == '$digit1$digit2$digit3$digit4') {
       print('success');
       // every time
-      await prefs.updateActivityVisible('SingleDigitTimedTest', false);
-      await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-
-      // just first time
-      if (await prefs.getBool('SingleDigitTimedTestComplete') == null) {
-        await prefs.updateActivityState('SingleDigitTimedTest', 'review');
-        await prefs.updateActivityVisible('AlphabetEdit', true);
+      await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+      await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+        if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        await prefs.updateActivityVisible(alphabetEditKey, true);
       }
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -85,11 +83,11 @@ class _SingleDigitTimedTestScreenState
   }
 
   void giveUp() async {
-    await prefs.updateActivityState('SingleDigitTimedTest', 'review');
-    await prefs.updateActivityVisible('SingleDigitTimedTest', false);
-    await prefs.updateActivityVisible('SingleDigitTimedTestPrep', true);
-    if (await prefs.getBool('SingleDigitTimedTestComplete') == null) {
-      await prefs.updateActivityState('SingleDigitTimedTestPrep', 'todo');
+    await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+    await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+    await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+    if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
     }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,

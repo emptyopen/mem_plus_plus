@@ -28,15 +28,15 @@ class _EditCardState extends State<EditCard> {
     super.initState();
 
     switch (widget.activityKey) {
-      case 'SingleDigit':
+      case singleDigitKey:
         leading = '${widget.entry.digits}';
         objectTextController.text = widget.entry.object;
         break;
-      case 'Alphabet':
+      case alphabetKey:
         leading = '${widget.entry.letter}';
         objectTextController.text = widget.entry.object;
         break;
-      case 'PAO':
+      case paoKey:
         leading = '${widget.entry.digits}';
         personTextController.text = widget.entry.person;
         actionTextController.text = widget.entry.action;
@@ -50,7 +50,7 @@ class _EditCardState extends State<EditCard> {
       //this right here
       child: Container(
         decoration: BoxDecoration(color: backgroundColor),
-        height: widget.activityKey == 'PAO' ? 350.0 : 200,
+        height: widget.activityKey == paoKey ? 350.0 : 200,
         width: 300.0,
         child: SingleChildScrollView(
           child: Column(
@@ -204,7 +204,7 @@ class _EditCardState extends State<EditCard> {
     int currIndex = widget.entry.index;
     dynamic updatedEntry = data[currIndex];
 
-    if (widget.activityKey == 'PAO') {
+    if (widget.activityKey == paoKey) {
       bool resetFamiliarity = false;
       if (personTextController.text != '') {
         updatedEntry.person = personTextController.text.trim();

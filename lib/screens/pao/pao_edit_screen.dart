@@ -51,8 +51,8 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     // check if information is filled out for the first time
     bool completedOnce = await prefs.getBool(paoEditCompleteKey);
     if (entriesComplete && completedOnce == null) {
-      await prefs.updateActivityVisible('PAOPractice', true);
-      await prefs.updateActivityState('PAOEdit', 'review');
+      await prefs.updateActivityVisible(paoPracticeKey, true);
+      await prefs.updateActivityState(paoEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -72,7 +72,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, 'PAOEditFirstHelp', PAOEditScreenHelp());
+    prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
     if (await prefs.getString(paoKey) == null) {
       paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
       await prefs.setString(paoKey, json.encode(paoData));
@@ -157,7 +157,7 @@ class _CSVImporterState extends State<CSVImporter> {
 
   updatePAOData(List<PAOData> paoDataList) async {
     var prefs = PrefsUpdater();
-    prefs.writeSharedPrefs('PAO', paoDataList);
+    prefs.writeSharedPrefs(paoKey, paoDataList);
     widget.callback(paoDataList);
   }
 

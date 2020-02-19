@@ -31,7 +31,6 @@ class _SingleDigitMultipleChoiceCardState
     SingleDigitData(2, '0', 'nothing', 0),
     SingleDigitData(3, '0', 'nothing', 0),
   ];
-  String singleDigitKey = 'SingleDigit';
   var prefs = PrefsUpdater();
   int isDigitToObject; // 0 == digitToObject, 1 == objectToDigit
 

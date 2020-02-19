@@ -37,7 +37,7 @@ class _SingleDigitTimedTestPrepScreenState
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var prefss = PrefsUpdater();
-    prefss.checkFirstTime(context, 'SingleDigitTimedTestPrepFirstHelp',
+    prefss.checkFirstTime(context, singleDigitTimedTestPrepFirstHelpKey,
         SingleDigitTimedTestPrepScreenHelp());
     setState(() {
       // if digits are null, randomize values and store them,
@@ -67,13 +67,13 @@ class _SingleDigitTimedTestPrepScreenState
 
   void updateStatus() async {
     await prefs.setBool(singleDigitTestActiveKey, false);
-    await prefs.updateActivityState('SingleDigitTimedTestPrep', 'review');
-    await prefs.updateActivityVisible('SingleDigitTimedTestPrep', false);
-    await prefs.updateActivityState('SingleDigitTimedTest', 'todo');
-    await prefs.updateActivityVisible('SingleDigitTimedTest', true);
-    await prefs.updateActivityFirstView('SingleDigitTimedTest', true);
+    await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'review');
+    await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, false);
+    await prefs.updateActivityState(singleDigitTimedTestKey, 'todo');
+    await prefs.updateActivityVisible(singleDigitTimedTestKey, true);
+    await prefs.updateActivityFirstView(singleDigitTimedTestKey, true);
     await prefs.updateActivityVisibleAfter(
-        'SingleDigitTimedTest', DateTime.now().add(testDuration));
+        singleDigitTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Single Digit timed test is ready!', 'Good luck!');
     widget.callback();

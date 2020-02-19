@@ -50,10 +50,8 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   }
 
   void nextActivity() async {
-    await prefs.updateActivityState('PAOEdit', 'review');
-    await prefs.updateActivityState('PAOPractice', 'review');
-    await prefs.updateActivityVisible('PAOMultipleChoiceTest', true);
-    await prefs.setBool('PAOPracticeComplete', true);
+    await prefs.updateActivityState(paoPracticeKey, 'review');
+    await prefs.updateActivityVisible(paoMultipleChoiceTestKey, true);
     widget.callback();
   }
 
@@ -72,7 +70,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
             entry: paoData[i],
             callback: callback,
             globalKey: widget.globalKey,
-            activityKey: 'PAO',
+            activityKey: paoKey,
             nextActivityCallback: nextActivity,
             familiarityTotal: 10000,
             color: colorPAODarker,

@@ -65,12 +65,12 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         textController2.text.toLowerCase().trim() ==
             '$char5$char6$char7$char8'.toLowerCase()) {
       print('success');
-      await prefs.updateActivityState('AlphabetTimedTest', 'review');
-      await prefs.updateActivityVisible('AlphabetTimedTest', false);
-      await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
-      if (await prefs.getBool('AlphabetTimedTestComplete') == null) {
-        await prefs.updateActivityVisible('PAOEdit', true);
-        await prefs.setBool('AlphabetTimedTestComplete', true);
+      await prefs.updateActivityState(alphabetTimedTestKey, 'review');
+      await prefs.updateActivityVisible(alphabetTimedTestKey, false);
+      await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+      if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+        await prefs.updateActivityVisible(paoEditKey, true);
+        await prefs.setBool(alphabetTimedTestCompleteKey, true);
       }
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -98,11 +98,11 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   void giveUp() async {
-    await prefs.updateActivityState('AlphabetTimedTest', 'review');
-    await prefs.updateActivityVisible('AlphabetTimedTest', false);
-    await prefs.updateActivityVisible('AlphabetTimedTestPrep', true);
-    if (await prefs.getBool('AlphabetTimedTestComplete') == null) {
-      await prefs.updateActivityState('AlphabetTimedTestPrep', 'todo');
+    await prefs.updateActivityState(alphabetTimedTestKey, 'review');
+    await prefs.updateActivityVisible(alphabetTimedTestKey, false);
+    await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+    if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
     }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,

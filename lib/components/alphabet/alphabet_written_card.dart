@@ -22,7 +22,6 @@ class AlphabetWrittenCard extends StatefulWidget {
 class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
   bool done = false;
   List<AlphabetData> alphabetDataList;
-  String alphabetKey = 'Alphabet';
   final textController = TextEditingController();
 
   @override

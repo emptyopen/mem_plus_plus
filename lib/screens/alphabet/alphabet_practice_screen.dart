@@ -34,7 +34,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
-        context, 'AlphabetPracticeFirstHelp', AlphabetPracticeScreenHelp());
+        context, alphabetPracticeFirstHelpKey, AlphabetPracticeScreenHelp());
     alphabetData = await prefs.getSharedPrefs(alphabetKey);
     alphabetData = shuffle(alphabetData);
     setState(() {});
@@ -52,11 +52,8 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   }
 
   void nextActivity() async {
-    await prefs.setBool('AlphabetPracticeComplete', true);
-    await prefs.updateActivityState('AlphabetEdit', 'review');
-    await prefs.updateActivityState('AlphabetPractice', 'review');
-    await prefs.updateActivityVisible('AlphabetWrittenTest', true);
-    await prefs.updateActivityFirstView('AlphabetWrittenTest', true);
+    await prefs.updateActivityState(alphabetPracticeKey, 'review');
+    await prefs.updateActivityVisible(alphabetWrittenTestKey, true);
     widget.callback();
   }
 
@@ -75,7 +72,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
             entry: alphabetData[i],
             callback: callback,
             globalKey: widget.globalKey,
-            activityKey: 'Alphabet',
+            activityKey: alphabetKey,
             nextActivityCallback: nextActivity,
             familiarityTotal: 2600,
             color: colorAlphabetDarker,

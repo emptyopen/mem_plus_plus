@@ -39,11 +39,10 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: add name (first time, and preferences) - use in local notifications
+// TODO: clear snackbars when leaving a screen?
 // TODO: move custom memory to floating button
 // TODO: add deck of cards
 // TODO: add faces test
-// TODO: add parking garage test
 // TODO: add date input to custom memories
 // TODO: add warning about 0 vs O
 // TODO: add safe viewing area (for toolbar)
@@ -53,8 +52,10 @@ class MyHomePage extends StatefulWidget {
 // TODO: consolidate all keys (find strings)
 // TODO: crashlytics for IOS
 // TODO: fix buttons getting cut off with scroll in help
+// TODO: add cooler page transitions
 
 // Nice to have
+// TODO: add name (first time, and preferences) - use in local notifications
 // TODO: add about developer to settings
 // TODO: add sounds
 // TODO: after MC test, show which words were INCORRECT
@@ -106,13 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (prefs.getBool(darkModeKey) == null || !(prefs.getBool(darkModeKey))) {
-      print('setting light');
       backgroundColor = Colors.white;
       backgroundHighlightColor = Colors.black;
       backgroundSemiColor = Colors.grey[200];
       backgroundSemiHighlightColor = Colors.grey[800];
     } else {
-      print('setting dark');
       backgroundColor = Colors.grey[800];
       backgroundHighlightColor = Colors.white;
       backgroundSemiColor = Colors.grey[600];
@@ -122,7 +121,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // activity states, and unlockedActivities
     if (prefs.getKeys().contains(activityStatesKey)) {
-      print('found existing activity states');
       setState(() {
         var rawMap = json.decode(prefs.getString(activityStatesKey))
             as Map<String, dynamic>;
@@ -130,7 +128,6 @@ class _MyHomePageState extends State<MyHomePage> {
             rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
       });
     } else {
-      print('setting activity states to default');
       setState(() {
         activityStates = defaultActivityStatesInitial;
         prefs.setString(

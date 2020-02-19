@@ -117,14 +117,13 @@ class _AlphabetTimedTestPrepScreenState
 
   void updateStatus() async {
     await prefs.setBool(alphabetTestActiveKey, false);
-    await prefs.updateActivityState('AlphabetTimedTestPrep', 'review');
-    await prefs.updateActivityVisible('AlphabetTimedTestPrep', false);
-    await prefs.updateActivityState('AlphabetTimedTest', 'todo');
-    await prefs.updateActivityVisible('AlphabetTimedTest', true);
-    await prefs.updateActivityFirstView('AlphabetTimedTest', true);
+    await prefs.updateActivityState(alphabetTimedTestPrepKey, 'review');
+    await prefs.updateActivityVisible(alphabetTimedTestPrepKey, false);
+    await prefs.updateActivityState(alphabetTimedTestKey, 'todo');
+    await prefs.updateActivityVisible(alphabetTimedTestKey, true);
     Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 2);
     await prefs.updateActivityVisibleAfter(
-        'AlphabetTimedTest', DateTime.now().add(testDuration));
+        alphabetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Alphabet timed test is ready!', 'Good luck!');
     widget.callback();
@@ -285,7 +284,7 @@ class _AlphabetTimedTestPrepScreenState
               onPressed: () => showConfirmDialog(
                 context: context,
                 function: updateStatus,
-                confirmText: 'Are you sure you\'d like to start this test? The number will no longer be available to view!',
+                confirmText: 'Are you sure you\'d like to start this test? The sequences will no longer be available to view!',
                 confirmColor: colorAlphabetStandard
               ),
               fontSize: 30,

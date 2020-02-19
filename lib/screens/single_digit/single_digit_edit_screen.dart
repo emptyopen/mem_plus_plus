@@ -81,7 +81,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
               singleDigitData[i].object,
               singleDigitData[i].familiarity),
           callback: callback,
-          activityKey: 'SingleDigit',
+          activityKey: singleDigitKey,
         );
         singleDigitViews.add(singleDigitEditCard);
       }

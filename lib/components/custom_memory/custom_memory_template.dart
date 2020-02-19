@@ -4,8 +4,6 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
 
-String customMemoriesKey = 'CustomMemories';
-
 class CustomMemoryInput extends StatefulWidget {
   final Function() callback;
   final List<MemoryField> memoryFields;
@@ -19,11 +17,7 @@ class CustomMemoryInput extends StatefulWidget {
 
 class _CustomMemoryInputState extends State<CustomMemoryInput> {
   // todo: generalize these
-  String spacedRepetitionChoice = 'long term (3m ~ 1y)';
-  String shortTerm = 'short term (1d ~ 1w)';
-  String mediumTerm = 'medium term (1w ~ 3m)';
-  String longTerm = 'long term (3m ~ 1y)';
-  String extraLongTerm = 'extra long term (1y ~ life)';
+  String spacedRepetitionType = longTerm;
   Set errors = Set();
 
   getFields() {
@@ -157,13 +151,13 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       return;
     }
     Duration firstSpacedRepetitionDuration =
-        termDurationsMap[spacedRepetitionChoice][0];
+        termDurationsMap[spacedRepetitionType][0];
     Map map = {
       'type': widget.memoryType,
       'title': primaryKey,
       'nextDatetime':
           DateTime.now().add(firstSpacedRepetitionDuration).toIso8601String(),
-      'spacedRepetitionType': spacedRepetitionChoice,
+      'spacedRepetitionType': spacedRepetitionType,
       'spacedRepetitionLevel': 0,
     };
     widget.memoryFields.sublist(1).forEach((nonPrimaryMemoryField) {
@@ -213,7 +207,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
           style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
         ),
         DropdownButton<String>(
-          value: spacedRepetitionChoice,
+          value: spacedRepetitionType,
           elevation: 16,
           style: TextStyle(fontSize: 22, color: colorCustomMemoryStandard),
           iconEnabledColor: backgroundHighlightColor,
@@ -223,7 +217,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
           ),
           onChanged: (String newValue) {
             setState(() {
-              spacedRepetitionChoice = newValue;
+              spacedRepetitionType = newValue;
             });
           },
           items: <String>[shortTerm, mediumTerm, longTerm, extraLongTerm]

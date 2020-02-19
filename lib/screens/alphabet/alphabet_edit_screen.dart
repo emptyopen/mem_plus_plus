@@ -30,7 +30,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    await prefs.checkFirstTime(context, 'AlphabetEditFirstHelp', AlphabetEditScreenHelp());
+    await prefs.checkFirstTime(context, alphabetEditFirstHelpKey, AlphabetEditScreenHelp());
     if (await prefs.getString(alphabetKey) == null) {
       alphabetData = debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
       prefs.setString(alphabetKey, json.encode(alphabetData));
@@ -56,8 +56,8 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     // check if information is filled out for the first time
     bool completedOnce = await prefs.getBool(alphabetEditCompleteKey);
     if (entriesComplete && completedOnce == null) {
-      await prefs.updateActivityVisible('AlphabetPractice', true);
-      await prefs.updateActivityState('AlphabetEdit', 'review');
+      await prefs.updateActivityVisible(alphabetPracticeKey, true);
+      await prefs.updateActivityState(alphabetEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -84,7 +84,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
           entry: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
               alphabetData[i].object, alphabetData[i].familiarity),
           callback: callback,
-          activityKey: 'Alphabet',
+          activityKey: alphabetKey,
         );
         alphabetViews.add(alphabetEditCard);
       }
