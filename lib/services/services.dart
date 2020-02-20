@@ -253,41 +253,49 @@ String durationToString(Duration duration) {
 }
 
 notify() async {
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max,
-        priority: Priority.High,
-        ticker: 'ticker',);
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0,
-        'Test notification',
-        'testing 1 2 3',
-        platformChannelSpecifics,
-        payload: 'item x');
-  }
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'your channel id', 'your channel name', 'your channel description',
+      importance: Importance.Max,
+      priority: Priority.High,
+      ticker: 'ticker',);
+  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  var platformChannelSpecifics = NotificationDetails(
+      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.show(
+      0,
+      'Test notification',
+      'testing 1 2 3',
+      platformChannelSpecifics,
+      payload: 'item x');
+}
 
-  notifyDuration(Duration duration, String title, String subtitle, String payload) async {
-    var scheduledNotificationDateTime = DateTime.now().add(duration);
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max,
-        priority: Priority.High,
-        ticker: 'ticker',);
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.schedule(
-        0,
-        title,
-        subtitle,
-        scheduledNotificationDateTime,
-        platformChannelSpecifics,
-        payload: payload,
-        );
-  }
+notifyDuration(Duration duration, String title, String subtitle, String payload) async {
+  var scheduledNotificationDateTime = DateTime.now().add(duration);
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      testReminderIdKey, testReminderKey, 'Timed test available',
+      importance: Importance.Max,
+      priority: Priority.High,
+      ticker: 'ticker',);
+  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.schedule(
+      0,
+      title,
+      subtitle,
+      scheduledNotificationDateTime,
+      platformChannelSpecifics,
+      payload: payload,
+      );
+}
+
+String datetimeToDateString(String datetimeString) {
+  var datetime = DateTime.parse(datetimeString);
+  String year = datetime.year.toString();
+  String month = datetime.month.toString().padLeft(2, '0');
+  String day = datetime.day.toString().padLeft(2, '0');
+  return '$year-$month-$day';
+}

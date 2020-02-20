@@ -120,8 +120,8 @@ class MainMenuOption extends StatelessWidget {
                     constraints: BoxConstraints(
                       minWidth: screenWidth * .65,
                       maxWidth: screenWidth * .65,
-                      minHeight: 45.0,
-                      maxHeight: 45.0,
+                      minHeight: 46,
+                      maxHeight: 46,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +170,7 @@ class MainMenuOption extends StatelessWidget {
               : Positioned(
                   child: Container(
                     width: screenWidth * 0.85,
-                    height: 47,
+                    height: 46,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(0, 0, 0, 0.85),
                         border: Border.all(),
@@ -182,7 +182,7 @@ class MainMenuOption extends StatelessWidget {
                     )),
                   ),
                   left: 0,
-                  top: 0,
+                  top: 2,
                 ),
         ],
       ),

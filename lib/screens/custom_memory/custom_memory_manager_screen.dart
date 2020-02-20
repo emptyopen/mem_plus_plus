@@ -277,7 +277,7 @@ class CustomMemoryTile extends StatelessWidget {
                                         : CustomMemoryViewPair(
                                             heading: 'Expiration:',
                                             subHeading:
-                                                customMemory['expiration'],
+                                                datetimeToDateString(customMemory['expiration']),
                                           ),
                                     customMemory['other'] == ''
                                         ? Container()

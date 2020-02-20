@@ -328,8 +328,8 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
         '    Simple combinations of letters and numbers will already become useful in your life to remember things like parking '
             'spots! Many parking garages or lots have designations like "A2" or "E9". You can imagine an apple being ferociously being '
             'eaten in the back seat of your car by an enourmous pidgeon, or an elephant stomping all over your car, with balloons being '
-            'released from the car with every stomp. A million red balloons! Don\'t forget to really make these scenes wild.\n'
-            '    Be sure not to confuse zero with O! Zero will have a dot in the character.'
+            'released from the car with every stomp. A million red balloons! Don\'t forget to really make these scenes wild.',
+            '    Be sure not to confuse zero with the letter O! Zero will have a dot in the character.'
       ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],

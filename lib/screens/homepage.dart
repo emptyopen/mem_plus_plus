@@ -39,12 +39,11 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// TODO: add date input to custom memories
 // TODO: clear snackbars when leaving a screen?
 // TODO: move custom memory to floating button
 // TODO: add deck of cards
 // TODO: add faces test
-// TODO: add date input to custom memories
-// TODO: add warning about 0 vs O
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: write some lessons, intersperse
@@ -71,7 +70,7 @@ class MyHomePage extends StatefulWidget {
 
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
-
+// Icons made by <a href="https://www.flaticon.com/authors/dimitry-miroliubov" title="Dimitry Miroliubov">Dimitry Miroliubov</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   List<String> availableActivities = [];
@@ -91,6 +90,25 @@ class _MyHomePageState extends State<MyHomePage> {
     initializeActivityMenuButtonMap();
     initializeNotificationsScheduler();
     new Timer.periodic(Duration(milliseconds: 100), (Timer t) => setState(() {}));
+  }
+
+  initializeNotificationsScheduler() async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    var time = Time(12, 30, 0);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        dailyReminderIdKey, dailyReminderKey, 'Daily reminder for MEM++',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        0,
+        'Have you improved your memory today?',
+        'Click here to check your to-do list!',
+        time,
+        platformChannelSpecifics);
+    print('initialized scheduled notification');
   }
 
   checkForAppUpdate() async {
@@ -283,24 +301,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     mainMenuOptions = mainMenuOptions.reversed.toList();
     return mainMenuOptions;
-  }
-
-  initializeNotificationsScheduler() async {
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    var time = Time(12, 30, 0);
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'Have you improved your memory today?',
-        'Click here to check your to-do list!',
-        time,
-        platformChannelSpecifics);
   }
 
   @override

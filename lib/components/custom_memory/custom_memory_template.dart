@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class CustomMemoryInput extends StatefulWidget {
   final Function() callback;
@@ -92,6 +93,30 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
             ),
           ),
         );
+      } else if (memoryField.inputType == 'date') {
+        fieldsList.add(
+          BasicFlatButton(
+            color: backgroundSemiColor,
+            onPressed: () {
+              DatePicker.showDatePicker(
+                context,
+                
+                  showTitleActions: true,
+                  onChanged: (date) {}, onConfirm: (date) {
+                print('confirm $date');
+                memoryField.controller.text = date.toIso8601String();
+                setState(() {});
+              }, 
+              currentTime: DateTime.now()
+              );
+            },
+            text: memoryField.controller.text == ''
+                ? 'Pick Date'
+                : datetimeToDateString(memoryField.controller.text),
+            fontSize: 18,
+            padding: 5,
+          ),
+        );
       } else {
         fieldsList.add(
           Container(
@@ -173,8 +198,11 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
     });
     customMemories[primaryKey] = map;
     await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
-    notifyDuration(firstSpacedRepetitionDuration,
-        'Ready to be tested on your \'$primaryKey\' memory?', 'Good luck!', homepageKey);
+    notifyDuration(
+        firstSpacedRepetitionDuration,
+        'Ready to be tested on your \'$primaryKey\' memory?',
+        'Good luck!',
+        homepageKey);
     widget.callback();
     Navigator.pop(context);
   }

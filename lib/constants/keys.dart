@@ -18,6 +18,12 @@ const String firstTimeAppKey = 'FirstTimeApp';
 const String activityStatesKey = 'ActivityStates';
 const String customMemoriesKey = 'CustomMemories';
 
+// notifications
+const String dailyReminderKey = 'Daily Reminder';
+const String dailyReminderIdKey = '1';
+const String testReminderKey = 'Test Reminder';
+const String testReminderIdKey = '2';
+
 // Single Digit
 const String singleDigitKey = 'SingleDigit';
 const String singleDigitEditKey = 'SingleDigitEdit';

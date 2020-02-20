@@ -34,7 +34,7 @@ Future<void> main() async {
   // change the default route of the app
   var notificationAppLaunchDetails =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  print(notificationAppLaunchDetails.didNotificationLaunchApp);
+  //print(notificationAppLaunchDetails.didNotificationLaunchApp);
 
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   var initializationSettingsIOS = IOSInitializationSettings(

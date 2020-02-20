@@ -134,18 +134,6 @@ class _HelpScreenState extends State<HelpScreen> {
                         SizedBox(
                           height: 30,
                         ),
-                        ParallaxContainer(
-                          child: firstHelp &&
-                                  slideIndex == widget.information.length - 1
-                              ? HelpOKButton(
-                                  buttonColor: widget.buttonColor,
-                                  buttonSplashColor: widget.buttonSplashColor,
-                                  firstHelpKey: widget.firstHelpKey,
-                                )
-                              : Container(),
-                          position: info.position,
-                          translationFactor: 50,
-                        ),
                       ],
                     ),
                   ),
@@ -155,7 +143,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 child: Text('${info.index + 1}/${widget.information.length}', style: TextStyle(color: backgroundHighlightColor),),
                 right: 23,
                 bottom: 17,
-              )
+              ),
             ],
           );
         }),
@@ -183,6 +171,14 @@ class _HelpScreenState extends State<HelpScreen> {
                   SizedBox(
                     height: 15,
                   ),
+                  firstHelp &&
+                          slideIndex == widget.information.length - 1
+                      ? HelpOKButton(
+                          buttonColor: widget.buttonColor,
+                          buttonSplashColor: widget.buttonSplashColor,
+                          firstHelpKey: widget.firstHelpKey,
+                        )
+                      : Container(),
                   firstHelp
                       ? Container()
                       : HelpOKButton(

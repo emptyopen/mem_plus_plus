@@ -35,6 +35,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
 
   Future<Null> getSharedPrefs() async {
     paoData = await prefs.getSharedPrefs(paoKey);
+    paoData = shuffle(paoData);
     setState(() {});
   }
 

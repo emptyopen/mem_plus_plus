@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 1.4.1+11
+version: 1.4.2+12
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -21,6 +21,7 @@ dependencies:
   rxdart:
   path_provider:
   flip_card: 
+  flutter_datetime_picker:
 
 dev_dependencies:
   flutter_test:
@@ -30,7 +31,7 @@ dev_dependencies:
 
 flutter_icons:
   ios: true
-  android: true
+  android: false
   image_path_ios: "assets/launcher/icon.png"
   image_path_android: "assets/launcher/icon.png"
 

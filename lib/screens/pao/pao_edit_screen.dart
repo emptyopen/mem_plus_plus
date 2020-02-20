@@ -265,7 +265,7 @@ class _CSVImporterState extends State<CSVImporter> {
                         width: 25,
                       ),
                       FlatButton(
-                        color: Colors.amber[200],
+                        color: colorPAOStandard,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(),
                           borderRadius: BorderRadius.circular(5),
@@ -278,7 +278,7 @@ class _CSVImporterState extends State<CSVImporter> {
                             List<PAOData> paoDataList = [];
                             l.asMap().forEach((k, v) {
                               paoDataList.add(PAOData(
-                                  k, k.toString(), v[0], v[1], v[2], 0));
+                                  k, defaultPAOData1[k].digits, v[0], v[1], v[2], 0));
                             });
                             updatePAOData(paoDataList);
                             Navigator.pop(context);
