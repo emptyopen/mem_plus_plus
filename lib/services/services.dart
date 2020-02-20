@@ -202,7 +202,7 @@ void showConfirmDialog({BuildContext context, Function function, String confirmT
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           side: BorderSide(),
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(20),
         ),
         title: Text('Confirm', style: TextStyle(color: backgroundHighlightColor),),
         content: Text(confirmText, style: TextStyle(color: backgroundHighlightColor),),

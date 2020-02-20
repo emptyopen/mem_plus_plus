@@ -26,3 +26,7 @@ var colorCustomMemoryLighter = Colors.purple[100];
 var colorCustomMemoryStandard = Colors.purple[200];
 var colorCustomMemoryDarker = Colors.purple[400];
 var colorCustomMemoryDarkest = Colors.purple[600];
+
+var colorFaceStandard = Colors.lime[200];
+var colorFaceDarker = Colors.lime[400];
+var colorFaceDarkest = Colors.lime[600];

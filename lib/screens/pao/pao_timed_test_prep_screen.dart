@@ -27,6 +27,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   String digits8 = '';
   String digits9 = '';
   PrefsUpdater prefs = PrefsUpdater();
+  Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 4);
   List<String> possibleValues = [
     '00',
     '01',
@@ -185,11 +186,10 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     await prefs.updateActivityVisible(paoTimedTestPrepKey, false);
     await prefs.updateActivityState(paoTimedTestKey, 'todo');
     await prefs.updateActivityVisible(paoTimedTestKey, true);
-    Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 4);
     await prefs.updateActivityVisibleAfter(
         paoTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'PAO timed test is ready!', 'Good luck!', paoTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (PAO) is ready!', 'Good luck!', paoTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }

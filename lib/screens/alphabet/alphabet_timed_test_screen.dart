@@ -71,15 +71,23 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
         await prefs.updateActivityVisible(paoEditKey, true);
         await prefs.setBool(alphabetTimedTestCompleteKey, true);
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
+          textColor: Colors.white,
+          backgroundColor: colorPAODarker,
+          durationSeconds: 4,
+          isSuper: true,
+        );
+      } else {
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You aced it!',
+          textColor: Colors.black,
+          backgroundColor: colorAlphabetStandard,
+          durationSeconds: 2,
+        );
       }
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
-        textColor: Colors.white,
-        backgroundColor: colorPAODarker,
-        durationSeconds: 5,
-        isSuper: true,
-      );
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -93,7 +101,6 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     textController1.text = '';
     textController2.text = '';
     Navigator.pop(context);
-    widget.callback();
     widget.callback();
   }
 

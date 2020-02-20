@@ -69,30 +69,35 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       await prefs.updateActivityState(paoTimedTestKey, 'review');
       await prefs.updateActivityVisible(paoTimedTestKey, false);
       await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-
+      await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
       await prefs.setBool(customMemoryManagerAvailableKey, true);
       if (await prefs.getBool(customMemoryManagerFirstHelpKey) == null) {
         await prefs.setBool(customMemoryManagerFirstHelpKey, true);
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',
+          textColor: Colors.white,
+          backgroundColor: Colors.purple,
+          durationSeconds: 4,
+          isSuper: true,
+        );
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
+          textColor: Colors.white,
+          backgroundColor: colorFaceDarker,
+          durationSeconds: 4,
+          isSuper: true,
+        );
+      } else {
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You aced it!',
+          textColor: Colors.black,
+          backgroundColor: colorPAOStandard,
+          durationSeconds: 2,
+        );
       }
-
-      widget.callback();
-
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',
-        textColor: Colors.white,
-        backgroundColor: Colors.purple,
-        durationSeconds: 5,
-        isSuper: true,
-      );
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Congratulations! You\'ve unlocked the XXX system!',
-        textColor: Colors.white,
-        backgroundColor: Colors.teal,
-        durationSeconds: 5,
-        isSuper: true,
-      );
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -105,6 +110,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     textController1.text = '';
     textController2.text = '';
     textController3.text = '';
+    widget.callback();
     Navigator.pop(context);
   }
 

@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 1.4.2+12
+version: 1.5.2+15
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -62,3 +62,6 @@ flutter:
     - family: JockeyOne
       fonts:
         - asset: assets/fonts/JockeyOne-Regular.ttf
+  assets:
+    - assets/images/men/
+    - assets/images/women/

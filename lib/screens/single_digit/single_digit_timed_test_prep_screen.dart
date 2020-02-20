@@ -75,7 +75,7 @@ class _SingleDigitTimedTestPrepScreenState
     await prefs.updateActivityVisibleAfter(
         singleDigitTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Single Digit timed test is ready!', 'Good luck!', singleDigitTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (single digit) is ready!', 'Good luck!', singleDigitTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }

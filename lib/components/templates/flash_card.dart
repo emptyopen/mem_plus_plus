@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
-import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
@@ -106,14 +105,14 @@ class _FlashCardState extends State<FlashCard> {
         scaffoldState: Scaffold.of(context),
         snackBarText: snackBarText,
         backgroundColor: snackBarColor,
-        durationSeconds: 2);
+        durationSeconds: 1);
     if (levelUp) {
       showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
               'Congratulations, you\'ve leveled up! Next up is a test!',
           backgroundColor: widget.color,
-          durationSeconds: 5);
+          durationSeconds: 3);
       Navigator.pop(context);
     }
     widget.callback(true);

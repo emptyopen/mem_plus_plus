@@ -179,6 +179,9 @@ class _HelpScreenState extends State<HelpScreen> {
                           firstHelpKey: widget.firstHelpKey,
                         )
                       : Container(),
+                  firstHelp &&
+                          slideIndex != widget.information.length - 1
+                      ? SizedBox(height: 48,) : Container(),
                   firstHelp
                       ? Container()
                       : HelpOKButton(

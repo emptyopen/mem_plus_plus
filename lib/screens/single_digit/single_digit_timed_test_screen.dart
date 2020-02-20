@@ -39,40 +39,49 @@ class _SingleDigitTimedTestScreenState
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp', SingleDigitTimedTestScreenHelp());
+    prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp',
+        SingleDigitTimedTestScreenHelp());
     // grab the digits
     digit1 = await prefs.getString('singleDigitTestDigit1');
     digit2 = await prefs.getString('singleDigitTestDigit2');
     digit3 = await prefs.getString('singleDigitTestDigit3');
     digit4 = await prefs.getString('singleDigitTestDigit4');
     print('real answer: $digit1$digit2$digit3$digit4');
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   void checkAnswer() async {
-    if (textController.text == '$digit1$digit2$digit3$digit4') {
-      print('success');
-      // every time
+    if (textController.text == '$digit1$digit2$digit3$digit4') { 
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-        if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+      await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+      if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+        await prefs.setBool(singleDigitTimedTestCompleteKey, true);
         await prefs.updateActivityVisible(alphabetEditKey, true);
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText:
+              'Congratulations! You\'ve unlocked the Alphabet system!',
+          textColor: Colors.white,
+          backgroundColor: colorAlphabetDarker,
+          durationSeconds: 4,
+          isSuper: true,
+        );
+      } else {
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText:
+              'Congratulations! You aced it!',
+          textColor: Colors.black,
+          backgroundColor: colorSingleDigitStandard,
+          durationSeconds: 2,
+        );
       }
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Congratulations! You\'ve unlocked the Alphabet system!',
-        textColor: Colors.white,
-        backgroundColor: colorAlphabetDarker,
-        durationSeconds: 5,
-        isSuper: true,
-      );
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
+        snackBarText:
+            'Incorrect. Keep trying to remember, or give up and try again!',
         backgroundColor: colorIncorrect,
         durationSeconds: 3,
       );
@@ -90,11 +99,11 @@ class _SingleDigitTimedTestScreenState
       await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
     }
     showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'The correct answer was: $digit1$digit2$digit3$digit4\nTry the timed test again to unlock the next system.',
-      backgroundColor: colorIncorrect,
-      durationSeconds: 5
-    );
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText:
+            'The correct answer was: $digit1$digit2$digit3$digit4\nTry the timed test again to unlock the next system.',
+        backgroundColor: colorIncorrect,
+        durationSeconds: 5);
     Navigator.pop(context);
     widget.callback();
   }
@@ -102,22 +111,23 @@ class _SingleDigitTimedTestScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
-      appBar: AppBar(title: Text('Single digit: timed test'),
-        backgroundColor: Colors.amber[200],
-        actions: <Widget>[
-        // action button
-        IconButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return SingleDigitTimedTestScreenHelp();
-                }));
-          },
-        ),
-      ]),
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+          title: Text('Single digit: timed test'),
+          backgroundColor: Colors.amber[200],
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return SingleDigitTimedTestScreenHelp();
+                    }));
+              },
+            ),
+          ]),
       body: Container(
         decoration: BoxDecoration(color: backgroundColor),
         child: Center(
@@ -127,7 +137,8 @@ class _SingleDigitTimedTestScreenState
               Container(
                 child: Text(
                   'Enter the number: ',
-                  style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
+                  style:
+                      TextStyle(fontSize: 30, color: backgroundHighlightColor),
                 ),
               ),
               SizedBox(height: 25),
@@ -138,14 +149,23 @@ class _SingleDigitTimedTestScreenState
                 child: TextFormField(
                   controller: textController,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'SpaceMono',
+                      color: backgroundHighlightColor),
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(5),
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundSemiColor)),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: backgroundSemiColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: backgroundHighlightColor)),
                       hintText: 'XXXX',
-                      hintStyle: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor)),
+                      hintStyle: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'SpaceMono',
+                          color: backgroundHighlightColor)),
                 ),
               ),
               SizedBox(height: 50),
@@ -160,7 +180,9 @@ class _SingleDigitTimedTestScreenState
                     onPressed: () => giveUp(),
                     padding: 10,
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   BasicFlatButton(
                     text: 'Submit',
                     fontSize: 24,
@@ -184,8 +206,10 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
   Widget build(BuildContext context) {
     return HelpScreen(
       title: 'Single Digit Timed Test',
-      information: ['    Time to remember your story! If you recall this correctly, you\'ll '
-        'unlock the next system! Good luck!'],
+      information: [
+        '    Time to remember your story! If you recall this correctly, you\'ll '
+            'unlock the next system! Good luck!'
+      ],
       buttonColor: Colors.amber[100],
       buttonSplashColor: Colors.amber[300],
       firstHelpKey: singleDigitTimedTestFirstHelpKey,
