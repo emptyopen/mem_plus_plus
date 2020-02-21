@@ -56,9 +56,14 @@ var defaultActivityStatesInitial = {
   paoPracticeKey: Activity(paoPracticeKey, 'todo', false, DateTime.now(), true),
   paoMultipleChoiceTestKey: Activity(paoMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
   paoTimedTestPrepKey: Activity(paoTimedTestPrepKey, 'todo', false, DateTime.now(), true),
-  paoTimedTestKey: Activity('paoTimedTestKey', 'todo', false, DateTime.now(), true),
+  paoTimedTestKey: Activity(paoTimedTestKey, 'todo', false, DateTime.now(), true),
   faceTimedTestPrepKey: Activity(faceTimedTestPrepKey, 'todo', false, DateTime.now(), true),
   faceTimedTestKey: Activity(faceTimedTestKey, 'todo', false, DateTime.now(), true),
+  deckEditKey: Activity(deckEditKey, 'todo', false, DateTime.now(), true),
+  deckPracticeKey: Activity(deckPracticeKey, 'todo', false, DateTime.now(), true),
+  deckMultipleChoiceTestKey: Activity(deckMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
+  deckTimedTestPrepKey: Activity(deckTimedTestPrepKey, 'todo', false, DateTime.now(), true),
+  deckTimedTestKey: Activity(deckTimedTestKey, 'todo', false, DateTime.now(), true),
 };
 
 var defaultActivityStatesAllDone = {
@@ -78,7 +83,12 @@ var defaultActivityStatesAllDone = {
   paoPracticeKey: Activity(paoPracticeKey, 'review', true, DateTime.now(), false),
   paoMultipleChoiceTestKey: Activity(paoMultipleChoiceTestKey, 'review', true, DateTime.now(), false),
   paoTimedTestPrepKey: Activity(paoTimedTestPrepKey, 'review', true, DateTime.now(), false),
-  paoTimedTestKey: Activity(paoTimedTestKey, 'todo', false, DateTime.now(), true),
-  faceTimedTestPrepKey: Activity(faceTimedTestPrepKey, 'todo', true, DateTime.now(), true),
-  faceTimedTestKey: Activity(faceTimedTestKey, 'todo', false, DateTime.now(), true),
+  paoTimedTestKey: Activity(paoTimedTestKey, 'review', false, DateTime.now(), false),
+  faceTimedTestPrepKey: Activity(faceTimedTestPrepKey, 'review', true, DateTime.now(), false),
+  faceTimedTestKey: Activity(faceTimedTestKey, 'review', false, DateTime.now(), false),
+  deckEditKey: Activity(deckEditKey, 'review', true, DateTime.now(), false),
+  deckPracticeKey: Activity(deckPracticeKey, 'review', true, DateTime.now(), false),
+  deckMultipleChoiceTestKey: Activity(deckMultipleChoiceTestKey, 'review', true, DateTime.now(), false),
+  deckTimedTestPrepKey: Activity(deckTimedTestPrepKey, 'todo', true, DateTime.now(), true),
+  deckTimedTestKey: Activity(deckTimedTestKey, 'review', false, DateTime.now(), true),
 };

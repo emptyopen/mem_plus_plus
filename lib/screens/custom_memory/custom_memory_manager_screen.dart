@@ -11,11 +11,6 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 
-// TODO: science!! USE fibonacci numbers?
-// 30m - 2h - 12h - 48h
-// 1h - 6h - 24h - 7d
-// 2h - 24h - 7d - 21d
-
 class CustomMemoryManagerScreen extends StatefulWidget {
   final Function callback;
 
@@ -44,7 +39,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, 'CustomMemoryManagerFirstHelp',
+    prefs.checkFirstTime(context, customMemoryManagerFirstHelpKey,
         CustomMemoryManagerScreenHelp());
 
     if (prefs.getString(customMemoriesKey) == null) {
@@ -549,10 +544,8 @@ class CustomMemoryManagerScreenHelp extends StatelessWidget {
         '    You can delete a memory by tapping the trash icon, and you can view a memory '
             'by tapping the eye icon. Tapping the eye icon will also reset the spaced '
             'repetition schedule, so only do so if you\'ve actually forgotten it!',
-        '    A review on the spaced repetition choices that will be available for these '
-            'custom memories.\n\n  30m-2h-12h-48h: Good for short term memories\n\n'
-            '  1h-6h-24h-4d: Good for medium term memories ()\n\n'
-            '  1h-2h-24h-7d-21d: Good for long term memories (IDs, recipes'
+            '    Don\'t worry about data privacy! No information that you enter into this app leaves your phone. '
+            'All local storage - check out the source code at https://github.com/emptyopen/mem_plus_plus/.'
       ],
       buttonColor: colorCustomMemoryStandard,
       buttonSplashColor: colorCustomMemoryDarker,

@@ -25,12 +25,6 @@ const String dailyReminderIdKey = '1';
 const String testReminderKey = 'Test Reminder';
 const String testReminderIdKey = '2';
 
-// faces
-const String faceTimedTestPrepKey = 'FaceTimedTestPrep';
-const String faceTimedTestKey = 'FaceTimedTest';
-const String faceTestActiveKey = 'FaceTestActive';
-const String faceTimedTestCompleteKey = 'FaceTimedTestComplete';
-
 // Single Digit
 const String singleDigitKey = 'SingleDigit';
 const String singleDigitEditKey = 'SingleDigitEdit';
@@ -66,6 +60,7 @@ const String paoTimedTestKey = 'PAOTimedTest';
 const String paoEditCompleteKey = 'PAOEditComplete';
 const String paoMultipleChoiceTestCompleteKey = 'PAOMultipleChoiceTestComplete';
 const String paoTestActiveKey = 'PAOTestActive';
+const String paoTestCompleteKey = 'PAOTimedTestComplete';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
@@ -76,6 +71,24 @@ const String extraLongTerm = 'extra long term (1y ~ life)';
 const String contactString = 'Contact';
 const String idCardString = 'ID/Credit Card';
 const String otherString = 'Other';
+
+// faces
+const String faceTimedTestPrepKey = 'FaceTimedTestPrep';
+const String faceTimedTestKey = 'FaceTimedTest';
+const String faceTestActiveKey = 'FaceTestActive';
+const String faceTimedTestCompleteKey = 'FaceTimedTestComplete';
+
+// Deck
+const String deckKey = 'Deck';
+const String deckEditKey = 'DeckEdit';
+const String deckPracticeKey = 'DeckPractice';
+const String deckMultipleChoiceTestKey = 'DeckMultipleChoice';
+const String deckTimedTestPrepKey = 'DeckTimedTestPrep';
+const String deckTimedTestKey = 'DeckTimedTest';
+const String deckEditCompleteKey = 'DeckEditComplete';
+const String deckMultipleChoiceTestCompleteKey = 'DeckMultipleChoiceTestComplete';
+const String deckTestActiveKey = 'DeckTestActive';
+const String deckTimedTestCompleteKey = 'DeckTimedTestComplete';
 
 // first help
 const String homepageFirstHelpKey = 'HomepageFirstHelp';
@@ -103,6 +116,12 @@ const String paoTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
 const String paoTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
 const String faceTimedTestPrepFirstHelpKey = 'FaceTimedTestPrepFirstHelp';
 const String faceTimedTestFirstHelpKey = 'FaceTimedTestFirstHelp';
+const String deckEditFirstHelpKey = 'PAOEditFirstHelp';
+const String deckPracticeFirstHelpKey = 'PAOPracticeFirstHelp';
+const String deckMultipleChoiceTestFirstHelpKey =
+    'PAOMultipleChoiceTestFirstHelp';
+const String deckTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
+const String deckTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
 
 List<String> menNames = [
   'Liam',

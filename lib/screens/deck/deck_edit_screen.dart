@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/pao/pao_data.dart';
+import 'package:mem_plus_plus/components/deck/deck_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
@@ -9,18 +9,18 @@ import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 
-class PAOEditScreen extends StatefulWidget {
+class DeckEditScreen extends StatefulWidget {
   final Function callback;
 
-  PAOEditScreen({Key key, this.callback}) : super(key: key);
+  DeckEditScreen({Key key, this.callback}) : super(key: key);
 
   @override
-  _PAOEditScreenState createState() => _PAOEditScreenState();
+  _DeckEditScreenState createState() => _DeckEditScreenState();
 }
 
-class _PAOEditScreenState extends State<PAOEditScreen> {
+class _DeckEditScreenState extends State<DeckEditScreen> {
   SharedPreferences sharedPreferences;
-  List<PAOData> paoData;
+  List<DeckData> deckData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
 
@@ -30,29 +30,42 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     getSharedPrefs();
   }
 
-  callback(newPaoData) async {
+  Future<Null> getSharedPrefs() async {
+    prefs.checkFirstTime(context, deckEditFirstHelpKey, DeckEditScreenHelp());
+    if (await prefs.getString(deckKey) == null) {
+      print('initializing new data');
+      deckData = debugModeEnabled ? defaultDeckData2 : defaultDeckData1;
+      await prefs.setString(deckKey, json.encode(deckData));
+    } else {
+      print('getting old data');
+      deckData = await prefs.getSharedPrefs(deckKey);
+    }
+    setState(() {});
+  }
+
+  callback(newDeckData) async {
     setState(() {
-      paoData = newPaoData;
+      deckData = newDeckData;
     });
     // check if all data is complete
     bool entriesComplete = true;
-    for (int i = 0; i < paoData.length; i++) {
-      if (paoData[i].person == '') {
+    for (int i = 0; i < deckData.length; i++) {
+      if (deckData[i].person == '') {
         entriesComplete = false;
       }
-      if (paoData[i].action == '') {
+      if (deckData[i].action == '') {
         entriesComplete = false;
       }
-      if (paoData[i].object == '') {
+      if (deckData[i].object == '') {
         entriesComplete = false;
       }
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getBool(paoEditCompleteKey);
+    bool completedOnce = await prefs.getBool(deckEditCompleteKey);
     if (entriesComplete && completedOnce == null) {
-      await prefs.updateActivityVisible(paoPracticeKey, true);
-      await prefs.updateActivityState(paoEditKey, 'review');
+      await prefs.updateActivityVisible(deckPracticeKey, true);
+      await prefs.updateActivityState(deckEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -63,44 +76,34 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
           ),
         ),
         duration: Duration(seconds: 5),
-        backgroundColor: colorPAODarker,
+        backgroundColor: colorDeckDarker,
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
-      await prefs.setBool(paoEditCompleteKey, true);
+      await prefs.setBool(deckEditCompleteKey, true);
       widget.callback();
     }
   }
 
-  Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
-    if (await prefs.getString(paoKey) == null) {
-      paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
-      await prefs.setString(paoKey, json.encode(paoData));
-    } else {
-      paoData = await prefs.getSharedPrefs(paoKey);
-    }
-    setState(() {});
-  }
-
-  List<EditCard> getPAOEditCards() {
-    List<EditCard> paoEditCards = [];
-    if (paoData != null) {
-      for (int i = 0; i < paoData.length; i++) {
-        EditCard paoEditCard = EditCard(
-          entry: PAOData(
-              paoData[i].index,
-              paoData[i].digits,
-              paoData[i].person,
-              paoData[i].action,
-              paoData[i].object,
-              paoData[i].familiarity),
+  List<EditCard> getDeckEditCards() {
+    List<EditCard> deckEditCards = [];
+    print('yo');
+    if (deckData != null) {
+      for (int i = 0; i < deckData.length; i++) {
+        EditCard deckEditCard = EditCard(
+          entry: DeckData(
+              deckData[i].index,
+              deckData[i].digitSuit,
+              deckData[i].person,
+              deckData[i].action,
+              deckData[i].object,
+              deckData[i].familiarity),
           callback: callback,
-          activityKey: 'PAO',
+          activityKey: deckKey,
         );
-        paoEditCards.add(paoEditCard);
+        deckEditCards.add(deckEditCard);
       }
     }
-    return paoEditCards;
+    return deckEditCards;
   }
 
   @override
@@ -108,8 +111,8 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-          title: Text('PAO: view/edit'),
-          backgroundColor: Colors.pink[200],
+          title: Text('Deck: view/edit'),
+          backgroundColor: colorDeckStandard,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.arrow_downward),
@@ -127,7 +130,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PAOEditScreenHelp();
+                      return DeckEditScreenHelp();
                     }));
               },
             ),
@@ -136,7 +139,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
         decoration: BoxDecoration(color: backgroundColor),
         child: Center(
             child: ListView(
-          children: getPAOEditCards(),
+          children: getDeckEditCards(),
         )),
       ),
     );
@@ -155,10 +158,10 @@ class CSVImporter extends StatefulWidget {
 class _CSVImporterState extends State<CSVImporter> {
   final textController = TextEditingController();
 
-  updatePAOData(List<PAOData> paoDataList) async {
+  updateDeckData(List<DeckData> deckDataList) async {
     var prefs = PrefsUpdater();
-    prefs.writeSharedPrefs(paoKey, paoDataList);
-    widget.callback(paoDataList);
+    prefs.writeSharedPrefs(deckKey, deckDataList);
+    widget.callback(deckDataList);
   }
 
   @override
@@ -185,7 +188,7 @@ class _CSVImporterState extends State<CSVImporter> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            '    Here you can upload CSV text to quickly update your PAO values!\n'
+                            '    Here you can upload CSV text to quickly update your deck values!\n'
                             '    You can do this in Google Sheets very easily. You just need '
                             'a column for Person, Action, and Object (no need for headers). Then in a '
                             'new column, add to the top cell: ',
@@ -226,15 +229,14 @@ class _CSVImporterState extends State<CSVImporter> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Input below: ',
+                          'Input below: Spades(Ace, 2, 3, ... Q, K), Hearts, Clubs, Diamonds',
                           style: TextStyle(fontSize: 20),
                         ),
                         TextField(
                           maxLines: 4,
                           decoration: InputDecoration(
                               hintText:
-                                  'Ozzy Osbourne,rocking out a concert,rock guitar\n'
-                                  'Orlando Bloom,walking the plank,eyepatch\n'
+                                  'Ariel,singing underwater,mermaid fin\n'
                                   '...',
                               hintStyle: TextStyle(fontSize: 15)),
                           controller: textController,
@@ -265,7 +267,7 @@ class _CSVImporterState extends State<CSVImporter> {
                         width: 25,
                       ),
                       FlatButton(
-                        color: colorPAOStandard,
+                        color: colorDeckStandard,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(),
                           borderRadius: BorderRadius.circular(5),
@@ -274,13 +276,13 @@ class _CSVImporterState extends State<CSVImporter> {
                           var csvConverter = CsvToListConverter();
                           var l = csvConverter.convert(textController.text,
                               eol: '\n');
-                          if (l.length == 100) {
-                            List<PAOData> paoDataList = [];
+                          if (l.length == 52) {
+                            List<DeckData> deckDataList = [];
                             l.asMap().forEach((k, v) {
-                              paoDataList.add(PAOData(
-                                  k, defaultPAOData1[k].digits, v[0], v[1], v[2], 0));
+                              deckDataList.add(DeckData(
+                                  k, defaultDeckData1[k].digitSuit, v[0], v[1], v[2], 0));
                             });
-                            updatePAOData(paoDataList);
+                            updateDeckData(deckDataList);
                             Navigator.pop(context);
                           }
                           //Navigator.pop(context);
@@ -301,46 +303,23 @@ class _CSVImporterState extends State<CSVImporter> {
   }
 }
 
-class PAOEditScreenHelp extends StatelessWidget {
+class DeckEditScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    Welcome to the 3rd system here at Takao Studios :) \n'
+    '    Welcome to the deck system! \n'
         '    PAO stands for Person Action Object. What this means is that for every digit '
         '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. Again, '
         'you can assign any person, action, and object to any digit, but it\'s a good idea at first '
         'to follow some kind of pattern. ',
-    '    This will take some time to set up! But believe me, it\'ll be worth it. \n'
-        '    The person should be associated to its corresponding action and object, '
-        'and no two persons, actions, or objects should be too similar (also avoid overlap with '
-      'your single digit and alphabet systems!). As a starter pattern, we recommend '
-        'using an initials pattern. ',
-    '    The initials pattern proposed in "Remember It!" by Nelson Dellis has '
-        '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Os, Fs, and Is are '
-      'pretty rare in names; zeros look like Os, and (S)ix and (N)ine are more common letters in initials.\n'
-        '     Using this pattern it becomes '
-        'much easier to find famous people/fictional characters with initials, i.e. 12=AB=Antonio Banderas.',
-    '    This system allows us to memorize sequences of numbers very efficiently. Passport/license IDs, '
-        'phone numbers, order numbers, almost anything. The way it works is we break long sequences of numbers '
-        'into groups of 6, or three pairs of two digits, each pair corresponding to a person, action, and object. ',
-    '    For example, for the number 958417 we\'d break it down into 95-84-17, '
-        'which under my personal system corresponds to 95 (person) = Tom Brady, 84 (action) = riding a motorcycle, '
-        '17 (object) = giant boulder. So my visualized scene would be Tom Brady riding a motorcycle over '
-        'a bunch of giant boulders. What a sight that would be!',
-    '    This system should take a good amount of time setting up before you start trying to master it. Update '
-        'the PAO values for your digits until you\'re really happy with the list. Use people you know in real life, '
-        'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '
-        'because overlap will make decoding more difficult. ',
-    '    As a final note, it\'s possible to upload an entire PAO system through the CSV upload method available in '
-        'the top right of the screen. More details on how to do that is available in the upload section.'
   ];
 
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
-      title: 'PAO Edit/View',
+      title: 'Deck Edit/View',
       information: information,
-      buttonColor: Colors.pink[100],
-      buttonSplashColor: Colors.pink[300],
-      firstHelpKey: paoEditFirstHelpKey,
+      buttonColor: colorDeckStandard,
+      buttonSplashColor: colorDeckDarker,
+      firstHelpKey: deckEditFirstHelpKey,
     );
   }
 }

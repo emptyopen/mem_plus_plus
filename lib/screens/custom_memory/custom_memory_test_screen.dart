@@ -190,7 +190,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
               ),
               Text(
                 memory['title'],
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
               ),
               SizedBox(
                 height: 20,
@@ -200,6 +200,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                   : PromptPair(
                       title: 'Birthday:',
                       textController: field1TextController,
+                      inputType: 'date',
                     ),
               memory['phoneNumber'] == ''
                   ? Container()
@@ -314,6 +315,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                     ),
               BasicFlatButton(
                 text: 'Submit',
+                fontSize: 22,
                 onPressed: () => checkAnswer(),
                 color: Colors.purple[100],
                 splashColor: Colors.purple[300],

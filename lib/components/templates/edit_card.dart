@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/components/deck/deck_data.dart';
 
 class EditCard extends StatefulWidget {
   final dynamic entry;
@@ -19,8 +20,8 @@ class _EditCardState extends State<EditCard> {
   final actionTextController = TextEditingController();
   final objectTextController = TextEditingController();
   final prefs = PrefsUpdater();
-  bool isPAO = false;
-  String leading = '';
+  bool isThreeItems = false;
+  Widget leading = Container();
   Dialog dialog;
 
   @override
@@ -29,19 +30,35 @@ class _EditCardState extends State<EditCard> {
 
     switch (widget.activityKey) {
       case singleDigitKey:
-        leading = '${widget.entry.digits}';
+        leading = Text(
+          '${widget.entry.digits}',
+          style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
+        );
         objectTextController.text = widget.entry.object;
         break;
       case alphabetKey:
-        leading = '${widget.entry.letter}';
+        leading = Text(
+          '${widget.entry.letter}',
+          style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
+        );
         objectTextController.text = widget.entry.object;
         break;
       case paoKey:
-        leading = '${widget.entry.digits}';
+        leading = Text(
+          '${widget.entry.digits}',
+          style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
+        );
         personTextController.text = widget.entry.person;
         actionTextController.text = widget.entry.action;
         objectTextController.text = widget.entry.object;
-        isPAO = true;
+        isThreeItems = true;
+        break;
+      case deckKey:
+        leading = getDeckCard(widget.entry.digitSuit, 'small');
+        personTextController.text = widget.entry.person;
+        actionTextController.text = widget.entry.action;
+        objectTextController.text = widget.entry.object;
+        isThreeItems = true;
         break;
     }
 
@@ -50,7 +67,7 @@ class _EditCardState extends State<EditCard> {
       //this right here
       child: Container(
         decoration: BoxDecoration(color: backgroundColor),
-        height: widget.activityKey == paoKey ? 350.0 : 200,
+        height: isThreeItems ? 350.0 : 200,
         width: 300.0,
         child: SingleChildScrollView(
           child: Column(
@@ -58,14 +75,15 @@ class _EditCardState extends State<EditCard> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 30),
-              isPAO
+              isThreeItems
                   ? Column(
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(
                             'Person',
-                            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+                            style: TextStyle(
+                                fontSize: 20, color: backgroundHighlightColor),
                           ),
                         ),
                         Container(
@@ -171,16 +189,13 @@ class _EditCardState extends State<EditCard> {
 
   getListTile() {
     return ListTile(
-      leading: Text(
-        leading,
-        style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
-      ),
-      title: isPAO
+      leading: leading,
+      title: isThreeItems
           ? Text('${widget.entry.person}',
               style: TextStyle(fontSize: 20, color: backgroundHighlightColor))
           : Text('${widget.entry.object}',
               style: TextStyle(fontSize: 20, color: backgroundHighlightColor)),
-      subtitle: isPAO
+      subtitle: isThreeItems
           ? Text(
               '${widget.entry.action} • ${widget.entry.object}',
               style: TextStyle(fontSize: 16, color: backgroundHighlightColor),

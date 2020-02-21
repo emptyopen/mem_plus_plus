@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 1.5.2+15
+version: 1.5.3+16
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -22,6 +22,7 @@ dependencies:
   path_provider:
   flip_card: 
   flutter_datetime_picker:
+  material_design_icons_flutter:
 
 dev_dependencies:
   flutter_test:

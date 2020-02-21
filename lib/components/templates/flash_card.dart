@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
+import 'package:mem_plus_plus/components/deck/deck_data.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:mem_plus_plus/components/deck/deck_data.dart';
 
 class FlashCard extends StatefulWidget {
   final String activityKey;
@@ -35,10 +37,11 @@ class FlashCard extends StatefulWidget {
 class _FlashCardState extends State<FlashCard> {
   bool done = false;
   bool guessed = true;
-  int familiarityIncrease = 100;
+  int familiarityIncrease = debugModeEnabled ? 100 : 35;
   int familiarityDecrease = 25;
   String digitLetter = '';
   String value = '';
+  Widget valueWidget = Container();
   final prefs = PrefsUpdater();
 
   @override
@@ -47,15 +50,32 @@ class _FlashCardState extends State<FlashCard> {
     switch (widget.activityKey) {
       case (alphabetKey):
         value = (widget.entry as AlphabetData).letter;
+        valueWidget = Text(
+          value,
+          style: TextStyle(fontSize: 50),
+        );
         digitLetter = 'letter';
         break;
       case (singleDigitKey):
         value = (widget.entry as SingleDigitData).digits;
+        valueWidget = Text(
+          value,
+          style: TextStyle(fontSize: 50),
+        );
         digitLetter = 'digit';
         break;
       case (paoKey):
         value = (widget.entry as PAOData).digits;
+        valueWidget = Text(
+          value,
+          style: TextStyle(fontSize: 50),
+        );
         digitLetter = 'digit';
+        break;
+      case (deckKey):
+        value = (widget.entry as DeckData).digitSuit;
+        valueWidget = getDeckCard(value, 'big');
+        digitLetter = 'card';
         break;
     }
   }
@@ -173,10 +193,7 @@ class _FlashCardState extends State<FlashCard> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              value,
-                              style: TextStyle(fontSize: 50),
-                            ),
+                            valueWidget,
                             SizedBox(height: 30),
                             Text(
                               '(Tap to flip!)',
@@ -194,9 +211,11 @@ class _FlashCardState extends State<FlashCard> {
                         child: Stack(
                           children: <Widget>[
                             Center(
-                              child: widget.activityKey == paoKey
+                              child: widget.activityKey == paoKey ||
+                                      widget.activityKey == deckKey
                                   ? Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           widget.entry.person,
@@ -213,7 +232,9 @@ class _FlashCardState extends State<FlashCard> {
                                           textAlign: TextAlign.center,
                                           style: TextStyle(fontSize: 30),
                                         ),
-                                        SizedBox(height: 50,)
+                                        SizedBox(
+                                          height: 50,
+                                        )
                                       ],
                                     )
                                   : Text(

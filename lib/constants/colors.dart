@@ -30,3 +30,8 @@ var colorCustomMemoryDarkest = Colors.purple[600];
 var colorFaceStandard = Colors.lime[200];
 var colorFaceDarker = Colors.lime[400];
 var colorFaceDarkest = Colors.lime[600];
+
+var colorDeckLighter = Colors.orange[100];
+var colorDeckStandard = Colors.orange[200];
+var colorDeckDarker = Colors.orange[400];
+var colorDeckDarkest = Colors.orange[600];

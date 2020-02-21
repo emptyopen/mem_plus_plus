@@ -71,11 +71,12 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
       if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(faceTimedTestKey, 'review');
         await prefs.setBool(faceTimedTestCompleteKey, true);
+        await prefs.updateActivityVisible(deckEditKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the XXX system!',
-          textColor: Colors.black,
-          backgroundColor: Colors.yellow[300],
+          snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
+          textColor: Colors.white,
+          backgroundColor: colorDeckDarker,
           durationSeconds: 5,
           isSuper: true,
         );

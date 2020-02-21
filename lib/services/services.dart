@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
 import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
+import 'package:mem_plus_plus/components/deck/deck_data.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,11 @@ class PrefsUpdater {
           .map((i) => PAOData.fromJson(i))
           .toList();
         return singleDigitData;
+      case 'Deck':
+        var singleDigitData = (json.decode(prefs.getString(key)) as List)
+          .map((i) => DeckData.fromJson(i))
+          .toList();
+        return singleDigitData;
       case 'Level':
         return prefs.getInt(levelKey);
       case 'CustomMemories':
@@ -73,6 +79,9 @@ class PrefsUpdater {
         prefs.setString(key, json.encode(object));
         break;
       case 'PAO':
+        prefs.setString(key, json.encode(object));
+        break;
+      case 'Deck':
         prefs.setString(key, json.encode(object));
         break;
       case 'CustomMemories':
@@ -140,6 +149,11 @@ class PrefsUpdater {
   Future<Set<String>> getKeys() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getKeys();
+  }
+
+  Future<void> remove(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(key);
   }
 
   Future<void> clear() async {

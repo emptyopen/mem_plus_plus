@@ -32,6 +32,11 @@ import 'package:mem_plus_plus/screens/pao/pao_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/pao/pao_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/face/face_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/face/face_timed_test_screen.dart';
+import 'package:mem_plus_plus/screens/deck/deck_edit_screen.dart';
+import 'package:mem_plus_plus/screens/deck/deck_practice_screen.dart';
+import 'package:mem_plus_plus/screens/deck/deck_multiple_choice_test_screen.dart';
+import 'package:mem_plus_plus/screens/deck/deck_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/deck/deck_timed_test_screen.dart';
 
 class MyHomePage extends StatefulWidget {
 
@@ -41,13 +46,15 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// TODO: make CSV input scrollable
+// TODO: make keyboard numeric for custom memory fields
+// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 // TODO: alphabet PAO (person action, same object)
 // TODO: add symbols
 // TODO: add password test
 // TODO: decrease size of photos
 // TODO: clear snackbars when leaving a screen?
 // TODO: move custom memory to floating button
-// TODO: add deck of cards
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: write some lessons, intersperse
@@ -68,7 +75,6 @@ class MyHomePage extends StatefulWidget {
 // TODO: consolidate colors
 // TODO: make snackbars prettier
 // TODO: written test: allow close enough spelling
-// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
@@ -621,8 +627,8 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
           ),
           icon: timedTestPrepIcon,
-          color: Colors.lime[400],
-          splashColor: Colors.lime[500]),
+          color: Colors.lime[500],
+          splashColor: Colors.lime[600]),
       faceTimedTestKey: ActivityMenuButton(
           text: 'Faces [Timed Test]',
           route: FaceTimedTestScreen(
@@ -630,8 +636,51 @@ class _MyHomePageState extends State<MyHomePage> {
             globalKey: globalKey,
           ),
           icon: timedTestIcon,
-          color: Colors.lime[400],
-          splashColor: Colors.lime[500]),
+          color: Colors.lime[500],
+          splashColor: Colors.lime[600]),
+      deckEditKey: ActivityMenuButton(
+          text: 'Deck [View/Edit]',
+          route: DeckEditScreen(
+            callback: callback,
+          ),
+          icon: editIcon,
+          color: Colors.orange[100],
+          splashColor: Colors.orange[200]),
+      deckPracticeKey: ActivityMenuButton(
+          text: 'Deck [Practice]',
+          route: DeckPracticeScreen(
+            callback: callback,
+            globalKey: globalKey,
+          ),
+          icon: practiceIcon,
+          color: Colors.orange[200],
+          splashColor: Colors.orange[300]),
+      deckMultipleChoiceTestKey: ActivityMenuButton(
+          text: 'Deck [MC Test]',
+          route: DeckMultipleChoiceTestScreen(
+            callback: callback,
+            globalKey: globalKey,
+          ),
+          icon: multipleChoiceTestIcon,
+          color: Colors.orange[300],
+          splashColor: Colors.orange[400]),
+      deckTimedTestPrepKey: ActivityMenuButton(
+          text: 'Deck [Test Prep]',
+          route: DeckTimedTestPrepScreen(
+            callback: callback,
+          ),
+          icon: timedTestPrepIcon,
+          color: Colors.orange[400],
+          splashColor: Colors.orange[500]),
+      deckTimedTestKey: ActivityMenuButton(
+          text: 'Deck [Timed Test]',
+          route: DeckTimedTestScreen(
+            callback: callback,
+            globalKey: globalKey,
+          ),
+          icon: timedTestIcon,
+          color: Colors.orange[400],
+          splashColor: Colors.orange[500]),
     };
   }
 }

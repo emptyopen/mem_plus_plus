@@ -93,9 +93,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 isSelected: isSelected,
               ),
               SizedBox(height: 40,),
+              Text('Developer options:   (dangerous!)', style: TextStyle(fontSize: 18, color: backgroundHighlightColor),),
+              SizedBox(height: 20,),
                     BasicFlatButton(
                       onPressed: () => widget.resetActivities(),
-                      text: 'reset activites, not data',
+                      text: 'reset activity states, but not data',
                     ),
                     BasicFlatButton(
                       onPressed: () => widget.maxOutKeys(),
