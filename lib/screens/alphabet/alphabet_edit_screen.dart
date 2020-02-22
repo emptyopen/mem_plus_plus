@@ -55,8 +55,8 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getBool(alphabetEditCompleteKey);
-    if (entriesComplete && completedOnce == null) {
+    bool completedOnce = await prefs.getActivityState(alphabetEditKey) == 'review';
+    if (entriesComplete && !completedOnce) {
       await prefs.updateActivityVisible(alphabetPracticeKey, true);
       await prefs.updateActivityState(alphabetEditKey, 'review');
       final snackBar = SnackBar(
@@ -72,7 +72,6 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
         backgroundColor: colorAlphabetDarker,
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
-      await prefs.setBool(alphabetEditCompleteKey, true);
       widget.callback();
     }
   }

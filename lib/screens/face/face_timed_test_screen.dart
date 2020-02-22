@@ -70,9 +70,8 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
       // every time
       await prefs.updateActivityVisible(faceTimedTestKey, false);
       await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-      if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
+      if (await prefs.getActivityState(faceTimedTestKey) == 'todo') {
         await prefs.updateActivityState(faceTimedTestKey, 'review');
-        await prefs.setBool(faceTimedTestCompleteKey, true);
         await prefs.updateActivityVisible(deckEditKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
@@ -112,9 +111,6 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     await prefs.updateActivityState(faceTimedTestKey, 'review');
     await prefs.updateActivityVisible(faceTimedTestKey, false);
     await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-    if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:

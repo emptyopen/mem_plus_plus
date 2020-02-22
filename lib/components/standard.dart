@@ -44,6 +44,7 @@ class BasicFlatButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(fontSize: fontSize, color: textColor),
+          textAlign: TextAlign.center,
         ),
       ),
     );

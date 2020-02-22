@@ -48,10 +48,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 // done:
-// TODO: collapse menu items into consolidated versions after complete
-// TODO: don't allow empty written test submission
-// TODO: prevent duplicate cards in deck test
-// TODO: make all sections gradient upon completion
 
 // next up:
 // TODO: custom notifications based on progress
@@ -232,18 +228,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // consolidate menu buttons
-    print(await prefs.getBool(singleDigitTimedTestCompleteKey));
-    if (!(await prefs.getBool(singleDigitTimedTestCompleteKey) == null)) {
-      print('setting consolidate single digit true');
+    if (await prefs.getActivityState(singleDigitTimedTestKey) == 'review') {
       consolidateSingleDigit = true;
     }
-    if (await prefs.getBool(alphabetTimedTestCompleteKey)) {
+    if (await prefs.getActivityState(alphabetTimedTestKey) == 'review') {
       consolidateAlphabet = true;
     }
-    if (await prefs.getBool(paoTimedTestCompleteKey)) {
+    if (await prefs.getActivityState(paoTimedTestKey) == 'review') {
       consolidatePAO = true;
     }
-    if (await prefs.getBool(deckTimedTestCompleteKey)) {
+    if (await prefs.getActivityState(deckTimedTestKey) == 'review') {
       consolidateDeck = true;
     }
 
@@ -650,11 +644,6 @@ class _MyHomePageState extends State<MyHomePage> {
   maxOutKeys() async {
     await prefs.setBool(customMemoryManagerAvailableKey, true);
     customMemoryManagerAvailable = true;
-
-    await prefs.setBool(singleDigitTimedTestCompleteKey, true);
-    await prefs.setBool(alphabetTimedTestCompleteKey, true);
-    await prefs.setBool(paoTimedTestCompleteKey, true);
-    await prefs.setBool(deckTimedTestCompleteKey, true);
 
     await prefs.writeSharedPrefs(
         activityStatesKey, defaultActivityStatesAllDone);

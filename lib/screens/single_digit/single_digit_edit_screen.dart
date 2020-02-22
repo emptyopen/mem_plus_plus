@@ -56,17 +56,16 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getBool(singleDigitEditCompleteKey);
-    if (entriesComplete && completedOnce == null) {
-      await prefs.updateActivityVisible('SingleDigitPractice', true);
+    bool completedOnce = await prefs.getActivityState(singleDigitEditKey) == 'review';
+    if (entriesComplete && !completedOnce) {
       await prefs.updateActivityState('SingleDigitEdit', 'review');
+      await prefs.updateActivityVisible('SingleDigitPractice', true);
       showSnackBar(
           scaffoldState: _scaffoldKey.currentState,
           snackBarText:
               'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
           backgroundColor: colorSingleDigitDarker,
           durationSeconds: 5);
-      await prefs.setBool(singleDigitEditCompleteKey, true);
       widget.callback();
     }
   }

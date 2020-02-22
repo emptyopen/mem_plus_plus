@@ -90,6 +90,11 @@ class PrefsUpdater {
     await writeSharedPrefs(activityStatesKey, activityStates);
   }
 
+  Future<String> getActivityState(String activityName) async {
+    Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);
+    return activityStates[activityName].state;
+  }
+
   updateActivityVisible(String activityName, bool visible) async {
     print('setting $activityName visible to $visible');
     Map<String, Activity> activityStates = await getSharedPrefs(activityStatesKey);

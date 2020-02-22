@@ -67,12 +67,11 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         textController2.text.toLowerCase().trim() ==
             '$char5$char6$char7$char8'.toLowerCase()) {
       print('success');
-      await prefs.updateActivityState(alphabetTimedTestKey, 'review');
       await prefs.updateActivityVisible(alphabetTimedTestKey, false);
       await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-      if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+      if (await prefs.getActivityState(alphabetTimedTestKey) == 'todo') {
+        await prefs.updateActivityState(alphabetTimedTestKey, 'review');
         await prefs.updateActivityVisible(paoEditKey, true);
-        await prefs.setBool(alphabetTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
@@ -111,9 +110,6 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     await prefs.updateActivityState(alphabetTimedTestKey, 'review');
     await prefs.updateActivityVisible(alphabetTimedTestKey, false);
     await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-    if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,
       snackBarText: 'Try the timed test again to unlock the next system.',
@@ -182,7 +178,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                         hintText: 'XXXX',
-                        hintStyle: TextStyle(fontSize: 30, color: backgroundHighlightColor)),
+                        hintStyle: TextStyle(fontSize: 30, color: Colors.grey,)),
                   ),
                 ),
                 SizedBox(height: 25),
@@ -193,17 +189,17 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                   child: TextFormField(
                     controller: textController2,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor,),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: backgroundSemiColor)),
+                            borderSide: BorderSide(color: backgroundSemiColor,)),
                         focusedBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: backgroundHighlightColor)),
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                         hintText: 'XXXX',
-                        hintStyle: TextStyle(fontSize: 30, color: backgroundHighlightColor)),
+                        hintStyle: TextStyle(fontSize: 30, color: Colors.grey,)),
                   ),
                 ),
                 SizedBox(height: 50),

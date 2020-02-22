@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = true;
+const bool debugModeEnabled = false;
 
 const String usernameKey = 'Username';
 
@@ -32,11 +32,7 @@ const String singleDigitPracticeKey = 'SingleDigitPractice';
 const String singleDigitMultipleChoiceTestKey = 'SingleDigitMultipleChoice';
 const String singleDigitTimedTestPrepKey = 'SingleDigitTimedTestPrep';
 const String singleDigitTimedTestKey = 'SingleDigitTimedTest';
-const String singleDigitEditCompleteKey = 'SingleDigitEditComplete';
-const String singleDigitMultipleChoiceTestCompleteKey =
-    'SingleDigitMultipleChoiceTestComplete';
 const String singleDigitTestActiveKey = 'SingleDigitTimedTestActive';
-const String singleDigitTimedTestCompleteKey = 'SingleDigitTimedTestComplete';
 
 // Alphabet
 const String alphabetKey = 'Alphabet';
@@ -45,10 +41,7 @@ const String alphabetPracticeKey = 'AlphabetPractice';
 const String alphabetWrittenTestKey = 'AlphabetWrittenTest';
 const String alphabetTimedTestPrepKey = 'AlphabetTimedTestPrep';
 const String alphabetTimedTestKey = 'AlphabetTimedTest';
-const String alphabetEditCompleteKey = 'AlphabetEditComplete';
-const String alphabetWrittenTestCompleteKey = 'AlphabetWrittenTestComplete';
 const String alphabetTestActiveKey = 'AlphabetTestActive';
-const String alphabetTimedTestCompleteKey = 'AlphabetTimedTestComplete';
 
 // PAO
 const String paoKey = 'PAO';
@@ -57,10 +50,7 @@ const String paoPracticeKey = 'PAOPractice';
 const String paoMultipleChoiceTestKey = 'PAOMultipleChoice';
 const String paoTimedTestPrepKey = 'PAOTimedTestPrep';
 const String paoTimedTestKey = 'PAOTimedTest';
-const String paoEditCompleteKey = 'PAOEditComplete';
-const String paoMultipleChoiceTestCompleteKey = 'PAOMultipleChoiceTestComplete';
 const String paoTestActiveKey = 'PAOTestActive';
-const String paoTimedTestCompleteKey = 'PAOTimedTestComplete';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
@@ -76,7 +66,6 @@ const String otherString = 'Other';
 const String faceTimedTestPrepKey = 'FaceTimedTestPrep';
 const String faceTimedTestKey = 'FaceTimedTest';
 const String faceTestActiveKey = 'FaceTestActive';
-const String faceTimedTestCompleteKey = 'FaceTimedTestComplete';
 
 // Deck
 const String deckKey = 'Deck';
@@ -85,10 +74,7 @@ const String deckPracticeKey = 'DeckPractice';
 const String deckMultipleChoiceTestKey = 'DeckMultipleChoice';
 const String deckTimedTestPrepKey = 'DeckTimedTestPrep';
 const String deckTimedTestKey = 'DeckTimedTest';
-const String deckEditCompleteKey = 'DeckEditComplete';
-const String deckMultipleChoiceTestCompleteKey = 'DeckMultipleChoiceTestComplete';
 const String deckTestActiveKey = 'DeckTestActive';
-const String deckTimedTestCompleteKey = 'DeckTimedTestComplete';
 
 // first help
 const String homepageFirstHelpKey = 'HomepageFirstHelp';

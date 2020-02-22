@@ -63,10 +63,10 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getBool(deckEditCompleteKey);
-    if (entriesComplete && completedOnce == null) {
-      await prefs.updateActivityVisible(deckPracticeKey, true);
+    bool completedOnce = await prefs.getActivityState(deckEditKey) == 'review';
+    if (entriesComplete && !completedOnce) {
       await prefs.updateActivityState(deckEditKey, 'review');
+      await prefs.updateActivityVisible(deckPracticeKey, true);
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -80,7 +80,6 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
         backgroundColor: colorDeckDarker,
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
-      await prefs.setBool(deckEditCompleteKey, true);
       widget.callback();
     }
   }

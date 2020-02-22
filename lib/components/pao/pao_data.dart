@@ -129,7 +129,7 @@ var defaultPAOData1 = [
 ];
 
 var defaultPAOData2 = [
-  PAOData(00, '00', '', '', '', 100),
+  PAOData(00, '00', 'Ozzy Osbourne', 'rocking a concert', '', 100),
   PAOData(01, '01', 'Prairie Johnson', 'dancing metaphorically', 'halo', 100),
   PAOData(02,
     '02', 'Orlando Bloom', 'walking the plank', 'pirate sword, eyepatch', 100),

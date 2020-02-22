@@ -44,17 +44,16 @@ class _DeckMultipleChoiceTestScreenState
     if (success) {
       score += 1;
       results[attempts] = true;
-      if (score == 52) {
+      if (score == 52 || (debugModeEnabled && score >= 5)) {
         // update keys
-        if (await prefs.getBool(deckMultipleChoiceTestCompleteKey) == null) {
-          await prefs.setBool(deckMultipleChoiceTestCompleteKey, true);
-          await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
+        if (await prefs.getActivityState(deckMultipleChoiceTestKey) == 'todo') {
           await prefs.updateActivityState(deckMultipleChoiceTestKey, 'review');
+          await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
           widget.callback();
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'You aced it! You\'ve unlocked the timed test!',
-            textColor: Colors.white,
+            textColor: Colors.black,
             backgroundColor: colorDeckStandard,
             durationSeconds: 4,
           );
@@ -63,7 +62,7 @@ class _DeckMultipleChoiceTestScreenState
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'You aced it!',
-            textColor: Colors.white,
+            textColor: Colors.black,
             backgroundColor: colorDeckStandard,
             durationSeconds: 3,
           );
@@ -79,7 +78,7 @@ class _DeckMultipleChoiceTestScreenState
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Try again! You got this. Score: $score/52',
-        textColor: Colors.white,
+        textColor: Colors.black,
         backgroundColor: colorIncorrect,
         durationSeconds: 2,
       );

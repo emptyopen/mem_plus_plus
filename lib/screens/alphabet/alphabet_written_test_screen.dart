@@ -50,10 +50,9 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
       if (score == 26) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        if (await prefs.getBool(alphabetWrittenTestCompleteKey) == null) {
+        if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
           await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
           await prefs.updateActivityState(alphabetWrittenTestKey, 'review');
-          await prefs.setBool(alphabetWrittenTestCompleteKey, true);
           widget.callback();
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,

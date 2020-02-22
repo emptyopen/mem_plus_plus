@@ -55,10 +55,9 @@ class _SingleDigitTimedTestScreenState
     if (textController.text == '$digit1$digit2$digit3$digit4') { 
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-      await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
-      await prefs.updateActivityVisible(alphabetEditKey, true);
-      if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-        await prefs.setBool(singleDigitTimedTestCompleteKey, true);
+      if (await prefs.getActivityState(singleDigitTimedTestKey) == 'todo') {
+        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        await prefs.updateActivityVisible(alphabetEditKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
@@ -96,9 +95,6 @@ class _SingleDigitTimedTestScreenState
     await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
     await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
     await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-    if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
@@ -167,7 +163,7 @@ class _SingleDigitTimedTestScreenState
                       hintStyle: TextStyle(
                           fontSize: 30,
                           fontFamily: 'SpaceMono',
-                          color: backgroundHighlightColor)),
+                          color: Colors.grey)),
                 ),
               ),
               SizedBox(height: 50),

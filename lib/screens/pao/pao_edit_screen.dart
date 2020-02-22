@@ -50,10 +50,10 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getBool(paoEditCompleteKey);
-    if (entriesComplete && completedOnce == null) {
-      await prefs.updateActivityVisible(paoPracticeKey, true);
+    bool completedOnce = await prefs.getActivityState(paoEditKey) == 'review';
+    if (entriesComplete && !completedOnce) {
       await prefs.updateActivityState(paoEditKey, 'review');
+      await prefs.updateActivityVisible(paoPracticeKey, true);
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -67,7 +67,6 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
         backgroundColor: colorPAODarker,
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
-      await prefs.setBool(paoEditCompleteKey, true);
       widget.callback();
     }
   }

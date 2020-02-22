@@ -48,10 +48,9 @@ class _SingleDigitMultipleChoiceTestScreenState
       if (score == 10) {
         // update keys
         PrefsUpdater prefs = PrefsUpdater();
-        if (await prefs.getBool(singleDigitMultipleChoiceTestCompleteKey) == null) {
-          await prefs.setBool(singleDigitMultipleChoiceTestCompleteKey, true);
-          await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+        if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) == 'todo') {
           await prefs.updateActivityState(singleDigitMultipleChoiceTestKey, 'review');
+          await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
           widget.callback();
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,

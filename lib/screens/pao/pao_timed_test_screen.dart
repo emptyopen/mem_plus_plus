@@ -68,14 +68,13 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     if (textController1.text.trim() == '$digits1$digits2$digits3' &&
         textController2.text.trim() == '$digits4$digits5$digits6' &&
         textController3.text.trim() == '$digits7$digits8$digits9') {
-      await prefs.updateActivityState(paoTimedTestKey, 'review');
       await prefs.updateActivityVisible(paoTimedTestKey, false);
       await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-      await prefs.setBool(customMemoryManagerAvailableKey, true);
-      if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
-        await prefs.setBool(paoTimedTestCompleteKey, true);
+      if (await prefs.getActivityState(paoTimedTestKey) == 'todo') {
+        await prefs.updateActivityState(paoTimedTestKey, 'review');
+        await prefs.setBool(customMemoryManagerAvailableKey, true);
         await prefs.setBool(customMemoryManagerFirstHelpKey, true);
+        await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',

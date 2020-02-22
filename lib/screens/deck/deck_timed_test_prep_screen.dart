@@ -334,8 +334,8 @@ class DeckTimedTestPrepScreenHelp extends StatelessWidget {
             'and link the scenes together. Remember, person-action-object, and really create a connection '
             'between scenes. ',
       ],
-      buttonColor: Colors.pink[100],
-      buttonSplashColor: Colors.pink[300],
+      buttonColor: colorDeckStandard,
+      buttonSplashColor: colorDeckDarker,
       firstHelpKey: deckTimedTestPrepFirstHelpKey,
     );
   }

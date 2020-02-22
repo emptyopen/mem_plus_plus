@@ -44,17 +44,16 @@ class _PAOMultipleChoiceTestScreenState
     if (success) {
       score += 1;
       results[attempts] = true;
-      if (score == 100) {
+      if (score == 100 || (debugModeEnabled && score >= 10)) {
         // update keys
-        if (await prefs.getBool(paoMultipleChoiceTestCompleteKey) == null) {
-          await prefs.setBool(paoMultipleChoiceTestCompleteKey, true);
-          await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+        if (await prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
           await prefs.updateActivityState(paoMultipleChoiceTestKey, 'review');
+          await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
           widget.callback();
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'You aced it! You\'ve unlocked the timed test!',
-            textColor: Colors.white,
+            textColor: Colors.black,
             backgroundColor: colorPAODarker,
             durationSeconds: 4,
           );
@@ -63,7 +62,7 @@ class _PAOMultipleChoiceTestScreenState
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'You aced it!',
-            textColor: Colors.white,
+            textColor: Colors.black,
             backgroundColor: colorCorrect,
             durationSeconds: 3,
           );
@@ -79,7 +78,7 @@ class _PAOMultipleChoiceTestScreenState
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Try again! You got this. Score: $score/100',
-        textColor: Colors.white,
+        textColor: Colors.black,
         backgroundColor: colorIncorrect,
         durationSeconds: 2,
       );
