@@ -7,7 +7,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-import 'dart:math';
+import 'package:flutter/services.dart';
 
 class DeckTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
@@ -162,6 +162,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

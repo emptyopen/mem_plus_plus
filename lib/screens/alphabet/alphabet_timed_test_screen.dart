@@ -4,6 +4,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:flutter/services.dart';
 
 class AlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -60,6 +61,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   void checkAnswer() async {
+    HapticFeedback.heavyImpact();
     if (textController1.text.toLowerCase().trim() ==
             '$char1$char2$char3$char4'.toLowerCase() &&
         textController2.text.toLowerCase().trim() ==
@@ -105,6 +107,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   void giveUp() async {
+    HapticFeedback.heavyImpact();
     await prefs.updateActivityState(alphabetTimedTestKey, 'review');
     await prefs.updateActivityVisible(alphabetTimedTestKey, false);
     await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
@@ -134,6 +137,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

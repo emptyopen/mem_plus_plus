@@ -8,6 +8,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:flutter/services.dart';
 
 class PAOEditScreen extends StatefulWidget {
   final Function callback;
@@ -114,6 +115,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
             IconButton(
               icon: Icon(Icons.arrow_downward),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -124,6 +126,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -254,7 +257,10 @@ class _CSVImporterState extends State<CSVImporter> {
                           side: BorderSide(),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          HapticFeedback.heavyImpact();
+                          Navigator.pop(context);
+                        },
                         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         child: Text(
                           'Cancel',
@@ -271,6 +277,7 @@ class _CSVImporterState extends State<CSVImporter> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         onPressed: () {
+                          HapticFeedback.heavyImpact();
                           var csvConverter = CsvToListConverter();
                           var l = csvConverter.convert(textController.text,
                               eol: '\n');

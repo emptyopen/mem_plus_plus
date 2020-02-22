@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter/services.dart';
 
 class CustomMemoryTestScreen extends StatefulWidget {
   final Function callback;
@@ -119,6 +120,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
   }
 
   checkAnswer() async {
+    HapticFeedback.heavyImpact();
     var memory = widget.customMemory;
     switch (memory['type']) {
       case 'Contact':
@@ -344,6 +346,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
+                  HapticFeedback.heavyImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -389,6 +392,7 @@ class _PromptPairState extends State<PromptPair> {
                   color: backgroundSemiColor,
                   textColor: backgroundHighlightColor,
                   onPressed: () {
+                    HapticFeedback.heavyImpact();
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
                         onChanged: (date) {}, onConfirm: (date) {

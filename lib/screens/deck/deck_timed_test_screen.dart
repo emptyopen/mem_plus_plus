@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter/services.dart';
 
 class DeckTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -56,6 +57,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
   }
 
   void checkAnswer() async {
+    HapticFeedback.heavyImpact();
     if (dropdownDigit[0] + dropdownSuit[0] == '$card1' &&
     dropdownDigit[1] + dropdownSuit[1] == '$card2' &&
     dropdownDigit[2] + dropdownSuit[2] == '$card3' &&
@@ -105,6 +107,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
   }
 
   void giveUp() async {
+    HapticFeedback.heavyImpact();
     await prefs.updateActivityState(deckTimedTestKey, 'review');
     await prefs.updateActivityVisible(deckTimedTestKey, false);
     await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
@@ -239,6 +242,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

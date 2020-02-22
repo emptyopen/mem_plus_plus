@@ -87,6 +87,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
+                  HapticFeedback.heavyImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -158,6 +159,7 @@ class CustomMemoryTile extends StatelessWidget {
   }
 
   confirmViewCustomMemory(BuildContext context) async {
+    HapticFeedback.heavyImpact();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -174,6 +176,7 @@ class CustomMemoryTile extends StatelessWidget {
               text: 'Cancel',
               color: Colors.grey[300],
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).pop();
               },
             ),
@@ -181,6 +184,7 @@ class CustomMemoryTile extends StatelessWidget {
               text: 'Confirm',
               color: colorCustomMemoryStandard,
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).pop();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
@@ -336,6 +340,7 @@ class CustomMemoryTile extends StatelessWidget {
   }
 
   resetCustomMemory(BuildContext context) async {
+    HapticFeedback.heavyImpact();
     Map customMemories = await prefs.getSharedPrefs(customMemoriesKey);
     customMemories[customMemory['title']]['spacedRepetitionLevel'] = 0;
     var spacedRepetitionType =

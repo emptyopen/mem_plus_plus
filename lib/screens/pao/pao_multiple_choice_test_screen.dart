@@ -6,6 +6,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
+import 'package:flutter/services.dart';
 
 class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
@@ -112,6 +113,7 @@ class _PAOMultipleChoiceTestScreenState
           leading: new IconButton(
             icon: new Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
+              HapticFeedback.heavyImpact();
               score = 0;
               attempts = 0;
               Navigator.of(context).pop();
@@ -122,6 +124,7 @@ class _PAOMultipleChoiceTestScreenState
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

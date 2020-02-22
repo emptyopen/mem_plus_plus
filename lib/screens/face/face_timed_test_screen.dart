@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:edit_distance/edit_distance.dart';
+import 'package:flutter/services.dart';
 
 class FaceTimedTestScreen extends StatefulWidget {
   final Function callback;
@@ -53,6 +54,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
   }
 
   void checkAnswer() async {
+    HapticFeedback.heavyImpact();
     Levenshtein d = new Levenshtein();
     String answer1 = name1.toLowerCase().trim();
     String guess1 = textController1.text.toLowerCase().trim();
@@ -106,6 +108,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
   }
 
   void giveUp() async {
+    HapticFeedback.heavyImpact();
     await prefs.updateActivityState(faceTimedTestKey, 'review');
     await prefs.updateActivityVisible(faceTimedTestKey, false);
     await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
@@ -134,6 +137,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

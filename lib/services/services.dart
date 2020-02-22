@@ -188,7 +188,6 @@ List shuffle(List items) {
 void showSnackBar({ScaffoldState scaffoldState, String snackBarText, Color textColor = Colors.black, Color backgroundColor,
   int durationSeconds = 3, bool isSuper = false}) {
   final snackBar = SnackBar(
-    // action: SnackBarAction(label: 'Roger!', onPressed: () => scaffoldState.hideCurrentSnackBar(), textColor: textColor,),
     content: Shimmer.fromColors(
       period: Duration(seconds: 3),
       baseColor: textColor,
@@ -225,6 +224,7 @@ void showConfirmDialog({BuildContext context, Function function, String confirmT
             text: 'Cancel',
             color: Colors.grey[300],
             onPressed: () {
+              HapticFeedback.heavyImpact();
               Navigator.of(context).pop();
             },
           ),
@@ -233,6 +233,7 @@ void showConfirmDialog({BuildContext context, Function function, String confirmT
             color: confirmColor,
             onPressed: () {
               function();
+              HapticFeedback.heavyImpact();
               Navigator.of(context).pop();
             },
           ),

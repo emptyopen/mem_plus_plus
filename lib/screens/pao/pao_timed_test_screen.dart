@@ -4,6 +4,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:flutter/services.dart';
 
 class PAOTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -63,6 +64,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   }
 
   void checkAnswer() async {
+    HapticFeedback.heavyImpact();
     if (textController1.text.trim() == '$digits1$digits2$digits3' &&
         textController2.text.trim() == '$digits4$digits5$digits6' &&
         textController3.text.trim() == '$digits7$digits8$digits9') {
@@ -115,6 +117,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   }
 
   void giveUp() async {
+    HapticFeedback.heavyImpact();
     await prefs.updateActivityState(paoTimedTestKey, 'review');
     await prefs.updateActivityVisible(paoTimedTestKey, false);
     await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
@@ -138,6 +141,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         IconButton(
           icon: Icon(Icons.info),
           onPressed: () {
+            HapticFeedback.heavyImpact();
             Navigator.of(context).push(PageRouteBuilder(
                 opaque: false,
                 pageBuilder: (BuildContext context, _, __) {

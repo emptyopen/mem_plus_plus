@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:flip_card/flip_card.dart';
-import 'package:mem_plus_plus/components/deck/deck_data.dart';
+import 'package:flutter/services.dart';
 
 class FlashCard extends StatefulWidget {
   final String activityKey;
@@ -81,8 +81,8 @@ class _FlashCardState extends State<FlashCard> {
   }
 
   void gotIt() async {
+    HapticFeedback.heavyImpact();
     bool levelUp = false;
-    var prefs = PrefsUpdater();
     List<dynamic> data = await prefs.getSharedPrefs(widget.activityKey);
     int currIndex = widget.entry.index;
     dynamic updatedEntry = data[currIndex];
@@ -139,7 +139,7 @@ class _FlashCardState extends State<FlashCard> {
   }
 
   void didntGotIt() async {
-    var prefs = PrefsUpdater();
+    HapticFeedback.heavyImpact();
     List<dynamic> dataList = await prefs.getSharedPrefs(widget.activityKey);
     int currIndex = widget.entry.index;
     dynamic updatedEntry = dataList[currIndex];

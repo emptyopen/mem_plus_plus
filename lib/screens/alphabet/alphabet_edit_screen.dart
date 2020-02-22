@@ -7,6 +7,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:flutter/services.dart';
 
 class AlphabetEditScreen extends StatefulWidget {
   final Function callback;
@@ -104,6 +105,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
         IconButton(
           icon: Icon(Icons.info),
           onPressed: () {
+            HapticFeedback.heavyImpact();
             Navigator.of(context).push(PageRouteBuilder(
                 opaque: false,
                 pageBuilder: (BuildContext context, _, __) {

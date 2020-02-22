@@ -3,10 +3,10 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:flutter/services.dart';
 
 class FaceTimedTestPrepScreen extends StatefulWidget {
   final Function callback;
@@ -109,6 +109,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
+                  HapticFeedback.heavyImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {

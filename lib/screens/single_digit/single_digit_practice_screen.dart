@@ -7,6 +7,7 @@ import 'package:mem_plus_plus/components/templates/flash_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
+import 'package:flutter/services.dart';
 
 class SingleDigitPracticeScreen extends StatefulWidget {
   final Function() callback;
@@ -100,6 +101,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -46,6 +47,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// TODO: vibration for every button
+// TODO: collapse menu items into consolidated versions after complete
 // TODO: make CSV input scrollable
 // TODO: make keyboard numeric for custom memory fields
 // TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
@@ -69,12 +72,9 @@ class MyHomePage extends StatefulWidget {
 // TODO: after MC test, show which words were INCORRECT
 // TODO: add ability for alphabet to contain up to 3 objects
 // TODO: implement length limits for inputs (like action/object)
-// TODO: collapse menu items into consolidated versions after complete
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: make vibrations cooler, and more consistent across app?
-// TODO: consolidate colors
 // TODO: make snackbars prettier
-// TODO: written test: allow close enough spelling
 
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
@@ -331,6 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               icon: Icon(Icons.add_box),
                               color: Colors.deepPurple,
                               onPressed: () {
+                                HapticFeedback.heavyImpact();
                                 checkCustomMemoryManagerFirstTime();
                               },
                             ),
@@ -369,6 +370,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 IconButton(
                   icon: Icon(Icons.settings),
                   onPressed: () {
+                    HapticFeedback.heavyImpact();
                     Navigator.of(context).push(PageRouteBuilder(
                         opaque: false,
                         pageBuilder: (BuildContext context, _, __) {
@@ -383,6 +385,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 IconButton(
                   icon: Icon(Icons.info),
                   onPressed: () {
+                    HapticFeedback.heavyImpact();
                     Navigator.of(context).push(PageRouteBuilder(
                         opaque: false,
                         pageBuilder: (BuildContext context, _, __) {
