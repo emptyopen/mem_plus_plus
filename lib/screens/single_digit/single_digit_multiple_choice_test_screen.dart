@@ -80,7 +80,7 @@ class _SingleDigitMultipleChoiceTestScreenState
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Try again! You got this. Score: $score/10',
         backgroundColor: colorIncorrect,
-        durationSeconds: 4,
+        durationSeconds: 2,
       );
       Navigator.pop(context);
     }

@@ -153,7 +153,7 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
           ),
         ),
         duration: Duration(seconds: 1),
-        backgroundColor: Colors.green[200],
+        backgroundColor: colorCorrect,
       );
       Scaffold.of(context).showSnackBar(snackBar);
       setState(() {
@@ -169,7 +169,7 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
           ),
         ),
         duration: Duration(seconds: 2),
-        backgroundColor: Colors.red[200],
+        backgroundColor: colorIncorrect,
       );
       Scaffold.of(context).showSnackBar(snackBar);
       setState(() {
@@ -181,10 +181,11 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
     return done
         ? Container()
         : Container(
-            height: 600,
+            height: screenHeight,
             decoration: BoxDecoration(
               color: backgroundColor,
             ),
@@ -196,7 +197,7 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
                 Center(
                   child: Text(
                     mapChoice == 'digitToPersonActionObject' ? 'Card:' : 'PAO:',
-                    style: TextStyle(
+                    style: TextStyle( 
                         fontSize: 26, color: backgroundHighlightColor),
                   ),
                 ),
@@ -232,6 +233,7 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
                         ? Text(
                             randomDeckChoice(shuffledOptions[0]),
                             style: TextStyle(fontSize: 30, color: Colors.black),
+                            textAlign: TextAlign.center,
                           )
                         : getDeckCard(shuffledOptions[0].digitSuit, 'small'),
                   ),
@@ -253,6 +255,7 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
                         ? Text(
                             randomDeckChoice(shuffledOptions[1]),
                             style: TextStyle(fontSize: 30, color: Colors.black),
+                            textAlign: TextAlign.center,
                           )
                         : getDeckCard(shuffledOptions[1].digitSuit, 'small'),
                   ),
@@ -274,6 +277,7 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
                         ? Text(
                             randomDeckChoice(shuffledOptions[2]),
                             style: TextStyle(fontSize: 30, color: Colors.black),
+                            textAlign: TextAlign.center,
                           )
                         : getDeckCard(shuffledOptions[2].digitSuit, 'small'),
                   ),
@@ -295,10 +299,12 @@ class _DeckMultipleChoiceCardState extends State<DeckMultipleChoiceCard> {
                         ? Text(
                             randomDeckChoice(shuffledOptions[3]),
                             style: TextStyle(fontSize: 30, color: Colors.black),
+                            textAlign: TextAlign.center,
                           )
                         : getDeckCard(shuffledOptions[3].digitSuit, 'small'),
                   ),
                 ),
+                SizedBox(height: 60,)
               ],
             ));
   }

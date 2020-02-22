@@ -55,7 +55,7 @@ class _PAOMultipleChoiceTestScreenState
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'You aced it! You\'ve unlocked the timed test!',
             textColor: Colors.white,
-            backgroundColor: colorPAOStandard,
+            backgroundColor: colorPAODarker,
             durationSeconds: 4,
           );
           Navigator.pop(context);
@@ -64,7 +64,7 @@ class _PAOMultipleChoiceTestScreenState
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'You aced it!',
             textColor: Colors.white,
-            backgroundColor: colorPAOStandard,
+            backgroundColor: colorCorrect,
             durationSeconds: 3,
           );
           Navigator.pop(context);
@@ -81,7 +81,7 @@ class _PAOMultipleChoiceTestScreenState
         snackBarText: 'Try again! You got this. Score: $score/100',
         textColor: Colors.white,
         backgroundColor: colorIncorrect,
-        durationSeconds: 5,
+        durationSeconds: 2,
       );
       Navigator.pop(context);
     }

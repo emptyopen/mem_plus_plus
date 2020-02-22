@@ -1,25 +1,25 @@
 # Summary
 
-Date : 2020-02-16 22:32:41
+Date : 2020-02-21 17:57:21
 
 Directory /Users/matt/flutter/mem_plus_plus
 
-Total : 68 files,  7819 codes, 205 comments, 660 blanks, all 8684 lines
+Total : 79 files,  12886 codes, 221 comments, 778 blanks, all 13885 lines
 
 [details](details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| Dart | 44 | 7,328 | 169 | 589 | 8,086 |
-| JSON | 2 | 145 | 0 | 2 | 147 |
+| Dart | 54 | 12,330 | 185 | 707 | 13,222 |
+| JSON | 3 | 193 | 0 | 2 | 195 |
 | XML | 7 | 110 | 26 | 13 | 149 |
-| Groovy | 3 | 98 | 3 | 22 | 123 |
-| YAML | 1 | 56 | 0 | 6 | 62 |
+| Groovy | 3 | 107 | 3 | 22 | 132 |
+| YAML | 1 | 62 | 0 | 6 | 68 |
 | Objective-C | 2 | 20 | 1 | 6 | 27 |
 | Ruby | 1 | 14 | 3 | 2 | 19 |
 | Markdown | 2 | 13 | 0 | 9 | 22 |
-| Properties | 3 | 11 | 1 | 4 | 16 |
+| Properties | 3 | 13 | 1 | 4 | 18 |
 | Java | 1 | 11 | 0 | 3 | 14 |
 | Shell Script | 1 | 9 | 2 | 1 | 12 |
 | C++ | 1 | 4 | 0 | 3 | 7 |
@@ -27,9 +27,9 @@ Total : 68 files,  7819 codes, 205 comments, 660 blanks, all 8684 lines
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 68 | 7,819 | 205 | 660 | 8,684 |
-| android | 12 | 169 | 28 | 40 | 237 |
-| android/app | 7 | 121 | 27 | 27 | 175 |
+| . | 79 | 12,886 | 221 | 778 | 13,885 |
+| android | 13 | 228 | 28 | 40 | 296 |
+| android/app | 8 | 173 | 27 | 27 | 227 |
 | android/app/src | 6 | 60 | 24 | 14 | 98 |
 | android/app/src/debug | 1 | 4 | 3 | 1 | 8 |
 | android/app/src/main | 4 | 52 | 18 | 12 | 82 |
@@ -50,22 +50,25 @@ Total : 68 files,  7819 codes, 205 comments, 660 blanks, all 8684 lines
 | ios/Runner/Assets.xcassets/AppIcon.appiconset | 1 | 122 | 0 | 1 | 123 |
 | ios/Runner/Assets.xcassets/LaunchImage.imageset | 2 | 26 | 0 | 3 | 29 |
 | ios/Runner/Base.lproj | 2 | 61 | 2 | 2 | 65 |
-| lib | 43 | 7,314 | 159 | 582 | 8,055 |
-| lib/components | 17 | 2,501 | 39 | 192 | 2,732 |
-| lib/components/alphabet | 2 | 227 | 0 | 17 | 244 |
-| lib/components/custom_memory | 4 | 423 | 6 | 44 | 473 |
-| lib/components/pao | 2 | 572 | 0 | 21 | 593 |
-| lib/components/single_digit | 2 | 243 | 3 | 18 | 264 |
-| lib/components/templates | 2 | 482 | 4 | 28 | 514 |
-| lib/constants | 2 | 61 | 7 | 16 | 84 |
-| lib/screens | 22 | 4,430 | 104 | 337 | 4,871 |
-| lib/screens/alphabet | 5 | 896 | 10 | 58 | 964 |
-| lib/screens/custom_memory | 2 | 609 | 11 | 47 | 667 |
-| lib/screens/lessons | 2 | 294 | 5 | 14 | 313 |
-| lib/screens/pao | 5 | 1,122 | 11 | 73 | 1,206 |
-| lib/screens/single_digit | 5 | 777 | 12 | 67 | 856 |
-| lib/screens/templates | 2 | 209 | 4 | 34 | 247 |
-| lib/services | 1 | 262 | 5 | 25 | 292 |
+| lib | 53 | 12,316 | 175 | 700 | 13,191 |
+| lib/components | 19 | 3,263 | 37 | 211 | 3,511 |
+| lib/components/alphabet | 2 | 232 | 0 | 17 | 249 |
+| lib/components/custom_memory | 4 | 483 | 6 | 42 | 531 |
+| lib/components/deck | 2 | 608 | 0 | 23 | 631 |
+| lib/components/pao | 2 | 576 | 0 | 21 | 597 |
+| lib/components/single_digit | 2 | 266 | 3 | 18 | 287 |
+| lib/components/templates | 2 | 565 | 4 | 28 | 597 |
+| lib/constants | 2 | 1,647 | 11 | 27 | 1,685 |
+| lib/screens | 30 | 7,073 | 115 | 425 | 7,613 |
+| lib/screens/alphabet | 5 | 977 | 10 | 58 | 1,045 |
+| lib/screens/custom_memory | 2 | 952 | 3 | 52 | 1,007 |
+| lib/screens/deck | 5 | 1,264 | 9 | 70 | 1,343 |
+| lib/screens/face | 2 | 529 | 4 | 23 | 556 |
+| lib/screens/lessons | 2 | 296 | 5 | 14 | 315 |
+| lib/screens/pao | 5 | 1,194 | 11 | 70 | 1,275 |
+| lib/screens/single_digit | 5 | 854 | 10 | 64 | 928 |
+| lib/screens/templates | 2 | 297 | 1 | 24 | 322 |
+| lib/services | 1 | 274 | 7 | 25 | 306 |
 | test | 1 | 14 | 10 | 7 | 31 |
 
 [details](details.md)

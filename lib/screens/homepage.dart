@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -40,32 +41,40 @@ import 'package:mem_plus_plus/screens/deck/deck_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_timed_test_screen.dart';
 
 class MyHomePage extends StatefulWidget {
-
   MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: vibration for every button
+// done:
 // TODO: collapse menu items into consolidated versions after complete
+// TODO: don't allow empty written test submission
+// TODO: prevent duplicate cards in deck test
+// TODO: make all sections gradient upon completion
+
+// next up:
+// TODO: custom notifications based on progress
+// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
+// TODO: clear snackbars when leaving a screen?
+
+// horizon:
+// TODO: only show one MC/flash card at a time (performance?)
+// TODO: pop practice when done (not fully done)
 // TODO: make CSV input scrollable
 // TODO: make keyboard numeric for custom memory fields
-// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 // TODO: alphabet PAO (person action, same object)
 // TODO: add symbols
 // TODO: add password test
-// TODO: decrease size of photos
-// TODO: clear snackbars when leaving a screen?
 // TODO: move custom memory to floating button
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: write some lessons, intersperse
-// TODO: only show one MC/flash card at a time (performance?)
 // TODO: crashlytics for IOS
 // TODO: add cooler page transitions
 
 // Nice to have
+// TODO: make CSV uploader text selectable
 // TODO: add name (first time, and preferences) - use in local notifications
 // TODO: add about developer to settings
 // TODO: add sounds
@@ -88,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool customMemoryManagerAvailable;
   bool customMemoryManagerFirstView;
   final globalKey = GlobalKey<ScaffoldState>();
+  bool consolidateSingleDigit = false;
+  bool consolidateAlphabet = false;
+  bool consolidatePAO = false;
+  bool consolidateDeck = false;
   var prefs = PrefsUpdater();
 
   @override
@@ -97,7 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
     getSharedPrefs();
     initializeActivityMenuButtonMap();
     initializeNotificationsScheduler();
-    new Timer.periodic(Duration(milliseconds: 100), (Timer t) => setState(() {}));
+    new Timer.periodic(
+        Duration(milliseconds: 100), (Timer t) => setState(() {}));
   }
 
   initializeNotificationsScheduler() async {
@@ -110,6 +124,8 @@ class _MyHomePageState extends State<MyHomePage> {
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
+    // TODO: here
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
         'Have you improved your memory today?',
@@ -120,13 +136,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkForAppUpdate() async {
-  //  String version = '6';
-  //  if (await prefs.getBool('VERSION-$version') == null) {
-  //    print('resetting due to new version $version');
-  //    resetActivities();
-  //    await prefs.setBool('VERSION-$version', true);
-  //    setUnlockedActivities();
-  //  }
+    //  String version = '6';
+    //  if (await prefs.getBool('VERSION-$version') == null) {
+    //    print('resetting due to new version $version');
+    //    resetActivities();
+    //    await prefs.setBool('VERSION-$version', true);
+    //    setUnlockedActivities();
+    //  }
   }
 
   Future<Null> getSharedPrefs() async {
@@ -205,18 +221,35 @@ class _MyHomePageState extends State<MyHomePage> {
       customMemories = await prefs.getSharedPrefs(customMemoriesKey);
     }
 
-    // set available activities
+    // iterate through all activity states, add activities if they are visible
+    availableActivities = [];
     activityStates = await prefs.getSharedPrefs(activityStatesKey);
-    // print(activityStates);
-    setState(() {
-      availableActivities = [];
-      for (String activityName in activityStates.keys) {
-        if (activityStates[activityName].visible) {
-          availableActivities.add(activityName);
-        }
+
+    for (String activityName in activityStates.keys) {
+      if (activityStates[activityName].visible) {
+        availableActivities.add(activityName);
       }
-    });
-    // print(availableActivities);
+    }
+
+    // consolidate menu buttons
+    print(await prefs.getBool(singleDigitTimedTestCompleteKey));
+    if (!(await prefs.getBool(singleDigitTimedTestCompleteKey) == null)) {
+      print('setting consolidate single digit true');
+      consolidateSingleDigit = true;
+    }
+    if (await prefs.getBool(alphabetTimedTestCompleteKey)) {
+      consolidateAlphabet = true;
+    }
+    if (await prefs.getBool(paoTimedTestCompleteKey)) {
+      consolidatePAO = true;
+    }
+    if (await prefs.getBool(deckTimedTestCompleteKey)) {
+      consolidateDeck = true;
+    }
+
+    setState(() {});
+    // print(activityStates);
+    print(availableActivities);
   }
 
   checkFirstTime() async {
@@ -253,7 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> getTodo() {
-    List<MainMenuOption> mainMenuOptions = [];
+    List<Widget> mainMenuOptions = [];
 
     // custom tests
     customMemories.forEach((title, memory) {
@@ -272,6 +305,9 @@ class _MyHomePageState extends State<MyHomePage> {
         callback: callback,
         color: Colors.purple[400],
         splashColor: Colors.purple[500],
+        complete1: Colors.purple[200],
+        complete2: Colors.purple[500],
+        complete: true,
       ));
     });
 
@@ -287,6 +323,9 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: activityMenuButtonMap[activity].icon,
           color: activityMenuButtonMap[activity].color,
           splashColor: activityMenuButtonMap[activity].splashColor,
+          complete1: activityMenuButtonMap[activity].complete1,
+          complete2: activityMenuButtonMap[activity].complete2,
+          complete: false,
         ));
       }
     }
@@ -294,19 +333,154 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> getReview() {
-    List<MainMenuOption> mainMenuOptions = [];
+    List<Widget> mainMenuOptions = [];
+
     for (String activity in availableActivities) {
       if (activityStates[activity] != null &&
           activityStates[activity].state == 'review') {
-        mainMenuOptions.add(MainMenuOption(
-          callback: callback,
-          activity: activityStates[activity],
-          text: activityMenuButtonMap[activity].text,
-          route: activityMenuButtonMap[activity].route,
-          icon: activityMenuButtonMap[activity].icon,
-          color: activityMenuButtonMap[activity].color,
-          splashColor: activityMenuButtonMap[activity].splashColor,
-        ));
+        bool notConsolidated = true;
+        if (activity.contains(singleDigitKey) && consolidateSingleDigit) {
+          notConsolidated = false;
+        }
+        if (activity.contains(alphabetKey) && consolidateAlphabet) {
+          notConsolidated = false;
+        }
+        if (activity.contains(paoKey) && consolidatePAO) {
+          notConsolidated = false;
+        }
+        if (activity.contains(deckKey) && consolidateDeck) {
+          notConsolidated = false;
+        }
+        if (notConsolidated) {
+          mainMenuOptions.add(MainMenuOption(
+            callback: callback,
+            activity: activityStates[activity],
+            text: activityMenuButtonMap[activity].text,
+            route: activityMenuButtonMap[activity].route,
+            icon: activityMenuButtonMap[activity].icon,
+            color: activityMenuButtonMap[activity].color,
+            splashColor: activityMenuButtonMap[activity].splashColor,
+            complete: true,
+            complete1: activityMenuButtonMap[activity].complete1,
+            complete2: activityMenuButtonMap[activity].complete2,
+          ));
+        }
+      }
+      if (activity == singleDigitEditKey && consolidateSingleDigit) {
+        mainMenuOptions.add(
+          CondensedMainMenuButtons(
+            text: 'Single Digit:',
+            backgroundColor: colorSingleDigitStandard,
+            buttonColor: colorSingleDigitDarker,
+            buttonSplashColor: colorSingleDigitDarkest,
+            editActivity: activityStates[singleDigitEditKey],
+            editRoute: SingleDigitEditScreen(
+              callback: callback,
+            ),
+            practiceActivity: activityStates[singleDigitPracticeKey],
+            practiceRoute: SingleDigitPracticeScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            testActivity: activityStates[singleDigitMultipleChoiceTestKey],
+            testIcon: multipleChoiceTestIcon,
+            testRoute: SingleDigitMultipleChoiceTestScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            timedTestPrepActivity: activityStates[singleDigitTimedTestPrepKey],
+            timedTestPrepRoute: SingleDigitTimedTestPrepScreen(
+              callback: callback,
+            ),
+          ),
+        );
+      }
+      if (activity == alphabetEditKey && consolidateAlphabet) {
+        mainMenuOptions.add(
+          CondensedMainMenuButtons(
+            text: 'Alphabet:',
+            backgroundColor: colorAlphabetStandard,
+            buttonColor: colorAlphabetDarker,
+            buttonSplashColor: colorAlphabetDarkest,
+            editActivity: activityStates[alphabetEditKey],
+            editRoute: AlphabetEditScreen(
+              callback: callback,
+            ),
+            practiceActivity: activityStates[alphabetPracticeKey],
+            practiceRoute: AlphabetPracticeScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            testActivity: activityStates[alphabetWrittenTestKey],
+            testIcon: writtenTestIcon,
+            testRoute: AlphabetWrittenTestScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            timedTestPrepActivity: activityStates[alphabetTimedTestPrepKey],
+            timedTestPrepRoute: AlphabetTimedTestPrepScreen(
+              callback: callback,
+            ),
+          ),
+        );
+      }
+      if (activity == paoEditKey && consolidatePAO) {
+        mainMenuOptions.add(
+          CondensedMainMenuButtons(
+            text: 'PAO:',
+            backgroundColor: colorPAOStandard,
+            buttonColor: colorPAODarker,
+            buttonSplashColor: colorPAODarkest,
+            editActivity: activityStates[paoEditKey],
+            editRoute: PAOEditScreen(
+              callback: callback,
+            ),
+            practiceActivity: activityStates[paoPracticeKey],
+            practiceRoute: PAOPracticeScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            testActivity: activityStates[paoMultipleChoiceTestKey],
+            testIcon: multipleChoiceTestIcon,
+            testRoute: PAOMultipleChoiceTestScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            timedTestPrepActivity: activityStates[paoTimedTestPrepKey],
+            timedTestPrepRoute: PAOTimedTestPrepScreen(
+              callback: callback,
+            ),
+          ),
+        );
+      }
+      if (activity == deckEditKey && consolidateDeck) {
+        mainMenuOptions.add(
+          CondensedMainMenuButtons(
+            text: 'Deck:',
+            backgroundColor: colorDeckStandard,
+            buttonColor: colorDeckDarker,
+            buttonSplashColor: colorDeckDarkest,
+            editActivity: activityStates[deckEditKey],
+            editRoute: DeckEditScreen(
+              callback: callback,
+            ),
+            practiceActivity: activityStates[deckPracticeKey],
+            practiceRoute: DeckPracticeScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            testActivity: activityStates[deckMultipleChoiceTestKey],
+            testIcon: multipleChoiceTestIcon,
+            testRoute: DeckMultipleChoiceTestScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            timedTestPrepActivity: activityStates[deckTimedTestPrepKey],
+            timedTestPrepRoute: DeckTimedTestPrepScreen(
+              callback: callback,
+            ),
+          ),
+        );
       }
     }
     mainMenuOptions = mainMenuOptions.reversed.toList();
@@ -318,7 +492,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return firstTimeOpeningApp == null
         ? Scaffold()
         : Scaffold(
-          backgroundColor: backgroundColor,
+            backgroundColor: backgroundColor,
             key: globalKey,
             appBar: AppBar(
               title: Text('MEM++ Homepage'),
@@ -417,7 +591,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     // ),
                     Text(
                       'To-do:',
-                      style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
+                      style: TextStyle(
+                          fontSize: 30, color: backgroundHighlightColor),
                     ),
                     Container(
                       height: 10,
@@ -430,7 +605,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     Text(
                       'Review:',
-                      style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
+                      style: TextStyle(
+                          fontSize: 30, color: backgroundHighlightColor),
                     ),
                     Container(
                       height: 10,
@@ -475,6 +651,11 @@ class _MyHomePageState extends State<MyHomePage> {
     await prefs.setBool(customMemoryManagerAvailableKey, true);
     customMemoryManagerAvailable = true;
 
+    await prefs.setBool(singleDigitTimedTestCompleteKey, true);
+    await prefs.setBool(alphabetTimedTestCompleteKey, true);
+    await prefs.setBool(paoTimedTestCompleteKey, true);
+    await prefs.setBool(deckTimedTestCompleteKey, true);
+
     await prefs.writeSharedPrefs(
         activityStatesKey, defaultActivityStatesAllDone);
 
@@ -482,208 +663,271 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void initializeActivityMenuButtonMap() {
-    var editIcon = Icon(Icons.edit);
-    var practiceIcon = Icon(Icons.flip);
-    var multipleChoiceTestIcon = Icon(Icons.list);
-    var timedTestPrepIcon = Icon(Icons.add_alarm);
-    var timedTestIcon = Icon(Icons.access_alarm);
-    var writtenTestIcon = Icon(Icons.text_format);
     activityMenuButtonMap = {
       welcomeKey: ActivityMenuButton(
-          text: 'Welcome',
-          route: WelcomeScreen(),
-          icon: Icon(Icons.filter),
-          color: Colors.green[100],
-          splashColor: Colors.green[200]),
+        text: 'Welcome',
+        route: WelcomeScreen(),
+        icon: Icon(Icons.filter),
+        color: Colors.green[200],
+        splashColor: Colors.green[400],
+        complete1: Colors.green[200],
+        complete2: Colors.green[400],
+      ),
       singleDigitEditKey: ActivityMenuButton(
-          text: 'Single Digit [View/Edit]',
-          route: SingleDigitEditScreen(
-            callback: callback,
-          ),
-          icon: editIcon,
-          color: Colors.amber[100],
-          splashColor: Colors.amber[200]),
+        text: 'Single Digit [View/Edit]',
+        route: SingleDigitEditScreen(
+          callback: callback,
+        ),
+        icon: editIcon,
+        color: Colors.amber[100],
+        splashColor: Colors.amber[200],
+        complete1: Colors.amber[200],
+        complete2: Colors.amber[400],
+      ),
       singleDigitPracticeKey: ActivityMenuButton(
-          text: 'Single Digit [Practice]',
-          route: SingleDigitPracticeScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: practiceIcon,
-          color: Colors.amber[200],
-          splashColor: Colors.amber[300]),
+        text: 'Single Digit [Practice]',
+        route: SingleDigitPracticeScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: practiceIcon,
+        color: Colors.amber[200],
+        splashColor: Colors.amber[300],
+        complete1: Colors.amber[200],
+        complete2: Colors.amber[400],
+      ),
       singleDigitMultipleChoiceTestKey: ActivityMenuButton(
-          text: 'Single Digit [MC Test]',
-          route: SingleDigitMultipleChoiceTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: multipleChoiceTestIcon,
-          color: Colors.amber[300],
-          splashColor: Colors.amber[400]),
+        text: 'Single Digit [MC Test]',
+        route: SingleDigitMultipleChoiceTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: multipleChoiceTestIcon,
+        color: Colors.amber[300],
+        splashColor: Colors.amber[400],
+        complete1: Colors.amber[200],
+        complete2: Colors.amber[400],
+      ),
       singleDigitTimedTestPrepKey: ActivityMenuButton(
-          text: 'Single Digit [Test Prep]',
-          route: SingleDigitTimedTestPrepScreen(
-            callback: callback,
-          ),
-          icon: timedTestPrepIcon,
-          color: Colors.amber[400],
-          splashColor: Colors.amber[500]),
+        text: 'Single Digit [Test Prep]',
+        route: SingleDigitTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: Colors.amber[400],
+        splashColor: Colors.amber[500],
+        complete1: Colors.amber[200],
+        complete2: Colors.amber[400],
+      ),
       singleDigitTimedTestKey: ActivityMenuButton(
-          text: 'Single Digit [Timed Test]',
-          route: SingleDigitTimedTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: timedTestIcon,
-          color: Colors.amber[400],
-          splashColor: Colors.amber[500]),
+        text: 'Single Digit [Timed Test]',
+        route: SingleDigitTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: Colors.amber[400],
+        splashColor: Colors.amber[500],
+        complete1: Colors.amber[200],
+        complete2: Colors.amber[400],
+      ),
       alphabetEditKey: ActivityMenuButton(
-          text: 'Alphabet [View/Edit]',
-          route: AlphabetEditScreen(
-            callback: callback,
-          ),
-          icon: editIcon,
-          color: Colors.blue[100],
-          splashColor: Colors.blue[200]),
+        text: 'Alphabet [View/Edit]',
+        route: AlphabetEditScreen(
+          callback: callback,
+        ),
+        icon: editIcon,
+        color: Colors.blue[100],
+        splashColor: Colors.blue[200],
+        complete1: Colors.blue[200],
+        complete2: Colors.blue[400],
+      ),
       alphabetPracticeKey: ActivityMenuButton(
-          text: 'Alphabet [Practice]',
-          route: AlphabetPracticeScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: practiceIcon,
-          color: Colors.blue[200],
-          splashColor: Colors.blue[300]),
+        text: 'Alphabet [Practice]',
+        route: AlphabetPracticeScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: practiceIcon,
+        color: Colors.blue[200],
+        splashColor: Colors.blue[300],
+        complete1: Colors.blue[200],
+        complete2: Colors.blue[400],
+      ),
       alphabetWrittenTestKey: ActivityMenuButton(
-          text: 'Alphabet [Written Test]',
-          route: AlphabetWrittenTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: writtenTestIcon,
-          color: Colors.blue[300],
-          splashColor: Colors.blue[400]),
+        text: 'Alphabet [Written Test]',
+        route: AlphabetWrittenTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: writtenTestIcon,
+        color: Colors.blue[300],
+        splashColor: Colors.blue[400],
+        complete1: Colors.blue[200],
+        complete2: Colors.blue[400],
+      ),
       alphabetTimedTestPrepKey: ActivityMenuButton(
-          text: 'Alphabet [Test Prep]',
-          route: AlphabetTimedTestPrepScreen(
-            callback: callback,
-          ),
-          icon: timedTestPrepIcon,
-          color: Colors.blue[400],
-          splashColor: Colors.blue[500]),
+        text: 'Alphabet [Test Prep]',
+        route: AlphabetTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: Colors.blue[400],
+        splashColor: Colors.blue[500],
+        complete1: Colors.blue[200],
+        complete2: Colors.blue[400],
+      ),
       alphabetTimedTestKey: ActivityMenuButton(
-          text: 'Alphabet [Timed Test]',
-          route: AlphabetTimedTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: timedTestIcon,
-          color: Colors.blue[400],
-          splashColor: Colors.blue[500]),
+        text: 'Alphabet [Timed Test]',
+        route: AlphabetTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: Colors.blue[400],
+        splashColor: Colors.blue[500],
+        complete1: Colors.blue[200],
+        complete2: Colors.blue[400],
+      ),
       paoEditKey: ActivityMenuButton(
-          text: 'PAO [View/Edit]',
-          route: PAOEditScreen(
-            callback: callback,
-          ),
-          icon: editIcon,
-          color: Colors.pink[100],
-          splashColor: Colors.pink[200]),
+        text: 'PAO [View/Edit]',
+        route: PAOEditScreen(
+          callback: callback,
+        ),
+        icon: editIcon,
+        color: Colors.pink[100],
+        splashColor: Colors.pink[200],
+        complete1: Colors.pink[200],
+        complete2: Colors.pink[400],
+      ),
       paoPracticeKey: ActivityMenuButton(
-          text: 'PAO [Practice]',
-          route: PAOPracticeScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: practiceIcon,
-          color: Colors.pink[200],
-          splashColor: Colors.pink[300]),
+        text: 'PAO [Practice]',
+        route: PAOPracticeScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: practiceIcon,
+        color: Colors.pink[200],
+        splashColor: Colors.pink[300],
+        complete1: Colors.pink[200],
+        complete2: Colors.pink[400],
+      ),
       paoMultipleChoiceTestKey: ActivityMenuButton(
-          text: 'PAO [MC Test]',
-          route: PAOMultipleChoiceTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: multipleChoiceTestIcon,
-          color: Colors.pink[300],
-          splashColor: Colors.pink[400]),
+        text: 'PAO [MC Test]',
+        route: PAOMultipleChoiceTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: multipleChoiceTestIcon,
+        color: Colors.pink[300],
+        splashColor: Colors.pink[400],
+        complete1: Colors.pink[200],
+        complete2: Colors.pink[400],
+      ),
       paoTimedTestPrepKey: ActivityMenuButton(
-          text: 'PAO [Test Prep]',
-          route: PAOTimedTestPrepScreen(
-            callback: callback,
-          ),
-          icon: timedTestPrepIcon,
-          color: Colors.pink[400],
-          splashColor: Colors.pink[500]),
+        text: 'PAO [Test Prep]',
+        route: PAOTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: Colors.pink[400],
+        splashColor: Colors.pink[500],
+        complete1: Colors.pink[200],
+        complete2: Colors.pink[400],
+      ),
       paoTimedTestKey: ActivityMenuButton(
-          text: 'PAO [Timed Test]',
-          route: PAOTimedTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: timedTestIcon,
-          color: Colors.pink[400],
-          splashColor: Colors.pink[500]),
+        text: 'PAO [Timed Test]',
+        route: PAOTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: Colors.pink[400],
+        splashColor: Colors.pink[500],
+        complete1: Colors.pink[200],
+        complete2: Colors.pink[400],
+      ),
       faceTimedTestPrepKey: ActivityMenuButton(
-          text: 'Faces [Test Prep]',
-          route: FaceTimedTestPrepScreen(
-            callback: callback,
-          ),
-          icon: timedTestPrepIcon,
-          color: Colors.lime[500],
-          splashColor: Colors.lime[600]),
+        text: 'Faces [Test Prep]',
+        route: FaceTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: Colors.lime[100],
+        splashColor: Colors.lime[200],
+        complete1: Colors.lime[200],
+        complete2: Colors.lime[400],
+      ),
       faceTimedTestKey: ActivityMenuButton(
-          text: 'Faces [Timed Test]',
-          route: FaceTimedTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: timedTestIcon,
-          color: Colors.lime[500],
-          splashColor: Colors.lime[600]),
+        text: 'Faces [Timed Test]',
+        route: FaceTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: Colors.lime[100],
+        splashColor: Colors.lime[200],
+        complete1: Colors.lime[200],
+        complete2: Colors.lime[400],
+      ),
       deckEditKey: ActivityMenuButton(
-          text: 'Deck [View/Edit]',
-          route: DeckEditScreen(
-            callback: callback,
-          ),
-          icon: editIcon,
-          color: Colors.orange[100],
-          splashColor: Colors.orange[200]),
+        text: 'Deck [View/Edit]',
+        route: DeckEditScreen(
+          callback: callback,
+        ),
+        icon: editIcon,
+        color: Colors.teal[100],
+        splashColor: Colors.teal[200],
+        complete1: Colors.teal[200],
+        complete2: Colors.teal[400],
+      ),
       deckPracticeKey: ActivityMenuButton(
-          text: 'Deck [Practice]',
-          route: DeckPracticeScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: practiceIcon,
-          color: Colors.orange[200],
-          splashColor: Colors.orange[300]),
+        text: 'Deck [Practice]',
+        route: DeckPracticeScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: practiceIcon,
+        color: Colors.teal[200],
+        splashColor: Colors.teal[300],
+        complete1: Colors.teal[200],
+        complete2: Colors.teal[400],
+      ),
       deckMultipleChoiceTestKey: ActivityMenuButton(
-          text: 'Deck [MC Test]',
-          route: DeckMultipleChoiceTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: multipleChoiceTestIcon,
-          color: Colors.orange[300],
-          splashColor: Colors.orange[400]),
+        text: 'Deck [MC Test]',
+        route: DeckMultipleChoiceTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: multipleChoiceTestIcon,
+        color: Colors.teal[300],
+        splashColor: Colors.teal[400],
+        complete1: Colors.teal[200],
+        complete2: Colors.teal[400],
+      ),
       deckTimedTestPrepKey: ActivityMenuButton(
-          text: 'Deck [Test Prep]',
-          route: DeckTimedTestPrepScreen(
-            callback: callback,
-          ),
-          icon: timedTestPrepIcon,
-          color: Colors.orange[400],
-          splashColor: Colors.orange[500]),
+        text: 'Deck [Test Prep]',
+        route: DeckTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: Colors.teal[400],
+        splashColor: Colors.teal[500],
+        complete1: Colors.teal[200],
+        complete2: Colors.teal[400],
+      ),
       deckTimedTestKey: ActivityMenuButton(
-          text: 'Deck [Timed Test]',
-          route: DeckTimedTestScreen(
-            callback: callback,
-            globalKey: globalKey,
-          ),
-          icon: timedTestIcon,
-          color: Colors.orange[400],
-          splashColor: Colors.orange[500]),
+        text: 'Deck [Timed Test]',
+        route: DeckTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: Colors.teal[400],
+        splashColor: Colors.teal[500],
+        complete1: Colors.teal[200],
+        complete2: Colors.teal[400],
+      ),
     };
   }
 }

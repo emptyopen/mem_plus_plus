@@ -84,13 +84,13 @@ Widget getDeckCard(String digitSuit, String size) {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: backgroundColor)),
+              border: Border.all(color: Colors.black)),
           child: Stack(
             children: <Widget>[
               Positioned(
                 child: Text(
                   digit,
-                  style: TextStyle(fontSize: fontSize),
+                  style: TextStyle(fontSize: fontSize, color: Colors.black),
                 ),
                 left: left,
                 top: top,

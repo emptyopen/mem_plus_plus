@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 const String usernameKey = 'Username';
 
@@ -60,7 +60,7 @@ const String paoTimedTestKey = 'PAOTimedTest';
 const String paoEditCompleteKey = 'PAOEditComplete';
 const String paoMultipleChoiceTestCompleteKey = 'PAOMultipleChoiceTestComplete';
 const String paoTestActiveKey = 'PAOTestActive';
-const String paoTestCompleteKey = 'PAOTimedTestComplete';
+const String paoTimedTestCompleteKey = 'PAOTimedTestComplete';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
@@ -122,6 +122,27 @@ const String deckMultipleChoiceTestFirstHelpKey =
     'PAOMultipleChoiceTestFirstHelp';
 const String deckTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
 const String deckTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
+
+var editIcon = Icon(Icons.edit);
+var practiceIcon = Icon(Icons.flip);
+var multipleChoiceTestIcon = Icon(Icons.list);
+var timedTestPrepIcon = Icon(Icons.add_alarm);
+var timedTestIcon = Icon(Icons.access_alarm);
+var writtenTestIcon = Icon(Icons.text_format);
+
+Map termDurationsMap = {
+  shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 3), Duration(seconds: 5), Duration(seconds: 8), Duration(seconds: 1)] :
+    [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
+  mediumTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10)],
+  longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
+  extraLongTerm: debugModeEnabled ? [Duration(days: 4), Duration(days: 4), Duration(seconds: 5), Duration(seconds: 8), Duration(seconds: 1)] : [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90), Duration(days: 180), Duration(days: 400)],
+};
+
+Map customMemoryIconMap = {
+  contactString: Icons.person_pin,
+  idCardString: Icons.credit_card,
+  otherString: Icons.add,
+};
 
 List<String> menNames = [
   'Liam',

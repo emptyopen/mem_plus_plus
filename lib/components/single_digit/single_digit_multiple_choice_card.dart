@@ -139,10 +139,11 @@ class _SingleDigitMultipleChoiceCardState
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
     return done
         ? Container()
         : Container(
-              height: 500,
+              height: screenHeight,
             decoration: BoxDecoration(
               color: backgroundColor,
             ),
@@ -220,7 +221,8 @@ class _SingleDigitMultipleChoiceCardState
                   padding: 5,
                   onPressed: () => checkResult(3),
                 ),
+                SizedBox(height: 60,)
               ],
-            ));
+            ),);
   }
 }

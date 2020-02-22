@@ -11,55 +11,37 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-Map termDurationsMap = {
-  shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 3), Duration(seconds: 5), Duration(seconds: 8), Duration(seconds: 1)] :
-    [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
-  mediumTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10)],
-  longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
-  extraLongTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90), Duration(days: 180), Duration(days: 400)],
-};
-
-Map customMemoryIconMap = {
-  contactString: Icons.person_pin,
-  idCardString: Icons.credit_card,
-  otherString: Icons.add,
-};
+import 'package:flutter/services.dart';
 
 class PrefsUpdater {
-  String activityStatesKey = 'ActivityStates';
-  String singleDigitKey = 'SingleDigit';
-  String levelKey = 'Level';
 
   Future<Object> getSharedPrefs(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     switch (key) {
-      case 'ActivityStates':
+      case activityStatesKey:
         Map<String, dynamic> rawMap = json.decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
         return rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
-      case 'SingleDigit':
+      case singleDigitKey:
         var singleDigitData = (json.decode(prefs.getString(key)) as List)
             .map((i) => SingleDigitData.fromJson(i))
             .toList();
         return singleDigitData;
-      case 'Alphabet':
+      case alphabetKey:
         var singleDigitData = (json.decode(prefs.getString(key)) as List)
           .map((i) => AlphabetData.fromJson(i))
           .toList();
         return singleDigitData;
-      case 'PAO':
+      case paoKey:
         var singleDigitData = (json.decode(prefs.getString(key)) as List)
           .map((i) => PAOData.fromJson(i))
           .toList();
         return singleDigitData;
-      case 'Deck':
+      case deckKey:
         var singleDigitData = (json.decode(prefs.getString(key)) as List)
           .map((i) => DeckData.fromJson(i))
           .toList();
         return singleDigitData;
-      case 'Level':
-        return prefs.getInt(levelKey);
-      case 'CustomMemories':
+      case customMemoriesKey:
         return json.decode(prefs.getString(key));
     }
     return null;
@@ -68,23 +50,23 @@ class PrefsUpdater {
   Future<void> writeSharedPrefs(String key, Object object) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     switch (key) {
-      case 'ActivityStates':
+      case activityStatesKey:
         Map<String, Activity> activityStates = object;
         prefs.setString(activityStatesKey, json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
         break;
-      case 'SingleDigit':
+      case singleDigitKey:
         prefs.setString(key, json.encode(object));
         break;
-      case 'Alphabet':
+      case alphabetKey:
         prefs.setString(key, json.encode(object));
         break;
-      case 'PAO':
+      case paoKey:
         prefs.setString(key, json.encode(object));
         break;
-      case 'Deck':
+      case deckKey:
         prefs.setString(key, json.encode(object));
         break;
-      case 'CustomMemories':
+      case customMemoriesKey:
         prefs.setString(key, json.encode(object));
         break;
     }
@@ -253,10 +235,13 @@ void showConfirmDialog({BuildContext context, Function function, String confirmT
 // }
 
 String durationToString(Duration duration) {
-  int hours = duration.inHours;
-  int minutes = duration.inMinutes - hours * 60;
-  int seconds = duration.inSeconds - minutes * 60 - hours * 3600;
-  if (hours >= 1) {
+  int days = duration.inDays;
+  int hours = duration.inHours - days * 24;
+  int minutes = duration.inMinutes - hours * 60 - days * 1440 ;
+  int seconds = duration.inSeconds - minutes * 60 - hours * 3600 - days * 86400;
+  if (days >= 1) {
+    return '${days}d ${hours}h';
+  } else if (hours >= 1) {
     return '${hours}h ${minutes}m';
   } else if (minutes >= 3) {
     return '$minutes minutes';

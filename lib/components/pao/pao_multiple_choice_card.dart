@@ -148,7 +148,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
           ),
         ),
         duration: Duration(seconds: 1),
-        backgroundColor: Colors.green[200],
+        backgroundColor: colorCorrect,
       );
       Scaffold.of(context).showSnackBar(snackBar);
       setState(() {
@@ -164,7 +164,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
           ),
         ),
         duration: Duration(seconds: 2),
-        backgroundColor: Colors.red[200],
+        backgroundColor: colorIncorrect,
       );
       Scaffold.of(context).showSnackBar(snackBar);
       setState(() {
@@ -176,10 +176,11 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
     return done
         ? Container()
         : Container(
-              height: 500,
+              height: screenHeight,
             decoration: BoxDecoration(
               color: backgroundColor,
             ),
@@ -192,6 +193,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   child: Text(
                     mapChoice == 'digitToPersonActionObject' ? 'Digit:' : 'PAO:',
                     style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(
@@ -202,7 +204,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   mapChoice == 'digitToPersonActionObject'
                       ? widget.paoData.digits
                       : randomPAOChoice(widget.paoData),
-                  style: TextStyle(fontSize: 50, color: backgroundHighlightColor),
+                  style: TextStyle(fontSize: 40, color: backgroundHighlightColor),
                   textAlign: TextAlign.center,
                 )),
                 SizedBox(height: 30,),
@@ -246,6 +248,7 @@ class _PAOMultipleChoiceCardState extends State<PAOMultipleChoiceCard> {
                   padding: 10,
                   onPressed: () => checkResult(3),
                 ),
+                SizedBox(height: 60,)
               ],
             ));
   }

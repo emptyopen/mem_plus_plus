@@ -22,6 +22,7 @@ class AlphabetWrittenCard extends StatefulWidget {
 class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
   bool done = false;
   List<AlphabetData> alphabetDataList;
+  bool isErrorMessage = false;
   final textController = TextEditingController();
 
   @override
@@ -61,32 +62,39 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
     Levenshtein d = new Levenshtein();
     String answer = widget.alphabetData.object.toLowerCase();
     String guess = textController.text.toLowerCase().trim();
+    if (guess == '') {
+      setState(() {
+        isErrorMessage = true;
+      });
+      return;
+    }
     if (d.distance(answer, guess) == 0) {
       showSnackBar(
-        scaffoldState: Scaffold.of(context),
-        snackBarText: 'Correct!',
-        backgroundColor: colorCorrect,
-        durationSeconds: 1);
+          scaffoldState: Scaffold.of(context),
+          snackBarText: 'Correct!',
+          backgroundColor: colorCorrect,
+          durationSeconds: 1);
       setState(() {
         widget.callback(context, true);
         done = true;
       });
     } else if (d.distance(answer, guess) == 1) {
       showSnackBar(
-        scaffoldState: Scaffold.of(context),
-        snackBarText: 'Close enough!',
-        backgroundColor: colorCorrect,
-        durationSeconds: 1);
+          scaffoldState: Scaffold.of(context),
+          snackBarText: 'Close enough!',
+          backgroundColor: colorCorrect,
+          durationSeconds: 1);
       setState(() {
         widget.callback(context, true);
         done = true;
       });
     } else {
       showSnackBar(
-        scaffoldState: Scaffold.of(context),
-        snackBarText: 'Incorrect! The correct answer is: ${widget.alphabetData.object}',
-        backgroundColor: colorIncorrect,
-        durationSeconds: 3);
+          scaffoldState: Scaffold.of(context),
+          snackBarText:
+              'Incorrect! The correct answer is: ${widget.alphabetData.object}',
+          backgroundColor: colorIncorrect,
+          durationSeconds: 3);
       setState(() {
         widget.callback(context, false);
         done = true;
@@ -100,7 +108,7 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
     return done
         ? Container()
         : Container(
-              height: 500,
+            height: 500,
             decoration: BoxDecoration(
               color: backgroundColor,
             ),
@@ -111,24 +119,38 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
                   child: Center(
                       child: Text(
                     widget.alphabetData.letter,
-                    style: TextStyle(fontSize: 30, color: backgroundSemiHighlightColor),
+                    style: TextStyle(
+                        fontSize: 30, color: backgroundSemiHighlightColor),
                   )),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Container(
                   width: 250,
                   child: TextField(
-                    style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
-                      controller: textController,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundSemiColor)),
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
-                        contentPadding: EdgeInsets.all(5),
-                        border: OutlineInputBorder(),
-                      )),
+                    style: TextStyle(
+                        fontSize: 22, color: backgroundHighlightColor),
+                    controller: textController,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: backgroundSemiColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: backgroundHighlightColor)),
+                      contentPadding: EdgeInsets.all(5),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 10,
+                ),
+                isErrorMessage ? Text('Can\'t be blank!', style: TextStyle(color: Colors.red, fontSize: 14),) : SizedBox(height: 14,),
+                SizedBox(
+                  height: 10,
+                ),
                 BasicFlatButton(
                   splashColor: Colors.blue[200],
                   text: 'Submit',

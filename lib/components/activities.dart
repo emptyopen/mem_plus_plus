@@ -35,8 +35,10 @@ class ActivityMenuButton {
   Icon icon;
   Color color;
   Color splashColor;
+  Color complete1;
+  Color complete2;
 
-  ActivityMenuButton({this.text, this.route, this.icon, this.color, this.splashColor});
+  ActivityMenuButton({this.text, this.route, this.icon, this.color, this.splashColor, this.complete1, this.complete2});
 }
 
 var defaultActivityStatesInitial = {

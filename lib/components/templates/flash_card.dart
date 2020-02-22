@@ -130,7 +130,7 @@ class _FlashCardState extends State<FlashCard> {
       showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
-              'Congratulations, you\'ve leveled up! Next up is a test!',
+              'Congratulations, you\'ve maxed out all familiarities! Next up is a test!',
           backgroundColor: widget.color,
           durationSeconds: 3);
       Navigator.pop(context);

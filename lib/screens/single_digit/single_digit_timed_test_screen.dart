@@ -56,9 +56,9 @@ class _SingleDigitTimedTestScreenState
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
       await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+      await prefs.updateActivityVisible(alphabetEditKey, true);
       if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
         await prefs.setBool(singleDigitTimedTestCompleteKey, true);
-        await prefs.updateActivityVisible(alphabetEditKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:

@@ -111,13 +111,14 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     await prefs.updateActivityState(deckTimedTestKey, 'review');
     await prefs.updateActivityVisible(deckTimedTestKey, false);
     await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-    Navigator.pop(context);
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
-            'The correct answers were: \n$card1$card2$card3\n$card4$card5$card6\n$card7$card8$card9\nTry the timed test again to unlock the next system.',
+            'The correct answers were: \n$card1 $card2 $card3\n$card4 $card5 $card6\n$card7 $card8 $card9\nTry the timed test again to unlock the next system.',
         backgroundColor: colorIncorrect,
-        durationSeconds: 15);
+        durationSeconds: 8);
+    Navigator.pop(context);
+    widget.callback();
   }
 
   dropDownPair(index) {

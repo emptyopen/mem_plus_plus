@@ -29,6 +29,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
   String digits7 = '';
   String digits8 = '';
   String digits9 = '';
+  var existingCards = [];
   PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration =
       debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 1);
@@ -101,15 +102,27 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
     if (sdTestIsActive == null || !sdTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
+
       digits1 = possibleValues[random.nextInt(possibleValues.length)];
+      existingCards.add(digits1);
+      possibleValues.remove(digits1);
       digits2 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits2);
       digits3 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits3);
       digits4 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits4);
       digits5 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits5);
       digits6 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits6);
       digits7 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits7);
       digits8 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits8);
+      print(possibleValues.length);
       digits9 = possibleValues[random.nextInt(possibleValues.length)];
+      possibleValues.remove(digits9);
       await prefs.setString('deckTestDigits1', digits1);
       await prefs.setString('deckTestDigits2', digits2);
       await prefs.setString('deckTestDigits3', digits3);

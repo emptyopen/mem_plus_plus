@@ -44,7 +44,7 @@ class _DeckMultipleChoiceTestScreenState
     if (success) {
       score += 1;
       results[attempts] = true;
-      if (score == 100) {
+      if (score == 52) {
         // update keys
         if (await prefs.getBool(deckMultipleChoiceTestCompleteKey) == null) {
           await prefs.setBool(deckMultipleChoiceTestCompleteKey, true);
@@ -75,13 +75,13 @@ class _DeckMultipleChoiceTestScreenState
     }
     attempts += 1;
 
-    if (attempts == 100 && score < 100) {
+    if (attempts == 52 && score < 52) {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Try again! You got this. Score: $score/52',
         textColor: Colors.white,
         backgroundColor: colorIncorrect,
-        durationSeconds: 5,
+        durationSeconds: 2,
       );
       Navigator.pop(context);
     }

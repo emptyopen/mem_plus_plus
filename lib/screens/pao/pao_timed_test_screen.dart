@@ -73,7 +73,8 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
       await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
       await prefs.setBool(customMemoryManagerAvailableKey, true);
-      if (await prefs.getBool(customMemoryManagerFirstHelpKey) == null) {
+      if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
+        await prefs.setBool(paoTimedTestCompleteKey, true);
         await prefs.setBool(customMemoryManagerFirstHelpKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
@@ -86,7 +87,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
-          textColor: Colors.white,
+          textColor: Colors.black,
           backgroundColor: colorFaceDarker,
           durationSeconds: 4,
           isSuper: true,
@@ -121,13 +122,14 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     await prefs.updateActivityState(paoTimedTestKey, 'review');
     await prefs.updateActivityVisible(paoTimedTestKey, false);
     await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-    Navigator.pop(context);
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,
       snackBarText: 'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
       backgroundColor: colorIncorrect,
       durationSeconds: 15
     );
+    Navigator.pop(context);
+    widget.callback();
   }
 
   @override
@@ -180,7 +182,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                         hintText: 'XXXXXX',
-                        hintStyle: TextStyle(fontSize: 30, color: backgroundHighlightColor)),
+                        hintStyle: TextStyle(fontSize: 30, color: Colors.grey)),
                   ),
                 ),
                 SizedBox(height: 25),
@@ -198,7 +200,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                         hintText: 'XXXXXX',
-                        hintStyle: TextStyle(fontSize: 30, color: backgroundHighlightColor)),
+                        hintStyle: TextStyle(fontSize: 30, color: Colors.grey)),
                   ),
                 ),
                 SizedBox(height: 25),
@@ -216,7 +218,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(),
                       hintText: 'XXXXXX',
-                      hintStyle: TextStyle(fontSize: 30, color: backgroundHighlightColor)),
+                      hintStyle: TextStyle(fontSize: 30, color: Colors.grey)),
                   ),
                 ),
                 SizedBox(height: 50),

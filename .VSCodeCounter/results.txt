@@ -1,20 +1,20 @@
-Date : 2020-02-16 22:32:41
+Date : 2020-02-21 17:57:21
 Directory : /Users/matt/flutter/mem_plus_plus
-Total : 68 files,  7819 codes, 205 comments, 660 blanks, all 8684 lines
+Total : 79 files,  12886 codes, 221 comments, 778 blanks, all 13885 lines
 
 Languages
 +--------------+------------+------------+------------+------------+------------+
 | language     | files      | code       | comment    | blank      | total      |
 +--------------+------------+------------+------------+------------+------------+
-| Dart         |         44 |      7,328 |        169 |        589 |      8,086 |
-| JSON         |          2 |        145 |          0 |          2 |        147 |
+| Dart         |         54 |     12,330 |        185 |        707 |     13,222 |
+| JSON         |          3 |        193 |          0 |          2 |        195 |
 | XML          |          7 |        110 |         26 |         13 |        149 |
-| Groovy       |          3 |         98 |          3 |         22 |        123 |
-| YAML         |          1 |         56 |          0 |          6 |         62 |
+| Groovy       |          3 |        107 |          3 |         22 |        132 |
+| YAML         |          1 |         62 |          0 |          6 |         68 |
 | Objective-C  |          2 |         20 |          1 |          6 |         27 |
 | Ruby         |          1 |         14 |          3 |          2 |         19 |
 | Markdown     |          2 |         13 |          0 |          9 |         22 |
-| Properties   |          3 |         11 |          1 |          4 |         16 |
+| Properties   |          3 |         13 |          1 |          4 |         18 |
 | Java         |          1 |         11 |          0 |          3 |         14 |
 | Shell Script |          1 |          9 |          2 |          1 |         12 |
 | C++          |          1 |          4 |          0 |          3 |          7 |
@@ -24,9 +24,9 @@ Directories
 +-----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                                                      | files      | code       | comment    | blank      | total      |
 +-----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                                                         |         68 |      7,819 |        205 |        660 |      8,684 |
-| android                                                                                                   |         12 |        169 |         28 |         40 |        237 |
-| android/app                                                                                               |          7 |        121 |         27 |         27 |        175 |
+| .                                                                                                         |         79 |     12,886 |        221 |        778 |     13,885 |
+| android                                                                                                   |         13 |        228 |         28 |         40 |        296 |
+| android/app                                                                                               |          8 |        173 |         27 |         27 |        227 |
 | android/app/src                                                                                           |          6 |         60 |         24 |         14 |         98 |
 | android/app/src/debug                                                                                     |          1 |          4 |          3 |          1 |          8 |
 | android/app/src/main                                                                                      |          4 |         52 |         18 |         12 |         82 |
@@ -47,22 +47,25 @@ Directories
 | ios/Runner/Assets.xcassets/AppIcon.appiconset                                                             |          1 |        122 |          0 |          1 |        123 |
 | ios/Runner/Assets.xcassets/LaunchImage.imageset                                                           |          2 |         26 |          0 |          3 |         29 |
 | ios/Runner/Base.lproj                                                                                     |          2 |         61 |          2 |          2 |         65 |
-| lib                                                                                                       |         43 |      7,314 |        159 |        582 |      8,055 |
-| lib/components                                                                                            |         17 |      2,501 |         39 |        192 |      2,732 |
-| lib/components/alphabet                                                                                   |          2 |        227 |          0 |         17 |        244 |
-| lib/components/custom_memory                                                                              |          4 |        423 |          6 |         44 |        473 |
-| lib/components/pao                                                                                        |          2 |        572 |          0 |         21 |        593 |
-| lib/components/single_digit                                                                               |          2 |        243 |          3 |         18 |        264 |
-| lib/components/templates                                                                                  |          2 |        482 |          4 |         28 |        514 |
-| lib/constants                                                                                             |          2 |         61 |          7 |         16 |         84 |
-| lib/screens                                                                                               |         22 |      4,430 |        104 |        337 |      4,871 |
-| lib/screens/alphabet                                                                                      |          5 |        896 |         10 |         58 |        964 |
-| lib/screens/custom_memory                                                                                 |          2 |        609 |         11 |         47 |        667 |
-| lib/screens/lessons                                                                                       |          2 |        294 |          5 |         14 |        313 |
-| lib/screens/pao                                                                                           |          5 |      1,122 |         11 |         73 |      1,206 |
-| lib/screens/single_digit                                                                                  |          5 |        777 |         12 |         67 |        856 |
-| lib/screens/templates                                                                                     |          2 |        209 |          4 |         34 |        247 |
-| lib/services                                                                                              |          1 |        262 |          5 |         25 |        292 |
+| lib                                                                                                       |         53 |     12,316 |        175 |        700 |     13,191 |
+| lib/components                                                                                            |         19 |      3,263 |         37 |        211 |      3,511 |
+| lib/components/alphabet                                                                                   |          2 |        232 |          0 |         17 |        249 |
+| lib/components/custom_memory                                                                              |          4 |        483 |          6 |         42 |        531 |
+| lib/components/deck                                                                                       |          2 |        608 |          0 |         23 |        631 |
+| lib/components/pao                                                                                        |          2 |        576 |          0 |         21 |        597 |
+| lib/components/single_digit                                                                               |          2 |        266 |          3 |         18 |        287 |
+| lib/components/templates                                                                                  |          2 |        565 |          4 |         28 |        597 |
+| lib/constants                                                                                             |          2 |      1,647 |         11 |         27 |      1,685 |
+| lib/screens                                                                                               |         30 |      7,073 |        115 |        425 |      7,613 |
+| lib/screens/alphabet                                                                                      |          5 |        977 |         10 |         58 |      1,045 |
+| lib/screens/custom_memory                                                                                 |          2 |        952 |          3 |         52 |      1,007 |
+| lib/screens/deck                                                                                          |          5 |      1,264 |          9 |         70 |      1,343 |
+| lib/screens/face                                                                                          |          2 |        529 |          4 |         23 |        556 |
+| lib/screens/lessons                                                                                       |          2 |        296 |          5 |         14 |        315 |
+| lib/screens/pao                                                                                           |          5 |      1,194 |         11 |         70 |      1,275 |
+| lib/screens/single_digit                                                                                  |          5 |        854 |         10 |         64 |        928 |
+| lib/screens/templates                                                                                     |          2 |        297 |          1 |         24 |        322 |
+| lib/services                                                                                              |          1 |        274 |          7 |         25 |        306 |
 | test                                                                                                      |          1 |         14 |         10 |          7 |         31 |
 +-----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 
@@ -71,15 +74,16 @@ Files
 | filename                                                                                                  | language     | code       | comment    | blank      | total      |
 +-----------------------------------------------------------------------------------------------------------+--------------+------------+------------+------------+------------+
 | /Users/matt/flutter/mem_plus_plus/README.md                                                               | Markdown     |         10 |          0 |          7 |         17 |
-| /Users/matt/flutter/mem_plus_plus/android/app/build.gradle                                                | Groovy       |         61 |          3 |         13 |         77 |
+| /Users/matt/flutter/mem_plus_plus/android/app/build.gradle                                                | Groovy       |         65 |          3 |         13 |         81 |
+| /Users/matt/flutter/mem_plus_plus/android/app/google-services.json                                        | JSON         |         48 |          0 |          0 |         48 |
 | /Users/matt/flutter/mem_plus_plus/android/app/src/debug/AndroidManifest.xml                               | XML          |          4 |          3 |          1 |          8 |
 | /Users/matt/flutter/mem_plus_plus/android/app/src/main/AndroidManifest.xml                                | XML          |         31 |          9 |          6 |         46 |
 | /Users/matt/flutter/mem_plus_plus/android/app/src/main/java/com/takaomatt/mem_plus_plus/MainActivity.java | Java         |         11 |          0 |          3 |         14 |
 | /Users/matt/flutter/mem_plus_plus/android/app/src/main/res/drawable/launch_background.xml                 | XML          |          4 |          7 |          2 |         13 |
 | /Users/matt/flutter/mem_plus_plus/android/app/src/main/res/values/styles.xml                              | XML          |          6 |          2 |          1 |          9 |
 | /Users/matt/flutter/mem_plus_plus/android/app/src/profile/AndroidManifest.xml                             | XML          |          4 |          3 |          1 |          8 |
-| /Users/matt/flutter/mem_plus_plus/android/build.gradle                                                    | Groovy       |         25 |          0 |          5 |         30 |
-| /Users/matt/flutter/mem_plus_plus/android/gradle.properties                                               | Properties   |          2 |          0 |          2 |          4 |
+| /Users/matt/flutter/mem_plus_plus/android/build.gradle                                                    | Groovy       |         30 |          0 |          5 |         35 |
+| /Users/matt/flutter/mem_plus_plus/android/gradle.properties                                               | Properties   |          4 |          0 |          2 |          6 |
 | /Users/matt/flutter/mem_plus_plus/android/gradle/wrapper/gradle-wrapper.properties                        | Properties   |          5 |          1 |          1 |          7 |
 | /Users/matt/flutter/mem_plus_plus/android/key.properties                                                  | Properties   |          4 |          0 |          1 |          5 |
 | /Users/matt/flutter/mem_plus_plus/android/settings.gradle                                                 | Groovy       |         12 |          0 |          4 |         16 |
@@ -93,50 +97,60 @@ Files
 | /Users/matt/flutter/mem_plus_plus/ios/Runner/Base.lproj/LaunchScreen.storyboard                           | XML          |         36 |          1 |          1 |         38 |
 | /Users/matt/flutter/mem_plus_plus/ios/Runner/Base.lproj/Main.storyboard                                   | XML          |         25 |          1 |          1 |         27 |
 | /Users/matt/flutter/mem_plus_plus/ios/Runner/main.m                                                       | Objective-C  |          8 |          0 |          2 |         10 |
-| /Users/matt/flutter/mem_plus_plus/lib/components/activities.dart                                          | Dart         |        105 |          4 |         11 |        120 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/activities.dart                                          | Dart         |         84 |          2 |          9 |         95 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/alphabet/alphabet_data.dart                              | Dart         |        101 |          0 |          6 |        107 |
-| /Users/matt/flutter/mem_plus_plus/lib/components/alphabet/alphabet_written_card.dart                      | Dart         |        126 |          0 |         11 |        137 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/alphabet/alphabet_written_card.dart                      | Dart         |        131 |          0 |         11 |        142 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/animations.dart                                          | Dart         |         86 |          0 |          9 |         95 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/custom_memory/contact.dart                               | Dart         |         74 |          0 |          9 |         83 |
-| /Users/matt/flutter/mem_plus_plus/lib/components/custom_memory/custom_memory_template.dart                | Dart         |        213 |          4 |         15 |        232 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/custom_memory/custom_memory_template.dart                | Dart         |        273 |          4 |         13 |        290 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/custom_memory/id_card.dart                               | Dart         |         65 |          1 |          9 |         75 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/custom_memory/other.dart                                 | Dart         |         71 |          1 |         11 |         83 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/deck/deck_data.dart                                      | Dart         |        316 |          0 |          9 |        325 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/deck/deck_multiple_choice_card.dart                      | Dart         |        292 |          0 |         14 |        306 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/fireworks.dart                                           | Dart         |         95 |         17 |         18 |        130 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/local_notifications.dart                                 | Dart         |         69 |          3 |         14 |         86 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/pao/pao_data.dart                                        | Dart         |        337 |          0 |          7 |        344 |
-| /Users/matt/flutter/mem_plus_plus/lib/components/pao/pao_multiple_choice_card.dart                        | Dart         |        235 |          0 |         14 |        249 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/pao/pao_multiple_choice_card.dart                        | Dart         |        239 |          0 |         14 |        253 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/single_digit/single_digit_data.dart                      | Dart         |         53 |          0 |          7 |         60 |
-| /Users/matt/flutter/mem_plus_plus/lib/components/single_digit/single_digit_multiple_choice_card.dart      | Dart         |        190 |          3 |         11 |        204 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/single_digit/single_digit_multiple_choice_card.dart      | Dart         |        213 |          3 |         11 |        227 |
 | /Users/matt/flutter/mem_plus_plus/lib/components/standard.dart                                            | Dart         |        199 |          2 |         12 |        213 |
-| /Users/matt/flutter/mem_plus_plus/lib/components/templates/edit_card.dart                                 | Dart         |        283 |          1 |         14 |        298 |
-| /Users/matt/flutter/mem_plus_plus/lib/components/templates/flash_card.dart                                | Dart         |        199 |          3 |         14 |        216 |
-| /Users/matt/flutter/mem_plus_plus/lib/constants/colors.dart                                               | Dart         |         21 |          0 |          8 |         29 |
-| /Users/matt/flutter/mem_plus_plus/lib/constants/keys.dart                                                 | Dart         |         40 |          7 |          8 |         55 |
-| /Users/matt/flutter/mem_plus_plus/lib/main.dart                                                           | Dart         |         60 |          4 |         12 |         76 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_edit_screen.dart                          | Dart         |        120 |          3 |         12 |        135 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_practice_screen.dart                      | Dart         |        103 |          0 |         12 |        115 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_timed_test_prep_screen.dart               | Dart         |        324 |          3 |         10 |        337 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_timed_test_screen.dart                    | Dart         |        214 |          2 |         12 |        228 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_written_test_screen.dart                  | Dart         |        135 |          2 |         12 |        149 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/custom_memory/custom_memory_manager_screen.dart             | Dart         |        308 |          9 |         27 |        344 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/custom_memory/custom_memory_test_screen.dart                | Dart         |        301 |          2 |         20 |        323 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/homepage.dart                                               | Dart         |        523 |         51 |         44 |        618 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/templates/edit_card.dart                                 | Dart         |        285 |          1 |         14 |        300 |
+| /Users/matt/flutter/mem_plus_plus/lib/components/templates/flash_card.dart                                | Dart         |        280 |          3 |         14 |        297 |
+| /Users/matt/flutter/mem_plus_plus/lib/constants/colors.dart                                               | Dart         |         28 |          0 |         10 |         38 |
+| /Users/matt/flutter/mem_plus_plus/lib/constants/keys.dart                                                 | Dart         |      1,619 |         11 |         17 |      1,647 |
+| /Users/matt/flutter/mem_plus_plus/lib/main.dart                                                           | Dart         |         59 |          5 |         12 |         76 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_edit_screen.dart                          | Dart         |        127 |          3 |         12 |        142 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_practice_screen.dart                      | Dart         |        130 |          0 |         12 |        142 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_timed_test_prep_screen.dart               | Dart         |        329 |          3 |         10 |        342 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_timed_test_screen.dart                    | Dart         |        247 |          2 |         12 |        261 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/alphabet/alphabet_written_test_screen.dart                  | Dart         |        144 |          2 |         12 |        158 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/custom_memory/custom_memory_manager_screen.dart             | Dart         |        528 |          1 |         32 |        561 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/custom_memory/custom_memory_test_screen.dart                | Dart         |        424 |          2 |         20 |        446 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/deck/deck_edit_screen.dart                                  | Dart         |        311 |          2 |         19 |        332 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/deck/deck_multiple_choice_test_screen.dart                  | Dart         |        143 |          2 |         13 |        158 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/deck/deck_practice_screen.dart                              | Dart         |        131 |          1 |         13 |        145 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/deck/deck_timed_test_prep_screen.dart                       | Dart         |        339 |          1 |         13 |        353 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/deck/deck_timed_test_screen.dart                            | Dart         |        340 |          3 |         12 |        355 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/face/face_timed_test_prep_screen.dart                       | Dart         |        231 |          1 |         11 |        243 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/face/face_timed_test_screen.dart                            | Dart         |        298 |          3 |         12 |        313 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/homepage.dart                                               | Dart         |        605 |         62 |         40 |        707 |
 | /Users/matt/flutter/mem_plus_plus/lib/screens/lessons/spaced_repetition_screen.dart                       | Dart         |          0 |          0 |          1 |          1 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/lessons/welcome_screen.dart                                 | Dart         |        294 |          5 |         13 |        312 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_edit_screen.dart                                    | Dart         |        321 |          3 |         19 |        343 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_multiple_choice_test_screen.dart                    | Dart         |        135 |          2 |         13 |        150 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_practice_screen.dart                                | Dart         |        107 |          1 |         13 |        121 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_timed_test_prep_screen.dart                         | Dart         |        329 |          3 |         13 |        345 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_timed_test_screen.dart                              | Dart         |        230 |          2 |         15 |        247 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_edit_screen.dart                  | Dart         |        137 |          3 |         14 |        154 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_multiple_choice_test_screen.dart  | Dart         |        142 |          2 |         13 |        157 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_practice_screen.dart              | Dart         |        109 |          0 |         14 |        123 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_timed_test_prep_screen.dart       | Dart         |        214 |          3 |         12 |        229 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_timed_test_screen.dart            | Dart         |        175 |          4 |         14 |        193 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/templates/card_test_screen.dart                             | Dart         |          0 |          3 |         18 |         21 |
-| /Users/matt/flutter/mem_plus_plus/lib/screens/templates/help_screen.dart                                  | Dart         |        209 |          1 |         16 |        226 |
-| /Users/matt/flutter/mem_plus_plus/lib/services/services.dart                                              | Dart         |        262 |          5 |         25 |        292 |
-| /Users/matt/flutter/mem_plus_plus/pubspec.yaml                                                            | YAML         |         56 |          0 |          6 |         62 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/lessons/welcome_screen.dart                                 | Dart         |        296 |          5 |         13 |        314 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_edit_screen.dart                                    | Dart         |        332 |          3 |         19 |        354 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_multiple_choice_test_screen.dart                    | Dart         |        143 |          2 |         13 |        158 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_practice_screen.dart                                | Dart         |        131 |          1 |         13 |        145 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_timed_test_prep_screen.dart                         | Dart         |        334 |          3 |         13 |        350 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/pao/pao_timed_test_screen.dart                              | Dart         |        254 |          2 |         12 |        268 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/settings_screen.dart                                        | Dart         |        105 |          0 |         10 |        115 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_edit_screen.dart                  | Dart         |        143 |          3 |         14 |        160 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_multiple_choice_test_screen.dart  | Dart         |        150 |          2 |         12 |        164 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_practice_screen.dart              | Dart         |        134 |          0 |         14 |        148 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_timed_test_prep_screen.dart       | Dart         |        220 |          3 |         12 |        235 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/single_digit/single_digit_timed_test_screen.dart            | Dart         |        207 |          2 |         12 |        221 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/templates/card_test_screen.dart                             | Dart         |         87 |          0 |          8 |         95 |
+| /Users/matt/flutter/mem_plus_plus/lib/screens/templates/help_screen.dart                                  | Dart         |        210 |          1 |         16 |        227 |
+| /Users/matt/flutter/mem_plus_plus/lib/services/services.dart                                              | Dart         |        274 |          7 |         25 |        306 |
+| /Users/matt/flutter/mem_plus_plus/pubspec.yaml                                                            | YAML         |         62 |          0 |          6 |         68 |
 | /Users/matt/flutter/mem_plus_plus/test/widget_test.dart                                                   | Dart         |         14 |         10 |          7 |         31 |
-| Total                                                                                                     |              |      7,819 |        205 |        660 |      8,684 |
+| Total                                                                                                     |              |     12,886 |        221 |        778 |     13,885 |
 +-----------------------------------------------------------------------------------------------------------+--------------+------------+------------+------------+------------+
