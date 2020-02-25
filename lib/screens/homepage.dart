@@ -48,17 +48,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 // done:
-
-// next up:
+// TODO: make CSV input scrollable
 // TODO: custom notifications based on progress
-// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 // TODO: clear snackbars when leaving a screen?
 
-// horizon:
 // TODO: only show one MC/flash card at a time (performance?)
+//   integrate all other tests (OMG!)
+
+// next up:
 // TODO: pop practice when done (not fully done)
-// TODO: make CSV input scrollable
+// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 // TODO: make keyboard numeric for custom memory fields
+
+// horizon:
+// TODO: add more faces
 // TODO: alphabet PAO (person action, same object)
 // TODO: add symbols
 // TODO: add password test
@@ -120,15 +123,64 @@ class _MyHomePageState extends State<MyHomePage> {
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-
-    // TODO: here
+    String title = 'Have you improved your memory today?';
+    String subtitle = 'Click here to check your to-do list!';
+    if (await prefs.getActivityState(singleDigitEditKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue developing your Single Digit mapping!';
+    } else if (await prefs.getActivityState(singleDigitPracticeKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue familiarizing your Single Digits!';
+    } else if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) == 'todo') {
+      title = 'Time to master Single Digits!';
+      subtitle = 'Click here to start your MC test!';
+    } else if (await prefs.getActivityState(singleDigitTimedTestPrepKey) == 'todo') {
+      title = 'Let\'s start a Single Digit timed test!';
+      subtitle = 'Complete the test to unlock the next system!';
+    } else if (await prefs.getActivityState(alphabetEditKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue developing your Alphabet mapping!';
+    } else if (await prefs.getActivityState(alphabetPracticeKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue familiarizing your Alphabet System!';
+    } else if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
+      title = 'Time to master the Alphabet!';
+      subtitle = 'Click here to start your MC test!';
+    } else if (await prefs.getActivityState(alphabetTimedTestPrepKey) == 'todo') {
+      title = 'Let\'s start an Alphabet timed test!';
+      subtitle = 'Complete the test to unlock the next system!';
+    } else if (await prefs.getActivityState(paoEditKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue developing your PAO mapping!';
+    } else if (await prefs.getActivityState(paoPracticeKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue familiarizing your PAO mapping!';
+    } else if (await prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
+      title = 'Time to master your PAO system!';
+      subtitle = 'Click here to start your MC test!';
+    } else if (await prefs.getActivityState(paoTimedTestPrepKey) == 'todo') {
+      title = 'Let\'s start a PAO timed test!';
+      subtitle = 'Complete the test to unlock the next system!';
+    } else if (await prefs.getActivityState(deckEditKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue developing your Deck mapping!';
+    } else if (await prefs.getActivityState(deckPracticeKey) == 'todo') {
+      title = 'Let\'s pick up where you left off!';
+      subtitle = 'Continue familiarizing your Deck mapping!';
+    } else if (await prefs.getActivityState(deckMultipleChoiceTestKey) == 'todo') {
+      title = 'Time to master your Deck system!';
+      subtitle = 'Click here to start your MC test!';
+    } else if (await prefs.getActivityState(deckTimedTestPrepKey) == 'todo') {
+      title = 'Let\'s start a Deck timed test!';
+      subtitle = 'Complete the test to unlock the next system!';
+    } 
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
-        'Have you improved your memory today?',
-        'Click here to check your to-do list!',
+        title,
+        subtitle,
         time,
         platformChannelSpecifics);
-    print('initialized scheduled notification');
+    print('initialized daily notification @ ${time.hour}:${time.minute}:${time.second}');
   }
 
   checkForAppUpdate() async {
@@ -243,7 +295,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {});
     // print(activityStates);
-    print(availableActivities);
+    //print(availableActivities);
   }
 
   checkFirstTime() async {
@@ -275,8 +327,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   callback() {
     setUnlockedActivities();
-    print(activityStates.map(
-        (k, v) => MapEntry(k, '${v.state} | ${v.visible} | ${v.firstView}')));
+    // print(activityStates.map((k, v) => MapEntry(k, '${v.state} | ${v.visible} | ${v.firstView}')));
   }
 
   List<Widget> getTodo() {
@@ -302,6 +353,7 @@ class _MyHomePageState extends State<MyHomePage> {
         complete1: Colors.purple[200],
         complete2: Colors.purple[500],
         complete: true,
+        globalKey: globalKey,
       ));
     });
 
@@ -320,6 +372,7 @@ class _MyHomePageState extends State<MyHomePage> {
           complete1: activityMenuButtonMap[activity].complete1,
           complete2: activityMenuButtonMap[activity].complete2,
           complete: false,
+          globalKey: globalKey,
         ));
       }
     }
@@ -357,6 +410,7 @@ class _MyHomePageState extends State<MyHomePage> {
             complete: true,
             complete1: activityMenuButtonMap[activity].complete1,
             complete2: activityMenuButtonMap[activity].complete2,
+            globalKey: globalKey,
           ));
         }
       }

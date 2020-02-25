@@ -171,16 +171,16 @@ class _HelpScreenState extends State<HelpScreen> {
                   SizedBox(
                     height: 15,
                   ),
-                  firstHelp &&
-                          slideIndex == widget.information.length - 1
+                  (firstHelp &&
+                          slideIndex == widget.information.length - 1) || debugModeEnabled
                       ? HelpOKButton(
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,
                           firstHelpKey: widget.firstHelpKey,
                         )
                       : Container(),
-                  firstHelp &&
-                          slideIndex != widget.information.length - 1
+                  (firstHelp &&
+                          slideIndex != widget.information.length - 1) || debugModeEnabled
                       ? SizedBox(height: 48,) : Container(),
                   firstHelp
                       ? Container()

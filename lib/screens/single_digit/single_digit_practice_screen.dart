@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/templates/flash_card.dart';
-import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 import 'package:flutter/services.dart';
@@ -21,11 +19,9 @@ class SingleDigitPracticeScreen extends StatefulWidget {
 }
 
 class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
-  SharedPreferences sharedPreferences;
-  List<SingleDigitData> singleDigitData;
-  List<bool> results = List.filled(10, null);
-  List<bool> tempResults = [];
-  int attempts = 0;
+  List<SingleDigitData> singleDigitData = [];
+  List<Widget> singleDigitCards = [];
+  bool dataReady = false;
   var prefs = PrefsUpdater();
 
   @override
@@ -35,91 +31,78 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, 'SingleDigitPracticeFirstHelp',
+    prefs.checkFirstTime(context, singleDigitPracticeFirstHelpKey,
         SingleDigitPracticeScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
-    singleDigitData = shuffle(singleDigitData);
-    setState(() {});
+    bool allComplete = true;
+    for (int i = 0; i < singleDigitData.length; i++) {
+      if (singleDigitData[i].familiarity < 100) {
+        allComplete = false;
+      }
+    }
+    if (!allComplete) {
+      var tempSingleDigitData = singleDigitData;
+      singleDigitData = [];
+      tempSingleDigitData.forEach((s) {
+        if (s.familiarity < 100) {
+          singleDigitData.add(s);
+        }
+      });
+    }
+    setState(() {
+      singleDigitData = shuffle(singleDigitData);
+      dataReady = true;
+    });
   }
 
-  callback(bool success) {
-    if (success) {
-      results[attempts] = true;
-    } else {
-      results[attempts] = false;
-    }
-    attempts += 1;
+  callback() {
     widget.callback();
-    setState(() {});
   }
 
   void nextActivity() async {
     await prefs.updateActivityState(singleDigitPracticeKey, 'review');
     await prefs.updateActivityVisible(singleDigitMultipleChoiceTestKey, true);
-
     widget.callback();
-  }
-
-  List<FlashCard> getSingleDigitFlashCards() {
-    List<FlashCard> singleDigitFlashCards = [];
-    if (singleDigitData != null) {
-      bool allComplete = true;
-      for (int i = 0; i < singleDigitData.length; i++) {
-        if (singleDigitData[i].familiarity < 100) {
-          allComplete = false;
-        }
-      }
-      for (int i = 0; i < singleDigitData.length; i++) {
-        if (singleDigitData[i].familiarity < 100 || allComplete) {
-          FlashCard singleDigitFlashCard = FlashCard(
-            entry: singleDigitData[i],
-            callback: callback,
-            globalKey: widget.globalKey,
-            activityKey: singleDigitKey,
-            nextActivityCallback: nextActivity,
-            familiarityTotal: 1000,
-            color: colorSingleDigitDarker,
-            lighterColor: colorSingleDigitLighter,
-          );
-          singleDigitFlashCards.add(singleDigitFlashCard);
-        }
-      }
-    }
-    setState(() {
-      tempResults = results.sublist(0, singleDigitFlashCards.length);
-    });
-    return singleDigitFlashCards;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
-        appBar: AppBar(
-          title: Text('Single digit: practice'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.info),
-              onPressed: () {
-                HapticFeedback.heavyImpact();
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitPracticeScreenHelp();
-                    }));
-              },
-            ),
-          ],
-          backgroundColor: Colors.amber[200],
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop('test'),
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        title: Text('Single digit: practice'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              HapticFeedback.heavyImpact();
+              Navigator.of(context).push(PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return SingleDigitPracticeScreenHelp();
+                  }));
+            },
           ),
+        ],
+        backgroundColor: Colors.amber[200],
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop('test'),
         ),
-        body: CardTestScreen(
-          cards: getSingleDigitFlashCards(),
-          results: tempResults,
-        ));
+      ),
+      body: dataReady
+          ? CardTestScreen(
+              cardData: singleDigitData,
+              cardType: 'FlashCard',
+              globalKey: widget.globalKey,
+              nextActivity: nextActivity,
+              systemKey: singleDigitKey,
+              color: colorSingleDigitStandard,
+              lighterColor: colorSingleDigitLighter,
+              familiarityTotal: 1000,
+            )
+          : Container(),
+    );
   }
 }
 

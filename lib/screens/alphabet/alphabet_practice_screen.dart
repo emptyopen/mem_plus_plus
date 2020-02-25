@@ -22,9 +22,8 @@ class AlphabetPracticeScreen extends StatefulWidget {
 class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   SharedPreferences sharedPreferences;
   List<AlphabetData> alphabetData;
-  List<bool> results = List.filled(26, null);
-  List<bool> tempResults = [];
-  int attempts = 0;
+  List<Widget> alphabetCards = [];
+  bool dataReady = false;
   var prefs = PrefsUpdater();
 
   @override
@@ -34,59 +33,38 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, alphabetPracticeFirstHelpKey, AlphabetPracticeScreenHelp());
+    prefs.checkFirstTime(context, alphabetPracticeFirstHelpKey,
+        AlphabetPracticeScreenHelp());
     alphabetData = await prefs.getSharedPrefs(alphabetKey);
-    alphabetData = shuffle(alphabetData);
-    setState(() {});
+    bool allComplete = true;
+    for (int i = 0; i < alphabetData.length; i++) {
+      if (alphabetData[i].familiarity < 100) {
+        allComplete = false;
+      }
+    }
+    if (!allComplete) {
+      var tempAlphabetData = alphabetData;
+      alphabetData = [];
+      tempAlphabetData.forEach((data) {
+        if (data.familiarity < 100) {
+          alphabetData.add(data);
+        }
+      });
+    }
+    setState(() {
+      alphabetData = shuffle(alphabetData);
+      dataReady = true;
+    });
   }
 
   callback(bool success) {
-    if (success) {
-      results[attempts] = true;
-    } else {
-      results[attempts] = false;
-    }
-    attempts += 1;
     widget.callback();
-    setState(() {});
   }
 
   void nextActivity() async {
     await prefs.updateActivityState(alphabetPracticeKey, 'review');
     await prefs.updateActivityVisible(alphabetWrittenTestKey, true);
     widget.callback();
-  }
-
-  List<FlashCard> getAlphabetFlashCards() {
-    List<FlashCard> alphabetFlashCards = [];
-    if (alphabetData != null) {
-      bool allComplete = true;
-      for (int i = 0; i < alphabetData.length; i++) {
-        if (alphabetData[i].familiarity < 100) {
-          allComplete = false;
-        }
-      }
-      for (int i = 0; i < alphabetData.length; i++) {
-        if (alphabetData[i].familiarity < 100 || allComplete) {
-          FlashCard alphabetFlashCard = FlashCard(
-            entry: alphabetData[i],
-            callback: callback,
-            globalKey: widget.globalKey,
-            activityKey: alphabetKey,
-            nextActivityCallback: nextActivity,
-            familiarityTotal: 2600,
-            color: colorAlphabetDarker,
-            lighterColor: colorAlphabetLighter,
-          );
-          alphabetFlashCards.add(alphabetFlashCard);
-        }
-      }
-    }
-    setState(() {
-      tempResults = results.sublist(0, alphabetFlashCards.length);
-    });
-    return alphabetFlashCards;
   }
 
   @override
@@ -117,10 +95,18 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
           },
         ),
       ),
-      body: CardTestScreen(
-        cards: getAlphabetFlashCards(),
-        results: tempResults,
-      ),
+      body: dataReady
+          ? CardTestScreen(
+              cardData: alphabetData,
+              cardType: 'FlashCard',
+              globalKey: widget.globalKey,
+              nextActivity: nextActivity,
+              systemKey: alphabetKey,
+              color: colorAlphabetStandard,
+              lighterColor: colorAlphabetLighter,
+              familiarityTotal: 2600,
+            )
+          : Container(),
     );
   }
 }

@@ -58,10 +58,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
           style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'CabinSketch',
-            fontSize: 18
-          ),
+              color: Colors.white, fontFamily: 'CabinSketch', fontSize: 18),
         ),
         duration: Duration(seconds: 5),
         backgroundColor: colorPAODarker,
@@ -87,13 +84,8 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     if (paoData != null) {
       for (int i = 0; i < paoData.length; i++) {
         EditCard paoEditCard = EditCard(
-          entry: PAOData(
-              paoData[i].index,
-              paoData[i].digits,
-              paoData[i].person,
-              paoData[i].action,
-              paoData[i].object,
-              paoData[i].familiarity),
+          entry: PAOData(paoData[i].index, paoData[i].digits, paoData[i].person,
+              paoData[i].action, paoData[i].object, paoData[i].familiarity),
           callback: callback,
           activityKey: 'PAO',
         );
@@ -165,145 +157,160 @@ class _CSVImporterState extends State<CSVImporter> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+    return SafeArea(
+      child: Material(
+          color: Color.fromRGBO(0, 0, 0, 0.7),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                color: Colors.transparent,
+                constraints: BoxConstraints.expand(),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              '    Here you can upload CSV text to quickly update your PAO values!\n'
+                              '    You can do this in Google Sheets very easily. You just need '
+                              'a column for Person, Action, and Object (no need for headers). Then in a '
+                              'new column, add to the top cell: ',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              '=concat(concat(concat(concat(XX,","),YY),","),ZZ)',
+                              style: TextStyle(
+                                  fontSize: 10, fontFamily: 'SpaceMono'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'where XX is the cell represting the person (in the same row), '
+                              'YY=action cell, ZZ=object cell. Then just drag the formula down to the bottom, '
+                              'copy that last column, and paste it here! ',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: 350,
+                      padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5)),
                       child: Column(
                         children: <Widget>[
                           Text(
-                            '    Here you can upload CSV text to quickly update your PAO values!\n'
-                            '    You can do this in Google Sheets very easily. You just need '
-                            'a column for Person, Action, and Object (no need for headers). Then in a '
-                            'new column, add to the top cell: ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 16),
+                            'Input below: ',
+                            style: TextStyle(fontSize: 20),
                           ),
-                          SizedBox(
-                            height: 10,
+                          TextField(
+                            maxLines: 4,
+                            decoration: InputDecoration(
+                                hintText:
+                                    'Ozzy Osbourne,rocking out a concert,rock guitar\n'
+                                    'Orlando Bloom,walking the plank,eyepatch\n'
+                                    '...',
+                                hintStyle: TextStyle(fontSize: 15)),
+                            controller: textController,
                           ),
-                          Text(
-                            '=concat(concat(concat(concat(XX,","),YY),","),ZZ)',
-                            style: TextStyle(
-                                fontSize: 10, fontFamily: 'SpaceMono'),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'where XX is the cell represting the person (in the same row), '
-                            'YY=action cell, ZZ=object cell. Then just drag the formula down to the bottom, '
-                            'copy that last column, and paste it here! ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 16),
-                          )
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    width: 350,
-                    padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          'Input below: ',
-                          style: TextStyle(fontSize: 20),
+                        FlatButton(
+                          color: Colors.grey[300],
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          onPressed: () {
+                            HapticFeedback.heavyImpact();
+                            Navigator.pop(context);
+                          },
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
-                        TextField(
-                          maxLines: 4,
-                          decoration: InputDecoration(
-                              hintText:
-                                  'Ozzy Osbourne,rocking out a concert,rock guitar\n'
-                                  'Orlando Bloom,walking the plank,eyepatch\n'
-                                  '...',
-                              hintStyle: TextStyle(fontSize: 15)),
-                          controller: textController,
+                        SizedBox(
+                          width: 25,
+                        ),
+                        FlatButton(
+                          color: colorPAOStandard,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          onPressed: () {
+                            HapticFeedback.heavyImpact();
+                            var csvConverter = CsvToListConverter();
+                            var l = csvConverter.convert(textController.text,
+                                eol: '\n');
+                            if (l.length == 100) {
+                              List<PAOData> paoDataList = [];
+                              l.asMap().forEach((k, v) {
+                                paoDataList.add(PAOData(
+                                    k,
+                                    defaultPAOData1[k].digits,
+                                    v[0],
+                                    v[1],
+                                    v[2],
+                                    0));
+                              });
+                              updatePAOData(paoDataList);
+                              Navigator.pop(context);
+                            }
+                            //Navigator.pop(context);
+                          },
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FlatButton(
-                        color: Colors.grey[300],
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        onPressed: () {
-                          HapticFeedback.heavyImpact();
-                          Navigator.pop(context);
-                        },
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 25,
-                      ),
-                      FlatButton(
-                        color: colorPAOStandard,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        onPressed: () {
-                          HapticFeedback.heavyImpact();
-                          var csvConverter = CsvToListConverter();
-                          var l = csvConverter.convert(textController.text,
-                              eol: '\n');
-                          if (l.length == 100) {
-                            List<PAOData> paoDataList = [];
-                            l.asMap().forEach((k, v) {
-                              paoDataList.add(PAOData(
-                                  k, defaultPAOData1[k].digits, v[0], v[1], v[2], 0));
-                            });
-                            updatePAOData(paoDataList);
-                            Navigator.pop(context);
-                          }
-                          //Navigator.pop(context);
-                        },
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                    SizedBox(height: 30,),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 }
 
@@ -317,11 +324,11 @@ class PAOEditScreenHelp extends StatelessWidget {
     '    This will take some time to set up! But believe me, it\'ll be worth it. \n'
         '    The person should be associated to its corresponding action and object, '
         'and no two persons, actions, or objects should be too similar (also avoid overlap with '
-      'your single digit and alphabet systems!). As a starter pattern, we recommend '
+        'your single digit and alphabet systems!). As a starter pattern, we recommend '
         'using an initials pattern. ',
     '    The initials pattern proposed in "Remember It!" by Nelson Dellis has '
         '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Os, Fs, and Is are '
-      'pretty rare in names; zeros look like Os, and (S)ix and (N)ine are more common letters in initials.\n'
+        'pretty rare in names; zeros look like Os, and (S)ix and (N)ine are more common letters in initials.\n'
         '     Using this pattern it becomes '
         'much easier to find famous people/fictional characters with initials, i.e. 12=AB=Antonio Banderas.',
     '    This system allows us to memorize sequences of numbers very efficiently. Passport/license IDs, '

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_multiple_choice_card.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 
 class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
@@ -21,10 +21,17 @@ class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
 
 class _SingleDigitMultipleChoiceTestScreenState
     extends State<SingleDigitMultipleChoiceTestScreen> {
-  List<SingleDigitData> singleDigitData;
-  List<bool> results = List.filled(10, null);
-  int score = 0;
-  int attempts = 0;
+  List<SingleDigitData> singleDigitData = [];
+  List fakeData = [];
+  List<Widget> singleDigitCards = [];
+  bool dataReady = false;
+  List<SingleDigitData> shuffledChoices = [
+    SingleDigitData(0, '0', 'nothing', 0),
+    SingleDigitData(1, '0', 'nothing', 0),
+    SingleDigitData(2, '0', 'nothing', 0),
+    SingleDigitData(3, '0', 'nothing', 0),
+  ];
+  int isDigitToObject = 0; // 0 == digitToObject, 1 == objectToDigit
   var prefs = PrefsUpdater();
 
   @override
@@ -38,89 +45,80 @@ class _SingleDigitMultipleChoiceTestScreenState
         SingleDigitMultipleChoiceScreenHelp());
     singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     singleDigitData = shuffle(singleDigitData);
-    setState(() {});
-  }
 
-  void callback(BuildContext context, bool success) async {
-    if (success) {
-      results[attempts] = true;
-      score += 1;
-      if (score == 10) {
-        // update keys
-        PrefsUpdater prefs = PrefsUpdater();
-        if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) == 'todo') {
-          await prefs.updateActivityState(singleDigitMultipleChoiceTestKey, 'review');
-          await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-          widget.callback();
-          showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
-            snackBarText: 'You aced it! You\'ve unlocked the timed test!',
-            backgroundColor: colorSingleDigitDarker,
-            durationSeconds: 4,
-          );
-          Navigator.pop(context);
-        } else {
-          showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
-            snackBarText: 'You aced it!',
-            backgroundColor: colorCorrect,
-            durationSeconds: 3,
-          );
-          Navigator.pop(context);
+    singleDigitData.forEach((entry) {
+      SingleDigitData fakeChoice1;
+      SingleDigitData fakeChoice2;
+      SingleDigitData fakeChoice3;
+
+      List<int> notAllowed = [entry.index];
+      while (fakeChoice1 == null) {
+        SingleDigitData candidate =
+            singleDigitData[Random().nextInt(singleDigitData.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakeChoice1 = candidate;
+          notAllowed.add(candidate.index);
         }
       }
-    } else {
-      results[attempts] = false;
-    }
-    attempts += 1;
+      while (fakeChoice2 == null) {
+        SingleDigitData candidate =
+            singleDigitData[Random().nextInt(singleDigitData.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakeChoice2 = candidate;
+          notAllowed.add(candidate.index);
+        }
+      }
+      while (fakeChoice3 == null) {
+        SingleDigitData candidate =
+            singleDigitData[Random().nextInt(singleDigitData.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakeChoice3 = candidate;
+          notAllowed.add(candidate.index);
+        }
+      }
 
-    if (attempts == 10 && score < 10) {
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Try again! You got this. Score: $score/10',
-        backgroundColor: colorIncorrect,
-        durationSeconds: 2,
-      );
-      Navigator.pop(context);
-    }
+      shuffledChoices = [
+        entry,
+        fakeChoice1,
+        fakeChoice2,
+        fakeChoice3,
+      ];
+      shuffledChoices = shuffle(shuffledChoices);
+      fakeData.add(shuffledChoices);
+    });
+
+    dataReady = true;
     setState(() {});
   }
 
-  List<SingleDigitMultipleChoiceCard> getSingleDigitMultipleChoiceCards() {
-    List<SingleDigitMultipleChoiceCard> singleDigitMultipleChoiceCards = [];
-    if (singleDigitData != null) {
-      for (int i = 0; i < singleDigitData.length; i++) {
-        SingleDigitMultipleChoiceCard singleDigitView =
-            SingleDigitMultipleChoiceCard(
-          singleDigitData: SingleDigitData(
-              singleDigitData[i].index,
-              singleDigitData[i].digits,
-              singleDigitData[i].object,
-              singleDigitData[i].familiarity),
-          callback: callback,
-        );
-        singleDigitMultipleChoiceCards.add(singleDigitView);
-      }
+  void nextActivity() async {
+    if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) ==
+        'todo') {
+      await prefs.updateActivityState(
+          singleDigitMultipleChoiceTestKey, 'review');
+      await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
     }
-    return singleDigitMultipleChoiceCards;
+    widget.callback();
+  }
+
+  callback() {
+    widget.callback();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Single digit: multiple choice test'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
               HapticFeedback.heavyImpact();
-              score = 0;
-              attempts = 0;
               Navigator.of(context).pop();
             },
           ),
-          backgroundColor: Colors.amber[200],
+          backgroundColor: colorSingleDigitStandard,
           actions: <Widget>[
             // action button
             IconButton(
@@ -135,10 +133,19 @@ class _SingleDigitMultipleChoiceTestScreenState
               },
             ),
           ]),
-      body: CardTestScreen(
-        cards: getSingleDigitMultipleChoiceCards(),
-        results: results,
-      ),
+      body: dataReady
+          ? CardTestScreen(
+              cardData: singleDigitData,
+              cardType: 'MultipleChoiceCard',
+              globalKey: widget.globalKey,
+              nextActivity: nextActivity,
+              systemKey: singleDigitKey,
+              color: colorSingleDigitStandard,
+              lighterColor: colorSingleDigitLighter,
+              familiarityTotal: 1000,
+              shuffledChoices: fakeData,
+            )
+          : Container(),
     );
   }
 }

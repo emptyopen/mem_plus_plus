@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 const String usernameKey = 'Username';
 
@@ -11,6 +11,7 @@ Color backgroundSemiColor = Colors.grey[200];
 Color backgroundHighlightColor = Colors.black;
 Color backgroundSemiHighlightColor = Colors.grey[800];
 const String darkModeKey = 'DarkMode';
+const String darkModeNotificationFirstTimeKey = 'DarkModeNotificationFirstTime';
 
 // general
 const String welcomeKey = 'Welcome';

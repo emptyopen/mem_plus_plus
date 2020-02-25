@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/pao/pao_data.dart';
-import 'package:mem_plus_plus/components/pao/pao_multiple_choice_card.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 
 class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
@@ -21,10 +21,27 @@ class PAOMultipleChoiceTestScreen extends StatefulWidget {
 
 class _PAOMultipleChoiceTestScreenState
     extends State<PAOMultipleChoiceTestScreen> {
-  List<PAOData> paoData;
-  List<bool> results = List.filled(100, null);
-  int score = 0;
-  int attempts = 0;
+  List<PAOData> paoData = [];
+  List fakeData = [];
+  List<Widget> paoCards = [];
+  bool dataReady = false;
+  List<PAOData> shuffledChoices = [
+    PAOData(0, '0', 'nothing', 'nothing', 'nothing', 0),
+    PAOData(1, '0', 'nothing', 'nothing', 'nothing', 0),
+    PAOData(2, '0', 'nothing', 'nothing', 'nothing', 0),
+    PAOData(3, '0', 'nothing', 'nothing', 'nothing', 0),
+  ];
+  var mapChoices = [
+    'digitToPersonActionObject',
+    'personActionObjectToDigit',
+  ];
+  var paoChoices = [
+    'person',
+    'action',
+    'object',
+  ];
+  int isDigitToObject = 0; // 0 == digitToObject, 1 == objectToDigit
+
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -37,69 +54,95 @@ class _PAOMultipleChoiceTestScreenState
     prefs.checkFirstTime(context, paoMultipleChoiceTestFirstHelpKey, PAOMultipleChoiceScreenHelp());
     paoData = await prefs.getSharedPrefs(paoKey);
     paoData = shuffle(paoData);
-    setState(() {});
-  }
 
-  void callback(BuildContext context, bool success) async {
-    if (success) {
-      score += 1;
-      results[attempts] = true;
-      if (score == 100 || (debugModeEnabled && score >= 10)) {
-        // update keys
-        if (await prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
-          await prefs.updateActivityState(paoMultipleChoiceTestKey, 'review');
-          await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-          widget.callback();
-          showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
-            snackBarText: 'You aced it! You\'ve unlocked the timed test!',
-            textColor: Colors.black,
-            backgroundColor: colorPAODarker,
-            durationSeconds: 4,
-          );
-          Navigator.pop(context);
-        } else {
-          showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
-            snackBarText: 'You aced it!',
-            textColor: Colors.black,
-            backgroundColor: colorCorrect,
-            durationSeconds: 3,
-          );
-          Navigator.pop(context);
+    paoData.forEach((entry) {
+      PAOData fakeSingleDigitChoice1;
+      PAOData fakeSingleDigitChoice2;
+      PAOData fakeSingleDigitChoice3;
+      // randomly choose either digit -> object or object -> digit
+      isDigitToObject = Random().nextInt(2);
+      if (isDigitToObject == 0) {
+        // loop until you find 3 random different objects
+        List<String> notAllowed = [entry.object];
+        while (fakeSingleDigitChoice1 == null) {
+          PAOData candidate =
+              paoData[Random().nextInt(paoData.length)];
+          if (!notAllowed.contains(candidate.object)) {
+            fakeSingleDigitChoice1 = candidate;
+            notAllowed.add(candidate.object);
+          }
+        }
+        while (fakeSingleDigitChoice2 == null) {
+          PAOData candidate =
+              paoData[Random().nextInt(paoData.length)];
+          if (!notAllowed.contains(candidate.object)) {
+            fakeSingleDigitChoice2 = candidate;
+            notAllowed.add(candidate.object);
+          }
+        }
+        while (fakeSingleDigitChoice3 == null) {
+          PAOData candidate =
+              paoData[Random().nextInt(paoData.length)];
+          if (!notAllowed.contains(candidate.object)) {
+            fakeSingleDigitChoice3 = candidate;
+            notAllowed.add(candidate.object);
+          }
+        }
+      } else {
+        // loop until you find 3 random different digits
+        List<String> notAllowed = [entry.digits];
+        while (fakeSingleDigitChoice1 == null) {
+          PAOData candidate =
+              paoData[Random().nextInt(paoData.length)];
+          if (!notAllowed.contains(candidate.digits)) {
+            fakeSingleDigitChoice1 = candidate;
+            notAllowed.add(candidate.digits);
+          }
+        }
+        while (fakeSingleDigitChoice2 == null) {
+          PAOData candidate =
+              paoData[Random().nextInt(paoData.length)];
+          if (!notAllowed.contains(candidate.digits)) {
+            fakeSingleDigitChoice2 = candidate;
+            notAllowed.add(candidate.digits);
+          }
+        }
+        while (fakeSingleDigitChoice3 == null) {
+          PAOData candidate =
+              paoData[Random().nextInt(paoData.length)];
+          if (!notAllowed.contains(candidate.digits)) {
+            fakeSingleDigitChoice3 = candidate;
+            notAllowed.add(candidate.digits);
+          }
         }
       }
-    } else {
-      results[attempts] = false;
-    }
-    attempts += 1;
+      shuffledChoices = [
+        entry,
+        fakeSingleDigitChoice1,
+        fakeSingleDigitChoice2,
+        fakeSingleDigitChoice3,
+      ];
+      shuffledChoices = shuffle(shuffledChoices);
+      fakeData.add(shuffledChoices);
+    });
 
-    if (attempts == 100 && score < 100) {
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Try again! You got this. Score: $score/100',
-        textColor: Colors.black,
-        backgroundColor: colorIncorrect,
-        durationSeconds: 2,
-      );
-      Navigator.pop(context);
-    }
+    dataReady = true;
+
     setState(() {});
   }
 
-  List<PAOMultipleChoiceCard> getPAOMultipleChoiceCards() {
-    List<PAOMultipleChoiceCard> paoMultipleChoiceCards = [];
-    if (paoData != null) {
-      for (int i = 0; i < paoData.length; i++) {
-        PAOMultipleChoiceCard paoView = PAOMultipleChoiceCard(
-          paoData: PAOData(paoData[i].index, paoData[i].digits, paoData[i].person,
-              paoData[i].action, paoData[i].object, paoData[i].familiarity),
-          callback: callback,
-        );
-        paoMultipleChoiceCards.add(paoView);
-      }
+  void nextActivity() async {
+    if (await prefs.getActivityState(paoMultipleChoiceTestKey) ==
+        'todo') {
+      await prefs.updateActivityState(
+          paoMultipleChoiceTestKey, 'review');
+      await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
     }
-    return paoMultipleChoiceCards;
+    widget.callback();
+  }
+
+  callback() {
+    widget.callback();
   }
 
   @override
@@ -107,14 +150,12 @@ class _PAOMultipleChoiceTestScreenState
     return Scaffold(
           backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Single digit: multiple choice test'),
+          title: Text('PAO: multiple choice test'),
         backgroundColor: Colors.pink[200],
           leading: new IconButton(
             icon: new Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
               HapticFeedback.heavyImpact();
-              score = 0;
-              attempts = 0;
               Navigator.of(context).pop();
             },
           ),
@@ -132,10 +173,19 @@ class _PAOMultipleChoiceTestScreenState
               },
             ),
           ]),
-          body: CardTestScreen(
-        cards: getPAOMultipleChoiceCards(),
-        results: results,
-      ),
+          body: dataReady
+          ? CardTestScreen(
+              cardData: paoData,
+              cardType: 'MultipleChoiceCard',
+              globalKey: widget.globalKey,
+              nextActivity: nextActivity,
+              systemKey: paoKey,
+              color: colorPAOStandard,
+              lighterColor: colorPAOLighter,
+              familiarityTotal: 10000,
+              shuffledChoices: fakeData,
+            )
+          : Container(),
     );
   }
 }

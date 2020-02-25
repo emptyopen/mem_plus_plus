@@ -168,143 +168,158 @@ class _CSVImporterState extends State<CSVImporter> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+    return SafeArea(
+      child: Material(
+          color: Color.fromRGBO(0, 0, 0, 0.7),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                color: Colors.transparent,
+                constraints: BoxConstraints.expand(),
+              ),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              '    Here you can upload CSV text to quickly update your deck values!\n'
+                              '    You can do this in Google Sheets very easily. You just need '
+                              'a column for Person, Action, and Object (no need for headers). Then in a '
+                              'new column, add to the top cell: ',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              '=concat(concat(concat(concat(XX,","),YY),","),ZZ)',
+                              style: TextStyle(
+                                  fontSize: 10, fontFamily: 'SpaceMono'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'where XX is the cell represting the person (in the same row), '
+                              'YY=action cell, ZZ=object cell. Then just drag the formula down to the bottom, '
+                              'copy that last column, and paste it here! ',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 16),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: 350,
+                      padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5)),
                       child: Column(
                         children: <Widget>[
                           Text(
-                            '    Here you can upload CSV text to quickly update your deck values!\n'
-                            '    You can do this in Google Sheets very easily. You just need '
-                            'a column for Person, Action, and Object (no need for headers). Then in a '
-                            'new column, add to the top cell: ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 16),
+                            'Input below: ',
+                            style: TextStyle(fontSize: 20),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
+                          SizedBox(height: 10,),
                           Text(
-                            '=concat(concat(concat(concat(XX,","),YY),","),ZZ)',
-                            style: TextStyle(
-                                fontSize: 10, fontFamily: 'SpaceMono'),
+                            'Ace through King, in order of Aces, Hearts, Clubs, Diamonds',
+                            style: TextStyle(fontSize: 14),
                           ),
-                          SizedBox(
-                            height: 10,
+                          TextField(
+                            maxLines: 4,
+                            decoration: InputDecoration(
+                                hintText:
+                                    'Ariel,singing underwater,mermaid fin\n'
+                                    '...',
+                                hintStyle: TextStyle(fontSize: 15)),
+                            controller: textController,
                           ),
-                          Text(
-                            'where XX is the cell represting the person (in the same row), '
-                            'YY=action cell, ZZ=object cell. Then just drag the formula down to the bottom, '
-                            'copy that last column, and paste it here! ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 16),
-                          )
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    width: 350,
-                    padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          'Input below: Spades(Ace, 2, 3, ... Q, K), Hearts, Clubs, Diamonds',
-                          style: TextStyle(fontSize: 20),
+                        FlatButton(
+                          color: Colors.grey[300],
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          onPressed: () {
+                            HapticFeedback.heavyImpact();
+                            Navigator.pop(context);
+                          },
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
-                        TextField(
-                          maxLines: 4,
-                          decoration: InputDecoration(
-                              hintText:
-                                  'Ariel,singing underwater,mermaid fin\n'
-                                  '...',
-                              hintStyle: TextStyle(fontSize: 15)),
-                          controller: textController,
+                        SizedBox(
+                          width: 25,
+                        ),
+                        FlatButton(
+                          color: colorDeckStandard,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          onPressed: () {
+                            HapticFeedback.heavyImpact();
+                            var csvConverter = CsvToListConverter();
+                            var l = csvConverter.convert(textController.text,
+                                eol: '\n');
+                            if (l.length == 52) {
+                              List<DeckData> deckDataList = [];
+                              l.asMap().forEach((k, v) {
+                                deckDataList.add(DeckData(
+                                    k, defaultDeckData1[k].digitSuit, v[0], v[1], v[2], 0));
+                              });
+                              updateDeckData(deckDataList);
+                              Navigator.pop(context);
+                            }
+                          },
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FlatButton(
-                        color: Colors.grey[300],
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        onPressed: () {
-                          HapticFeedback.heavyImpact();
-                          Navigator.pop(context);
-                        },
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 25,
-                      ),
-                      FlatButton(
-                        color: colorDeckStandard,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        onPressed: () {
-                          HapticFeedback.heavyImpact();
-                          var csvConverter = CsvToListConverter();
-                          var l = csvConverter.convert(textController.text,
-                              eol: '\n');
-                          if (l.length == 52) {
-                            List<DeckData> deckDataList = [];
-                            l.asMap().forEach((k, v) {
-                              deckDataList.add(DeckData(
-                                  k, defaultDeckData1[k].digitSuit, v[0], v[1], v[2], 0));
-                            });
-                            updateDeckData(deckDataList);
-                            Navigator.pop(context);
-                          }
-                        },
-                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                    SizedBox(height: 30,),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 }
 

@@ -22,10 +22,9 @@ class PAOPracticeScreen extends StatefulWidget {
 
 class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   SharedPreferences sharedPreferences;
-  List<PAOData> paoData;
-  List<bool> results = List.filled(100, null);
-  List<bool> tempResults = [];
-  int attempts = 0;
+  List<PAOData> paoData = [];
+  List<Widget> paoCards = [];
+  bool dataReady = false;
   var prefs = PrefsUpdater();
 
   @override
@@ -35,68 +34,38 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
+    prefs.checkFirstTime(context, paoPracticeFirstHelpKey,
+        PAOPracticeScreenHelp());
     paoData = await prefs.getSharedPrefs(paoKey);
-    paoData = shuffle(paoData);
-    setState(() {});
+    bool allComplete = true;
+    for (int i = 0; i < paoData.length; i++) {
+      if (paoData[i].familiarity < 100) {
+        allComplete = false;
+      }
+    }
+    if (!allComplete) {
+      var tempPAOData = paoData;
+      paoData = [];
+      tempPAOData.forEach((s) {
+        if (s.familiarity < 100) {
+          paoData.add(s);
+        }
+      });
+    }
+    setState(() {
+      paoData = shuffle(paoData);
+      dataReady = true;
+    });
   }
 
   callback(bool success) {
-    if (success) {
-      results[attempts] = true;
-    } else {
-      results[attempts] = false;
-    }
-    attempts += 1;
     widget.callback();
-    setState(() {});
   }
 
   void nextActivity() async {
     await prefs.updateActivityState(paoPracticeKey, 'review');
     await prefs.updateActivityVisible(paoMultipleChoiceTestKey, true);
     widget.callback();
-  }
-
-  List<FlashCard> getPAOFlashCards() {
-    List<FlashCard> paoFlashCards = [];
-    if (paoData != null) {
-      bool allComplete = true;
-      for (int i = 0; i < paoData.length; i++) {
-        if (paoData[i].familiarity < 100) {
-          allComplete = false;
-        }
-      }
-      for (int i = 0; i < paoData.length; i++) {
-        if (paoData[i].familiarity < 100 || allComplete) {
-          FlashCard paoFlashCard = FlashCard(
-            entry: paoData[i],
-            callback: callback,
-            globalKey: widget.globalKey,
-            activityKey: paoKey,
-            nextActivityCallback: nextActivity,
-            familiarityTotal: 10000,
-            color: colorPAODarker,
-            lighterColor: colorPAOLighter,
-          );
-          paoFlashCards.add(paoFlashCard);
-        }
-      }
-    }
-    setState(() {
-      tempResults = results.sublist(0, paoFlashCards.length);
-    });
-    return paoFlashCards;
-  }
-
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
   }
 
   @override
@@ -120,10 +89,16 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
                 },
               ),
             ]),
-        body: CardTestScreen(
-          cards: getPAOFlashCards(),
-          results: tempResults,
-        ));
+        body: dataReady? CardTestScreen(
+          cardData: paoData,
+          cardType: 'FlashCard',
+          globalKey: widget.globalKey,
+          nextActivity: nextActivity,
+          systemKey: paoKey,
+          color: colorPAOStandard,
+          lighterColor: colorPAOLighter,
+          familiarityTotal: 10000,
+        ) : Container());
   }
 }
 

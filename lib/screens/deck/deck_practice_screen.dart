@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/deck/deck_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/templates/flash_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
@@ -21,11 +18,9 @@ class DeckPracticeScreen extends StatefulWidget {
 }
 
 class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
-  SharedPreferences sharedPreferences;
   List<DeckData> deckData;
-  List<bool> results = List.filled(100, null);
-  List<bool> tempResults = [];
-  int attempts = 0;
+  List<Widget> deckCards = [];
+  bool dataReady = false;
   var prefs = PrefsUpdater();
 
   @override
@@ -35,68 +30,38 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
+    prefs.checkFirstTime(context, deckPracticeFirstHelpKey,
+        DeckPracticeScreenHelp());
     deckData = await prefs.getSharedPrefs(deckKey);
-    deckData = shuffle(deckData);
-    setState(() {});
+    bool allComplete = true;
+    for (int i = 0; i < deckData.length; i++) {
+      if (deckData[i].familiarity < 100) {
+        allComplete = false;
+      }
+    }
+    if (!allComplete) {
+      var tempDeckData = deckData;
+      deckData = [];
+      tempDeckData.forEach((s) {
+        if (s.familiarity < 100) {
+          deckData.add(s);
+        }
+      });
+    }
+    setState(() {
+      deckData = shuffle(deckData);
+      dataReady = true;
+    });
   }
 
-  callback(bool success) {
-    if (success) {
-      results[attempts] = true;
-    } else {
-      results[attempts] = false;
-    }
-    attempts += 1;
+  callback() {
     widget.callback();
-    setState(() {});
   }
 
   void nextActivity() async {
     await prefs.updateActivityState(deckPracticeKey, 'review');
     await prefs.updateActivityVisible(deckMultipleChoiceTestKey, true);
     widget.callback();
-  }
-
-  List<FlashCard> getDeckFlashCards() {
-    List<FlashCard> deckFlashCards = [];
-    if (deckData != null) {
-      bool allComplete = true;
-      for (int i = 0; i < deckData.length; i++) {
-        if (deckData[i].familiarity < 100) {
-          allComplete = false;
-        }
-      }
-      for (int i = 0; i < deckData.length; i++) {
-        if (deckData[i].familiarity < 100 || allComplete) {
-          FlashCard deckFlashCard = FlashCard(
-            entry: deckData[i],
-            callback: callback,
-            globalKey: widget.globalKey,
-            activityKey: deckKey,
-            nextActivityCallback: nextActivity,
-            familiarityTotal: 5200,
-            color: colorDeckDarker,
-            lighterColor: colorDeckLighter,
-          );
-          deckFlashCards.add(deckFlashCard);
-        }
-      }
-    }
-    setState(() {
-      tempResults = results.sublist(0, deckFlashCards.length);
-    });
-    return deckFlashCards;
-  }
-
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
   }
 
   @override
@@ -120,10 +85,19 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
                 },
               ),
             ]),
-        body: CardTestScreen(
-          cards: getDeckFlashCards(),
-          results: tempResults,
-        ));
+        body: dataReady
+          ? CardTestScreen(
+              cardData: deckData,
+              cardType: 'FlashCard',
+              globalKey: widget.globalKey,
+              nextActivity: nextActivity,
+              systemKey: deckKey,
+              color: colorDeckStandard,
+              lighterColor: colorDeckLighter,
+              familiarityTotal: 5200,
+            )
+          : Container(),
+        );
   }
 }
 

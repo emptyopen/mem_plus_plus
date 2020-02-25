@@ -131,8 +131,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
               ),
             ]),
         body: CardTestScreen(
-          cards: getAlphabetWrittenCards(),
-          results: results,
+          cardData: getAlphabetWrittenCards(),
         ));
   }
 }

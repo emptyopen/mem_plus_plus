@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/components/templates/flash_card.dart';
+import 'package:mem_plus_plus/components/templates/multiple_choice_card.dart';
 
 class CardTestScreen extends StatefulWidget {
-  final List results;
-  final List<Widget> cards;
+  final List<dynamic> cardData;
+  final String cardType;
+  final GlobalKey globalKey;
+  final Function nextActivity;
+  final String systemKey;
+  final int familiarityTotal;
+  final Color color;
+  final Color lighterColor;
+  final List<dynamic> shuffledChoices;
+  final int isDigitToObject;
 
   CardTestScreen({
-    this.results,
-    this.cards,
+    this.cardData,
+    this.shuffledChoices,
+    this.cardType,
+    this.globalKey,
+    this.nextActivity,
+    this.systemKey,
+    this.familiarityTotal,
+    this.color,
+    this.lighterColor,
+    this.isDigitToObject,
   });
 
   @override
@@ -17,23 +35,70 @@ class CardTestScreen extends StatefulWidget {
 
 class _CardTestScreenState extends State<CardTestScreen> {
   int numCards = 0;
-  int numCompleted = 0;
+  int attempts = 0;
+  List<bool> results = [];
+  List<FlashCard> flashCards = [];
+  bool cardsReady = false;
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      numCards = widget.cards.length;
+      numCards = widget.cardData.length;
+      results = List.filled(numCards, null);
     });
   }
 
+  callback(bool success) {
+    if (success) {
+      results[attempts] = true;
+    } else {
+      results[attempts] = false;
+    }
+    attempts += 1;
+    setState(() {});
+  }
+
+  Widget getCard() {
+    if (widget.cardType == 'FlashCard') {
+      return new FlashCard(
+        key: UniqueKey(),
+        entry: widget.cardData[attempts],
+        callback: callback,
+        globalKey: widget.globalKey,
+        systemKey: widget.systemKey,
+        nextActivityCallback: widget.nextActivity,
+        familiarityTotal: widget.familiarityTotal,
+        color: widget.color,
+        lighterColor: widget.lighterColor,
+        isLastCard: attempts == numCards - 1,
+      );
+    } else if (widget.cardType == 'MultipleChoiceCard') {
+      return new MultipleChoiceCard(
+        key: UniqueKey(),
+        entry: widget.cardData[attempts],
+        callback: callback,
+        globalKey: widget.globalKey,
+        systemKey: widget.systemKey,
+        nextActivityCallback: widget.nextActivity,
+        familiarityTotal: widget.familiarityTotal,
+        color: widget.color,
+        lighterColor: widget.lighterColor,
+        isLastCard: attempts == numCards - 1,
+        results: results,
+        shuffledChoices: widget.shuffledChoices,
+        isDigitToObject: widget.isDigitToObject,
+      );
+    }
+    return Container();
+  }
+
   List<Widget> getProgressTiles() {
-    numCards = widget.cards.length;
-    numCompleted = 0;
+    attempts = 0;
     var screenWidth = MediaQuery.of(context).size.width;
     var tileWidth = screenWidth / numCards;
     List<Widget> progressTiles = [];
-    widget.results.forEach((e) {
+    results.forEach((e) {
       if (e == null) {
         progressTiles.add(Container(
           height: 40,
@@ -41,14 +106,14 @@ class _CardTestScreenState extends State<CardTestScreen> {
           decoration: BoxDecoration(color: Colors.grey[300]),
         ));
       } else if (e) {
-        numCompleted += 1;
+        attempts += 1;
         progressTiles.add(Container(
           height: 40,
           width: tileWidth,
           decoration: BoxDecoration(color: colorCorrect),
         ));
       } else {
-        numCompleted += 1;
+        attempts += 1;
         progressTiles.add(Container(
             height: 40,
             width: tileWidth,
@@ -76,16 +141,13 @@ class _CardTestScreenState extends State<CardTestScreen> {
                   child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text('$numCompleted/$numCards completed')
-                  ),
+                    padding: EdgeInsets.all(10),
+                    child: Text('$attempts/$numCards completed')),
               ))
             ],
           ),
           Expanded(
-            child: Stack(
-              children: widget.cards,
-            ),
+            child: attempts < numCards ? getCard() : Container(),
           ),
         ],
       )),

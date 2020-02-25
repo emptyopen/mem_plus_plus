@@ -62,6 +62,7 @@ class MainMenuOption extends StatelessWidget {
   final Widget route;
   final Function() callback;
   final bool complete;
+  final GlobalKey<ScaffoldState> globalKey;
   final String activityStatesKey = 'ActivityStates';
 
   MainMenuOption({
@@ -76,6 +77,7 @@ class MainMenuOption extends StatelessWidget {
     this.route,
     this.complete,
     this.callback,
+    this.globalKey,
   });
 
   String generateTimeRemaining() {
@@ -124,6 +126,7 @@ class MainMenuOption extends StatelessWidget {
                   side: BorderSide(), borderRadius: BorderRadius.circular(5)),
               onPressed: () async {
                 HapticFeedback.heavyImpact();
+                globalKey.currentState.hideCurrentSnackBar();
                 if (activity.visibleAfterTime.compareTo(DateTime.now()) > 0) {
                   return null;
                 }
