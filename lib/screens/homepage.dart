@@ -51,16 +51,15 @@ class MyHomePage extends StatefulWidget {
 // TODO: make CSV input scrollable
 // TODO: custom notifications based on progress
 // TODO: clear snackbars when leaving a screen?
-
 // TODO: only show one MC/flash card at a time (performance?)
-//   integrate all other tests (OMG!)
+// TODO: pop practice when done (not fully done)
+// TODO: fix reset 
 
 // next up:
-// TODO: pop practice when done (not fully done)
-// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
-// TODO: make keyboard numeric for custom memory fields
 
 // horizon:
+// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
+// TODO: make keyboard numeric for custom memory fields
 // TODO: add more faces
 // TODO: alphabet PAO (person action, same object)
 // TODO: add symbols
@@ -79,7 +78,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: add sounds
 // TODO: after MC test, show which words were INCORRECT
 // TODO: add ability for alphabet to contain up to 3 objects
-// TODO: implement length limits for inputs (like action/object)
+// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: make vibrations cooler, and more consistent across app?
 // TODO: make snackbars prettier
@@ -108,79 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
     checkForAppUpdate();
     getSharedPrefs();
     initializeActivityMenuButtonMap();
-    initializeNotificationsScheduler();
     new Timer.periodic(
         Duration(milliseconds: 100), (Timer t) => setState(() {}));
-  }
-
-  initializeNotificationsScheduler() async {
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    var time = Time(12, 30, 0);
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        dailyReminderIdKey, dailyReminderKey, 'Daily reminder for MEM++',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    String title = 'Have you improved your memory today?';
-    String subtitle = 'Click here to check your to-do list!';
-    if (await prefs.getActivityState(singleDigitEditKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue developing your Single Digit mapping!';
-    } else if (await prefs.getActivityState(singleDigitPracticeKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue familiarizing your Single Digits!';
-    } else if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) == 'todo') {
-      title = 'Time to master Single Digits!';
-      subtitle = 'Click here to start your MC test!';
-    } else if (await prefs.getActivityState(singleDigitTimedTestPrepKey) == 'todo') {
-      title = 'Let\'s start a Single Digit timed test!';
-      subtitle = 'Complete the test to unlock the next system!';
-    } else if (await prefs.getActivityState(alphabetEditKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue developing your Alphabet mapping!';
-    } else if (await prefs.getActivityState(alphabetPracticeKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue familiarizing your Alphabet System!';
-    } else if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
-      title = 'Time to master the Alphabet!';
-      subtitle = 'Click here to start your MC test!';
-    } else if (await prefs.getActivityState(alphabetTimedTestPrepKey) == 'todo') {
-      title = 'Let\'s start an Alphabet timed test!';
-      subtitle = 'Complete the test to unlock the next system!';
-    } else if (await prefs.getActivityState(paoEditKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue developing your PAO mapping!';
-    } else if (await prefs.getActivityState(paoPracticeKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue familiarizing your PAO mapping!';
-    } else if (await prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
-      title = 'Time to master your PAO system!';
-      subtitle = 'Click here to start your MC test!';
-    } else if (await prefs.getActivityState(paoTimedTestPrepKey) == 'todo') {
-      title = 'Let\'s start a PAO timed test!';
-      subtitle = 'Complete the test to unlock the next system!';
-    } else if (await prefs.getActivityState(deckEditKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue developing your Deck mapping!';
-    } else if (await prefs.getActivityState(deckPracticeKey) == 'todo') {
-      title = 'Let\'s pick up where you left off!';
-      subtitle = 'Continue familiarizing your Deck mapping!';
-    } else if (await prefs.getActivityState(deckMultipleChoiceTestKey) == 'todo') {
-      title = 'Time to master your Deck system!';
-      subtitle = 'Click here to start your MC test!';
-    } else if (await prefs.getActivityState(deckTimedTestPrepKey) == 'todo') {
-      title = 'Let\'s start a Deck timed test!';
-      subtitle = 'Complete the test to unlock the next system!';
-    } 
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        title,
-        subtitle,
-        time,
-        platformChannelSpecifics);
-    print('initialized daily notification @ ${time.hour}:${time.minute}:${time.second}');
   }
 
   checkForAppUpdate() async {
@@ -294,6 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     setState(() {});
+    initializeNotificationsScheduler();
     // print(activityStates);
     //print(availableActivities);
   }
@@ -680,7 +609,14 @@ class _MyHomePageState extends State<MyHomePage> {
     await prefs.writeSharedPrefs(activityStatesKey, clearTo);
     await prefs.writeSharedPrefs(customMemoriesKey, {});
 
+    consolidateSingleDigit = false;
+    consolidateAlphabet = false;
+    consolidatePAO = false;
+    consolidateDeck = false;
+
     setUnlockedActivities();
+
+    setState(() {});
   }
 
   resetActivities() async {
@@ -983,7 +919,8 @@ class HomepageHelp extends StatelessWidget {
       information: [
         '    This is the homescreen! The first time you open any screen, the information '
             'regarding the screen will pop up. Access the information again at any time by clicking the '
-            'info icon in the top right corner! '
+            'info icon in the top right corner! Also check out the preferences, where you can toggle '
+            'dark mode! '
       ],
       buttonColor: Colors.grey[200],
       buttonSplashColor: Colors.grey[300],

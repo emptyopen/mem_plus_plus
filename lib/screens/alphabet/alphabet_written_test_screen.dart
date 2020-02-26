@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
-import 'package:mem_plus_plus/components/alphabet/alphabet_written_card.dart';
-import 'dart:convert';
+import 'package:mem_plus_plus/components/data/alphabet_data.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -22,9 +20,8 @@ class AlphabetWrittenTestScreen extends StatefulWidget {
 
 class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   List<AlphabetData> alphabetData;
-  List<bool> results = List.filled(26, null);
-  int score = 0;
-  int attempts = 0;
+  bool dataReady = false;
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -33,81 +30,91 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(
         context, alphabetWrittenTestFirstHelpKey, AlphabetWrittenTestScreenHelp());
-    alphabetData = (json.decode(await prefs.getString(alphabetKey)) as List)
-        .map((i) => AlphabetData.fromJson(i))
-        .toList();
+    alphabetData = await prefs.getSharedPrefs(alphabetKey);
     alphabetData = shuffle(alphabetData);
+    dataReady = true;
     setState(() {});
   }
 
-  void callback(BuildContext context, bool success) async {
-    if (success) {
-      score += 1;
-      results[attempts] = true;
-      if (score == 26) {
-        // update keys
-        PrefsUpdater prefs = PrefsUpdater();
-        if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
-          await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-          await prefs.updateActivityState(alphabetWrittenTestKey, 'review');
-          widget.callback();
-          showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
-            snackBarText: 'You aced it! You\'ve unlocked the timed test!',
-            textColor: Colors.black,
-            backgroundColor: colorAlphabetDarker,
-            durationSeconds: 5,
-          );
-          Navigator.pop(context);
-        } else {
-          showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
-            snackBarText: 'You aced it!',
-            textColor: Colors.black,
-            backgroundColor: colorAlphabetStandard,
-            durationSeconds: 3,
-          );
-          Navigator.pop(context);
-        }
-      }
-    } else {
-      results[attempts] = false;
+  void nextActivity() async {
+    if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
+      await prefs.updateActivityState(alphabetWrittenTestKey, 'review');
+      await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
     }
-    attempts += 1;
-
-    if (attempts == 26 && score < 26) {
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Try again! You got this. Score: $score/26',
-        textColor: Colors.black,
-        backgroundColor: colorIncorrect,
-        durationSeconds: 4,
-      );
-      Navigator.pop(context);
-    }
-    setState(() {});
+    widget.callback();
   }
 
-  List<AlphabetWrittenCard> getAlphabetWrittenCards() {
-    List<AlphabetWrittenCard> alphabetWrittenCards = [];
-    if (alphabetData != null) {
-      for (int i = 0; i < alphabetData.length; i++) {
-        AlphabetWrittenCard alphabetView = AlphabetWrittenCard(
-          alphabetData: AlphabetData(
-              alphabetData[i].index,
-              alphabetData[i].letter,
-              alphabetData[i].object,
-              alphabetData[i].familiarity),
-          callback: callback,
-        );
-        alphabetWrittenCards.add(alphabetView);
-      }
-    }
-    return alphabetWrittenCards;
+  callback() {
+    widget.callback();
   }
+
+  // void callback(BuildContext context, bool success) async {
+  //   if (success) {
+  //     score += 1;
+  //     results[attempts] = true;
+  //     if (score == 26) {
+  //       // update keys
+  //       PrefsUpdater prefs = PrefsUpdater();
+  //       if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
+  //         await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+  //         await prefs.updateActivityState(alphabetWrittenTestKey, 'review');
+  //         widget.callback();
+  //         showSnackBar(
+  //           scaffoldState: widget.globalKey.currentState,
+  //           snackBarText: 'You aced it! You\'ve unlocked the timed test!',
+  //           textColor: Colors.black,
+  //           backgroundColor: colorAlphabetDarker,
+  //           durationSeconds: 5,
+  //         );
+  //         Navigator.pop(context);
+  //       } else {
+  //         showSnackBar(
+  //           scaffoldState: widget.globalKey.currentState,
+  //           snackBarText: 'You aced it!',
+  //           textColor: Colors.black,
+  //           backgroundColor: colorAlphabetStandard,
+  //           durationSeconds: 3,
+  //         );
+  //         Navigator.pop(context);
+  //       }
+  //     }
+  //   } else {
+  //     results[attempts] = false;
+  //   }
+  //   attempts += 1;
+
+  //   if (attempts == 26 && score < 26) {
+  //     showSnackBar(
+  //       scaffoldState: widget.globalKey.currentState,
+  //       snackBarText: 'Try again! You got this. Score: $score/26',
+  //       textColor: Colors.black,
+  //       backgroundColor: colorIncorrect,
+  //       durationSeconds: 4,
+  //     );
+  //     Navigator.pop(context);
+  //   }
+  //   setState(() {});
+  // }
+
+  // List<AlphabetWrittenCard> getAlphabetWrittenCards() {
+  //   List<AlphabetWrittenCard> alphabetWrittenCards = [];
+  //   if (alphabetData != null) {
+  //     for (int i = 0; i < alphabetData.length; i++) {
+  //       AlphabetWrittenCard alphabetView = AlphabetWrittenCard(
+  //         alphabetData: AlphabetData(
+  //             alphabetData[i].index,
+  //             alphabetData[i].letter,
+  //             alphabetData[i].object,
+  //             alphabetData[i].familiarity),
+  //         callback: callback,
+  //       );
+  //       alphabetWrittenCards.add(alphabetView);
+  //     }
+  //   }
+  //   return alphabetWrittenCards;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,9 +137,19 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
                 },
               ),
             ]),
-        body: CardTestScreen(
-          cardData: getAlphabetWrittenCards(),
-        ));
+        body: dataReady
+          ? CardTestScreen(
+              cardData: alphabetData,
+              cardType: 'WrittenCard',
+              globalKey: widget.globalKey,
+              nextActivity: nextActivity,
+              systemKey: alphabetKey,
+              color: colorAlphabetStandard,
+              lighterColor: colorAlphabetLighter,
+              familiarityTotal: 2600,
+            )
+          : Container(),
+        );
   }
 }
 

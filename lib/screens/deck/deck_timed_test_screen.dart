@@ -277,7 +277,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                     dropDownPair(2),
                   ],
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -288,7 +288,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                     dropDownPair(5),
                   ],
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -299,7 +299,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                     dropDownPair(8),
                   ],
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

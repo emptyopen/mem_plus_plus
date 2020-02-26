@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/single_digit/single_digit_data.dart';
-import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
-import 'package:mem_plus_plus/components/pao/pao_data.dart';
-import 'package:mem_plus_plus/components/deck/deck_data.dart';
+import 'package:mem_plus_plus/components/data/single_digit_data.dart';
+import 'package:mem_plus_plus/components/data/alphabet_data.dart';
+import 'package:mem_plus_plus/components/data/pao_data.dart';
+import 'package:mem_plus_plus/components/data/deck_data.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
@@ -137,7 +137,7 @@ class _FlashCardState extends State<FlashCard> {
       showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
-              'Great job! You still have some items you need to increase familiarity for, pop back here any time!',
+              'Great job! You still have some items for which you need to increase familiarity, pop back here any time!',
           backgroundColor: widget.color,
           durationSeconds: 3);
       Navigator.pop(context);

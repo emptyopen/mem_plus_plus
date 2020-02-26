@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/deck/deck_data.dart';
-import 'package:mem_plus_plus/components/deck/deck_multiple_choice_card.dart';
+import 'package:mem_plus_plus/components/data/deck_data.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -26,13 +25,7 @@ class _DeckMultipleChoiceTestScreenState
   List fakeData = [];
   List<Widget> deckCards = [];
   bool dataReady = false;
-  List<DeckData> shuffledChoices = [
-    DeckData(0, '0', 'nothing', 'nothing', 'nothing', 0),
-    DeckData(1, '0', 'nothing', 'nothing', 'nothing', 0),
-    DeckData(2, '0', 'nothing', 'nothing', 'nothing', 0),
-    DeckData(3, '0', 'nothing', 'nothing', 'nothing', 0),
-  ];
-  int isDigitToObject = 0; // 0 == digitToObject, 1 == objectToDigit
+  List<DeckData> shuffledChoices;
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -42,76 +35,44 @@ class _DeckMultipleChoiceTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, deckMultipleChoiceTestFirstHelpKey, DeckMultipleChoiceScreenHelp());
+    prefs.checkFirstTime(context, deckMultipleChoiceTestFirstHelpKey,
+        DeckMultipleChoiceScreenHelp());
     deckData = await prefs.getSharedPrefs(deckKey);
     deckData = shuffle(deckData);
 
     deckData.forEach((entry) {
-      DeckData fakeSingleDigitChoice1;
-      DeckData fakeSingleDigitChoice2;
-      DeckData fakeSingleDigitChoice3;
-      // randomly choose either digit -> object or object -> digit
-      isDigitToObject = Random().nextInt(2);
-      if (isDigitToObject == 0) {
-        // loop until you find 3 random different objects
-        List<String> notAllowed = [entry.object];
-        while (fakeSingleDigitChoice1 == null) {
-          DeckData candidate =
-              deckData[Random().nextInt(deckData.length)];
-          if (!notAllowed.contains(candidate.object)) {
-            fakeSingleDigitChoice1 = candidate;
-            notAllowed.add(candidate.object);
-          }
-        }
-        while (fakeSingleDigitChoice2 == null) {
-          DeckData candidate =
-              deckData[Random().nextInt(deckData.length)];
-          if (!notAllowed.contains(candidate.object)) {
-            fakeSingleDigitChoice2 = candidate;
-            notAllowed.add(candidate.object);
-          }
-        }
-        while (fakeSingleDigitChoice3 == null) {
-          DeckData candidate =
-              deckData[Random().nextInt(deckData.length)];
-          if (!notAllowed.contains(candidate.object)) {
-            fakeSingleDigitChoice3 = candidate;
-            notAllowed.add(candidate.object);
-          }
-        }
-      } else {
-        // loop until you find 3 random different digits
-        List<String> notAllowed = [entry.digitSuit];
-        while (fakeSingleDigitChoice1 == null) {
-          DeckData candidate =
-              deckData[Random().nextInt(deckData.length)];
-          if (!notAllowed.contains(candidate.digitSuit)) {
-            fakeSingleDigitChoice1 = candidate;
-            notAllowed.add(candidate.digitSuit);
-          }
-        }
-        while (fakeSingleDigitChoice2 == null) {
-          DeckData candidate =
-              deckData[Random().nextInt(deckData.length)];
-          if (!notAllowed.contains(candidate.digitSuit)) {
-            fakeSingleDigitChoice2 = candidate;
-            notAllowed.add(candidate.digitSuit);
-          }
-        }
-        while (fakeSingleDigitChoice3 == null) {
-          DeckData candidate =
-              deckData[Random().nextInt(deckData.length)];
-          if (!notAllowed.contains(candidate.digitSuit)) {
-            fakeSingleDigitChoice3 = candidate;
-            notAllowed.add(candidate.digitSuit);
-          }
+      DeckData fakeChoice1;
+      DeckData fakeChoice2;
+      DeckData fakeChoice3;
+
+      List<int> notAllowed = [entry.index];
+      while (fakeChoice1 == null) {
+        DeckData candidate = deckData[Random().nextInt(deckData.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakeChoice1 = candidate;
+          notAllowed.add(candidate.index);
         }
       }
+      while (fakeChoice2 == null) {
+        DeckData candidate = deckData[Random().nextInt(deckData.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakeChoice2 = candidate;
+          notAllowed.add(candidate.index);
+        }
+      }
+      while (fakeChoice3 == null) {
+        DeckData candidate = deckData[Random().nextInt(deckData.length)];
+        if (!notAllowed.contains(candidate.index)) {
+          fakeChoice3 = candidate;
+          notAllowed.add(candidate.index);
+        }
+      }
+
       shuffledChoices = [
         entry,
-        fakeSingleDigitChoice1,
-        fakeSingleDigitChoice2,
-        fakeSingleDigitChoice3,
+        fakeChoice1,
+        fakeChoice2,
+        fakeChoice3,
       ];
       shuffledChoices = shuffle(shuffledChoices);
       fakeData.add(shuffledChoices);
@@ -122,10 +83,8 @@ class _DeckMultipleChoiceTestScreenState
   }
 
   void nextActivity() async {
-    if (await prefs.getActivityState(deckMultipleChoiceTestKey) ==
-        'todo') {
-      await prefs.updateActivityState(
-          deckMultipleChoiceTestKey, 'review');
+    if (await prefs.getActivityState(deckMultipleChoiceTestKey) == 'todo') {
+      await prefs.updateActivityState(deckMultipleChoiceTestKey, 'review');
       await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
     }
     widget.callback();
@@ -138,10 +97,10 @@ class _DeckMultipleChoiceTestScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Deck: multiple choice test'),
-        backgroundColor: colorDeckStandard,
+          backgroundColor: colorDeckStandard,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -163,7 +122,7 @@ class _DeckMultipleChoiceTestScreenState
               },
             ),
           ]),
-          body: dataReady
+      body: dataReady
           ? CardTestScreen(
               cardData: deckData,
               cardType: 'MultipleChoiceCard',
@@ -181,13 +140,14 @@ class _DeckMultipleChoiceTestScreenState
 }
 
 class DeckMultipleChoiceScreenHelp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
       title: 'Deck Multiple Choice Test',
-      information: ['    Alright! Time for a test on your Deck system. If you get a perfect score, '
-        'the next test will be unlocked! Good luck!'],
+      information: [
+        '    Alright! Time for a test on your Deck system. If you get a perfect score, '
+            'the next test will be unlocked! Good luck!'
+      ],
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,
       firstHelpKey: deckMultipleChoiceTestFirstHelpKey,

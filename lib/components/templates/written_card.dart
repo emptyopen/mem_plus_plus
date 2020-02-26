@@ -1,68 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/alphabet/alphabet_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'dart:math';
-import 'package:mem_plus_plus/components/standard.dart';
-import 'package:mem_plus_plus/services/services.dart';
-import 'package:edit_distance/edit_distance.dart';
-import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/components/standard.dart';
+import 'package:edit_distance/edit_distance.dart';
 
-class AlphabetWrittenCard extends StatefulWidget {
-  final AlphabetData alphabetData;
-  final Function(BuildContext, bool) callback;
+class WrittenCard extends StatefulWidget {
+  final Key key;
+  final String systemKey;
+  final dynamic entry;
+  final Function(bool) callback;
+  final Function() nextActivityCallback;
+  final Color color;
+  final Color lighterColor;
+  final bool isLastCard;
+  final GlobalKey<ScaffoldState> globalKey;
+  final List results;
 
-  AlphabetWrittenCard({this.alphabetData, this.callback});
+  WrittenCard({
+    this.key,
+    this.systemKey,
+    this.entry,
+    this.callback,
+    this.nextActivityCallback,
+    this.color,
+    this.lighterColor,
+    this.globalKey,
+    this.isLastCard = false,
+    this.results,
+  });
 
   @override
-  _AlphabetWrittenCardState createState() => _AlphabetWrittenCardState();
+  _WrittenCardState createState() => _WrittenCardState();
 }
 
-class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
-  bool done = false;
-  List<AlphabetData> alphabetDataList;
+class _WrittenCardState extends State<WrittenCard> {
   bool isErrorMessage = false;
   final textController = TextEditingController();
+  final prefs = PrefsUpdater();
 
   @override
   void initState() {
     super.initState();
-    getSharedPrefs();
-  }
-
-  @override
-  void dispose() {
-    textController.dispose();
-    super.dispose();
-  }
-
-  Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      alphabetDataList = (json.decode(prefs.getString(alphabetKey)) as List)
-          .map((i) => AlphabetData.fromJson(i))
-          .toList();
-      alphabetDataList = shuffle(alphabetDataList);
-    });
-  }
-
-  List shuffle(List items) {
-    var random = new Random();
-    for (var i = items.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-      var temp = items[i];
-      items[i] = items[n];
-      items[n] = temp;
-    }
-    return items;
   }
 
   void checkResult() {
     Levenshtein d = new Levenshtein();
-    String answer = widget.alphabetData.object.toLowerCase();
+    String answer = widget.entry.object.toLowerCase();
     String guess = textController.text.toLowerCase().trim();
-    if (guess == '') {
+    if (textController.text == '') {
       setState(() {
         isErrorMessage = true;
       });
@@ -74,41 +60,57 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
           snackBarText: 'Correct!',
           backgroundColor: colorCorrect,
           durationSeconds: 1);
-      setState(() {
-        widget.callback(context, true);
-        done = true;
-      });
+      widget.callback(true);
     } else if (d.distance(answer, guess) == 1) {
       showSnackBar(
           scaffoldState: Scaffold.of(context),
           snackBarText: 'Close enough!',
           backgroundColor: colorCorrect,
           durationSeconds: 1);
-      setState(() {
-        widget.callback(context, true);
-        done = true;
-      });
+      widget.callback(true);
     } else {
       showSnackBar(
           scaffoldState: Scaffold.of(context),
-          snackBarText:
-              'Incorrect! The correct answer is: ${widget.alphabetData.object}',
+          snackBarText: 'Incorrect!   ${widget.entry.letter} = ${widget.entry.object}',
           backgroundColor: colorIncorrect,
-          durationSeconds: 3);
-      setState(() {
-        widget.callback(context, false);
-        done = true;
-      });
+          durationSeconds: 2);
+      widget.callback(false);
     }
-    textController.text = '';
+    if (widget.isLastCard) {
+      int score = 0;
+      widget.results.forEach((v) {
+        if (v) {
+          score += 1;
+        }
+      });
+      if (score == widget.results.length) {
+        showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Congratulations, you aced it! Next up is a timed test!',
+            backgroundColor: widget.color,
+            durationSeconds: 3);
+        widget.nextActivityCallback();
+        Navigator.pop(context);
+      } else {
+        showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Try again! You got this. Score: $score/${widget.results.length}',
+            backgroundColor: colorIncorrect,
+            durationSeconds: 3);
+        Navigator.pop(context);
+      }
+    }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return done
-        ? Container()
-        : Container(
-            height: 500,
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+            height: screenHeight,
             decoration: BoxDecoration(
               color: backgroundColor,
             ),
@@ -118,7 +120,7 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
                 Container(
                   child: Center(
                       child: Text(
-                    widget.alphabetData.letter,
+                    widget.entry.letter,
                     style: TextStyle(
                         fontSize: 30, color: backgroundSemiHighlightColor),
                   )),
@@ -127,7 +129,7 @@ class _AlphabetWrittenCardState extends State<AlphabetWrittenCard> {
                   height: 30,
                 ),
                 Container(
-                  width: 250,
+                  width: screenWidth * 0.8,
                   child: TextField(
                     style: TextStyle(
                         fontSize: 22, color: backgroundHighlightColor),

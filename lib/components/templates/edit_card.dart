@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:mem_plus_plus/components/deck/deck_data.dart';
+import 'package:mem_plus_plus/components/data/deck_data.dart';
 
 class EditCard extends StatefulWidget {
   final dynamic entry;
@@ -97,7 +97,7 @@ class _EditCardState extends State<EditCard> {
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: backgroundSemiColor)),
+                                      BorderSide(color: backgroundSemiHighlightColor)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: backgroundHighlightColor)),
@@ -126,7 +126,7 @@ class _EditCardState extends State<EditCard> {
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: backgroundSemiColor)),
+                                        BorderSide(color: backgroundSemiHighlightColor)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: backgroundHighlightColor)),
@@ -155,7 +155,7 @@ class _EditCardState extends State<EditCard> {
                   controller: objectTextController,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: backgroundSemiColor)),
+                          borderSide: BorderSide(color: backgroundSemiHighlightColor)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: backgroundHighlightColor)),

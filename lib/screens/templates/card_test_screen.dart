@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/templates/written_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/components/templates/flash_card.dart';
@@ -14,7 +15,6 @@ class CardTestScreen extends StatefulWidget {
   final Color color;
   final Color lighterColor;
   final List<dynamic> shuffledChoices;
-  final int isDigitToObject;
 
   CardTestScreen({
     this.cardData,
@@ -26,7 +26,6 @@ class CardTestScreen extends StatefulWidget {
     this.familiarityTotal,
     this.color,
     this.lighterColor,
-    this.isDigitToObject,
   });
 
   @override
@@ -37,8 +36,6 @@ class _CardTestScreenState extends State<CardTestScreen> {
   int numCards = 0;
   int attempts = 0;
   List<bool> results = [];
-  List<FlashCard> flashCards = [];
-  bool cardsReady = false;
 
   @override
   void initState() {
@@ -87,7 +84,19 @@ class _CardTestScreenState extends State<CardTestScreen> {
         isLastCard: attempts == numCards - 1,
         results: results,
         shuffledChoices: widget.shuffledChoices,
-        isDigitToObject: widget.isDigitToObject,
+      );
+    } else if (widget.cardType == 'WrittenCard') {
+      return new WrittenCard(
+        key: UniqueKey(),
+        entry: widget.cardData[attempts],
+        callback: callback,
+        globalKey: widget.globalKey,
+        systemKey: widget.systemKey,
+        nextActivityCallback: widget.nextActivity,
+        color: widget.color,
+        lighterColor: widget.lighterColor,
+        isLastCard: attempts == numCards - 1,
+        results: results,
       );
     }
     return Container();

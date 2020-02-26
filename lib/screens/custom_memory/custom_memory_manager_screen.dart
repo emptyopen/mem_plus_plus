@@ -24,6 +24,7 @@ class CustomMemoryManagerScreen extends StatefulWidget {
 class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
   Map customMemories = {};
   Column customMemoriesColumn = Column();
+    var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -38,7 +39,6 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, customMemoryManagerFirstHelpKey,
         CustomMemoryManagerScreenHelp());
 

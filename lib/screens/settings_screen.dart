@@ -73,17 +73,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         buttonIndex < isSelected.length;
                         buttonIndex++) {
                       if (buttonIndex == index) {
-                        backgroundColor = Colors.grey[800];
-                        backgroundHighlightColor = Colors.white;
-                        backgroundSemiColor = Colors.grey[600];
-                        backgroundSemiHighlightColor = Colors.grey[200];
+                        backgroundColor = darkBackgroundColorPermanent;
+                        backgroundHighlightColor = darkBackgroundHighlightColorPermanent;
+                        backgroundSemiColor = darkBackgroundSemiColorPermanent;
+                        backgroundSemiHighlightColor = darkBackgroundSemiHighlightColorPermanent;
                         isSelected[buttonIndex] = true;
                         setDarkMode(true);
                       } else {
-                        backgroundColor = Colors.white;
-                        backgroundHighlightColor = Colors.black;
-                        backgroundSemiColor = Colors.grey[200];
-                        backgroundSemiHighlightColor = Colors.grey[800];
+                        backgroundColor = lightBackgroundColorPermanent;
+                        backgroundHighlightColor = lightBackgroundHighlightColorPermanent;
+                        backgroundSemiColor = lightBackgroundSemiColorPermanent;
+                        backgroundSemiHighlightColor = lightBackgroundSemiHighlightColorPermanent;
                         isSelected[buttonIndex] = false;
                         setDarkMode(false);
                       }

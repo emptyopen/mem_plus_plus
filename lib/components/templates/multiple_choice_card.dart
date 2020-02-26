@@ -3,7 +3,7 @@ import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-import 'package:mem_plus_plus/components/deck/deck_data.dart';
+import 'package:mem_plus_plus/components/data/deck_data.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
 
@@ -20,7 +20,6 @@ class MultipleChoiceCard extends StatefulWidget {
   final bool isLastCard;
   final GlobalKey<ScaffoldState> globalKey;
   final List results;
-  final int isDigitToObject;
 
   MultipleChoiceCard({
     this.key,
@@ -35,7 +34,6 @@ class MultipleChoiceCard extends StatefulWidget {
     this.globalKey,
     this.isLastCard = false,
     this.results,
-    this.isDigitToObject,
   });
 
   @override
@@ -142,7 +140,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               : Center(
             child: Text(
               isValueToProperty ? widget.entry.digits : widget.entry.action,
-              style: TextStyle(fontSize: 40, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 34, color: backgroundHighlightColor),
               textAlign: TextAlign.center,
             ),
           );
@@ -152,7 +150,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               : Center(
             child: Text(
               isValueToProperty ? widget.entry.digits : widget.entry.object,
-              style: TextStyle(fontSize: 40, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 34, color: backgroundHighlightColor),
               textAlign: TextAlign.center,
             ),
           );
@@ -227,7 +225,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
                   highlightColor: Colors.transparent,
                   onPressed: () {
                     HapticFeedback.heavyImpact();
-                    checkResult(0);
+                    checkResult(index);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
@@ -237,9 +235,6 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
                     child: getDeckCard(widget.shuffledChoices[attempts][index].digitSuit, 'small'),
                   ),
                 );
-              //   Center(
-              // child: getDeckCard(
-              //     widget.shuffledChoices[attempts][index].digitSuit, 'small'));
     }
     return BasicFlatButton(
       splashColor: colorSingleDigitDarker,
@@ -254,9 +249,6 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
   }
 
   void checkResult(int index) {
-    print('$attempts');
-    print('${widget.shuffledChoices[attempts][index].index} ${widget.entry.index}');
-    print('');
     if (widget.shuffledChoices[attempts][index].index == widget.entry.index) {
       showSnackBar(
           scaffoldState: Scaffold.of(context),

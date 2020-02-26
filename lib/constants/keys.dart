@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = true;
+const bool debugModeEnabled = false;
 
 const String usernameKey = 'Username';
 
 // dark mode colors
-Color backgroundColor = Colors.white;
-Color backgroundSemiColor = Colors.grey[200];
-Color backgroundHighlightColor = Colors.black;
-Color backgroundSemiHighlightColor = Colors.grey[800];
+Color darkBackgroundColorPermanent = Colors.grey[800];
+Color darkBackgroundHighlightColorPermanent = Colors.white;
+Color darkBackgroundSemiColorPermanent = Colors.grey[600];
+Color darkBackgroundSemiHighlightColorPermanent = Colors.grey[200];
+Color lightBackgroundColorPermanent = Colors.white;
+Color lightBackgroundHighlightColorPermanent = Colors.black;
+Color lightBackgroundSemiColorPermanent = Colors.grey[400];
+Color lightBackgroundSemiHighlightColorPermanent = Colors.grey[600];
+Color backgroundColor = darkBackgroundColorPermanent;
+Color backgroundSemiColor = darkBackgroundSemiColorPermanent;
+Color backgroundHighlightColor = darkBackgroundHighlightColorPermanent;
+Color backgroundSemiHighlightColor = darkBackgroundSemiHighlightColorPermanent;
 const String darkModeKey = 'DarkMode';
 const String darkModeNotificationFirstTimeKey = 'DarkModeNotificationFirstTime';
 
