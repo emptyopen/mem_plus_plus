@@ -23,6 +23,7 @@ const String darkModeNotificationFirstTimeKey = 'DarkModeNotificationFirstTime';
 
 // general
 const String welcomeKey = 'Welcome';
+const String homepageFirstHelpKey = 'HomepageFirstHelp';
 const String homepageKey = 'Homepage';
 const String firstTimeAppKey = 'FirstTimeApp';
 const String activityStatesKey = 'ActivityStates';
@@ -42,6 +43,13 @@ const String singleDigitMultipleChoiceTestKey = 'SingleDigitMultipleChoice';
 const String singleDigitTimedTestPrepKey = 'SingleDigitTimedTestPrep';
 const String singleDigitTimedTestKey = 'SingleDigitTimedTest';
 const String singleDigitTestActiveKey = 'SingleDigitTimedTestActive';
+const String singleDigitEditFirstHelpKey = 'SingleDigitEditFirstHelp';
+const String singleDigitPracticeFirstHelpKey = 'SingleDigitPracticeFirstHelp';
+const String singleDigitMultipleChoiceTestFirstHelpKey =
+    'SingleDigitMultipleChoiceTestFirstHelp';
+const String singleDigitTimedTestPrepFirstHelpKey =
+    'SingleDigitTimedTestPrepFirstHelp';
+const String singleDigitTimedTestFirstHelpKey = 'SingleDigitTimedTestFirstHelp';
 
 // Alphabet
 const String alphabetKey = 'Alphabet';
@@ -51,6 +59,13 @@ const String alphabetWrittenTestKey = 'AlphabetWrittenTest';
 const String alphabetTimedTestPrepKey = 'AlphabetTimedTestPrep';
 const String alphabetTimedTestKey = 'AlphabetTimedTest';
 const String alphabetTestActiveKey = 'AlphabetTestActive';
+const String alphabetEditFirstHelpKey = 'AlphabetEditFirstHelp';
+const String alphabetPracticeFirstHelpKey = 'AlphabetPracticeFirstHelp';
+const String alphabetWrittenTestFirstHelpKey =
+    'AlphabetMultipleChoiceTestFirstHelp';
+const String alphabetTimedTestPrepFirstHelpKey =
+    'AlphabetTimedTestPrepFirstHelp';
+const String alphabetTimedTestFirstHelpKey = 'AlphabetTimedTestFirstHelp';
 
 // PAO
 const String paoKey = 'PAO';
@@ -60,11 +75,26 @@ const String paoMultipleChoiceTestKey = 'PAOMultipleChoice';
 const String paoTimedTestPrepKey = 'PAOTimedTestPrep';
 const String paoTimedTestKey = 'PAOTimedTest';
 const String paoTestActiveKey = 'PAOTestActive';
+const String paoEditFirstHelpKey = 'PAOEditFirstHelp';
+const String paoPracticeFirstHelpKey = 'PAOPracticeFirstHelp';
+const String paoMultipleChoiceTestFirstHelpKey =
+    'PAOMultipleChoiceTestFirstHelp';
+const String paoTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
+const String paoTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
 
 // pi
 const String piTimedTestPrepKey = 'PiTimedTestPrep';
 const String piTimedTestKey = 'PiTimedTest';
 const String piTestActiveKey = 'PiTestActive';
+const String piTimedTestPrepFirstHelpKey = 'PiTimedTestPrepFirstHelp';
+const String piTimedTestFirstHelpKey = 'PiTimedTestFirstHelp';
+
+// phonetic alphabet
+const String phoneticAlphabetTimedTestPrepKey = 'PhoneticAlphabetTimedTestPrep';
+const String phoneticAlphabetTimedTestKey = 'PhoneticAlphabetTimedTest';
+const String phoneticAlphabetTestActiveKey = 'PhoneticAlphabetTestActive';
+const String phoneticAlphabetTimedTestPrepFirstHelpKey = 'PhoneticAlphabetTimedTestPrepFirstHelp';
+const String phoneticAlphabetTimedTestFirstHelpKey = 'PhoneticAlphabetTimedTestFirstHelp';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
@@ -75,11 +105,15 @@ const String extraLongTerm = 'extra long term (1y ~ life)';
 const String contactString = 'Contact';
 const String idCardString = 'ID/Credit Card';
 const String otherString = 'Other';
+const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstHelp';
+const String customMemoryTestFirstHelpKey = 'CustomMemoryTestFirstHelp';
 
 // faces
 const String faceTimedTestPrepKey = 'FaceTimedTestPrep';
 const String faceTimedTestKey = 'FaceTimedTest';
 const String faceTestActiveKey = 'FaceTestActive';
+const String faceTimedTestPrepFirstHelpKey = 'FaceTimedTestPrepFirstHelp';
+const String faceTimedTestFirstHelpKey = 'FaceTimedTestFirstHelp';
 
 // Deck
 const String deckKey = 'Deck';
@@ -89,33 +123,6 @@ const String deckMultipleChoiceTestKey = 'DeckMultipleChoice';
 const String deckTimedTestPrepKey = 'DeckTimedTestPrep';
 const String deckTimedTestKey = 'DeckTimedTest';
 const String deckTestActiveKey = 'DeckTestActive';
-
-// first help
-const String homepageFirstHelpKey = 'HomepageFirstHelp';
-const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstHelp';
-const String customMemoryTestFirstHelpKey = 'CustomMemoryTestFirstHelp';
-const String singleDigitEditFirstHelpKey = 'SingleDigitEditFirstHelp';
-const String singleDigitPracticeFirstHelpKey = 'SingleDigitPracticeFirstHelp';
-const String singleDigitMultipleChoiceTestFirstHelpKey =
-    'SingleDigitMultipleChoiceTestFirstHelp';
-const String singleDigitTimedTestPrepFirstHelpKey =
-    'SingleDigitTimedTestPrepFirstHelp';
-const String singleDigitTimedTestFirstHelpKey = 'SingleDigitTimedTestFirstHelp';
-const String alphabetEditFirstHelpKey = 'AlphabetEditFirstHelp';
-const String alphabetPracticeFirstHelpKey = 'AlphabetPracticeFirstHelp';
-const String alphabetWrittenTestFirstHelpKey =
-    'AlphabetMultipleChoiceTestFirstHelp';
-const String alphabetTimedTestPrepFirstHelpKey =
-    'AlphabetTimedTestPrepFirstHelp';
-const String alphabetTimedTestFirstHelpKey = 'AlphabetTimedTestFirstHelp';
-const String paoEditFirstHelpKey = 'PAOEditFirstHelp';
-const String paoPracticeFirstHelpKey = 'PAOPracticeFirstHelp';
-const String paoMultipleChoiceTestFirstHelpKey =
-    'PAOMultipleChoiceTestFirstHelp';
-const String paoTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
-const String paoTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
-const String faceTimedTestPrepFirstHelpKey = 'FaceTimedTestPrepFirstHelp';
-const String faceTimedTestFirstHelpKey = 'FaceTimedTestFirstHelp';
 const String deckEditFirstHelpKey = 'PAOEditFirstHelp';
 const String deckPracticeFirstHelpKey = 'PAOPracticeFirstHelp';
 const String deckMultipleChoiceTestFirstHelpKey =

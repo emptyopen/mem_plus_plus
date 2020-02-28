@@ -35,10 +35,8 @@ class ActivityMenuButton {
   Icon icon;
   Color color;
   Color splashColor;
-  Color complete1;
-  Color complete2;
 
-  ActivityMenuButton({this.text, this.route, this.icon, this.color, this.splashColor, this.complete1, this.complete2});
+  ActivityMenuButton({this.text, this.route, this.icon, this.color, this.splashColor});
 }
 
 var defaultActivityStatesInitial = {
@@ -56,6 +54,8 @@ var defaultActivityStatesInitial = {
   alphabetWrittenTestKey: Activity(alphabetWrittenTestKey, 'todo', false, DateTime.now(), true),
   alphabetTimedTestPrepKey: Activity(alphabetTimedTestPrepKey, 'todo', false, DateTime.now(), true),
   alphabetTimedTestKey: Activity(alphabetTimedTestKey, 'todo', false, DateTime.now(), true),
+  phoneticAlphabetTimedTestPrepKey: Activity(phoneticAlphabetTimedTestPrepKey, 'todo', false, DateTime.now(), true),
+  phoneticAlphabetTimedTestKey: Activity(phoneticAlphabetTimedTestKey, 'todo', false, DateTime.now(), true),
   paoEditKey: Activity(paoEditKey, 'todo', false, DateTime.now(), true),
   paoPracticeKey: Activity(paoPracticeKey, 'todo', false, DateTime.now(), true),
   paoMultipleChoiceTestKey: Activity(paoMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
@@ -85,6 +85,8 @@ var defaultActivityStatesAllDone = {
   alphabetWrittenTestKey: Activity(alphabetWrittenTestKey, 'review', true, DateTime.now(), false),
   alphabetTimedTestPrepKey: Activity(alphabetTimedTestPrepKey, 'review', true, DateTime.now(), false),
   alphabetTimedTestKey: Activity(alphabetTimedTestKey, 'review', false, DateTime.now(), false),
+  phoneticAlphabetTimedTestPrepKey: Activity(phoneticAlphabetTimedTestPrepKey, 'review', true, DateTime.now(), false),
+  phoneticAlphabetTimedTestKey: Activity(phoneticAlphabetTimedTestKey, 'review', false, DateTime.now(), false),
   paoEditKey: Activity(paoEditKey, 'review', true, DateTime.now(), false),
   paoPracticeKey: Activity(paoPracticeKey, 'review', true, DateTime.now(), false),
   paoMultipleChoiceTestKey: Activity(paoMultipleChoiceTestKey, 'review', true, DateTime.now(), false),

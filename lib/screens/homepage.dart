@@ -39,6 +39,8 @@ import 'package:mem_plus_plus/screens/deck/deck_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/pi/pi_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/pi/pi_timed_test_screen.dart';
+import 'package:mem_plus_plus/screens/phonetic_alphabet/phonetic_alphabet_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/phonetic_alphabet/phonetic_alphabet_timed_test_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -52,15 +54,14 @@ class MyHomePage extends StatefulWidget {
 
 // Chapter 1
 // single digit
-// - quick lesson 1: ?? Don't get discouraged! If you forgot something, it just wasn't anchored correctly, or it wasn't vivid enough. 
+// - quick lesson 1: Don't get discouraged! If you forgot something, it just wasn't anchored correctly, or it wasn't vivid enough.
 // - planet test
 // - face test (with age)
 
 // Chapter 2
 // alphabet
-// - quick lesson 2: ?? 
-// - parking spot
-// - phonetic alphabet
+// - quick lesson 2: Memory palace!!
+// - phonetic alphabet (use memory palace)
 // - airline confirmation code / flight number / departure time / seat number
 
 // Chapter 3
@@ -77,30 +78,26 @@ class MyHomePage extends StatefulWidget {
 // - first aid
 // - doomsday test
 
-
 // done:
-// add cooler page transitions
-// fix padding on flash cards
-// identify unavailable activites (availableAfter)
-// add about developer to settings
-// change page numbers to dot system  (welcome screen, help screens)
-// BIG: 100 digit pi test
-// change isSuper to completion of system, not unlock
-// Tenable new activities based on if they are not yet enabled
-// make keyboard numeric for custom memory fields
+
+
+// TODO: BIG: add phonetic alphabet
+// TODO: fix keyboard not showing
 
 // next up:
+// TODO: BIG: consolidate tests between systems (1 lesson and 2 tests)
+// TODO: BIG: add planet test
+// TODO: BIG: airplane test
+// TODO: make default date better (1990 for birthday, etc)
+// TODO: move custom memory to floating button
+// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
 
 // horizon:
-// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
-// TODO: move custom memory to floating button
 // TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
-// TODO: make default date better (1990 for birthday, etc)
+// TODO: add more basic tests, intersperse between systems (planets, 100 digits of pi, phonetic alphabet, conversion rates, the doomsday rule)
 // TODO: handle bad CSV input
 // TODO: add CSV template for google sheets
 // TODO: if number of flash cards needed is less than 5?, make it 5 instead of just one
-// TODO: consolidate tests between systems (need 3 or 4 tests in between each?)
-// TODO: add more basic tests, intersperse between systems (planets, 100 digits of pi, phonetic alphabet, conversion rates, the doomsday rule)
 // TODO: add first aid system
 // TODO: add more faces, make all of them closer to the face
 // TODO: alphabet PAO (person action, same object)
@@ -259,7 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {});
     initializeNotificationsScheduler();
-    print(activityStates);
+    // print(activityStates);
     print(availableActivities);
   }
 
@@ -322,23 +319,23 @@ class _MyHomePageState extends State<MyHomePage> {
       var nextDateTime = DateTime.parse(memory['nextDatetime']);
       var activity = Activity('test', 'todo', true, nextDateTime, false);
       var customIcon = customMemoryIconMap[memory['type']];
-      mainMenuOptions.add(MainMenuOption(
-        activity: activity,
-        icon: Icon(customIcon),
-        text: '${memory['type']}: $title',
-        route: CustomMemoryTestScreen(
-          customMemory: memory,
+      mainMenuOptions.add(
+        MainMenuOption(
+          activity: activity,
+          icon: Icon(customIcon),
+          text: '${memory['type']}: $title',
+          route: CustomMemoryTestScreen(
+            customMemory: memory,
+            callback: callback,
+            globalKey: globalKey,
+          ),
           callback: callback,
+          color: Colors.purple[400],
+          splashColor: Colors.purple[500],
+          complete: true,
           globalKey: globalKey,
         ),
-        callback: callback,
-        color: Colors.purple[400],
-        splashColor: Colors.purple[500],
-        complete1: Colors.purple[200],
-        complete2: Colors.purple[500],
-        complete: true,
-        globalKey: globalKey,
-      ));
+      );
     });
 
     // regular activities
@@ -353,8 +350,6 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: activityMenuButtonMap[activity].icon,
           color: activityMenuButtonMap[activity].color,
           splashColor: activityMenuButtonMap[activity].splashColor,
-          complete1: activityMenuButtonMap[activity].complete1,
-          complete2: activityMenuButtonMap[activity].complete2,
           complete: false,
           globalKey: globalKey,
         ));
@@ -373,7 +368,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if (activity.contains(singleDigitKey) && consolidateSingleDigit) {
           notConsolidated = false;
         }
-        if (activity.contains(alphabetKey) && consolidateAlphabet) {
+        if (activity.contains(alphabetKey) && !activity.contains('Phonetic') && consolidateAlphabet) {
           notConsolidated = false;
         }
         if (activity.contains(paoKey) && consolidatePAO) {
@@ -383,25 +378,25 @@ class _MyHomePageState extends State<MyHomePage> {
           notConsolidated = false;
         }
         if (notConsolidated) {
-          mainMenuOptions.add(MainMenuOption(
-            callback: callback,
-            activity: activityStates[activity],
-            text: activityMenuButtonMap[activity].text,
-            route: activityMenuButtonMap[activity].route,
-            icon: activityMenuButtonMap[activity].icon,
-            color: activityMenuButtonMap[activity].color,
-            splashColor: activityMenuButtonMap[activity].splashColor,
-            complete: true,
-            complete1: activityMenuButtonMap[activity].complete1,
-            complete2: activityMenuButtonMap[activity].complete2,
-            globalKey: globalKey,
-          ));
+          mainMenuOptions.add(
+            MainMenuOption(
+              callback: callback,
+              activity: activityStates[activity],
+              text: activityMenuButtonMap[activity].text,
+              route: activityMenuButtonMap[activity].route,
+              icon: activityMenuButtonMap[activity].icon,
+              color: activityMenuButtonMap[activity].color,
+              splashColor: activityMenuButtonMap[activity].splashColor,
+              complete: true,
+              globalKey: globalKey,
+            ),
+          );
         }
       }
       if (activity == singleDigitEditKey && consolidateSingleDigit) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'Single Digit:',
+            text: 'System: Single Digit',
             backgroundColor: colorSingleDigitStandard,
             buttonColor: colorSingleDigitDarker,
             buttonSplashColor: colorSingleDigitDarkest,
@@ -430,7 +425,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == alphabetEditKey && consolidateAlphabet) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'Alphabet:',
+            text: 'System: Alphabet',
             backgroundColor: colorAlphabetStandard,
             buttonColor: colorAlphabetDarker,
             buttonSplashColor: colorAlphabetDarkest,
@@ -459,7 +454,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == paoEditKey && consolidatePAO) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'PAO:',
+            text: 'System: PAO',
             backgroundColor: colorPAOStandard,
             buttonColor: colorPAODarker,
             buttonSplashColor: colorPAODarkest,
@@ -488,7 +483,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == deckEditKey && consolidateDeck) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'Deck:',
+            text: 'System: Deck',
             backgroundColor: colorDeckStandard,
             buttonColor: colorDeckDarker,
             buttonSplashColor: colorDeckDarkest,
@@ -722,9 +717,7 @@ class _MyHomePageState extends State<MyHomePage> {
         route: WelcomeScreen(),
         icon: Icon(Icons.filter),
         color: Colors.green[200],
-        splashColor: Colors.green[400],
-        complete1: Colors.green[200],
-        complete2: Colors.green[400],
+        splashColor: Colors.green[500],
       ),
       singleDigitEditKey: ActivityMenuButton(
         text: 'Single Digit [View/Edit]',
@@ -732,10 +725,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: editIcon,
-        color: Colors.amber[100],
-        splashColor: Colors.amber[200],
-        complete1: Colors.amber[200],
-        complete2: Colors.amber[400],
+        color: Colors.amber[200],
+        splashColor: Colors.amber[500],
       ),
       singleDigitPracticeKey: ActivityMenuButton(
         text: 'Single Digit [Practice]',
@@ -745,9 +736,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         icon: practiceIcon,
         color: Colors.amber[200],
-        splashColor: Colors.amber[300],
-        complete1: Colors.amber[200],
-        complete2: Colors.amber[400],
+        splashColor: Colors.amber[500],
       ),
       singleDigitMultipleChoiceTestKey: ActivityMenuButton(
         text: 'Single Digit [MC Test]',
@@ -756,10 +745,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: multipleChoiceTestIcon,
-        color: Colors.amber[300],
-        splashColor: Colors.amber[400],
-        complete1: Colors.amber[200],
-        complete2: Colors.amber[400],
+        color: Colors.amber[200],
+        splashColor: Colors.amber[500],
       ),
       singleDigitTimedTestPrepKey: ActivityMenuButton(
         text: 'Single Digit [Test Prep]',
@@ -767,10 +754,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: timedTestPrepIcon,
-        color: Colors.amber[400],
+        color: Colors.amber[200],
         splashColor: Colors.amber[500],
-        complete1: Colors.amber[200],
-        complete2: Colors.amber[400],
       ),
       singleDigitTimedTestKey: ActivityMenuButton(
         text: 'Single Digit [Timed Test]',
@@ -779,10 +764,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: timedTestIcon,
-        color: Colors.amber[400],
+        color: Colors.amber[200],
         splashColor: Colors.amber[500],
-        complete1: Colors.amber[200],
-        complete2: Colors.amber[400],
       ),
       faceTimedTestPrepKey: ActivityMenuButton(
         text: 'Faces [Test Prep]',
@@ -790,10 +773,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: timedTestPrepIcon,
-        color: Colors.lime[100],
-        splashColor: Colors.lime[200],
-        complete1: Colors.lime[200],
-        complete2: Colors.lime[400],
+        color: Colors.lime[200],
+        splashColor: Colors.lime[500],
       ),
       faceTimedTestKey: ActivityMenuButton(
         text: 'Faces [Timed Test]',
@@ -802,10 +783,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: timedTestIcon,
-        color: Colors.lime[100],
-        splashColor: Colors.lime[200],
-        complete1: Colors.lime[200],
-        complete2: Colors.lime[400],
+        color: Colors.lime[200],
+        splashColor: Colors.lime[500],
       ),
       alphabetEditKey: ActivityMenuButton(
         text: 'Alphabet [View/Edit]',
@@ -813,10 +792,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: editIcon,
-        color: Colors.blue[100],
-        splashColor: Colors.blue[200],
-        complete1: Colors.blue[200],
-        complete2: Colors.blue[400],
+        color: Colors.blue[200],
+        splashColor: Colors.blue[500],
       ),
       alphabetPracticeKey: ActivityMenuButton(
         text: 'Alphabet [Practice]',
@@ -827,8 +804,6 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: practiceIcon,
         color: Colors.blue[200],
         splashColor: Colors.blue[300],
-        complete1: Colors.blue[200],
-        complete2: Colors.blue[400],
       ),
       alphabetWrittenTestKey: ActivityMenuButton(
         text: 'Alphabet [Written Test]',
@@ -837,10 +812,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: writtenTestIcon,
-        color: Colors.blue[300],
-        splashColor: Colors.blue[400],
-        complete1: Colors.blue[200],
-        complete2: Colors.blue[400],
+        color: Colors.blue[200],
+        splashColor: Colors.blue[500],
       ),
       alphabetTimedTestPrepKey: ActivityMenuButton(
         text: 'Alphabet [Test Prep]',
@@ -850,8 +823,6 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: timedTestPrepIcon,
         color: Colors.blue[400],
         splashColor: Colors.blue[500],
-        complete1: Colors.blue[200],
-        complete2: Colors.blue[400],
       ),
       alphabetTimedTestKey: ActivityMenuButton(
         text: 'Alphabet [Timed Test]',
@@ -860,10 +831,27 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: timedTestIcon,
-        color: Colors.blue[400],
+        color: Colors.blue[200],
         splashColor: Colors.blue[500],
-        complete1: Colors.blue[200],
-        complete2: Colors.blue[400],
+      ),
+      phoneticAlphabetTimedTestPrepKey: ActivityMenuButton(
+        text: 'Phonetic Alphabet [Test Prep]',
+        route: PhoneticAlphabetTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: Colors.green[200],
+        splashColor: Colors.green[500],
+      ),
+      phoneticAlphabetTimedTestKey: ActivityMenuButton(
+        text: 'Phonetic Alphabet [Timed Test]',
+        route: PhoneticAlphabetTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: Colors.green[200],
+        splashColor: Colors.green[500],
       ),
       paoEditKey: ActivityMenuButton(
         text: 'PAO [View/Edit]',
@@ -871,10 +859,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: editIcon,
-        color: Colors.pink[100],
-        splashColor: Colors.pink[200],
-        complete1: Colors.pink[200],
-        complete2: Colors.pink[400],
+        color: Colors.pink[200],
+        splashColor: Colors.pink[500],
       ),
       paoPracticeKey: ActivityMenuButton(
         text: 'PAO [Practice]',
@@ -884,9 +870,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         icon: practiceIcon,
         color: Colors.pink[200],
-        splashColor: Colors.pink[300],
-        complete1: Colors.pink[200],
-        complete2: Colors.pink[400],
+        splashColor: Colors.pink[500],
       ),
       paoMultipleChoiceTestKey: ActivityMenuButton(
         text: 'PAO [MC Test]',
@@ -895,10 +879,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: multipleChoiceTestIcon,
-        color: Colors.pink[300],
-        splashColor: Colors.pink[400],
-        complete1: Colors.pink[200],
-        complete2: Colors.pink[400],
+        color: Colors.pink[200],
+        splashColor: Colors.pink[500],
       ),
       paoTimedTestPrepKey: ActivityMenuButton(
         text: 'PAO [Test Prep]',
@@ -906,10 +888,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: timedTestPrepIcon,
-        color: Colors.pink[400],
+        color: Colors.pink[200],
         splashColor: Colors.pink[500],
-        complete1: Colors.pink[200],
-        complete2: Colors.pink[400],
       ),
       paoTimedTestKey: ActivityMenuButton(
         text: 'PAO [Timed Test]',
@@ -918,10 +898,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: timedTestIcon,
-        color: Colors.pink[400],
+        color: Colors.pink[200],
         splashColor: Colors.pink[500],
-        complete1: Colors.pink[200],
-        complete2: Colors.pink[400],
       ),
       piTimedTestPrepKey: ActivityMenuButton(
         text: 'Pi [Test Prep]',
@@ -929,10 +907,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: timedTestPrepIcon,
-        color: Colors.green[400],
+        color: Colors.green[200],
         splashColor: Colors.green[500],
-        complete1: Colors.green[200],
-        complete2: Colors.green[400],
       ),
       piTimedTestKey: ActivityMenuButton(
         text: 'Pi [Timed Test]',
@@ -941,10 +917,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: timedTestIcon,
-        color: Colors.green[400],
+        color: Colors.green[200],
         splashColor: Colors.green[500],
-        complete1: Colors.green[200],
-        complete2: Colors.green[400],
       ),
       deckEditKey: ActivityMenuButton(
         text: 'Deck [View/Edit]',
@@ -952,10 +926,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: editIcon,
-        color: Colors.teal[100],
-        splashColor: Colors.teal[200],
-        complete1: Colors.teal[200],
-        complete2: Colors.teal[400],
+        color: Colors.teal[200],
+        splashColor: Colors.teal[500],
       ),
       deckPracticeKey: ActivityMenuButton(
         text: 'Deck [Practice]',
@@ -965,9 +937,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         icon: practiceIcon,
         color: Colors.teal[200],
-        splashColor: Colors.teal[300],
-        complete1: Colors.teal[200],
-        complete2: Colors.teal[400],
+        splashColor: Colors.teal[500],
       ),
       deckMultipleChoiceTestKey: ActivityMenuButton(
         text: 'Deck [MC Test]',
@@ -976,10 +946,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: multipleChoiceTestIcon,
-        color: Colors.teal[300],
-        splashColor: Colors.teal[400],
-        complete1: Colors.teal[200],
-        complete2: Colors.teal[400],
+        color: Colors.teal[200],
+        splashColor: Colors.teal[500],
       ),
       deckTimedTestPrepKey: ActivityMenuButton(
         text: 'Deck [Test Prep]',
@@ -987,10 +955,8 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: timedTestPrepIcon,
-        color: Colors.teal[400],
+        color: Colors.teal[200],
         splashColor: Colors.teal[500],
-        complete1: Colors.teal[200],
-        complete2: Colors.teal[400],
       ),
       deckTimedTestKey: ActivityMenuButton(
         text: 'Deck [Timed Test]',
@@ -999,10 +965,8 @@ class _MyHomePageState extends State<MyHomePage> {
           globalKey: globalKey,
         ),
         icon: timedTestIcon,
-        color: Colors.teal[400],
+        color: Colors.teal[200],
         splashColor: Colors.teal[500],
-        complete1: Colors.teal[200],
-        complete2: Colors.teal[400],
       ),
     };
   }

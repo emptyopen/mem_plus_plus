@@ -36,12 +36,20 @@ class WrittenCard extends StatefulWidget {
 
 class _WrittenCardState extends State<WrittenCard> {
   bool isErrorMessage = false;
+  //static GlobalKey<FormState> _k1 = new GlobalKey<FormState>();
   final textController = TextEditingController();
   final prefs = PrefsUpdater();
+  static var _formKey = new GlobalKey();
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   void checkResult() {
@@ -109,6 +117,7 @@ class _WrittenCardState extends State<WrittenCard> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    print('rebuilding');
     return Container(
             height: screenHeight,
             decoration: BoxDecoration(
@@ -131,6 +140,8 @@ class _WrittenCardState extends State<WrittenCard> {
                 Container(
                   width: screenWidth * 0.8,
                   child: TextField(
+                    key: _formKey,
+                    //key: _k1,
                     style: TextStyle(
                         fontSize: 22, color: backgroundHighlightColor),
                     controller: textController,
@@ -154,7 +165,8 @@ class _WrittenCardState extends State<WrittenCard> {
                   height: 10,
                 ),
                 BasicFlatButton(
-                  splashColor: Colors.blue[200],
+                  color: Colors.blue[200],
+                  splashColor: Colors.blue[300],
                   text: 'Submit',
                   fontSize: 16,
                   onPressed: () => checkResult(),

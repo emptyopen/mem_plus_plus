@@ -26,6 +26,12 @@ class _PiTimedTestPrepScreenState
   @override
   void initState() {
     super.initState();
+    getSharedPrefs();
+  }
+
+  getSharedPrefs() async {
+    prefs.checkFirstTime(context, piTimedTestPrepFirstHelpKey,
+        PiTimedTestPrepScreenHelp());
   }
 
   void updateStatus() async {
@@ -38,7 +44,7 @@ class _PiTimedTestPrepScreenState
     await prefs.updateActivityVisibleAfter(
         piTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Timed test (pi) is ready!', 'Good luck!', singleDigitTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (pi) is ready!', 'Good luck!', piTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }
@@ -84,12 +90,18 @@ class _PiTimedTestPrepScreenState
             SizedBox(
               height: 5,
             ),
-            Text('141592 653589 793238', style: TextStyle(fontSize: 24),),
-            Text('462643 383279 502884', style: TextStyle(fontSize: 24),),
-            Text('197169 399375 105820', style: TextStyle(fontSize: 24),),
-            Text('974944 592307 816406', style: TextStyle(fontSize: 24),),
-            Text('286208 998628 034825', style: TextStyle(fontSize: 24),),
-            Text('342117 0679', style: TextStyle(fontSize: 24),),
+            Text('141592 653589 793238', style: TextStyle(fontSize: 24, 
+                    color: backgroundHighlightColor,),),
+            Text('462643 383279 502884', style: TextStyle(fontSize: 24, 
+                    color: backgroundHighlightColor,),),
+            Text('197169 399375 105820', style: TextStyle(fontSize: 24,
+                    color: backgroundHighlightColor,),),
+            Text('974944 592307 816406', style: TextStyle(fontSize: 24,
+                    color: backgroundHighlightColor,),),
+            Text('286208 998628 034825', style: TextStyle(fontSize: 24,
+                    color: backgroundHighlightColor,),),
+            Text('342117 0679', style: TextStyle(fontSize: 24,
+                    color: backgroundHighlightColor,),),
             SizedBox(
               height: 60,
             ),
@@ -142,7 +154,7 @@ class PiTimedTestPrepScreenHelp extends StatelessWidget {
       information: information,
       buttonColor: colorLessonStandard,
       buttonSplashColor: colorLessonDarker,
-      firstHelpKey: singleDigitTimedTestPrepFirstHelpKey,
+      firstHelpKey: piTimedTestPrepFirstHelpKey,
     );
   }
 }

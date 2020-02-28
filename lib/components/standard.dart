@@ -54,8 +54,6 @@ class MainMenuOption extends StatelessWidget {
   final String text;
   final Color color;
   final Color splashColor;
-  final Color complete1;
-  final Color complete2;
   final Widget route;
   final Function() callback;
   final bool complete;
@@ -69,8 +67,6 @@ class MainMenuOption extends StatelessWidget {
     this.text,
     this.color,
     this.splashColor,
-    this.complete1,
-    this.complete2,
     this.route,
     this.complete,
     this.callback,
@@ -89,7 +85,6 @@ class MainMenuOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
     return Container(
       height: 50,
       width: screenWidth * 0.85,
@@ -105,8 +100,8 @@ class MainMenuOption extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment(0.46, 1.5),
                       colors: [
-                        complete1,
-                        complete2,
+                        color,
+                        splashColor,
                       ], // whitish to gray
                       tileMode: TileMode
                           .repeated, // repeats the gradient over the canvas
@@ -292,10 +287,11 @@ class CondensedMainMenuButtons extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Text(text,
                     style: TextStyle(fontSize: 24), textAlign: TextAlign.start),
               ),
+              SizedBox(height: 5,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[

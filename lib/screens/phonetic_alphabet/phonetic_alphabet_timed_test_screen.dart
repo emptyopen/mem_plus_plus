@@ -6,17 +6,17 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
 
-class PiTimedTestScreen extends StatefulWidget {
+class PhoneticAlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  PiTimedTestScreen({this.callback, this.globalKey});
+  PhoneticAlphabetTimedTestScreen({this.callback, this.globalKey});
 
   @override
-  _PiTimedTestScreenState createState() => _PiTimedTestScreenState();
+  _PhoneticAlphabetTimedTestScreenState createState() => _PhoneticAlphabetTimedTestScreenState();
 }
 
-class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
+class _PhoneticAlphabetTimedTestScreenState extends State<PhoneticAlphabetTimedTestScreen> {
   final textController = TextEditingController();
   String piString =
       '1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679';
@@ -37,7 +37,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
-        context, piTimedTestFirstHelpKey, PiTimedTestScreenHelp());
+        context, phoneticAlphabetTimedTestFirstHelpKey, PhoneticAlphabetTimedTestScreenHelp());
     setState(() {});
   }
 
@@ -109,8 +109,8 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Pi: timed test'),
-          backgroundColor: Colors.pink[200],
+          title: Text('Phonetic Alphabet: timed test'),
+          backgroundColor: colorLessonStandard,
           actions: <Widget>[
             // action button
             IconButton(
@@ -120,7 +120,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PiTimedTestScreenHelp();
+                      return PhoneticAlphabetTimedTestScreenHelp();
                     }));
               },
             ),
@@ -219,18 +219,18 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
   }
 }
 
-class PiTimedTestScreenHelp extends StatelessWidget {
+class PhoneticAlphabetTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
-      title: 'Pi Timed Test',
+      title: 'Phonetic Alphabet Timed Test',
       information: [
         '    Time to recall your story! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!'
       ],
       buttonColor: colorLessonStandard,
       buttonSplashColor: colorLessonDarker,
-      firstHelpKey: piTimedTestFirstHelpKey,
+      firstHelpKey: phoneticAlphabetTimedTestFirstHelpKey,
     );
   }
 }
