@@ -104,7 +104,8 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
               children: <Widget>[
                 SingleChildScrollView(child: customMemoriesColumn),
                 Positioned(
-                  child: FlatButton(
+                  child: RaisedButton(
+                    elevation: 5,
                     color: colorCustomMemoryStandard,
                     splashColor: colorCustomMemoryDarker,
                     onPressed: () {
@@ -119,7 +120,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                         borderRadius: BorderRadius.circular(5),
                         side: BorderSide()),
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
                       child: Row(
                         children: <Widget>[
                           Center(child: Icon(Icons.add)),
@@ -549,8 +550,6 @@ class CustomMemoryManagerScreenHelp extends StatelessWidget {
         '    You can delete a memory by tapping the trash icon, and you can view a memory '
             'by tapping the eye icon. Tapping the eye icon will also reset the spaced '
             'repetition schedule, so only do so if you\'ve actually forgotten it!',
-            '    Don\'t worry about data privacy! No information that you enter into this app leaves your phone. '
-            'All local storage - check out the source code at https://github.com/emptyopen/mem_plus_plus/.'
       ],
       buttonColor: colorCustomMemoryStandard,
       buttonSplashColor: colorCustomMemoryDarker,

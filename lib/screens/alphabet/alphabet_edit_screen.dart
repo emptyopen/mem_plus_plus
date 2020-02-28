@@ -22,6 +22,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   SharedPreferences sharedPreferences;
   List<AlphabetData> alphabetData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -30,7 +31,6 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     await prefs.checkFirstTime(context, alphabetEditFirstHelpKey, AlphabetEditScreenHelp());
     if (await prefs.getString(alphabetKey) == null) {
       alphabetData = debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
@@ -42,7 +42,6 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   }
 
   callback(newAlphabetData) async {
-    var prefs = PrefsUpdater();
     setState(() {
       alphabetData = newAlphabetData;
     });
@@ -55,7 +54,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityState(alphabetEditKey) == 'review';
+    bool completedOnce = await prefs.getActivityVisible(alphabetPracticeKey);
     if (entriesComplete && !completedOnce) {
       await prefs.updateActivityVisible(alphabetPracticeKey, true);
       await prefs.updateActivityState(alphabetEditKey, 'review');

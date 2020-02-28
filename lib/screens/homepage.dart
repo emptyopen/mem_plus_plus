@@ -8,8 +8,6 @@ import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -39,6 +37,8 @@ import 'package:mem_plus_plus/screens/deck/deck_practice_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_multiple_choice_test_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_timed_test_screen.dart';
+import 'package:mem_plus_plus/screens/pi/pi_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/pi/pi_timed_test_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -47,41 +47,77 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// Chapter 0
+// welcome
+
+// Chapter 1
+// single digit
+// - quick lesson 1: ?? Don't get discouraged! If you forgot something, it just wasn't anchored correctly, or it wasn't vivid enough. 
+// - planet test
+// - face test (with age)
+
+// Chapter 2
+// alphabet
+// - quick lesson 2: ?? 
+// - parking spot
+// - phonetic alphabet
+// - airline confirmation code / flight number / departure time / seat number
+
+// Chapter 3
+// pao
+// - quick lesson 3: spaced repetition
+// * custom memory manager
+// - pi test
+
+// ---- paywall -----
+
+// Chapter 4
+// deck
+// - conversion rates
+// - first aid
+// - doomsday test
+
+
 // done:
-// TODO: make CSV input scrollable
-// TODO: custom notifications based on progress
-// TODO: clear snackbars when leaving a screen?
-// TODO: only show one MC/flash card at a time (performance?)
-// TODO: pop practice when done (not fully done)
-// TODO: fix reset 
+// add cooler page transitions
+// fix padding on flash cards
+// identify unavailable activites (availableAfter)
+// add about developer to settings
+// change page numbers to dot system  (welcome screen, help screens)
+// BIG: 100 digit pi test
+// change isSuper to completion of system, not unlock
+// Tenable new activities based on if they are not yet enabled
+// make keyboard numeric for custom memory fields
 
 // next up:
 
 // horizon:
+// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
+// TODO: move custom memory to floating button
 // TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
-// TODO: make keyboard numeric for custom memory fields
-// TODO: add more faces
+// TODO: make default date better (1990 for birthday, etc)
+// TODO: handle bad CSV input
+// TODO: add CSV template for google sheets
+// TODO: if number of flash cards needed is less than 5?, make it 5 instead of just one
+// TODO: consolidate tests between systems (need 3 or 4 tests in between each?)
+// TODO: add more basic tests, intersperse between systems (planets, 100 digits of pi, phonetic alphabet, conversion rates, the doomsday rule)
+// TODO: add first aid system
+// TODO: add more faces, make all of them closer to the face
 // TODO: alphabet PAO (person action, same object)
 // TODO: add symbols
 // TODO: add password test
-// TODO: move custom memory to floating button
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: write some lessons, intersperse
 // TODO: crashlytics for IOS
-// TODO: add cooler page transitions
 
 // Nice to have
 // TODO: make CSV uploader text selectable
 // TODO: add name (first time, and preferences) - use in local notifications
-// TODO: add about developer to settings
 // TODO: add sounds
-// TODO: after MC test, show which words were INCORRECT
 // TODO: add ability for alphabet to contain up to 3 objects
-// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: make vibrations cooler, and more consistent across app?
-// TODO: make snackbars prettier
 
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
@@ -223,8 +259,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {});
     initializeNotificationsScheduler();
-    // print(activityStates);
-    //print(availableActivities);
+    print(activityStates);
+    print(availableActivities);
   }
 
   checkFirstTime() async {
@@ -245,13 +281,32 @@ class _MyHomePageState extends State<MyHomePage> {
       });
       await prefs.setBool(customMemoryManagerFirstHelpKey, false);
     }
-    Navigator.of(context).push(PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (BuildContext context, _, __) {
-          return CustomMemoryManagerScreen(
-            callback: callback,
-          );
-        }));
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+        ) =>
+            CustomMemoryManagerScreen(
+          callback: callback,
+        ),
+        transitionsBuilder: (
+          BuildContext context,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child,
+        ) =>
+            SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        ),
+      ),
+    );
   }
 
   callback() {
@@ -522,15 +577,34 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icon(Icons.settings),
                   onPressed: () {
                     HapticFeedback.heavyImpact();
-                    Navigator.of(context).push(PageRouteBuilder(
-                        opaque: false,
-                        pageBuilder: (BuildContext context, _, __) {
-                          return SettingsScreen(
-                            resetAll: resetAll,
-                            resetActivities: resetActivities,
-                            maxOutKeys: maxOutKeys,
-                          );
-                        }));
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (
+                          BuildContext context,
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation,
+                        ) =>
+                            SettingsScreen(
+                          resetAll: resetAll,
+                          resetActivities: resetActivities,
+                          maxOutKeys: maxOutKeys,
+                        ),
+                        transitionsBuilder: (
+                          BuildContext context,
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation,
+                          Widget child,
+                        ) =>
+                            SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(1, 0),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: child,
+                        ),
+                      ),
+                    );
                   },
                 ),
                 IconButton(
@@ -710,6 +784,29 @@ class _MyHomePageState extends State<MyHomePage> {
         complete1: Colors.amber[200],
         complete2: Colors.amber[400],
       ),
+      faceTimedTestPrepKey: ActivityMenuButton(
+        text: 'Faces [Test Prep]',
+        route: FaceTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: Colors.lime[100],
+        splashColor: Colors.lime[200],
+        complete1: Colors.lime[200],
+        complete2: Colors.lime[400],
+      ),
+      faceTimedTestKey: ActivityMenuButton(
+        text: 'Faces [Timed Test]',
+        route: FaceTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: Colors.lime[100],
+        splashColor: Colors.lime[200],
+        complete1: Colors.lime[200],
+        complete2: Colors.lime[400],
+      ),
       alphabetEditKey: ActivityMenuButton(
         text: 'Alphabet [View/Edit]',
         route: AlphabetEditScreen(
@@ -826,28 +923,28 @@ class _MyHomePageState extends State<MyHomePage> {
         complete1: Colors.pink[200],
         complete2: Colors.pink[400],
       ),
-      faceTimedTestPrepKey: ActivityMenuButton(
-        text: 'Faces [Test Prep]',
-        route: FaceTimedTestPrepScreen(
+      piTimedTestPrepKey: ActivityMenuButton(
+        text: 'Pi [Test Prep]',
+        route: PiTimedTestPrepScreen(
           callback: callback,
         ),
         icon: timedTestPrepIcon,
-        color: Colors.lime[100],
-        splashColor: Colors.lime[200],
-        complete1: Colors.lime[200],
-        complete2: Colors.lime[400],
+        color: Colors.green[400],
+        splashColor: Colors.green[500],
+        complete1: Colors.green[200],
+        complete2: Colors.green[400],
       ),
-      faceTimedTestKey: ActivityMenuButton(
-        text: 'Faces [Timed Test]',
-        route: FaceTimedTestScreen(
+      piTimedTestKey: ActivityMenuButton(
+        text: 'Pi [Timed Test]',
+        route: PiTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
         ),
         icon: timedTestIcon,
-        color: Colors.lime[100],
-        splashColor: Colors.lime[200],
-        complete1: Colors.lime[200],
-        complete2: Colors.lime[400],
+        color: Colors.green[400],
+        splashColor: Colors.green[500],
+        complete1: Colors.green[200],
+        complete2: Colors.green[400],
       ),
       deckEditKey: ActivityMenuButton(
         text: 'Deck [View/Edit]',

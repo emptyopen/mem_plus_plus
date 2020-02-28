@@ -56,10 +56,10 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityState(singleDigitEditKey) == 'review';
+    bool completedOnce = await prefs.getActivityVisible(singleDigitPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityState('SingleDigitEdit', 'review');
-      await prefs.updateActivityVisible('SingleDigitPractice', true);
+      await prefs.updateActivityVisible(singleDigitPracticeKey, true);
+      await prefs.updateActivityState(singleDigitEditKey, 'review');
       showSnackBar(
           scaffoldState: _scaffoldKey.currentState,
           snackBarText:

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/activities.dart';
-import 'package:mem_plus_plus/constants/colors.dart';
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -63,7 +60,7 @@ class MainMenuOption extends StatelessWidget {
   final Function() callback;
   final bool complete;
   final GlobalKey<ScaffoldState> globalKey;
-  final String activityStatesKey = 'ActivityStates';
+  final prefs = PrefsUpdater();
 
   MainMenuOption({
     Key key,
@@ -85,6 +82,10 @@ class MainMenuOption extends StatelessWidget {
         activity.visibleAfterTime.difference(DateTime.now()));
   }
 
+  String getActivityName() {
+    return text;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -99,25 +100,27 @@ class MainMenuOption extends StatelessWidget {
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(5),
-              gradient: complete ? LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment(0.46, 1.5),
-                colors: [
-                  complete1,
-                  complete2,
-                ], // whitish to gray
-                tileMode:
-                    TileMode.repeated, // repeats the gradient over the canvas
-              ) : LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment(0.52, 0.0),
-                colors: [
-                  color,
-                  color,
-                ], // whitish to gray
-                tileMode:
-                    TileMode.repeated, // repeats the gradient over the canvas
-              ),
+              gradient: complete
+                  ? LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment(0.46, 1.5),
+                      colors: [
+                        complete1,
+                        complete2,
+                      ], // whitish to gray
+                      tileMode: TileMode
+                          .repeated, // repeats the gradient over the canvas
+                    )
+                  : LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment(0.52, 0.0),
+                      colors: [
+                        color,
+                        color,
+                      ], // whitish to gray
+                      tileMode: TileMode
+                          .repeated, // repeats the gradient over the canvas
+                    ),
             ),
             child: FlatButton(
               splashColor: splashColor,
@@ -131,23 +134,33 @@ class MainMenuOption extends StatelessWidget {
                   return null;
                 }
                 if (activity.firstView) {
-                  // TODO: universal
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  var rawMap = json.decode(prefs.getString(activityStatesKey))
-                      as Map<String, dynamic>;
-                  Map<String, Activity> activityStates =
-                      rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
-                  activityStates[activity.name].firstView = false;
-                  prefs.setString(
-                      activityStatesKey,
-                      json.encode(
-                        activityStates.map((k, v) => MapEntry(k, v.toJson())),
-                      ));
+                  await prefs.updateActivityFirstView(activity.name, false);
                   callback();
                 }
-                final result = Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => route));
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (
+                      BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                    ) =>
+                        route,
+                    transitionsBuilder: (
+                      BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                      Widget child,
+                    ) =>
+                        SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1, 0),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    ),
+                  ),
+                );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,18 +217,18 @@ class MainMenuOption extends StatelessWidget {
           activity.visibleAfterTime.compareTo(DateTime.now()) < 0
               ? Container()
               : Container(
-                width: screenWidth * 0.85,
-                height: 48,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(0, 0, 0, 0.85),
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(5)),
-                child: Center(
-                    child: Text(
-                  generateTimeRemaining(),
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                )),
-              ),
+                  width: screenWidth * 0.85,
+                  height: 46,
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 0, 0, 0.85),
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                      child: Text(
+                    '${getActivityName()} in ${generateTimeRemaining()}',
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  )),
+                ),
         ],
       ),
     );
@@ -237,7 +250,7 @@ class CondensedMainMenuButtons extends StatelessWidget {
   final Widget testRoute;
   final Widget timedTestPrepRoute;
   final Function() callback;
-  var prefs = PrefsUpdater();
+  final prefs = PrefsUpdater();
 
   CondensedMainMenuButtons({
     Key key,
@@ -355,7 +368,29 @@ class CondensedMenuButton extends StatelessWidget {
             ? () async {
                 HapticFeedback.heavyImpact();
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => route));
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (
+                      BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                    ) =>
+                        route,
+                    transitionsBuilder: (
+                      BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                      Widget child,
+                    ) =>
+                        SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1, 0),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    ),
+                  ),
+                );
               }
             : null,
         shape: RoundedRectangleBorder(

@@ -74,17 +74,17 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
-              'Congratulations! Now go practice on an entire real deck! You\'ve unlocked the XXX test!',
-          textColor: Colors.black,
-          backgroundColor: Colors.yellow,
-          durationSeconds: 4,
+              'Congratulations! Now go practice on an entire real deck!',
+          textColor: Colors.white,
+          backgroundColor: colorDeckDarker,
+          durationSeconds: 3,
           isSuper: true,
         );
       } else {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
-              'Congratulations! Now go practice on an entire real deck! ',
+              'Nice! Now go practice on an entire real deck! ',
           textColor: Colors.black,
           backgroundColor: colorDeckStandard,
           durationSeconds: 2,

@@ -50,10 +50,10 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityState(paoEditKey) == 'review';
+    bool completedOnce = await prefs.getActivityVisible(paoPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityState(paoEditKey, 'review');
       await prefs.updateActivityVisible(paoPracticeKey, true);
+      await prefs.updateActivityState(paoEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',

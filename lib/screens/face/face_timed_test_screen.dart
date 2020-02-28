@@ -72,13 +72,13 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
       await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
       if (await prefs.getActivityState(faceTimedTestKey) == 'todo') {
         await prefs.updateActivityState(faceTimedTestKey, 'review');
-        await prefs.updateActivityVisible(deckEditKey, true);
+        await prefs.updateActivityVisible(alphabetEditKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
+          snackBarText: 'Congratulations! You\'ve unlocked the Alphabet system!',
           textColor: Colors.white,
           backgroundColor: colorDeckDarker,
-          durationSeconds: 5,
+          durationSeconds: 3,
           isSuper: true,
         );
       } else {

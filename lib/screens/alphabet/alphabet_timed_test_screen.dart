@@ -69,15 +69,23 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       print('success');
       await prefs.updateActivityVisible(alphabetTimedTestKey, false);
       await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+      await prefs.updateActivityVisible(paoEditKey, true);
       if (await prefs.getActivityState(alphabetTimedTestKey) == 'todo') {
         await prefs.updateActivityState(alphabetTimedTestKey, 'review');
-        await prefs.updateActivityVisible(paoEditKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
+          snackBarText: 'Congratulations! You\'ve mastered the Alphabet system!',
+          textColor: Colors.white,
+          backgroundColor: colorAlphabetDarker,
+          durationSeconds: 3,
+          isSuper: true,
+        );
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'You\'ve unlocked the PAO system!',
           textColor: Colors.white,
           backgroundColor: colorPAODarker,
-          durationSeconds: 4,
+          durationSeconds: 2,
           isSuper: true,
         );
       } else {

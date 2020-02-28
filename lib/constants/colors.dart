@@ -6,6 +6,10 @@ var colorCorrectDarker = Colors.greenAccent[300];
 var colorIncorrect = Colors.redAccent[200];
 var colorIncorrectDarker = Colors.redAccent[300];
 
+var colorLessonLighter = Colors.green[100];
+var colorLessonStandard = Colors.green[200];
+var colorLessonDarker = Colors.green[400];
+var colorLessonDarkest = Colors.green[600];
 
 var colorSingleDigitLighter = Colors.amber[100];
 var colorSingleDigitStandard = Colors.amber[200];

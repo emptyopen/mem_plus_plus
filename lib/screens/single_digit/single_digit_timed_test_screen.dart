@@ -55,16 +55,24 @@ class _SingleDigitTimedTestScreenState
     if (textController.text == '$digit1$digit2$digit3$digit4') { 
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+      await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
       if (await prefs.getActivityState(singleDigitTimedTestKey) == 'todo') {
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
-        await prefs.updateActivityVisible(alphabetEditKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
-              'Congratulations! You\'ve unlocked the Alphabet system!',
-          textColor: Colors.white,
-          backgroundColor: colorAlphabetDarker,
-          durationSeconds: 4,
+              'Congratulations! You\'ve mastered the Single Digit system!',
+          textColor: Colors.black,
+          backgroundColor: colorSingleDigitDarker,
+          durationSeconds: 3,
+          isSuper: true,
+        );
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
+          textColor: Colors.black,
+          backgroundColor: colorFaceDarker,
+          durationSeconds: 3,
           isSuper: true,
         );
       } else {

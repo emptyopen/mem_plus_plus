@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 const String usernameKey = 'Username';
 
@@ -60,6 +60,11 @@ const String paoMultipleChoiceTestKey = 'PAOMultipleChoice';
 const String paoTimedTestPrepKey = 'PAOTimedTestPrep';
 const String paoTimedTestKey = 'PAOTimedTest';
 const String paoTestActiveKey = 'PAOTestActive';
+
+// pi
+const String piTimedTestPrepKey = 'PiTimedTestPrep';
+const String piTimedTestKey = 'PiTimedTest';
+const String piTestActiveKey = 'PiTestActive';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';

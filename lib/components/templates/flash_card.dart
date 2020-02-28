@@ -117,7 +117,7 @@ class _FlashCardState extends State<FlashCard> {
         widget.nextActivityCallback();
       }
     } else if (updatedEntry.familiarity == 100) {
-      snackBarText = 'Familiarity for $digitLetter $value already maxed out!';
+      snackBarText = 'Familiarity for $digitLetter $value maxed out!';
       snackBarColor = colorCorrect;
     }
     showSnackBar(
@@ -134,12 +134,25 @@ class _FlashCardState extends State<FlashCard> {
           durationSeconds: 3);
       Navigator.pop(context);
     } else if (widget.isLastCard) {
-      showSnackBar(
+      int familiaritySum = 0;
+      for (dynamic entry in data) {
+        familiaritySum += entry.familiarity;
+      }
+      if (familiaritySum == widget.familiarityTotal) {
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText:
+              'Great job! Come back any time!',
+          backgroundColor: widget.color,
+          durationSeconds: 3);
+      } else {
+        showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
               'Great job! You still have some items for which you need to increase familiarity, pop back here any time!',
           backgroundColor: widget.color,
           durationSeconds: 3);
+      }
       Navigator.pop(context);
     }
     widget.callback(true);
@@ -217,38 +230,43 @@ class _FlashCardState extends State<FlashCard> {
                   borderRadius: BorderRadius.circular(20)),
               child: Stack(
                 children: <Widget>[
-                  Center(
-                    child: widget.systemKey == paoKey ||
-                            widget.systemKey == deckKey
-                        ? Column(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Text(
-                                widget.entry.person,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30),
-                              ),
-                              Text(
-                                widget.entry.action,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30),
-                              ),
-                              Text(
-                                widget.entry.object,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 30),
-                              ),
-                              SizedBox(
-                                height: 50,
-                              )
-                            ],
-                          )
-                        : Text(
-                            widget.entry.object,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 40),
-                          ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    child: Center(
+                      child: widget.systemKey == paoKey ||
+                              widget.systemKey == deckKey
+                          ? Column(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    widget.entry.person,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+                                ),
+                                Text(
+                                  widget.entry.action,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                Text(
+                                  widget.entry.object,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 24),
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                )
+                              ],
+                            )
+                          : Text(
+                              widget.entry.object,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 40),
+                            ),
+                    ),
                   ),
                   Positioned(
                     child: Container(

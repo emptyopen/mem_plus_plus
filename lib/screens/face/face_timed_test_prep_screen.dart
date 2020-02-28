@@ -207,7 +207,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                       TextStyle(fontSize: 18, color: backgroundHighlightColor),
                 ),
               ],
-            ),
+            ), 
           ),
         ));
   }
@@ -220,7 +220,7 @@ class FacesTimedTestPrepScreenHelp extends StatelessWidget {
     'to that feature. A deep voice, high cheekbones, green eyes, a distinctive mole, or something else unique! '
     'Never, ever, EVER (under any circumstances!) tell people their identifying feature!',
     '    For example, let\'s imagine someone named Fred. Maybe his nose is a little more squished than '
-    'the average person, and he has prominent cheekbones. Fred might remind you of Fred Flintstone, so you could '
+    'the average person, and he has prominent cheekbones. The name Fred might remind you of Fred Flintstone, so you could '
     'imagine Fred Flintstone flinging some rocks with prominent ridges at poor Fred. \n    All the rocks kept smashing '
     'his nose in! His cheekbones are prominent and strong, and deflected all stones from Fred Flintstone.',
     '    If their name is in a language foreign to yours, imagine something that has a similar sound to their name. '

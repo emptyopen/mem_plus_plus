@@ -126,6 +126,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
               style: TextStyle(color: backgroundHighlightColor),
               textAlign: TextAlign.center,
               controller: memoryField.controller,
+              keyboardType: memoryField.inputType == 'number' ? TextInputType.number : TextInputType.text,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: backgroundSemiColor)),

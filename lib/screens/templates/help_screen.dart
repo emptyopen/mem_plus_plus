@@ -51,7 +51,6 @@ class _HelpScreenState extends State<HelpScreen> {
             style: TextStyle(fontSize: 16, color: Colors.grey[500]),
             textAlign: TextAlign.center,
           ),
-          Icon(Icons.arrow_forward),
         ],
       ));
       widget.information.sublist(1).forEach((f) {
@@ -79,26 +78,28 @@ class _HelpScreenState extends State<HelpScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     TransformerPageView transformerPageView = TransformerPageView(
-        pageSnapping: true,
-        onPageChanged: (index) {
-          setState(() {
-            slideIndex = index;
-          });
-        },
-        loop: false,
-        controller: indexController,
-        transformer:
-            PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
-          return Stack(
+      pageSnapping: true,
+      onPageChanged: (index) {
+        setState(() {
+          slideIndex = index;
+        });
+      },
+      loop: false,
+      controller: indexController,
+      transformer:
+          PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
+        return Container(
+          margin: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(5)),
+          alignment: Alignment.center,
+          child: Stack(
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(5)),
-                alignment: Alignment.center,
+              Center(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: SingleChildScrollView(
@@ -115,9 +116,8 @@ class _HelpScreenState extends State<HelpScreen> {
                                   Text(
                                     widget.title,
                                     style: TextStyle(
-                                      fontSize: 28,
-                                      color: backgroundHighlightColor
-                                    ),
+                                        fontSize: 28,
+                                        color: backgroundHighlightColor),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(
@@ -132,22 +132,26 @@ class _HelpScreenState extends State<HelpScreen> {
                           translationFactor: 100,
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 10,
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              Positioned(
-                child: Text('${info.index + 1}/${widget.information.length}', style: TextStyle(color: backgroundHighlightColor),),
-                right: 23,
-                bottom: 17,
-              ),
+              widget.information.length > 1 ? Padding(
+                padding: const EdgeInsets.all(13),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: getSlideCircles(widget.information.length, slideIndex, widget.buttonColor),
+                ),
+              ) : Container(),
             ],
-          );
-        }),
-        itemCount: widget.information.length);
+          ),
+        );
+      }),
+      itemCount: widget.information.length,
+    );
 
     return Material(
         color: Color.fromRGBO(0, 0, 0, 0.7),
@@ -162,26 +166,30 @@ class _HelpScreenState extends State<HelpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                      width: screenWidth * 0.9,
-                      height: 400,
-                      decoration: BoxDecoration(
-                          color: backgroundColor,
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: transformerPageView),
+                    width: screenWidth * 0.9,
+                    height: screenHeight * 0.6,
+                    decoration: BoxDecoration(
+                        color: backgroundColor,
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    child: transformerPageView,
+                  ),
                   SizedBox(
                     height: 15,
                   ),
-                  (firstHelp &&
-                          slideIndex == widget.information.length - 1) || debugModeEnabled
+                  (firstHelp && slideIndex == widget.information.length - 1) ||
+                          debugModeEnabled
                       ? HelpOKButton(
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,
                           firstHelpKey: widget.firstHelpKey,
                         )
                       : Container(),
-                  (firstHelp &&
-                          slideIndex != widget.information.length - 1) || debugModeEnabled
-                      ? SizedBox(height: 48,) : Container(),
+                  (!firstHelp && slideIndex == widget.information.length - 1) ||
+                          debugModeEnabled
+                      ? SizedBox(
+                          height: 48,
+                        )
+                      : Container(),
                   firstHelp
                       ? Container()
                       : HelpOKButton(

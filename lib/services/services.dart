@@ -99,6 +99,12 @@ class PrefsUpdater {
     return activityStates[activityName].state;
   }
 
+  Future<bool> getActivityVisible(String activityName) async {
+    Map<String, Activity> activityStates =
+        await getSharedPrefs(activityStatesKey);
+    return activityStates[activityName].visible;
+  }
+
   updateActivityVisible(String activityName, bool visible) async {
     print('setting $activityName visible to $visible');
     Map<String, Activity> activityStates =
@@ -420,4 +426,31 @@ initializeNotificationsScheduler() async {
       0, title, subtitle, time, platformChannelSpecifics);
   print(
       'initialized daily notification @ ${time.hour}:${time.minute}:${time.second}');
+}
+
+getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {
+  List<Widget> circles = [];
+  for (int i = 0; i < numCircles; i++) {
+    bool isCurrent = i == currentCircleIndex;
+    circles.add(
+      Container(
+        height: isCurrent ? 14 : 10,
+        width: isCurrent ? 14 : 10,
+        decoration: BoxDecoration(
+          color: isCurrent ? highlightColor : Colors.grey,
+          borderRadius: isCurrent ? BorderRadius.circular(7) : BorderRadius.circular(7),
+          border: i == currentCircleIndex ? Border.all(color: backgroundColor) : null,
+        ),
+      ),
+    );
+    circles.add(
+      SizedBox(
+        width: 5,
+      ),
+    );
+  }
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: circles,
+  );
 }

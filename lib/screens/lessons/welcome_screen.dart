@@ -11,7 +11,8 @@ class WelcomeScreen extends StatefulWidget {
   final Function callback;
   final Function mainMenuFirstTimeCallback;
 
-  WelcomeScreen({this.firstTime = false, this.callback, this.mainMenuFirstTimeCallback});
+  WelcomeScreen(
+      {this.firstTime = false, this.callback, this.mainMenuFirstTimeCallback});
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -45,31 +46,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
-    Text(
-      'Pay attention, and visualize!',
-      style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
-      textAlign: TextAlign.center,
-    ),
-    Text(
-      'Invest in yourself!',
-      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
-      textAlign: TextAlign.center,
-    ),
+    // Text(
+    //   'Pay attention, and visualize!',
+    //   style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
+    //   textAlign: TextAlign.center,
+    // ),
+    // Text(
+    //   'Invest in yourself!',
+    //   style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
+    //   textAlign: TextAlign.center,
+    // ),
     Text(
       'How this app works:',
       style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
-  ];
-
-  final List<Icon> icons = [
-    Icon(Icons.flight_takeoff, size: 60),
-    Icon(Icons.cancel, size: 60),
-    Icon(Icons.cancel, size: 60),
-    Icon(Icons.cancel, size: 60),
-    Icon(Icons.remove_red_eye, size: 60),
-    Icon(Icons.attach_money, size: 60),
-    Icon(Icons.info, size: 60),
   ];
 
   final List<Widget> information = [
@@ -91,7 +82,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Text(
           '    Memory champions have become so in less than a year of training - '
           'and none of them have claimed to have photographic memory '
@@ -105,14 +98,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Text(
-            '    I can tell you from personal experience that at the ripe old age of 29 '
-            'I was resigned to have a terrible memory for the rest of my life. I had the worst memory '
-              'among all my friends. \n'
-            '    All I did was encounter these strategies by accident while waiting in line for ramen, '
-            'and within months I was able to rapidly improve my memory beyond all recognition.'
-            '\n\n   If I can do it, so can you. ',
+          '    I can tell you from personal experience that at the ripe old age of 29 '
+          'I was resigned to have a terrible memory for the rest of my life. I had the worst memory '
+          'among all my friends. \n'
+          '    All I did was encounter these strategies by accident while waiting in line for ramen, '
+          'and within months I was able to rapidly improve my memory beyond all recognition.'
+          '\n\n   If I can do it, so can you. ',
           style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
@@ -120,7 +115,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Column(
       children: <Widget>[
         Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Text(
           '    Okay, not totally false. The brain does have a limit, but it is far beyond anyone\'s reach - '
           'scientists estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
@@ -130,24 +127,25 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         ),
       ],
     ),
+    // Text(
+    //   '    You\'ll be surprised at how much more you remember simply by making a conscious effort '
+    //   'to pay attention to things more. Even thinking about your memory like you are now '
+    //   'will in and of itself improve your memory (it\'s all very meta, I know). '
+    //   '\n    And when you visualize in your brain what you\'re paying attention to, really amp up those details. '
+    //   'Make it zanier and more visceral than real life.',
+    //   style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+    // ),
+    // Text(
+    //   '    Don\'t worry, this app is free! The only investment you need to make is some of your time. '
+    //   'Trust me though, once you\'ve achieved some proficiency in the some of these systems, '
+    //   'you\'ll be glad you did. The benefits pay for life!',
+    //   style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+    // ),
     Text(
-      '    You\'ll be surprised at how much more you remember simply by making a conscious effort '
-      'to pay attention to things more. Even thinking about your memory like you are now '
-      'will in and of itself improve your memory (it\'s all very meta, I know). '
-      '\n    And when you visualize in your brain what you\'re paying attention to, really amp up those details. '
-      'Make it zanier and more visceral than real life.',
-      style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-    ),
-    Text(
-      '    Don\'t worry, this app is free! The only investment you need to make is some of your time. '
-      'Trust me though, once you\'ve achieved some proficiency in the some of these systems, '
-      'you\'ll be glad you did. The benefits pay for life!',
-      style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-    ),
-    Text(
-      '    We\'ll start with some basic systems, and as you master them, new ones will unlock. '
+      '    We\'ll start with some basic systems, and as you master them, new ones will unlock. Tests '
+      'and lessons will be interspersed between the systems. '
       'In the main menu, you will be presented with a TO-DO section and a REVIEW section. \n    New '
-        'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
+      'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
       'will still be available in the REVIEW section. \n'
       '    Okay, off you go!\n      - Matt',
       style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
@@ -255,25 +253,27 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         SizedBox(
                           height: 20,
                         ),
-                        debugModeEnabled && info.index == 0 ? ParallaxContainer(
-                          child: BasicFlatButton(
-                            text: 'Main Menu',
-                            color: Colors.amber[50],
-                            splashColor: Colors.amber[200],
-                            onPressed: () => goToMainMenu(context),
-                            padding: 10,
-                            fontSize: 28,
-                          ),
-                          position: info.position,
-                          translationFactor: 300,
-                        ) : Container(),
+                        debugModeEnabled && info.index == 0
+                            ? ParallaxContainer(
+                                child: BasicFlatButton(
+                                  text: 'Main Menu',
+                                  color: Colors.green[200],
+                                  splashColor: Colors.green[300],
+                                  onPressed: () => goToMainMenu(context),
+                                  padding: 10,
+                                  fontSize: 28,
+                                ),
+                                position: info.position,
+                                translationFactor: 300,
+                              )
+                            : Container(),
                         info.index != headers.length - 1
                             ? Container()
                             : ParallaxContainer(
                                 child: BasicFlatButton(
                                   text: 'Main Menu',
-                                  color: Colors.amber[50],
-                                  splashColor: Colors.amber[200],
+                                  color: Colors.green[200],
+                                  splashColor: Colors.green[300],
                                   onPressed: () => goToMainMenu(context),
                                   padding: 10,
                                   fontSize: 28,
@@ -286,10 +286,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   ),
                 ),
               ),
-              Positioned(
-                child: Text('${info.index + 1}/${headers.length}', style: TextStyle(color: backgroundHighlightColor),),
-                right: 10,
-                bottom: 10,
+              Align(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                  child: getSlideCircles(
+                      information.length, slideIndex, Colors.green[300]),
+                ),
+                alignment: Alignment.bottomCenter,
               )
             ],
           );
@@ -298,14 +301,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     return widget.firstTime
         ? Scaffold(
-          backgroundColor: backgroundColor,
+            backgroundColor: backgroundColor,
             body: transformerPageView,
           )
         : Scaffold(
-          backgroundColor: backgroundColor,
+            backgroundColor: backgroundColor,
             appBar: AppBar(
               title: Text('Welcome'),
-              backgroundColor: Colors.green[100],
+              backgroundColor: Colors.green[200],
             ),
             body: transformerPageView,
           );

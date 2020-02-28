@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 1.5.6+19
+version: 1.5.8+21
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -23,6 +23,7 @@ dependencies:
   flip_card: 
   flutter_datetime_picker:
   material_design_icons_flutter:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:
@@ -64,5 +65,6 @@ flutter:
       fonts:
         - asset: assets/fonts/JockeyOne-Regular.ttf
   assets:
+    - assets/images/
     - assets/images/men/
     - assets/images/women/

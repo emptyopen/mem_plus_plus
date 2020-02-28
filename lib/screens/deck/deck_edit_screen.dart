@@ -20,7 +20,6 @@ class DeckEditScreen extends StatefulWidget {
 }
 
 class _DeckEditScreenState extends State<DeckEditScreen> {
-  SharedPreferences sharedPreferences;
   List<DeckData> deckData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
@@ -63,10 +62,10 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityState(deckEditKey) == 'review';
+    bool completedOnce = await prefs.getActivityVisible(deckPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityState(deckEditKey, 'review');
       await prefs.updateActivityVisible(deckPracticeKey, true);
+      await prefs.updateActivityState(deckEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',

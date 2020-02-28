@@ -83,7 +83,7 @@ Widget getDeckCard(String digitSuit, String size) {
           width: cardWidth,
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(size != 'big' ? 5 : 20),
               border: Border.all(color: Colors.black)),
           child: Stack(
             children: <Widget>[

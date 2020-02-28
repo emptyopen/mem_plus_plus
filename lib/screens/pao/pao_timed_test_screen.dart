@@ -70,25 +70,25 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         textController3.text.trim() == '$digits7$digits8$digits9') {
       await prefs.updateActivityVisible(paoTimedTestKey, false);
       await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+      await prefs.updateActivityVisible(piTimedTestPrepKey, true);
       if (await prefs.getActivityState(paoTimedTestKey) == 'todo') {
         await prefs.updateActivityState(paoTimedTestKey, 'review');
         await prefs.setBool(customMemoryManagerAvailableKey, true);
         await prefs.setBool(customMemoryManagerFirstHelpKey, true);
-        await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',
+          snackBarText: 'Congratulations! You\'ve mastered the Custom Memory Manager!',
           textColor: Colors.white,
           backgroundColor: Colors.purple,
-          durationSeconds: 4,
+          durationSeconds: 3,
           isSuper: true,
         );
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
+          snackBarText: 'Congratulations! You\'ve unlocked the Pi test!',
           textColor: Colors.black,
           backgroundColor: colorFaceDarker,
-          durationSeconds: 4,
+          durationSeconds: 3,
           isSuper: true,
         );
       } else {
@@ -125,7 +125,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       scaffoldState: widget.globalKey.currentState,
       snackBarText: 'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
       backgroundColor: colorIncorrect,
-      durationSeconds: 15
+      durationSeconds: 12
     );
     Navigator.pop(context);
     widget.callback();

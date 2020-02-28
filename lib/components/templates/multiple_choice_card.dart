@@ -302,6 +302,16 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
       widget.callback(false);
       setState(() {});
     }
+    if (debugModeEnabled && attempts >= 5) {
+      showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText:
+              'Debug: Congratulations, you aced it! Next up is a timed test!',
+          backgroundColor: widget.color,
+          durationSeconds: 3);
+      widget.nextActivityCallback();
+      Navigator.pop(context);
+    }
     if (widget.isLastCard) {
       int score = 0;
       widget.results.forEach((v) {
