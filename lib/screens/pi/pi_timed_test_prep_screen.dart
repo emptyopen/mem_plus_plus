@@ -55,7 +55,7 @@ class _PiTimedTestPrepScreenState
           backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Pi: timed test prep'),
-          backgroundColor: Colors.green[200],
+          backgroundColor: colorChapter3Standard,
           actions: <Widget>[
             // action button
             IconButton(
@@ -107,14 +107,14 @@ class _PiTimedTestPrepScreenState
             ),
             BasicFlatButton(
               text: 'I\'m ready!',
-              color: colorLessonDarker,
-              splashColor: colorLessonStandard,
+              color: colorChapter3Darker,
+              splashColor: colorChapter3Standard,
               onPressed: () => showConfirmDialog(
                   context: context,
                   function: updateStatus,
                   confirmText:
                       'Are you sure you\'d like to start this test? The number will no longer be available to view! (unless you check online xD)',
-                  confirmColor: colorLessonStandard),
+                  confirmColor: colorChapter3Standard),
               fontSize: 30,
               padding: 10,
             ),
@@ -152,8 +152,8 @@ class PiTimedTestPrepScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Pi Timed Test Preparation',
       information: information,
-      buttonColor: colorLessonStandard,
-      buttonSplashColor: colorLessonDarker,
+      buttonColor: colorChapter3Standard,
+      buttonSplashColor: colorChapter3Darker,
       firstHelpKey: piTimedTestPrepFirstHelpKey,
     );
   }

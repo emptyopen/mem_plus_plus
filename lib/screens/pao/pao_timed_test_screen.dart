@@ -71,13 +71,22 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       await prefs.updateActivityVisible(paoTimedTestKey, false);
       await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
       await prefs.updateActivityVisible(piTimedTestPrepKey, true);
-      if (await prefs.getActivityState(paoTimedTestKey) == 'todo') {
-        await prefs.updateActivityState(paoTimedTestKey, 'review');
-        await prefs.setBool(customMemoryManagerAvailableKey, true);
+      await prefs.setBool(customMemoryManagerAvailableKey, true);
+      if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
         await prefs.setBool(customMemoryManagerFirstHelpKey, true);
+        await prefs.setBool(paoTimedTestCompleteKey, true);
+        await prefs.updateActivityState(paoTimedTestKey, 'review');
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve mastered the Custom Memory Manager!',
+          snackBarText: 'Congratulations! You\'ve mastered the PAO system!',
+          textColor: Colors.white,
+          backgroundColor: colorPAODarker,
+          durationSeconds: 3,
+          isSuper: true,
+        );
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',
           textColor: Colors.white,
           backgroundColor: Colors.purple,
           durationSeconds: 3,
@@ -121,6 +130,9 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     await prefs.updateActivityState(paoTimedTestKey, 'review');
     await prefs.updateActivityVisible(paoTimedTestKey, false);
     await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+    if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,
       snackBarText: 'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
@@ -136,7 +148,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     return Scaffold(
           backgroundColor: backgroundColor,
       appBar: AppBar(title: Text('PAO: timed test'),
-        backgroundColor: Colors.pink[200],
+        backgroundColor: colorPAOStandard,
         actions: <Widget>[
         // action button
         IconButton(
@@ -236,8 +248,8 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
-                      color: Colors.pink[200],
-                      splashColor: Colors.pink,
+                      color: colorPAOStandard,
+                      splashColor: colorPAODarker,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -260,8 +272,8 @@ class PAOTimedTestScreenHelp extends StatelessWidget {
       title: 'PAO Timed Test',
       information: ['    Time to recall your story! If you recall this correctly, you\'ll '
         'unlock the next system! Good luck!'],
-      buttonColor: Colors.pink[100],
-      buttonSplashColor: Colors.pink[300],
+      buttonColor: colorPAOStandard,
+      buttonSplashColor: colorPAODarker,
       firstHelpKey: paoTimedTestFirstHelpKey,
     );
   }

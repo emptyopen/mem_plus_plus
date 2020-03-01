@@ -56,12 +56,13 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       await prefs.updateActivityVisible(piTimedTestKey, false);
       await prefs.updateActivityVisible(piTimedTestPrepKey, true);
       await prefs.updateActivityVisible(deckEditKey, true);
-      if (await prefs.getActivityState(piTimedTestKey) == 'todo') {
+      if (await prefs.getBool(piTimedTestKey) == null) {
         await prefs.updateActivityState(piTimedTestKey, 'review');
+        await prefs.setBool(piTimedTestKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
-          textColor: Colors.black,
+          textColor: Colors.white,
           backgroundColor: colorDeckDarker,
           durationSeconds: 3,
           isSuper: true,
@@ -71,7 +72,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'Congratulations! You aced it!',
           textColor: Colors.black,
-          backgroundColor: colorLessonStandard,
+          backgroundColor: colorChapter3Standard,
           durationSeconds: 2,
         );
       }
@@ -95,6 +96,9 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     await prefs.updateActivityState(piTimedTestKey, 'review');
     await prefs.updateActivityVisible(piTimedTestKey, false);
     await prefs.updateActivityVisible(piTimedTestPrepKey, true);
+    if (await prefs.getBool(piTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(piTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Head back to test prep to study up!',
@@ -110,7 +114,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Pi: timed test'),
-          backgroundColor: Colors.pink[200],
+          backgroundColor: colorChapter3Standard,
           actions: <Widget>[
             // action button
             IconButton(
@@ -200,8 +204,8 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
-                      color: Colors.pink[200],
-                      splashColor: Colors.pink,
+                      color: colorChapter3Standard,
+                      splashColor: colorChapter3Darker,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -228,8 +232,8 @@ class PiTimedTestScreenHelp extends StatelessWidget {
         '    Time to recall your story! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!'
       ],
-      buttonColor: colorLessonStandard,
-      buttonSplashColor: colorLessonDarker,
+      buttonColor: colorChapter3Standard,
+      buttonSplashColor: colorChapter3Darker,
       firstHelpKey: piTimedTestFirstHelpKey,
     );
   }

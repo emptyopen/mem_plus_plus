@@ -49,24 +49,28 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
         if (gender1IsMale) {
           face1 = 'men/man$faceIndex1.jpg';
           String firstName = menNames[random.nextInt(menNames.length)];
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name1 = '$firstName $lastName';
+          name1 = firstName;
+          //String lastName = lastNames[random.nextInt(menNames.length)];
+          // name1 = '$firstName $lastName';
         } else {
           face1 = 'women/woman$faceIndex1.jpg';
           String firstName = womenNames[random.nextInt(menNames.length)];
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name1 = '$firstName $lastName';
+          name1 = firstName;
+          // String lastName = lastNames[random.nextInt(menNames.length)];
+          // name1 = '$firstName $lastName';
         }
         if (gender2IsMale) {
           face2 = 'men/man$faceIndex2.jpg';
           String firstName = menNames[random.nextInt(menNames.length)];
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name2 = '$firstName $lastName';
+          name2 = firstName;
+          // String lastName = lastNames[random.nextInt(menNames.length)];
+          // name2 = '$firstName $lastName';
         } else {
           face2 = 'women/woman$faceIndex2.jpg';
           String firstName = womenNames[random.nextInt(menNames.length)];
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name2 = '$firstName $lastName';
+          name2 = firstName;
+          // String lastName = lastNames[random.nextInt(menNames.length)];
+          // name2 = '$firstName $lastName';
         }
         prefs.setString('face1', face1);
         prefs.setString('face2', face2);
@@ -103,7 +107,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
         backgroundColor: backgroundColor,
         appBar: AppBar(
             title: Text('Faces Test Prep'),
-            backgroundColor: colorFaceStandard,
+            backgroundColor: colorChapter1Standard,
             actions: <Widget>[
               // action button
               IconButton(
@@ -187,14 +191,14 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                 ),
                 BasicFlatButton(
                   text: 'I\'m ready!',
-                  color: colorFaceStandard,
-                  splashColor: colorFaceDarker,
+                  color: colorChapter1Standard,
+                  splashColor: colorChapter1Darker,
                   onPressed: () => showConfirmDialog(
                       context: context,
                       function: updateStatus,
                       confirmText:
                           'Are you sure you\'d like to start this test? The names will no longer be available to view!',
-                      confirmColor: colorFaceDarker),
+                      confirmColor: colorChapter1Darker),
                   fontSize: 30,
                   padding: 10,
                 ),
@@ -215,7 +219,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
 
 class FacesTimedTestPrepScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    Awesome job getting here! Now we\'re going to do something practical, memorizing names! '
+    '    Let\'s start with something practical, memorizing names! '
     'The best way to do this is to identify a permanent(ish) feature of the person, and link some scene '
     'to that feature. A deep voice, high cheekbones, green eyes, a distinctive mole, or something else unique! '
     'Never, ever, EVER (under any circumstances!) tell people their identifying feature!',
@@ -225,8 +229,10 @@ class FacesTimedTestPrepScreenHelp extends StatelessWidget {
     'his nose in! His cheekbones are prominent and strong, and deflected all stones from Fred Flintstone.',
     '    If their name is in a language foreign to yours, imagine something that has a similar sound to their name. '
     'You can also break up the name into parts if the whole name is too difficult! '
-    'For example, \'Sifiso\' could be remembered with \'Sci-fi sew(ing)\', and a visualization for \'Anatoliy\' could '
+    '\n    For example, \'Sifiso\' could be remembered with \'Sci-fi sew(ing)\', and a visualization for \'Anatoliy\' could '
     'include a scene with \'a Natalie (Portman)\'.'
+    '\n    I know that this seems like it it would take a long time to think of scenes like the example, but you '
+    'will get faster and faster at it! '
   ];
 
   @override
@@ -234,8 +240,8 @@ class FacesTimedTestPrepScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Face Timed Test Preparation',
       information: information,
-      buttonColor: colorFaceStandard,
-      buttonSplashColor: colorFaceDarker,
+      buttonColor: colorChapter1Standard,
+      buttonSplashColor: colorChapter1Darker,
       firstHelpKey: faceTimedTestPrepFirstHelpKey,
     );
   }

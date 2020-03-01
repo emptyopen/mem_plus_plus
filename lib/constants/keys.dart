@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = true;
+const bool debugModeEnabled = false;
 
 const String usernameKey = 'Username';
 
@@ -50,6 +51,18 @@ const String singleDigitMultipleChoiceTestFirstHelpKey =
 const String singleDigitTimedTestPrepFirstHelpKey =
     'SingleDigitTimedTestPrepFirstHelp';
 const String singleDigitTimedTestFirstHelpKey = 'SingleDigitTimedTestFirstHelp';
+const String singleDigitTimedTestCompleteKey = 'SingleDigitTimedTestComplete';
+
+// lesson 1
+const String lesson1Key = 'Lesson1';
+
+// pi
+const String planetTimedTestPrepKey = 'PlanetTimedTestPrep';
+const String planetTimedTestKey = 'PlanetTimedTest';
+const String planetTestActiveKey = 'PlanetTestActive';
+const String planetTimedTestPrepFirstHelpKey = 'PlanetTimedTestPrepFirstHelp';
+const String planetTimedTestFirstHelpKey = 'PlanetTimedTestFirstHelp';
+const String planetTimedTestCompleteKey = 'PlanetTimedTestComplete';
 
 // Alphabet
 const String alphabetKey = 'Alphabet';
@@ -66,6 +79,18 @@ const String alphabetWrittenTestFirstHelpKey =
 const String alphabetTimedTestPrepFirstHelpKey =
     'AlphabetTimedTestPrepFirstHelp';
 const String alphabetTimedTestFirstHelpKey = 'AlphabetTimedTestFirstHelp';
+const String alphabetTimedTestCompleteKey = 'AlphabetTimedTestComplete';
+
+// lesson 2
+const String lesson2Key = 'Lesson2';
+
+// airport
+const String airportTimedTestPrepKey = 'AirportTimedTestPrep';
+const String airportTimedTestKey = 'AirportTimedTest';
+const String airportTestActiveKey = 'AirportTestActive';
+const String airportTimedTestPrepFirstHelpKey = 'AirportTimedTestPrepFirstHelp';
+const String airportTimedTestFirstHelpKey = 'AirportTimedTestFirstHelp';
+const String airportTimedTestCompleteKey = 'AirportTimedTestComplete';
 
 // PAO
 const String paoKey = 'PAO';
@@ -81,6 +106,7 @@ const String paoMultipleChoiceTestFirstHelpKey =
     'PAOMultipleChoiceTestFirstHelp';
 const String paoTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
 const String paoTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
+const String paoTimedTestCompleteKey = 'PAOTimedTestComplete';
 
 // pi
 const String piTimedTestPrepKey = 'PiTimedTestPrep';
@@ -88,6 +114,7 @@ const String piTimedTestKey = 'PiTimedTest';
 const String piTestActiveKey = 'PiTestActive';
 const String piTimedTestPrepFirstHelpKey = 'PiTimedTestPrepFirstHelp';
 const String piTimedTestFirstHelpKey = 'PiTimedTestFirstHelp';
+const String piTimedTestCompleteKey = 'PiTimedTestComplete';
 
 // phonetic alphabet
 const String phoneticAlphabetTimedTestPrepKey = 'PhoneticAlphabetTimedTestPrep';
@@ -95,6 +122,7 @@ const String phoneticAlphabetTimedTestKey = 'PhoneticAlphabetTimedTest';
 const String phoneticAlphabetTestActiveKey = 'PhoneticAlphabetTestActive';
 const String phoneticAlphabetTimedTestPrepFirstHelpKey = 'PhoneticAlphabetTimedTestPrepFirstHelp';
 const String phoneticAlphabetTimedTestFirstHelpKey = 'PhoneticAlphabetTimedTestFirstHelp';
+const String phoneticAlphabetTimedTestCompleteKey = 'PhoneticAlphabetTimedTestComplete';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
@@ -114,6 +142,7 @@ const String faceTimedTestKey = 'FaceTimedTest';
 const String faceTestActiveKey = 'FaceTestActive';
 const String faceTimedTestPrepFirstHelpKey = 'FaceTimedTestPrepFirstHelp';
 const String faceTimedTestFirstHelpKey = 'FaceTimedTestFirstHelp';
+const String faceTimedTestCompleteKey = 'FaceTimedTestComplete';
 
 // Deck
 const String deckKey = 'Deck';
@@ -123,12 +152,13 @@ const String deckMultipleChoiceTestKey = 'DeckMultipleChoice';
 const String deckTimedTestPrepKey = 'DeckTimedTestPrep';
 const String deckTimedTestKey = 'DeckTimedTest';
 const String deckTestActiveKey = 'DeckTestActive';
-const String deckEditFirstHelpKey = 'PAOEditFirstHelp';
-const String deckPracticeFirstHelpKey = 'PAOPracticeFirstHelp';
+const String deckEditFirstHelpKey = 'DeckEditFirstHelp';
+const String deckPracticeFirstHelpKey = 'DeckPracticeFirstHelp';
 const String deckMultipleChoiceTestFirstHelpKey =
-    'PAOMultipleChoiceTestFirstHelp';
-const String deckTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
-const String deckTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
+    'DeckMultipleChoiceTestFirstHelp';
+const String deckTimedTestPrepFirstHelpKey = 'DeckTimedTestPrepFirstHelp';
+const String deckTimedTestFirstHelpKey = 'DeckTimedTestFirstHelp';
+const String deckTimedTestCompleteKey = 'DeckTimedTestComplete';
 
 var editIcon = Icon(Icons.edit);
 var practiceIcon = Icon(Icons.flip);
@@ -136,6 +166,11 @@ var multipleChoiceTestIcon = Icon(Icons.list);
 var timedTestPrepIcon = Icon(Icons.add_alarm);
 var timedTestIcon = Icon(Icons.access_alarm);
 var writtenTestIcon = Icon(Icons.text_format);
+var lessonIcon = Icon(MdiIcons.brain);
+var planetIcon = Icon(MdiIcons.earth);
+var faceIcon = Icon(MdiIcons.faceRecognition);
+var airportIcon = Icon(MdiIcons.airplaneTakeoff);
+var phoneticIcon = Icon(MdiIcons.sortAlphabeticalAscending);
 
 Map termDurationsMap = {
   shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 3), Duration(seconds: 5), Duration(seconds: 8), Duration(seconds: 1)] :
@@ -150,6 +185,91 @@ Map customMemoryIconMap = {
   idCardString: Icons.credit_card,
   otherString: Icons.add,
 };
+
+List letters = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z'
+];
+List phoneticAlphabet = [
+  'Alpha',
+  'Bravo',
+  'Charlie',
+  'Delta',
+  'Echo',
+  'Foxtrot',
+  'Golf',
+  'Hotel',
+  'India',
+  'Juliett',
+  'Kilo',
+  'Lima',
+  'Mike',
+  'November',
+  'Oscar',
+  'Papa',
+  'Quebec',
+  'Romeo',
+  'Sierra',
+  'Tango',
+  'Uniform',
+  'Victor',
+  'Whiskey',
+  'X-ray',
+  'Yankee',
+  'Zulu',
+];
+List morse = [
+  '•-',
+  '-•••',
+  '-•-•',
+  '-••',
+  '•',
+  '••-•',
+  '--•',
+  '••••',
+  '••',
+  '•---',
+  '-•-',
+  '•-••',
+  '--',
+  '-•',
+  '---',
+  '•--•',
+  '--•-',
+  '•-•',
+  '•••',
+  '-',
+  '••-',
+  '•••-',
+  '•--',
+  '-••-',
+  '-•--',
+  '--••',
+];
 
 List<String> menNames = [
   'Liam',

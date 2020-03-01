@@ -69,8 +69,9 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     dropdownDigit[8] + dropdownSuit[8] == '$card9') {
       await prefs.updateActivityVisible(deckTimedTestKey, false);
       await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-      if (await prefs.getActivityState(deckTimedTestKey) == 'todo') {
+      if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(deckTimedTestKey, 'review');
+        await prefs.setBool(deckTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
@@ -109,6 +110,9 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     await prefs.updateActivityState(deckTimedTestKey, 'review');
     await prefs.updateActivityVisible(deckTimedTestKey, false);
     await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
+    if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:

@@ -55,13 +55,16 @@ class _SingleDigitTimedTestScreenState
     if (textController.text == '$digit1$digit2$digit3$digit4') { 
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-      if (await prefs.getActivityState(singleDigitTimedTestKey) == 'todo') {
+      print(lesson1Key);
+      
+      await prefs.updateActivityVisible(lesson1Key, true);
+      if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        await prefs.setBool(singleDigitTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
-              'Congratulations! You\'ve mastered the Single Digit system!',
+              'Congratulations! You\'ve completed the Single Digit system!',
           textColor: Colors.black,
           backgroundColor: colorSingleDigitDarker,
           durationSeconds: 3,
@@ -69,9 +72,9 @@ class _SingleDigitTimedTestScreenState
         );
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
+          snackBarText: 'Congratulations! You\'ve unlocked Chapter 1!',
           textColor: Colors.black,
-          backgroundColor: colorFaceDarker,
+          backgroundColor: colorChapter1Darker,
           durationSeconds: 3,
           isSuper: true,
         );
@@ -103,6 +106,9 @@ class _SingleDigitTimedTestScreenState
     await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
     await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
     await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+    if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
@@ -214,7 +220,7 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
       title: 'Single Digit Timed Test',
       information: [
         '    Time to remember your story! If you recall this correctly, you\'ll '
-            'unlock the next system! Good luck!'
+            'unlock the next chapter! Good luck!'
       ],
       buttonColor: Colors.amber[100],
       buttonSplashColor: Colors.amber[300],

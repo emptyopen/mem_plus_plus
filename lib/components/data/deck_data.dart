@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/constants/colors.dart';
-import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DeckData {

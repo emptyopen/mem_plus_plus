@@ -40,8 +40,8 @@ class FlashCard extends StatefulWidget {
 }
 
 class _FlashCardState extends State<FlashCard> {
-  int familiarityIncrease = debugModeEnabled ? 100 : 35;
-  int familiarityDecrease = 25;
+  int familiarityIncrease = debugModeEnabled ? 100 : 50;
+  int familiarityDecrease = 35;
   String digitLetter = '';
   String value = '';
   Widget valueWidget = Container();

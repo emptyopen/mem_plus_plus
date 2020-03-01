@@ -44,7 +44,6 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(
         context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
     // grab the digits
@@ -69,9 +68,10 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       print('success');
       await prefs.updateActivityVisible(alphabetTimedTestKey, false);
       await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(paoEditKey, true);
-      if (await prefs.getActivityState(alphabetTimedTestKey) == 'todo') {
+      await prefs.updateActivityVisible(lesson2Key, true);
+      if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(alphabetTimedTestKey, 'review');
+        await prefs.setBool(alphabetTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'Congratulations! You\'ve mastered the Alphabet system!',
@@ -82,10 +82,10 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         );
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'You\'ve unlocked the PAO system!',
-          textColor: Colors.white,
-          backgroundColor: colorPAODarker,
-          durationSeconds: 2,
+          snackBarText: 'Congratulations! You\'ve unlocked Chapter 2!',
+          textColor: Colors.black,
+          backgroundColor: colorChapter2Darker,
+          durationSeconds: 3,
           isSuper: true,
         );
       } else {
@@ -118,6 +118,9 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     await prefs.updateActivityState(alphabetTimedTestKey, 'review');
     await prefs.updateActivityVisible(alphabetTimedTestKey, false);
     await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+    if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,
       snackBarText: 'Try the timed test again to unlock the next system.',

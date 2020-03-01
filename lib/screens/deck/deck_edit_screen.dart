@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:mem_plus_plus/services/services.dart';
@@ -33,11 +32,9 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, deckEditFirstHelpKey, DeckEditScreenHelp());
     if (await prefs.getString(deckKey) == null) {
-      print('initializing new data');
       deckData = debugModeEnabled ? defaultDeckData2 : defaultDeckData1;
       await prefs.setString(deckKey, json.encode(deckData));
     } else {
-      print('getting old data');
       deckData = await prefs.getSharedPrefs(deckKey);
     }
     setState(() {});
@@ -85,7 +82,6 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
 
   List<EditCard> getDeckEditCards() {
     List<EditCard> deckEditCards = [];
-    print('yo');
     if (deckData != null) {
       for (int i = 0; i < deckData.length; i++) {
         EditCard deckEditCard = EditCard(
@@ -325,10 +321,15 @@ class _CSVImporterState extends State<CSVImporter> {
 class DeckEditScreenHelp extends StatelessWidget {
   final List<String> information = [
     '    Welcome to the deck system! \n'
-        '    PAO stands for Person Action Object. What this means is that for every digit '
-        '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. Again, '
-        'you can assign any person, action, and object to any digit, but it\'s a good idea at first '
-        'to follow some kind of pattern. ',
+        '    Here we are going to use the same idea as the PAO system, only now for each of the 52 cards! '
+        'Feel free to re-use People, Actions, and Objects from your 2-digit PAO system, unless you\'re planning '
+        'on being in a position where you\'ll have to remember combinations of digits and cards.',
+        '    One tip I\'d give from my personal system is to break up the people into categories based on suit. '
+        'In my system, Spades are fictional characters, Hearts are people I know personally, Clubs are athletes and '
+        'performers, and Diamonds are rich people or other celebrities. But feel free to memorize however you want!',
+        '    Once again, I\'d also highly recommend storing this data in a google sheet and importing it! A lot '
+        'easier than having to type everything out on your phone, and you can always reuse it in case you '
+        'get a new phone. '
   ];
 
   @override

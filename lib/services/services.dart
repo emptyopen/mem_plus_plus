@@ -110,6 +110,11 @@ class PrefsUpdater {
     Map<String, Activity> activityStates =
         await getSharedPrefs(activityStatesKey);
     Activity activity = activityStates[activityName];
+    if (activity == null) {
+      print('hey, activity.visible was null. defaulting...');
+      activityStates[activityName] = defaultActivityStatesAllDone[activityName];
+      activity = activityStates[activityName];
+    }
     activity.visible = visible;
     activityStates[activityName] = activity;
     await writeSharedPrefs(activityStatesKey, activityStates);

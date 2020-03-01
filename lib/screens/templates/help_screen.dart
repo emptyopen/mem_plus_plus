@@ -167,7 +167,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 children: <Widget>[
                   Container(
                     width: screenWidth * 0.9,
-                    height: screenHeight * 0.6,
+                    height: screenHeight * 0.75,
                     decoration: BoxDecoration(
                         color: backgroundColor,
                         borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -182,12 +182,6 @@ class _HelpScreenState extends State<HelpScreen> {
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,
                           firstHelpKey: widget.firstHelpKey,
-                        )
-                      : Container(),
-                  (!firstHelp && slideIndex == widget.information.length - 1) ||
-                          debugModeEnabled
-                      ? SizedBox(
-                          height: 48,
                         )
                       : Container(),
                   firstHelp

@@ -6,25 +6,35 @@ var colorCorrectDarker = Colors.greenAccent[300];
 var colorIncorrect = Colors.redAccent[200];
 var colorIncorrectDarker = Colors.redAccent[300];
 
-var colorLessonLighter = Colors.green[100];
-var colorLessonStandard = Colors.green[200];
-var colorLessonDarker = Colors.green[400];
-var colorLessonDarkest = Colors.green[600];
-
 var colorSingleDigitLighter = Colors.amber[100];
 var colorSingleDigitStandard = Colors.amber[200];
 var colorSingleDigitDarker = Colors.amber[400];
 var colorSingleDigitDarkest = Colors.amber[600];
+
+var colorChapter1Lighter = Colors.lime[100];
+var colorChapter1Standard = Colors.lime[200];
+var colorChapter1Darker = Colors.lime[400];
+var colorChapter1Darkest = Colors.lime[600];
 
 var colorAlphabetLighter = Colors.blue[100];
 var colorAlphabetStandard = Colors.blue[200];
 var colorAlphabetDarker= Colors.blue[400];
 var colorAlphabetDarkest= Colors.blue[600];
 
+var colorChapter2Lighter = Colors.indigo[100];
+var colorChapter2Standard = Colors.indigo[200];
+var colorChapter2Darker = Colors.indigo[400];
+var colorChapter2Darkest = Colors.indigo[600];
+
 var colorPAOLighter = Colors.pink[100];
 var colorPAOStandard = Colors.pink[200];
 var colorPAODarker = Colors.pink[400];
 var colorPAODarkest = Colors.pink[600];
+
+var colorChapter3Lighter = Colors.orangeAccent[100];
+var colorChapter3Standard = Colors.orangeAccent[200];
+var colorChapter3Darker = Colors.orangeAccent[400];
+var colorChapter3Darkest = Colors.orangeAccent[600];
 
 var colorCustomMemoryLighter = Colors.purple[100];
 var colorCustomMemoryStandard = Colors.purple[200];

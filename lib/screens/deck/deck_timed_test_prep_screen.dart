@@ -330,9 +330,8 @@ class DeckTimedTestPrepScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Deck Timed Test Preparation',
       information: [
-        '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '
-            'and link the scenes together. Remember, person-action-object, and really create a connection '
-            'between scenes. ',
+        '    OK! Now you\'re going to convert these nine cards into three scenes, and link the scenes together. '
+        'Remember, make it visceral - really add as much detail as you can muster!',
       ],
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,

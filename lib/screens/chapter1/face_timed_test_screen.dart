@@ -60,7 +60,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     String guess1 = textController1.text.toLowerCase().trim();
     String answer2 = name2.toLowerCase().trim();
     String guess2 = textController2.text.toLowerCase().trim();
-    if (d.distance(answer1, guess1) <= 1 && d.distance(answer2, guess2) <= 1) {
+    if (d.distance(answer1, guess1) <= 2 && d.distance(answer2, guess2) <= 2) {
       if (d.distance(answer1, guess1) == 1 ||
           d.distance(answer1, guess1) == 1) {
         print('close enough');
@@ -70,25 +70,38 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
       // every time
       await prefs.updateActivityVisible(faceTimedTestKey, false);
       await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-      if (await prefs.getActivityState(faceTimedTestKey) == 'todo') {
+      if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(faceTimedTestKey, 'review');
-        await prefs.updateActivityVisible(alphabetEditKey, true);
-        showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Alphabet system!',
-          textColor: Colors.white,
-          backgroundColor: colorDeckDarker,
-          durationSeconds: 3,
-          isSuper: true,
-        );
+        await prefs.setBool(faceTimedTestCompleteKey, true);
+        if (await prefs.getBool(planetTimedTestCompleteKey) == null) {
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Awesome job! Complete the Planet test to unlock the next system!',
+            textColor: Colors.black,
+            backgroundColor: colorChapter1Darker,
+            durationSeconds: 3,
+          );
+        } else {
+          await prefs.updateActivityVisible(alphabetEditKey, true);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Congratulations! You\'ve unlocked the Alphabet system!',
+            textColor: Colors.white,
+            backgroundColor: colorAlphabetDarker,
+            durationSeconds: 3,
+            isSuper: true,
+          );
+        }
       } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
             'Congratulations! You aced it!',
         textColor: Colors.black,
-        backgroundColor: colorFaceDarker,
-        durationSeconds: 3,
+        backgroundColor: colorChapter1Darker,
+        durationSeconds: 2,
       );
     }
     } else {
@@ -111,6 +124,9 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     await prefs.updateActivityState(faceTimedTestKey, 'review');
     await prefs.updateActivityVisible(faceTimedTestKey, false);
     await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
+    if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
+      await prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
@@ -127,7 +143,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Face: timed test'),
-          backgroundColor: colorFaceDarker,
+          backgroundColor: colorChapter1Darker,
           actions: <Widget>[
             // action button
             IconButton(
@@ -270,8 +286,8 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
                           BasicFlatButton(
                             text: 'Submit',
                             fontSize: 24,
-                            color: colorFaceStandard,
-                            splashColor: colorFaceDarker,
+                            color: colorChapter1Standard,
+                            splashColor: colorChapter1Darker,
                             onPressed: () => checkAnswer(),
                             padding: 10,
                           ),
@@ -300,8 +316,8 @@ class FaceTimedTestScreenHelp extends StatelessWidget {
             'sounds! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!'
       ],
-      buttonColor: colorFaceStandard,
-      buttonSplashColor: colorFaceDarker,
+      buttonColor: colorChapter1Standard,
+      buttonSplashColor: colorChapter1Darker,
       firstHelpKey: faceTimedTestFirstHelpKey,
     );
   }

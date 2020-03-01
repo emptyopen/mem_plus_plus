@@ -26,6 +26,12 @@ class _PhoneticAlphabetTimedTestPrepScreenState
   @override
   void initState() {
     super.initState();
+    getSharedPrefs();
+  }
+
+  getSharedPrefs() async {
+    prefs.checkFirstTime(context, phoneticAlphabetTimedTestPrepFirstHelpKey,
+        PhoneticAlphabetTimedTestPrepScreenHelp());
   }
 
   void updateStatus() async {
@@ -48,90 +54,6 @@ class _PhoneticAlphabetTimedTestPrepScreenState
     List<Widget> lettersList = [];
     List<Widget> phoneticsList = [];
     List<Widget> morseList = [];
-    List letters = [
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'J',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z'
-    ];
-    List phoneticAlphabet = [
-      'Alpha',
-      'Bravo',
-      'Charlie',
-      'Delta',
-      'Echo',
-      'Foxtrot',
-      'Golf',
-      'Hotel',
-      'India',
-      'Juliett',
-      'Kilo',
-      'Lima',
-      'Mike',
-      'November',
-      'Oscar',
-      'Papa',
-      'Quebec',
-      'Romeo',
-      'Sierra',
-      'Tango',
-      'Uniform',
-      'Victor',
-      'Whiskey',
-      'X-ray',
-      'Yankee',
-      'Zulu',
-    ];
-    List morse = [
-      '•-',
-      '-•••',
-      '-•-•',
-      '-••',
-      '•',
-      '••-•',
-      '--•',
-      '••••',
-      '••',
-      '•---',
-      '-•-',
-      '•-••',
-      '--',
-      '-•',
-      '---',
-      '•--•',
-      '--•-',
-      '•-•',
-      '•••',
-      '-',
-      '••-',
-      '•••-',
-      '•--',
-      '-••-',
-      '-•--',
-      '--••',
-    ];
     for (int i = 0; i < morse.length; i++) {
       lettersList.add(Text(
         letters[i],
@@ -178,7 +100,7 @@ class _PhoneticAlphabetTimedTestPrepScreenState
       backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Phonetic alphabet: timed test prep'),
-          backgroundColor: Colors.green[200],
+          backgroundColor: colorChapter2Darker,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.info),
@@ -219,14 +141,14 @@ class _PhoneticAlphabetTimedTestPrepScreenState
               ),
               BasicFlatButton(
                 text: 'I\'m ready!',
-                color: colorLessonDarker,
-                splashColor: colorLessonStandard,
+                color: colorChapter2Darker,
+                splashColor: colorChapter2Standard,
                 onPressed: () => showConfirmDialog(
                     context: context,
                     function: updateStatus,
                     confirmText:
                         'Are you sure you\'d like to start this test? The number will no longer be available to view! (unless you check online xD)',
-                    confirmColor: colorLessonStandard),
+                    confirmColor: colorChapter2Standard),
                 fontSize: 30,
                 padding: 10,
               ),
@@ -253,15 +175,30 @@ class _PhoneticAlphabetTimedTestPrepScreenState
 
 class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    OK! Let\'s get right down to using the Memory Palace. We\'re going to memorize the NATO phonetic alphabet!'
-        'Pick a place, like your current home, or an '
+    '    OK! Let\'s get right down to using the Memory Palace. We\'re going to memorize the NATO phonetic alphabet and Morse code. '
+        'Now if you get stranded on an island and there\'s a Morse code machine there, you can communicate with the world and be the hero!'
+        '\n    Pick a place, like your current home, or an '
         'old apartment. Start at your front door, and move along a wall around your apartment, visiting different '
-        'rooms or objects. Maybe it\'s the front door, the fridge in your kitchen, the sink, the kitchen table, the '
-        'living room sofa, the stairs to the annex, the annex itself, on and on, a total of 26 sub-locations.',
-    'Now assign the phonetic word for A (Alpha) and the Morse code '
-        'for A (dot dash) to the font door. Maybe Alpha reminds you of an apex predator, and you could have a shark '
-        'smashing your front door over a grizzly bear\'s head. Or maybe Alpha reminds you of transparency, so the door\'s opacity '
-        'is wildly fluctuating. Then, for the Morse we can ',
+        'rooms or objects. ',
+    '    Maybe it\'s the front door, the fridge in your kitchen, the sink, the kitchen table, the '
+        'living room sofa, the stairs to the second floor, your younger brother\'s bedroom, the hallway closet, '
+        'your bedroom, on and on, a total of 26 sub-locations.',
+    '    Now assign the phonetic word for A ("Alpha") and the Morse code '
+        'for A (dot dash) to the font door. Maybe "alpha" reminds you of an apex predator, and you could have a shark '
+        'smashing your front door over a grizzly bear\'s head. Or maybe "alpha" reminds you of transparency, so the door\'s opacity '
+        'is wildly fluctuating. ',
+    '    Then, for the Morse we can add to that scene thin objects (dashes) and round objects (dots). '
+        'Maybe the shark smashes the door over the grizzly\'s head, '
+        'and feels really bad about it so he brings the grizzly a vintage globe that has a retractable telescope that pops out of '
+        'the top. Close your eyes and imagine the smell of a grandfather\'s office and hear the popping '
+        'sound of the telescope. \n\n    Now we\'ve encoded "alpha" and "•-", woohoo!',
+    '    Really mash the scene and your real life sublocation together!\n\n    Is blood spurting out of the '
+        'faucet? So gross! Billowing flames when you open the bathroom door? Close your eyes and feel the searing flames on your face! '
+        'Smell the stench of the rotting zombies chasing you down the hallway! \n    Really let your imagination run wild!',
+    '    Finally, it would be great to link the scenes between your sub-locations as well. Not only will it help you '
+        'remember everything more clearly in general, it will also help you to move around the scenes more quickly, or if you '
+        'need to jump around to certain letters in your head.\n    Like everything else you memorize, eventually these scenes '
+        'will fade into the background as the words, dots, and dashes become second nature.',
   ];
 
   @override
@@ -269,8 +206,8 @@ class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Phonetic Alphabet Timed Test Prep',
       information: information,
-      buttonColor: colorLessonStandard,
-      buttonSplashColor: colorLessonDarker,
+      buttonColor: colorChapter2Standard,
+      buttonSplashColor: colorChapter2Darker,
       firstHelpKey: phoneticAlphabetTimedTestPrepFirstHelpKey,
     );
   }

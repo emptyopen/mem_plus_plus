@@ -101,7 +101,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
           title: Text('PAO: view/edit'),
-          backgroundColor: Colors.pink[200],
+          backgroundColor: colorPAOStandard,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.arrow_downward),
@@ -318,8 +318,8 @@ class PAOEditScreenHelp extends StatelessWidget {
   final List<String> information = [
     '    Welcome to the 3rd system here at Takao Studios :) \n'
         '    PAO stands for Person Action Object. What this means is that for every digit '
-        '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. Again, '
-        'you can assign any person, action, and object to any digit, but it\'s a good idea at first '
+        '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. '
+        'You can assign any person, action, and object to any digit, but it\'s a good idea at first '
         'to follow some kind of pattern. ',
     '    This will take some time to set up! But believe me, it\'ll be worth it. \n'
         '    The person should be associated to its corresponding action and object, '
@@ -343,7 +343,8 @@ class PAOEditScreenHelp extends StatelessWidget {
         'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '
         'because overlap will make decoding more difficult. ',
     '    As a final note, it\'s possible to upload an entire PAO system through the CSV upload method available in '
-        'the top right of the screen. More details on how to do that is available in the upload section.'
+        'the top right of the screen. I would highly, highly recommend storing your PAO data in a google doc. '
+        'More details on how to do that is available in the upload section.'
   ];
 
   @override
@@ -351,8 +352,8 @@ class PAOEditScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'PAO Edit/View',
       information: information,
-      buttonColor: Colors.pink[100],
-      buttonSplashColor: Colors.pink[300],
+      buttonColor: colorPAOStandard,
+      buttonSplashColor: colorPAODarker,
       firstHelpKey: paoEditFirstHelpKey,
     );
   }

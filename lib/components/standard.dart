@@ -93,12 +93,12 @@ class MainMenuOption extends StatelessWidget {
           Container(
             height: 46,
             decoration: BoxDecoration(
-              color: color,
+              color: splashColor,
               borderRadius: BorderRadius.circular(5),
               gradient: complete
                   ? LinearGradient(
                       begin: Alignment.topLeft,
-                      end: Alignment(0.46, 1.5),
+                      end: Alignment.bottomRight,
                       colors: [
                         color,
                         splashColor,
@@ -108,10 +108,10 @@ class MainMenuOption extends StatelessWidget {
                     )
                   : LinearGradient(
                       begin: Alignment.topLeft,
-                      end: Alignment(0.52, 0.0),
+                      end: Alignment.bottomRight,
                       colors: [
-                        color,
-                        color,
+                        splashColor,
+                        splashColor,
                       ], // whitish to gray
                       tileMode: TileMode
                           .repeated, // repeats the gradient over the canvas
@@ -276,7 +276,7 @@ class CondensedMainMenuButtons extends StatelessWidget {
               border: Border.all(),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
-                end: Alignment(0.52, 0.0),
+                end: Alignment.bottomRight,
                 colors: [backgroundColor, buttonSplashColor], // whitish to gray
                 tileMode:
                     TileMode.repeated, // repeats the gradient over the canvas
@@ -300,29 +300,126 @@ class CondensedMainMenuButtons extends StatelessWidget {
                     callback: callback,
                     route: editRoute,
                     icon: editIcon,
-                    color: buttonColor,
+                    color: backgroundColor,
                   ),
                   CondensedMenuButton(
                     activity: practiceActivity,
                     callback: callback,
                     route: practiceRoute,
                     icon: practiceIcon,
-                    color: buttonColor,
+                    color: backgroundColor,
                   ),
                   CondensedMenuButton(
                     activity: testActivity,
                     callback: callback,
                     route: testRoute,
                     icon: testIcon,
-                    color: buttonColor,
+                    color: backgroundColor,
                   ),
                   CondensedMenuButton(
                     activity: timedTestPrepActivity,
                     callback: callback,
                     route: timedTestPrepRoute,
                     icon: timedTestPrepIcon,
-                    color: buttonColor,
+                    color: backgroundColor,
                     testPrepAvailable: timedTestPrepActivity.visible,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 3,
+        )
+      ],
+    );
+  }
+}
+
+class CondensedMainMenuChapterButtons extends StatelessWidget {
+  final Activity lesson;
+  final Activity activity1;
+  final Activity activity2;
+  final Icon activity1Icon;
+  final Icon activity2Icon;
+  final String text;
+  final Color standardColor;
+  final Color darkerColor;
+  final Widget lessonRoute;
+  final Widget activity1Route;
+  final Widget activity2Route;
+  final Function() callback;
+  final prefs = PrefsUpdater();
+
+  CondensedMainMenuChapterButtons({
+    Key key,
+    this.lesson,
+    this.activity1,
+    this.activity2,
+    this.activity1Icon,
+    this.activity2Icon,
+    this.text,
+    this.standardColor,
+    this.darkerColor,
+    this.lessonRoute,
+    this.activity1Route,
+    this.activity2Route,
+    this.callback,
+  });
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Column(
+      children: <Widget>[
+        Container(
+          height: 100,
+          width: screenWidth * 0.85,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [standardColor, darkerColor], // whitish to gray
+                tileMode:
+                    TileMode.repeated, // repeats the gradient over the canvas
+              ),
+              borderRadius: BorderRadius.circular(5)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                child: Text(text,
+                    style: TextStyle(fontSize: 24), textAlign: TextAlign.start),
+              ),
+              SizedBox(height: 5,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  CondensedMenuButton(
+                    activity: lesson,
+                    callback: callback,
+                    route: lessonRoute,
+                    icon: lessonIcon,
+                    color: standardColor,
+                  ),
+                  CondensedMenuButton(
+                    activity: activity1,
+                    callback: callback,
+                    route: activity1Route,
+                    icon: activity1Icon,
+                    color: standardColor,
+                    testPrepAvailable: activity1.visible,
+                  ),
+                  CondensedMenuButton(
+                    activity: activity2,
+                    callback: callback,
+                    route: activity2Route,
+                    icon: activity2Icon,
+                    color: standardColor,
+                    testPrepAvailable: activity2.visible,
                   ),
                 ],
               )

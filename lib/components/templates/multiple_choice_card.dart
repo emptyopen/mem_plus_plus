@@ -302,7 +302,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
       widget.callback(false);
       setState(() {});
     }
-    if (debugModeEnabled && attempts >= 5) {
+    if (debugModeEnabled && attempts >= 2) {
       showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:

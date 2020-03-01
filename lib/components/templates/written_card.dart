@@ -39,11 +39,24 @@ class _WrittenCardState extends State<WrittenCard> {
   //static GlobalKey<FormState> _k1 = new GlobalKey<FormState>();
   final textController = TextEditingController();
   final prefs = PrefsUpdater();
+  int attempts = 0;
   static var _formKey = new GlobalKey();
 
   @override
   void initState() {
     super.initState();
+    getSharedPrefs();
+  }
+
+  getSharedPrefs() async {
+    setState(() {
+      attempts = 0;
+      widget.results.forEach((attempt) {
+        if (attempt != null) {
+          attempts += 1;
+        }
+      });
+    });
   }
 
   @override
@@ -83,6 +96,16 @@ class _WrittenCardState extends State<WrittenCard> {
           backgroundColor: colorIncorrect,
           durationSeconds: 2);
       widget.callback(false);
+    }
+    if (debugModeEnabled && attempts >= 2) {
+      showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText:
+              'Debug: Congratulations, you aced it! Next up is a timed test!',
+          backgroundColor: widget.color,
+          durationSeconds: 3);
+      widget.nextActivityCallback();
+      Navigator.pop(context);
     }
     if (widget.isLastCard) {
       int score = 0;

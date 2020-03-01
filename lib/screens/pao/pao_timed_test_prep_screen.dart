@@ -200,7 +200,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     return Scaffold(
           backgroundColor: backgroundColor,
       appBar: AppBar(title: Text('PAO: timed test prep'),
-        backgroundColor: Colors.pink[200],
+        backgroundColor: colorPAOStandard,
         actions: <Widget>[
         // action button
         IconButton(
@@ -318,8 +318,8 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
             'and Sandra takes a big gulp of it, now paint is all around her mouth! What a messy eater Sandra is. '
             'Now she\'s mad about the paint so she\'s going to go dunk some poker chips to cool off.'
       ],
-      buttonColor: Colors.pink[100],
-      buttonSplashColor: Colors.pink[300],
+      buttonColor: colorPAOStandard,
+      buttonSplashColor: colorPAODarker,
       firstHelpKey: paoTimedTestPrepFirstHelpKey,
     );
   }

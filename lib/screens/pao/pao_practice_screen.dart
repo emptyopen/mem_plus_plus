@@ -72,7 +72,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
           backgroundColor: backgroundColor,
         appBar: AppBar(
             title: Text('PAO: practice'),
-            backgroundColor: Colors.pink[200],
+            backgroundColor: colorPAOStandard,
             actions: <Widget>[
               // action button
               IconButton(
@@ -109,8 +109,8 @@ class PAOPracticeScreenHelp extends StatelessWidget {
         '    Get perfect familiarities for each set of digits and '
             'the first test will be unlocked! Good luck!'
       ],
-      buttonColor: Colors.pink[100],
-      buttonSplashColor: Colors.pink[300],
+      buttonColor: colorPAOStandard,
+      buttonSplashColor: colorPAODarker,
       firstHelpKey: paoPracticeFirstHelpKey,
     );
   }
