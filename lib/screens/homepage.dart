@@ -95,7 +95,7 @@ class MyHomePage extends StatefulWidget {
 // next up:
 
 // horizon:
-// TODO: add ability cancel running test (already forgot)
+// TODO: add ability cancel running test (in case already forgot)
 // TODO: move custom memory to floating button
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
 // TODO: implement length limits for inputs (like action/object) - maybe 30 characters
@@ -120,8 +120,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: write some lessons, intersperse
 // TODO: crashlytics for IOS
 // TODO: add recipe as custom test
-
-// Nice to have
+// TODO: look into possible battery drainage from refreshing screen? emulator seems to run hot
 // TODO: make CSV uploader text selectable
 // TODO: add name (first time, and preferences) - use in local notifications
 // TODO: add sounds

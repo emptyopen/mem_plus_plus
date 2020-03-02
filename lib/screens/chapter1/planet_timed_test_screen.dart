@@ -27,8 +27,8 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
   String planet3 = '';
   String planet4 = '';
   Map planetPositionSize = {
-    'venus': [1, 6],
-    'mercury': [2, 8],
+    'mercury': [1, 8],
+    'venus': [2, 6],
     'earth': [3, 5],
     'mars': [4, 7],
     'jupiter': [5, 1],

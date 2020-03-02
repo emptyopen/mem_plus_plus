@@ -165,14 +165,14 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
                       ),
                     ),
                     Text(
-                      'Venus',
+                      'Mercury',
                       style: TextStyle(
                         fontSize: 24,
                         color: backgroundHighlightColor,
                       ),
                     ),
                     Text(
-                      'Mercury',
+                      'Venus',
                       style: TextStyle(
                         fontSize: 24,
                         color: backgroundHighlightColor,
@@ -232,14 +232,14 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
                       ),
                     ),
                     Text(
-                      '3',
+                      '1',
                       style: TextStyle(
                         fontSize: 24,
                         color: backgroundHighlightColor,
                       ),
                     ),
                     Text(
-                      '1',
+                      '3',
                       style: TextStyle(
                         fontSize: 24,
                         color: backgroundHighlightColor,
@@ -332,19 +332,22 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
     '    Let\'s try another method. Let\'s create a visual scene using words or concepts that we can strongly tie '
         'to certain planets. And because we have so much power in creating these scenes in our heads, we can very easily attach '
         'our digit-objects for the planet\'s size ranking to the scenes! \n\n    Let\'s look at an example.',
-    '    We start with the Sun, I suppose. Fiery hellfire will be our anchor. This outer space test is literal hillfire. '
-        'From there we go to Venus. What might we think of for Venus? The Roman goddess '
-        'of beauty? The shaving razor? Let\'s go with the goddess of beauty.\n    A smoking hot babe emerges from the fire, '
-        'and of course she\'s only wearing a bra (bra is my object for 3, and Venus is the 3rd biggest planet). ',
-    '    Where did she get that bra? It\'s so sexy! Oh, she\'s pulling a vial out of her bra... a shiny silver color! '
-        'Liquid mercury! Is she going to drink it?? She does!! Someone call an ambulance!\n\n    ... oh, she\'s fine. She '
-        'pulls out a baseball bat and starts practicing her baseball swing (my stick object for 1). I guess mercury is just a simple '
-        'accelerant for a goddess!',
-    '    Someone is pitching baseball-sized Earths at the babe, and she\'s smacking each one into the cheering crowd. '
-        'Oh, the humanity!! \n    Once she gets tired of committing xenocide, she goes and relaxes on her huge, luxurious yacht (4 is sailboat for me). '
-        'I picture her from a bird\'s-eye view, laying down on the deck, the sun reflecting in her black, sexy sunglasses.\n    The story continues like this. '
-        'Maybe next it starts raining Mars bars, or a god of war commandeers the yacht for war, but I think you get the idea.',
-    '    This sounds insane, I know. But I promise, if you start using that creativity inside your brain, something is '
+    '    We start with the Sun, I suppose. Fiery hellfire will be our anchor. '
+        'From there we go to Mercury. Maybe a big vat of silver liquid mercury getting boiled by the sun will do the trick! '
+        '\n    Now we want to attach the digit '
+        'representing how small the planet is, the number 1! My object for number 1 is a stick, so I\'ll just imagine I stir the '
+        'vat with a giant stick until something emerges. ',
+    '    Next is Venus, what might we think of for that? The Roman goddess '
+        'of beauty? The shaving razor? Let\'s go with the goddess of beauty. So we stir the shimmering liquid mercury, '
+        'until a smoking hot babe emerges. Wow, how can someone be that attractive? '
+        'And of course she\'s only wearing a bra (bra is my object for 3, and Venus is the 3rd biggest planet). ',
+    '    Where did she get that bra? It\'s so sexy! Oh, she\'s pulling something out of her bra... the whole Earth! '
+        'What a magic trick!\n'
+        '    Pulling the entire Earth out of your bra is pretty tiring, so she goes and relaxes on her huge, luxurious yacht (4 is sailboat for me). '
+        'I picture her from a bird\'s-eye view, laying down on the deck, the sun reflecting in her black, sexy sunglasses.',
+    '    The story continues like this. '
+        'Maybe next it starts raining Mars bars, or a god of war commandeers the yacht for war, but I think you get the idea.'
+        '\n\n    This sounds insane, I know. But I promise, if you start using that creativity inside your brain, something is '
         'going to start clicking. The wild scenes you can create in your head can be insanely memorable. We '
         'are going to unlock that. \n    Baby steps, baby steps. We\'ll peak Everest eventually.'
   ];
