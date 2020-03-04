@@ -230,7 +230,7 @@ void showConfirmDialog(
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           side: BorderSide(),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
         ),
         title: Text(
           'Confirm',

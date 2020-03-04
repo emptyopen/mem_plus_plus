@@ -106,8 +106,8 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                 Positioned(
                   child: RaisedButton(
                     elevation: 5,
-                    color: colorCustomMemoryStandard,
-                    splashColor: colorCustomMemoryDarker,
+                    color: colorCustomMemoryDarker,
+                    splashColor: colorCustomMemoryDarkest,
                     onPressed: () {
                       HapticFeedback.heavyImpact();
                       showDialog(
@@ -128,8 +128,8 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                             width: 10,
                           ),
                           Text(
-                            'memory',
-                            style: TextStyle(fontSize: 24, color: Colors.black),
+                            'new memory',
+                            style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                         ],
                       ),

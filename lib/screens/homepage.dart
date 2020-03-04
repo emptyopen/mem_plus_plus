@@ -37,8 +37,10 @@ import 'package:mem_plus_plus/screens/deck/deck_practice_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_multiple_choice_test_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/deck/deck_timed_test_screen.dart';
-import 'package:mem_plus_plus/screens/pi/pi_timed_test_prep_screen.dart';
-import 'package:mem_plus_plus/screens/pi/pi_timed_test_screen.dart';
+import 'package:mem_plus_plus/screens/chapter3/pi_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/chapter3/pi_timed_test_screen.dart';
+import 'package:mem_plus_plus/screens/chapter3/face_2_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/chapter3/face_2_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/chapter1/planet_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/chapter1/planet_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/chapter2/airport_timed_test_prep_screen.dart';
@@ -47,6 +49,7 @@ import 'package:mem_plus_plus/screens/chapter2/phonetic_alphabet_timed_test_prep
 import 'package:mem_plus_plus/screens/chapter2/phonetic_alphabet_timed_test_screen.dart';
 import 'package:mem_plus_plus/screens/chapter1/lesson_1_screen.dart';
 import 'package:mem_plus_plus/screens/chapter2/lesson_2_screen.dart';
+import 'package:mem_plus_plus/screens/chapter3/lesson_3_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -75,6 +78,7 @@ class MyHomePage extends StatefulWidget {
 // - quick lesson 3: spaced repetition
 // * custom memory manager
 // - pi test
+// - face test #2: first and last name, occupation, hometown
 
 // ---- paywall -----
 
@@ -83,32 +87,38 @@ class MyHomePage extends StatefulWidget {
 // - conversion rates
 // - first aid
 // - doomsday test
+// - periodic table
+
 
 // done:
-// add phonetic alphabet
-// airplane test
-// add planet test
-// quick lesson 1
-// consolidate tests between systems (chapters: 1 lesson and 2 tests)
-// quick lesson 2
+// BIG: add lesson 2
+// BIG: add lesson 3
+// BIG: add more difficult face test for chapter 3
+// fix planet test
+// hide developer settings (with debugEnabled) except reset all, add confirmation dialog
+// move custom memory to floating button
+// add google doc template link in CSV upload 
+// add ability to cancel running test (in case already forgot)
+// check for missing keys, for each missing one add the default version
 
 // next up:
 
 // horizon:
-// TODO: add ability cancel running test (in case already forgot)
-// TODO: move custom memory to floating button
+// TODO: match ages for face (hard)
+// TODO: divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
+// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
+// TODO: only show congratulations from lessons first time
+// TODO: add image for memory palace lesson
+// TODO: BIG: make planet test prettier with planets in the background
+// TODO: handle bad CSV input
+// TODO: for tests like planets, show was what incorrect?
+// TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
 // TODO: implement length limits for inputs (like action/object) - maybe 30 characters
-// TODO: add google doc link in CSV upload
 // TODO: describe amount of pi correct
 // TODO: chapter animation
-// TODO: add airport as custom test
 // TODO: make default date better (1990 for birthday, etc)
-// TODO: BIG: add planet test
-// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
 // TODO: add more basic tests, intersperse between systems (planets, 100 digits of pi, phonetic alphabet, conversion rates, the doomsday rule)
-// TODO: handle bad CSV input
-// TODO: add CSV template for google sheets
 // TODO: if number of flash cards needed is less than 5?, make it 5 instead of just one
 // TODO: add first aid system
 // TODO: add more faces, make all of them closer to the face
@@ -117,7 +127,6 @@ class MyHomePage extends StatefulWidget {
 // TODO: add password test
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
-// TODO: write some lessons, intersperse
 // TODO: crashlytics for IOS
 // TODO: add recipe as custom test
 // TODO: look into possible battery drainage from refreshing screen? emulator seems to run hot
@@ -145,6 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool consolidateAlphabet = false;
   bool consolidateChapter2 = false;
   bool consolidatePAO = false;
+  bool consolidateChapter3 = false;
   bool consolidateDeck = false;
   var prefs = PrefsUpdater();
 
@@ -169,7 +179,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // if (!(await prefs.getKeys().asStream().contains(lesson1Key))) {
     //   print('doesn\'t contain lesson1Key');
     // }
-    Map<String, Activity> activityStates = await prefs.getSharedPrefs(activityStatesKey);
+    Map<String, Activity> activityStates =
+        await prefs.getSharedPrefs(activityStatesKey);
     print(activityStates[singleDigitPracticeKey].name);
     // print(activityStates[lesson2Key].name);
     // await prefs.writeSharedPrefs(activityStatesKey, defaultActivityStatesAllDone);
@@ -186,6 +197,17 @@ class _MyHomePageState extends State<MyHomePage> {
     if (await prefs.getActivityState(deckTimedTestKey) == 'review') {
       await prefs.setBool(deckTimedTestCompleteKey, true);
     }
+
+    print(defaultActivityStatesInitial[faceTimedTestPrepKey]);
+    print(defaultActivityStatesInitial.keys.length);
+
+    defaultActivityStatesInitial.forEach((k, v) {
+      if (!activityStates.keys.contains(k)) {
+        print('adding $k!!!!');
+        activityStates[k] = v;
+      }
+    });
+    await prefs.writeSharedPrefs(activityStatesKey, activityStates);
   }
 
   Future<Null> getSharedPrefs() async {
@@ -292,6 +314,10 @@ class _MyHomePageState extends State<MyHomePage> {
     if (await prefs.getBool(paoTimedTestCompleteKey) != null) {
       consolidatePAO = true;
     }
+    if (await prefs.getBool(piTimedTestCompleteKey) != null &&
+        await prefs.getBool(face2TimedTestCompleteKey) != null) {
+      consolidateChapter3 = true;
+    }
     if (await prefs.getBool(deckTimedTestCompleteKey) != null) {
       consolidateDeck = true;
     }
@@ -376,6 +402,7 @@ class _MyHomePageState extends State<MyHomePage> {
           splashColor: Colors.purple[500],
           complete: true,
           globalKey: globalKey,
+          isCustomTest: true,
         ),
       );
     });
@@ -415,8 +442,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 activity == planetTimedTestPrepKey ||
                 activity == faceTimedTestPrepKey) &&
             consolidateChapter1) {
-              consolidated = true;
-            }
+          consolidated = true;
+        }
         if (activity.contains(alphabetKey) &&
             !activity.contains('Phonetic') &&
             consolidateAlphabet) {
@@ -426,15 +453,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 activity == phoneticAlphabetTimedTestPrepKey ||
                 activity == airportTimedTestPrepKey) &&
             consolidateChapter2) {
-              consolidated = true;
-            }
+          consolidated = true;
+        }
         if (activity.contains(paoKey) && consolidatePAO) {
+          consolidated = true;
+        }
+        if ((activity == lesson3Key ||
+                activity == piTimedTestPrepKey ||
+                activity == face2TimedTestPrepKey) &&
+            consolidateChapter2) {
           consolidated = true;
         }
         if (activity.contains(deckKey) && consolidateDeck) {
           consolidated = true;
         }
-        //print('$activity: consolidated: $consolidated');
         if (!consolidated) {
           mainMenuOptions.add(
             MainMenuOption(
@@ -540,7 +572,7 @@ class _MyHomePageState extends State<MyHomePage> {
             standardColor: colorChapter2Lighter,
             darkerColor: colorChapter2Darker,
             lesson: activityStates[lesson2Key],
-            lessonRoute: Lesson1Screen(
+            lessonRoute: Lesson2Screen(
               callback: callback,
             ),
             activity1: activityStates[phoneticAlphabetTimedTestPrepKey],
@@ -586,6 +618,30 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
       }
+      if (activity == lesson3Key && consolidateChapter3) {
+        mainMenuOptions.add(
+          CondensedMainMenuChapterButtons(
+            text: 'Chapter 3:',
+            standardColor: colorChapter3Lighter,
+            darkerColor: colorChapter3Darker,
+            lesson: activityStates[lesson3Key],
+            lessonRoute: Lesson3Screen(
+              callback: callback,
+            ),
+            activity1: activityStates[face2TimedTestPrepKey],
+            activity1Icon: face2Icon,
+            activity1Route: Face2TimedTestPrepScreen(
+              callback: callback,
+            ),
+            activity2: activityStates[piTimedTestPrepKey],
+            activity2Icon: piIcon,
+            activity2Route: PiTimedTestPrepScreen(
+              callback: callback,
+            ),
+            callback: callback,
+          ),
+        );
+      }
       if (activity == deckEditKey && consolidateDeck) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
@@ -622,6 +678,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return firstTimeOpeningApp == null
         ? Scaffold()
         : Scaffold(
@@ -630,50 +688,6 @@ class _MyHomePageState extends State<MyHomePage> {
             appBar: AppBar(
               title: Text('MEM++ Homepage'),
               actions: <Widget>[
-                customMemoryManagerAvailable
-                    ? Stack(
-                        children: <Widget>[
-                          Center(
-                            child: IconButton(
-                              icon: Icon(Icons.add_box),
-                              color: Colors.deepPurple,
-                              onPressed: () {
-                                HapticFeedback.heavyImpact();
-                                checkCustomMemoryManagerFirstTime();
-                              },
-                            ),
-                          ),
-                          customMemoryManagerFirstView
-                              ? Positioned(
-                                  child: Container(
-                                    width: 35,
-                                    height: 18,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(width: 1),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5)),
-                                      //color: Color.fromRGBO(255, 105, 180, 1),
-                                      color:
-                                          Color.fromRGBO(255, 255, 255, 0.85),
-                                    ),
-                                    child: Shimmer.fromColors(
-                                      period: Duration(seconds: 3),
-                                      baseColor: Colors.black,
-                                      highlightColor: Colors.greenAccent,
-                                      child: Center(
-                                          child: Text(
-                                        'new!',
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.red),
-                                      )),
-                                    ),
-                                  ),
-                                  left: 3,
-                                  top: 4)
-                              : Container()
-                        ],
-                      )
-                    : Container(),
                 IconButton(
                   icon: Icon(Icons.settings),
                   onPressed: () {
@@ -721,58 +735,118 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            body: SingleChildScrollView(
-              child: Container(
-                decoration: BoxDecoration(color: backgroundColor),
-                padding: EdgeInsets.all(30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    // BasicFlatButton(
-                    //   text: 'Notify!',
-                    //   onPressed: () => notifyDuration(Duration(seconds: 4), 'hey', 'yo'),
-                    // ),
-                    // Shimmer.fromColors(
-                    //   baseColor: backgroundHighlightColor,
-                    //   highlightColor: backgroundColor,
-                    //   period: Duration(seconds: 6),
-                    //   child: Text(
-                    //     'To-do:',
-                    //     style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
-                    //   ),
-                    // ),
-                    Text(
-                      'To-do:',
-                      style: TextStyle(
-                          fontSize: 30, color: backgroundHighlightColor),
+            body: Container(
+              height: screenHeight,
+              width: screenWidth,
+              child: Stack(
+                children: <Widget>[
+                  SingleChildScrollView(
+                    child: Container(
+                      decoration: BoxDecoration(color: backgroundColor),
+                      padding: EdgeInsets.all(30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'To-do:',
+                            style: TextStyle(
+                                fontSize: 30, color: backgroundHighlightColor),
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Column(
+                            children: getTodo(),
+                          ),
+                          Container(
+                            height: 30,
+                          ),
+                          Text(
+                            'Review:',
+                            style: TextStyle(
+                                fontSize: 30, color: backgroundHighlightColor),
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          Column(
+                            children: getReview(),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      ),
                     ),
-                    Container(
-                      height: 10,
-                    ),
-                    Column(
-                      children: getTodo(),
-                    ),
-                    Container(
-                      height: 30,
-                    ),
-                    Text(
-                      'Review:',
-                      style: TextStyle(
-                          fontSize: 30, color: backgroundHighlightColor),
-                    ),
-                    Container(
-                      height: 10,
-                    ),
-                    Column(
-                      children: getReview(),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                  ],
-                ),
+                  ),
+                  Positioned(
+                    child: customMemoryManagerAvailable
+                        ? Stack(
+                            children: <Widget>[
+                              Center(
+                                child: RaisedButton(
+                                  elevation: 15,
+                                  color: colorCustomMemoryDarker,
+                                  splashColor: colorCustomMemoryDarkest,
+                                  onPressed: () {
+                                    HapticFeedback.heavyImpact();
+                                    checkCustomMemoryManagerFirstTime();
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    side: BorderSide(width: 3),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                    child: Text(
+                                      'Memory manager',
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.white),
+                                          textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              customMemoryManagerFirstView
+                                  ? Positioned(
+                                      child: Container(
+                                        width: 50,
+                                        height: 25,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(width: 1),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                          //color: Color.fromRGBO(255, 105, 180, 1),
+                                          color: Color.fromRGBO(
+                                              255, 255, 255, 0.85),
+                                        ),
+                                        child: Shimmer.fromColors(
+                                          period: Duration(seconds: 3),
+                                          baseColor: Colors.black,
+                                          highlightColor: Colors.greenAccent,
+                                          child: Center(
+                                              child: Text(
+                                            'new!',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.red),
+                                          )),
+                                        ),
+                                      ),
+                                      left: 10,
+                                      top: 5)
+                                  : Container()
+                            ],
+                          )
+                        : Container(),
+                    bottom: 25,
+                    right: 25,
+                  )
+                ],
               ),
-            ));
+            ),
+          );
   }
 
   resetAll() async {
@@ -811,17 +885,33 @@ class _MyHomePageState extends State<MyHomePage> {
     setUnlockedActivities();
   }
 
-  maxOutKeys() async {
+  maxOutKeys(int maxTo) async {
     await prefs.setBool(customMemoryManagerAvailableKey, true);
+    await prefs.setBool(customMemoryManagerFirstHelpKey, true);
+    customMemoryManagerFirstView = true;
     customMemoryManagerAvailable = true;
 
-    await prefs.writeSharedPrefs(
-        activityStatesKey, defaultActivityStatesAllDone);
-
-    await prefs.setBool(singleDigitTimedTestCompleteKey, true);
-    await prefs.setBool(alphabetTimedTestCompleteKey, true);
-    await prefs.setBool(paoTimedTestCompleteKey, true);
-    await prefs.setBool(deckTimedTestCompleteKey, true);
+    if (maxTo >= 2) {
+      await prefs.setBool(singleDigitTimedTestCompleteKey, true);
+      await prefs.setBool(alphabetTimedTestCompleteKey, true);
+      await prefs.setBool(planetTimedTestCompleteKey, true);
+      await prefs.setBool(faceTimedTestCompleteKey, true);
+      await prefs.setBool(airportTimedTestCompleteKey, true);
+      await prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
+      await prefs.writeSharedPrefs(
+          activityStatesKey, defaultActivityStatesChapter2Done);
+    }
+    if (maxTo >= 3) {
+      await prefs.setBool(paoTimedTestCompleteKey, true);
+      await prefs.setBool(piTimedTestCompleteKey, true);
+      await prefs.writeSharedPrefs(
+          activityStatesKey, defaultActivityStatesChapter3Done);
+    }
+    if (maxTo >= 4) {
+      await prefs.setBool(deckTimedTestCompleteKey, true);
+      await prefs.writeSharedPrefs(
+          activityStatesKey, defaultActivityStatesAllDone);
+    }
 
     setUnlockedActivities();
   }
@@ -887,6 +977,7 @@ class _MyHomePageState extends State<MyHomePage> {
         text: 'Chapter 1 Lesson:',
         route: Lesson1Screen(
           callback: callback,
+          globalKey: globalKey,
         ),
         icon: lessonIcon,
         color: colorChapter1Lighter,
@@ -982,6 +1073,7 @@ class _MyHomePageState extends State<MyHomePage> {
         text: 'Chapter 2 Lesson:',
         route: Lesson2Screen(
           callback: callback,
+          globalKey: globalKey,
         ),
         icon: lessonIcon,
         color: colorChapter2Lighter,
@@ -1073,12 +1165,41 @@ class _MyHomePageState extends State<MyHomePage> {
         color: colorPAOLighter,
         splashColor: colorPAODarker,
       ),
+      lesson3Key: ActivityMenuButton(
+        text: 'Chapter 3 Lesson:',
+        route: Lesson3Screen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: lessonIcon,
+        color: colorChapter3Lighter,
+        splashColor: colorChapter3Darker,
+      ),
+      face2TimedTestPrepKey: ActivityMenuButton(
+        text: 'Faces (Hard) [Test Prep]',
+        route: Face2TimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: face2Icon,
+        color: colorChapter3Lighter,
+        splashColor: colorChapter3Darker,
+      ),
+      face2TimedTestKey: ActivityMenuButton(
+        text: 'Faces (Hard) [Timed Test]',
+        route: Face2TimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: face2Icon,
+        color: colorChapter3Lighter,
+        splashColor: colorChapter3Darker,
+      ),
       piTimedTestPrepKey: ActivityMenuButton(
         text: 'Pi [Test Prep]',
         route: PiTimedTestPrepScreen(
           callback: callback,
         ),
-        icon: timedTestPrepIcon,
+        icon: piIcon,
         color: colorChapter3Lighter,
         splashColor: colorChapter3Darker,
       ),
@@ -1088,7 +1209,7 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
           globalKey: globalKey,
         ),
-        icon: timedTestIcon,
+        icon: piIcon,
         color: colorChapter3Lighter,
         splashColor: colorChapter3Darker,
       ),
@@ -1127,7 +1248,7 @@ class _MyHomePageState extends State<MyHomePage> {
           callback: callback,
         ),
         icon: timedTestPrepIcon,
-        color:colorDeckLighter,
+        color: colorDeckLighter,
         splashColor: colorDeckDarker,
       ),
       deckTimedTestKey: ActivityMenuButton(

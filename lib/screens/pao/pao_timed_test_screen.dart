@@ -70,10 +70,8 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         textController3.text.trim() == '$digits7$digits8$digits9') {
       await prefs.updateActivityVisible(paoTimedTestKey, false);
       await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(piTimedTestPrepKey, true);
-      await prefs.setBool(customMemoryManagerAvailableKey, true);
+      await prefs.updateActivityVisible(lesson3Key, true);
       if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
-        await prefs.setBool(customMemoryManagerFirstHelpKey, true);
         await prefs.setBool(paoTimedTestCompleteKey, true);
         await prefs.updateActivityState(paoTimedTestKey, 'review');
         showSnackBar(
@@ -86,17 +84,9 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         );
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Custom Memory Manager!',
+          snackBarText: 'Congratulations! You\'ve unlocked Chapter 3!',
           textColor: Colors.white,
-          backgroundColor: Colors.purple,
-          durationSeconds: 3,
-          isSuper: true,
-        );
-        showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Pi test!',
-          textColor: Colors.black,
-          backgroundColor: colorFaceDarker,
+          backgroundColor: colorChapter3Darker,
           durationSeconds: 3,
           isSuper: true,
         );

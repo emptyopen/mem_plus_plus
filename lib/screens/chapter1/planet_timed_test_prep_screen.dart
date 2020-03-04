@@ -20,7 +20,7 @@ class PlanetTimedTestPrepScreen extends StatefulWidget {
 class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
   PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration =
-      debugModeEnabled ? Duration(seconds: 5) : Duration(minutes: 10);
+      debugModeEnabled ? Duration(seconds: 5) : Duration(minutes: 30);
 
   @override
   void initState() {
@@ -312,7 +312,7 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
             ),
             Container(
               child: Text(
-                '(You\'ll be quizzed on this in ten minutes!)',
+                '(You\'ll be quizzed on this in thirty minutes!)',
                 style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
               ),
             ),
@@ -344,12 +344,17 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
     '    Where did she get that bra? It\'s so sexy! Oh, she\'s pulling something out of her bra... the whole Earth! '
         'What a magic trick!\n'
         '    Pulling the entire Earth out of your bra is pretty tiring, so she goes and relaxes on her huge, luxurious yacht (4 is sailboat for me). '
-        'I picture her from a bird\'s-eye view, laying down on the deck, the sun reflecting in her black, sexy sunglasses.',
+        'I picture her from a bird\'s-eye view, laying down on the deck, the sun reflecting in her black, sexy sunglasses. Next to her on the yacht '
+        'is the entire Earth, looking very tranquil. Earth on a yacht (Earth = 4). ',
     '    The story continues like this. '
-        'Maybe next it starts raining Mars bars, or a god of war commandeers the yacht for war, but I think you get the idea.'
+        'Maybe next it starts raining Mars bars, or a god of war commandeers the yacht (Mars is the god of war), but I think you get the idea.'
         '\n\n    This sounds insane, I know. But I promise, if you start using that creativity inside your brain, something is '
-        'going to start clicking. The wild scenes you can create in your head can be insanely memorable. We '
-        'are going to unlock that. \n    Baby steps, baby steps. We\'ll peak Everest eventually.'
+        'going to start clicking. The wild scenes you can create in your head can be insanely memorable, and we '
+        'are going to unlock that. ',
+        '    You can see that we can now add other details to the story which could signify ANYTHING! '
+        'The weights, colors, sizes, chemical compositions, or distances from the Sun could be converted to sub-scenes and '
+        'appended to the scenes with very little additional effort. But we\'re not here to memorize the solar system, we\'re here to change your life!'
+        '\n    Baby steps, baby steps. We\'ll peak Everest eventually.'
   ];
 
   @override

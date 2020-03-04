@@ -55,8 +55,6 @@ class _SingleDigitTimedTestScreenState
     if (textController.text == '$digit1$digit2$digit3$digit4') { 
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-      print(lesson1Key);
-      
       await prefs.updateActivityVisible(lesson1Key, true);
       if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');

@@ -8,6 +8,8 @@ import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:flutter/services.dart';
+import 'package:mem_plus_plus/components/standard.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DeckEditScreen extends StatefulWidget {
   final Function callback;
@@ -185,35 +187,23 @@ class _CSVImporterState extends State<CSVImporter> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                        padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
                         child: Column(
                           children: <Widget>[
                             Text(
-                              '    Here you can upload CSV text to quickly update your deck values!\n'
-                              '    You can do this in Google Sheets very easily. You just need '
-                              'a column for Person, Action, and Object (no need for headers). Then in a '
-                              'new column, add to the top cell: ',
+                              '    Here you can upload CSV text to quickly update your Deck values!\n'
+                              '    Click below to save a copy of the template! I\'d recommend working primarily in your google doc as '
+                              'you develop your Deck system, and come back to paste it here when you\'ve completed it.',
                               textAlign: TextAlign.left,
                               style: TextStyle(fontSize: 16),
                             ),
-                            SizedBox(
-                              height: 10,
+                            SizedBox(height: 10,),
+                            BasicFlatButton(
+                              text: 'Google docs link!',
+                              color: colorDeckDarker,
+                              textColor: Colors.white,
+                              onPressed: () => launch('https://docs.google.com/spreadsheets/d/1clgeu8oeKb6e7D-J7-pGrYyS7_O4sc-9sPqPBohZpBk/edit?usp=sharing'),
                             ),
-                            Text(
-                              '=concat(concat(concat(concat(XX,","),YY),","),ZZ)',
-                              style: TextStyle(
-                                  fontSize: 10, fontFamily: 'SpaceMono'),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'where XX is the cell represting the person (in the same row), '
-                              'YY=action cell, ZZ=object cell. Then just drag the formula down to the bottom, '
-                              'copy that last column, and paste it here! ',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 16),
-                            )
                           ],
                         ),
                       ),
@@ -235,7 +225,7 @@ class _CSVImporterState extends State<CSVImporter> {
                           ),
                           SizedBox(height: 10,),
                           Text(
-                            'Ace through King, in order of Aces, Hearts, Clubs, Diamonds',
+                            'Ace through King, in order of Spades, Hearts, Clubs, Diamonds',
                             style: TextStyle(fontSize: 14),
                           ),
                           TextField(

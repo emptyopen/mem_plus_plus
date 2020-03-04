@@ -126,7 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 40,
                   ),
                   Text(
-                    'Developer options:   (dangerous!)',
+                    'Options:',
                     style: TextStyle(
                         fontSize: 18, color: backgroundHighlightColor),
                   ),
@@ -134,24 +134,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 20,
                   ),
                   BasicFlatButton(
+                    color: Colors.red[400],
+                    textColor: Colors.black,
+                    fontSize: 20,
+                    padding: 10,
                     onPressed: () {
-                      widget.resetActivities();
+                      print('wow');
+                      showConfirmDialog(
+                        context: context,
+                        function: widget.resetAll,
+                        confirmColor: Colors.red,
+                        confirmText: "Are you sure you want to reset everything? All data will be lost! There\'s no recovery!!"
+                      );
                     },
-                    text: 'reset activity states, but not data',
+                    text: 'Reset everything!',
                   ),
-                  BasicFlatButton(
-                    onPressed: () {
-                      widget.maxOutKeys();
-                    },
-                    text: 'max out everything',
-                  ),
-                  BasicFlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      widget.resetAll();
-                    },
-                    text: 'reset everything',
-                  ),
+                  debugModeEnabled ? Column(
+                    children: <Widget>[
+                      BasicFlatButton(
+                        onPressed: () {
+                          widget.maxOutKeys(2);
+                        },
+                        text: 'complete chapter 2',
+                      ),
+                      BasicFlatButton(
+                        onPressed: () {
+                          widget.maxOutKeys(3);
+                        },
+                        text: 'complete chapter 3',
+                      ),
+                      BasicFlatButton(
+                        onPressed: () {
+                          widget.maxOutKeys(5);
+                        },
+                        text: 'max out everything',
+                      ),
+                    ],
+                  ) : Container(),
                 ],
               ),
             ),
@@ -193,7 +212,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         border: Border.all(color: backgroundHighlightColor),
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
-                          end: Alignment.bottomRight, 
+                          end: Alignment.bottomRight,
                           colors: [
                             Colors.yellow[200],
                             Colors.yellow[700],

@@ -55,18 +55,30 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     if (textController.text.trim() == '$piString') {
       await prefs.updateActivityVisible(piTimedTestKey, false);
       await prefs.updateActivityVisible(piTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(deckEditKey, true);
       if (await prefs.getBool(piTimedTestKey) == null) {
         await prefs.updateActivityState(piTimedTestKey, 'review');
         await prefs.setBool(piTimedTestKey, true);
-        showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
-          textColor: Colors.white,
-          backgroundColor: colorDeckDarker,
-          durationSeconds: 3,
-          isSuper: true,
-        );
+        if (await prefs.getBool(face2TimedTestCompleteKey) == null) {
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Awesome job! Complete the Face (hard) test to unlock the next system!',
+            textColor: Colors.black,
+            backgroundColor: colorChapter3Darker,
+            durationSeconds: 3,
+          );
+        } else {
+          await prefs.updateActivityVisible(deckEditKey, true);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Congratulations! You\'ve unlocked the Deck system!',
+            textColor: Colors.white,
+            backgroundColor: colorDeckDarker,
+            durationSeconds: 3,
+            isSuper: true,
+          );
+        }
       } else {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,

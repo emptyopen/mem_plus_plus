@@ -27,14 +27,14 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
   String planet3 = '';
   String planet4 = '';
   Map planetPositionSize = {
-    'mercury': [1, 8],
-    'venus': [2, 6],
-    'earth': [3, 5],
-    'mars': [4, 7],
-    'jupiter': [5, 1],
-    'saturn': [6, 2],
-    'uranus': [7, 3],
-    'neptune': [8, 4],
+    'mercury': [1, 1],
+    'venus': [2, 3],
+    'earth': [3, 4],
+    'mars': [4, 2],
+    'jupiter': [5, 8],
+    'saturn': [6, 7],
+    'uranus': [7, 6],
+    'neptune': [8, 5],
   };
   bool showError1 = false;
   bool showError2 = false;
@@ -284,7 +284,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: backgroundSemiColor)),
+                                  BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -308,6 +308,17 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                     'farthest from the sun!',
                     style: TextStyle(
                         fontSize: 20, color: backgroundHighlightColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  child: Text(
+                    '(closest = 1, furthest = 8)',
+                    style: TextStyle(
+                        fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -357,7 +368,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: backgroundSemiColor)),
+                                  BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -399,6 +410,15 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         height: 16,
                       ),
                 SizedBox(height: 10),
+                Container(
+                  child: Text(
+                    '--------------------------',
+                    style: TextStyle(
+                        fontSize: 20, color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -430,7 +450,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: backgroundSemiColor)),
+                                  BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -451,9 +471,17 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 ),
                 Container(
                   child: Text(
-                    'biggest planet!',
+                    'smallest planet!',
                     style: TextStyle(
                         fontSize: 20, color: backgroundHighlightColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    '(smallest = 1, largest = 8)',
+                    style: TextStyle(
+                        fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -503,7 +531,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: backgroundSemiColor)),
+                                  BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -524,7 +552,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 ),
                 Container(
                   child: Text(
-                    'biggest planet!',
+                    'smallest planet!',
                     style: TextStyle(
                         fontSize: 20, color: backgroundHighlightColor),
                     textAlign: TextAlign.center,
@@ -588,7 +616,10 @@ class PlanetTimedTestScreenHelp extends StatelessWidget {
       title: 'Planet Timed Test',
       information: [
         '    Time to recall your story! Hopefully you anchored your story well! Did it start from the sun? '
-        'From a burning inferno? '
+        'From a burning inferno? \n    If you need to figure out which planet is 5th biggest, just try and remember where '
+        'your object for the number 5 appears in your story! For me, that would be a SNAKE floating all alone in the OCEAN '
+        '(snake = 5, ocean = Poseidon/Neptune, god of the ocean). The snake is shivering, by the way. It feels very sad '
+        'that it\'s all alone out there. Poor little snake. '
       ],
       buttonColor: colorChapter1Standard,
       buttonSplashColor: colorChapter1Darker,

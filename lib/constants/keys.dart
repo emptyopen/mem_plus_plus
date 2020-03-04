@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 const String usernameKey = 'Username';
 
@@ -56,7 +56,15 @@ const String singleDigitTimedTestCompleteKey = 'SingleDigitTimedTestComplete';
 // lesson 1
 const String lesson1Key = 'Lesson1';
 
-// pi
+// faces easy
+const String faceTimedTestPrepKey = 'FaceTimedTestPrep';
+const String faceTimedTestKey = 'FaceTimedTest';
+const String faceTestActiveKey = 'FaceTestActive';
+const String faceTimedTestPrepFirstHelpKey = 'FaceTimedTestPrepFirstHelp';
+const String faceTimedTestFirstHelpKey = 'FaceTimedTestFirstHelp';
+const String faceTimedTestCompleteKey = 'FaceTimedTestComplete';
+
+// planet
 const String planetTimedTestPrepKey = 'PlanetTimedTestPrep';
 const String planetTimedTestKey = 'PlanetTimedTest';
 const String planetTestActiveKey = 'PlanetTestActive';
@@ -92,6 +100,14 @@ const String airportTimedTestPrepFirstHelpKey = 'AirportTimedTestPrepFirstHelp';
 const String airportTimedTestFirstHelpKey = 'AirportTimedTestFirstHelp';
 const String airportTimedTestCompleteKey = 'AirportTimedTestComplete';
 
+// phonetic alphabet
+const String phoneticAlphabetTimedTestPrepKey = 'PhoneticAlphabetTimedTestPrep';
+const String phoneticAlphabetTimedTestKey = 'PhoneticAlphabetTimedTest';
+const String phoneticAlphabetTestActiveKey = 'PhoneticAlphabetTestActive';
+const String phoneticAlphabetTimedTestPrepFirstHelpKey = 'PhoneticAlphabetTimedTestPrepFirstHelp';
+const String phoneticAlphabetTimedTestFirstHelpKey = 'PhoneticAlphabetTimedTestFirstHelp';
+const String phoneticAlphabetTimedTestCompleteKey = 'PhoneticAlphabetTimedTestComplete';
+
 // PAO
 const String paoKey = 'PAO';
 const String paoEditKey = 'PAOEdit';
@@ -108,6 +124,17 @@ const String paoTimedTestPrepFirstHelpKey = 'PAOTimedTestPrepFirstHelp';
 const String paoTimedTestFirstHelpKey = 'PAOTimedTestFirstHelp';
 const String paoTimedTestCompleteKey = 'PAOTimedTestComplete';
 
+// lesson 3
+const String lesson3Key = 'Lesson3';
+
+// faces difficult
+const String face2TimedTestPrepKey = 'Face2TimedTestPrep';
+const String face2TimedTestKey = 'Face2TimedTest';
+const String face2TestActiveKey = 'Face2TestActive';
+const String face2TimedTestPrepFirstHelpKey = 'Face2TimedTestPrepFirstHelp';
+const String face2TimedTestFirstHelpKey = 'Face2TimedTestFirstHelp';
+const String face2TimedTestCompleteKey = 'Face2TimedTestComplete';
+
 // pi
 const String piTimedTestPrepKey = 'PiTimedTestPrep';
 const String piTimedTestKey = 'PiTimedTest';
@@ -115,14 +142,6 @@ const String piTestActiveKey = 'PiTestActive';
 const String piTimedTestPrepFirstHelpKey = 'PiTimedTestPrepFirstHelp';
 const String piTimedTestFirstHelpKey = 'PiTimedTestFirstHelp';
 const String piTimedTestCompleteKey = 'PiTimedTestComplete';
-
-// phonetic alphabet
-const String phoneticAlphabetTimedTestPrepKey = 'PhoneticAlphabetTimedTestPrep';
-const String phoneticAlphabetTimedTestKey = 'PhoneticAlphabetTimedTest';
-const String phoneticAlphabetTestActiveKey = 'PhoneticAlphabetTestActive';
-const String phoneticAlphabetTimedTestPrepFirstHelpKey = 'PhoneticAlphabetTimedTestPrepFirstHelp';
-const String phoneticAlphabetTimedTestFirstHelpKey = 'PhoneticAlphabetTimedTestFirstHelp';
-const String phoneticAlphabetTimedTestCompleteKey = 'PhoneticAlphabetTimedTestComplete';
 
 // custom memory
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
@@ -135,14 +154,6 @@ const String idCardString = 'ID/Credit Card';
 const String otherString = 'Other';
 const String customMemoryManagerFirstHelpKey = 'CustomMemoryManagerFirstHelp';
 const String customMemoryTestFirstHelpKey = 'CustomMemoryTestFirstHelp';
-
-// faces
-const String faceTimedTestPrepKey = 'FaceTimedTestPrep';
-const String faceTimedTestKey = 'FaceTimedTest';
-const String faceTestActiveKey = 'FaceTestActive';
-const String faceTimedTestPrepFirstHelpKey = 'FaceTimedTestPrepFirstHelp';
-const String faceTimedTestFirstHelpKey = 'FaceTimedTestFirstHelp';
-const String faceTimedTestCompleteKey = 'FaceTimedTestComplete';
 
 // Deck
 const String deckKey = 'Deck';
@@ -168,7 +179,9 @@ var timedTestIcon = Icon(Icons.access_alarm);
 var writtenTestIcon = Icon(Icons.text_format);
 var lessonIcon = Icon(MdiIcons.brain);
 var planetIcon = Icon(MdiIcons.earth);
-var faceIcon = Icon(MdiIcons.faceRecognition);
+var faceIcon = Icon(MdiIcons.face);
+var face2Icon = Icon(MdiIcons.faceRecognition);
+var piIcon = Icon(MdiIcons.pi);
 var airportIcon = Icon(MdiIcons.airplaneTakeoff);
 var phoneticIcon = Icon(MdiIcons.sortAlphabeticalAscending);
 
@@ -269,6 +282,58 @@ List morse = [
   '-••-',
   '-•--',
   '--••',
+];
+
+List<String> jobs = [
+  'Flight Attendant',
+  'Engineer',
+  'Coder',
+  'Nurse',
+  'Lawyer',
+  'Doctor',
+  'Photographer',
+  'Project Manager',
+  'Teacher',
+  'Real Estate Agent',
+  'Chef',
+  'Sales',
+  'Marketing',
+  'CEO',
+  'Athelete',
+  'Journalist',
+  'Dentist',
+  'Receptionist',
+];
+
+List<String> cities = [
+  'New York',
+  'Los Angeles',
+  'Chicago',
+  'Houston',
+  'Phoenix',
+  'Philadelphia',
+  'San Antonio',
+  'San Diego',
+  'Dallas',
+  'San Jose',
+  'Austin',
+  'Jacksonville',
+  'Fort Worth',
+  'Columbus',
+  'San Francisco',
+  'Charlotte',
+  'Seattle',
+  'Denver',
+  'Boston',
+  'Detroit',
+  'Nashville',
+  'Portland',
+  'Las Vegas',
+  'Atlanta',
+  'Miami',
+  'New Oreans',
+  'Honolulu',
+  'St Louis',
 ];
 
 List<String> menNames = [

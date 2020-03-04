@@ -58,6 +58,7 @@ class MainMenuOption extends StatelessWidget {
   final Function() callback;
   final bool complete;
   final GlobalKey<ScaffoldState> globalKey;
+  final bool isCustomTest;
   final prefs = PrefsUpdater();
 
   MainMenuOption({
@@ -71,6 +72,7 @@ class MainMenuOption extends StatelessWidget {
     this.complete,
     this.callback,
     this.globalKey,
+    this.isCustomTest = false,
   });
 
   String generateTimeRemaining() {
@@ -80,6 +82,57 @@ class MainMenuOption extends StatelessWidget {
 
   String getActivityName() {
     return text;
+  }
+
+  cancelActivity() async {
+    switch(activity.name) {
+      case singleDigitTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+        await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+        if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
+        }
+        break;
+      case singleDigitTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+        await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+        if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
+        }
+        break;
+      case alphabetTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(alphabetTimedTestKey, 'review');
+        await prefs.updateActivityVisible(alphabetTimedTestKey, false);
+        await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+        if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
+        }
+        break;
+      case paoTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(paoTimedTestKey, 'review');
+        await prefs.updateActivityVisible(paoTimedTestKey, false);
+        await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+        if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
+        }
+        break;
+      case deckTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(deckTimedTestKey, 'review');
+        await prefs.updateActivityVisible(deckTimedTestKey, false);
+        await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
+        if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
+        }
+        break;
+    }
+    callback();
   }
 
   @override
@@ -218,11 +271,41 @@ class MainMenuOption extends StatelessWidget {
                       color: Color.fromRGBO(0, 0, 0, 0.85),
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(5)),
-                  child: Center(
-                      child: Text(
-                    '${getActivityName()} in ${generateTimeRemaining()}',
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  )),
+                  child: isCustomTest ? Center(
+                        child: Text(
+                          '${getActivityName()} in ${generateTimeRemaining()}',
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                      ) : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Center(
+                        child: Text(
+                          '${getActivityName()} in ${generateTimeRemaining()}',
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: BasicFlatButton(
+                          text: 'Cancel',
+                          onPressed: () => showConfirmDialog(
+                            context: context,
+                            function: cancelActivity,
+                            confirmText: 'Are you sure you want to give up?',
+                            confirmColor: splashColor,
+                          ),
+                          textColor: Colors.white,
+                          color: Color.fromRGBO(0, 0, 0, 0.5),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
         ],
       ),
@@ -291,7 +374,9 @@ class CondensedMainMenuButtons extends StatelessWidget {
                 child: Text(text,
                     style: TextStyle(fontSize: 24), textAlign: TextAlign.start),
               ),
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -394,7 +479,9 @@ class CondensedMainMenuChapterButtons extends StatelessWidget {
                 child: Text(text,
                     style: TextStyle(fontSize: 24), textAlign: TextAlign.start),
               ),
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
