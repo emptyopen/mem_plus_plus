@@ -141,23 +141,26 @@ class _Lesson1ScreenState extends State<Lesson1Screen>
 
   completeLesson() async {
     await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-    showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
-      textColor: Colors.black,
-      backgroundColor: colorChapter1Darker,
-      durationSeconds: 3,
-      isSuper: true,
-    );
     await prefs.updateActivityVisible(planetTimedTestPrepKey, true);
-    showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'Congratulations! You\'ve unlocked the Planet test!',
-      textColor: Colors.black,
-      backgroundColor: colorChapter1Darker,
-      durationSeconds: 3,
-      isSuper: true,
-    );
+    if (await prefs.getBool(lesson1CompleteKey) == null) {
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
+        textColor: Colors.black,
+        backgroundColor: colorChapter1Darker,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the Planet test!',
+        textColor: Colors.black,
+        backgroundColor: colorChapter1Darker,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      await prefs.setBool(lesson1CompleteKey, true);
+    }
     await prefs.updateActivityState(lesson1Key, 'review');
     widget.callback();
     Navigator.pop(context);

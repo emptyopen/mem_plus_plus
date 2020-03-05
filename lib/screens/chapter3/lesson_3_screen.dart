@@ -22,6 +22,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen>
   int slideIndex = 0;
   bool firstTime = false;
   final IndexController indexController = IndexController();
+  bool alreadyComplete = false;
   var prefs = PrefsUpdater();
 
   final List<Widget> headers = [
@@ -103,6 +104,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen>
   @override
   void initState() {
     super.initState();
+    getSharedPrefs();
     animationController = AnimationController(
       duration: const Duration(
         seconds: 5,
@@ -118,37 +120,44 @@ class _Lesson3ScreenState extends State<Lesson3Screen>
     super.dispose();
   }
 
+  getSharedPrefs() async {
+    alreadyComplete = await prefs.getBool(lesson3CompleteKey) != null;
+  }
+
   completeLesson() async {
     await prefs.updateActivityVisible(piTimedTestPrepKey, true);
     await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
     await prefs.updateActivityState(lesson3Key, 'review');
     await prefs.setBool(customMemoryManagerAvailableKey, true);
-    await prefs.setBool(customMemoryManagerFirstHelpKey, true);
-    showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText:
-          'Congratulations! You\'ve unlocked the Custom Memory Manager!',
-      textColor: Colors.white,
-      backgroundColor: Colors.purple,
-      durationSeconds: 3,
-      isSuper: true,
-    );
-    showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'Congratulations! You\'ve unlocked the Pi test!',
-      textColor: Colors.black,
-      backgroundColor: colorChapter3Darker,
-      durationSeconds: 3,
-      isSuper: true,
-    );
-    showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'Congratulations! You\'ve unlocked the Face (hard) test!',
-      textColor: Colors.black,
-      backgroundColor: colorChapter3Darker,
-      durationSeconds: 3,
-      isSuper: true,
-    );
+    if (!alreadyComplete) {
+      await prefs.setBool(customMemoryManagerFirstHelpKey, true);
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText:
+            'Congratulations! You\'ve unlocked the Custom Memory Manager!',
+        textColor: Colors.white,
+        backgroundColor: Colors.purple,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the Face (hard) test!',
+        textColor: Colors.black,
+        backgroundColor: colorChapter3Darker,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the Pi test!',
+        textColor: Colors.black,
+        backgroundColor: colorChapter3Darker,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      await prefs.setBool(lesson3CompleteKey, true);
+    }
     widget.callback();
     Navigator.pop(context);
   }
@@ -228,12 +237,12 @@ class _Lesson3ScreenState extends State<Lesson3Screen>
                               ? Container()
                               : ParallaxContainer(
                                   child: BasicFlatButton(
-                                    text: 'Gimme!',
+                                    text: alreadyComplete ? 'Already got it!' : 'Gimme!',
                                     color: colorChapter3Standard,
                                     splashColor: colorChapter3Darker,
                                     onPressed: completeLesson,
                                     padding: 10,
-                                    fontSize: 28,
+                                    fontSize: alreadyComplete ? 22 : 28,
                                   ),
                                   position: info.position,
                                   translationFactor: 300,

@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/components/animations.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
@@ -18,8 +19,8 @@ class AirportTimedTestPrepScreen extends StatefulWidget {
       _AirportTimedTestPrepScreenState();
 }
 
-class _AirportTimedTestPrepScreenState
-    extends State<AirportTimedTestPrepScreen> {
+class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
+    with SingleTickerProviderStateMixin {
   String confirmationCode = '';
   String airline = '';
   String flightCode = '';
@@ -49,6 +50,7 @@ class _AirportTimedTestPrepScreenState
   String airportFont = 'Quicksand';
   PrefsUpdater prefs = PrefsUpdater();
   bool isLoaded = false;
+  AnimationController animationController;
   Duration testDuration =
       debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 6);
 
@@ -56,11 +58,29 @@ class _AirportTimedTestPrepScreenState
   void initState() {
     super.initState();
     getSharedPrefs();
+    animationController = AnimationController(
+      duration: const Duration(
+        seconds: 5,
+      ),
+      vsync: this,
+    );
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  callback() {
+    animationController.reset();
+    animationController.forward();
   }
 
   getSharedPrefs() async {
     prefs.checkFirstTime(context, airportTimedTestPrepFirstHelpKey,
-        AirportTimedTestPrepScreenHelp());
+        AirportTimedTestPrepScreenHelp(callback: callback));
 
     bool airportTestIsActive = await prefs.getBool(airportTestActiveKey);
     if (airportTestIsActive == null || !airportTestIsActive) {
@@ -83,12 +103,14 @@ class _AirportTimedTestPrepScreenState
 
       departingTerminal = (random.nextInt(5) + 1).toString();
       if (random.nextInt(4) == 0) {
-        departingTerminal += terminalLetters[random.nextInt(terminalLetters.length)];
+        departingTerminal +=
+            terminalLetters[random.nextInt(terminalLetters.length)];
       }
 
       arrivingTerminal = (random.nextInt(5) + 1).toString();
       if (random.nextInt(4) == 0) {
-        arrivingTerminal += terminalLetters[random.nextInt(terminalLetters.length)];
+        arrivingTerminal +=
+            terminalLetters[random.nextInt(terminalLetters.length)];
       }
       await prefs.setString('airportAirline', airline);
       await prefs.setString('airportDepartingTerminal', departingTerminal);
@@ -147,280 +169,321 @@ class _AirportTimedTestPrepScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return AirportTimedTestPrepScreenHelp();
+                      return AirportTimedTestPrepScreenHelp(
+                        callback: callback,
+                      );
                     }));
               },
             ),
           ]),
-      body: isLoaded ? Container(
-        width: screenWidth,
-        child: SingleChildScrollView(
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: 40,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text(
-                    'Thank you for choosing',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+      body: isLoaded
+          ? Container(
+              width: screenWidth,
+              child: SingleChildScrollView(
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 40,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                '-   ${airlines[airline]}   -',
-                style: TextStyle(
-                  fontSize: 28,
-                  color: backgroundHighlightColor,
-                  fontFamily: airportFont,
-                ),
-                textAlign: TextAlign.right,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                  child: Text(
-                    'for your flight tomorrow!',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Text(
+                          'Thank you for choosing',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: backgroundHighlightColor,
+                            fontFamily: airportFont,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text(
-                    'Go to departing terminal:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    SizedBox(
+                      height: 10,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                  child: Text(
-                    departingTerminal,
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    Text(
+                      '-   ${airlines[airline]}   -',
+                      style: TextStyle(
+                        fontSize: 28,
+                        color: backgroundHighlightColor,
+                        fontFamily: airportFont,
+                      ),
+                      textAlign: TextAlign.right,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text(
-                    'Check in with confirmation code:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    SizedBox(
+                      height: 10,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                  child: Text(
-                    confirmationCode,
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                        child: Text(
+                          'for your flight tomorrow!',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: backgroundHighlightColor,
+                            fontFamily: airportFont,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text(
-                    'Leaving at / from gate number:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    SizedBox(
+                      height: 20,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                  child: Text(
-                    '$departureTime / $gateNumber',
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Text(
+                          'Go to departing terminal:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: backgroundHighlightColor,
+                            fontFamily: airportFont,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text(
-                    'Flight code / seat number:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    SizedBox(
+                      height: 5,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                  child: Text(
-                    '$flightCode / $seatNumber',
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    StaggerAnimationSideways(
+                      widget: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                          child: Text(
+                            departingTerminal,
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: backgroundHighlightColor,
+                              fontFamily: airportFont,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ),
+                      controller: animationController,
+                      begin: 0,
+                      end: 0.5,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text(
-                    'Arriving at terminal:',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    SizedBox(
+                      height: 20,
                     ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                  child: Text(
-                    arrivingTerminal,
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: backgroundHighlightColor,
-                      fontFamily: airportFont,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Text(
+                          'Check in with confirmation code:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: backgroundHighlightColor,
+                            fontFamily: airportFont,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.left,
-                  ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    StaggerAnimationSideways(
+                      widget: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                          child: Text(
+                            confirmationCode,
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: backgroundHighlightColor,
+                              fontFamily: airportFont,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ),
+                      controller: animationController,
+                      begin: 0.1,
+                      end: 0.6,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Text(
+                          'Leaving at / from gate number:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: backgroundHighlightColor,
+                            fontFamily: airportFont,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    StaggerAnimationSideways(
+                      widget: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                          child: Text(
+                            '$departureTime / $gateNumber',
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: backgroundHighlightColor,
+                              fontFamily: airportFont,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ),
+                      controller: animationController,
+                      begin: 0.2,
+                      end: 0.7,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Text(
+                          'Flight code / seat number:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: backgroundHighlightColor,
+                            fontFamily: airportFont,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    StaggerAnimationSideways(
+                      widget: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                          child: Text(
+                            '$flightCode / $seatNumber',
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: backgroundHighlightColor,
+                              fontFamily: airportFont,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ),
+                      controller: animationController,
+                      begin: 0.3,
+                      end: 0.8,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Text(
+                          'Arriving at terminal:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: backgroundHighlightColor,
+                            fontFamily: airportFont,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    StaggerAnimationSideways(
+                      widget: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                          child: Text(
+                            arrivingTerminal,
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: backgroundHighlightColor,
+                              fontFamily: airportFont,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ),
+                      controller: animationController,
+                      begin: 0.4,
+                      end: 0.9,
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    BasicFlatButton(
+                      text: 'I\'m ready!',
+                      color: colorChapter2Darker,
+                      splashColor: colorChapter2Standard,
+                      onPressed: () => showConfirmDialog(
+                          context: context,
+                          function: updateStatus,
+                          confirmText:
+                              'Are you sure you\'d like to start this test? The information will no longer be available to view!',
+                          confirmColor: colorChapter2Standard),
+                      fontSize: 30,
+                      padding: 10,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: Text(
+                        '(You\'ll be quizzed on this in six hours!)',
+                        style: TextStyle(
+                            fontSize: 18, color: backgroundHighlightColor),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
-              BasicFlatButton(
-                text: 'I\'m ready!',
-                color: colorChapter2Darker,
-                splashColor: colorChapter2Standard,
-                onPressed: () => showConfirmDialog(
-                    context: context,
-                    function: updateStatus,
-                    confirmText:
-                        'Are you sure you\'d like to start this test? The information will no longer be available to view!',
-                    confirmColor: colorChapter2Standard),
-                fontSize: 30,
-                padding: 10,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                child: Text(
-                  '(You\'ll be quizzed on this in six hours!)',
-                  style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-                ),
-              ),
-              SizedBox(height: 50,),
-            ],
-          ),
-        ),
-      ) : Container(),
+            )
+          : Container(),
     );
   }
 }
 
 class AirportTimedTestPrepScreenHelp extends StatelessWidget {
+
+  final Function callback;
+
+  AirportTimedTestPrepScreenHelp({this.callback});
+
+  helpCallback() {
+    callback();
+  }
+
   final List<String> information = [
     '    You are a rock star! Let\'s get you some more practical experience you can use in '
         'day to day life - travel plans! The next time you go to the airport, don\'t bother with the hassle of '
@@ -432,7 +495,7 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
         'a knife... or maybe it\'s just the seatbelt?\n    It doesn\'t matter, he\'s simply trying to distract us '
         'from his elephant trunk and tusks! How did '
         'we miss that the first time around? An ENORMOUS elephant trunk protruding out of Dexter Morgan\'s face, wow!',
-        '    If you can handle this, you\'re ready for anything :) It might take a while your first time to get '
+    '    If you can handle this, you\'re ready for anything :) It might take a while your first time to get '
         'everything memorized. Trust me, it gets easier and easier to build these scenes and make them wacky. '
         'While it might take you ten or twenty minutes to memorize all this information the first time, once you master the PAO system '
         'and keep practicing, you\'ll eventually be able to fully memorize all of this in just a couple '
@@ -447,6 +510,7 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,
       firstHelpKey: airportTimedTestPrepFirstHelpKey,
+      callback: helpCallback,
     );
   }
 }

@@ -23,10 +23,24 @@ class _EditCardState extends State<EditCard> {
   bool isThreeItems = false;
   Widget leading = Container();
   Dialog dialog;
+  List<dynamic> data;
+  List suggestions = [
+    'hero  /  ball, gumball, marble',
+    'bun  /  baseball bat, pencil',
+    'shoe  /  swan, duck, goose',
+    'tree  /  bra, boxers, bathing suit',
+    'door  /  sailboat, yacht, boat',
+    'hive  /  snake, worm, turtle',
+    'sticks  /  golf club, tennis racket',
+    'heaven  /  boomerang, arrowhead',
+    'gate  /  snowman, reindeer',
+    'wine  /  flagpole, balloon',
+  ];
 
   @override
   void initState() {
     super.initState();
+    getSharedPrefs();
 
     switch (widget.activityKey) {
       case singleDigitKey:
@@ -61,20 +75,54 @@ class _EditCardState extends State<EditCard> {
         isThreeItems = true;
         break;
     }
+  }
+
+  getTitle() {
+    if (widget.activityKey == singleDigitKey) {
+      return Text(
+        'Digit: ${widget.entry.digits}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    } else if (widget.activityKey == alphabetKey) {
+      return Text(
+        'Letter: ${widget.entry.letter}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    } else if (widget.activityKey == paoKey) {
+      return Text(
+        'Digits: ${widget.entry.digits}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    } else if (widget.activityKey == deckKey) {
+      return Text(
+        'Card: ${widget.entry.digitSuit}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    }
+  }
+
+  getSharedPrefs() async {
+    data = await prefs.getSharedPrefs(widget.activityKey);
 
     dialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Container(
-        decoration: BoxDecoration(color: backgroundColor),
-        height: isThreeItems ? 350.0 : 200,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          border: Border.all(color: backgroundHighlightColor),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        height: isThreeItems ? 320.0 : 240,
         width: 300.0,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 30),
+              SizedBox(height: 20),
+              getTitle(),
+              SizedBox(height: 10),
               isThreeItems
                   ? Column(
                       children: <Widget>[
@@ -96,8 +144,8 @@ class _EditCardState extends State<EditCard> {
                             controller: personTextController,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: backgroundSemiHighlightColor)),
+                                  borderSide: BorderSide(
+                                      color: backgroundSemiHighlightColor)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: backgroundHighlightColor)),
@@ -125,8 +173,8 @@ class _EditCardState extends State<EditCard> {
                             controller: actionTextController,
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: backgroundSemiHighlightColor)),
+                                    borderSide: BorderSide(
+                                        color: backgroundSemiHighlightColor)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: backgroundHighlightColor)),
@@ -155,7 +203,8 @@ class _EditCardState extends State<EditCard> {
                   controller: objectTextController,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: backgroundSemiHighlightColor)),
+                          borderSide:
+                              BorderSide(color: backgroundSemiHighlightColor)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: backgroundHighlightColor)),
@@ -165,13 +214,16 @@ class _EditCardState extends State<EditCard> {
                 ),
               ),
               SizedBox(height: 10),
+              widget.activityKey == singleDigitKey ? 
+              Text(suggestions[widget.entry.index], style: TextStyle(color: Colors.grey,),) : Container(),
+              SizedBox(height: 10),
               BasicFlatButton(
                 text: 'Save',
                 fontSize: 18,
                 onPressed: () => saveItem(),
                 color: Colors.grey[200],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
             ],
           ),
         ),
@@ -215,7 +267,6 @@ class _EditCardState extends State<EditCard> {
   }
 
   void saveItem() async {
-    List<dynamic> data = await prefs.getSharedPrefs(widget.activityKey);
     int currIndex = widget.entry.index;
     dynamic updatedEntry = data[currIndex];
 
@@ -238,7 +289,8 @@ class _EditCardState extends State<EditCard> {
       }
       data[currIndex] = updatedEntry;
       await prefs.writeSharedPrefs(widget.activityKey, data);
-    } if (widget.activityKey == deckKey) {
+    }
+    if (widget.activityKey == deckKey) {
       bool resetFamiliarity = false;
       if (personTextController.text != '') {
         updatedEntry.person = personTextController.text.trim();

@@ -52,6 +52,27 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double photoHeight = screenWidth / 0.3397435897; // ratio is 265 x 780 = 0.3397435897
+    //print(photoHeight); // 1211
+    double availableHeight = photoHeight - 414;
+
+    // photo is determined by width
+    // 30 + 34 + 30 + 30 * 8 + 80 = 414
+    // 1211 - 414 = available space 
+    
+    SizedBox sizedBoxHeight2 = SizedBox(height: availableHeight * 0.04);
+    // planets
+    SizedBox sizedBoxHeight3 = SizedBox(height: availableHeight * 0.038);
+    SizedBox sizedBoxHeight4 = SizedBox(height: availableHeight * 0.037);
+    SizedBox sizedBoxHeight5 = SizedBox(height: availableHeight * 0.044);
+    SizedBox sizedBoxHeight6 = SizedBox(height: availableHeight * 0.034);
+    // jupiter
+    SizedBox sizedBoxHeight7 = SizedBox(height: availableHeight * 0.15);
+    SizedBox sizedBoxHeight8 = SizedBox(height: availableHeight * 0.25);
+    SizedBox sizedBoxHeight9 = SizedBox(height: availableHeight * 0.18);
+    SizedBox sizedBoxHeight10 = SizedBox(height: availableHeight * 0.04);
+    SizedBox sizedBoxHeight11 = SizedBox(height: availableHeight * 0.08);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -71,252 +92,141 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
               },
             ),
           ]),
-      body: Container(
-        width: screenWidth,
-        decoration: BoxDecoration(color: backgroundColor),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Stack(
           children: <Widget>[
-            Center(
-                child: Text(
-              'The orders of the planets are: ',
-              style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
-            )),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Text(
-                      '#',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '1',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '2',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '3',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '4',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '5',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '6',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '7',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '8',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Text(
-                      'Planet',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Mercury',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Venus',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Earth',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Mars',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Jupiter',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Saturn',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Uranus',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      'Neptune',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Text(
-                      'Size rank',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '1',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '3',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '4',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '2',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '8',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '7',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '6',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                    Text(
-                      '5',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: backgroundHighlightColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 60,
-            ),
-            BasicFlatButton(
-              text: 'My story is ready!',
-              color: colorChapter1Darker,
-              splashColor: colorChapter1Standard,
-              onPressed: () => showConfirmDialog(
-                  context: context,
-                  function: updateStatus,
-                  confirmText:
-                      'Have you got everything memorized? Got a beautiful, wacky scene with lots of details?',
-                  confirmColor: colorChapter1Standard),
-              fontSize: 26,
-              padding: 10,
-            ),
-            SizedBox(
-              height: 20,
-            ),
             Container(
-              child: Text(
-                '(You\'ll be quizzed on this in thirty minutes!)',
-                style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              width: screenWidth,
+              child: Image(
+                fit: BoxFit.fitWidth,
+                image: AssetImage(
+                  'assets/images/planets.png',
+                ),
               ),
             ),
+            Column(
+              children: <Widget>[
+                SizedBox(height: 30,),
+                // 34?
+                Container(
+                  padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(0, 0, 0, 0.7),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    'The orders of the planets are: ',
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                  ),
+                ),
+                sizedBoxHeight2,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    SizedBox(),
+                    SizedBox(),
+                    SizedBox(),
+                    SizedBox(),
+                    SizedBox(),
+                    SizedBox(),
+                    Column(
+                      children: <Widget>[
+                        PlanetText(text: 'Planet:'),
+                        sizedBoxHeight3,
+                        PlanetText(text: 'Mercury'),
+                        sizedBoxHeight4,
+                        PlanetText(text: 'Venus'),
+                        sizedBoxHeight5,
+                        PlanetText(text: 'Earth'),
+                        sizedBoxHeight6,
+                        PlanetText(text: 'Mars'),
+                        sizedBoxHeight7,
+                        PlanetText(text: 'Jupiter'),
+                        sizedBoxHeight8,
+                        PlanetText(text: 'Saturn'),
+                        sizedBoxHeight9,
+                        PlanetText(text: 'Uranus'),
+                        sizedBoxHeight10,
+                        PlanetText(text: 'Neptune'),
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        PlanetText(text: 'Size:', width: 75,),
+                        sizedBoxHeight3,
+                        PlanetText(text: '1', width: 30,),
+                        sizedBoxHeight4,
+                        PlanetText(text: '3', width: 30,),
+                        sizedBoxHeight5,
+                        PlanetText(text: '4', width: 30,),
+                        sizedBoxHeight6,
+                        PlanetText(text: '2', width: 30,),
+                        sizedBoxHeight7,
+                        PlanetText(text: '8', width: 30,),
+                        sizedBoxHeight8,
+                        PlanetText(text: '7', width: 30,),
+                        sizedBoxHeight9,
+                        PlanetText(text: '6', width: 30,),
+                        sizedBoxHeight10,
+                        PlanetText(text: '5', width: 30,),
+                      ],
+                    ),
+                  ],
+                ),
+                sizedBoxHeight11,
+                BasicFlatButton(
+                  text: 'My story is ready!',
+                  color: colorChapter1Darker,
+                  splashColor: colorChapter1Standard,
+                  onPressed: () => showConfirmDialog(
+                      context: context,
+                      function: updateStatus,
+                      confirmText:
+                          'Have you got everything memorized? Got a beautiful, wacky scene with lots of details?',
+                      confirmColor: colorChapter1Standard),
+                  fontSize: 22,
+                  padding: 10,
+                ),
+                SizedBox(height: 10),
+                Container(
+                  child: Text(
+                    '(You\'ll be quizzed on this in thirty minutes!)',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+                SizedBox(height: 30),
+              ],
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class PlanetText extends StatelessWidget {
+  final String text;
+  final double width;
+
+  PlanetText({this.text, this.width = 110});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(0, 0, 0, 0.5),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+      child: Center(
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
         ),
       ),
     );
@@ -351,7 +261,7 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
         '\n\n    This sounds insane, I know. But I promise, if you start using that creativity inside your brain, something is '
         'going to start clicking. The wild scenes you can create in your head can be insanely memorable, and we '
         'are going to unlock that. ',
-        '    You can see that we can now add other details to the story which could signify ANYTHING! '
+    '    You can see that we can now add other details to the story which could signify ANYTHING! '
         'The weights, colors, sizes, chemical compositions, or distances from the Sun could be converted to sub-scenes and '
         'appended to the scenes with very little additional effort. But we\'re not here to memorize the solar system, we\'re here to change your life!'
         '\n    Baby steps, baby steps. We\'ll peak Everest eventually.'

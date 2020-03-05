@@ -91,7 +91,7 @@ class _SingleDigitTimedTestScreenState
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
             'Incorrect. Keep trying to remember, or give up and try again!',
-        backgroundColor: colorIncorrect,
+        backgroundColor: colorSingleDigitDarkest,
         durationSeconds: 3,
       );
     }
@@ -111,7 +111,7 @@ class _SingleDigitTimedTestScreenState
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
             'The correct answer was: $digit1$digit2$digit3$digit4\nTry the timed test again to unlock the next system.',
-        backgroundColor: colorIncorrect,
+        backgroundColor: colorSingleDigitDarkest,
         durationSeconds: 5);
     Navigator.pop(context);
     widget.callback();

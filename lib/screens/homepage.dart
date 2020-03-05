@@ -10,11 +10,12 @@ import 'package:flutter/services.dart';
 
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
+import 'package:mem_plus_plus/screens/day_or_older_activities_screen.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/screens/settings_screen.dart';
 import 'package:mem_plus_plus/screens/custom_memory/custom_memory_manager_screen.dart';
 import 'package:mem_plus_plus/screens/custom_memory/custom_memory_test_screen.dart';
-import 'package:mem_plus_plus/screens/lessons/welcome_screen.dart';
+import 'package:mem_plus_plus/screens/welcome_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_edit_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_practice_screen.dart';
 import 'package:mem_plus_plus/screens/single_digit/single_digit_multiple_choice_test_screen.dart';
@@ -89,36 +90,33 @@ class MyHomePage extends StatefulWidget {
 // - doomsday test
 // - periodic table
 
-
 // done:
-// BIG: add lesson 2
-// BIG: add lesson 3
-// BIG: add more difficult face test for chapter 3
-// fix planet test
-// hide developer settings (with debugEnabled) except reset all, add confirmation dialog
-// move custom memory to floating button
-// add google doc template link in CSV upload 
-// add ability to cancel running test (in case already forgot)
-// check for missing keys, for each missing one add the default version
+// BIG: made planet test prettier with planets in the background
+// pi test: now allows three tries before resetting number
+// added object suggestions for single digits
+// added animations to airplane test prep
+// now only shows congratulations from lessons first time
+// added image for memory palace lesson
+// ensured planet screen looks good on multiple devices
+// when nothing to do add button to memory manager
+// tasks that are still more than 24 hours away, have separate bar with count of such activities
 
 // next up:
 
 // horizon:
+// TODO: describe amount of pi correct
 // TODO: match ages for face (hard)
 // TODO: divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
-// TODO: tasks that are still more than 24 hours away, have separate bar with count of such activities
-// TODO: only show congratulations from lessons first time
-// TODO: add image for memory palace lesson
-// TODO: BIG: make planet test prettier with planets in the background
 // TODO: handle bad CSV input
+// TODO: add scroll notification when scrollable
 // TODO: for tests like planets, show was what incorrect?
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
 // TODO: implement length limits for inputs (like action/object) - maybe 30 characters
-// TODO: describe amount of pi correct
 // TODO: chapter animation
 // TODO: make default date better (1990 for birthday, etc)
-// TODO: add more basic tests, intersperse between systems (planets, 100 digits of pi, phonetic alphabet, conversion rates, the doomsday rule)
+// TODO: add conversion rates
+// TODO: add doomsday rule
 // TODO: if number of flash cards needed is less than 5?, make it 5 instead of just one
 // TODO: add first aid system
 // TODO: add more faces, make all of them closer to the face
@@ -130,12 +128,12 @@ class MyHomePage extends StatefulWidget {
 // TODO: crashlytics for IOS
 // TODO: add recipe as custom test
 // TODO: look into possible battery drainage from refreshing screen? emulator seems to run hot
-// TODO: make CSV uploader text selectable
 // TODO: add name (first time, and preferences) - use in local notifications
 // TODO: add sounds
 // TODO: add ability for alphabet to contain up to 3 objects
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: make vibrations cooler, and more consistent across app?
+// TODO: make account, backend, retrieve portfolios
 
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
@@ -381,49 +379,160 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> getTodo() {
     List<Widget> mainMenuOptions = [];
+    List<Activity> availableNowActivities = [];
+
+    List<String> names = [];
+    List<DateTime> availableTimes = [];
+    List<IconData> icons = [];
+    List<String> nameKeys = [];
 
     // custom tests
     customMemories.forEach((title, memory) {
       var nextDateTime = DateTime.parse(memory['nextDatetime']);
       var activity = Activity('test', 'todo', true, nextDateTime, false);
       var customIcon = customMemoryIconMap[memory['type']];
-      mainMenuOptions.add(
-        MainMenuOption(
-          activity: activity,
-          icon: Icon(customIcon),
-          text: '${memory['type']}: $title',
-          route: CustomMemoryTestScreen(
-            customMemory: memory,
+      if (activity.visibleAfterTime.compareTo(DateTime.now()) > 0) {
+        availableNowActivities.add(activity);
+      }
+      if (activity.visibleAfterTime.difference(DateTime.now()) >
+          Duration(days: 1)) {
+        names.add(title);
+        availableTimes.add(activity.visibleAfterTime);
+        icons.add(customIcon);
+        nameKeys.add('');
+      } else {
+        mainMenuOptions.add(
+          MainMenuOption(
+            activity: activity,
+            icon: Icon(customIcon),
+            text: '${memory['type']}: $title',
+            route: CustomMemoryTestScreen(
+              customMemory: memory,
+              callback: callback,
+              globalKey: globalKey,
+            ),
             callback: callback,
+            color: Colors.purple[400],
+            splashColor: Colors.purple[500],
+            complete: true,
             globalKey: globalKey,
+            isCustomTest: true,
           ),
-          callback: callback,
-          color: Colors.purple[400],
-          splashColor: Colors.purple[500],
-          complete: true,
-          globalKey: globalKey,
-          isCustomTest: true,
-        ),
-      );
+        );
+      }
     });
 
     // regular activities
     for (String activity in availableActivities) {
       if (activityStates[activity] != null &&
           activityStates[activity].state == 'todo') {
-        mainMenuOptions.add(MainMenuOption(
-          callback: callback,
-          activity: activityStates[activity],
-          text: activityMenuButtonMap[activity].text,
-          route: activityMenuButtonMap[activity].route,
-          icon: activityMenuButtonMap[activity].icon,
-          color: activityMenuButtonMap[activity].color,
-          splashColor: activityMenuButtonMap[activity].splashColor,
-          complete: false,
-          globalKey: globalKey,
-        ));
+        if (activityStates[activity]
+                .visibleAfterTime
+                .compareTo(DateTime.now()) >
+            0) {
+          availableNowActivities.add(activityStates[activity]);
+        }
+        if (activityStates[activity]
+                .visibleAfterTime
+                .difference(DateTime.now()) >
+            Duration(days: 1)) {
+          names.add(activityStates[activity].name);
+          availableTimes.add(activityStates[activity].visibleAfterTime);
+          icons.add(activityMenuButtonMap[activity].icon.icon);
+          nameKeys.add(activityStates[activity].name);
+        } else {
+          mainMenuOptions.add(
+            MainMenuOption(
+              callback: callback,
+              activity: activityStates[activity],
+              text: activityMenuButtonMap[activity].text,
+              route: activityMenuButtonMap[activity].route,
+              icon: activityMenuButtonMap[activity].icon,
+              color: activityMenuButtonMap[activity].color,
+              splashColor: activityMenuButtonMap[activity].splashColor,
+              complete: false,
+              globalKey: globalKey,
+            ),
+          );
+        }
       }
     }
+
+    // if nothing in todo, send button to go to custom memories (use same button/text template as 24hr +)
+    if (mainMenuOptions.length == 0) {
+      mainMenuOptions.add(MainMenuOption(
+        text:
+            'You\'ve reached the end of the line! Add some memories in the memory manager!',
+        isButton: true,
+        color: colorCustomMemoryLighter,
+        function: () => Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) =>
+                CustomMemoryManagerScreen(),
+            transitionsBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child,
+            ) =>
+                SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+          ),
+        ),
+      ));
+    }
+
+    // for all items over 24 hours, consolidate in single button to view
+    if (names.length > 0) {
+      mainMenuOptions.add(MainMenuOption(
+        text:
+            'You have ${names.length} upcoming tests in more than a day! Click here to view.',
+        isButton: true,
+        textColor: Colors.white,
+        color: Color.fromRGBO(0, 0, 0, 0.85),
+        function: () => Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) =>
+                DayOrOlderActivitiesScreen(
+              names: names,
+              availableTimes: availableTimes,
+              icons: icons,
+              nameKeys: nameKeys,
+              callback: callback,
+            ),
+            transitionsBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child,
+            ) =>
+                SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+          ),
+        ),
+      ));
+    }
+
     return mainMenuOptions;
   }
 
@@ -515,21 +624,22 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == lesson1Key && consolidateChapter1) {
         mainMenuOptions.add(
           CondensedMainMenuChapterButtons(
-            text: 'Chapter 1:',
+            text: 'Chapter 1: The Basics',
             standardColor: colorChapter1Lighter,
             darkerColor: colorChapter1Darker,
             lesson: activityStates[lesson1Key],
             lessonRoute: Lesson1Screen(
               callback: callback,
+              globalKey: globalKey,
             ),
-            activity1: activityStates[planetTimedTestPrepKey],
-            activity1Icon: planetIcon,
-            activity1Route: PlanetTimedTestPrepScreen(
+            activity1: activityStates[faceTimedTestPrepKey],
+            activity1Icon: faceIcon,
+            activity1Route: FaceTimedTestPrepScreen(
               callback: callback,
             ),
-            activity2: activityStates[faceTimedTestPrepKey],
-            activity2Icon: faceIcon,
-            activity2Route: FaceTimedTestPrepScreen(
+            activity2: activityStates[planetTimedTestPrepKey],
+            activity2Icon: planetIcon,
+            activity2Route: PlanetTimedTestPrepScreen(
               callback: callback,
             ),
             callback: callback,
@@ -568,12 +678,13 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == lesson2Key && consolidateChapter2) {
         mainMenuOptions.add(
           CondensedMainMenuChapterButtons(
-            text: 'Chapter 2:',
+            text: 'Chapter 2: Memory Palace',
             standardColor: colorChapter2Lighter,
             darkerColor: colorChapter2Darker,
             lesson: activityStates[lesson2Key],
             lessonRoute: Lesson2Screen(
               callback: callback,
+              globalKey: globalKey,
             ),
             activity1: activityStates[phoneticAlphabetTimedTestPrepKey],
             activity1Icon: phoneticIcon,
@@ -621,12 +732,13 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == lesson3Key && consolidateChapter3) {
         mainMenuOptions.add(
           CondensedMainMenuChapterButtons(
-            text: 'Chapter 3:',
+            text: 'Chapter 3: Spaced Repetition',
             standardColor: colorChapter3Lighter,
             darkerColor: colorChapter3Darker,
             lesson: activityStates[lesson3Key],
             lessonRoute: Lesson3Screen(
               callback: callback,
+              globalKey: globalKey,
             ),
             activity1: activityStates[face2TimedTestPrepKey],
             activity1Icon: face2Icon,
@@ -797,13 +909,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                     side: BorderSide(width: 3),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                    padding:
+                                        EdgeInsets.fromLTRB(10, 20, 10, 20),
                                     child: Text(
                                       'Memory manager',
                                       style: TextStyle(
-                                          fontSize: 22,
-                                          color: Colors.white),
-                                          textAlign: TextAlign.center,
+                                          fontSize: 22, color: Colors.white),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),

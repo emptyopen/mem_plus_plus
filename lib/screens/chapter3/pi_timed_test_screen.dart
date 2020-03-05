@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -18,9 +19,11 @@ class PiTimedTestScreen extends StatefulWidget {
 
 class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
   final textController = TextEditingController();
+  int lives = 3;
   String piString =
       '1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679';
   bool showError = false;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -71,14 +74,15 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
           await prefs.updateActivityVisible(deckEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
-            snackBarText:
-                'Congratulations! You\'ve unlocked the Deck system!',
+            snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
             textColor: Colors.white,
             backgroundColor: colorDeckDarker,
             durationSeconds: 3,
             isSuper: true,
           );
         }
+        textController.text = '';
+        Navigator.pop(context);
       } else {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
@@ -87,7 +91,20 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
           backgroundColor: colorChapter3Standard,
           durationSeconds: 2,
         );
+        textController.text = '';
+        Navigator.pop(context);
       }
+    } else if (lives > 1) {
+      lives -= 1;
+      setState(() {});
+      showSnackBar(
+        scaffoldState: _scaffoldKey.currentState,
+        snackBarText:
+            'Incorrect. You have $lives lives left!',
+        textColor: Colors.black,
+        backgroundColor: colorIncorrect,
+        durationSeconds: 3,
+      );
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -97,10 +114,10 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
         backgroundColor: colorIncorrect,
         durationSeconds: 3,
       );
+      Navigator.pop(context);
+      textController.text = '';
     }
-    textController.text = '';
     widget.callback();
-    Navigator.pop(context);
   }
 
   void giveUp() async {
@@ -122,8 +139,10 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: backgroundColor,
+      key: _scaffoldKey,
       appBar: AppBar(
           title: Text('Pi: timed test'),
           backgroundColor: colorChapter3Standard,
@@ -162,8 +181,8 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                 ),
                 SizedBox(height: 25),
                 Container(
-                  width: 250,
-                  height: 300,
+                  width: screenWidth * 0.8,
+                  height: 240,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5))),
                   child: TextFormField(
@@ -188,17 +207,68 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                         hintStyle: TextStyle(fontSize: 18, color: Colors.grey)),
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 showError
-                    ? Text(
-                        'Your guess is not 100 digits!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.red,
-                        ),
+                    ? Column(
+                        children: <Widget>[
+                          Text(
+                            'Your guess is not 100 digits!',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.red,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       )
-                    : SizedBox(height: 16,),
-                SizedBox(height: 30),
+                    : SizedBox(
+                        height: 16,
+                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    lives >= 1
+                        ? Icon(
+                            MdiIcons.heart,
+                            size: 40,
+                            color: Colors.red,
+                          )
+                        : Icon(
+                            MdiIcons.heartOutline,
+                            size: 40,
+                            color: Colors.red,
+                          ),
+                    lives >= 2
+                        ? Icon(
+                            MdiIcons.heart,
+                            size: 40,
+                            color: Colors.red,
+                          )
+                        : Icon(
+                            MdiIcons.heartOutline,
+                            size: 40,
+                            color: Colors.red,
+                          ),
+                    lives >= 3
+                        ? Icon(
+                            MdiIcons.heart,
+                            size: 40,
+                            color: Colors.red,
+                          )
+                        : Icon(
+                            MdiIcons.heartOutline,
+                            size: 40,
+                            color: Colors.red,
+                          ),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Text('$lives lives remaining!', style: TextStyle(fontSize: 20, color: backgroundHighlightColor),),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

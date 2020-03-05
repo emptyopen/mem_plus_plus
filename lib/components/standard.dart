@@ -59,6 +59,9 @@ class MainMenuOption extends StatelessWidget {
   final bool complete;
   final GlobalKey<ScaffoldState> globalKey;
   final bool isCustomTest;
+  final bool isButton;
+  final function;
+  final Color textColor;
   final prefs = PrefsUpdater();
 
   MainMenuOption({
@@ -73,6 +76,9 @@ class MainMenuOption extends StatelessWidget {
     this.callback,
     this.globalKey,
     this.isCustomTest = false,
+    this.isButton = false,
+    this.textColor = Colors.black,
+    this.function,
   });
 
   String generateTimeRemaining() {
@@ -85,7 +91,7 @@ class MainMenuOption extends StatelessWidget {
   }
 
   cancelActivity() async {
-    switch(activity.name) {
+    switch (activity.name) {
       case singleDigitTimedTestKey:
         HapticFeedback.heavyImpact();
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
@@ -138,6 +144,38 @@ class MainMenuOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
+    if (isButton) {
+      return Container(
+        height: 50,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              width: screenWidth * 0.85,
+              height: 46,
+              decoration: BoxDecoration(
+                  color: color,
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(5)),
+              child: Container(
+                height: 46,
+                child: FlatButton(
+                  onPressed: () {
+                    function();
+                  },
+                  child: Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: (TextStyle(color: textColor)),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       height: 50,
       width: screenWidth * 0.85,
@@ -271,41 +309,45 @@ class MainMenuOption extends StatelessWidget {
                       color: Color.fromRGBO(0, 0, 0, 0.85),
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(5)),
-                  child: isCustomTest ? Center(
-                        child: Text(
-                          '${getActivityName()} in ${generateTimeRemaining()}',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ) : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Center(
-                        child: Text(
-                          '${getActivityName()} in ${generateTimeRemaining()}',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ),
-                      Container(
-                        height: 30,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: BasicFlatButton(
-                          text: 'Cancel',
-                          onPressed: () => showConfirmDialog(
-                            context: context,
-                            function: cancelActivity,
-                            confirmText: 'Are you sure you want to give up?',
-                            confirmColor: splashColor,
+                  child: isCustomTest
+                      ? Center(
+                          child: Text(
+                            '${getActivityName()} in ${generateTimeRemaining()}',
+                            style: TextStyle(color: Colors.white, fontSize: 14),
                           ),
-                          textColor: Colors.white,
-                          color: Color.fromRGBO(0, 0, 0, 0.5),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Center(
+                              child: Text(
+                                '${getActivityName()} in ${generateTimeRemaining()}',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                            ),
+                            Container(
+                              height: 30,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: BasicFlatButton(
+                                text: 'Cancel',
+                                onPressed: () => showConfirmDialog(
+                                  context: context,
+                                  function: cancelActivity,
+                                  confirmText:
+                                      'Are you sure you want to give up?',
+                                  confirmColor: splashColor,
+                                ),
+                                textColor: Colors.white,
+                                color: Color.fromRGBO(0, 0, 0, 0.5),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
         ],
       ),

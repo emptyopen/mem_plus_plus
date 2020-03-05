@@ -10,13 +10,16 @@ class HelpScreen extends StatefulWidget {
   final Color buttonColor;
   final Color buttonSplashColor;
   final String firstHelpKey;
+  final Function callback;
 
-  HelpScreen(
-      {this.title = '',
-      this.information,
-      this.buttonColor,
-      this.buttonSplashColor,
-      this.firstHelpKey});
+  HelpScreen({
+    this.title = '',
+    this.information,
+    this.buttonColor,
+    this.buttonSplashColor,
+    this.firstHelpKey,
+    this.callback,
+  });
 
   @override
   _HelpScreenState createState() => _HelpScreenState();
@@ -139,13 +142,16 @@ class _HelpScreenState extends State<HelpScreen> {
                   ),
                 ),
               ),
-              widget.information.length > 1 ? Padding(
-                padding: const EdgeInsets.all(13),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: getSlideCircles(widget.information.length, slideIndex, widget.buttonColor),
-                ),
-              ) : Container(),
+              widget.information.length > 1
+                  ? Padding(
+                      padding: const EdgeInsets.all(13),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: getSlideCircles(widget.information.length,
+                            slideIndex, widget.buttonColor),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         );
@@ -182,6 +188,7 @@ class _HelpScreenState extends State<HelpScreen> {
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,
                           firstHelpKey: widget.firstHelpKey,
+                          callback: widget.callback,
                         )
                       : Container(),
                   firstHelp
@@ -190,6 +197,7 @@ class _HelpScreenState extends State<HelpScreen> {
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,
                           firstHelpKey: widget.firstHelpKey,
+                          callback: widget.callback,
                         )
                 ],
               ),
@@ -204,8 +212,9 @@ class HelpOKButton extends StatelessWidget {
   final Color buttonSplashColor;
   final String firstHelpKey;
   final prefs = PrefsUpdater();
+  final Function callback;
 
-  HelpOKButton({this.buttonColor, this.buttonSplashColor, this.firstHelpKey});
+  HelpOKButton({this.buttonColor, this.buttonSplashColor, this.firstHelpKey, this.callback});
 
   updateFirstHelp() async {
     await prefs.setBool(firstHelpKey, false);
@@ -215,6 +224,9 @@ class HelpOKButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasicFlatButton(
       onPressed: () {
+        if (callback != null) {
+          callback();
+        }
         updateFirstHelp();
         Navigator.pop(context);
       },

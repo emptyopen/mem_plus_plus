@@ -104,7 +104,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
-        backgroundColor: colorIncorrect,
+        backgroundColor: colorPAODarkest,
         durationSeconds: 3,
       );
     }
@@ -126,7 +126,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,
       snackBarText: 'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
-      backgroundColor: colorIncorrect,
+      backgroundColor: colorPAODarkest,
       durationSeconds: 12
     );
     Navigator.pop(context);

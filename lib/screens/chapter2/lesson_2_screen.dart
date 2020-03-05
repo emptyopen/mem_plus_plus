@@ -51,7 +51,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
       textAlign: TextAlign.center,
     ),
     Text(
-      'Sample location image placeholder',
+      'Sample apartment',
       style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
@@ -145,9 +145,27 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
       'then the TV. The we go to the bedroom which contains our comfy bed, and finally the toilet in the bathroom!',
       style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
     ),
-    Text(
-      '    TBD',
-      style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+    Column(
+      children: <Widget>[
+        Stack(
+          children: <Widget>[
+            Container(
+              child: Image(
+                fit: BoxFit.fitWidth,
+                image: AssetImage(
+                  'assets/images/room.png',
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 30,),
+        Text(
+          '    That\'s a pretty horrendous drawing by Matt! Is he trying to pull that blob off as a bed? It\'s not '
+          'every day you see something this bad, haha. ',
+          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+        ),
+      ],
     ),
     Column(
       children: <Widget>[
@@ -159,7 +177,9 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
           '    2 gallons of milk / front door:',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
           '    We have to attach 2 gallons of milk to the front door. The ways we can do this are endless! I '
           'think if we just remember the number 2, we\'ll probably be able to figure out we were thinking about '
@@ -176,18 +196,22 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
           '    a bunch of toilet paper / fridge:',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
           '    Now we\'re at the fridge. We open the door, and toilet paper comes exploding outwards! Who put this much '
-          'toilet paper in the fridge, and why? And - oh GROSS! The toilet paper is USED! Briefly imagine the stench! You\'re '
-          'not forgetting that one!',
+          'toilet paper in the fridge? It was probably the swan. And - oh GROSS! '
+          'The toilet paper is USED! Briefly imagine the stench! You\'re not forgetting that one!',
           style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
         ),
         Text(
           '\n    4 lbs of chicken breast / sink:',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
           '    Onto the sink! The chickens are all lounging in your sink like it\'s a jacuuzi! They sure are making '
           'themselves feel at home, but that\'s fine. You are an impeccable host.\n    How many chickens did we '
@@ -203,7 +227,9 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
           '    cilantro / sofa:',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
           '    Cilantro in the sofa cracks! Overflowing with cilantro. You sit down on the sofa and your pants turn green. '
           'Kick your legs up on the ottoman and inhale the pungency of cilantro.',
@@ -213,7 +239,9 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
           '\n    dish soap / TV:',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
           '    Every time you change the channel, the TV squirts dish soap at you! Rude! And it\'s squirting wayyyy too much.',
           style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
@@ -222,7 +250,9 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
           '\n    birthday cake / toilet:',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Text(
           '    And finally we walk into the bathroom and what do we see? An edible toilet! Truly amazing, '
           'red velvet on the inside! Really delicious. Happy birthday Margaret!',
@@ -258,23 +288,26 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
 
   completeLesson() async {
     await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
-    showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'Congratulations! You\'ve unlocked the Airport test!',
-      textColor: Colors.black,
-      backgroundColor: colorChapter2Darker,
-      durationSeconds: 3,
-      isSuper: true,
-    );
     await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
-    showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'Congratulations! You\'ve unlocked the NATO/Morse test!',
-      textColor: Colors.black,
-      backgroundColor: colorChapter2Darker,
-      durationSeconds: 3,
-      isSuper: true,
-    );
+    if (await prefs.getBool(lesson1CompleteKey) == null) {
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the NATO/Morse test!',
+        textColor: Colors.black,
+        backgroundColor: colorChapter2Darker,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You\'ve unlocked the Airport test!',
+        textColor: Colors.black,
+        backgroundColor: colorChapter2Darker,
+        durationSeconds: 3,
+        isSuper: true,
+      );
+      await prefs.setBool(lesson2CompleteKey, true);
+    }
     await prefs.updateActivityState(lesson2Key, 'review');
     widget.callback();
     Navigator.pop(context);

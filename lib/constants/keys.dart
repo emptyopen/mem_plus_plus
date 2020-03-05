@@ -55,6 +55,7 @@ const String singleDigitTimedTestCompleteKey = 'SingleDigitTimedTestComplete';
 
 // lesson 1
 const String lesson1Key = 'Lesson1';
+const String lesson1CompleteKey = 'Lesson1Complete';
 
 // faces easy
 const String faceTimedTestPrepKey = 'FaceTimedTestPrep';
@@ -91,6 +92,7 @@ const String alphabetTimedTestCompleteKey = 'AlphabetTimedTestComplete';
 
 // lesson 2
 const String lesson2Key = 'Lesson2';
+const String lesson2CompleteKey = 'Lesson2Complete';
 
 // airport
 const String airportTimedTestPrepKey = 'AirportTimedTestPrep';
@@ -126,6 +128,7 @@ const String paoTimedTestCompleteKey = 'PAOTimedTestComplete';
 
 // lesson 3
 const String lesson3Key = 'Lesson3';
+const String lesson3CompleteKey = 'Lesson3Complete';
 
 // faces difficult
 const String face2TimedTestPrepKey = 'Face2TimedTestPrep';
