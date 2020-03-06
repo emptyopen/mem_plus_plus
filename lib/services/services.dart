@@ -56,6 +56,8 @@ class PrefsUpdater {
             json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
         break;
       case singleDigitKey:
+        List<SingleDigitData> thing = object;
+        print('SERVICES: writing ${thing[2].object} | ${thing[3].object}');
         prefs.setString(key, json.encode(object));
         break;
       case alphabetKey:

@@ -33,6 +33,17 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     getSharedPrefs();
   }
 
+  Future<Null> getSharedPrefs() async {
+    prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
+    if (await prefs.getString(paoKey) == null) {
+      paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
+      await prefs.setString(paoKey, json.encode(paoData));
+    } else {
+      paoData = await prefs.getSharedPrefs(paoKey);
+    }
+    setState(() {});
+  }
+
   callback(newPaoData) async {
     setState(() {
       paoData = newPaoData;
@@ -68,17 +79,6 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
       _scaffoldKey.currentState.showSnackBar(snackBar);
       widget.callback();
     }
-  }
-
-  Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
-    if (await prefs.getString(paoKey) == null) {
-      paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
-      await prefs.setString(paoKey, json.encode(paoData));
-    } else {
-      paoData = await prefs.getSharedPrefs(paoKey);
-    }
-    setState(() {});
   }
 
   List<EditCard> getPAOEditCards() {

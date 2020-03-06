@@ -34,10 +34,12 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     prefs.checkFirstTime(
         context, singleDigitEditFirstHelpKey, SingleDigitEditScreenHelp());
     if (await prefs.getString(singleDigitKey) == null) {
+      print('pulling from default');
       singleDigitData =
           debugModeEnabled ? defaultSingleDigitData3 : defaultSingleDigitData1;
       await prefs.setString(singleDigitKey, json.encode(singleDigitData));
     } else {
+      print('already have, updating singleDigitdata in sharedprefs');
       singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     }
     setState(() {});
@@ -45,8 +47,11 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
 
   callback(newSingleDigitData) async {
     // check if all data is complete
+    print('running callback with new data');
+    await prefs.writeSharedPrefs(singleDigitKey, newSingleDigitData);
     setState(() {
       singleDigitData = newSingleDigitData;
+      print('after update: ${singleDigitData.map((entry) {return entry.object;})}');
     });
     bool entriesComplete = true;
     for (int i = 0; i < singleDigitData.length; i++) {
@@ -75,11 +80,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     if (singleDigitData != null) {
       for (int i = 0; i < singleDigitData.length; i++) {
         EditCard singleDigitEditCard = EditCard(
-          entry: SingleDigitData(
-              singleDigitData[i].index,
-              singleDigitData[i].digits,
-              singleDigitData[i].object,
-              singleDigitData[i].familiarity),
+          entry: singleDigitData[i],
           callback: callback,
           activityKey: singleDigitKey,
         );
@@ -92,7 +93,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       key: _scaffoldKey,
       appBar: AppBar(
           title: Text('Single digit: view/edit'),
@@ -114,16 +115,16 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
       body: Container(
         decoration: BoxDecoration(color: backgroundColor),
         child: Center(
-            child: ListView(
-          children: getSingleDigitEditCards(),
-        )),
+          child: ListView(
+            children: getSingleDigitEditCards(),
+          ),
+        ),
       ),
     );
   }
 }
 
 class SingleDigitEditScreenHelp extends StatelessWidget {
-
   final information = [
     '    Welcome to your first system, the single digit system! '
         'The idea behind this system is to link the nine digits (0-9) to different objects. \n'

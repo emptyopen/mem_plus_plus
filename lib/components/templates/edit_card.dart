@@ -77,30 +77,6 @@ class _EditCardState extends State<EditCard> {
     }
   }
 
-  getTitle() {
-    if (widget.activityKey == singleDigitKey) {
-      return Text(
-        'Digit: ${widget.entry.digits}',
-        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
-      );
-    } else if (widget.activityKey == alphabetKey) {
-      return Text(
-        'Letter: ${widget.entry.letter}',
-        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
-      );
-    } else if (widget.activityKey == paoKey) {
-      return Text(
-        'Digits: ${widget.entry.digits}',
-        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
-      );
-    } else if (widget.activityKey == deckKey) {
-      return Text(
-        'Card: ${widget.entry.digitSuit}',
-        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
-      );
-    }
-  }
-
   getSharedPrefs() async {
     data = await prefs.getSharedPrefs(widget.activityKey);
 
@@ -231,6 +207,30 @@ class _EditCardState extends State<EditCard> {
     );
   }
 
+  getTitle() {
+    if (widget.activityKey == singleDigitKey) {
+      return Text(
+        'Digit: ${widget.entry.digits}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    } else if (widget.activityKey == alphabetKey) {
+      return Text(
+        'Letter: ${widget.entry.letter}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    } else if (widget.activityKey == paoKey) {
+      return Text(
+        'Digits: ${widget.entry.digits}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    } else if (widget.activityKey == deckKey) {
+      return Text(
+        'Card: ${widget.entry.digitSuit}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
+    }
+  }
+
   @override
   void dispose() {
     personTextController.dispose();
@@ -267,6 +267,7 @@ class _EditCardState extends State<EditCard> {
   }
 
   void saveItem() async {
+    data = await prefs.getSharedPrefs(widget.activityKey);
     int currIndex = widget.entry.index;
     dynamic updatedEntry = data[currIndex];
 
@@ -289,8 +290,7 @@ class _EditCardState extends State<EditCard> {
       }
       data[currIndex] = updatedEntry;
       await prefs.writeSharedPrefs(widget.activityKey, data);
-    }
-    if (widget.activityKey == deckKey) {
+    } else if (widget.activityKey == deckKey) {
       bool resetFamiliarity = false;
       if (personTextController.text != '') {
         updatedEntry.person = personTextController.text.trim();

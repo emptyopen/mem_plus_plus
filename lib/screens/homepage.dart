@@ -91,30 +91,21 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
-// BIG: made planet test prettier with planets in the background
-// pi test: now allows three tries before resetting number
-// added object suggestions for single digits
-// added animations to airplane test prep
-// now only shows congratulations from lessons first time
-// added image for memory palace lesson
-// ensured planet screen looks good on multiple devices
-// when nothing to do add button to memory manager
-// tasks that are still more than 24 hours away, have separate bar with count of such activities
 
 // next up:
-
-// horizon:
+// TODO: add suggestions for alphabet
 // TODO: describe amount of pi correct
-// TODO: match ages for face (hard)
-// TODO: divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
-// TODO: handle bad CSV input
-// TODO: add scroll notification when scrollable
-// TODO: for tests like planets, show was what incorrect?
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
-// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
-// TODO: chapter animation
 // TODO: make default date better (1990 for birthday, etc)
+// TODO: handle bad CSV input
+// TODO: chapter animation
+
+// horizon:
+// TODO: match ages for face (hard)
+// TODO: divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
+// TODO: add scroll notification when scrollable
+// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
 // TODO: add conversion rates
 // TODO: add doomsday rule
 // TODO: if number of flash cards needed is less than 5?, make it 5 instead of just one
