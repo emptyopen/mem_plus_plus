@@ -91,20 +91,23 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
+// add suggestions for alphabet
+// complete second face test
+
+// TODO: make default date better (1990 for birthday, etc)
+// TODO: cancel airport failed (cancels in general aren't doing well)
 
 // next up:
-// TODO: add suggestions for alphabet
+// TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
 // TODO: describe amount of pi correct
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
-// TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
-// TODO: make default date better (1990 for birthday, etc)
 // TODO: handle bad CSV input
-// TODO: chapter animation
 
 // horizon:
+// TODO: chapter animation
+// TODO: add scroll notification when scrollable: https://medium.com/@diegoveloper/flutter-lets-know-the-scrollcontroller-and-scrollnotification-652b2685a4ac
 // TODO: match ages for face (hard)
 // TODO: divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
-// TODO: add scroll notification when scrollable
 // TODO: implement length limits for inputs (like action/object) - maybe 30 characters
 // TODO: add conversion rates
 // TODO: add doomsday rule
@@ -315,6 +318,7 @@ class _MyHomePageState extends State<MyHomePage> {
     initializeNotificationsScheduler();
     //print(activityStates);
     print(availableActivities);
+    print(await prefs.getActivityVisible(lesson3Key));
   }
 
   checkFirstTime() async {
@@ -453,7 +457,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (mainMenuOptions.length == 0) {
       mainMenuOptions.add(MainMenuOption(
         text:
-            'You\'ve reached the end of the line! Add some memories in the memory manager!',
+            'You\'ve got nothing to do! Add some memories in the memory manager!',
         isButton: true,
         color: colorCustomMemoryLighter,
         function: () => Navigator.push(
@@ -561,7 +565,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if ((activity == lesson3Key ||
                 activity == piTimedTestPrepKey ||
                 activity == face2TimedTestPrepKey) &&
-            consolidateChapter2) {
+            consolidateChapter3) {
           consolidated = true;
         }
         if (activity.contains(deckKey) && consolidateDeck) {
@@ -586,7 +590,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == singleDigitEditKey && consolidateSingleDigit) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'Single Digit System:',
+            text: 'Single Digit System',
             backgroundColor: colorSingleDigitStandard,
             buttonColor: colorSingleDigitDarker,
             buttonSplashColor: colorSingleDigitDarkest,
@@ -640,7 +644,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == alphabetEditKey && consolidateAlphabet) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'Alphabet System:',
+            text: 'Alphabet System',
             backgroundColor: colorAlphabetStandard,
             buttonColor: colorAlphabetDarker,
             buttonSplashColor: colorAlphabetDarkest,
@@ -694,7 +698,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == paoEditKey && consolidatePAO) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'PAO System:',
+            text: 'PAO System',
             backgroundColor: colorPAOStandard,
             buttonColor: colorPAODarker,
             buttonSplashColor: colorPAODarkest,
@@ -748,7 +752,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (activity == deckEditKey && consolidateDeck) {
         mainMenuOptions.add(
           CondensedMainMenuButtons(
-            text: 'Deck System:',
+            text: 'Deck System',
             backgroundColor: colorDeckStandard,
             buttonColor: colorDeckDarker,
             buttonSplashColor: colorDeckDarkest,

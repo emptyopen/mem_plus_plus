@@ -198,41 +198,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       height: 30,
                     ),
                     Text(
-                      '    Matt has a cute dog called Aki. They live in LA and have a good time together. '
-                      '\n\n    The ios store has informed Matt that he cannot say that he will provide '
-                      'any extra digital content as a result of donations, but they are appreciated!',
+                      '    Matt has a cute dog called Aki. They live in LA and have a good time together. ',
+                      // '\n\n    The ios store has informed Matt that he cannot say that he will provide '
+                      // 'any extra digital content as a result of donations, but they are appreciated!',
                       style: TextStyle(color: backgroundHighlightColor),
                     ),
                     SizedBox(
                       height: 30,
                     ),
-                    Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: backgroundHighlightColor),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.yellow[200],
-                            Colors.yellow[700],
-                          ], // whitish to gray
-                          tileMode: TileMode
-                              .repeated, // repeats the gradient over the canvas
-                        ),
-                      ),
-                      child: Center(
-                        child: InkWell(
-                          child: Text(
-                            'Give Matt beer!',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onTap: () => launch('http://paypal.me/takaomatt'),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   height: 40,
+                    //   width: 140,
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(5),
+                    //     border: Border.all(color: backgroundHighlightColor),
+                    //     gradient: LinearGradient(
+                    //       begin: Alignment.topLeft,
+                    //       end: Alignment.bottomRight,
+                    //       colors: [
+                    //         Colors.yellow[200],
+                    //         Colors.yellow[700],
+                    //       ], // whitish to gray
+                    //       tileMode: TileMode
+                    //           .repeated, // repeats the gradient over the canvas
+                    //     ),
+                    //   ),
+                    //   child: Center(
+                    //     child: InkWell(
+                    //       child: Text(
+                    //         'Give Matt beer!',
+                    //         style: TextStyle(color: Colors.black),
+                    //       ),
+                    //       onTap: () => launch('http://paypal.me/takaomatt'),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

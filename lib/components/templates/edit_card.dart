@@ -24,18 +24,6 @@ class _EditCardState extends State<EditCard> {
   Widget leading = Container();
   Dialog dialog;
   List<dynamic> data;
-  List suggestions = [
-    'hero  /  ball, gumball, marble',
-    'bun  /  baseball bat, pencil',
-    'shoe  /  swan, duck, goose',
-    'tree  /  bra, boxers, bathing suit',
-    'door  /  sailboat, yacht, boat',
-    'hive  /  snake, worm, turtle',
-    'sticks  /  golf club, tennis racket',
-    'heaven  /  boomerang, arrowhead',
-    'gate  /  snowman, reindeer',
-    'wine  /  flagpole, balloon',
-  ];
 
   @override
   void initState() {
@@ -191,7 +179,9 @@ class _EditCardState extends State<EditCard> {
               ),
               SizedBox(height: 10),
               widget.activityKey == singleDigitKey ? 
-              Text(suggestions[widget.entry.index], style: TextStyle(color: Colors.grey,),) : Container(),
+              Text(singleDigitSuggestions[widget.entry.index], style: TextStyle(color: Colors.grey,),) : Container(),
+              widget.activityKey == alphabetKey ? 
+              Text(alphabetSuggestions[widget.entry.index], style: TextStyle(color: Colors.grey,),) : Container(),
               SizedBox(height: 10),
               BasicFlatButton(
                 text: 'Save',

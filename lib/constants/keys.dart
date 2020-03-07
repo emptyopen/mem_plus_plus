@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 const String usernameKey = 'Username';
 
@@ -334,9 +334,51 @@ List<String> cities = [
   'Las Vegas',
   'Atlanta',
   'Miami',
-  'New Oreans',
+  'New Orleans',
   'Honolulu',
   'St Louis',
+];
+
+List singleDigitSuggestions = [
+  'hero  /  ball, gumball, marble',
+  'bun  /  baseball bat, pencil',
+  'shoe  /  swan, duck, goose',
+  'tree  /  bra, boxers, bathing suit',
+  'door  /  sailboat, yacht, boat',
+  'hive  /  snake, worm, turtle',
+  'sticks  /  golf club, tennis racket',
+  'heaven  /  boomerang, arrowhead',
+  'gate  /  snowman, reindeer',
+  'wine  /  flagpole, balloon',
+];
+
+List alphabetSuggestions = [
+  'apple, archer, axe',
+  'bicycle, bank, barbarian',
+  'cat, chimpanzee, Christmas',
+  'dinosaur, dealership, dock',
+  'elephant, eclipse, egg',
+  'flamingo, fang, fedora',
+  'godzilla, ghost, globe',
+  'honey, heaven, highway',
+  'igloo, iguana, iceberg',
+  'jar, jaguar, Jamaica',
+  'kangaroo, keg, ketchup',
+  'lava, laser, leg',
+  'mountain, magazine, mailbox',
+  'ninja, nachos, noodle',
+  'ocarina, octagon, onion',
+  'piano, peacock, pub',
+  'quicksand, quadriceps, quail',
+  'root, rattle, railroad',
+  'skeleton, sack, saw',
+  'tattoo, tampon, tablet',
+  'umbrella, ukulele, university',
+  'violin, vacuum, valley',
+  'wagon, wand, waterfall',
+  'xylophone, x-ray, xerox',
+  'yak, yardstick, yurt',
+  'zipper, zoo, zapper',
 ];
 
 List<String> menNames = [

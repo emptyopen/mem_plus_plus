@@ -49,18 +49,18 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       showError = false;
     });
     HapticFeedback.heavyImpact();
-    if (textController.text.length != 100) {
+    if (textController.text.replaceAll(' ', '').length != 100) {
       setState(() {
         showError = true;
       });
       return;
     }
-    if (textController.text.trim() == '$piString') {
+    if (textController.text.replaceAll(' ', '') == '$piString') {
       await prefs.updateActivityVisible(piTimedTestKey, false);
       await prefs.updateActivityVisible(piTimedTestPrepKey, true);
-      if (await prefs.getBool(piTimedTestKey) == null) {
+      if (await prefs.getBool(piTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(piTimedTestKey, 'review');
-        await prefs.setBool(piTimedTestKey, true);
+        await prefs.setBool(piTimedTestCompleteKey, true);
         if (await prefs.getBool(face2TimedTestCompleteKey) == null) {
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
@@ -173,16 +173,16 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                 ),
                 Container(
                   child: Text(
-                    'The first 100 digits of Pi after \'3.\' are:',
+                    'The first 100 digits of Pi \nafter \'3.\' are:',
                     style: TextStyle(
-                        fontSize: 30, color: backgroundHighlightColor),
+                        fontSize: 26, color: backgroundHighlightColor),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(height: 25),
                 Container(
                   width: screenWidth * 0.8,
-                  height: 240,
+                  height: 260,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5))),
                   child: TextFormField(
@@ -312,7 +312,8 @@ class PiTimedTestScreenHelp extends StatelessWidget {
       title: 'Pi Timed Test',
       information: [
         '    Time to recall your story! If you recall this correctly, you\'ll '
-            'unlock the next system! Good luck!'
+            'unlock the next system! Good luck!\n\n    You can leave the spaces in if it\'s easier '
+            'for you to type it out like that!'
       ],
       buttonColor: colorChapter3Standard,
       buttonSplashColor: colorChapter3Darker,

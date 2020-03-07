@@ -99,16 +99,20 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
       seatNumber = random.nextInt(65).toString() +
           seatingLetters[random.nextInt(seatingLetters.length)];
 
-      gateNumber = random.nextInt(60).toString();
+
+      gateNumber = random.nextInt(20).toString();
+      if (random.nextInt(5) == 0) { 
+        gateNumber = random.nextInt(60).toString();
+      }
 
       departingTerminal = (random.nextInt(5) + 1).toString();
-      if (random.nextInt(4) == 0) {
+      if (random.nextInt(5) == 0) {
         departingTerminal +=
             terminalLetters[random.nextInt(terminalLetters.length)];
       }
 
       arrivingTerminal = (random.nextInt(5) + 1).toString();
-      if (random.nextInt(4) == 0) {
+      if (random.nextInt(5) == 0) {
         arrivingTerminal +=
             terminalLetters[random.nextInt(terminalLetters.length)];
       }
@@ -497,7 +501,7 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
         'we miss that the first time around? An ENORMOUS elephant trunk protruding out of Dexter Morgan\'s face, wow!',
     '    If you can handle this, you\'re ready for anything :) It might take a while your first time to get '
         'everything memorized. Trust me, it gets easier and easier to build these scenes and make them wacky. '
-        'While it might take you ten or twenty minutes to memorize all this information the first time, once you master the PAO system '
+        '\n    While it might take you ten or twenty minutes to memorize all this information the first time, once you master the PAO system '
         'and keep practicing, you\'ll eventually be able to fully memorize all of this in just a couple '
         'minutes or less!',
   ];

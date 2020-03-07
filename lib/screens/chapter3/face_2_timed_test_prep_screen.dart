@@ -78,8 +78,8 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
           String lastName = lastNames[random.nextInt(menNames.length)];
           name2 = '$firstName $lastName';
         }
-        age1 = (random.nextInt(30) + 18).toString();
-        age2 = (random.nextInt(30) + 18).toString();
+        age1 = (random.nextInt(20) + 18).toString();
+        age2 = (random.nextInt(20) + 18).toString();
         job1 = jobs[random.nextInt(jobs.length)];
         job2 = jobs[random.nextInt(jobs.length)];
         hometown1 = cities[random.nextInt(cities.length)];
@@ -154,7 +154,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                 SizedBox(
                   height: 60,
                 ),
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(
@@ -206,7 +206,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                       ],
                     ),
                     SizedBox(
-                      width: 30,
+                      height: 40,
                     ),
                     Column(
                       children: <Widget>[
@@ -278,10 +278,11 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                   height: 20,
                 ),
                 Text(
-                  '(You\'ll be quizzed on this in thirty minutes!)',
+                  '(You\'ll be quizzed on this in 3 hours!)',
                   style:
                       TextStyle(fontSize: 18, color: backgroundHighlightColor),
                 ),
+                SizedBox(height: 40,),
               ],
             ), 
           ),

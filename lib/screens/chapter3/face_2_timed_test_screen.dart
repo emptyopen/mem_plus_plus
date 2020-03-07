@@ -72,25 +72,34 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     job2 = await prefs.getString('face2Job2');
     hometown2 = await prefs.getString('face2Hometown2');
     isLoaded = true;
-    print('real answer: $name1 $name2');
+    print(
+        'real answer: $name1 $age1 $job1 $hometown1 || $name2 $age2 $job2 $hometown2');
     setState(() {});
   }
 
   void checkAnswer() async {
     HapticFeedback.heavyImpact();
     Levenshtein d = new Levenshtein();
-    String answer1 = name1.toLowerCase().trim();
-    String guess1 = name1Controller.text.toLowerCase().trim();
-    String answer2 = name2.toLowerCase().trim();
-    String guess2 = name2Controller.text.toLowerCase().trim();
-    if (d.distance(answer1, guess1) <= 2 && d.distance(answer2, guess2) <= 2) {
-      if (d.distance(answer1, guess1) == 1 ||
-          d.distance(answer1, guess1) == 1) {
-        print('close enough');
-      } else {
-        print('success');
-      }
-      // every time
+    String name1Answer = name1.toLowerCase().trim();
+    String name1Guess = name1Controller.text.toLowerCase().trim();
+    String name2Answer = name2.toLowerCase().trim();
+    String name2Guess = name2Controller.text.toLowerCase().trim();
+    String job1Answer = job1.toLowerCase().trim();
+    String job1Guess = job1Controller.text.toLowerCase().trim();
+    String job2Answer = job2.toLowerCase().trim();
+    String job2Guess = job2Controller.text.toLowerCase().trim();
+    String hometown1Answer = hometown1.toLowerCase().trim();
+    String hometown1Guess = hometown1Controller.text.toLowerCase().trim();
+    String hometown2Answer = hometown2.toLowerCase().trim();
+    String hometown2Guess = hometown2Controller.text.toLowerCase().trim();
+    if (d.distance(name1Answer, name1Guess) <= 2 &&
+        d.distance(name2Answer, name2Guess) <= 2 &&
+        age1 == age1Controller.text.trim() &&
+        age2 == age2Controller.text.trim() &&
+        d.distance(job1Answer, job1Guess) <= 4 &&
+        d.distance(job2Answer, job2Guess) <= 4 &&
+        d.distance(hometown1Answer, hometown1Guess) <= 2 &&
+        d.distance(hometown2Answer, hometown2Guess) <= 2) {
       await prefs.updateActivityVisible(face2TimedTestKey, false);
       await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
       if (await prefs.getBool(face2TimedTestCompleteKey) == null) {
@@ -109,8 +118,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
           await prefs.updateActivityVisible(deckEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
-            snackBarText:
-                'Congratulations! You\'ve unlocked the Deck system!',
+            snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
             textColor: Colors.white,
             backgroundColor: colorDeckDarker,
             durationSeconds: 3,
@@ -118,15 +126,14 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
           );
         }
       } else {
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText:
-            'Congratulations! You aced it!',
-        textColor: Colors.black,
-        backgroundColor: colorChapter1Darker,
-        durationSeconds: 2,
-      );
-    }
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You aced it!',
+          textColor: Colors.black,
+          backgroundColor: colorChapter3Darker,
+          durationSeconds: 2,
+        );
+      }
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -137,7 +144,13 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
       );
     }
     name1Controller.text = '';
+    age1Controller.text = '';
+    job1Controller.text = '';
+    hometown1Controller.text = '';
     name2Controller.text = '';
+    age2Controller.text = '';
+    job2Controller.text = '';
+    hometown2Controller.text = '';
     widget.callback();
     Navigator.pop(context);
   }
@@ -153,9 +166,10 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
-            'The correct names were: \n$name1 \n$name2\nTry the timed test again to unlock the next system.',
+            'The correct information was: \n$name1, $age1, $job1, $hometown1 \n'
+            '$name2, $age2, $job2, $hometown2\nTry the timed test again to unlock the next system.',
         backgroundColor: colorIncorrect,
-        durationSeconds: 5);
+        durationSeconds: 6);
     Navigator.pop(context);
     widget.callback();
   }
@@ -166,7 +180,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Face: timed test'),
-          backgroundColor: colorChapter1Darker,
+          backgroundColor: colorChapter3Darker,
           actions: <Widget>[
             // action button
             IconButton(
@@ -194,104 +208,82 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
                       ),
                       Container(
                         child: Text(
-                          'Enter the names: ',
+                          'Enter the information: ',
                           style: TextStyle(
                               fontSize: 30, color: backgroundHighlightColor),
                         ),
                       ),
                       SizedBox(height: 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image(
-                                  height: 200,
-                                  image: AssetImage(
-                                    'assets/images/$face1',
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                child: TextFormField(
-                                  controller: name1Controller,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: backgroundHighlightColor),
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.all(5),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: backgroundSemiColor)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: backgroundHighlightColor)),
-                                      hintText: '________',
-                                      hintStyle: TextStyle(
-                                          fontSize: 18,
-                                          color: backgroundHighlightColor)),
-                                ),
-                              ),
-                            ],
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image(
+                          height: 200,
+                          image: AssetImage(
+                            'assets/images/$face1',
                           ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Column(
-                            children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image(
-                                  height: 200,
-                                  image: AssetImage(
-                                    'assets/images/$face2',
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                child: TextFormField(
-                                  controller: name2Controller,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: backgroundHighlightColor),
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.all(5),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: backgroundSemiColor)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: backgroundHighlightColor)),
-                                      hintText: '________',
-                                      hintStyle: TextStyle(
-                                          fontSize: 18,
-                                          color: backgroundHighlightColor)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
-                      SizedBox(height: 50),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InputPair(
+                        textController: name1Controller,
+                        title: 'Name:',
+                        width: 270,
+                        hintText: '______   ______',
+                      ),
+                      InputPair(
+                        textController: age1Controller,
+                        title: 'Age:',
+                        keyboardType: TextInputType.number,
+                        width: 80,
+                        hintText: '__',
+                      ),
+                      InputPair(
+                        textController: job1Controller,
+                        title: 'Job:',
+                      ),
+                      InputPair(
+                        textController: hometown1Controller,
+                        title: 'Hometown:',
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image(
+                          height: 200,
+                          image: AssetImage(
+                            'assets/images/$face2',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InputPair(
+                        textController: name2Controller,
+                        title: 'Name:',
+                        width: 270,
+                        hintText: '______   ______',
+                      ),
+                      InputPair(
+                        textController: age2Controller,
+                        title: 'Age:',
+                        keyboardType: TextInputType.number,
+                        width: 80,
+                        hintText: '__',
+                      ),
+                      InputPair(
+                        textController: job2Controller,
+                        title: 'Job:',
+                      ),
+                      InputPair(
+                        textController: hometown2Controller,
+                        title: 'Hometown:',
+                      ),
+                      SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -309,8 +301,8 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
                           BasicFlatButton(
                             text: 'Submit',
                             fontSize: 24,
-                            color: colorChapter1Standard,
-                            splashColor: colorChapter1Darker,
+                            color: colorChapter3Standard,
+                            splashColor: colorChapter3Darker,
                             onPressed: () => checkAnswer(),
                             padding: 10,
                           ),
@@ -329,6 +321,59 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   }
 }
 
+class InputPair extends StatelessWidget {
+  final TextEditingController textController;
+  final String title;
+  final TextInputType keyboardType;
+  final double width;
+  final String hintText;
+
+  InputPair(
+      {this.textController,
+      this.title,
+      this.keyboardType = TextInputType.text,
+      this.width = 220,
+      this.hintText = '________'});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Text(
+          title,
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Container(
+          width: width,
+          decoration:
+              BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5))),
+          child: TextFormField(
+            controller: textController,
+            textAlign: TextAlign.center,
+            keyboardType: keyboardType,
+            style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(5),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: backgroundHighlightColor)),
+                hintText: hintText,
+                hintStyle:
+                    TextStyle(fontSize: 18, color: backgroundHighlightColor)),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+}
+
 class Face2TimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -339,8 +384,8 @@ class Face2TimedTestScreenHelp extends StatelessWidget {
             'sounds! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!'
       ],
-      buttonColor: colorChapter1Standard,
-      buttonSplashColor: colorChapter1Darker,
+      buttonColor: colorChapter3Standard,
+      buttonSplashColor: colorChapter3Darker,
       firstHelpKey: face2TimedTestFirstHelpKey,
     );
   }
