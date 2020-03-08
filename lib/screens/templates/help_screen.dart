@@ -190,15 +190,7 @@ class _HelpScreenState extends State<HelpScreen> {
                           firstHelpKey: widget.firstHelpKey,
                           callback: widget.callback,
                         )
-                      : Container(),
-                  firstHelp
-                      ? Container()
-                      : HelpOKButton(
-                          buttonColor: widget.buttonColor,
-                          buttonSplashColor: widget.buttonSplashColor,
-                          firstHelpKey: widget.firstHelpKey,
-                          callback: widget.callback,
-                        )
+                      : SizedBox(height: 50,),
                 ],
               ),
             ),

@@ -91,13 +91,13 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
-// add suggestions for alphabet
-// complete second face test
+// make default date better (1990 for birthday, etc)
+// fixed cancel issues
 
-// TODO: make default date better (1990 for birthday, etc)
-// TODO: cancel airport failed (cancels in general aren't doing well)
+// TODO: fix sizing of font on phonetic alphabet test and add morse code input
 
 // next up:
+// TODO: intermittent android notifications
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
 // TODO: describe amount of pi correct
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
@@ -1011,6 +1011,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (maxTo >= 3) {
       await prefs.setBool(paoTimedTestCompleteKey, true);
       await prefs.setBool(piTimedTestCompleteKey, true);
+      await prefs.setBool(face2TimedTestCompleteKey, true);
       await prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesChapter3Done);
     }

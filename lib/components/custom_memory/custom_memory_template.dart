@@ -39,12 +39,12 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                   controller: memoryField.fieldController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundSemiColor)),
+                        borderSide: BorderSide(color: Colors.grey)),
                     focusedBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: backgroundHighlightColor)),
                     hintText: memoryField.text,
-                    hintStyle: TextStyle(color: backgroundSemiColor),
+                    hintStyle: TextStyle(color: Colors.grey),
                     contentPadding: EdgeInsets.all(5),
                     border: OutlineInputBorder(),
                   ),
@@ -84,7 +84,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
               controller: memoryField.controller,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: backgroundSemiColor)),
+                    borderSide: BorderSide(color: Colors.grey)),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: backgroundHighlightColor)),
                 contentPadding: EdgeInsets.all(5),
@@ -96,18 +96,19 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       } else if (memoryField.inputType == 'date') {
         fieldsList.add(
           BasicFlatButton(
-            color: backgroundSemiColor,
+            color: Colors.grey,
             onPressed: () {
               DatePicker.showDatePicker(
                 context,
-                
-                  showTitleActions: true,
-                  onChanged: (date) {}, onConfirm: (date) {
-                print('confirm $date');
-                memoryField.controller.text = date.toIso8601String();
-                setState(() {});
-              }, 
-              currentTime: DateTime.now()
+                showTitleActions: true,
+                onChanged: (date) {},
+                onConfirm: (date) {
+                  print('confirm ${memoryField.mapKey}');
+                  memoryField.controller.text = date.toIso8601String();
+                  setState(() {});
+                },
+                currentTime: memoryField.mapKey == 'birthday'
+                    ? DateTime.parse('1990-01-01') : DateTime.now(),
               );
             },
             text: memoryField.controller.text == ''
@@ -126,10 +127,12 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
               style: TextStyle(color: backgroundHighlightColor),
               textAlign: TextAlign.center,
               controller: memoryField.controller,
-              keyboardType: memoryField.inputType == 'number' ? TextInputType.number : TextInputType.text,
+              keyboardType: memoryField.inputType == 'number'
+                  ? TextInputType.number
+                  : TextInputType.text,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: backgroundSemiColor)),
+                    borderSide: BorderSide(color: Colors.grey)),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: backgroundHighlightColor)),
                 contentPadding: EdgeInsets.all(5),

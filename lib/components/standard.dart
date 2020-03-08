@@ -91,6 +91,7 @@ class MainMenuOption extends StatelessWidget {
   }
 
   cancelActivity() async {
+    print(activity.name);
     switch (activity.name) {
       case singleDigitTimedTestKey:
         HapticFeedback.heavyImpact();
@@ -101,13 +102,22 @@ class MainMenuOption extends StatelessWidget {
           await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
         }
         break;
-      case singleDigitTimedTestKey:
+      case faceTimedTestKey:
         HapticFeedback.heavyImpact();
-        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
-        await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
-        await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-        if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-          await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
+        await prefs.updateActivityState(faceTimedTestKey, 'review');
+        await prefs.updateActivityVisible(faceTimedTestKey, false);
+        await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
+        if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
+        }
+        break;
+      case planetTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(planetTimedTestKey, 'review');
+        await prefs.updateActivityVisible(planetTimedTestKey, false);
+        await prefs.updateActivityVisible(planetTimedTestPrepKey, true);
+        if (await prefs.getBool(planetTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(planetTimedTestPrepKey, 'todo');
         }
         break;
       case alphabetTimedTestKey:
@@ -119,6 +129,24 @@ class MainMenuOption extends StatelessWidget {
           await prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
         }
         break;
+      case phoneticAlphabetTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
+        await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
+        await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
+        if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'todo');
+        }
+        break;
+      case airportTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(airportTimedTestKey, 'review');
+        await prefs.updateActivityVisible(airportTimedTestKey, false);
+        await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
+        if (await prefs.getBool(airportTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(airportTimedTestPrepKey, 'todo');
+        }
+        break;
       case paoTimedTestKey:
         HapticFeedback.heavyImpact();
         await prefs.updateActivityState(paoTimedTestKey, 'review');
@@ -126,6 +154,24 @@ class MainMenuOption extends StatelessWidget {
         await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
         if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
           await prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
+        }
+        break;
+      case face2TimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(face2TimedTestKey, 'review');
+        await prefs.updateActivityVisible(face2TimedTestKey, false);
+        await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
+        if (await prefs.getBool(face2TimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(face2TimedTestPrepKey, 'todo');
+        }
+        break;
+      case piTimedTestKey:
+        HapticFeedback.heavyImpact();
+        await prefs.updateActivityState(piTimedTestKey, 'review');
+        await prefs.updateActivityVisible(piTimedTestKey, false);
+        await prefs.updateActivityVisible(piTimedTestPrepKey, true);
+        if (await prefs.getBool(piTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(piTimedTestPrepKey, 'todo');
         }
         break;
       case deckTimedTestKey:
@@ -283,7 +329,6 @@ class MainMenuOption extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(width: 1),
                       borderRadius: BorderRadius.all(Radius.circular(5)),
-                      //color: Color.fromRGBO(255, 105, 180, 1),
                       color: Color.fromRGBO(255, 255, 255, 0.85),
                     ),
                     child: Shimmer.fromColors(
@@ -321,14 +366,14 @@ class MainMenuOption extends StatelessWidget {
                           children: <Widget>[
                             Center(
                               child: Text(
-                                '${getActivityName()} in ${generateTimeRemaining()}',
+                                '${getActivityName().contains('[Timed Test]') ? getActivityName().replaceAll('[Timed Test]', 'Test') : getActivityName()} in ${generateTimeRemaining()}',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 14),
                               ),
                             ),
                             Container(
                               height: 30,
-                              width: 80,
+                              width: 75,
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.white),
                                 borderRadius: BorderRadius.circular(5),
@@ -519,7 +564,8 @@ class CondensedMainMenuChapterButtons extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Text(text,
-                    style: TextStyle(fontSize: text.length > 24 ? 22 : 24), textAlign: TextAlign.start),
+                    style: TextStyle(fontSize: text.length > 24 ? 22 : 24),
+                    textAlign: TextAlign.start),
               ),
               SizedBox(
                 height: 5,
