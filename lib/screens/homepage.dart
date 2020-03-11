@@ -457,7 +457,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // if nothing in todo, send button to go to custom memories (use same button/text template as 24hr +)
-    if (mainMenuOptions.length == 0) {
+    if (mainMenuOptions.length == 0 && customMemoryManagerAvailable) {
       mainMenuOptions.add(MainMenuOption(
         text:
             'You\'ve got nothing to do! Add some memories in the memory manager!',

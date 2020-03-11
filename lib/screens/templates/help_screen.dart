@@ -183,7 +183,7 @@ class _HelpScreenState extends State<HelpScreen> {
                     height: 15,
                   ),
                   (firstHelp && slideIndex == widget.information.length - 1) ||
-                          debugModeEnabled
+                          debugModeEnabled || !firstHelp
                       ? HelpOKButton(
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,

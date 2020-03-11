@@ -18,8 +18,12 @@ class PrefsUpdater {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     switch (key) {
       case activityStatesKey:
+        String activityStatesString = prefs.getString(activityStatesKey);
+        if (activityStatesString == null) {
+          return defaultActivityStatesInitial;
+        }
         Map<String, dynamic> rawMap = json
-            .decode(prefs.getString(activityStatesKey)) as Map<String, dynamic>;
+            .decode(activityStatesString) as Map<String, dynamic>;
         return rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
       case singleDigitKey:
         var singleDigitData = (json.decode(prefs.getString(key)) as List)
