@@ -91,26 +91,19 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
-// improved NATO/morse code test
-// make default date better (1990 for birthday, etc)
-// fixed cancel issues
-// added ideas for custom memories 
-// consolidated lessons into a format
-// first attempt to ensure good update progression
-// first attempt to fix "intermittent" notifications
 
 // next up:
+// TODO: store all custom memories as hashes
+// TODO: make all backgroundSemi -> grey
+// TODO: welcome animation, second page still visible until swipe
+// TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
+// TODO: handle bad CSV input
 
 // horizon:
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
-// TODO: store all custom memories as hashes
-// TODO: make all backgroundSemi -> grey
 // TODO: BIG: badge / quest system
 // TODO: BIG: once you beat something (like a timed test, it gets harder, up to three levels???)
 // TODO: describe amount of pi correct
-// TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
-// TODO: handle bad CSV input
-// TODO: welcome animation, second page still visible until swipe
 // TODO: chapter animation
 // TODO: add scroll notification when scrollable: https://medium.com/@diegoveloper/flutter-lets-know-the-scrollcontroller-and-scrollnotification-652b2685a4ac
 // TODO: match ages for face (hard)
@@ -135,6 +128,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: make vibrations cooler, and more consistent across app?
 // TODO: make account, backend, retrieve portfolios
+// TODO: BIG: add backend, account recovery (store everything?)
 
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
@@ -179,28 +173,29 @@ class _MyHomePageState extends State<MyHomePage> {
     // if (!(await prefs.getKeys().asStream().contains(lesson1Key))) {
     //   print('doesn\'t contain lesson1Key');
     // }
-    Map<String, Activity> activityStates =
-        await prefs.getSharedPrefs(activityStatesKey);
-    print(activityStates[singleDigitPracticeKey].name);
 
-    if (await prefs.getActivityState(singleDigitTimedTestKey) == 'review') {
-      await prefs.setBool(singleDigitTimedTestCompleteKey, true);
-      await prefs.updateActivityVisible(lesson1Key, true);
-    }
-    if (await prefs.getActivityState(alphabetTimedTestKey) == 'review') {
-      await prefs.setBool(alphabetTimedTestCompleteKey, true);
-      await prefs.updateActivityVisible(lesson2Key, true);
-    }
-    if (await prefs.getActivityState(paoTimedTestKey) == 'review') {
-      await prefs.setBool(paoTimedTestCompleteKey, true);
-      await prefs.updateActivityVisible(lesson3Key, true);
-    }
-    if (await prefs.getActivityState(deckTimedTestKey) == 'review') {
-      await prefs.setBool(deckTimedTestCompleteKey, true);
-    }
+    // if (await prefs.getActivityState(singleDigitTimedTestKey) == 'review') {
+    //   await prefs.setBool(singleDigitTimedTestCompleteKey, true);
+    //   await prefs.updateActivityVisible(lesson1Key, true);
+    // }
+    // if (await prefs.getActivityState(alphabetTimedTestKey) == 'review') {
+    //   await prefs.setBool(alphabetTimedTestCompleteKey, true);
+    //   await prefs.updateActivityVisible(lesson2Key, true);
+    // }
+    // if (await prefs.getActivityState(paoTimedTestKey) == 'review') {
+    //   await prefs.setBool(paoTimedTestCompleteKey, true);
+    //   await prefs.updateActivityVisible(lesson3Key, true);
+    // }
+    // if (await prefs.getActivityState(deckTimedTestKey) == 'review') {
+    //   await prefs.setBool(deckTimedTestCompleteKey, true);
+    // }
 
     print(defaultActivityStatesInitial[faceTimedTestPrepKey]);
     print(defaultActivityStatesInitial.keys.length);
+
+    Map<String, Activity> activityStates =
+        await prefs.getSharedPrefs(activityStatesKey);
+    print(activityStates[singleDigitPracticeKey].name);
 
     defaultActivityStatesInitial.forEach((k, v) {
       if (!activityStates.keys.contains(k)) {
