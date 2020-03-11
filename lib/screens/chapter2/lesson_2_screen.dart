@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
-import 'package:mem_plus_plus/components/animations.dart';
-import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/lesson_screen.dart';
 
 class Lesson2Screen extends StatefulWidget {
   final Function callback;
@@ -16,12 +14,7 @@ class Lesson2Screen extends StatefulWidget {
   _Lesson2ScreenState createState() => _Lesson2ScreenState();
 }
 
-class _Lesson2ScreenState extends State<Lesson2Screen>
-    with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  int slideIndex = 0;
-  bool firstTime = false;
-  final IndexController indexController = IndexController();
+class _Lesson2ScreenState extends State<Lesson2Screen> {
   var prefs = PrefsUpdater();
 
   final List<Widget> headers = [
@@ -159,7 +152,9 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
             ),
           ],
         ),
-        SizedBox(height: 30,),
+        SizedBox(
+          height: 30,
+        ),
         Text(
           '    That\'s a pretty horrendous drawing by Matt! Is he trying to pull that blob off as a bed? It\'s not '
           'every day you see something this bad, haha. ',
@@ -268,24 +263,6 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
     ),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      duration: const Duration(
-        seconds: 5,
-      ),
-      vsync: this,
-    );
-    animationController.forward();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
   completeLesson() async {
     await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
     await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
@@ -315,115 +292,13 @@ class _Lesson2ScreenState extends State<Lesson2Screen>
 
   @override
   Widget build(BuildContext context) {
-    TransformerPageView transformerPageView = TransformerPageView(
-        pageSnapping: true,
-        onPageChanged: (index) {
-          setState(() {
-            slideIndex = index;
-          });
-        },
-        loop: false,
-        controller: indexController,
-        transformer:
-            PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
-          return Stack(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(color: backgroundColor),
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        ParallaxContainer(
-                          child: info.index == 0
-                              ? StaggerAnimation(
-                                  widget: headers[info.index],
-                                  controller: animationController,
-                                  begin: 0,
-                                  end: 1,
-                                )
-                              : headers[info.index],
-                          position: info.position,
-                          translationFactor: 200,
-                        ),
-                        info.index == 0
-                            ? SizedBox(
-                                height: 10,
-                              )
-                            : SizedBox(
-                                height: 10,
-                              ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ParallaxContainer(
-                          child: info.index == 0
-                              ? StaggerAnimation(
-                                  widget: information[info.index],
-                                  controller: animationController,
-                                  begin: 0.2,
-                                  end: 1,
-                                )
-                              : information[info.index],
-                          position: info.position,
-                          translationFactor: 100,
-                        ),
-                        info.index != headers.length - 1
-                            ? Container()
-                            : SizedBox(
-                                height: 10,
-                              ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        info.index != headers.length - 1
-                            ? Container()
-                            : ParallaxContainer(
-                                child: BasicFlatButton(
-                                  text: 'Onward!',
-                                  color: colorChapter2Standard,
-                                  splashColor: colorChapter2Darker,
-                                  onPressed: completeLesson,
-                                  padding: 10,
-                                  fontSize: 28,
-                                ),
-                                position: info.position,
-                                translationFactor: 300,
-                              ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                  child: getSlideCircles(
-                      information.length, slideIndex, colorChapter2Darker),
-                ),
-                alignment: Alignment.bottomCenter,
-              )
-            ],
-          );
-        }),
-        itemCount: headers.length);
-
-    return firstTime
-        ? Scaffold(
-            backgroundColor: backgroundColor,
-            body: transformerPageView,
-          )
-        : Scaffold(
-            backgroundColor: backgroundColor,
-            appBar: AppBar(
-              title: Text('Chapter 2 Lesson'),
-              backgroundColor: colorChapter2Darker,
-            ),
-            body: transformerPageView,
-          );
+    return LessonScreen(
+      title: 'Lesson 2',
+      headers: headers,
+      information: information,
+      colorStandard: colorChapter2Standard,
+      colorDarker: colorChapter2Darker,
+      completeLesson: completeLesson,
+    );
   }
 }

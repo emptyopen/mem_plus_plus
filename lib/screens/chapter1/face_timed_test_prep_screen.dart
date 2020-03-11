@@ -207,6 +207,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                 ),
                 Text(
                   '(You\'ll be quizzed on this in thirty minutes!)',
+                  textAlign: TextAlign.center,
                   style:
                       TextStyle(fontSize: 18, color: backgroundHighlightColor),
                 ),

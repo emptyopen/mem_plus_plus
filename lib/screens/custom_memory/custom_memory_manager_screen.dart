@@ -24,7 +24,7 @@ class CustomMemoryManagerScreen extends StatefulWidget {
 class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
   Map customMemories = {};
   Column customMemoriesColumn = Column();
-    var prefs = PrefsUpdater();
+  var prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -77,8 +77,9 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-          backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor,
         appBar: AppBar(
             title: Text('Custom memory management'),
             backgroundColor: colorCustomMemoryStandard,
@@ -102,7 +103,99 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                SingleChildScrollView(child: customMemoriesColumn),
+                SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      customMemoriesColumn,
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            width: screenWidth * 0.8,
+                            decoration: BoxDecoration(
+                              color: Colors.purple[50],
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: backgroundSemiHighlightColor,
+                              ),
+                            ),
+                            padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Some ideas for custom memories: ',
+                                  style: TextStyle(
+                                    color: backgroundHighlightColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  '  - Phone numbers\n  - Birthdays\n  - Addresses\n'
+                                  '  - Credit cards\n  - Checking/routing numbers\n  - Driver\'s license info'
+                                  '\n  - Recipes (template coming later)\n  - Flight confirmation numbers'
+                                  '\n  - Security codes\n  - Padlock combinations\n  - Usernames/passwords\n\n... if you had to '
+                                  'look it up recently, it\'s a good candidate!',
+                                  textAlign: TextAlign.left,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          Container(
+                            width: screenWidth * 0.8,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[50],
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: backgroundSemiHighlightColor,
+                              ),
+                            ),
+                            padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Is it safe to type my info here?',
+                                  style: TextStyle(
+                                    color: backgroundHighlightColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  '    Don\'t worry about data privacy! All custom memory data can be hashed using '
+                                  'SHA-512 encryption, meaning nothing you type (for secure data) will ever '
+                                  'be stored anywhere in plain text!\n    You can specify if you\'d like something '
+                                  'cryptographically secured when storing the memory by checking the password symbol for that field. '
+                                  'Keep in mind that if you do that, you won\'t be able to view it later, even if you '
+                                  'forget it!',
+                                  textAlign: TextAlign.left,
+                                ),
+                                SizedBox(height: 20,),
+                                Text(
+                                  'HASHING will be available soon! Hopefully next update.',
+                                  style: TextStyle(
+                                    color: backgroundHighlightColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 Positioned(
                   child: RaisedButton(
                     elevation: 5,
@@ -168,10 +261,15 @@ class CustomMemoryTile extends StatelessWidget {
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
               side: BorderSide(), borderRadius: BorderRadius.circular(5)),
-          title: Text('Confirm', style: TextStyle(color: backgroundHighlightColor),),
+          title: Text(
+            'Confirm',
+            style: TextStyle(color: backgroundHighlightColor),
+          ),
           content: Text(
-              'Are you sure you\'d like to view this memory? Doing so '
-              'will reset the spaced repetition schedule back to the beginning!', style: TextStyle(color: backgroundHighlightColor),),
+            'Are you sure you\'d like to view this memory? Doing so '
+            'will reset the spaced repetition schedule back to the beginning!',
+            style: TextStyle(color: backgroundHighlightColor),
+          ),
           actions: <Widget>[
             BasicFlatButton(
               text: 'Cancel',
@@ -276,8 +374,8 @@ class CustomMemoryTile extends StatelessWidget {
                                         ? Container()
                                         : CustomMemoryViewPair(
                                             heading: 'Expiration:',
-                                            subHeading:
-                                                datetimeToDateString(customMemory['expiration']),
+                                            subHeading: datetimeToDateString(
+                                                customMemory['expiration']),
                                           ),
                                     customMemory['other'] == ''
                                         ? Container()
@@ -369,8 +467,12 @@ class CustomMemoryTile extends StatelessWidget {
     return Card(
       color: backgroundSemiColor,
       child: ListTile(
-        leading: Icon(customMemoryIconMap[customMemory['type']], color: backgroundHighlightColor,),
-        title: Text('${customMemory['title']}', style: TextStyle(fontSize: 20, color: backgroundHighlightColor)),
+        leading: Icon(
+          customMemoryIconMap[customMemory['type']],
+          color: backgroundHighlightColor,
+        ),
+        title: Text('${customMemory['title']}',
+            style: TextStyle(fontSize: 20, color: backgroundHighlightColor)),
         subtitle: Text(
           '${customMemory['type']}\n'
           '${findRemainingTime()}',
@@ -382,8 +484,8 @@ class CustomMemoryTile extends StatelessWidget {
             Container(
               width: 50,
               child: FlatButton(
-                child:
-                    Icon(Icons.remove_red_eye, color: colorCustomMemoryStandard),
+                child: Icon(Icons.remove_red_eye,
+                    color: colorCustomMemoryStandard),
                 onPressed: () => confirmViewCustomMemory(context),
               ),
             ),
@@ -417,13 +519,16 @@ class CustomMemoryViewPair extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(heading, style: TextStyle(fontSize: 22, color: backgroundHighlightColor)),
+        Text(heading,
+            style: TextStyle(fontSize: 22, color: backgroundHighlightColor)),
         Container(
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey[300]),
                 borderRadius: BorderRadius.circular(5)),
             padding: EdgeInsets.all(10),
-            child: Text(subHeading, style: TextStyle(fontSize: 24, color: backgroundHighlightColor))),
+            child: Text(subHeading,
+                style:
+                    TextStyle(fontSize: 24, color: backgroundHighlightColor))),
         SizedBox(
           height: 10,
         ),

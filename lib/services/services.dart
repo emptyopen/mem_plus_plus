@@ -328,6 +328,7 @@ notifyDuration(
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+  print('setting notification $scheduledNotificationDateTime ||| $title ||| $subtitle');
   await flutterLocalNotificationsPlugin.schedule(
     0,
     title,
@@ -352,7 +353,7 @@ initializeNotificationsScheduler() async {
       FlutterLocalNotificationsPlugin();
   var time = Time(12, 30, 0);
   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      dailyReminderIdKey, dailyReminderKey, 'Daily reminder for MEM++',
+      dailyReminderIdKey, dailyReminderKey, 'Daily reminder',
       importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
   var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
-import 'package:mem_plus_plus/components/animations.dart';
-import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/lesson_screen.dart';
 
 class Lesson3Screen extends StatefulWidget {
   final Function callback;
@@ -16,12 +14,7 @@ class Lesson3Screen extends StatefulWidget {
   _Lesson3ScreenState createState() => _Lesson3ScreenState();
 }
 
-class _Lesson3ScreenState extends State<Lesson3Screen>
-    with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  int slideIndex = 0;
-  bool firstTime = false;
-  final IndexController indexController = IndexController();
+class _Lesson3ScreenState extends State<Lesson3Screen> {
   bool alreadyComplete = false;
   var prefs = PrefsUpdater();
 
@@ -105,19 +98,6 @@ class _Lesson3ScreenState extends State<Lesson3Screen>
   void initState() {
     super.initState();
     getSharedPrefs();
-    animationController = AnimationController(
-      duration: const Duration(
-        seconds: 5,
-      ),
-      vsync: this,
-    );
-    animationController.forward();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
   }
 
   getSharedPrefs() async {
@@ -164,123 +144,14 @@ class _Lesson3ScreenState extends State<Lesson3Screen>
 
   @override
   Widget build(BuildContext context) {
-    TransformerPageView transformerPageView = TransformerPageView(
-        pageSnapping: true,
-        onPageChanged: (index) {
-          setState(() {
-            slideIndex = index;
-          });
-        },
-        loop: false,
-        controller: indexController,
-        transformer:
-            PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
-          return Stack(
-            children: <Widget>[
-              SingleChildScrollView(
-                child: Container(
-                  decoration: BoxDecoration(color: backgroundColor),
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 30,
-                          ),
-                          ParallaxContainer(
-                            child: info.index == 0
-                                ? StaggerAnimation(
-                                    widget: headers[info.index],
-                                    controller: animationController,
-                                    begin: 0,
-                                    end: 1,
-                                  )
-                                : headers[info.index],
-                            position: info.position,
-                            translationFactor: 200,
-                          ),
-                          info.index == 0
-                              ? SizedBox(
-                                  height: 10,
-                                )
-                              : SizedBox(
-                                  height: 10,
-                                ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ParallaxContainer(
-                            child: info.index == 0
-                                ? StaggerAnimation(
-                                    widget: information[info.index],
-                                    controller: animationController,
-                                    begin: 0.2,
-                                    end: 1,
-                                  )
-                                : information[info.index],
-                            position: info.position,
-                            translationFactor: 100,
-                          ),
-                          info.index != headers.length - 1
-                              ? Container()
-                              : SizedBox(
-                                  height: 10,
-                                ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          info.index != headers.length - 1
-                              ? Container()
-                              : ParallaxContainer(
-                                  child: BasicFlatButton(
-                                    text: alreadyComplete ? 'Already got it!' : 'Gimme!',
-                                    color: colorChapter3Standard,
-                                    splashColor: colorChapter3Darker,
-                                    onPressed: completeLesson,
-                                    padding: 10,
-                                    fontSize: alreadyComplete ? 22 : 28,
-                                  ),
-                                  position: info.position,
-                                  translationFactor: 300,
-                                ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                  child: getSlideCircles(
-                      information.length, slideIndex, colorChapter3Darker),
-                ),
-                alignment: Alignment.bottomCenter,
-              )
-            ],
-          );
-        }),
-        itemCount: headers.length);
 
-    return firstTime
-        ? Scaffold(
-            backgroundColor: backgroundColor,
-            body: transformerPageView,
-          )
-        : Scaffold(
-            backgroundColor: backgroundColor,
-            appBar: AppBar(
-              title: Text('Chapter 3 Lesson'),
-              backgroundColor: colorChapter3Darker,
-            ),
-            body: transformerPageView,
-          );
+    return LessonScreen(
+      title: 'Lesson 3',
+      headers: headers,
+      information: information,
+      completeLesson: completeLesson,
+      colorDarker: colorChapter3Darker,
+      colorStandard: colorChapter3Standard,
+    );
   }
 }

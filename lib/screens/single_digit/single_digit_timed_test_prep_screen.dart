@@ -76,7 +76,8 @@ class _SingleDigitTimedTestPrepScreenState
     await prefs.updateActivityVisibleAfter(
         singleDigitTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Timed test (single digit) is ready!', 'Good luck!', singleDigitTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (single digit) is ready!',
+        'Good luck!', singleDigitTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }
@@ -84,7 +85,7 @@ class _SingleDigitTimedTestPrepScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Single digit: timed test preparation'),
           backgroundColor: Colors.amber[200],
@@ -202,19 +203,20 @@ class _SingleDigitTimedTestPrepScreenState
 }
 
 class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
-
   final List<String> information = [
     '    Great job so far! Now your goal is to memorize a 4 digit number by converting the digits '
         'to their associated objects and imagining a crazy scene where those objects '
         'appear in order. \n    Once you feel confident, select "I\'m ready!" and the numbers will become unavailable. '
         'In an hour you will have to decode the scene back into numbers.',
-    '    For example, let\'s look at the number 1234. Let\'s say that translates to stick, bird, bra, and sailboat. We '
-        'could imagine a stick falling out of the sky, landing and skewering a bird. Ouch! '
-        'The bird is in a lot of pain. Luckily, it finds a bra and makes a tourniquet out of it. '
-        'Now the bird can make it to the fancy dinner party on the sailboat tonight! Phew!',
-    '    Really make that scene vivid! Close your eyes and physically imagine the details in your mind. Is the bird a '
-        'swan? How much does that swan squawk when it gets speared out of nowhere? '
-        'Think about all of the swan\'s friends that would be sad if the swan doesn\'t show up.',
+    '    For example, let\'s look at the number 1234. Let\'s say that translates to STICK, BIRD, BRA, and SAILBOAT. We '
+        'could imagine a STICK falling out of the sky, landing and skewering a BIRD. Ouch! '
+        'The bird is in a lot of pain. Luckily, it finds a BRA and makes a tourniquet out of it. '
+        'Now the bird can make it to the fancy dinner party on the SAILBOAT tonight! Phew!',
+    '    Really make that scene vivid! CLOSE your eyes and physically imagine the details in your mind. '
+        'Was that STICK an ancient Roman spear? A bayonet? How much does that BIRD squawk when it gets speared out of nowhere? '
+        'I would squawk like crazy. \n    Was the bird a swan? So lucky it had that super sexy BRA. The bra is all bloody '
+        'but it saved someone\'s life tonight!'
+        '\n    Think about all of the swan\'s friends that would be sad if the swan doesn\'t show up to the SAILBOAT party.',
     '    Now let\'s attach that scene to this quiz. It\'s a timed test, so let\'s imagine '
         'you up in the clouds, about to take this test. A huge timer clock is above you... ah, '
         'yes, this is the place to take a timed test. And the first thing that happens is you '

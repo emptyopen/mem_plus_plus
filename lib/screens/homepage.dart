@@ -91,19 +91,26 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
+// improved NATO/morse code test
 // make default date better (1990 for birthday, etc)
 // fixed cancel issues
-
-// TODO: fix sizing of font on phonetic alphabet test and add morse code input
+// added ideas for custom memories 
+// consolidated lessons into a format
+// first attempt to ensure good update progression
+// first attempt to fix "intermittent" notifications
 
 // next up:
-// TODO: intermittent android notifications
+
+// horizon:
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
+// TODO: store all custom memories as hashes
+// TODO: make all backgroundSemi -> grey
+// TODO: BIG: badge / quest system
+// TODO: BIG: once you beat something (like a timed test, it gets harder, up to three levels???)
 // TODO: describe amount of pi correct
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 // TODO: handle bad CSV input
-
-// horizon:
+// TODO: welcome animation, second page still visible until swipe
 // TODO: chapter animation
 // TODO: add scroll notification when scrollable: https://medium.com/@diegoveloper/flutter-lets-know-the-scrollcontroller-and-scrollnotification-652b2685a4ac
 // TODO: match ages for face (hard)
@@ -156,6 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
     handleAppUpdate();
     getSharedPrefs();
     initializeActivityMenuButtonMap();
+    initializeNotificationsScheduler();
     new Timer.periodic(
         Duration(milliseconds: 100), (Timer t) => setState(() {}));
   }
@@ -174,17 +182,18 @@ class _MyHomePageState extends State<MyHomePage> {
     Map<String, Activity> activityStates =
         await prefs.getSharedPrefs(activityStatesKey);
     print(activityStates[singleDigitPracticeKey].name);
-    // print(activityStates[lesson2Key].name);
-    // await prefs.writeSharedPrefs(activityStatesKey, defaultActivityStatesAllDone);
 
     if (await prefs.getActivityState(singleDigitTimedTestKey) == 'review') {
       await prefs.setBool(singleDigitTimedTestCompleteKey, true);
+      await prefs.updateActivityVisible(lesson1Key, true);
     }
     if (await prefs.getActivityState(alphabetTimedTestKey) == 'review') {
       await prefs.setBool(alphabetTimedTestCompleteKey, true);
+      await prefs.updateActivityVisible(lesson2Key, true);
     }
     if (await prefs.getActivityState(paoTimedTestKey) == 'review') {
       await prefs.setBool(paoTimedTestCompleteKey, true);
+      await prefs.updateActivityVisible(lesson3Key, true);
     }
     if (await prefs.getActivityState(deckTimedTestKey) == 'review') {
       await prefs.setBool(deckTimedTestCompleteKey, true);
@@ -315,7 +324,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     setState(() {});
-    initializeNotificationsScheduler();
     //print(activityStates);
     print(availableActivities);
     print(await prefs.getActivityVisible(lesson3Key));

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
-import 'package:mem_plus_plus/components/animations.dart';
-import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/screens/templates/lesson_screen.dart';
 
 class Lesson1Screen extends StatefulWidget {
   final Function callback;
@@ -16,12 +14,7 @@ class Lesson1Screen extends StatefulWidget {
   _Lesson1ScreenState createState() => _Lesson1ScreenState();
 }
 
-class _Lesson1ScreenState extends State<Lesson1Screen>
-    with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  int slideIndex = 0;
-  bool firstTime = false;
-  final IndexController indexController = IndexController();
+class _Lesson1ScreenState extends State<Lesson1Screen> {
   var prefs = PrefsUpdater();
 
   final List<Widget> headers = [
@@ -110,8 +103,9 @@ class _Lesson1ScreenState extends State<Lesson1Screen>
     Text(
       '    Finally, the most imporant advice I can give you is to not give up. We all still forget things, '
       'but when that happens don\'t blame your amazing, awesome brain. \n'
-      '    When I got frustrated that I forgot something, I had to understand and '
-      'accept that I simply didn\'t anchor the memory well '
+      '    As I went through this learning process, I would still forget things. I still forget things. '
+      'But for the first time, I understood that the reason I forgot something was because '
+      'I didn\'t try hard enough to remember it. I didn\'t anchor the memory well '
       'enough, or I didn\'t visualize the scenes in enough detail, or I didn\'t test myself on the '
       'memory enough. \n    These tools that you will learn to wield aren\'t silver bullets, but I think you\'ll find '
       'that if you stick with them, you will soon remember anything you set your mind to. Learn and practice these '
@@ -120,24 +114,6 @@ class _Lesson1ScreenState extends State<Lesson1Screen>
       style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
     ),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      duration: const Duration(
-        seconds: 5,
-      ),
-      vsync: this,
-    );
-    animationController.forward();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
 
   completeLesson() async {
     await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
@@ -168,123 +144,14 @@ class _Lesson1ScreenState extends State<Lesson1Screen>
 
   @override
   Widget build(BuildContext context) {
-    TransformerPageView transformerPageView = TransformerPageView(
-        pageSnapping: true,
-        onPageChanged: (index) {
-          setState(() {
-            slideIndex = index;
-          });
-        },
-        loop: false,
-        controller: indexController,
-        transformer:
-            PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
-          return Stack(
-            children: <Widget>[
-              SingleChildScrollView(
-                child: Container(
-                  decoration: BoxDecoration(color: backgroundColor),
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 30,
-                          ),
-                          ParallaxContainer(
-                            child: info.index == 0
-                                ? StaggerAnimation(
-                                    widget: headers[info.index],
-                                    controller: animationController,
-                                    begin: 0,
-                                    end: 1,
-                                  )
-                                : headers[info.index],
-                            position: info.position,
-                            translationFactor: 200,
-                          ),
-                          info.index == 0
-                              ? SizedBox(
-                                  height: 10,
-                                )
-                              : SizedBox(
-                                  height: 10,
-                                ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ParallaxContainer(
-                            child: info.index == 0
-                                ? StaggerAnimation(
-                                    widget: information[info.index],
-                                    controller: animationController,
-                                    begin: 0.1,
-                                    end: 1,
-                                  )
-                                : information[info.index],
-                            position: info.position,
-                            translationFactor: 100,
-                          ),
-                          info.index != headers.length - 1
-                              ? Container()
-                              : SizedBox(
-                                  height: 10,
-                                ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          info.index != headers.length - 1
-                              ? Container()
-                              : ParallaxContainer(
-                                  child: BasicFlatButton(
-                                    text: 'Let\'s go!',
-                                    color: colorChapter1Standard,
-                                    splashColor: colorChapter1Darker,
-                                    onPressed: completeLesson,
-                                    padding: 10,
-                                    fontSize: 28,
-                                  ),
-                                  position: info.position,
-                                  translationFactor: 300,
-                                ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                  child: getSlideCircles(
-                      information.length, slideIndex, colorChapter1Darker),
-                ),
-                alignment: Alignment.bottomCenter,
-              )
-            ],
-          );
-        }),
-        itemCount: headers.length);
 
-    return firstTime
-        ? Scaffold(
-            backgroundColor: backgroundColor,
-            body: transformerPageView,
-          )
-        : Scaffold(
-            backgroundColor: backgroundColor,
-            appBar: AppBar(
-              title: Text('Chapter 1 Lesson'),
-              backgroundColor: colorChapter1Darker,
-            ),
-            body: transformerPageView,
-          );
+    return LessonScreen(
+      title: 'Lesson 1',
+      colorStandard: colorChapter1Standard,
+      colorDarker: colorChapter1Darker,
+      headers: headers,
+      information: information,
+      completeLesson: completeLesson,
+    );
   }
 }
