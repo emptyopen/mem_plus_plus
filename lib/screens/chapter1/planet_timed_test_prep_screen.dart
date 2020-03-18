@@ -60,17 +60,17 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
     // 30 + 34 + 30 + 30 * 8 + 80 = 414
     // 1211 - 414 = available space 
     
-    SizedBox sizedBoxHeight2 = SizedBox(height: availableHeight * 0.04);
+    SizedBox sizedBoxHeight2 = SizedBox(height: availableHeight * 0.049);
     // planets
-    SizedBox sizedBoxHeight3 = SizedBox(height: availableHeight * 0.038);
+    SizedBox sizedBoxHeight3 = SizedBox(height: availableHeight * 0.04);
     SizedBox sizedBoxHeight4 = SizedBox(height: availableHeight * 0.037);
     SizedBox sizedBoxHeight5 = SizedBox(height: availableHeight * 0.044);
-    SizedBox sizedBoxHeight6 = SizedBox(height: availableHeight * 0.034);
+    SizedBox sizedBoxHeight6 = SizedBox(height: availableHeight * 0.04);
     // jupiter
     SizedBox sizedBoxHeight7 = SizedBox(height: availableHeight * 0.15);
-    SizedBox sizedBoxHeight8 = SizedBox(height: availableHeight * 0.25);
-    SizedBox sizedBoxHeight9 = SizedBox(height: availableHeight * 0.18);
-    SizedBox sizedBoxHeight10 = SizedBox(height: availableHeight * 0.04);
+    SizedBox sizedBoxHeight8 = SizedBox(height: availableHeight * 0.26);
+    SizedBox sizedBoxHeight9 = SizedBox(height: availableHeight * 0.19);
+    SizedBox sizedBoxHeight10 = SizedBox(height: availableHeight * 0.05);
     SizedBox sizedBoxHeight11 = SizedBox(height: availableHeight * 0.08);
 
     return Scaffold(
@@ -224,7 +224,7 @@ class PlanetText extends StatelessWidget {
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 16,
             color: Colors.white,
           ),
         ),

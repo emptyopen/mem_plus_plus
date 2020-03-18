@@ -74,7 +74,8 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         await prefs.setBool(alphabetTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You\'ve mastered the Alphabet system!',
+          snackBarText:
+              'Congratulations! You\'ve mastered the Alphabet system!',
           textColor: Colors.white,
           backgroundColor: colorAlphabetDarker,
           durationSeconds: 3,
@@ -135,7 +136,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Alphabet: timed test'),
           backgroundColor: Colors.blue[200],
@@ -175,21 +176,32 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                 Container(
                   width: 200,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
                   child: TextFormField(
                     controller: textController1,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'SpaceMono',
+                        color: backgroundHighlightColor),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: backgroundSemiColor)),
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: backgroundHighlightColor)),
+                          borderSide:
+                              BorderSide(color: backgroundHighlightColor),
+                        ),
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                         hintText: 'XXXX',
-                        hintStyle: TextStyle(fontSize: 30, color: Colors.grey,)),
+                        hintStyle: TextStyle(
+                          fontSize: 30,
+                          color: Colors.grey,
+                        )),
                   ),
                 ),
                 SizedBox(height: 25),
@@ -200,17 +212,28 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                   child: TextFormField(
                     controller: textController2,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor,),
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'SpaceMono',
+                      color: backgroundHighlightColor,
+                    ),
                     decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: backgroundSemiColor,)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: backgroundHighlightColor)),
-                        contentPadding: EdgeInsets.all(5),
-                        border: OutlineInputBorder(),
-                        hintText: 'XXXX',
-                        hintStyle: TextStyle(fontSize: 30, color: Colors.grey,)),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: backgroundHighlightColor),
+                      ),
+                      contentPadding: EdgeInsets.all(5),
+                      border: OutlineInputBorder(),
+                      hintText: 'XXXX',
+                      hintStyle: TextStyle(
+                        fontSize: 30,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 50),

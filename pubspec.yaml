@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 1.6.8+32
+version: 1.7.0+34
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -25,6 +25,7 @@ dependencies:
   material_design_icons_flutter:
   url_launcher:
   random_words:
+  password:
 
 dev_dependencies:
   flutter_test:

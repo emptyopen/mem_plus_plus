@@ -171,7 +171,7 @@ class _WrittenCardState extends State<WrittenCard> {
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: backgroundSemiColor)),
+                          borderSide: BorderSide(color: Colors.grey)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: backgroundHighlightColor)),

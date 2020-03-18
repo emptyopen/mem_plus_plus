@@ -6,6 +6,7 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:password/password.dart';
 
 class CustomMemoryTestScreen extends StatefulWidget {
   final Function callback;
@@ -98,20 +99,25 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
     } else {
       final snackBar = SnackBar(
         content: Text(
-          'Incorrect!',
+          'Incorrect. Try again!',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.red,
+            fontSize: 18,
+            fontFamily: 'CabinSketch',
+            color: Colors.black,
           ),
         ),
         duration: Duration(seconds: 2),
-        backgroundColor: Colors.white,
+        backgroundColor: colorIncorrect,
       );
       globalKey.currentState.showSnackBar(snackBar);
     }
   }
 
-  bool stringsAreEqual(String string1, String string2) {
+  bool stringsAreEqual(String string1, String string2, bool isEncrypted) {
+    if (isEncrypted) {
+      string1 = Password.hash(string1, PBKDF2());
+    }
     if (string1.toLowerCase().trim() == string2.toLowerCase().trim()) {
       return true;
     } else {
@@ -126,20 +132,21 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
       case 'Contact':
         bool success = true;
         if (memory['birthday'] != '' &&
-            !stringsAreEqual(datetimeToDateString(field1TextController.text), datetimeToDateString(memory['birthday']))) {
+            !stringsAreEqual(datetimeToDateString(field1TextController.text),
+                datetimeToDateString(memory['birthday']), memory['birthdayEncrypt'])) {
           success = false;
         }
         if (memory['phoneNumber'] != '' &&
             !stringsAreEqual(
-                field2TextController.text, memory['phoneNumber'])) {
+                field2TextController.text, memory['phoneNumber'], memory['phoneNumberEncrypt'])) {
           success = false;
         }
         if (memory['address'] != '' &&
-            !stringsAreEqual(field3TextController.text, memory['address'])) {
+            !stringsAreEqual(field3TextController.text, memory['address'], memory['addressEncrypt'])) {
           success = false;
         }
         if (memory['other'] != '' &&
-            !stringsAreEqual(field4TextController.text, memory['other'])) {
+            !stringsAreEqual(field4TextController.text, memory['other'], memory['otherEncrypt'])) {
           success = false;
         }
         checkResult(memory, success);
@@ -147,15 +154,16 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
       case 'ID/Credit Card':
         bool success = true;
         if (memory['number'] != '' &&
-            !stringsAreEqual(field1TextController.text, memory['number'])) {
+            !stringsAreEqual(field1TextController.text, memory['number'], memory['numberEncrypt'])) {
           success = false;
         }
         if (memory['expiration'] != '' &&
-            !stringsAreEqual(datetimeToDateString(field2TextController.text), datetimeToDateString(memory['expiration']))) {
+            !stringsAreEqual(datetimeToDateString(field2TextController.text),
+                datetimeToDateString(memory['expiration']), memory['expirationEncrypt'])) {
           success = false;
         }
         if (memory['other'] != '' &&
-            !stringsAreEqual(field3TextController.text, memory['other'])) {
+            !stringsAreEqual(field3TextController.text, memory['other'], memory['otherEncrypt'])) {
           success = false;
         }
         checkResult(memory, success);
@@ -163,15 +171,15 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
       case 'Other':
         bool success = true;
         if (memory['other1'] != '' &&
-            !stringsAreEqual(field1TextController.text, memory['other1'])) {
+            !stringsAreEqual(field1TextController.text, memory['other1'], memory['other1Encrypt'])) {
           success = false;
         }
         if (memory['other2'] != '' &&
-            !stringsAreEqual(field2TextController.text, memory['other2'])) {
+            !stringsAreEqual(field2TextController.text, memory['other2'], memory['other2Encrypt'])) {
           success = false;
         }
         if (memory['other3'] != '' &&
-            !stringsAreEqual(field3TextController.text, memory['other3'])) {
+            !stringsAreEqual(field3TextController.text, memory['other3'], memory['other3Encrypt'])) {
           success = false;
         }
         checkResult(memory, success);
@@ -203,6 +211,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                       title: 'Birthday:',
                       textController: field1TextController,
                       inputType: 'date',
+                      mapKey: 'birthday',
                     ),
               memory['phoneNumber'] == ''
                   ? Container()
@@ -222,16 +231,6 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                       title: memory['otherField'] + ':',
                       textController: field4TextController,
                     ),
-              BasicFlatButton(
-                text: 'Submit',
-                onPressed: () => checkAnswer(),
-                color: Colors.purple[100],
-                splashColor: Colors.purple[300],
-                padding: 10,
-              ),
-              SizedBox(
-                height: 50,
-              ),
             ],
           ),
         );
@@ -269,16 +268,6 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                       title: memory['otherField'] + ':',
                       textController: field3TextController,
                     ),
-              BasicFlatButton(
-                text: 'Submit',
-                onPressed: () => checkAnswer(),
-                color: Colors.purple[100],
-                splashColor: Colors.purple[300],
-                padding: 10,
-              ),
-              SizedBox(
-                height: 50,
-              ),
             ],
           ),
         );
@@ -315,17 +304,6 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                       title: memory['other3Field'] + ':',
                       textController: field3TextController,
                     ),
-              BasicFlatButton(
-                text: 'Submit',
-                fontSize: 22,
-                onPressed: () => checkAnswer(),
-                color: Colors.purple[100],
-                splashColor: Colors.purple[300],
-                padding: 10,
-              ),
-              SizedBox(
-                height: 50,
-              ),
             ],
           ),
         );
@@ -356,19 +334,36 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
               ),
             ]),
         body: Center(
-          child: getTest(),
+          child: Column(
+            children: <Widget>[
+              getTest(),
+              BasicFlatButton(
+                text: 'Submit',
+                fontSize: 20,
+                onPressed: () => checkAnswer(),
+                color: Colors.purple[100],
+                splashColor: Colors.purple[300],
+                padding: 10,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+            ],
+          ),
         ));
   }
 }
 
 class PromptPair extends StatefulWidget {
   final String inputType;
+  final String mapKey;
   final String title;
   final TextEditingController textController;
   final double containerWidth;
 
   PromptPair(
       {this.inputType,
+      this.mapKey,
       this.title,
       this.textController,
       this.containerWidth = 250});
@@ -382,8 +377,13 @@ class _PromptPairState extends State<PromptPair> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(widget.title,
-            style: TextStyle(fontSize: 24, color: backgroundHighlightColor)),
+        Text(
+          widget.title,
+          style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+        ),
+        SizedBox(
+          height: 5,
+        ),
         Container(
           width: widget.containerWidth,
           height: 40,
@@ -393,13 +393,18 @@ class _PromptPairState extends State<PromptPair> {
                   textColor: backgroundHighlightColor,
                   onPressed: () {
                     HapticFeedback.heavyImpact();
-                    DatePicker.showDatePicker(context,
-                        showTitleActions: true,
-                        onChanged: (date) {}, onConfirm: (date) {
-                      print('confirm $date');
-                      widget.textController.text = date.toIso8601String();
-                      setState(() {});
-                    }, currentTime: DateTime.now());
+                    DatePicker.showDatePicker(
+                      context,
+                      showTitleActions: true,
+                      onChanged: (date) {},
+                      onConfirm: (date) {
+                        widget.textController.text = date.toIso8601String();
+                        setState(() {});
+                      },
+                      currentTime: widget.mapKey == 'birthday'
+                          ? DateTime.parse('1990-01-01')
+                          : DateTime.now(),
+                    );
                   },
                   text: widget.textController.text == ''
                       ? 'Pick Date'
@@ -408,14 +413,15 @@ class _PromptPairState extends State<PromptPair> {
                   padding: 5,
                 )
               : TextField(
-                  style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+                  style:
+                      TextStyle(fontSize: 18, color: backgroundHighlightColor),
                   textAlign: TextAlign.center,
                   controller: widget.textController,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: backgroundSemiColor)),
+                          borderSide: BorderSide(color: Colors.grey)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: backgroundHighlightColor))),

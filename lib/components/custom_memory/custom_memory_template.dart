@@ -3,7 +3,9 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:password/password.dart';
 
 class CustomMemoryInput extends StatefulWidget {
   final Function() callback;
@@ -20,56 +22,198 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
   // todo: generalize these
   String spacedRepetitionType = longTerm;
   Set errors = Set();
+  List<bool> encryptStates;
+  bool encrypting = false;
+  var prefs = PrefsUpdater();
+
+  @override
+  void initState() {
+    super.initState();
+    encryptStates = List.filled(widget.memoryFields.length, false);
+  }
+
+  toggleMode(int i) {
+    HapticFeedback.heavyImpact();
+    encryptStates[i] = !encryptStates[i];
+    setState(() {});
+  }
 
   getFields() {
     List<Widget> fieldsList = [];
-    widget.memoryFields.forEach((memoryField) {
+    widget.memoryFields.asMap().forEach((i, memoryField) {
       // if other, have field be textfield
       if (memoryField.inputType == 'other') {
-        fieldsList.add(Container(
-          width: 160,
-          height: 30,
-          child: Row(
+        fieldsList.add(
+          Row(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Flexible(
-                child: TextField(
-                  style: TextStyle(color: backgroundHighlightColor),
-                  textAlign: TextAlign.center,
-                  controller: memoryField.fieldController,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: backgroundHighlightColor)),
-                    hintText: memoryField.text,
-                    hintStyle: TextStyle(color: Colors.grey),
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                  ),
+              encryptStates[i]
+                  ? GestureDetector(
+                      onTap: () => toggleMode(i),
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: Colors.blue[200],
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Center(
+                              child: Icon(
+                                Icons.lock,
+                                color: backgroundColor,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            child: Text(
+                              'SAFE',
+                              style: TextStyle(
+                                fontFamily: 'Viga',
+                                fontSize: 11,
+                              ),
+                            ),
+                            left: 2,
+                            bottom: 6,
+                          )
+                        ],
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: () => toggleMode(i),
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                          child: Icon(
+                            Icons.lock_open,
+                            color: backgroundHighlightColor,
+                          ),
+                        ),
+                      ),
+                    ),
+              SizedBox(
+                width: 10,
+              ),
+              Container(
+                width: 160,
+                height: 30,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Flexible(
+                      child: TextField(
+                        style: TextStyle(color: backgroundHighlightColor),
+                        textAlign: TextAlign.center,
+                        controller: memoryField.fieldController,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: backgroundHighlightColor)),
+                          hintText: memoryField.text,
+                          hintStyle: TextStyle(color: Colors.grey),
+                          contentPadding: EdgeInsets.all(5),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    memoryField.required
+                        ? Text(
+                            ' *',
+                            style: TextStyle(
+                                fontSize: 20, color: backgroundHighlightColor),
+                          )
+                        : Container()
+                  ],
                 ),
               ),
-              memoryField.required
-                  ? Text(
-                      ' *',
-                      style: TextStyle(
-                          fontSize: 20, color: backgroundHighlightColor),
-                    )
-                  : Container()
             ],
           ),
-        ));
-        fieldsList.add(SizedBox(
-          height: 5,
-        ));
+        );
+        fieldsList.add(
+          SizedBox(
+            height: 5,
+          ),
+        );
       } else {
         String title = memoryField.text;
         if (memoryField.required) {
           title += ' *';
         }
-        fieldsList.add(Text(title,
-            style: TextStyle(fontSize: 20, color: backgroundHighlightColor)));
+        fieldsList.add(
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              i != 0 ? encryptStates[i]
+                  ? GestureDetector(
+                      onTap: () => toggleMode(i),
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: Colors.blue[200],
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Center(
+                              child: Icon(
+                                Icons.lock,
+                                color: backgroundColor,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            child: Text(
+                              'SAFE',
+                              style: TextStyle(
+                                fontFamily: 'Viga',
+                                fontSize: 11,
+                              ),
+                            ),
+                            left: 2,
+                            bottom: 6,
+                          )
+                        ],
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: () => toggleMode(i),
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                          child: Icon(
+                            Icons.lock_open,
+                            color: backgroundHighlightColor,
+                          ),
+                        ),
+                      ),
+                    ) : Container(),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                title,
+                style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+              ),
+            ],
+          ),
+        );
+        fieldsList.add(
+          SizedBox(
+            height: 5,
+          ),
+        );
       }
 
       // if required, add error box below
@@ -96,19 +240,19 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       } else if (memoryField.inputType == 'date') {
         fieldsList.add(
           BasicFlatButton(
-            color: Colors.grey,
+            color: Colors.purple[50],
             onPressed: () {
               DatePicker.showDatePicker(
                 context,
                 showTitleActions: true,
                 onChanged: (date) {},
                 onConfirm: (date) {
-                  print('confirm ${memoryField.mapKey}');
                   memoryField.controller.text = date.toIso8601String();
                   setState(() {});
                 },
                 currentTime: memoryField.mapKey == 'birthday'
-                    ? DateTime.parse('1990-01-01') : DateTime.now(),
+                    ? DateTime.parse('1990-01-01')
+                    : DateTime.now(),
               );
             },
             text: memoryField.controller.text == ''
@@ -152,7 +296,6 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
   }
 
   addMemory() async {
-    var prefs = PrefsUpdater();
     errors = Set();
     String primaryKey = widget.memoryFields[0].controller.text;
     widget.memoryFields.forEach((memoryField) {
@@ -170,6 +313,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
         errors.add('${memoryField.text} title required.');
       }
     });
+    encrypting = true;
     setState(() {});
     // check if we already have the memory
     var customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
@@ -189,15 +333,28 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       'spacedRepetitionType': spacedRepetitionType,
       'spacedRepetitionLevel': 0,
     };
-    widget.memoryFields.sublist(1).forEach((nonPrimaryMemoryField) {
+    widget.memoryFields.asMap().forEach((i, nonPrimaryMemoryField) {
       if (nonPrimaryMemoryField.inputType == 'other') {
-        map[nonPrimaryMemoryField.mapKey + 'Field'] =
-            nonPrimaryMemoryField.fieldController.text;
-        map[nonPrimaryMemoryField.mapKey] =
-            nonPrimaryMemoryField.controller.text;
+        map[nonPrimaryMemoryField.mapKey + 'Field'] = nonPrimaryMemoryField.fieldController.text;
+        if (encryptStates[i]) {
+          map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = true;
+          map[nonPrimaryMemoryField.mapKey] = Password.hash(
+              nonPrimaryMemoryField.controller.text, PBKDF2());
+        } else {
+          map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = false;
+          map[nonPrimaryMemoryField.mapKey] =
+              nonPrimaryMemoryField.controller.text;
+        }
       } else {
-        map[nonPrimaryMemoryField.mapKey] =
-            nonPrimaryMemoryField.controller.text;
+        if (encryptStates[i]) {
+          map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = true;
+          map[nonPrimaryMemoryField.mapKey] = Password.hash(
+              nonPrimaryMemoryField.controller.text, PBKDF2());
+        } else {
+          map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = false;
+          map[nonPrimaryMemoryField.mapKey] =
+              nonPrimaryMemoryField.controller.text;
+        }
       }
     });
     customMemories[primaryKey] = map;
@@ -207,6 +364,8 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
         'Ready to be tested on your \'$primaryKey\' memory?',
         'Good luck!',
         homepageKey);
+    encrypting = false;
+    setState(() {});
     widget.callback();
     Navigator.pop(context);
   }
@@ -258,13 +417,18 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
               value: value,
               child: Text(
                 value,
-                style: TextStyle(fontSize: 20, fontFamily: 'CabinSketch'),
+                style: TextStyle(fontSize: 16, fontFamily: 'CabinSketch'),
               ),
             );
           }).toList(),
         ),
         getErrors(),
-        BasicFlatButton(
+        encrypting ? BasicFlatButton(
+          text: 'Encrypting',
+          onPressed: null,
+          fontSize: 18,
+          color: Colors.yellow,
+        ) : BasicFlatButton(
           text: 'Start',
           onPressed: addMemory,
           fontSize: 18,

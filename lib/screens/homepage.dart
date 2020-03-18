@@ -91,18 +91,24 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
+// make text input clearer in bright mode
+// store all custom memories as hashes
+
+// TODO: mini games - morse survival game, rapid memory game (fade), super PI/other irrational numbers
 
 // next up:
-// TODO: store all custom memories as hashes
-// TODO: make all backgroundSemi -> grey
-// TODO: welcome animation, second page still visible until swipe
+// TODO: check callback for adding custom ID vs others? 
+// TODO: welcome animation, second page still visible until swipe?
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 // TODO: handle bad CSV input
 
 // horizon:
+// TODO: investigate potential slow encrypting
+// TODO: add recipe as custom test
+// TODO: add date system
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
 // TODO: BIG: badge / quest system
-// TODO: BIG: once you beat something (like a timed test, it gets harder, up to three levels???)
+// TODO: BIG: once you beat something (like a timed test, it gets harder, up to three levels???) / or choose amount of time for timed tests
 // TODO: describe amount of pi correct
 // TODO: chapter animation
 // TODO: add scroll notification when scrollable: https://medium.com/@diegoveloper/flutter-lets-know-the-scrollcontroller-and-scrollnotification-652b2685a4ac
@@ -120,7 +126,6 @@ class MyHomePage extends StatefulWidget {
 // TODO: add safe viewing area (for toolbar)
 // TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
 // TODO: crashlytics for IOS
-// TODO: add recipe as custom test
 // TODO: look into possible battery drainage from refreshing screen? emulator seems to run hot
 // TODO: add name (first time, and preferences) - use in local notifications
 // TODO: add sounds
@@ -128,6 +133,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: make vibrations cooler, and more consistent across app?
 // TODO: make account, backend, retrieve portfolios
+// TODO: delete old memory dict keys for custom memories when you delete the memory
 // TODO: BIG: add backend, account recovery (store everything?)
 
 // TODO:  Brain by Arjun Adamson from the Noun Project

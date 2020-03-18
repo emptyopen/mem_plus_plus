@@ -30,19 +30,19 @@ class _ContactInputState extends State<ContactInput> {
         required: true,
         inputType: 'string'));
     memoryFields.add(MemoryField(
-        text: 'Contact birthday',
+        text: 'Birthday',
         mapKey: 'birthday',
         controller: contactBirthdayTextController,
         required: false,
         inputType: 'date'));
     memoryFields.add(MemoryField(
-        text: 'Contact phone number',
+        text: 'Phone number',
         mapKey: 'phoneNumber',
         controller: contactPhoneNumberTextController,
         required: false,
         inputType: 'number'));
     memoryFields.add(MemoryField(
-        text: 'Contact address',
+        text: 'Address',
         mapKey: 'address',
         controller: contactAddressTextController,
         required: false,

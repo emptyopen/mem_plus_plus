@@ -195,9 +195,7 @@ class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
     '    Really mash the scene and your real life sublocation together!\n\n    Is blood spurting out of the '
         'faucet? So gross! Billowing flames when you open the bathroom door? Close your eyes and feel the searing flames on your face! '
         'Smell the stench of the rotting zombies chasing you down the hallway! \n    Really let your imagination run wild!',
-    '    Finally, it would be great to link the scenes between your sub-locations as well. Not only will it help you '
-        'remember everything more clearly in general, it will also help you to move around the scenes more quickly, or if you '
-        'need to jump around to certain letters in your head.\n    Like everything else you memorize, eventually these scenes '
+    '        Don\'t worry about having to imagine these uncomfortably weird scenes forever. Like everything else you memorize, eventually these zany images '
         'will fade into the background as the words, dots, and dashes become second nature.',
   ];
 

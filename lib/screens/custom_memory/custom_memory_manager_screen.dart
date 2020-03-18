@@ -63,10 +63,12 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     List<CustomMemoryTile> customMemoryTiles = [];
     for (String customMemoryKey in customMemories.keys) {
       var customMemory = customMemories[customMemoryKey];
-      customMemoryTiles.add(CustomMemoryTile(
-        customMemory: customMemory,
-        callback: callback,
-      ));
+      customMemoryTiles.add(
+        CustomMemoryTile(
+          customMemory: customMemory,
+          callback: callback,
+        ),
+      );
     }
     if (this.mounted) {
       setState(() {
@@ -108,7 +110,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                     children: <Widget>[
                       customMemoriesColumn,
                       SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
                       Column(
                         children: <Widget>[
@@ -136,7 +138,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                                 ),
                                 Text(
                                   '  - Phone numbers\n  - Birthdays\n  - Addresses\n'
-                                  '  - Credit cards\n  - Checking/routing numbers\n  - Driver\'s license info'
+                                  '  - Credit cards\n  - Checking/routing numbers\n  - Driver\'s license info\n  - Licence plates'
                                   '\n  - Recipes (template coming later)\n  - Flight confirmation numbers'
                                   '\n  - Security codes\n  - Padlock combinations\n  - Usernames/passwords\n\n... if you had to '
                                   'look it up recently, it\'s a good candidate!',
@@ -148,7 +150,9 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Container(
                             width: screenWidth * 0.8,
                             decoration: BoxDecoration(
@@ -172,25 +176,20 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                                   height: 10,
                                 ),
                                 Text(
-                                  '    Don\'t worry about data privacy! All custom memory data can be hashed using '
-                                  'SHA-512 encryption, meaning nothing you type (for secure data) will ever '
+                                  '    All custom memory data can be hashed using '
+                                  'SHA-512 encryption, meaning nothing you type (for your choices of data) will ever '
                                   'be stored anywhere in plain text!\n    You can specify if you\'d like something '
-                                  'cryptographically secured when storing the memory by checking the password symbol for that field. '
-                                  'Keep in mind that if you do that, you won\'t be able to view it later, even if you '
-                                  'forget it!',
+                                  'cryptographically secured when storing the memory by toggling the SAFE symbol for that field. '
+                                  'Keep in mind that if you do that, you won\'t be able to view it later even if you '
+                                  'forget it, because only the hash value will be stored!',
                                   textAlign: TextAlign.left,
-                                ),
-                                SizedBox(height: 20,),
-                                Text(
-                                  'HASHING will be available soon! Hopefully next update.',
-                                  style: TextStyle(
-                                    color: backgroundHighlightColor,
-                                    fontSize: 18,
-                                  ),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: 100,
+                          )
                         ],
                       ),
                     ],
@@ -216,13 +215,17 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                       padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
                       child: Row(
                         children: <Widget>[
-                          Center(child: Icon(Icons.add)),
+                          Center(
+                              child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          )),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
                             'new memory',
-                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         ],
                       ),
@@ -260,7 +263,9 @@ class CustomMemoryTile extends StatelessWidget {
         return AlertDialog(
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
-              side: BorderSide(), borderRadius: BorderRadius.circular(5)),
+            side: BorderSide(),
+            borderRadius: BorderRadius.circular(5),
+          ),
           title: Text(
             'Confirm',
             style: TextStyle(color: backgroundHighlightColor),
@@ -300,6 +305,9 @@ class CustomMemoryTile extends StatelessWidget {
 
   viewCustomMemory(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    customMemory.forEach((k, v) {
+      print('$k | $v');
+    });
     return Material(
         color: Color.fromRGBO(0, 0, 0, 0.7),
         child: Stack(
@@ -334,6 +342,8 @@ class CustomMemoryTile extends StatelessWidget {
                                             heading: 'Birthday:',
                                             subHeading:
                                                 customMemory['birthday'],
+                                            encrypted:
+                                                customMemory['birthdayEncrypt'],
                                           ),
                                     customMemory['phoneNumber'] == ''
                                         ? Container()
@@ -341,12 +351,16 @@ class CustomMemoryTile extends StatelessWidget {
                                             heading: 'Phone number:',
                                             subHeading:
                                                 customMemory['phoneNumber'],
+                                            encrypted: customMemory[
+                                                'phoneNumberEncrypt'],
                                           ),
                                     customMemory['address'] == ''
                                         ? Container()
                                         : CustomMemoryViewPair(
                                             heading: 'Address:',
                                             subHeading: customMemory['address'],
+                                            encrypted:
+                                                customMemory['addressEncrypt'],
                                           ),
                                     customMemory['other'] == ''
                                         ? Container()
@@ -355,6 +369,8 @@ class CustomMemoryTile extends StatelessWidget {
                                                 customMemory['otherField'] +
                                                     ':',
                                             subHeading: customMemory['other'],
+                                            encrypted:
+                                                customMemory['otherEncrypt'],
                                           ),
                                   ],
                                 )
@@ -369,13 +385,19 @@ class CustomMemoryTile extends StatelessWidget {
                                     CustomMemoryViewPair(
                                       heading: 'Number:',
                                       subHeading: customMemory['number'],
+                                      encrypted: customMemory['numberEncrypt'],
                                     ),
                                     customMemory['expiration'] == ''
                                         ? Container()
                                         : CustomMemoryViewPair(
                                             heading: 'Expiration:',
-                                            subHeading: datetimeToDateString(
-                                                customMemory['expiration']),
+                                            subHeading: customMemory[
+                                                    'expirationEncrypt']
+                                                ? 'ENCRYPTED'
+                                                : datetimeToDateString(
+                                                    customMemory['expiration']),
+                                            encrypted: customMemory[
+                                                'expirationEncrypt'],
                                           ),
                                     customMemory['other'] == ''
                                         ? Container()
@@ -384,6 +406,8 @@ class CustomMemoryTile extends StatelessWidget {
                                                 customMemory['otherField'] +
                                                     ':',
                                             subHeading: customMemory['other'],
+                                            encrypted:
+                                                customMemory['otherEncrypt'],
                                           ),
                                   ],
                                 )
@@ -399,6 +423,7 @@ class CustomMemoryTile extends StatelessWidget {
                                       heading:
                                           customMemory['other1Field'] + ':',
                                       subHeading: customMemory['other1'],
+                                      encrypted: customMemory['other1Encrypt'],
                                     ),
                                     customMemory['other2'] == ''
                                         ? Container()
@@ -407,6 +432,8 @@ class CustomMemoryTile extends StatelessWidget {
                                                 customMemory['other2Field'] +
                                                     ':',
                                             subHeading: customMemory['other2'],
+                                            encrypted:
+                                                customMemory['other2Encrypt'],
                                           ),
                                     customMemory['other3'] == ''
                                         ? Container()
@@ -415,6 +442,8 @@ class CustomMemoryTile extends StatelessWidget {
                                                 customMemory['other3Field'] +
                                                     ':',
                                             subHeading: customMemory['other3'],
+                                            encrypted:
+                                                customMemory['other3Encrypt'],
                                           ),
                                   ],
                                 )
@@ -474,9 +503,8 @@ class CustomMemoryTile extends StatelessWidget {
         title: Text('${customMemory['title']}',
             style: TextStyle(fontSize: 20, color: backgroundHighlightColor)),
         subtitle: Text(
-          '${customMemory['type']}\n'
           '${findRemainingTime()}',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 14, color: backgroundHighlightColor),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
@@ -484,8 +512,8 @@ class CustomMemoryTile extends StatelessWidget {
             Container(
               width: 50,
               child: FlatButton(
-                child: Icon(Icons.remove_red_eye,
-                    color: colorCustomMemoryStandard),
+                child:
+                    Icon(Icons.remove_red_eye, color: colorCustomMemoryDarker),
                 onPressed: () => confirmViewCustomMemory(context),
               ),
             ),
@@ -512,23 +540,56 @@ class CustomMemoryTile extends StatelessWidget {
 class CustomMemoryViewPair extends StatelessWidget {
   final String heading;
   final String subHeading;
+  final bool encrypted;
 
-  CustomMemoryViewPair({this.heading, this.subHeading});
+  CustomMemoryViewPair({this.heading, this.subHeading, this.encrypted = false});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(heading,
-            style: TextStyle(fontSize: 22, color: backgroundHighlightColor)),
+        Text(
+          heading,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+        ),
+        SizedBox(
+          height: 3,
+        ),
         Container(
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[300]),
+                border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(5)),
             padding: EdgeInsets.all(10),
-            child: Text(subHeading,
-                style:
-                    TextStyle(fontSize: 24, color: backgroundHighlightColor))),
+            child: encrypted
+                ? Container(
+                  width: 120,
+                  child: Stack(
+                      children: <Widget>[
+                        // Text(
+                        //   subHeading.substring(0, 6),
+                        //   style: TextStyle(color: Colors.black, fontSize: 20),
+                        //   textAlign: TextAlign.center,
+                        // ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Icon(Icons.lock),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'ENCRYPTED',
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      ],
+                    ),
+                )
+                : Text(subHeading,
+                    style: TextStyle(
+                        fontSize: 20, color: backgroundHighlightColor))),
         SizedBox(
           height: 10,
         ),

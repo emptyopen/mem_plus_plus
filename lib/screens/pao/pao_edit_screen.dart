@@ -328,8 +328,8 @@ class PAOEditScreenHelp extends StatelessWidget {
         'into groups of 6, or three pairs of two digits, each pair corresponding to a person, action, and object. ',
     '    For example, for the number 958417 we\'d break it down into 95-84-17, '
         'which under my personal system corresponds to 95 (person) = Tom Brady, 84 (action) = riding a motorcycle, '
-        '17 (object) = giant boulder. So my visualized scene would be Tom Brady riding a motorcycle over '
-        'a bunch of giant boulders. What a sight that would be!',
+        '17 (object) = giant boulder. \n    So my visualized scene would be TOM BRADY riding a MOTORCYCLE over '
+        'a bunch of giant BOULDERS. What a sight that would be!',
     '    This system should take a good amount of time setting up before you start trying to master it. Update '
         'the PAO values for your digits until you\'re really happy with the list. Use people you know in real life, '
         'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '

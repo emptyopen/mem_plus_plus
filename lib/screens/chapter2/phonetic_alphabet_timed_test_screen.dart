@@ -240,12 +240,11 @@ class _PhoneticAlphabetTimedTestScreenState
             'Incorrect. \n${errors}Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
         backgroundColor: colorIncorrect,
-        durationSeconds: 2 *
-            ((firstCorrect ? 0 : 1) +
-                (secondCorrect ? 0 : 1) +
-                (thirdCorrect ? 0 : 1) +
-                (fourthCorrect ? 0 : 1) +
-                (fifthCorrect ? 0 : 1)),
+        durationSeconds: ((firstCorrect ? 0 : 2) +
+                (secondCorrect ? 0 : 2) +
+                (thirdCorrect ? 0 : 2) +
+                (fourthCorrect ? 0 : 2) +
+                (fifthCorrect ? 0 : 4)),
       );
     }
     text1Controller.text = '';
@@ -774,15 +773,16 @@ class PhoneticAlphabetTimedTestScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Phonetic Alphabet Timed Test',
       information: [
-        '    Time to recall your story! Now, which old apartment was that again...\n'
-            '    When pressing the button, you will see graphically when it is being registered '
+        '    Time to recall your story! Now, which old apartment was that again...',
+            '    When pressing the Morse button, you will see graphically when it is being registered '
             'as a dot or a dash. There will also be a timer that indicates how much time you '
             'have left to start the next dot or dash before the letter is locked. A slash is a letter separator!',
         '    Here are the rules for Morse, if you were curious: \n'
             '  - The length of a dot is 1 time unit. \n  - A dash is 3 time units.\n'
             '  - The space between symbols (dots and dashes) of the same letter is 1 time unit.\n'
             '  - The space between letters is 3 time units.\n'
-            '  - The space between words is 7 time units.'
+            '  - The space between words is 7 time units.\n\n    Don\'t worry about getting it exactly right yourself! '
+            'This Morse button is pretty forgiving. '
       ],
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,

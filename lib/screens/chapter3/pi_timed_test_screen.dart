@@ -194,10 +194,10 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                         color: backgroundHighlightColor),
                     minLines: 10,
                     maxLines: 12,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: backgroundSemiColor)),
+                            borderSide: BorderSide(color: Colors.grey)),
                         focusedBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: backgroundHighlightColor)),

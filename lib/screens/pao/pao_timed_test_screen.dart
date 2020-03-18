@@ -178,7 +178,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
                     decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundSemiColor)),
+                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
                         focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
@@ -196,7 +196,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundSemiColor)),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
                       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
@@ -214,7 +214,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundSemiColor)),
+                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
                       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(),

@@ -240,7 +240,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                  color: backgroundSemiColor,
+                                  color: Colors.grey,
                                 )),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -301,7 +301,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                  color: backgroundSemiColor,
+                                  color: Colors.grey,
                                 )),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -365,7 +365,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                      color: backgroundSemiColor,
+                                      color: Colors.grey,
                                     )),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -402,7 +402,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                      color: backgroundSemiColor,
+                                      color: Colors.grey,
                                     )),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -468,7 +468,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                      color: backgroundSemiColor,
+                                      color: Colors.grey,
                                     )),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -505,7 +505,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                      color: backgroundSemiColor,
+                                      color: Colors.grey,
                                     )),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -568,7 +568,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                             decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                  color: backgroundSemiColor,
+                                  color: Colors.grey,
                                 )),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(

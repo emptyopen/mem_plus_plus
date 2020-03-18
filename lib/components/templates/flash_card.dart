@@ -186,7 +186,7 @@ class _FlashCardState extends State<FlashCard> {
       showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
-              'Great job! You still have some items you need to increase familiarity for, pop back here any time!',
+              'Great job! You still have some items you need to increase familiarity for, pop back to practice any time!',
           backgroundColor: widget.color,
           durationSeconds: 3);
       Navigator.pop(context);

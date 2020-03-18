@@ -167,7 +167,7 @@ class _SingleDigitTimedTestScreenState
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(5),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: backgroundSemiColor)),
+                          borderSide: BorderSide(color: Colors.grey)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: backgroundHighlightColor)),
