@@ -43,6 +43,11 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
+    Text(
+      'Let\'s go!',
+      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
+      textAlign: TextAlign.center,
+    ),
   ];
 
   final List<Widget> information = [
@@ -65,13 +70,12 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       ],
     ),
     Text(
-      '    My favorite demonstration that I use to get people invested into their memories is memorizing '
-      'a deck of cards in ten minutes. I also tell them about the time I learned '
-      '200 digits of pi in a few hours, but they never want to check :(\n\n'
-      '    But those are just party tricks. The real value, at least for me, was the incredible quality-of-'
-      'life improvement I started to experience. I started effortlessly recalling my credit card numbers, '
-      'expiration dates. Licences and passports. Names and passwords. Grocery lists, recipes.'
-      ' Security code combinations. Checking account and routing numbers. '
+      '    My go-to party trick that I use to get people invested into their memories is memorizing '
+      'a deck of cards in ten minutes (trying to get it to five minutes). I memorize 20 digits in 5 minutes, '
+      'or recite 100 digits of pi. But these are just party tricks.\n'
+      '    But the real value, at least for me, has been the incredible quality-of-'
+      'life improvement I started to experience. I can effortlessly recall my checking account and routing numbers. '
+      'Licences and passports. Names and passwords. Grocery lists, recipes. Security code combinations. '
       '\n    I no longer have to painfully search through ancient emails or text threads for obscure information. '
       'I don\'t forget things when I go shopping, and I always remember exactly where I parked my car. The list '
       'goes on, and on, and on. Memory is a part of everything we do!',
@@ -107,11 +111,14 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       'But for the first time, I understood that the reason I forgot something was because '
       'I didn\'t try hard enough to remember it. I didn\'t anchor the memory well '
       'enough, or I didn\'t visualize the scenes in enough detail, or I didn\'t test myself on the '
-      'memory enough. \n    These tools that you will learn to wield aren\'t silver bullets, but I think you\'ll find '
+      'memory enough.',
+      style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+    ),
+    Text(
+      '    These tools that you will learn to wield aren\'t silver bullets, but I think you\'ll find '
       'that if you stick with them, you will soon remember anything you set your mind to. Learn and practice these '
-      'systems, and believe in yourself. '
-      '\n\n    Alright, enough lessons! Let\'s practice with two tests, and then you\'ll be onto your next system!',
-      style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+      'systems, and believe in yourself.\n    Alright, enough lessons! Let\'s practice with two tests, and then you\'ll be onto your next system!',
+      style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
     ),
   ];
 

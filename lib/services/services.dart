@@ -13,6 +13,34 @@ import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/services.dart';
 
+handleAppUpdate() async {
+  print('handling app update...');
+
+  var prefs = PrefsUpdater();
+
+  // new games for old devices:
+  // if singleDigitTimedTest complete, set games available, set fade game available
+  if (await prefs.getBool(singleDigitTimedTestCompleteKey)) {
+    await prefs.setBool(gamesAvailableKey, true);
+    await prefs.setBool(fadeGameAvailableKey, true);
+  }
+  // if nato phonetic complete, set survival game available
+  if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
+    await prefs.setBool(morseGameAvailableKey, true);
+  }
+
+  Map<String, Activity> activityStates =
+      await prefs.getSharedPrefs(activityStatesKey);
+
+  defaultActivityStatesInitial.forEach((k, v) {
+    if (!activityStates.keys.contains(k)) {
+      print('adding $k!!!!');
+      activityStates[k] = v;
+    }
+  });
+  await prefs.writeSharedPrefs(activityStatesKey, activityStates);
+}
+
 class PrefsUpdater {
   Future<Object> getSharedPrefs(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -22,8 +50,8 @@ class PrefsUpdater {
         if (activityStatesString == null) {
           return defaultActivityStatesInitial;
         }
-        Map<String, dynamic> rawMap = json
-            .decode(activityStatesString) as Map<String, dynamic>;
+        Map<String, dynamic> rawMap =
+            json.decode(activityStatesString) as Map<String, dynamic>;
         return rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
       case singleDigitKey:
         var singleDigitData = (json.decode(prefs.getString(key)) as List)
@@ -332,7 +360,8 @@ notifyDuration(
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-  print('setting notification $scheduledNotificationDateTime ||| $title ||| $subtitle');
+  print(
+      'setting notification $scheduledNotificationDateTime ||| $title ||| $subtitle');
   await flutterLocalNotificationsPlugin.schedule(
     0,
     title,
@@ -385,7 +414,8 @@ initializeNotificationsScheduler() async {
   if (singleDigitEditState != null && singleDigitEditState == 'todo') {
     title = 'Let\'s pick up where you left off!';
     subtitle = 'Continue developing your Single Digit mapping!';
-  } else if (singleDigitPracticeState != null && singleDigitPracticeState == 'todo') {
+  } else if (singleDigitPracticeState != null &&
+      singleDigitPracticeState == 'todo') {
     title = 'Let\'s pick up where you left off!';
     subtitle = 'Continue familiarizing your Single Digits!';
   } //else if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) ==
@@ -450,8 +480,11 @@ getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {
         width: isCurrent ? 14 : 10,
         decoration: BoxDecoration(
           color: isCurrent ? highlightColor : Colors.grey,
-          borderRadius: isCurrent ? BorderRadius.circular(7) : BorderRadius.circular(7),
-          border: i == currentCircleIndex ? Border.all(color: backgroundColor) : null,
+          borderRadius:
+              isCurrent ? BorderRadius.circular(7) : BorderRadius.circular(7),
+          border: i == currentCircleIndex
+              ? Border.all(color: backgroundColor)
+              : null,
         ),
       ),
     );
@@ -465,4 +498,48 @@ getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: circles,
   );
+}
+
+slideTransition(BuildContext context, Widget route) {
+  Navigator.push(
+    context,
+    PageRouteBuilder(
+      pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) =>
+          route,
+      transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+      ) =>
+          SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ).animate(animation),
+        child: child,
+      ),
+    ),
+  );
+}
+
+stringToMorse(String string, bool multiWord) {
+  String morseString = multiWord ? '> ' : '';
+  string.runes.forEach((int rune) {
+    var character = new String.fromCharCode(rune).toUpperCase();
+    if (letters.contains(character)) {
+      int index = letters.indexWhere(
+          (letter) => letter.toLowerCase() == character.toLowerCase());
+      morseString += morse[index] + '/';
+    } else if (character == ' ') {
+      morseString += multiWord ? '\n> ' : ' ';
+    } else {
+      morseString += character;
+    }
+  });
+  return morseString;
 }

@@ -115,7 +115,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
                 'Congratulations! You\'ve unlocked the PAO system!',
-            textColor: Colors.black,
+            textColor: Colors.white,
             backgroundColor: colorPAODarker,
             durationSeconds: 3,
             isSuper: true,

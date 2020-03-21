@@ -129,7 +129,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                                 Text(
                                   'Some ideas for custom memories: ',
                                   style: TextStyle(
-                                    color: backgroundHighlightColor,
+                                    color: Colors.black,
                                     fontSize: 18,
                                   ),
                                 ),
@@ -168,7 +168,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                                 Text(
                                   'Is it safe to type my info here?',
                                   style: TextStyle(
-                                    color: backgroundHighlightColor,
+                                    color: Colors.black,
                                     fontSize: 18,
                                   ),
                                 ),
@@ -196,40 +196,19 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                   ),
                 ),
                 Positioned(
-                  child: RaisedButton(
-                    elevation: 5,
-                    color: colorCustomMemoryDarker,
-                    splashColor: colorCustomMemoryDarkest,
-                    onPressed: () {
+                  child: BigButton(
+                    title: 'Add Memory',
+                    function: () {
                       HapticFeedback.heavyImpact();
                       showDialog(
-                          context: context,
-                          child: MyDialogContent(
-                            callback: callback,
-                          ));
+                        context: context,
+                        child: MyDialogContent(
+                          callback: callback,
+                        ),
+                      );
                     },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide()),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
-                      child: Row(
-                        children: <Widget>[
-                          Center(
-                              child: Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          )),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'new memory',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
+                    color1: Colors.purpleAccent,
+                    color2: Colors.purple,
                   ),
                   right: 25,
                   bottom: 25,
@@ -564,8 +543,8 @@ class CustomMemoryViewPair extends StatelessWidget {
             padding: EdgeInsets.all(10),
             child: encrypted
                 ? Container(
-                  width: 120,
-                  child: Stack(
+                    width: 120,
+                    child: Stack(
                       children: <Widget>[
                         // Text(
                         //   subHeading.substring(0, 6),
@@ -586,7 +565,7 @@ class CustomMemoryViewPair extends StatelessWidget {
                         )
                       ],
                     ),
-                )
+                  )
                 : Text(subHeading,
                     style: TextStyle(
                         fontSize: 20, color: backgroundHighlightColor))),

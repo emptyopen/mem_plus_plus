@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = true;
+const bool debugModeEnabled = false;
 
 const String usernameKey = 'Username';
 
@@ -28,7 +28,6 @@ const String homepageFirstHelpKey = 'HomepageFirstHelp';
 const String homepageKey = 'Homepage';
 const String firstTimeAppKey = 'FirstTimeApp';
 const String activityStatesKey = 'ActivityStates';
-const String customMemoriesKey = 'CustomMemories';
 
 // notifications
 const String dailyReminderKey = 'Daily Reminder';
@@ -146,7 +145,17 @@ const String piTimedTestPrepFirstHelpKey = 'PiTimedTestPrepFirstHelp';
 const String piTimedTestFirstHelpKey = 'PiTimedTestFirstHelp';
 const String piTimedTestCompleteKey = 'PiTimedTestComplete';
 
+// games
+const String gamesAvailableKey = 'GamesAvailable';
+const String gamesFirstHelpKey = 'GamesFirstHelp';
+const String fadeGameAvailableKey = 'FadeGameAvailable';
+const String fadeGameFirstHelpKey = 'FadeGameFirstHelp';
+const String morseGameAvailableKey = 'MorseGameAvailable';
+const String morseGameFirstHelpKey = 'MorseGameFirstHelp';
+const String superIrrationalGameAvailableKey = 'SuperIrrationalGameAvailable';
+
 // custom memory
+const String customMemoriesKey = 'CustomMemories';
 const String customMemoryManagerAvailableKey = 'CustomMemoryManagerAvailable';
 const String shortTerm = 'short term (1d ~ 1w)';
 const String mediumTerm = 'medium term (1w ~ 3m)';
@@ -200,6 +209,48 @@ Map customMemoryIconMap = {
   contactString: Icons.person_pin,
   idCardString: Icons.credit_card,
   otherString: Icons.add,
+};
+
+Map morseQuiz = {
+  'most common red fruit': 'apple',
+  'you pedal it has two wheels': 'bicycle',
+  'you sit down on it has four legs': 'chair',
+  'four letter eating utensil': 'fork',
+  'day before tomorrow': 'today',
+  'you make calls on it': 'phone',
+  'furniture that you sleep on': 'bed',
+  'biggest of five on hand': 'thumb',
+  'wax and wick burned for light': 'candle',
+  'small bright objects in the sky': 'starts',
+  'containing nothing': 'empty',
+  'leather around the waist': 'belt',
+  'comes out of the tap': 'water',
+  'opposite of long': 'short',
+  'color of chocolate and coffee': 'brown',
+  'worn on the finger': 'ring',
+  'easier way to say incorrect': 'wrong',
+  'hard shell baby bird inside': 'egg',
+  'horse with black and white stripes': 'zebra',
+  'water from the sky': 'rain',
+  'thousands grow out of your head': 'hair',
+  'three hundred sixty five days': 'year',
+  'sixty minutes is an': 'hour',
+  'most popular stringed instrument': 'guitar',
+  'the tallest animal': 'giraffe',
+  'runs in our veins': 'blood',
+  'sandy area along the shore': 'beach',
+  'large fabric rectangle on the floor': 'carpet',
+  'biggest planet in our solar system': 'jupiter',
+  'sudoku is a type of': 'puzzle',
+  'stop with intent to continue later': 'pause',
+  'erupts with lava': 'volcano',
+  'unwanted emails': 'spam',
+  'show something that was hidden': 'reveal',
+  'organ that pumps blood': 'heart',
+  'a hundred years': 'century',
+  'where you type on a computer': 'keyboard',
+  'tons of sand and maybe an oasis': 'desert', 
+  'wacky scenes when you sleep': 'dream',
 };
 
 List letters = [

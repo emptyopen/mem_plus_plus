@@ -198,7 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       height: 30,
                     ),
                     Text(
-                      '    Matt has a cute dog called Aki. They live in LA and have a good time together. ',
+                      '    Matt has a cute dog called Aki. They live in LA and are always having a a good time with friends and family. ',
                       // '\n\n    The ios store has informed Matt that he cannot say that he will provide '
                       // 'any extra digital content as a result of donations, but they are appreciated!',
                       style: TextStyle(color: backgroundHighlightColor),

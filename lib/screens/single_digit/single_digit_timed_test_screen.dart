@@ -56,6 +56,8 @@ class _SingleDigitTimedTestScreenState
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
       await prefs.updateActivityVisible(lesson1Key, true);
+      await prefs.setBool(gamesAvailableKey, true);
+      await prefs.setBool(fadeGameAvailableKey, true);
       if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         await prefs.setBool(singleDigitTimedTestCompleteKey, true);
@@ -65,6 +67,15 @@ class _SingleDigitTimedTestScreenState
               'Congratulations! You\'ve completed the Single Digit system!',
           textColor: Colors.black,
           backgroundColor: colorSingleDigitDarker,
+          durationSeconds: 3,
+          isSuper: true,
+        );
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText:
+              'Congratulations! You\'ve unlocked Mini-Games!',
+          textColor: Colors.white,
+          backgroundColor: colorGamesDarker,
           durationSeconds: 3,
           isSuper: true,
         );

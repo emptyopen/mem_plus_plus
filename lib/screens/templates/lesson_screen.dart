@@ -70,7 +70,7 @@ class _LessonScreenState extends State<LessonScreen>
                   decoration: BoxDecoration(color: backgroundColor),
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                    padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

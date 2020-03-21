@@ -57,7 +57,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
-                                color: Colors.blue[200],
+                                color: Colors.blue[400],
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
                               child: Icon(
@@ -72,6 +72,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                               style: TextStyle(
                                 fontFamily: 'Viga',
                                 fontSize: 11,
+                                color: backgroundHighlightColor,
                               ),
                             ),
                             left: 2,
@@ -91,7 +92,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                         child: Center(
                           child: Icon(
                             Icons.lock_open,
-                            color: backgroundHighlightColor,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -160,7 +161,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
-                                color: Colors.blue[200],
+                                color: Colors.blue[400],
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
                               child: Icon(
@@ -175,6 +176,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                               style: TextStyle(
                                 fontFamily: 'Viga',
                                 fontSize: 11,
+                                color: backgroundHighlightColor,
                               ),
                             ),
                             left: 2,
@@ -194,7 +196,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                         child: Center(
                           child: Icon(
                             Icons.lock_open,
-                            color: backgroundHighlightColor,
+                            color: Colors.black,
                           ),
                         ),
                       ),

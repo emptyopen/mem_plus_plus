@@ -13,6 +13,7 @@ import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/screens/day_or_older_activities_screen.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/screens/settings_screen.dart';
+import 'package:mem_plus_plus/screens/games/games_screen.dart';
 import 'package:mem_plus_plus/screens/custom_memory/custom_memory_manager_screen.dart';
 import 'package:mem_plus_plus/screens/custom_memory/custom_memory_test_screen.dart';
 import 'package:mem_plus_plus/screens/welcome_screen.dart';
@@ -93,16 +94,27 @@ class MyHomePage extends StatefulWidget {
 // done:
 // make text input clearer in bright mode
 // store all custom memories as hashes
-
-// TODO: mini games - morse survival game, rapid memory game (fade), super PI/other irrational numbers
+// CONSOLIDATE: screen transitions
+// added mini games
+// added fade game
+// added morse survival game
 
 // next up:
-// TODO: check callback for adding custom ID vs others? 
+
+// horizon:
+// TODO: add last second vibrations for morse code test
+// TODO: custom memory can't always submit answer? check if wrong
+// TODO: ensure no duplicates for tests like morse (planets already done?)
+// TODO: figure out overflow on morse code
+// TODO: new button for games button
 // TODO: welcome animation, second page still visible until swipe?
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 // TODO: handle bad CSV input
-
-// horizon:
+// TODO: add super PI/irrational game
+// TODO: figure out how to handle CSV on iphone (doesn't launch google sheets well?) button in CSV to copy text? 
+// TODO: re-add donate button (launch in safari on iphone)
+// TODO: morse code encode portion: long morse doesn't wrap
+// TODO: check callback for adding custom ID vs others?
 // TODO: investigate potential slow encrypting
 // TODO: add recipe as custom test
 // TODO: add date system
@@ -145,8 +157,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Map customMemories;
   Map activityMenuButtonMap;
   bool firstTimeOpeningApp;
-  bool customMemoryManagerAvailable;
-  bool customMemoryManagerFirstView;
+  bool customMemoryManagerAvailable = false;
+  bool customMemoryManagerFirstView = false;
+  bool gamesAvailable = false;
+  bool gamesFirstView = false;
   final globalKey = GlobalKey<ScaffoldState>();
   bool consolidateSingleDigit = false;
   bool consolidateChapter1 = false;
@@ -161,55 +175,14 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     handleAppUpdate();
+    setState(() {});
     getSharedPrefs();
     initializeActivityMenuButtonMap();
     initializeNotificationsScheduler();
     new Timer.periodic(
-        Duration(milliseconds: 100), (Timer t) => setState(() {}));
-  }
-
-  handleAppUpdate() async {
-    //  String version = '6';
-    //  if (await prefs.getBool('VERSION-$version') == null) {
-    //    print('resetting due to new version $version');
-    //    resetActivities();
-    //    await prefs.setBool('VERSION-$version', true);
-    //    setUnlockedActivities();
-    //  }
-    // if (!(await prefs.getKeys().asStream().contains(lesson1Key))) {
-    //   print('doesn\'t contain lesson1Key');
-    // }
-
-    // if (await prefs.getActivityState(singleDigitTimedTestKey) == 'review') {
-    //   await prefs.setBool(singleDigitTimedTestCompleteKey, true);
-    //   await prefs.updateActivityVisible(lesson1Key, true);
-    // }
-    // if (await prefs.getActivityState(alphabetTimedTestKey) == 'review') {
-    //   await prefs.setBool(alphabetTimedTestCompleteKey, true);
-    //   await prefs.updateActivityVisible(lesson2Key, true);
-    // }
-    // if (await prefs.getActivityState(paoTimedTestKey) == 'review') {
-    //   await prefs.setBool(paoTimedTestCompleteKey, true);
-    //   await prefs.updateActivityVisible(lesson3Key, true);
-    // }
-    // if (await prefs.getActivityState(deckTimedTestKey) == 'review') {
-    //   await prefs.setBool(deckTimedTestCompleteKey, true);
-    // }
-
-    print(defaultActivityStatesInitial[faceTimedTestPrepKey]);
-    print(defaultActivityStatesInitial.keys.length);
-
-    Map<String, Activity> activityStates =
-        await prefs.getSharedPrefs(activityStatesKey);
-    print(activityStates[singleDigitPracticeKey].name);
-
-    defaultActivityStatesInitial.forEach((k, v) {
-      if (!activityStates.keys.contains(k)) {
-        print('adding $k!!!!');
-        activityStates[k] = v;
-      }
-    });
-    await prefs.writeSharedPrefs(activityStatesKey, activityStates);
+      Duration(milliseconds: 100),
+      (Timer t) => setState(() {}),
+    );
   }
 
   Future<Null> getSharedPrefs() async {
@@ -265,6 +238,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   )));
     } else {
       firstTimeOpeningApp = false;
+    }
+
+    // check if games are available, and firstView
+    if (await prefs.getBool(gamesAvailableKey) == null) {
+      gamesAvailable = false;
+    } else {
+      gamesAvailable = true;
+    }
+    if (await prefs.getBool(fadeGameFirstHelpKey) == null ||
+        await prefs.getBool(fadeGameFirstHelpKey) == false) {
+      gamesFirstView = false;
+    } else {
+      gamesFirstView = true;
     }
 
     // check if customManager is available, and firstView
@@ -341,6 +327,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  checkGamesFirstTime() async {
+    if (await prefs.getBool(fadeGameFirstHelpKey) == true) {
+      setState(() {
+        gamesFirstView = false;
+      });
+      await prefs.setBool(fadeGameFirstHelpKey, false);
+    }
+    slideTransition(
+      context,
+      GamesScreen(
+        callback: callback,
+      ),
+    );
+  }
+
   checkCustomMemoryManagerFirstTime() async {
     if (await prefs.getBool(customMemoryManagerFirstHelpKey) == true) {
       setState(() {
@@ -348,31 +349,9 @@ class _MyHomePageState extends State<MyHomePage> {
       });
       await prefs.setBool(customMemoryManagerFirstHelpKey, false);
     }
-    Navigator.push(
+    slideTransition(
       context,
-      PageRouteBuilder(
-        pageBuilder: (
-          BuildContext context,
-          Animation<double> animation,
-          Animation<double> secondaryAnimation,
-        ) =>
-            CustomMemoryManagerScreen(
-          callback: callback,
-        ),
-        transitionsBuilder: (
-          BuildContext context,
-          Animation<double> animation,
-          Animation<double> secondaryAnimation,
-          Widget child,
-        ) =>
-            SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: child,
-        ),
-      ),
+      CustomMemoryManagerScreen(callback: callback),
     );
   }
 
@@ -418,7 +397,6 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
             color: Colors.purple[400],
             splashColor: Colors.purple[500],
-            complete: true,
             globalKey: globalKey,
             isCustomTest: true,
           ),
@@ -454,7 +432,6 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: activityMenuButtonMap[activity].icon,
               color: activityMenuButtonMap[activity].color,
               splashColor: activityMenuButtonMap[activity].splashColor,
-              complete: false,
               globalKey: globalKey,
             ),
           );
@@ -590,7 +567,6 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: activityMenuButtonMap[activity].icon,
               color: activityMenuButtonMap[activity].color,
               splashColor: activityMenuButtonMap[activity].splashColor,
-              complete: true,
               globalKey: globalKey,
             ),
           );
@@ -889,40 +865,85 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: getReview(),
                           ),
                           SizedBox(
-                            height: 50,
+                            height: 100,
                           ),
                         ],
                       ),
                     ),
                   ),
+                  IgnorePointer(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 200,
+                        width: screenWidth,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: FractionalOffset.topCenter,
+                            end: FractionalOffset.bottomCenter,
+                            colors: [
+                              backgroundColor.withOpacity(0.0),
+                              backgroundColor.withOpacity(1),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    child: gamesAvailable
+                        ? Stack(
+                            children: <Widget>[
+                              BigButton(
+                                title: 'Games',
+                                function: checkGamesFirstTime,
+                                color1: Colors.lightBlueAccent,
+                                color2: Colors.lightBlue[700],
+                              ),
+                              gamesFirstView
+                                  ? Positioned(
+                                      child: Container(
+                                        width: 50,
+                                        height: 25,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(width: 1),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                          //color: Color.fromRGBO(255, 105, 180, 1),
+                                          color: Color.fromRGBO(
+                                              255, 255, 255, 0.85),
+                                        ),
+                                        child: Shimmer.fromColors(
+                                          period: Duration(seconds: 3),
+                                          baseColor: Colors.black,
+                                          highlightColor: Colors.greenAccent,
+                                          child: Center(
+                                              child: Text(
+                                            'new!',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.red),
+                                          )),
+                                        ),
+                                      ),
+                                      left: 10,
+                                      top: 5)
+                                  : Container()
+                            ],
+                          )
+                        : Container(),
+                    bottom: 25,
+                    left: 25,
+                  ),
                   Positioned(
                     child: customMemoryManagerAvailable
                         ? Stack(
                             children: <Widget>[
-                              Center(
-                                child: RaisedButton(
-                                  elevation: 15,
-                                  color: colorCustomMemoryDarker,
-                                  splashColor: colorCustomMemoryDarkest,
-                                  onPressed: () {
-                                    HapticFeedback.heavyImpact();
-                                    checkCustomMemoryManagerFirstTime();
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(width: 3),
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(10, 20, 10, 20),
-                                    child: Text(
-                                      'Memory manager',
-                                      style: TextStyle(
-                                          fontSize: 22, color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
+                              BigButton(
+                                title: 'Memories',
+                                function: checkCustomMemoryManagerFirstTime,
+                                color1: Colors.purpleAccent,
+                                color2: Colors.purple,
                               ),
                               customMemoryManagerFirstView
                                   ? Positioned(
@@ -958,7 +979,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         : Container(),
                     bottom: 25,
                     right: 25,
-                  )
+                  ),
                 ],
               ),
             ),

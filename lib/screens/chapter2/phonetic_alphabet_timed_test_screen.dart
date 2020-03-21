@@ -37,18 +37,6 @@ class _PhoneticAlphabetTimedTestScreenState
   bool showError3 = false;
   bool showError4 = false;
   bool showError5 = false;
-
-  int morseButtonCounter = 0;
-  bool buttonPressed = false;
-  bool increaseLoopActive = false;
-  int countdownCounter = 0;
-  bool countdownLoopActive = false;
-  int dashThreshold = 10;
-  int initialCountdown = 20;
-  int countdownThreshold = 20;
-  int milliseconds = 50;
-  int counterWidthRatio = 5;
-
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -88,7 +76,7 @@ class _PhoneticAlphabetTimedTestScreenState
     generateNoun(maxSyllables: 3).take(1).forEach((word) {
       encodeWord = word.asLowerCase;
     });
-    while (encodeWord.length > 5) {
+    while (encodeWord.length > 8) {
       generateNoun(maxSyllables: 3).take(1).forEach((word) {
         encodeWord = word.asLowerCase;
       });
@@ -98,13 +86,19 @@ class _PhoneticAlphabetTimedTestScreenState
     generateNoun(maxSyllables: 3).take(1).forEach((word) {
       decodeWord = word.asLowerCase;
     });
-    while (decodeWord.length > 5) {
+    while (decodeWord.length > 8) {
       generateNoun(maxSyllables: 3).take(1).forEach((word) {
         decodeWord = word.asLowerCase;
       });
     }
 
     setState(() {});
+  }
+
+  updateMorseGuess(String guess) {
+    setState(() {
+      morseGuess = guess;
+    });
   }
 
   void checkAnswer() async {
@@ -142,13 +136,13 @@ class _PhoneticAlphabetTimedTestScreenState
     }
     int index1 = letters.indexWhere(
         (letter) => letter.toLowerCase() == randomLetter1.toLowerCase());
-    var correct1 = (phoneticAlphabet[index1].toLowerCase());
+    var correct1 = (phoneticAlphabet[index1].toLowerCase().replaceAll('-', ''));
     int index2 = letters.indexWhere(
         (letter) => letter.toLowerCase() == randomLetter2.toLowerCase());
-    var correct2 = (phoneticAlphabet[index2].toLowerCase());
+    var correct2 = (phoneticAlphabet[index2].toLowerCase().replaceAll('-', ''));
     int index3 = letters.indexWhere(
         (letter) => letter.toLowerCase() == randomLetter3.toLowerCase());
-    var correct3 = (phoneticAlphabet[index3].toLowerCase());
+    var correct3 = (phoneticAlphabet[index3].toLowerCase().replaceAll('-', ''));
     String encodeAnswer = '';
     encodeWord.runes.forEach((int rune) {
       var character = new String.fromCharCode(rune).toLowerCase();
@@ -185,15 +179,6 @@ class _PhoneticAlphabetTimedTestScreenState
     if (!fifthCorrect) {
       errors += '$encodeGuess should have been $encodeAnswer\n';
     }
-    // print(
-    //     '$firstCorrect, ${text1Controller.text.trim().toLowerCase()} | $correct1');
-    // print(
-    //     '$secondCorrect, ${text2Controller.text.trim().toLowerCase()} | $correct2');
-    // print(
-    //     '$thirdCorrect, ${text3Controller.text.trim().toLowerCase()} | $correct3');
-    // print(
-    //     '$fourthCorrect, ${text4Controller.text.trim().toLowerCase()} | $decodeWord');
-    // print('$fifthCorrect, $encodeAnswer | $encodeGuess');
     if (firstCorrect &&
         secondCorrect &&
         thirdCorrect &&
@@ -201,6 +186,7 @@ class _PhoneticAlphabetTimedTestScreenState
         fifthCorrect) {
       await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
       await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
+      await prefs.setBool(morseGameAvailableKey, true);
       if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
         await prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
         await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
@@ -218,8 +204,17 @@ class _PhoneticAlphabetTimedTestScreenState
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
-            textColor: Colors.black,
+            textColor: Colors.white,
             backgroundColor: colorPAODarker,
+            durationSeconds: 3,
+            isSuper: true,
+          );
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Congratulations! You\'ve unlocked the Morse game!',
+            textColor: Colors.white,
+            backgroundColor: colorGamesDarker,
             durationSeconds: 3,
             isSuper: true,
           );
@@ -241,10 +236,10 @@ class _PhoneticAlphabetTimedTestScreenState
         textColor: Colors.black,
         backgroundColor: colorIncorrect,
         durationSeconds: ((firstCorrect ? 0 : 2) +
-                (secondCorrect ? 0 : 2) +
-                (thirdCorrect ? 0 : 2) +
-                (fourthCorrect ? 0 : 2) +
-                (fifthCorrect ? 0 : 4)),
+            (secondCorrect ? 0 : 2) +
+            (thirdCorrect ? 0 : 2) +
+            (fourthCorrect ? 0 : 2) +
+            (fifthCorrect ? 0 : 4)),
       );
     }
     text1Controller.text = '';
@@ -282,86 +277,9 @@ class _PhoneticAlphabetTimedTestScreenState
     });
     return Text(
       morseString,
-      style: TextStyle(fontSize: 24, fontFamily: 'SpaceMono'),
+      style: TextStyle(fontSize: 24, fontFamily: 'SpaceMono', color: backgroundHighlightColor,),
       textAlign: TextAlign.center,
     );
-  }
-
-  resetMorseGuess() {
-    setState(() {
-      morseGuess = '';
-    });
-  }
-
-  void _increaseCounterWhilePressed() async {
-    if (increaseLoopActive) return;
-    increaseLoopActive = true;
-    while (buttonPressed) {
-      setState(() {
-        countdownCounter = 0;
-        morseButtonCounter++;
-      });
-      await Future.delayed(
-        Duration(
-          milliseconds: milliseconds,
-        ),
-      );
-    }
-    increaseLoopActive = false;
-  }
-
-  void _wordCountdown() async {
-    if (countdownLoopActive) return;
-    countdownLoopActive = true;
-    while (countdownCounter < countdownThreshold) {
-      setState(() {
-        countdownCounter++;
-      });
-      await Future.delayed(
-        Duration(
-          milliseconds: milliseconds,
-        ),
-      );
-    }
-    morseGuess += '/';
-    countdownCounter = 0;
-    countdownLoopActive = false;
-    setState(() {});
-  }
-
-  getMorseCounterText() {
-    if (countdownLoopActive && !buttonPressed) {
-      return 'Next letter!';
-    } else if (morseButtonCounter == 0) {
-      return 'Press the button!';
-    }
-    if (morseButtonCounter > dashThreshold) {
-      return 'DASH';
-    }
-    return 'DOT';
-  }
-
-  getMorseState() {
-    if (increaseLoopActive) {
-      return Column(
-        children: <Widget>[
-          Container(
-            height: 5,
-            width: morseButtonCounter.toDouble() * counterWidthRatio,
-            decoration: BoxDecoration(
-              color: morseButtonCounter > dashThreshold
-                  ? Colors.blue
-                  : Colors.orange,
-            ),
-          ),
-        ],
-      );
-    }
-    return Container(
-      height: 5,
-    );
-
-    // return Text(countdownCounter.toString());
   }
 
   @override
@@ -480,133 +398,10 @@ class _PhoneticAlphabetTimedTestScreenState
                     ),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                morseGuess,
-                                style: TextStyle(fontSize: 24),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          countdownLoopActive
-                              ? Container(
-                                  width: 5,
-                                  height: initialCountdown * 2 -
-                                      countdownCounter.toDouble() * 2,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              : Container(
-                                  width: 5,
-                                ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      // Text(getMorseCounterText()),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
-                      Column(
-                        children: <Widget>[
-                          getMorseState(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: 2,
-                                height: 4,
-                                decoration: BoxDecoration(color: Colors.blue),
-                              ),
-                              SizedBox(
-                                width: dashThreshold.toDouble() * 5,
-                              ),
-                              Container(
-                                width: 2,
-                                height: 4,
-                                decoration: BoxDecoration(color: Colors.blue),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Listener(
-                            onPointerUp: (details) {
-                              HapticFeedback.heavyImpact();
-                              resetMorseGuess();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(),
-                              ),
-                              padding: EdgeInsets.all(10.0),
-                              child: Text('Reset'),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Listener(
-                            onPointerDown: (details) {
-                              buttonPressed = true;
-                              countdownCounter = 0;
-                              _increaseCounterWhilePressed();
-                            },
-                            onPointerUp: (details) {
-                              HapticFeedback.heavyImpact();
-                              buttonPressed = false;
-                              if (morseButtonCounter > dashThreshold) {
-                                morseGuess += '-';
-                              } else {
-                                morseGuess += '•';
-                              }
-                              morseButtonCounter = 0;
-                              setState(() {});
-                              _wordCountdown();
-                            },
-                            child: Container(
-                              width: 80,
-                              decoration: BoxDecoration(
-                                color: colorChapter2Lighter,
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(),
-                              ),
-                              padding: EdgeInsets.all(10.0),
-                              child: Center(child: Text('Press')),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      )
-                    ],
+                  child: MorseTest(
+                    callback: updateMorseGuess,
+                    morseAnswer: encodeWord,
+                    color: colorChapter2Standard,
                   ),
                 ),
                 SizedBox(height: 30),
@@ -774,7 +569,7 @@ class PhoneticAlphabetTimedTestScreenHelp extends StatelessWidget {
       title: 'Phonetic Alphabet Timed Test',
       information: [
         '    Time to recall your story! Now, which old apartment was that again...',
-            '    When pressing the Morse button, you will see graphically when it is being registered '
+        '    When pressing the Morse button, you will see graphically when it is being registered '
             'as a dot or a dash. There will also be a timer that indicates how much time you '
             'have left to start the next dot or dash before the letter is locked. A slash is a letter separator!',
         '    Here are the rules for Morse, if you were curious: \n'

@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/constants/colors.dart';
 
 class BasicFlatButton extends StatelessWidget {
   final Color color;
@@ -14,15 +15,18 @@ class BasicFlatButton extends StatelessWidget {
   final Function onPressed;
   final double padding;
   final Color textColor;
+  final String fontFamily;
 
-  BasicFlatButton(
-      {this.color = Colors.white,
-      this.splashColor,
-      this.text,
-      this.fontSize,
-      this.onPressed,
-      this.padding = 0,
-      this.textColor = Colors.black});
+  BasicFlatButton({
+    this.color = Colors.white,
+    this.splashColor,
+    this.text,
+    this.fontSize,
+    this.onPressed,
+    this.padding = 0,
+    this.textColor = Colors.black,
+    this.fontFamily = 'CabinSketch',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +44,59 @@ class BasicFlatButton extends StatelessWidget {
         padding: EdgeInsets.all(padding),
         child: Text(
           text,
-          style: TextStyle(fontSize: fontSize, color: textColor),
+          style: TextStyle(
+            fontSize: fontSize,
+            color: textColor,
+            fontFamily: fontFamily,
+          ),
           textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}
+
+class BigButton extends StatelessWidget {
+  final String title;
+  final Function function;
+  final Color color1;
+  final Color color2;
+
+  BigButton({this.title, this.function, this.color1, this.color2});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(17),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            color1,
+            color2,
+          ],
+        ),
+      ),
+      child: FlatButton(
+        onPressed: () {
+          HapticFeedback.heavyImpact();
+          function();
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+          side: BorderSide(width: 2.5),
+        ),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 22,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
@@ -56,7 +111,6 @@ class MainMenuOption extends StatelessWidget {
   final Color splashColor;
   final Widget route;
   final Function() callback;
-  final bool complete;
   final GlobalKey<ScaffoldState> globalKey;
   final bool isCustomTest;
   final bool isButton;
@@ -72,7 +126,6 @@ class MainMenuOption extends StatelessWidget {
     this.color,
     this.splashColor,
     this.route,
-    this.complete,
     this.callback,
     this.globalKey,
     this.isCustomTest = false,
@@ -91,7 +144,7 @@ class MainMenuOption extends StatelessWidget {
   }
 
   cancelActivity() async {
-    print(activity.name);
+    // TODO: consolidate this
     switch (activity.name) {
       case singleDigitTimedTestKey:
         HapticFeedback.heavyImpact();
@@ -133,9 +186,11 @@ class MainMenuOption extends StatelessWidget {
         HapticFeedback.heavyImpact();
         await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
         await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
-        await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
+        await prefs.updateActivityVisible(
+            phoneticAlphabetTimedTestPrepKey, true);
         if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
-          await prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'todo');
+          await prefs.updateActivityState(
+              phoneticAlphabetTimedTestPrepKey, 'todo');
         }
         break;
       case airportTimedTestKey:
@@ -232,33 +287,24 @@ class MainMenuOption extends StatelessWidget {
             decoration: BoxDecoration(
               color: splashColor,
               borderRadius: BorderRadius.circular(5),
-              gradient: complete
-                  ? LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        color,
-                        splashColor,
-                      ], // whitish to gray
-                      tileMode: TileMode
-                          .repeated, // repeats the gradient over the canvas
-                    )
-                  : LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        splashColor,
-                        splashColor,
-                      ], // whitish to gray
-                      tileMode: TileMode
-                          .repeated, // repeats the gradient over the canvas
-                    ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  color,
+                  splashColor,
+                ], // whitish to gray
+                tileMode:
+                    TileMode.repeated, // repeats the gradient over the canvas
+              ),
             ),
             child: FlatButton(
               splashColor: splashColor,
               highlightColor: Colors.transparent,
               shape: RoundedRectangleBorder(
-                  side: BorderSide(), borderRadius: BorderRadius.circular(5)),
+                side: BorderSide(),
+                borderRadius: BorderRadius.circular(5),
+              ),
               onPressed: () async {
                 HapticFeedback.heavyImpact();
                 globalKey.currentState.hideCurrentSnackBar();
@@ -269,30 +315,7 @@ class MainMenuOption extends StatelessWidget {
                   await prefs.updateActivityFirstView(activity.name, false);
                   callback();
                 }
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (
-                      BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation,
-                    ) =>
-                        route,
-                    transitionsBuilder: (
-                      BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation,
-                      Widget child,
-                    ) =>
-                        SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(1, 0),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    ),
-                  ),
-                );
+                slideTransition(context, route);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -689,6 +712,278 @@ class OKPopButton extends StatelessWidget {
       splashColor: splashColor,
       fontSize: 20,
       padding: 10,
+    );
+  }
+}
+
+class MorseTest extends StatefulWidget {
+  final Function callback;
+  final String morseAnswer;
+  final Color color;
+
+  MorseTest({this.callback, this.morseAnswer, this.color});
+
+  @override
+  _MorseTestState createState() => _MorseTestState();
+}
+
+class _MorseTestState extends State<MorseTest> {
+  String morseGuess = '';
+
+  int morseButtonCounter = 0;
+  bool buttonPressed = false;
+  bool increaseLoopActive = false;
+  int countdownCounter = 0;
+  bool countdownLoopActive = false;
+  int dashThreshold = 15;
+  int initialCountdown = 30;
+  int countdownThreshold = 30;
+  int milliseconds = 25;
+  int counterWidthRatio = 5;
+
+  double textboxHeight = 30;
+
+  void _increaseCounterWhilePressed() async {
+    if (increaseLoopActive) return;
+    increaseLoopActive = true;
+    while (buttonPressed) {
+      setState(() {
+        countdownCounter = 0;
+        morseButtonCounter++;
+      });
+      await Future.delayed(
+        Duration(
+          milliseconds: milliseconds,
+        ),
+      );
+    }
+    increaseLoopActive = false;
+  }
+
+  void _wordCountdown() async {
+    if (countdownLoopActive) return;
+    countdownLoopActive = true;
+    while (countdownCounter < countdownThreshold) {
+      setState(() {
+        countdownCounter++;
+      });
+      await Future.delayed(
+        Duration(
+          milliseconds: milliseconds,
+        ),
+      );
+    }
+    morseGuess += '/';
+    checkNewHeight();
+    countdownCounter = 0;
+    countdownLoopActive = false;
+    widget.callback(morseGuess);
+    setState(() {});
+  }
+
+  getMorseCounterText() {
+    if (countdownLoopActive && !buttonPressed) {
+      return 'Next letter!';
+    } else if (morseButtonCounter == 0) {
+      return 'Press the button!';
+    }
+    if (morseButtonCounter > dashThreshold) {
+      return 'DASH';
+    }
+    return 'DOT';
+  }
+
+  resetMorseGuess() {
+    setState(() {
+      morseGuess = '';
+    });
+  }
+
+  getMorseState() {
+    if (increaseLoopActive) {
+      return Column(
+        children: <Widget>[
+          Container(
+            height: 5,
+            width: morseButtonCounter.toDouble() * counterWidthRatio,
+            decoration: BoxDecoration(
+              color: morseButtonCounter > dashThreshold
+                  ? Colors.blue
+                  : Colors.orange,
+            ),
+          ),
+        ],
+      );
+    }
+    return Container(
+      height: 5,
+    );
+
+    // return Text(countdownCounter.toString());
+  }
+
+  checkNewHeight() {
+    textboxHeight = 30 * (morseGuess.length ~/ 18 + 1.0);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 270,
+                  height: textboxHeight,
+                  child: Text(
+                    morseGuess,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'SpaceMono',
+                      color: backgroundHighlightColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            countdownLoopActive
+                ? Container(
+                    width: 5,
+                    height:
+                        initialCountdown * 1 - countdownCounter.toDouble() * 1,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                    ),
+                  )
+                : Container(
+                    width: 5,
+                  ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Column(
+          children: <Widget>[
+            getMorseState(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 2,
+                  height: 4,
+                  decoration: BoxDecoration(color: Colors.blue),
+                ),
+                SizedBox(
+                  width: dashThreshold.toDouble() * 5,
+                ),
+                Container(
+                  width: 2,
+                  height: 4,
+                  decoration: BoxDecoration(color: Colors.blue),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Listener(
+              onPointerUp: (details) {
+                HapticFeedback.heavyImpact();
+                resetMorseGuess();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(),
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  'Reset',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Listener(
+              onPointerDown: (details) {
+                buttonPressed = true;
+                countdownCounter = 0;
+                _increaseCounterWhilePressed();
+              },
+              onPointerUp: (details) {
+                HapticFeedback.heavyImpact();
+                buttonPressed = false;
+                if (morseButtonCounter > dashThreshold) {
+                  morseGuess += '-';
+                } else {
+                  morseGuess += '•';
+                }
+                morseButtonCounter = 0;
+                widget.callback(morseGuess);
+                setState(() {});
+                _wordCountdown();
+              },
+              child: Container(
+                width: 80,
+                decoration: BoxDecoration(
+                  color: widget.color,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(),
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Center(
+                  child: Text(
+                    'Press',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        )
+      ],
+    );
+  }
+}
+
+class ScreenDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 3,
+      width: 280,
+      decoration: BoxDecoration(
+        color: backgroundHighlightColor,
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(2),
+      ),
     );
   }
 }
