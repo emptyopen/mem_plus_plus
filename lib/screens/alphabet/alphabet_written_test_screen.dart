@@ -96,7 +96,7 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
         '    Welcome to your first written test! In this section, you will be tested on your familiarity with '
             'each letter. Every time you load this page, the letters will be scattered in a random order, '
             'and you simply have to write in the correct object. If you get a perfect score, '
-            'the next test will be unlocked! Good luck!'
+            'the next test will be unlocked! Good luck!\n\n    Small typos are allowed!'
       ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],

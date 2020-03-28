@@ -126,6 +126,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                             padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                             child: Column(
                               children: <Widget>[
+                                SizedBox(height: 10,),
                                 Text(
                                   'Some ideas for custom memories: ',
                                   style: TextStyle(

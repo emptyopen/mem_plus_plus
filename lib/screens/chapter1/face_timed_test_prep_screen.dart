@@ -22,6 +22,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
   String face2 = '';
   String name1 = '';
   String name2 = '';
+  bool ready = false;
   var prefs = PrefsUpdater();
   Duration testDuration =
       debugModeEnabled ? Duration(seconds: 5) : Duration(minutes: 30);
@@ -84,7 +85,9 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
         name1 = await prefs.getString('name1');
         name2 = await prefs.getString('name2');
       }
-    setState(() {});
+    setState(() {
+      ready = true;
+    });
   }
 
   void updateStatus() async {
@@ -130,7 +133,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                 SizedBox(
                   height: 60,
                 ),
-                Row(
+                ready ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(
@@ -185,7 +188,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                       ],
                     )
                   ],
-                ),
+                ) : Container(),
                 SizedBox(
                   height: 40,
                 ),
@@ -228,12 +231,16 @@ class FacesTimedTestPrepScreenHelp extends StatelessWidget {
     'the average person, and he has prominent cheekbones. The name Fred might remind you of Fred Flintstone, so you could '
     'imagine Fred Flintstone flinging some rocks with prominent ridges at poor Fred. \n    All the rocks kept smashing '
     'his nose in! His cheekbones are prominent and strong, and deflected all stones from Fred Flintstone.',
+    '    Or maybe you\'re at a party, and your friend Cassie introduces you to her friend Henry. Henry, Henry... sounds like a '
+    'king\'s name. You imagine someone putting a big crown on his big head, and he sits down on a golden throne. Clutching his '
+    'staff, he bellows to his peasants, spit flying everywhere: \n    "WE SHALL BEHEAD OUR ENEMIES!!"\n\n    And maybe now you '
+    'won\'t have to ask Henry\'s name again when you\'re talking by the fridge in ten minutes.',
     '    If their name is in a language foreign to yours, imagine something that has a similar sound to their name. '
     'You can also break up the name into parts if the whole name is too difficult! '
     '\n    For example, \'Sifiso\' could be remembered with \'Sci-fi sew(ing)\', and a visualization for \'Anatoliy\' could '
     'include a scene with \'a Natalie (Portman)\'.'
     '\n    I know that this seems like it it would take a long time to think of scenes like the example, but you '
-    'will get faster and faster at it! '
+    'will get better and faster at it! '
   ];
 
   @override

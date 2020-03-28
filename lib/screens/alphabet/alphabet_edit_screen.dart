@@ -128,9 +128,9 @@ class AlphabetEditScreenHelp extends StatelessWidget {
   Widget build(BuildContext context) {
     return HelpScreen(
       title: 'Alphabet View/Edit',
-      information: ['    OK! Welcome to the 2nd system here at Takao Studios :) \n'
-        '    What we\'re going to do here is just like last time, now with letters of '
-        'the alphabet! '],
+      information: ['    OK! Welcome to the 2nd system here at Takao Studios :)\n    I\'m getting very excited for you! '
+        'What we\'re going to do here is just like last time, except now with letters of '
+        'the alphabet!'],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
       firstHelpKey: alphabetEditFirstHelpKey,

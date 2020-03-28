@@ -29,7 +29,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       textAlign: TextAlign.center,
     ),
     Text(
-      'The general gist.',
+      'The general gist',
       style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
@@ -71,10 +71,10 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
     ),
     Text(
       '    My go-to party trick that I use to get people invested into their memories is memorizing '
-      'a deck of cards in ten minutes (trying to get it to five minutes). I memorize 20 digits in 5 minutes, '
-      'or recite 100 digits of pi. But these are just party tricks.\n'
-      '    But the real value, at least for me, has been the incredible quality-of-'
-      'life improvement I started to experience. I can effortlessly recall my checking account and routing numbers. '
+      'a deck of cards in ten minutes. I memorize 20 digits in 5 minutes, '
+      'or recite 100 digits of pi. This stuff is crazy.\n\n'
+      '    I have experienced an incredible quality-of-'
+      'life improvement, and I wanted to share it with the world. Imagine effortlessly recalling your checking account and routing numbers. '
       'Licences and passports. Names and passwords. Grocery lists, recipes. Security code combinations. '
       '\n    I no longer have to painfully search through ancient emails or text threads for obscure information. '
       'I don\'t forget things when I go shopping, and I always remember exactly where I parked my car. The list '
@@ -97,7 +97,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       '    Paying attention, of course, is critical. It seems obvious, but it bears repeating. You\'ll really '
       'be surprised at how much more you remember simply by making a conscious effort '
       'to pay attention to things more.'
-      '\n    For example, when someone introduces themselves and they say their name, we\'re not going to just '
+      '\n    For example, when someone introduces themselves and says their name, we\'re not going to just '
       'sit there and let that name just float into our ears. No! '
       'We\'re going to learn how to actively grab a hold of it, and wrestle it into submission.'
       '\n    The added bonus about all of this is that simply thinking about your own memory '
@@ -109,13 +109,13 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       'but when that happens don\'t blame your amazing, awesome brain. \n'
       '    As I went through this learning process, I would still forget things. I still forget things. '
       'But for the first time, I understood that the reason I forgot something was because '
-      'I didn\'t try hard enough to remember it. I didn\'t anchor the memory well '
+      'I didn\'t try hard enough to remember it. \n    I just didn\'t anchor the memory well '
       'enough, or I didn\'t visualize the scenes in enough detail, or I didn\'t test myself on the '
-      'memory enough.',
+      'memory sufficiently. I did better next time, and forgot less.',
       style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
     ),
     Text(
-      '    These tools that you will learn to wield aren\'t silver bullets, but I think you\'ll find '
+      '    These tools that you will learn aren\'t silver bullets, but I think you\'ll find '
       'that if you stick with them, you will soon remember anything you set your mind to. Learn and practice these '
       'systems, and believe in yourself.\n    Alright, enough lessons! Let\'s practice with two tests, and then you\'ll be onto your next system!',
       style: TextStyle(fontSize: 20, color: backgroundHighlightColor),

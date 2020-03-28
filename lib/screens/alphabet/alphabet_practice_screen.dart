@@ -32,8 +32,6 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, alphabetPracticeFirstHelpKey,
-        AlphabetPracticeScreenHelp());
     alphabetData = await prefs.getSharedPrefs(alphabetKey);
     bool allComplete = true;
     for (int i = 0; i < alphabetData.length; i++) {

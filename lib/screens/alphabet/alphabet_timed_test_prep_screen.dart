@@ -314,14 +314,15 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Alphabet Timed Test Preparation',
       information: [
-        '    You guessed it! Two sequences this time. And now we\'re throwing numbers into the mix as well!\n'
+        '    You guessed it! Two sequences this time. And we\'re throwing numbers into the mix as well!\n'
             '    As we start to use longer sequences, start to move the scene around. For example, say we have '
             'the sequences "GP3D" and "R5ZA". Let\'s say that translates to [GHOST, PANDA, BRA, DINOSAUR], and '
             '[ROOT, SNAKE, ZIPPER, APPLE]. ',
         '    [GHOST, PANDA, BRA, DINOSAUR] \n\n    Let\'s avoid starting with a ghost of a panda, because we might forget '
             'which order they come in. \n'
-            '    Alright, let\'s get weird! A very friendly GHOST accidentally bumps into a morbidly obese PANDA. Sorry panda! The panda is very startled, '
-            'because she is trying on a BRA. The bra is a way too tight, though. \n     Ms. Panda sighs, today is not her day. '
+            '    Alright, let\'s get weird with a sample scene! You are a very friendly GHOST, and you always have been. '
+            'Your ghostly self accidentally bumps into a morbidly obese PANDA. The panda is very startled, '
+            'because she is trying on a BRA. The bra is a way too tight, though. \n     Ms. Panda sighs, today is just not her day. '
             'Suddenly she realizes she\'s late for her meeting with her DINOSAUR friend! And today is Dinosaur Day! He\'s going to be so sad if she doesn\'t '
             'show up.',
         '    [ROOT, SNAKE, ZIPPER, APPLE]\n\n    Ms. Panda runs over to see '
@@ -330,8 +331,8 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
             'upon closer inspection, all of these snakes have ZIPPERS down their bodies. Let\'s pull on them to see what comes '
             'out! Ziiiiiiiip! Oh my word, APPLES keep gushing out! Where do these snakes keep all these apples in their bodies?',
         '    Simple combinations of letters and numbers will already become useful in your life to remember things like parking '
-            'spots! Many parking garages or lots have designations like "A2" or "E9". \n    You can imagine an apple being ferociously being '
-            'eaten in the back seat of your car by an enourmous pidgeon, or an elephant stomping all over your car, with balloons being '
+            'spots! Many parking garages or lots have designations like "A2" or "E9". \n    You can imagine an APPLE (my "A") being ferociously being '
+            'eaten in the back seat of your car by an enourmous PIDGEON (my #2), or an ELEPHANT (my "E") stomping all over your car, with BALLOONS (my #9) being '
             'released from the car with every stomp. A million red balloons! Don\'t forget to really make these scenes wild.',
             '    Be sure not to confuse zero with the letter O! Zero will have a dot in the character.\n\n    Remember, WILD stories with LOTS of details!'
       ],

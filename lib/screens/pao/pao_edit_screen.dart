@@ -313,25 +313,27 @@ class PAOEditScreenHelp extends StatelessWidget {
         '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. '
         'You can assign any person, action, and object to any digit, but it\'s a good idea at first '
         'to follow some kind of pattern. ',
-    '    This will take some time to set up! But believe me, it\'ll be worth it. \n'
+    '    This will take some time to set up! It took me a few days to put together the list, and another few weeks to '
+    'start becoming "number fluent", to the point where I could instantly translate any numbers to scenes. But TRUST me, it\'ll be worth it. \n\n'
         '    The person should be associated to its corresponding action and object, '
         'and no two persons, actions, or objects should be too similar (also avoid overlap with '
         'your single digit and alphabet systems!). As a starter pattern, we recommend '
         'using an initials pattern. ',
     '    The initials pattern proposed in "Remember It!" by Nelson Dellis has '
-        '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Os, Fs, and Is are '
+        '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Fs, and Is are '
         'pretty rare in names; zeros look like Os, and (S)ix and (N)ine are more common letters in initials.\n'
         '     Using this pattern it becomes '
         'much easier to find famous people/fictional characters with initials, i.e. 12=AB=Antonio Banderas.',
     '    This system allows us to memorize sequences of numbers very efficiently. Passport/license IDs, '
         'phone numbers, order numbers, almost anything. The way it works is we break long sequences of numbers '
-        'into groups of 6, or three pairs of two digits, each pair corresponding to a person, action, and object. ',
-    '    For example, for the number 958417 we\'d break it down into 95-84-17, '
-        'which under my personal system corresponds to 95 (person) = Tom Brady, 84 (action) = riding a motorcycle, '
-        '17 (object) = giant boulder. \n    So my visualized scene would be TOM BRADY riding a MOTORCYCLE over '
-        'a bunch of giant BOULDERS. What a sight that would be!',
+        'into groups of 6, or three pairs of two digits, each pair corresponding to a person, action, and object.\n\n'
+        '    For example:\n\n    154825 -> \n    (15 person)\n    (48 action)\n    (25 object)',
+    '    For example, for the number 154825 we\'d break it down into 15-48-25, '
+        'which under my personal system corresponds to 15 (person) = AE = Albert Einstein, 48 (action) = DH (dwight howard) = slam dunking, '
+        '25 (object) = quarters. \n    So my visualized scene would be ALBERT EINSTEIN who jumps into the air and SLAM DUNKS his '
+        'fistfuls of shiny QUARTERS. What a sight that would be! Hear the cacaphony of quarters hit the ground as the absolute legend finally drops to the ground.',
     '    This system should take a good amount of time setting up before you start trying to master it. Update '
-        'the PAO values for your digits until you\'re really happy with the list. Use people you know in real life, '
+        'the PAO values for your digits until you\'re really happy with the list.\n\n    Use people you know in real life, '
         'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '
         'because overlap will make decoding more difficult. ',
     '    As a final note, it\'s possible to upload an entire PAO system through the CSV upload method available in '

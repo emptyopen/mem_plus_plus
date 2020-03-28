@@ -92,32 +92,30 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
-// make text input clearer in bright mode
-// store all custom memories as hashes
-// CONSOLIDATE: screen transitions
-// added mini games
-// added fade game
-// added morse survival game
+// add last second vibrations for morse code test
+// ensure no duplicates for tests like morse (planets already done?)
+// check on custom memory encryption
+// clear snackbars on press for games
+// add more detailed notifications only on M, W, F, Su @ 12:30pm
+
+// TODO: add super PI/irrational game
 
 // next up:
+// TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 
 // horizon:
-// TODO: add last second vibrations for morse code test
-// TODO: custom memory can't always submit answer? check if wrong
-// TODO: ensure no duplicates for tests like morse (planets already done?)
-// TODO: figure out overflow on morse code
-// TODO: new button for games button
-// TODO: welcome animation, second page still visible until swipe?
-// TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
-// TODO: handle bad CSV input
-// TODO: add super PI/irrational game
-// TODO: figure out how to handle CSV on iphone (doesn't launch google sheets well?) button in CSV to copy text? 
+// TODO: add new button for Game menu, set it whenever there is new game (and also new for new games)
+// TODO: add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
+// TODO: add FIND THE CARD game, memory show all cards for some amount of time, then flip over
 // TODO: re-add donate button (launch in safari on iphone)
-// TODO: morse code encode portion: long morse doesn't wrap
+// TODO: add date & recipe system
+// TODO: custom memory can't always submit answer? check if wrong
+// TODO: welcome animation, second page still visible until swipe?
+// TODO: handle bad CSV input
+// TODO: figure out how to handle CSV on iphone (doesn't launch google sheets well?) button in CSV to copy text? 
 // TODO: check callback for adding custom ID vs others?
 // TODO: investigate potential slow encrypting
 // TODO: add recipe as custom test
-// TODO: add date system
 // TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
 // TODO: BIG: badge / quest system
 // TODO: BIG: once you beat something (like a timed test, it gets harder, up to three levels???) / or choose amount of time for timed tests
@@ -140,8 +138,7 @@ class MyHomePage extends StatefulWidget {
 // TODO: crashlytics for IOS
 // TODO: look into possible battery drainage from refreshing screen? emulator seems to run hot
 // TODO: add name (first time, and preferences) - use in local notifications
-// TODO: add sounds
-// TODO: add ability for alphabet to contain up to 3 objects
+// TODO: add ability for alphabet to contain up to 3 objects (level up system?)
 // TODO: make PAO multiple choice tougher with similar digits
 // TODO: make vibrations cooler, and more consistent across app?
 // TODO: make account, backend, retrieve portfolios
@@ -313,7 +310,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
     //print(activityStates);
     print(availableActivities);
-    print(await prefs.getActivityVisible(lesson3Key));
   }
 
   checkFirstTime() async {

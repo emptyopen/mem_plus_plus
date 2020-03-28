@@ -120,7 +120,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
                 style: TextStyle(
                   fontSize: 44,
                   fontFamily: 'SpaceMono',
-                  color: Colors.black,
+                  color: backgroundHighlightColor,
                 ),
               ),
               controller: animationController,
@@ -216,9 +216,6 @@ class _FadeGameScreenState extends State<FadeGameScreen>
         child: Center(
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 30,
-              ),
               Stack(
                 children: <Widget>[
                   complete
@@ -226,26 +223,34 @@ class _FadeGameScreenState extends State<FadeGameScreen>
                       : started
                           ? Container()
                           : Align(
-                            alignment: Alignment.topCenter,
-                            child: BasicFlatButton(
-                                text: 'GO!',
-                                color: colorGamesLighter,
-                                fontSize: 42,
-                                padding: 20,
-                                onPressed: () {
-                                  animationController.reset();
-                                  animationController.forward();
-                                  setState(() {
-                                    started = true;
-                                  });
-                                  Future.delayed(Duration(seconds: duration), () {
-                                    setState(() {
-                                      complete = true;
-                                    });
-                                  });
-                                },
+                              alignment: Alignment.topCenter,
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  BasicFlatButton(
+                                    text: 'GO!',
+                                    color: colorGamesLighter,
+                                    fontSize: 42,
+                                    padding: 20,
+                                    onPressed: () {
+                                      animationController.reset();
+                                      animationController.forward();
+                                      setState(() {
+                                        started = true;
+                                      });
+                                      Future.delayed(
+                                          Duration(seconds: duration), () {
+                                        setState(() {
+                                          complete = true;
+                                        });
+                                      });
+                                    },
+                                  ),
+                                ],
                               ),
-                          ),
+                            ),
                   complete ? Container() : getColumn(),
                 ],
               ),
@@ -257,6 +262,9 @@ class _FadeGameScreenState extends State<FadeGameScreen>
               complete
                   ? Column(
                       children: <Widget>[
+                        SizedBox(
+                          height: 30,
+                        ),
                         Container(
                           width: 200,
                           child: TextFormField(
@@ -298,7 +306,8 @@ class _FadeGameScreenState extends State<FadeGameScreen>
                                   complete = false;
                                   Navigator.pop(context);
                                   showSnackBar(
-                                    scaffoldState: widget.scaffoldKey,
+                                    scaffoldState:
+                                        widget.scaffoldKey.currentState,
                                     snackBarText: 'Try again!',
                                     backgroundColor: colorIncorrect,
                                   );

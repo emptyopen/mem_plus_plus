@@ -576,8 +576,7 @@ class PhoneticAlphabetTimedTestScreenHelp extends StatelessWidget {
             '  - The length of a dot is 1 time unit. \n  - A dash is 3 time units.\n'
             '  - The space between symbols (dots and dashes) of the same letter is 1 time unit.\n'
             '  - The space between letters is 3 time units.\n'
-            '  - The space between words is 7 time units.\n\n    Don\'t worry about getting it exactly right yourself! '
-            'This Morse button is pretty forgiving. '
+            '  - The space between words is 7 time units.\n\n    Don\'t worry about getting it exactly right! :) '
       ],
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,

@@ -236,7 +236,7 @@ class PlanetText extends StatelessWidget {
 class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
   final List<String> information = [
     '    Well, you may have the planets memorized already! No problem. Either way, let\'s memorize an additional property '
-        'of the planets: the order of their size! Most likely if you ever did learn the order of the planets, it was '
+        'of the planets: the order of their size!\n    If you ever did learn the order of the planets, it was likely '
         'through some mnemonic like "my very eager mother just served us nine pizzas". \n    Not bad, but a pretty inflexible '
         'way to remember!',
     '    Let\'s try another method. Let\'s create a visual scene using words or concepts that we can strongly tie '
@@ -246,18 +246,18 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
         'From there we go to Mercury. Maybe a big vat of silver liquid mercury getting boiled by the sun will do the trick! '
         '\n    Now we want to attach the digit '
         'representing how small the planet is, the number 1! My object for number 1 is a stick, so I\'ll '
-        'just imagine that I\'m stir the vat with a giant stick until something emerges. ',
+        'just imagine that I\'m stir the vat of MERCURY with a giant STICK until something emerges. ',
     '    Next is Venus, what might we think of for that? The Roman goddess '
-        'of beauty? The shaving razor? Let\'s go with the goddess of beauty. So we stir the shimmering liquid mercury, '
+        'of beauty? The shaving razor? Let\'s go with the goddess of beauty.\n    So we stir the shimmering liquid mercury, '
         'until a smoking hot babe emerges. Wow, how can someone be that attractive? '
-        'And of course she\'s only wearing a bra (bra is my object for 3, and Venus is the 3rd biggest planet). ',
+        'And of course VENUS is only wearing a BRA (bra is my object for 3, and Venus is the 3rd biggest planet). ',
     '    Where did she get that bra? It\'s so sexy! Oh, she\'s pulling something out of her bra... the whole Earth! '
         'What a magic trick!\n'
         '    Pulling the entire Earth out of your bra is pretty tiring, so she goes and relaxes on her huge, luxurious yacht (4 is sailboat for me). '
         'I picture her from a bird\'s-eye view, laying down on the deck, the sun reflecting in her black, sexy sunglasses. Next to her on the yacht '
-        'is the entire Earth, looking very tranquil. Earth on a yacht (Earth = 4). ',
+        'is the entire Earth, looking very tranquil. EARTH on a YACHT (Earth = 4). ',
     '    The story continues like this. '
-        'Maybe next it starts raining Mars bars, or a god of war commandeers the yacht (Mars is the god of war), but I think you get the idea.'
+        'Maybe next it starts raining MARS bars into the mouths of BIRDS (my #2), or a god of war commandeers the yacht (Mars is the god of war), but I think you get the idea.'
         '\n\n    This sounds insane, I know. But I promise, if you start using that creativity inside your brain, something is '
         'going to start clicking. The wild scenes you can create in your head can be insanely memorable, and we '
         'are going to unlock that. ',

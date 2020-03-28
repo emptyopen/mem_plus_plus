@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 
 const String usernameKey = 'Username';
 
@@ -226,7 +226,7 @@ Map morseQuiz = {
   'leather around the waist': 'belt',
   'comes out of the tap': 'water',
   'opposite of long': 'short',
-  'color of chocolate and coffee': 'brown',
+  'color of coffee': 'brown',
   'worn on the finger': 'ring',
   'easier way to say incorrect': 'wrong',
   'hard shell baby bird inside': 'egg',
@@ -248,9 +248,14 @@ Map morseQuiz = {
   'show something that was hidden': 'reveal',
   'organ that pumps blood': 'heart',
   'a hundred years': 'century',
-  'where you type on a computer': 'keyboard',
+  'where you type on computers': 'keyboard',
   'tons of sand and maybe an oasis': 'desert', 
-  'wacky scenes when you sleep': 'dream',
+  'wacky scene when sleeping': 'dream',
+  'connects ground to ceiling': 'wall',
+  'color of banana': 'yellow',
+  'color of snow': 'white',
+  'color of grass': 'green',
+  'lead writing utensil': 'pencil',
 };
 
 List letters = [

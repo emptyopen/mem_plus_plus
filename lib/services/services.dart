@@ -13,6 +13,8 @@ import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/services.dart';
 
+import '../constants/keys.dart';
+
 handleAppUpdate() async {
   print('handling app update...');
 
@@ -20,12 +22,12 @@ handleAppUpdate() async {
 
   // new games for old devices:
   // if singleDigitTimedTest complete, set games available, set fade game available
-  if (await prefs.getBool(singleDigitTimedTestCompleteKey)) {
+  if (await prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
     await prefs.setBool(gamesAvailableKey, true);
     await prefs.setBool(fadeGameAvailableKey, true);
   }
   // if nato phonetic complete, set survival game available
-  if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
+  if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null) {
     await prefs.setBool(morseGameAvailableKey, true);
   }
 
@@ -384,7 +386,6 @@ initializeNotificationsScheduler() async {
   var prefs = PrefsUpdater();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  var time = Time(12, 30, 0);
   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       dailyReminderIdKey, dailyReminderKey, 'Daily reminder',
       importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
@@ -392,82 +393,59 @@ initializeNotificationsScheduler() async {
   var platformChannelSpecifics = NotificationDetails(
       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
-  String singleDigitEditState =
-      await prefs.getActivityState(singleDigitEditKey);
-  String singleDigitPracticeState =
-      await prefs.getActivityState(singleDigitPracticeKey);
-  String singleDigitMultipleChoiceTestState =
-      await prefs.getActivityState(singleDigitMultipleChoiceTestKey);
-  // String singleDigitEditState =
-  //     await prefs.getActivityState(singleDigitEditKey);
-  // String singleDigitEditState =
-  //     await prefs.getActivityState(singleDigitEditKey);
-  // String singleDigitEditState =
-  //     await prefs.getActivityState(singleDigitEditKey);
-  // String singleDigitEditState =
-  //     await prefs.getActivityState(singleDigitEditKey);
-  // String singleDigitEditState =
-  //     await prefs.getActivityState(singleDigitEditKey);
+  bool singleDigitComplete =
+      await prefs.getBool(singleDigitTimedTestCompleteKey) != null;
+  bool chapter1Complete =
+      await prefs.getBool(faceTimedTestCompleteKey) != null &&
+          await prefs.getBool(planetTimedTestCompleteKey) != null;
+  bool alphabetComplete =
+      await prefs.getBool(alphabetTimedTestCompleteKey) != null;
+  bool chapter2Complete =
+      await prefs.getBool(airportTimedTestCompleteKey) != null &&
+          await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null;
+  bool paoComplete =
+      await prefs.getBool(paoTimedTestCompleteKey) != null;
+  bool chapter3Complete =
+      await prefs.getBool(piTimedTestCompleteKey) != null &&
+          await prefs.getBool(face2TimedTestCompleteKey) != null;
+  bool deckComplete =
+      await prefs.getBool(deckTimedTestCompleteKey) != null;
 
+  var random = Random();
+  int basicMessage = random.nextInt(2);
   String title = 'Have you improved your memory today?';
-  String subtitle = 'Click here to check your to-do list!';
-  if (singleDigitEditState != null && singleDigitEditState == 'todo') {
-    title = 'Let\'s pick up where you left off!';
-    subtitle = 'Continue developing your Single Digit mapping!';
-  } else if (singleDigitPracticeState != null &&
-      singleDigitPracticeState == 'todo') {
-    title = 'Let\'s pick up where you left off!';
-    subtitle = 'Continue familiarizing your Single Digits!';
-  } //else if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) ==
-  //     'todo') {
-  //   title = 'Time to master Single Digits!';
-  //   subtitle = 'Click here to start your MC test!';
-  // } else if (await prefs.getActivityState(singleDigitTimedTestPrepKey) ==
-  //     'todo') {
-  //   title = 'Let\'s start a Single Digit timed test!';
-  //   subtitle = 'Complete the test to unlock the next system!';
-  // } else if (await prefs.getActivityState(alphabetEditKey) == 'todo') {
-  //   title = 'Let\'s pick up where you left off!';
-  //   subtitle = 'Continue developing your Alphabet mapping!';
-  // } else if (await prefs.getActivityState(alphabetPracticeKey) == 'todo') {
-  //   title = 'Let\'s pick up where you left off!';
-  //   subtitle = 'Continue familiarizing your Alphabet System!';
-  // } else if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
-  //   title = 'Time to master the Alphabet!';
-  //   subtitle = 'Click here to start your MC test!';
-  // } else if (await prefs.getActivityState(alphabetTimedTestPrepKey) == 'todo') {
-  //   title = 'Let\'s start an Alphabet timed test!';
-  //   subtitle = 'Complete the test to unlock the next system!';
-  // } else if (await prefs.getActivityState(paoEditKey) == 'todo') {
-  //   title = 'Let\'s pick up where you left off!';
-  //   subtitle = 'Continue developing your PAO mapping!';
-  // } else if (await prefs.getActivityState(paoPracticeKey) == 'todo') {
-  //   title = 'Let\'s pick up where you left off!';
-  //   subtitle = 'Continue familiarizing your PAO mapping!';
-  // } else if (await prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
-  //   title = 'Time to master your PAO system!';
-  //   subtitle = 'Click here to start your MC test!';
-  // } else if (await prefs.getActivityState(paoTimedTestPrepKey) == 'todo') {
-  //   title = 'Let\'s start a PAO timed test!';
-  //   subtitle = 'Complete the test to unlock the next system!';
-  // } else if (await prefs.getActivityState(deckEditKey) == 'todo') {
-  //   title = 'Let\'s pick up where you left off!';
-  //   subtitle = 'Continue developing your Deck mapping!';
-  // } else if (await prefs.getActivityState(deckPracticeKey) == 'todo') {
-  //   title = 'Let\'s pick up where you left off!';
-  //   subtitle = 'Continue familiarizing your Deck mapping!';
-  // } else if (await prefs.getActivityState(deckMultipleChoiceTestKey) ==
-  //     'todo') {
-  //   title = 'Time to master your Deck system!';
-  //   subtitle = 'Click here to start your MC test!';
-  // } else if (await prefs.getActivityState(deckTimedTestPrepKey) == 'todo') {
-  //   title = 'Let\'s start a Deck timed test!';
-  //   subtitle = 'Complete the test to unlock the next system!';
-  // }
-  await flutterLocalNotificationsPlugin.showDailyAtTime(
-      0, title, subtitle, time, platformChannelSpecifics);
+  String subtitle = 'Click here to check your todo list!';
+  if (basicMessage == 1) {
+    title = 'Looking for something to do?';
+  } else if (basicMessage == 2) {
+    title = 'Bored? Let\'s self-improve!';
+  }
+  if (!singleDigitComplete) {
+    subtitle = 'Continue developing your Single Digit skills!';
+  } else if (!chapter1Complete) {
+    subtitle = 'Keep on working on Chapter 1!';
+  } else if (!alphabetComplete) {
+    subtitle = 'Work on your Alphabet System!';
+  } else if (!chapter2Complete) {
+    subtitle = 'Complete Chapter 2!';
+  } else if (!paoComplete) {
+    subtitle = 'Continue familiarizing your PAO System!';
+  } else if (!chapter3Complete) {
+    subtitle = 'Chapter 3 is waiting!';
+  } else if (!deckComplete) {
+    subtitle = 'Continue familiarizing your Deck System!';
+  } 
+  var time = Time(12, 30, 0);
+  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+      0, title, subtitle, Day.Monday, time, platformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+      0, title, subtitle, Day.Wednesday, time, platformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+      0, title, subtitle, Day.Friday, time, platformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+      0, title, subtitle, Day.Sunday, time, platformChannelSpecifics);
   print(
-      'initialized daily notification @ ${time.hour}:${time.minute}:${time.second}');
+      'initialized weekly notifications (MWFSu) @ ${time.hour}:${time.minute}:${time.second}');
 }
 
 getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {

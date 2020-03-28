@@ -180,20 +180,21 @@ class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
         '\n    Pick a place, like your current home, or an '
         'old apartment. Start at your front door, and move along a wall around your apartment, visiting different '
         'rooms or objects. ',
-    '    Maybe it\'s the front door, the fridge in your kitchen, the sink, the kitchen table, the '
+    '    Before you really get started, make sure to pace yourself! You\'re going to want to fit 26 sublocations here, so if it\'s a smaller apartment, '
+    'count out 26 sublocations before you start.\n\n    Maybe it\'s the front door, the fridge in your kitchen, the sink, the kitchen table, the '
         'living room sofa, the stairs to the second floor, your younger brother\'s bedroom, the hallway closet, '
-        'your bedroom, on and on, a total of 26 sub-locations.',
+        'your bedroom, on and on.',
     '    Now assign the phonetic word for A ("Alpha") and the Morse code '
-        'for A (dot dash) to the font door. Maybe "alpha" reminds you of an apex predator, and you could have a shark '
+        'for A (dot dash) to the font door.\n    Maybe "alpha" reminds you of an apex predator, and you could have a shark '
         'smashing your front door over a grizzly bear\'s head. Or maybe "alpha" reminds you of transparency, so the door\'s opacity '
         'is wildly fluctuating. ',
     '    Then, for the Morse we can add to that scene thin objects (dashes) and round objects (dots). '
         'Maybe the shark smashes the door over the grizzly\'s head, '
-        'and feels really bad about it so he brings the grizzly a vintage globe that has a retractable telescope that pops out of '
+        'and feels really bad about it so he brings the grizzly a vintage GLOBE (dot) that has a retractable TELESCOPE (dash) that pops out of '
         'the top. Close your eyes and imagine the smell of a grandfather\'s office and hear the popping '
         'sound of the telescope. \n\n    Now we\'ve encoded "alpha" and "•-", woohoo!',
     '    Really mash the scene and your real life sublocation together!\n\n    Is blood spurting out of the '
-        'faucet? So gross! Billowing flames when you open the bathroom door? Close your eyes and feel the searing flames on your face! '
+        'faucets? So gross! Billowing flames when you open the bathroom door? Close your eyes and feel the searing flames on your face! '
         'Smell the stench of the rotting zombies chasing you down the hallway! \n    Really let your imagination run wild!',
     '        Don\'t worry about having to imagine these uncomfortably weird scenes forever. Like everything else you memorize, eventually these zany images '
         'will fade into the background as the words, dots, and dashes become second nature.',

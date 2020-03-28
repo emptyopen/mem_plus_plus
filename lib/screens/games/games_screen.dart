@@ -211,6 +211,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 0),
               completeKey: 'fade0Complete',
               availableKey: fadeGameAvailableKey,
+              globalKey: scaffoldKey,
             ),
             DifficultySelection(
               text: 'Medium',
@@ -218,6 +219,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 1),
               completeKey: 'fade1Complete',
               availableKey: 'fade0Complete',
+              globalKey: scaffoldKey,
             ),
             DifficultySelection(
               text: 'Difficult',
@@ -225,6 +227,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 2),
               completeKey: 'fade2Complete',
               availableKey: 'fade1Complete',
+              globalKey: scaffoldKey,
             ),
             DifficultySelection(
               text: 'Master',
@@ -232,6 +235,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 3),
               completeKey: 'fade3Complete',
               availableKey: 'fade2Complete',
+              globalKey: scaffoldKey,
             ),
             DifficultySelection(
               text: 'Ancient God',
@@ -239,6 +243,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 4),
               completeKey: 'fade4Complete',
               availableKey: 'fade3Complete',
+              globalKey: scaffoldKey,
             ),
           ],
         );
@@ -253,6 +258,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 0),
               completeKey: 'morse0Complete',
               availableKey: morseGameAvailableKey,
+              globalKey: scaffoldKey,
             ),
             DifficultySelection(
               text: 'Medium',
@@ -260,6 +266,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 1),
               completeKey: 'morse1Complete',
               availableKey: 'morse0Complete',
+              globalKey: scaffoldKey,
             ),
             DifficultySelection(
               text: 'Master',
@@ -267,6 +274,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 2),
               completeKey: 'morse2Complete',
               availableKey: 'morse1Complete',
+              globalKey: scaffoldKey,
             ),
             DifficultySelection(
               text: 'Ancient God',
@@ -274,6 +282,7 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 3),
               completeKey: 'morse3Complete',
               availableKey: 'morse2Complete',
+              globalKey: scaffoldKey,
             ),
           ],
         );
@@ -300,13 +309,15 @@ class DifficultySelection extends StatefulWidget {
   final String text;
   final String completeKey;
   final String availableKey;
+  final GlobalKey<ScaffoldState> globalKey;
 
   DifficultySelection(
       {this.text,
       this.color,
       this.function,
       this.completeKey,
-      this.availableKey});
+      this.availableKey,
+      this.globalKey});
 
   @override
   _DifficultySelectionState createState() => _DifficultySelectionState();
@@ -367,6 +378,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
             onPressed: isAvailable
                 ? () {
                     HapticFeedback.heavyImpact();
+                    widget.globalKey.currentState.hideCurrentSnackBar();
                     widget.function();
                   }
                 : null,

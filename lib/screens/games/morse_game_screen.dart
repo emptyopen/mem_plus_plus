@@ -31,7 +31,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
       'but we believe it was intercepted by the Robot faction. \n    Main communications are down, but we were able to connect '
       'to HQ implementing a rudimentary Morse code system. We need you to intrepret the Captcha message and return the '
       'correct response. That will notify them that we need another drop.\n    But hurry!'
-      ' The Robot faction is inbound and we only have 3 minutes before they decipher the code and '
+      ' The Robot faction is inbound and we only have 5 minutes before they decipher the code and '
       'intercept the supply drop!';
   String mediumInstructions =
       '    It\'s the 5th day since we crash-landed on the island. You are the leader of the rag-tag survivors, '
@@ -99,6 +99,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
   initializeSequence() {
     prefs.checkFirstTime(context, morseGameFirstHelpKey, MorseGameScreenHelp());
     Random random = new Random();
+    alreadyClues = [];
     if (widget.difficulty >= 0) {
       instructions = easyInstructions;
       buttonText = easyButtonText;
@@ -421,6 +422,9 @@ class _MorseGameScreenState extends State<MorseGameScreen>
       );
       Navigator.pop(context);
     }
+    if (countdown < 10) {
+      HapticFeedback.heavyImpact();
+    }
   }
 
   @override
@@ -500,7 +504,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                           SizedBox(height: 20),
                           Text(
                             'Solve the puzzles below!',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
                           ),
                           SizedBox(height: 8),
                           Text(
