@@ -46,16 +46,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
       textAlign: TextAlign.center,
     ),
-    // Text(
-    //   'Pay attention, and visualize!',
-    //   style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
-    //   textAlign: TextAlign.center,
-    // ),
-    // Text(
-    //   'Invest in yourself!',
-    //   style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
-    //   textAlign: TextAlign.center,
-    // ),
     Text(
       'How this app works:',
       style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
@@ -127,20 +117,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         ),
       ],
     ),
-    // Text(
-    //   '    You\'ll be surprised at how much more you remember simply by making a conscious effort '
-    //   'to pay attention to things more. Even thinking about your memory like you are now '
-    //   'will in and of itself improve your memory (it\'s all very meta, I know). '
-    //   '\n    And when you visualize in your brain what you\'re paying attention to, really amp up those details. '
-    //   'Make it zanier and more visceral than real life.',
-    //   style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-    // ),
-    // Text(
-    //   '    Don\'t worry, this app is free! The only investment you need to make is some of your time. '
-    //   'Trust me though, once you\'ve achieved some proficiency in the some of these systems, '
-    //   'you\'ll be glad you did. The benefits pay for life!',
-    //   style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-    // ),
     Text(
       '    We\'ll start with some basic systems, and as you master them, new ones will unlock. Tests '
       'and lessons will be interspersed between the systems. '

@@ -70,10 +70,10 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       ],
     ),
     Text(
-      '    My go-to party trick that I use to get people invested into their memories is memorizing '
-      'a deck of cards in ten minutes. I memorize 20 digits in 5 minutes, '
-      'or recite 100 digits of pi. This stuff is crazy.\n\n'
-      '    I have experienced an incredible quality-of-'
+      '    My favorite way to get people invested into their memories is memorizing '
+      'a deck of cards in ten minutes. Or memorizing 20 digits in 5 minutes, '
+      'or reciting 100 digits of pi. This stuff is crazy, but they are just party tricks.\n\n'
+      '    The real benefit is the incredible quality-of-'
       'life improvement, and I wanted to share it with the world. Imagine effortlessly recalling your checking account and routing numbers. '
       'Licences and passports. Names and passwords. Grocery lists, recipes. Security code combinations. '
       '\n    I no longer have to painfully search through ancient emails or text threads for obscure information. '

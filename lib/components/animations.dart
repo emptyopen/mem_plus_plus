@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/constants/keys.dart';
 
 class StaggerAnimation extends StatelessWidget {
   StaggerAnimation(
@@ -223,7 +224,7 @@ class PercentageAnimation extends StatelessWidget {
                 end: Alignment.centerRight,
                 colors: [
                   color,
-                  Colors.white,
+                  backgroundColor,
                 ], // whitish to gray
                 tileMode:
                     TileMode.repeated, // repeats the gradient over the canvas

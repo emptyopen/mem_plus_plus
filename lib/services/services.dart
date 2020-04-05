@@ -436,16 +436,17 @@ initializeNotificationsScheduler() async {
     subtitle = 'Continue familiarizing your Deck System!';
   } 
   var time = Time(12, 30, 0);
-  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-      0, title, subtitle, Day.Monday, time, platformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-      0, title, subtitle, Day.Wednesday, time, platformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-      0, title, subtitle, Day.Friday, time, platformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-      0, title, subtitle, Day.Sunday, time, platformChannelSpecifics);
-  print(
-      'initialized weekly notifications (MWFSu) @ ${time.hour}:${time.minute}:${time.second}');
+  await flutterLocalNotificationsPlugin.showDailyAtTime(0, title, subtitle, time, platformChannelSpecifics);
+  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+  //     0, title, subtitle, Day.Monday, time, platformChannelSpecifics);
+  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+  //     0, title, subtitle, Day.Wednesday, time, platformChannelSpecifics);
+  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+  //     0, title, subtitle, Day.Friday, time, platformChannelSpecifics);
+  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+  //     0, title, subtitle, Day.Sunday, time, platformChannelSpecifics);
+  // print(
+  //     'initialized weekly notifications (MWFSu) @ ${time.hour}:${time.minute}:${time.second}');
 }
 
 getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {

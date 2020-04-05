@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mem_plus_plus/screens/games/fade_game_screen.dart';
 import 'package:mem_plus_plus/screens/games/morse_game_screen.dart';
+import 'package:mem_plus_plus/screens/games/irrational_game_screen.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
@@ -65,15 +66,15 @@ class _GamesScreenState extends State<GamesScreen> {
         ),
       );
     }
-    if (await prefs.getBool(superIrrationalGameAvailableKey) != null) {
+    if (await prefs.getBool(irrationalGameAvailableKey) != null) {
       availableGameTiles.add(
         GameTile(
           game: 'irrational',
           title: 'IRRATIONAL!',
-          subtitle: '',
+          subtitle: 'Test the outer limits of your memory capacity!',
           scaffoldKey: _scaffoldKey,
           icon: Icon(
-            MdiIcons.shoePrint,
+            MdiIcons.pi,
             size: 40,
           ),
         ),
@@ -176,7 +177,6 @@ class MyDialogContent extends StatelessWidget {
 
   goToScreen(BuildContext context, int difficulty) {
     Navigator.pop(context);
-    print('for game: $game');
     switch (game) {
       case 'fade':
         slideTransition(
@@ -191,6 +191,15 @@ class MyDialogContent extends StatelessWidget {
         slideTransition(
           context,
           MorseGameScreen(
+            difficulty: difficulty,
+            scaffoldKey: scaffoldKey,
+          ),
+        );
+        break;
+      case 'irrational':
+        slideTransition(
+          context,
+          IrrationalGameScreen(
             difficulty: difficulty,
             scaffoldKey: scaffoldKey,
           ),
@@ -282,6 +291,61 @@ class MyDialogContent extends StatelessWidget {
               function: () => goToScreen(context, 3),
               completeKey: 'morse3Complete',
               availableKey: 'morse2Complete',
+              globalKey: scaffoldKey,
+            ),
+          ],
+        );
+        break;
+      case 'irrational':
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            DifficultySelection(
+              text: '200 digits of PI',
+              color: Colors.lightBlue[200],
+              function: () => goToScreen(context, 0),
+              completeKey: 'irrational0Complete',
+              availableKey: irrationalGameAvailableKey,
+              globalKey: scaffoldKey,
+            ),
+            DifficultySelection(
+              text: '500 digits of PI',
+              color: Colors.lightBlue[300],
+              function: () => goToScreen(context, 1),
+              completeKey: 'irrational1Complete',
+              availableKey: 'irrational0Complete',
+              globalKey: scaffoldKey,
+            ),
+            DifficultySelection(
+              text: '1000 digits of PI',
+              color: Colors.lightBlue[400],
+              function: () => goToScreen(context, 2),
+              completeKey: 'irrational2Complete',
+              availableKey: 'irrational1Complete',
+              globalKey: scaffoldKey,
+            ),
+            DifficultySelection(
+              text: '200 digits of E',
+              color: Colors.lightBlue[200],
+              function: () => goToScreen(context, 3),
+              completeKey: 'irrational3Complete',
+              availableKey: irrationalGameAvailableKey,
+              globalKey: scaffoldKey,
+            ),
+            DifficultySelection(
+              text: '500 digits of E',
+              color: Colors.lightBlue[300],
+              function: () => goToScreen(context, 4),
+              completeKey: 'irrational4Complete',
+              availableKey: 'irrational3Complete',
+              globalKey: scaffoldKey,
+            ),
+            DifficultySelection(
+              text: '1000 digits of E',
+              color: Colors.lightBlue[400],
+              function: () => goToScreen(context, 5),
+              completeKey: 'irrational5Complete',
+              availableKey: 'irrational4Complete',
               globalKey: scaffoldKey,
             ),
           ],

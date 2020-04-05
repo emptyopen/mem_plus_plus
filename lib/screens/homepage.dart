@@ -53,6 +53,8 @@ import 'package:mem_plus_plus/screens/chapter1/lesson_1_screen.dart';
 import 'package:mem_plus_plus/screens/chapter2/lesson_2_screen.dart';
 import 'package:mem_plus_plus/screens/chapter3/lesson_3_screen.dart';
 
+import '../constants/keys.dart';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
 
@@ -92,22 +94,17 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
-// add last second vibrations for morse code test
-// ensure no duplicates for tests like morse (planets already done?)
-// check on custom memory encryption
-// clear snackbars on press for games
-// add more detailed notifications only on M, W, F, Su @ 12:30pm
 
 // TODO: add super PI/irrational game
+// TODO: add FIND THE CARD game, memory show all cards for some amount of time, then flip over
 
 // next up:
 // TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
+// TODO: add new button for Game menu, set it whenever there is new game (and also new for new games)
+// TODO: re-add donate button (launch in safari on iphone)
 
 // horizon:
-// TODO: add new button for Game menu, set it whenever there is new game (and also new for new games)
 // TODO: add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
-// TODO: add FIND THE CARD game, memory show all cards for some amount of time, then flip over
-// TODO: re-add donate button (launch in safari on iphone)
 // TODO: add date & recipe system
 // TODO: custom memory can't always submit answer? check if wrong
 // TODO: welcome animation, second page still visible until swipe?
@@ -1023,6 +1020,10 @@ class _MyHomePageState extends State<MyHomePage> {
     await prefs.setBool(customMemoryManagerFirstHelpKey, true);
     customMemoryManagerFirstView = true;
     customMemoryManagerAvailable = true;
+    await prefs.setBool(gamesAvailableKey, true);
+    await prefs.setBool(gamesFirstHelpKey, true);
+    gamesAvailable = true;
+    gamesFirstView = true;
 
     if (maxTo >= 2) {
       await prefs.setBool(singleDigitTimedTestCompleteKey, true);
@@ -1033,6 +1034,8 @@ class _MyHomePageState extends State<MyHomePage> {
       await prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
       await prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesChapter2Done);
+      await prefs.setBool(fadeGameAvailableKey, true);
+      await prefs.setBool(morseGameAvailableKey, true);
     }
     if (maxTo >= 3) {
       await prefs.setBool(paoTimedTestCompleteKey, true);
@@ -1040,6 +1043,7 @@ class _MyHomePageState extends State<MyHomePage> {
       await prefs.setBool(face2TimedTestCompleteKey, true);
       await prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesChapter3Done);
+      await prefs.setBool(irrationalGameAvailableKey, true);
     }
     if (maxTo >= 4) {
       await prefs.setBool(deckTimedTestCompleteKey, true);

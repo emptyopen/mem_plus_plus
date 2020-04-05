@@ -109,6 +109,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
   Widget getColumn() {
     List<Widget> characters = [];
     double fraction = 1 / (randomSequence.length + 8);
+    characters.add(SizedBox(height: 20,));
     for (int i = 0; i < randomSequence.length; i += 1) {
       characters.add(
         Row(

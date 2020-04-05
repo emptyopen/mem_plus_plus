@@ -58,6 +58,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     if (textController.text.replaceAll(' ', '') == '$piString') {
       await prefs.updateActivityVisible(piTimedTestKey, false);
       await prefs.updateActivityVisible(piTimedTestPrepKey, true);
+      await prefs.setBool(irrationalGameAvailableKey, true);
       if (await prefs.getBool(piTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(piTimedTestKey, 'review');
         await prefs.setBool(piTimedTestCompleteKey, true);
@@ -69,6 +70,15 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
             textColor: Colors.black,
             backgroundColor: colorChapter3Darker,
             durationSeconds: 3,
+          );
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Congratulations! You\'ve unlocked the Irra/ional game!',
+            textColor: Colors.white,
+            backgroundColor: colorGamesDarker,
+            durationSeconds: 3,
+            isSuper: true,
           );
         } else {
           await prefs.updateActivityVisible(deckEditKey, true);

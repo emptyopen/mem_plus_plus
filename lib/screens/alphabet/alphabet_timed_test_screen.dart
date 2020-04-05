@@ -124,7 +124,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'Try the timed test again to unlock the next system.',
+      snackBarText: 'It was: $char1$char2$char3$char4 $char5$char6$char7$char8. Try the timed test again to unlock the next system.',
       textColor: Colors.black,
       backgroundColor: colorIncorrect,
       durationSeconds: 3,
