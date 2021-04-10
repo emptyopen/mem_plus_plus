@@ -31,9 +31,11 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    await prefs.checkFirstTime(context, alphabetEditFirstHelpKey, AlphabetEditScreenHelp());
+    await prefs.checkFirstTime(
+        context, alphabetEditFirstHelpKey, AlphabetEditScreenHelp());
     if (await prefs.getString(alphabetKey) == null) {
-      alphabetData = debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
+      alphabetData =
+          debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
       prefs.setString(alphabetKey, json.encode(alphabetData));
     } else {
       alphabetData = await prefs.getSharedPrefs(alphabetKey);
@@ -62,10 +64,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
           style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'CabinSketch',
-            fontSize: 18
-          ),
+              color: Colors.white, fontFamily: 'CabinSketch', fontSize: 18),
         ),
         duration: Duration(seconds: 5),
         backgroundColor: colorAlphabetDarker,
@@ -94,24 +93,25 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       key: _scaffoldKey,
-      appBar: AppBar(title: Text('Alphabet: view/edit'),
-        backgroundColor: Colors.blue[200],
-        actions: <Widget>[
-        // action button
-        IconButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            HapticFeedback.heavyImpact();
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return AlphabetEditScreenHelp();
-                }));
-          },
-        ),
-      ]),
+      appBar: AppBar(
+          title: Text('Alphabet: view/edit'),
+          backgroundColor: Colors.blue[200],
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return AlphabetEditScreenHelp();
+                    }));
+              },
+            ),
+          ]),
       body: Container(
         decoration: BoxDecoration(color: backgroundColor),
         child: Center(
@@ -128,9 +128,11 @@ class AlphabetEditScreenHelp extends StatelessWidget {
   Widget build(BuildContext context) {
     return HelpScreen(
       title: 'Alphabet View/Edit',
-      information: ['    OK! Welcome to the 2nd system here at Takao Studios :)\n    I\'m getting very excited for you! '
-        'What we\'re going to do here is just like last time, except now with letters of '
-        'the alphabet!'],
+      information: [
+        '    OK! Welcome to the 2nd system here at Takao Studios :)\n    I\'m getting very excited for you! '
+            'What we\'re going to do here is just like last time, except now with letters of '
+            'the alphabet!\n    Remember, we want to attach objects that are unique, and easy to attach to stories!'
+      ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],
       firstHelpKey: alphabetEditFirstHelpKey,

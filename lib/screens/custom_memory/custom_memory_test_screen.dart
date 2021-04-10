@@ -126,27 +126,31 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
   }
 
   checkAnswer() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     var memory = widget.customMemory;
     switch (memory['type']) {
       case 'Contact':
         bool success = true;
         if (memory['birthday'] != '' &&
-            !stringsAreEqual(datetimeToDateString(field1TextController.text),
-                datetimeToDateString(memory['birthday']), memory['birthdayEncrypt'])) {
+            !stringsAreEqual(
+                datetimeToDateString(field1TextController.text),
+                datetimeToDateString(memory['birthday']),
+                memory['birthdayEncrypt'])) {
           success = false;
         }
         if (memory['phoneNumber'] != '' &&
-            !stringsAreEqual(
-                field2TextController.text, memory['phoneNumber'], memory['phoneNumberEncrypt'])) {
+            !stringsAreEqual(field2TextController.text, memory['phoneNumber'],
+                memory['phoneNumberEncrypt'])) {
           success = false;
         }
         if (memory['address'] != '' &&
-            !stringsAreEqual(field3TextController.text, memory['address'], memory['addressEncrypt'])) {
+            !stringsAreEqual(field3TextController.text, memory['address'],
+                memory['addressEncrypt'])) {
           success = false;
         }
         if (memory['other'] != '' &&
-            !stringsAreEqual(field4TextController.text, memory['other'], memory['otherEncrypt'])) {
+            !stringsAreEqual(field4TextController.text, memory['other'],
+                memory['otherEncrypt'])) {
           success = false;
         }
         checkResult(memory, success);
@@ -154,16 +158,20 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
       case 'ID/Credit Card':
         bool success = true;
         if (memory['number'] != '' &&
-            !stringsAreEqual(field1TextController.text, memory['number'], memory['numberEncrypt'])) {
+            !stringsAreEqual(field1TextController.text, memory['number'],
+                memory['numberEncrypt'])) {
           success = false;
         }
         if (memory['expiration'] != '' &&
-            !stringsAreEqual(datetimeToDateString(field2TextController.text),
-                datetimeToDateString(memory['expiration']), memory['expirationEncrypt'])) {
+            !stringsAreEqual(
+                datetimeToDateString(field2TextController.text),
+                datetimeToDateString(memory['expiration']),
+                memory['expirationEncrypt'])) {
           success = false;
         }
         if (memory['other'] != '' &&
-            !stringsAreEqual(field3TextController.text, memory['other'], memory['otherEncrypt'])) {
+            !stringsAreEqual(field3TextController.text, memory['other'],
+                memory['otherEncrypt'])) {
           success = false;
         }
         checkResult(memory, success);
@@ -171,15 +179,18 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
       case 'Other':
         bool success = true;
         if (memory['other1'] != '' &&
-            !stringsAreEqual(field1TextController.text, memory['other1'], memory['other1Encrypt'])) {
+            !stringsAreEqual(field1TextController.text, memory['other1'],
+                memory['other1Encrypt'])) {
           success = false;
         }
         if (memory['other2'] != '' &&
-            !stringsAreEqual(field2TextController.text, memory['other2'], memory['other2Encrypt'])) {
+            !stringsAreEqual(field2TextController.text, memory['other2'],
+                memory['other2Encrypt'])) {
           success = false;
         }
         if (memory['other3'] != '' &&
-            !stringsAreEqual(field3TextController.text, memory['other3'], memory['other3Encrypt'])) {
+            !stringsAreEqual(field3TextController.text, memory['other3'],
+                memory['other3Encrypt'])) {
           success = false;
         }
         checkResult(memory, success);
@@ -324,7 +335,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
-                  HapticFeedback.heavyImpact();
+                  HapticFeedback.lightImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -392,7 +403,7 @@ class _PromptPairState extends State<PromptPair> {
                   color: backgroundSemiColor,
                   textColor: backgroundHighlightColor,
                   onPressed: () {
-                    HapticFeedback.heavyImpact();
+                    HapticFeedback.lightImpact();
                     DatePicker.showDatePicker(
                       context,
                       showTitleActions: true,

@@ -54,7 +54,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
   }
 
   void checkAnswer() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     Levenshtein d = new Levenshtein();
     String answer1 = name1.toLowerCase().trim();
     String guess1 = textController1.text.toLowerCase().trim();
@@ -95,15 +95,14 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
           );
         }
       } else {
-      showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
-        snackBarText:
-            'Congratulations! You aced it!',
-        textColor: Colors.black,
-        backgroundColor: colorChapter1Darker,
-        durationSeconds: 2,
-      );
-    }
+        showSnackBar(
+          scaffoldState: widget.globalKey.currentState,
+          snackBarText: 'Congratulations! You aced it!',
+          textColor: Colors.black,
+          backgroundColor: colorChapter1Darker,
+          durationSeconds: 2,
+        );
+      }
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -120,7 +119,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(faceTimedTestKey, 'review');
     await prefs.updateActivityVisible(faceTimedTestKey, false);
     await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
@@ -149,7 +148,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

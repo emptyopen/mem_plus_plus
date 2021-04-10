@@ -423,7 +423,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
       Navigator.pop(context);
     }
     if (countdown < 10) {
-      HapticFeedback.heavyImpact();
+      HapticFeedback.lightImpact();
     }
   }
 
@@ -439,7 +439,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(
                   PageRouteBuilder(
                     opaque: false,
@@ -504,7 +504,8 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                           SizedBox(height: 20),
                           Text(
                             'Solve the puzzles below!',
-                            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+                            style: TextStyle(
+                                fontSize: 20, color: backgroundHighlightColor),
                           ),
                           SizedBox(height: 8),
                           Text(
@@ -528,7 +529,8 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                                     started = false;
                                     Navigator.pop(context);
                                     showSnackBar(
-                                      scaffoldState: widget.scaffoldKey.currentState,
+                                      scaffoldState:
+                                          widget.scaffoldKey.currentState,
                                       snackBarText: failureMessage,
                                       backgroundColor: colorIncorrect,
                                     );

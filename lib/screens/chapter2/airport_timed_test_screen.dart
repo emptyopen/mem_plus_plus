@@ -75,26 +75,51 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     setState(() {
       showError = false;
     });
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     if (confirmationCodeController.text == '' ||
-        flightCodeController.text == '' ||
-        seatNumberController.text == '' ||
-        gateNumberController.text == '' ||
-        departureTimeController.text == '' ||
-        departingTerminalController.text == '' ||
-        arrivingTerminalController.text == '') {
+            flightCodeController.text == '' ||
+            // seatNumberController.text == '' ||
+            // gateNumberController.text == '' ||
+            departureTimeController.text == '' ||
+            departingTerminalController.text == ''
+        // arrivingTerminalController.text == '') {
+        ) {
       setState(() {
         showError = true;
       });
       return;
     }
-    if (confirmationCodeController.text.trim().toLowerCase().replaceAll(' ', '') == confirmationCode.toLowerCase() &&
-        flightCodeController.text.trim().toLowerCase().replaceAll('-', '').replaceAll(' ', '') == flightCode.toLowerCase().replaceAll('-', '') &&
-        seatNumberController.text.trim().toLowerCase().replaceAll(' ', '') == seatNumber.toLowerCase() &&
-        gateNumberController.text.trim().toLowerCase().replaceAll(' ', '') == gateNumber.toLowerCase() &&
-        departureTimeController.text.trim().toLowerCase().replaceAll(':', '').replaceAll(' ', '') == departureTime.toLowerCase().replaceAll(':', '') &&
-        departingTerminalController.text.trim().toLowerCase().replaceAll(' ', '') == departingTerminal.toLowerCase() &&
-        arrivingTerminalController.text.trim().toLowerCase().replaceAll(' ', '') == arrivingTerminal.toLowerCase()) {
+    if (confirmationCodeController.text
+                .trim()
+                .toLowerCase()
+                .replaceAll(' ', '') ==
+            confirmationCode.toLowerCase() &&
+        flightCodeController.text
+                .trim()
+                .toLowerCase()
+                .replaceAll('-', '')
+                .replaceAll(' ', '') ==
+            flightCode.toLowerCase().replaceAll('-', '') &&
+        // seatNumberController.text.trim().toLowerCase().replaceAll(' ', '') ==
+        //     seatNumber.toLowerCase() &&
+        // gateNumberController.text.trim().toLowerCase().replaceAll(' ', '') ==
+        //     gateNumber.toLowerCase() &&
+        departureTimeController.text
+                .trim()
+                .toLowerCase()
+                .replaceAll(':', '')
+                .replaceAll(' ', '') ==
+            departureTime.toLowerCase().replaceAll(':', '') &&
+        departingTerminalController.text
+                .trim()
+                .toLowerCase()
+                .replaceAll(' ', '') ==
+            departingTerminal.toLowerCase()) {
+      // arrivingTerminalController.text
+      //         .trim()
+      //         .toLowerCase()
+      //         .replaceAll(' ', '') ==
+      //     arrivingTerminal.toLowerCase()) {
       await prefs.updateActivityVisible(airportTimedTestKey, false);
       await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
       if (await prefs.getBool(airportTimedTestCompleteKey) == null) {
@@ -113,8 +138,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
           await prefs.updateActivityVisible(paoEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
-            snackBarText:
-                'Congratulations! You\'ve unlocked the PAO system!',
+            snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
             textColor: Colors.white,
             backgroundColor: colorPAODarker,
             durationSeconds: 3,
@@ -151,7 +175,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(airportTimedTestKey, 'review');
     await prefs.updateActivityVisible(airportTimedTestKey, false);
     await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
@@ -181,7 +205,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -327,7 +351,8 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                         child: Text(
-                          'Leaving at / from gate number:',
+                          // 'Leaving at / from gate number:',
+                          'Leaving at:',
                           style: TextStyle(
                             fontSize: 18,
                             color: backgroundHighlightColor,
@@ -381,43 +406,43 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                                     )),
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              child: TextFormField(
-                                controller: gateNumberController,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: airportFont,
-                                  color: backgroundHighlightColor,
-                                ),
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                      color: Colors.grey,
-                                    )),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: backgroundHighlightColor),
-                                    ),
-                                    contentPadding: EdgeInsets.all(5),
-                                    border: OutlineInputBorder(),
-                                    hintText: 'XX',
-                                    hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                      fontFamily: airportFont,
-                                    )),
-                              ),
-                            ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
+                            // Container(
+                            //   width: 70,
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.all(
+                            //       Radius.circular(5),
+                            //     ),
+                            //   ),
+                            //   child: TextFormField(
+                            //     controller: gateNumberController,
+                            //     textAlign: TextAlign.center,
+                            //     style: TextStyle(
+                            //       fontSize: 20,
+                            //       fontFamily: airportFont,
+                            //       color: backgroundHighlightColor,
+                            //     ),
+                            //     decoration: InputDecoration(
+                            //         enabledBorder: OutlineInputBorder(
+                            //             borderSide: BorderSide(
+                            //           color: Colors.grey,
+                            //         )),
+                            //         focusedBorder: OutlineInputBorder(
+                            //           borderSide: BorderSide(
+                            //               color: backgroundHighlightColor),
+                            //         ),
+                            //         contentPadding: EdgeInsets.all(5),
+                            //         border: OutlineInputBorder(),
+                            //         hintText: 'XX',
+                            //         hintStyle: TextStyle(
+                            //           fontSize: 20,
+                            //           color: Colors.grey,
+                            //           fontFamily: airportFont,
+                            //         )),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -430,7 +455,8 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                         child: Text(
-                          'Flight code & seat number:',
+                          // 'Flight code & seat number:',
+                          'Flight code:',
                           style: TextStyle(
                             fontSize: 18,
                             color: backgroundHighlightColor,
@@ -484,108 +510,108 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                                     )),
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              child: TextFormField(
-                                controller: seatNumberController,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: airportFont,
-                                  color: backgroundHighlightColor,
-                                ),
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                      color: Colors.grey,
-                                    )),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: backgroundHighlightColor),
-                                    ),
-                                    contentPadding: EdgeInsets.all(5),
-                                    border: OutlineInputBorder(),
-                                    hintText: 'XXX',
-                                    hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey,
-                                      fontFamily: airportFont,
-                                    )),
-                              ),
-                            ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
+                            // Container(
+                            //   width: 70,
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.all(
+                            //       Radius.circular(5),
+                            //     ),
+                            //   ),
+                            //   child: TextFormField(
+                            //     controller: seatNumberController,
+                            //     textAlign: TextAlign.center,
+                            //     style: TextStyle(
+                            //       fontSize: 20,
+                            //       fontFamily: airportFont,
+                            //       color: backgroundHighlightColor,
+                            //     ),
+                            //     decoration: InputDecoration(
+                            //         enabledBorder: OutlineInputBorder(
+                            //             borderSide: BorderSide(
+                            //           color: Colors.grey,
+                            //         )),
+                            //         focusedBorder: OutlineInputBorder(
+                            //           borderSide: BorderSide(
+                            //               color: backgroundHighlightColor),
+                            //         ),
+                            //         contentPadding: EdgeInsets.all(5),
+                            //         border: OutlineInputBorder(),
+                            //         hintText: 'XXX',
+                            //         hintStyle: TextStyle(
+                            //           fontSize: 20,
+                            //           color: Colors.grey,
+                            //           fontFamily: airportFont,
+                            //         )),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Text(
-                          'Arriving at terminal:',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: backgroundHighlightColor,
-                            fontFamily: airportFont,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                        child: Container(
-                          width: 70,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
-                          child: TextFormField(
-                            controller: arrivingTerminalController,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: airportFont,
-                              color: backgroundHighlightColor,
-                            ),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Colors.grey,
-                                )),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: backgroundHighlightColor),
-                                ),
-                                contentPadding: EdgeInsets.all(5),
-                                border: OutlineInputBorder(),
-                                hintText: 'X',
-                                hintStyle: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.grey,
-                                  fontFamily: airportFont,
-                                )),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                    //     child: Text(
+                    //       'Arriving at terminal:',
+                    //       style: TextStyle(
+                    //         fontSize: 18,
+                    //         color: backgroundHighlightColor,
+                    //         fontFamily: airportFont,
+                    //       ),
+                    //       textAlign: TextAlign.left,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.centerRight,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                    //     child: Container(
+                    //       width: 70,
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.all(
+                    //           Radius.circular(5),
+                    //         ),
+                    //       ),
+                    //       child: TextFormField(
+                    //         controller: arrivingTerminalController,
+                    //         textAlign: TextAlign.center,
+                    //         style: TextStyle(
+                    //           fontSize: 20,
+                    //           fontFamily: airportFont,
+                    //           color: backgroundHighlightColor,
+                    //         ),
+                    //         decoration: InputDecoration(
+                    //             enabledBorder: OutlineInputBorder(
+                    //                 borderSide: BorderSide(
+                    //               color: Colors.grey,
+                    //             )),
+                    //             focusedBorder: OutlineInputBorder(
+                    //               borderSide: BorderSide(
+                    //                   color: backgroundHighlightColor),
+                    //             ),
+                    //             contentPadding: EdgeInsets.all(5),
+                    //             border: OutlineInputBorder(),
+                    //             hintText: 'X',
+                    //             hintStyle: TextStyle(
+                    //               fontSize: 20,
+                    //               color: Colors.grey,
+                    //               fontFamily: airportFont,
+                    //             )),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 40,
                     ),

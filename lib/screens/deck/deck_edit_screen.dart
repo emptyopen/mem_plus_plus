@@ -114,7 +114,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
             IconButton(
               icon: Icon(Icons.arrow_downward),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -125,7 +125,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -253,7 +253,7 @@ class _CSVImporterState extends State<CSVImporter> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           onPressed: () {
-                            HapticFeedback.heavyImpact();
+                            HapticFeedback.lightImpact();
                             Navigator.pop(context);
                           },
                           padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -272,7 +272,7 @@ class _CSVImporterState extends State<CSVImporter> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           onPressed: () {
-                            HapticFeedback.heavyImpact();
+                            HapticFeedback.lightImpact();
                             var csvConverter = CsvToListConverter();
                             var l = csvConverter.convert(textController.text,
                                 eol: '\n');

@@ -67,7 +67,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text('Alphabet: practice'),
         backgroundColor: Colors.blue[200],
@@ -75,7 +75,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
           IconButton(
             icon: Icon(Icons.info),
             onPressed: () {
-              HapticFeedback.heavyImpact();
+              HapticFeedback.lightImpact();
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
@@ -87,7 +87,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            HapticFeedback.heavyImpact();
+            HapticFeedback.lightImpact();
             Navigator.of(context).pop('test');
           },
         ),
@@ -114,7 +114,9 @@ class AlphabetPracticeScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Alphabet Practice',
       information: [
-        '    You know the drill, get cracking :) ',
+        '    If you find that you can\'t remember your word because other words starting with that letter keep '
+            'bubbling up in your mind, consider using one of those words instead! \n    You can always go back to the edit page and update your '
+            'letters :) ',
       ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],

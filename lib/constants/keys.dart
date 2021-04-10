@@ -105,9 +105,12 @@ const String airportTimedTestCompleteKey = 'AirportTimedTestComplete';
 const String phoneticAlphabetTimedTestPrepKey = 'PhoneticAlphabetTimedTestPrep';
 const String phoneticAlphabetTimedTestKey = 'PhoneticAlphabetTimedTest';
 const String phoneticAlphabetTestActiveKey = 'PhoneticAlphabetTestActive';
-const String phoneticAlphabetTimedTestPrepFirstHelpKey = 'PhoneticAlphabetTimedTestPrepFirstHelp';
-const String phoneticAlphabetTimedTestFirstHelpKey = 'PhoneticAlphabetTimedTestFirstHelp';
-const String phoneticAlphabetTimedTestCompleteKey = 'PhoneticAlphabetTimedTestComplete';
+const String phoneticAlphabetTimedTestPrepFirstHelpKey =
+    'PhoneticAlphabetTimedTestPrepFirstHelp';
+const String phoneticAlphabetTimedTestFirstHelpKey =
+    'PhoneticAlphabetTimedTestFirstHelp';
+const String phoneticAlphabetTimedTestCompleteKey =
+    'PhoneticAlphabetTimedTestComplete';
 
 // PAO
 const String paoKey = 'PAO';
@@ -147,13 +150,22 @@ const String piTimedTestCompleteKey = 'PiTimedTestComplete';
 
 // games
 const String gamesAvailableKey = 'GamesAvailable';
+const String newGamesAvailableKey = 'NewGamesAvailable';
 const String gamesFirstHelpKey = 'GamesFirstHelp';
 const String fadeGameAvailableKey = 'FadeGameAvailable';
 const String fadeGameFirstHelpKey = 'FadeGameFirstHelp';
+const String fadeGameFirstViewKey = 'FadeGameFirstView';
 const String morseGameAvailableKey = 'MorseGameAvailable';
 const String morseGameFirstHelpKey = 'MorseGameFirstHelp';
+const String morseGameFirstViewKey = 'MorseGameFirstView';
 const String irrationalGameAvailableKey = 'IrrationalGameAvailable';
 const String irrationalGameFirstHelpKey = 'IrrationalGameFirstHelp';
+const String irrationalGameFirstViewKey = 'IrrationalGameFirstView';
+const String triviaGameAvailableKey = 'TriviaGameAvailable';
+const String triviaGameFirstViewKey = 'TriviaGameFirstView';
+const String presidentsTriviaGameFirstHelpKey = 'PresidentsTriviaGameFirstHelp';
+const String elementsTriviaGameFirstHelpKey = 'ElementsTriviaGameFirstHelp';
+const String countriesTriviaGameFirstHelpKey = 'CountriesTriviaGameFirstHelp';
 
 // custom memory
 const String customMemoriesKey = 'CustomMemories';
@@ -199,11 +211,56 @@ var airportIcon = Icon(MdiIcons.airplaneTakeoff);
 var phoneticIcon = Icon(MdiIcons.sortAlphabeticalAscending);
 
 Map termDurationsMap = {
-  shortTerm: debugModeEnabled ? [Duration(seconds: 1), Duration(seconds: 3), Duration(seconds: 5), Duration(seconds: 8), Duration(seconds: 1)] :
-    [Duration(minutes: 20), Duration(minutes: 80), Duration(minutes: 220), Duration(minutes: 540), Duration(minutes: 1240)],
-  mediumTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10)],
-  longTerm: [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90)],
-  extraLongTerm: debugModeEnabled ? [Duration(days: 4), Duration(days: 4), Duration(seconds: 5), Duration(seconds: 8), Duration(seconds: 1)] : [Duration(minutes: 30), Duration(hours: 3), Duration(hours: 12), Duration(days: 2), Duration(days: 10), Duration(days: 30), Duration(days: 90), Duration(days: 180), Duration(days: 400)],
+  shortTerm: debugModeEnabled
+      ? [
+          Duration(seconds: 1),
+          Duration(seconds: 3),
+          Duration(seconds: 5),
+          Duration(seconds: 8),
+          Duration(seconds: 1)
+        ]
+      : [
+          Duration(minutes: 20),
+          Duration(minutes: 80),
+          Duration(minutes: 220),
+          Duration(minutes: 540),
+          Duration(minutes: 1240)
+        ],
+  mediumTerm: [
+    Duration(minutes: 30),
+    Duration(hours: 3),
+    Duration(hours: 12),
+    Duration(days: 2),
+    Duration(days: 10)
+  ],
+  longTerm: [
+    Duration(minutes: 30),
+    Duration(hours: 3),
+    Duration(hours: 12),
+    Duration(days: 2),
+    Duration(days: 10),
+    Duration(days: 30),
+    Duration(days: 90)
+  ],
+  extraLongTerm: debugModeEnabled
+      ? [
+          Duration(days: 4),
+          Duration(days: 4),
+          Duration(seconds: 5),
+          Duration(seconds: 8),
+          Duration(seconds: 1)
+        ]
+      : [
+          Duration(minutes: 30),
+          Duration(hours: 3),
+          Duration(hours: 12),
+          Duration(days: 2),
+          Duration(days: 10),
+          Duration(days: 30),
+          Duration(days: 90),
+          Duration(days: 180),
+          Duration(days: 400)
+        ],
 };
 
 Map customMemoryIconMap = {
@@ -250,7 +307,7 @@ Map morseQuiz = {
   'organ that pumps blood': 'heart',
   'a hundred years': 'century',
   'where you type on computers': 'keyboard',
-  'tons of sand and maybe an oasis': 'desert', 
+  'tons of sand and maybe an oasis': 'desert',
   'wacky scene when sleeping': 'dream',
   'connects ground to ceiling': 'wall',
   'color of banana': 'yellow',
@@ -439,34 +496,403 @@ List alphabetSuggestions = [
 ];
 
 String piValue = '3.14159265358979323846264338327950288419716939937510'
-  '58209749445923078164062862089986280348253421170679'
-  '82148086513282306647093844609550582231725359408128'
-  '48111745028410270193852110555964462294895493038196'
-  '44288109756659334461284756482337867831652712019091'
-  '45648566923460348610454326648213393607260249141273'
-  '72458700660631558817488152092096282925409171536436'
-  '78925903600113305305488204665213841469519415116094'
-  '33057270365759591953092186117381932611793105118548'
-  '07446237996274956735188575272489122793818301194912'
-  '98336733624406566430860213949463952247371907021798'
-  '60943702770539217176293176752384674818467669405132'
-  '00056812714526356082778577134275778960917363717872'
-  '14684409012249534301465495853710507922796892589235'
-  '42019956112129021960864034418159813629774771309960'
-  '51870721134999999837297804995105973173281609631859'
-  '50244594553469083026425223082533446850352619311881'
-  '71010003137838752886587533208381420617177669147303'
-  '59825349042875546873115956286388235378759375195778'
-  '18577805321712268066130019278766111959092164201989';
+    '58209749445923078164062862089986280348253421170679'
+    '82148086513282306647093844609550582231725359408128'
+    '48111745028410270193852110555964462294895493038196'
+    '44288109756659334461284756482337867831652712019091'
+    '45648566923460348610454326648213393607260249141273'
+    '72458700660631558817488152092096282925409171536436'
+    '78925903600113305305488204665213841469519415116094'
+    '33057270365759591953092186117381932611793105118548'
+    '07446237996274956735188575272489122793818301194912'
+    '98336733624406566430860213949463952247371907021798'
+    '60943702770539217176293176752384674818467669405132'
+    '00056812714526356082778577134275778960917363717872'
+    '14684409012249534301465495853710507922796892589235'
+    '42019956112129021960864034418159813629774771309960'
+    '51870721134999999837297804995105973173281609631859'
+    '50244594553469083026425223082533446850352619311881'
+    '71010003137838752886587533208381420617177669147303'
+    '59825349042875546873115956286388235378759375195778'
+    '18577805321712268066130019278766111959092164201989';
 
-String eValue = '2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305'
-'99218174135966290435729003342952605956307381323286279434907632338298807531952510190115738341879307021540891499348841675092447614606680'
-'82264800168477411853742345442437107539077744992069551702761838606261331384583000752044933826560297606737113200709328709127443747047230'
-'69697720931014169283681902551510865746377211125238978442505695369677078544996996794686445490598793163688923009879312773617821542499922'
-'95763514822082698951936680331825288693984964651058209392398294887933203625094431173012381970684161403970198376793206832823764648042953'
-'11802328782509819455815301756717361332069811250996181881593041690351598888519345807273866738589422879228499892086805825749279610484198'
-'44436346324496848756023362482704197862320900216099023530436994184914631409343173814364054625315209618369088870701676839642437814059271'
-'45635490613031072085103837505101157477041718986106873969655212671546889570350354';
+String eValue =
+    '2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305'
+    '99218174135966290435729003342952605956307381323286279434907632338298807531952510190115738341879307021540891499348841675092447614606680'
+    '82264800168477411853742345442437107539077744992069551702761838606261331384583000752044933826560297606737113200709328709127443747047230'
+    '69697720931014169283681902551510865746377211125238978442505695369677078544996996794686445490598793163688923009879312773617821542499922'
+    '95763514822082698951936680331825288693984964651058209392398294887933203625094431173012381970684161403970198376793206832823764648042953'
+    '11802328782509819455815301756717361332069811250996181881593041690351598888519345807273866738589422879228499892086805825749279610484198'
+    '44436346324496848756023362482704197862320900216099023530436994184914631409343173814364054625315209618369088870701676839642437814059271'
+    '45635490613031072085103837505101157477041718986106873969655212671546889570350354';
+
+Map presidents = {
+  'washington': {'name': 'George Washington', 'firstYear': 1789},
+  'adams': {'name': 'John Adams', 'firstYear': 1797},
+  'jefferson': {'name': 'Thomas Jefferson', 'firstYear': 1801},
+  'madison': {'name': 'James Madison', 'firstYear': 1809},
+  'monroe': {'name': 'James Monroe', 'firstYear': 1817},
+  'adams2': {'name': 'John Quency Adams', 'firstYear': 1825},
+  'jackson': {'name': 'Andrew Jackson', 'firstYear': 1829},
+  'buren': {'name': 'Martin Van Buren', 'firstYear': 1837},
+  'harrison': {'name': 'William Henry Harrison', 'firstYear': 1841},
+  'tyler': {'name': 'John Tyler', 'firstYear': 1841},
+  'polk': {'name': 'James K. Polk', 'firstYear': 1845},
+  'taylor': {'name': 'Zachary Taylor', 'firstYear': 1849},
+  'fillmore': {'name': 'Millard Fillmore', 'firstYear': 1850},
+  'pierce': {'name': 'Fraklin Pierce', 'firstYear': 1853},
+  'buchanan': {'name': 'James Buchanan', 'firstYear': 1857},
+  'lincoln': {'name': 'Abraham Lincoln', 'firstYear': 1861},
+  'johnson': {'name': 'Andrew Johnson', 'firstYear': 1865},
+  'grant': {'name': 'Ulysses S. Grant', 'firstYear': 1869},
+  'hayes': {'name': 'Rutherford B. Hayes', 'firstYear': 1877},
+  'garfield': {'name': 'James A. Garfield', 'firstYear': 1881},
+  'arthur': {'name': 'Chester A. Authur', 'firstYear': 1881},
+  'cleveland': {'name': 'Grover Cleveland', 'firstYear': 1885},
+  'harrison2': {'name': 'Benjamin Harrison', 'firstYear': 1889},
+  'cleveland2': {'name': 'Grover Cleveland (second term)', 'firstYear': 1893},
+  'mckinley': {'name': 'William McKinley', 'firstYear': 1897},
+  'roosevelt': {'name': 'Theodore Roosevelt', 'firstYear': 1901},
+  'taft': {'name': 'William Howard Taft', 'firstYear': 1909},
+  'wilson': {'name': 'Woodrow Wilson', 'firstYear': 1913},
+  'harding': {'name': 'Warren G. Harding', 'firstYear': 1921},
+  'coolidge': {'name': 'Calvin Coolidge', 'firstYear': 1923},
+  'hoover': {'name': 'Herbert Hoover', 'firstYear': 1929},
+  'roosevelt2': {'name': 'Franklin D. Roosevelt', 'firstYear': 1933},
+  'truman': {'name': 'Harry S. Truman', 'firstYear': 1945},
+  'eisenhower': {'name': 'Dwight D. Eisenhower', 'firstYear': 1953},
+  'kennedy': {'name': 'John F. Kennedy', 'firstYear': 1961},
+  'johnson2': {'name': 'Lyndon B. Johnson', 'firstYear': 1963},
+  'nixon': {'name': 'Richard Nixon', 'firstYear': 1969},
+  'ford': {'name': 'Gerald Ford', 'firstYear': 1974},
+  'carter': {'name': 'Jimmy Carter', 'firstYear': 1977},
+  'reagan': {'name': 'Ronald Reagan', 'firstYear': 1981},
+  'bush': {'name': 'George H. W. Bush', 'firstYear': 1989},
+  'clinton': {'name': 'Bill Clinton', 'firstYear': 1993},
+  'bush2': {'name': 'George W. Bush', 'firstYear': 2001},
+  'obama': {'name': 'Barack Obama', 'firstYear': 2009},
+  'trump': {'name': 'Donald Trump', 'firstYear': 2017},
+};
+
+Map elements = {
+  '1': {'name': 'Hydrogen', 'atomicWeight': 1.008, 'symbol': 'H'},
+  '2': {'name': 'Helium', 'atomicWeight': 4.0026, 'symbol': 'He'},
+  '3': {'name': 'Lithium', 'atomicWeight': 6.94, 'symbol': 'Li'},
+  '4': {'name': 'Beryllium', 'atomicWeight': 9.0122, 'symbol': 'Be'},
+  '5': {'name': 'Boron', 'atomicWeight': 10.81, 'symbol': 'B'},
+  '6': {'name': 'Carbon', 'atomicWeight': 12.011, 'symbol': 'C'},
+  '7': {'name': 'Nitrogen', 'atomicWeight': 14.007, 'symbol': 'N'},
+  '8': {'name': 'Oxygen', 'atomicWeight': 15.999, 'symbol': 'O'},
+  '9': {'name': 'Fluorine', 'atomicWeight': 18.998, 'symbol': 'F'},
+  '10': {'name': 'Neon', 'atomicWeight': 20.180, 'symbol': 'Ne'},
+  '11': {'name': 'Sodium', 'atomicWeight': 22.990, 'symbol': 'Na'},
+  '12': {'name': 'Magnesium', 'atomicWeight': 24.305, 'symbol': 'Mg'},
+  '13': {'name': 'Aluminium', 'atomicWeight': 26.982, 'symbol': 'Al'},
+  '14': {'name': 'Silicon', 'atomicWeight': 28.085, 'symbol': 'Si'},
+  '15': {'name': 'Phosphorus', 'atomicWeight': 30.974, 'symbol': 'P'},
+  '16': {'name': 'Sulfur', 'atomicWeight': 32.06, 'symbol': 'S'},
+  '17': {'name': 'Chlorine', 'atomicWeight': 35.45, 'symbol': 'Cl'},
+  '18': {'name': 'Argon', 'atomicWeight': 39.948, 'symbol': 'Ar'},
+  '19': {'name': 'Potassium', 'atomicWeight': 39.098, 'symbol': 'K'},
+  '20': {'name': 'Calcium', 'atomicWeight': 40.078, 'symbol': 'Ca'},
+  '21': {'name': 'Scandium', 'atomicWeight': 44.956, 'symbol': 'Sc'},
+  '22': {'name': 'Titanium', 'atomicWeight': 47.876, 'symbol': 'Ti'},
+  '23': {'name': 'Vanadium', 'atomicWeight': 50.942, 'symbol': 'V'},
+  '24': {'name': 'Chromium', 'atomicWeight': 51.996, 'symbol': 'Cr'},
+  '25': {'name': 'Manganese', 'atomicWeight': 54.938, 'symbol': 'Mn'},
+  '26': {'name': 'Iron', 'atomicWeight': 55.845, 'symbol': 'Fe'},
+  '27': {'name': 'Cobalt', 'atomicWeight': 58.933, 'symbol': 'Co'},
+  '28': {'name': 'Nickel', 'atomicWeight': 58.693, 'symbol': 'Ni'},
+  '29': {'name': 'Copper', 'atomicWeight': 63.546, 'symbol': 'Cu'},
+  '30': {'name': 'Zinc', 'atomicWeight': 65.38, 'symbol': 'Zn'},
+  '31': {'name': 'Gallium', 'atomicWeight': 69.723, 'symbol': 'Ga'},
+  '32': {'name': 'Germanium', 'atomicWeight': 72.630, 'symbol': 'Ge'},
+  '33': {'name': 'Arsenic', 'atomicWeight': 74.922, 'symbol': 'As'},
+  '34': {'name': 'Selenium', 'atomicWeight': 78.971, 'symbol': 'Se'},
+  '35': {'name': 'Bromine', 'atomicWeight': 79.904, 'symbol': 'Br'},
+  '36': {'name': 'Krypton', 'atomicWeight': 83.798, 'symbol': 'Kr'},
+  '37': {'name': 'Rubidium', 'atomicWeight': 85.468, 'symbol': 'Rb'},
+  '38': {'name': 'Strontium', 'atomicWeight': 87.62, 'symbol': 'Sr'},
+  '39': {'name': 'Yttrium', 'atomicWeight': 88.906, 'symbol': 'Y'},
+  '40': {'name': 'Zirconium', 'atomicWeight': 91.224, 'symbol': 'Zr'},
+  '41': {'name': 'Niobium', 'atomicWeight': 92.906, 'symbol': 'Nb'},
+  '42': {'name': 'Molybdenur', 'atomicWeight': 95.95, 'symbol': 'Mo'},
+  '43': {'name': 'Technetium', 'atomicWeight': 98, 'symbol': 'Tc'},
+  '44': {'name': 'Ruthenium', 'atomicWeight': 101.07, 'symbol': 'Ru'},
+  '45': {'name': 'Rhodium', 'atomicWeight': 102.91, 'symbol': 'Rh'},
+  '46': {'name': 'Palladium', 'atomicWeight': 106.42, 'symbol': 'Pd'},
+  '47': {'name': 'Silver', 'atomicWeight': 107.87, 'symbol': 'Ag'},
+  '48': {'name': 'Cadmium', 'atomicWeight': 112.41, 'symbol': 'Cd'},
+  '49': {'name': 'Indium', 'atomicWeight': 114.82, 'symbol': 'In'},
+  '50': {'name': 'Tin', 'atomicWeight': 118.71, 'symbol': 'Sn'},
+  '51': {'name': 'Antimony', 'atomicWeight': 121.76, 'symbol': 'Sb'},
+  '52': {'name': 'Tellurium', 'atomicWeight': 127.60, 'symbol': 'Te'},
+  '53': {'name': 'Iodine', 'atomicWeight': 126.90, 'symbol': 'I'},
+  '54': {'name': 'Xenon', 'atomicWeight': 131.29, 'symbol': 'Xe'},
+  '55': {'name': 'Caesium', 'atomicWeight': 132.91, 'symbol': 'Cs'},
+  '56': {'name': 'Barium', 'atomicWeight': 137.3, 'symbol': 'Ba'},
+  '57': {'name': 'Lanthanum', 'atomicWeight': 138.91, 'symbol': 'La'},
+  '58': {'name': 'Cerium', 'atomicWeight': 140.12, 'symbol': 'Ce'},
+  '59': {'name': 'Praseodynium', 'atomicWeight': 140.91, 'symbol': 'Pr'},
+  '60': {'name': 'Neodynium', 'atomicWeight': 144.24, 'symbol': 'Nd'},
+  '61': {'name': 'Promethium', 'atomicWeight': 145, 'symbol': 'Pm'},
+  '62': {'name': 'Samarium', 'atomicWeight': 150.36, 'symbol': 'Sm'},
+  '63': {'name': 'Europium', 'atomicWeight': 151.96, 'symbol': 'Eu'},
+  '64': {'name': 'Gadolinium', 'atomicWeight': 157.25, 'symbol': 'Gd'},
+  '65': {'name': 'Terbium', 'atomicWeight': 158.93, 'symbol': 'Tb'},
+  '66': {'name': 'Dysprosium', 'atomicWeight': 162.5, 'symbol': 'Dy'},
+  '67': {'name': 'Holmium', 'atomicWeight': 164.93, 'symbol': 'Ho'},
+  '68': {'name': 'Erbium', 'atomicWeight': 167.26, 'symbol': 'Er'},
+  '69': {'name': 'Thulium', 'atomicWeight': 168.93, 'symbol': 'Tm'},
+  '70': {'name': 'Ytterbium', 'atomicWeight': 173.05, 'symbol': 'Yb'},
+  '71': {'name': 'Lutetium', 'atomicWeight': 174.97, 'symbol': 'Lu'},
+  '72': {'name': 'Hafnium', 'atomicWeight': 178.49, 'symbol': 'Hf'},
+  '73': {'name': 'Tantalum', 'atomicWeight': 180.95, 'symbol': 'Ta'},
+  '74': {'name': 'Tungsten', 'atomicWeight': 183.84, 'symbol': 'W'},
+  '75': {'name': 'Rhenium', 'atomicWeight': 186.21, 'symbol': 'Re'},
+  '76': {'name': 'Osmium', 'atomicWeight': 190.23, 'symbol': 'Os'},
+  '77': {'name': 'Iridium', 'atomicWeight': 192.22, 'symbol': 'Ir'},
+  '78': {'name': 'Platinum', 'atomicWeight': 195.08, 'symbol': 'Pt'},
+  '79': {'name': 'Gold', 'atomicWeight': 196.97, 'symbol': 'Au'},
+  '80': {'name': 'Mercury', 'atomicWeight': 200.59, 'symbol': 'Hg'},
+  '81': {'name': 'Thallium', 'atomicWeight': 204.38, 'symbol': 'Tl'},
+  '82': {'name': 'Lead', 'atomicWeight': 207.2, 'symbol': 'Pb'},
+  '83': {'name': 'Bismuth', 'atomicWeight': 208.98, 'symbol': 'Bi'},
+  '84': {'name': 'Polonium', 'atomicWeight': 209, 'symbol': 'Po'},
+  '85': {'name': 'Astatine', 'atomicWeight': 210, 'symbol': 'At'},
+  '86': {'name': 'Radon', 'atomicWeight': 222, 'symbol': 'Rn'},
+  '87': {'name': 'Francium', 'atomicWeight': 223, 'symbol': 'Fr'},
+  '88': {'name': 'Radium', 'atomicWeight': 226, 'symbol': 'Ra'},
+  '89': {'name': 'Actinium', 'atomicWeight': 227, 'symbol': 'Ac'},
+  '90': {'name': 'Thorium', 'atomicWeight': 232.04, 'symbol': 'Th'},
+  '91': {'name': 'Protactinium', 'atomicWeight': 231.04, 'symbol': 'Pa'},
+  '92': {'name': 'Uranium', 'atomicWeight': 238.03, 'symbol': 'U'},
+  '93': {'name': 'Neptunium', 'atomicWeight': 237, 'symbol': 'Np'},
+  '94': {'name': 'Plutonium', 'atomicWeight': 244, 'symbol': 'Pu'},
+  '95': {'name': 'Americium', 'atomicWeight': 243, 'symbol': 'Am'},
+  '96': {'name': 'Curium', 'atomicWeight': 247, 'symbol': 'Cm'},
+  '97': {'name': 'Berkelium', 'atomicWeight': 247, 'symbol': 'Bk'},
+  '98': {'name': 'Californium', 'atomicWeight': 251, 'symbol': 'Cf'},
+  '99': {'name': 'Einsteinium', 'atomicWeight': 252, 'symbol': 'Es'},
+  '100': {'name': 'Fermium', 'atomicWeight': 257, 'symbol': 'Fm'},
+  '101': {'name': 'Mendelevium', 'atomicWeight': 258, 'symbol': 'Md'},
+  '102': {'name': 'Nobelium', 'atomicWeight': 259, 'symbol': 'No'},
+  '103': {'name': 'Lawrencium', 'atomicWeight': 266, 'symbol': 'Lr'},
+  '104': {'name': 'Rutherfordium', 'atomicWeight': 267, 'symbol': 'Rf'},
+  '105': {'name': 'Dubnium', 'atomicWeight': 268, 'symbol': 'Db'},
+  '106': {'name': 'Seaborgium', 'atomicWeight': 269, 'symbol': 'Sg'},
+  '107': {'name': 'Bohrium', 'atomicWeight': 270, 'symbol': 'Bh'},
+  '108': {'name': 'Hassium', 'atomicWeight': 270, 'symbol': 'Hs'},
+  '109': {'name': 'Meitnerium', 'atomicWeight': 278, 'symbol': 'Mt'},
+  '110': {'name': 'Darmstadtium', 'atomicWeight': 281, 'symbol': 'Ds'},
+  '111': {'name': 'Roentgenium', 'atomicWeight': 282, 'symbol': 'Rg'},
+  '112': {'name': 'Copernicium', 'atomicWeight': 285, 'symbol': 'Cn'},
+  '113': {'name': 'Nihonium', 'atomicWeight': 286, 'symbol': 'Nh'},
+  '114': {'name': 'Flerovium', 'atomicWeight': 289, 'symbol': 'Fl'},
+  '115': {'name': 'Moscovium', 'atomicWeight': 290, 'symbol': 'Mc'},
+  '116': {'name': 'Livermorium', 'atomicWeight': 293, 'symbol': 'Lv'},
+  '117': {'name': 'Tennessine', 'atomicWeight': 294, 'symbol': 'Ts'},
+  '118': {'name': 'Oganesson', 'atomicWeight': 294, 'symbol': 'Og'},
+};
+
+Map countries = {
+  'AFGHANISTAN': {'capital': 'KABUL'},
+  'ALBANIA': {'capital': 'TIRANA'},
+  'ALGERIA': {'capital': 'ALGIERS'},
+  'ANDORRA': {'capital': 'ANDORRA LA VELLA'},
+  'ANGOLA': {'capital': 'LUANDA'},
+  'ANTIGUA & BARBUDA': {'capital': 'SAINT JOHN\'S'},
+  'ARGENTINA': {'capital': 'BUENOS AIRES'},
+  'ARMENIA': {'capital': 'YEREVAN'},
+  'AUSTRALIA': {'capital': 'CANBERRA'},
+  'AUSTRIA': {'capital': 'VIENNA'},
+  'AZERBAIJAN': {'capital': 'BAKU'},
+  'BAHAMAS, THE': {'capital': 'NASSAU'},
+  'BAHRAIN': {'capital': 'MANAMA'},
+  'BANGLADESH': {'capital': 'DHAKA'},
+  'BARBADOS': {'capital': 'BRIDGETOWN'},
+  'BELARUS': {'capital': 'MINSK'},
+  'BELGIUM': {'capital': 'BRUSSELS'},
+  'BELIZE': {'capital': 'BELMOPAN'},
+  'BENIN': {'capital': 'PORTO-NOVO'},
+  'BHUTAN': {'capital': 'THIMPHU'},
+  'BOLIVIA': {'capital': 'SUCRE'},
+  'BOSNIA & HERZEGOVINA': {'capital': 'SARAJEVO'},
+  'BOTSWANA': {'capital': 'GABORONE'},
+  'BRAZIL': {'capital': 'BRASILIA'},
+  'BRUNEI': {'capital': 'BANDAR SERI BEGAWAN'},
+  'BULGARIA': {'capital': 'SOFIA'},
+  'BURKINA FASO': {'capital': 'OUAGADOUGOU'},
+  'BURUNDI': {'capital': 'BUJUMBURA'},
+  'CABO VERDE': {'capital': 'PRAIA'},
+  'CAMBODIA': {'capital': 'PHNOM PENH'},
+  'CAMEROON': {'capital': 'YAOUNDE'},
+  'CANADA': {'capital': 'OTTAWA'},
+  'CENTRAL AFRICAN REPUBLIC': {'capital': 'BANGUI'},
+  'CHAD': {'capital': 'N\'DJAMENA'},
+  'CHILE': {'capital': 'SANTIAGO'},
+  'CHINA': {'capital': 'BEIJING'},
+  'COLOMBIA': {'capital': 'BOGOTÁ'},
+  'COMOROS': {'capital': 'MORONI'},
+  'CONGO, DEMOCRATIC REPUBLIC OF THE': {'capital': 'KINSHASA'},
+  'COSTA RICA': {'capital': 'SAN JOSE'},
+  'CÔTE D\'IVOIRE': {'capital': 'YAMOUSSOUKRO'},
+  'CROATIA': {'capital': 'ZAGREB'},
+  'CUBA': {'capital': 'HAVANA'},
+  'CYPRUS': {'capital': 'NICOSIA'},
+  'CZECH REPUBLIC': {'capital': 'PRAGUE'},
+  'DENMARK': {'capital': 'COPENHAGEN'},
+  'DJIBOUTI': {'capital': 'DJIBOUTI (CITY)'},
+  'DOMINICA': {'capital': 'ROSEAU'},
+  'DOMINICAN REPUBLIC': {'capital': 'SANTO DOMINGO'},
+  'ECUADOR': {'capital': 'QUITO'},
+  'EGYPT': {'capital': 'CAIRO'},
+  'EL SALVADOR': {'capital': 'SAN SALVADOR'},
+  'EQUATORIAL GUINEA': {'capital': 'MALABO'},
+  'ERITREA': {'capital': 'ASMARA'},
+  'ESTONIA': {'capital': 'TALLINN'},
+  'ESWATINI': {'capital': 'MBABANE'},
+  'ETHIOPIA': {'capital': 'ADDIS ABABA'},
+  'FEDERATED STATES OF MICRONESIA': {'capital': 'PALIKIR'},
+  'FIJI': {'capital': 'SUVA'},
+  'FINLAND': {'capital': 'HELSINKI'},
+  'FRANCE': {'capital': 'PARIS'},
+  'GABON': {'capital': 'LIBREVILLE'},
+  'GAMBIA, THE': {'capital': 'BANJUL'},
+  'GEORGIA': {'capital': 'TBILISI'},
+  'GERMANY': {'capital': 'BERLIN'},
+  'GHANA': {'capital': 'ACCRA'},
+  'GREECE': {'capital': 'ATHENS'},
+  'GRENADA': {'capital': 'SAINT GEORGE\'S'},
+  'GUATEMALA': {'capital': 'GUATEMALA CITY'},
+  'GUINEA': {'capital': 'CONAKRY'},
+  'GUINEA-BISSAU': {'capital': 'BISSAU'},
+  'GUYANA': {'capital': 'GEORGETOWN'},
+  'HAITI': {'capital': 'PORT-AU-PRINCE'},
+  'HONDURAS': {'capital': 'TEGUCIGALPA'},
+  'HUNGARY': {'capital': 'BUDAPEST'},
+  'ICELAND': {'capital': 'REYKJAVIK'},
+  'INDIA': {'capital': 'NEW DELHI'},
+  'INDONESIA': {'capital': 'JAKARTA'},
+  'IRAN': {'capital': 'TEHRAN'},
+  'IRAQ': {'capital': 'BAGHDAD'},
+  'IRELAND': {'capital': 'DUBLIN'},
+  'ISRAEL': {'capital': 'JERUSALEM'},
+  'ITALY': {'capital': 'ROME'},
+  'JAMAICA': {'capital': 'KINGSTON'},
+  'JAPAN': {'capital': 'TOKYO'},
+  'JORDAN': {'capital': 'AMMAN'},
+  'KAZAKHSTAN': {'capital': 'NUR-SULTAN'},
+  'KENYA': {'capital': 'NAIROBI'},
+  'KIRIBATI': {'capital': 'SOUTH TARAWA'},
+  'KOSOVO': {'capital': 'PRISTINA'},
+  'KUWAIT': {'capital': 'KUWAIT CITY'},
+  'KYRGYZSTAN': {'capital': 'BISHKEK'},
+  'LAOS': {'capital': 'VIENTIANE'},
+  'LATVIA': {'capital': 'RIGA'},
+  'LEBANON': {'capital': 'BEIRUT'},
+  'LESOTHO': {'capital': 'MASERU'},
+  'LIBERIA': {'capital': 'MONROVIA'},
+  'LIBYA': {'capital': 'TRIPOLI'},
+  'LIECHTENSTEIN': {'capital': 'VADUZ'},
+  'LITHUANIA': {'capital': 'VILNIUS'},
+  'LUXEMBOURG': {'capital': 'LUXEMBOURG'},
+  'MADAGASCAR': {'capital': 'ANTANANARIVO'},
+  'MALAWI': {'capital': 'LILONGWE'},
+  'MALAYSIA': {'capital': 'KUALA LUMPUR'},
+  'MALDIVES': {'capital': 'MALE'},
+  'MALI': {'capital': 'BAMAKO'},
+  'MALTA': {'capital': 'VALLETTA'},
+  'MARSHALL ISLANDS': {'capital': 'MAJURO'},
+  'MAURITANIA': {'capital': 'NOUAKCHOTT'},
+  'MAURITIUS': {'capital': 'PORT LOUIS'},
+  'MEXICO': {'capital': 'MEXICO CITY'},
+  'MOLDOVA': {'capital': 'CHISINAU'},
+  'MONACO': {'capital': 'MONACO'},
+  'MONGOLIA': {'capital': 'ULAANBAATAR'},
+  'MONTENEGRO': {'capital': 'PODGORICA'},
+  'MOROCCO': {'capital': 'RABAT'},
+  'MOZAMBIQUE': {'capital': 'MAPUTO'},
+  'MYANMAR': {'capital': 'NAY PYI TAW'},
+  'NAMIBIA': {'capital': 'WINDHOEK'},
+  'NAURU': {'capital': 'YAREN DISTRICT'},
+  'NEPAL': {'capital': 'KATHMANDU'},
+  'NETHERLANDS': {'capital': 'AMSTERDAM'},
+  'NEW ZEALAND': {'capital': 'WELLINGTON'},
+  'NICARAGUA': {'capital': 'MANAGUA'},
+  'NIGER': {'capital': 'NIAMEY'},
+  'NIGERIA': {'capital': 'ABUJA'},
+  'NORTH KOREA': {'capital': 'PYONGYANG'},
+  'NORTH MACEDONIA': {'capital': 'SKOPJE'},
+  'NORWAY': {'capital': 'OSLO'},
+  'OMAN': {'capital': 'MUSCAT'},
+  'PAKISTAN': {'capital': 'ISLAMABAD'},
+  'PALAU': {'capital': 'NGERULMUD'},
+  'PALESTINE': {'capital': 'EAST JERUSALEM'},
+  'PANAMA': {'capital': 'PANAMA CITY'},
+  'PAPUA NEW GUINEA': {'capital': 'PORT MORESBY'},
+  'PARAGUAY': {'capital': 'ASUNCIÓN'},
+  'PERU': {'capital': 'LIMA'},
+  'PHILIPPINES': {'capital': 'MANILA'},
+  'POLAND': {'capital': 'WARSAW'},
+  'PORTUGAL': {'capital': 'LISBON'},
+  'QATAR': {'capital': 'DOHA'},
+  'REPUBLIC OF THE CONGO': {'capital': 'BRAZZAVILLE'},
+  'ROMANIA': {'capital': 'BUCHAREST'},
+  'RUSSIA': {'capital': 'MOSCOW'},
+  'RWANDA': {'capital': 'KIGALI'},
+  'SAINT KITTS & NEVIS': {'capital': 'BASSETERRE'},
+  'SAINT LUCIA': {'capital': 'CASTRIES'},
+  'SAINT VINCENT & THE GRENADINES': {'capital': 'KINGSTOWN'},
+  'SAMOA': {'capital': 'APIA'},
+  'SAN MARINO': {'capital': 'SAN MARINO'},
+  'SÃO TOMÉ & PRÍNCIPE': {'capital': 'SÃO TOMÉ'},
+  'SAUDI ARABIA': {'capital': 'RIYADH'},
+  'SENEGAL': {'capital': 'DAKAR'},
+  'SERBIA': {'capital': 'BELGRADE'},
+  'SEYCHELLES': {'capital': 'VICTORIA'},
+  'SIERRA LEONE': {'capital': 'FREETOWN'},
+  'SINGAPORE': {'capital': 'SINGAPORE'},
+  'SLOVAKIA': {'capital': 'BRATISLAVA'},
+  'SLOVENIA': {'capital': 'LJUBLJANA'},
+  'SOLOMON ISLANDS': {'capital': 'HONIARA'},
+  'SOMALIA': {'capital': 'MOGADISHU'},
+  'SOUTH AFRICA': {'capital': 'BLOEMFONTEIN, CAPE TOWN, PRETORIA'},
+  'SOUTH KOREA': {'capital': 'SEOUL'},
+  'SOUTH SUDAN': {'capital': 'JUBA'},
+  'SPAIN': {'capital': 'MADRID'},
+  'SRI LANKA': {'capital': 'COLOMBO, SRI JAYAWARDENEPURA KOTTE'},
+  'SUDAN': {'capital': 'KHARTOUM'},
+  'SURINAME': {'capital': 'PARAMARIBO'},
+  'SWEDEN': {'capital': 'STOCKHOLM'},
+  'SWITZERLAND': {'capital': 'BERN'},
+  'SYRIA': {'capital': 'DAMASCUS'},
+  'TAJIKISTAN': {'capital': 'DUSHANBE'},
+  'TANZANIA': {'capital': 'DODOMA'},
+  'THAILAND': {'capital': 'BANGKOK'},
+  'TIMOR-LESTE': {'capital': 'DILI'},
+  'TOGO': {'capital': 'LOMÉ'},
+  'TONGA': {'capital': 'NUKUʻALOFA'},
+  'TRINIDAD & TOBAGO': {'capital': 'PORT OF SPAIN'},
+  'TUNISIA': {'capital': 'TUNIS'},
+  'TURKEY': {'capital': 'ANKARA'},
+  'TURKMENISTAN': {'capital': 'ASHGABAT'},
+  'TUVALU': {'capital': 'FUNAFUTI'},
+  'UGANDA': {'capital': 'KAMPALA'},
+  'UKRAINE': {'capital': 'KIEV'},
+  'UNITED ARAB EMIRATES': {'capital': 'ABU DHABI'},
+  'UNITED KINGDOM*': {'capital': 'LONDON'},
+  'UNITED STATES': {'capital': 'WASHINGTON, D.C.'},
+  'URUGUAY': {'capital': 'MONTEVIDEO'},
+  'UZBEKISTAN': {'capital': 'TASHKENT'},
+  'VANUATU': {'capital': 'PORT VILA'},
+  'VATICAN CITY': {'capital': 'VATICAN CITY'},
+  'VENEZUELA': {'capital': 'CARACAS'},
+  'VIETNAM': {'capital': 'HANOI'},
+  'YEMEN': {'capital': 'SANA\'A'},
+  'ZAMBIA': {'capital': 'LUSAKA'},
+  'ZIMBABWE': {'capital': 'HARARE'},
+};
 
 List<String> menNames = [
   'Liam',

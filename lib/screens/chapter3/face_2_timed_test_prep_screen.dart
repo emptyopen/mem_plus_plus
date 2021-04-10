@@ -14,7 +14,8 @@ class Face2TimedTestPrepScreen extends StatefulWidget {
   Face2TimedTestPrepScreen({Key key, this.callback}) : super(key: key);
 
   @override
-  _Face2TimedTestPrepScreenState createState() => _Face2TimedTestPrepScreenState();
+  _Face2TimedTestPrepScreenState createState() =>
+      _Face2TimedTestPrepScreenState();
 }
 
 class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
@@ -39,75 +40,75 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    await prefs.checkFirstTime(
-        context, face2TimedTestPrepFirstHelpKey, Face2TimedTestPrepScreenHelp());
+    await prefs.checkFirstTime(context, face2TimedTestPrepFirstHelpKey,
+        Face2TimedTestPrepScreenHelp());
     bool face2TestIsActive = await prefs.getBool(face2TestActiveKey);
-      if (face2TestIsActive == null || !face2TestIsActive) {
-        print('no active test, setting new values');
-        var random = new Random();
-        var gender1IsMale = random.nextBool();
-        var gender2IsMale = random.nextBool();
-        String faceIndex1 = (random.nextInt(23) + 1).toString();
-        String faceIndex2 = (random.nextInt(23) + 1).toString();
-        while (faceIndex2 == faceIndex1) {
-          faceIndex2 = (random.nextInt(23) + 1).toString();
-        }
-        if (gender1IsMale) {
-          face1 = 'men/man$faceIndex1.jpg';
-          String firstName = menNames[random.nextInt(menNames.length)];
-          name1 = firstName;
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name1 = '$firstName $lastName';
-        } else {
-          face1 = 'women/woman$faceIndex1.jpg';
-          String firstName = womenNames[random.nextInt(menNames.length)];
-          name1 = firstName;
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name1 = '$firstName $lastName';
-        }
-        if (gender2IsMale) {
-          face2 = 'men/man$faceIndex2.jpg';
-          String firstName = menNames[random.nextInt(menNames.length)];
-          name2 = firstName;
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name2 = '$firstName $lastName';
-        } else {
-          face2 = 'women/woman$faceIndex2.jpg';
-          String firstName = womenNames[random.nextInt(menNames.length)];
-          name2 = firstName;
-          String lastName = lastNames[random.nextInt(menNames.length)];
-          name2 = '$firstName $lastName';
-        }
-        age1 = (random.nextInt(20) + 18).toString();
-        age2 = (random.nextInt(20) + 18).toString();
-        job1 = jobs[random.nextInt(jobs.length)];
-        job2 = jobs[random.nextInt(jobs.length)];
-        hometown1 = cities[random.nextInt(cities.length)];
-        hometown2 = cities[random.nextInt(cities.length)];
-        prefs.setString('face2Face1', face1);
-        prefs.setString('face2Name1', name1);
-        prefs.setString('face2Age1', age1);
-        prefs.setString('face2Job1', job1);
-        prefs.setString('face2Hometown1', hometown1);
-        prefs.setString('face2Face2', face2);
-        prefs.setString('face2Name2', name2);
-        prefs.setString('face2Age2', age2);
-        prefs.setString('face2Job2', job2);
-        prefs.setString('face2Hometown2', hometown2);
-        prefs.setBool(face2TestActiveKey, true);
-      } else {
-        print('found active test, restoring values');
-        face1 = await prefs.getString('face2Face1');
-        name1 = await prefs.getString('face2Name1');
-        age1 = await prefs.getString('face2Age1');
-        job1 = await prefs.getString('face2Job1');
-        hometown1 = await prefs.getString('face2Hometown1');
-        face2 = await prefs.getString('face2Face2');
-        name2 = await prefs.getString('face2Name2');
-        age2 = await prefs.getString('face2Age2');
-        job2 = await prefs.getString('face2Job2');
-        hometown2 = await prefs.getString('face2Hometown2');
+    if (face2TestIsActive == null || !face2TestIsActive) {
+      print('no active test, setting new values');
+      var random = new Random();
+      var gender1IsMale = random.nextBool();
+      var gender2IsMale = random.nextBool();
+      String faceIndex1 = (random.nextInt(23) + 1).toString();
+      String faceIndex2 = (random.nextInt(23) + 1).toString();
+      while (faceIndex2 == faceIndex1) {
+        faceIndex2 = (random.nextInt(23) + 1).toString();
       }
+      if (gender1IsMale) {
+        face1 = 'men/man$faceIndex1.jpg';
+        String firstName = menNames[random.nextInt(menNames.length)];
+        name1 = firstName;
+        String lastName = lastNames[random.nextInt(menNames.length)];
+        name1 = '$firstName $lastName';
+      } else {
+        face1 = 'women/woman$faceIndex1.jpg';
+        String firstName = womenNames[random.nextInt(menNames.length)];
+        name1 = firstName;
+        String lastName = lastNames[random.nextInt(menNames.length)];
+        name1 = '$firstName $lastName';
+      }
+      if (gender2IsMale) {
+        face2 = 'men/man$faceIndex2.jpg';
+        String firstName = menNames[random.nextInt(menNames.length)];
+        name2 = firstName;
+        String lastName = lastNames[random.nextInt(menNames.length)];
+        name2 = '$firstName $lastName';
+      } else {
+        face2 = 'women/woman$faceIndex2.jpg';
+        String firstName = womenNames[random.nextInt(menNames.length)];
+        name2 = firstName;
+        String lastName = lastNames[random.nextInt(menNames.length)];
+        name2 = '$firstName $lastName';
+      }
+      age1 = (random.nextInt(20) + 18).toString();
+      age2 = (random.nextInt(20) + 18).toString();
+      job1 = jobs[random.nextInt(jobs.length)];
+      job2 = jobs[random.nextInt(jobs.length)];
+      hometown1 = cities[random.nextInt(cities.length)];
+      hometown2 = cities[random.nextInt(cities.length)];
+      prefs.setString('face2Face1', face1);
+      prefs.setString('face2Name1', name1);
+      prefs.setString('face2Age1', age1);
+      prefs.setString('face2Job1', job1);
+      prefs.setString('face2Hometown1', hometown1);
+      prefs.setString('face2Face2', face2);
+      prefs.setString('face2Name2', name2);
+      prefs.setString('face2Age2', age2);
+      prefs.setString('face2Job2', job2);
+      prefs.setString('face2Hometown2', hometown2);
+      prefs.setBool(face2TestActiveKey, true);
+    } else {
+      print('found active test, restoring values');
+      face1 = await prefs.getString('face2Face1');
+      name1 = await prefs.getString('face2Name1');
+      age1 = await prefs.getString('face2Age1');
+      job1 = await prefs.getString('face2Job1');
+      hometown1 = await prefs.getString('face2Hometown1');
+      face2 = await prefs.getString('face2Face2');
+      name2 = await prefs.getString('face2Name2');
+      age2 = await prefs.getString('face2Age2');
+      job2 = await prefs.getString('face2Job2');
+      hometown2 = await prefs.getString('face2Hometown2');
+    }
     setState(() {});
   }
 
@@ -120,7 +121,8 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
     await prefs.updateActivityVisibleAfter(
         face2TimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Faces test (difficult) is ready!', 'Good luck!', face2TimedTestKey);
+    notifyDuration(testDuration, 'Faces test (difficult) is ready!',
+        'Good luck!', face2TimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }
@@ -137,7 +139,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
-                  HapticFeedback.heavyImpact();
+                  HapticFeedback.lightImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -160,7 +162,10 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                     Column(
                       children: <Widget>[
                         Container(
-                          decoration: BoxDecoration(border: Border.all(color: backgroundSemiHighlightColor), borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: backgroundSemiHighlightColor),
+                              borderRadius: BorderRadius.circular(20)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(19),
                             child: Image(
@@ -211,15 +216,18 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                     Column(
                       children: <Widget>[
                         Container(
-                          decoration: BoxDecoration(border: Border.all(color: backgroundSemiHighlightColor), borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: backgroundSemiHighlightColor),
+                              borderRadius: BorderRadius.circular(20)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(19),
                             child: Image(
-                                height: 200,
-                                image: AssetImage(
-                                  'assets/images/$face2',
-                                ),
+                              height: 200,
+                              image: AssetImage(
+                                'assets/images/$face2',
                               ),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -282,9 +290,11 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                   style:
                       TextStyle(fontSize: 18, color: backgroundHighlightColor),
                 ),
-                SizedBox(height: 40,),
+                SizedBox(
+                  height: 40,
+                ),
               ],
-            ), 
+            ),
           ),
         ));
   }
@@ -293,7 +303,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
 class Face2TimedTestPrepScreenHelp extends StatelessWidget {
   final List<String> information = [
     '    Welcome to hell-mode of the Faces test! Now, in addition to just a first name, we\'re '
-    'going to memorize a last name, age, job, and hometown. Wow!'
+        'going to memorize a last name, age, job, and hometown. Wow!'
   ];
 
   @override

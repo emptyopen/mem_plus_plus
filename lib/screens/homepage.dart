@@ -3,7 +3,6 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:flutter/services.dart';
@@ -89,58 +88,56 @@ class MyHomePage extends StatefulWidget {
 // Chapter 4
 // deck
 // - conversion rates
+// - recipes
 // - first aid
 // - doomsday test
 // - periodic table
 
 // done:
 
-// TODO: add super PI/irrational game
-// TODO: add FIND THE CARD game, memory show all cards for some amount of time, then flip over
-
 // next up:
-// TODO: when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
-// TODO: add new button for Game menu, set it whenever there is new game (and also new for new games)
-// TODO: re-add donate button (launch in safari on iphone)
+// add more possibilities for notification message besides "looking for something to do?"
+// make dialog for edit static, non scrollable
+// add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
+// custom memory can't always submit answer? check if wrong
+// when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 
 // horizon:
-// TODO: add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
-// TODO: add date & recipe system
-// TODO: custom memory can't always submit answer? check if wrong
-// TODO: welcome animation, second page still visible until swipe?
-// TODO: handle bad CSV input
-// TODO: figure out how to handle CSV on iphone (doesn't launch google sheets well?) button in CSV to copy text? 
-// TODO: check callback for adding custom ID vs others?
-// TODO: investigate potential slow encrypting
-// TODO: add recipe as custom test
-// TODO: for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
-// TODO: BIG: badge / quest system
-// TODO: BIG: once you beat something (like a timed test, it gets harder, up to three levels???) / or choose amount of time for timed tests
-// TODO: describe amount of pi correct
-// TODO: chapter animation
-// TODO: add scroll notification when scrollable: https://medium.com/@diegoveloper/flutter-lets-know-the-scrollcontroller-and-scrollnotification-652b2685a4ac
-// TODO: match ages for face (hard)
-// TODO: divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
-// TODO: implement length limits for inputs (like action/object) - maybe 30 characters
-// TODO: add conversion rates
-// TODO: add doomsday rule
-// TODO: if number of flash cards needed is less than 5?, make it 5 instead of just one
-// TODO: add first aid system
-// TODO: add more faces, make all of them closer to the face
-// TODO: alphabet PAO (person action, same object)
-// TODO: add symbols
-// TODO: add password test
-// TODO: add safe viewing area (for toolbar)
-// TODO: add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
-// TODO: crashlytics for IOS
-// TODO: look into possible battery drainage from refreshing screen? emulator seems to run hot
-// TODO: add name (first time, and preferences) - use in local notifications
-// TODO: add ability for alphabet to contain up to 3 objects (level up system?)
-// TODO: make PAO multiple choice tougher with similar digits
-// TODO: make vibrations cooler, and more consistent across app?
-// TODO: make account, backend, retrieve portfolios
-// TODO: delete old memory dict keys for custom memories when you delete the memory
-// TODO: BIG: add backend, account recovery (store everything?)
+// add FIND THE CARD game, memory show all cards for some amount of time, then flip over
+// BIG: add date & recipe system
+// welcome animation, second page still visible until swipe? (and other swiping pages only first page)
+// handle bad CSV input
+// figure out how to handle CSV on iphone (doesn't launch google sheets well?) button in CSV to copy text?
+// check callback for adding custom ID vs others?
+// investigate potential slow encrypting
+// add recipe as custom test
+// for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
+// BIG: badge / quest system
+// BIG: once you beat something (like a timed test, it gets harder, up to three levels???) / or choose amount of time for timed tests
+// describe amount of pi correct
+// chapter animation
+// add scroll notification when scrollable: https://medium.com/@diegoveloper/flutter-lets-know-the-scrollcontroller-and-scrollnotification-652b2685a4ac
+// match ages for face (hard)
+// divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
+// implement length limits for inputs (like action/object) - maybe 30 characters
+// add conversion rates
+// add doomsday memory rule
+// add first aid system
+// add more faces, make all of them closer to the face
+// alphabet PAO (person action, same object)
+// add symbols
+// add password test
+// add safe viewing area (for toolbar)
+// add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
+// crashlytics for IOS
+// look into possible battery drainage from refreshing screen? emulator seems to run hot
+// add name (first time, and preferences) - use in local notifications
+// add ability for alphabet to contain up to 3 objects (level up system?)
+// make PAO multiple choice tougher with similar digits
+// make vibrations cooler, and more consistent across app?
+// make account, backend, retrieve portfolios
+// delete old memory dict keys for custom memories when you delete the memory
+// BIG: add backend, account recovery (store everything?)
 
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
@@ -240,8 +237,8 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       gamesAvailable = true;
     }
-    if (await prefs.getBool(fadeGameFirstHelpKey) == null ||
-        await prefs.getBool(fadeGameFirstHelpKey) == false) {
+    if (await prefs.getBool(newGamesAvailableKey) == null ||
+        await prefs.getBool(newGamesAvailableKey) == false) {
       gamesFirstView = false;
     } else {
       gamesFirstView = true;
@@ -321,11 +318,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkGamesFirstTime() async {
-    if (await prefs.getBool(fadeGameFirstHelpKey) == true) {
+    if (await prefs.getBool(newGamesAvailableKey) == true) {
       setState(() {
         gamesFirstView = false;
       });
-      await prefs.setBool(fadeGameFirstHelpKey, false);
+      await prefs.setBool(newGamesAvailableKey, false);
     }
     slideTransition(
       context,
@@ -776,7 +773,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 IconButton(
                   icon: Icon(Icons.settings),
                   onPressed: () {
-                    HapticFeedback.heavyImpact();
+                    HapticFeedback.lightImpact();
                     Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -810,7 +807,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 IconButton(
                   icon: Icon(Icons.info),
                   onPressed: () {
-                    HapticFeedback.heavyImpact();
+                    HapticFeedback.lightImpact();
                     Navigator.of(context).push(PageRouteBuilder(
                         opaque: false,
                         pageBuilder: (BuildContext context, _, __) {
@@ -893,35 +890,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color1: Colors.lightBlueAccent,
                                 color2: Colors.lightBlue[700],
                               ),
-                              gamesFirstView
-                                  ? Positioned(
-                                      child: Container(
-                                        width: 50,
-                                        height: 25,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5)),
-                                          //color: Color.fromRGBO(255, 105, 180, 1),
-                                          color: Color.fromRGBO(
-                                              255, 255, 255, 0.85),
-                                        ),
-                                        child: Shimmer.fromColors(
-                                          period: Duration(seconds: 3),
-                                          baseColor: Colors.black,
-                                          highlightColor: Colors.greenAccent,
-                                          child: Center(
-                                              child: Text(
-                                            'new!',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.red),
-                                          )),
-                                        ),
-                                      ),
-                                      left: 10,
-                                      top: 5)
-                                  : Container()
+                              gamesFirstView ? NewTag(top: 10) : Container()
                             ],
                           )
                         : Container(),
@@ -939,33 +908,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color2: Colors.purple,
                               ),
                               customMemoryManagerFirstView
-                                  ? Positioned(
-                                      child: Container(
-                                        width: 50,
-                                        height: 25,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5)),
-                                          //color: Color.fromRGBO(255, 105, 180, 1),
-                                          color: Color.fromRGBO(
-                                              255, 255, 255, 0.85),
-                                        ),
-                                        child: Shimmer.fromColors(
-                                          period: Duration(seconds: 3),
-                                          baseColor: Colors.black,
-                                          highlightColor: Colors.greenAccent,
-                                          child: Center(
-                                              child: Text(
-                                            'new!',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.red),
-                                          )),
-                                        ),
-                                      ),
-                                      left: 10,
-                                      top: 5)
+                                  ? NewTag()
                                   : Container()
                             ],
                           )

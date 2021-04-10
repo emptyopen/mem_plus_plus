@@ -175,7 +175,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -260,7 +260,8 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
                   right: 0,
                 ),
               ]),
-            ),Container(
+            ),
+            Container(
               width: 150,
               height: 100,
               child: Stack(children: [
@@ -331,7 +332,7 @@ class DeckTimedTestPrepScreenHelp extends StatelessWidget {
       title: 'Deck Timed Test Preparation',
       information: [
         '    OK! Now you\'re going to convert these nine cards into three scenes, and link the scenes together. '
-        'Remember, make it visceral - really add as much detail as you can muster!',
+            'Remember, make it visceral - really add as much detail as you can muster!',
       ],
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,

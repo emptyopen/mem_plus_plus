@@ -21,14 +21,15 @@ handleAppUpdate() async {
   var prefs = PrefsUpdater();
 
   // new games for old devices:
-  // if singleDigitTimedTest complete, set games available, set fade game available
   if (await prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
     await prefs.setBool(gamesAvailableKey, true);
     await prefs.setBool(fadeGameAvailableKey, true);
   }
-  // if nato phonetic complete, set survival game available
   if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null) {
     await prefs.setBool(morseGameAvailableKey, true);
+  }
+  if (await prefs.getBool(piTimedTestCompleteKey) != null) {
+    await prefs.setBool(irrationalGameAvailableKey, true);
   }
 
   Map<String, Activity> activityStates =
@@ -281,7 +282,7 @@ void showConfirmDialog(
             text: 'Cancel',
             color: Colors.grey[300],
             onPressed: () {
-              HapticFeedback.heavyImpact();
+              HapticFeedback.lightImpact();
               Navigator.of(context).pop();
             },
           ),
@@ -290,7 +291,7 @@ void showConfirmDialog(
             color: confirmColor,
             onPressed: () {
               function();
-              HapticFeedback.heavyImpact();
+              HapticFeedback.lightImpact();
               Navigator.of(context).pop();
             },
           ),
@@ -334,13 +335,15 @@ notify() async {
     'your channel id',
     'your channel name',
     'your channel description',
-    importance: Importance.Max,
-    priority: Priority.High,
+    importance: Importance.max,
+    priority: Priority.high,
     ticker: 'ticker',
   );
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    android: androidPlatformChannelSpecifics,
+    iOS: iOSPlatformChannelSpecifics,
+  );
   await flutterLocalNotificationsPlugin.show(
       0, 'Test notification', 'testing 1 2 3', platformChannelSpecifics,
       payload: 'item x');
@@ -355,13 +358,15 @@ notifyDuration(
     testReminderIdKey,
     testReminderKey,
     'Timed test available',
-    importance: Importance.Max,
-    priority: Priority.High,
+    importance: Importance.max,
+    priority: Priority.high,
     ticker: 'ticker',
   );
   var iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    android: androidPlatformChannelSpecifics,
+    iOS: iOSPlatformChannelSpecifics,
+  );
   print(
       'setting notification $scheduledNotificationDateTime ||| $title ||| $subtitle');
   await flutterLocalNotificationsPlugin.schedule(
@@ -387,11 +392,18 @@ initializeNotificationsScheduler() async {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      dailyReminderIdKey, dailyReminderKey, 'Daily reminder',
-      importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    dailyReminderIdKey,
+    dailyReminderKey,
+    'Daily reminder',
+    importance: Importance.max,
+    priority: Priority.high,
+    ticker: 'ticker',
+  );
   var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
-      androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    android: androidPlatformChannelSpecifics,
+    iOS: iOSPlatformChannelSpecifics,
+  );
 
   bool singleDigitComplete =
       await prefs.getBool(singleDigitTimedTestCompleteKey) != null;
@@ -403,13 +415,10 @@ initializeNotificationsScheduler() async {
   bool chapter2Complete =
       await prefs.getBool(airportTimedTestCompleteKey) != null &&
           await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null;
-  bool paoComplete =
-      await prefs.getBool(paoTimedTestCompleteKey) != null;
-  bool chapter3Complete =
-      await prefs.getBool(piTimedTestCompleteKey) != null &&
-          await prefs.getBool(face2TimedTestCompleteKey) != null;
-  bool deckComplete =
-      await prefs.getBool(deckTimedTestCompleteKey) != null;
+  bool paoComplete = await prefs.getBool(paoTimedTestCompleteKey) != null;
+  bool chapter3Complete = await prefs.getBool(piTimedTestCompleteKey) != null &&
+      await prefs.getBool(face2TimedTestCompleteKey) != null;
+  bool deckComplete = await prefs.getBool(deckTimedTestCompleteKey) != null;
 
   var random = Random();
   int basicMessage = random.nextInt(2);
@@ -434,19 +443,24 @@ initializeNotificationsScheduler() async {
     subtitle = 'Chapter 3 is waiting!';
   } else if (!deckComplete) {
     subtitle = 'Continue familiarizing your Deck System!';
-  } 
+  }
   var time = Time(12, 30, 0);
-  await flutterLocalNotificationsPlugin.showDailyAtTime(0, title, subtitle, time, platformChannelSpecifics);
-  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-  //     0, title, subtitle, Day.Monday, time, platformChannelSpecifics);
-  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-  //     0, title, subtitle, Day.Wednesday, time, platformChannelSpecifics);
-  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-  //     0, title, subtitle, Day.Friday, time, platformChannelSpecifics);
-  // await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-  //     0, title, subtitle, Day.Sunday, time, platformChannelSpecifics);
-  // print(
-  //     'initialized weekly notifications (MWFSu) @ ${time.hour}:${time.minute}:${time.second}');
+  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+      random.nextInt(1000),
+      title,
+      subtitle,
+      Day.tuesday,
+      time,
+      platformChannelSpecifics);
+  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
+      random.nextInt(1000),
+      title,
+      subtitle,
+      Day.saturday,
+      time,
+      platformChannelSpecifics);
+  print(
+      'initialized weekly notification $title / $subtitle:  (MWFSu) @ ${time.hour}:${time.minute}:${time.second}');
 }
 
 getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {

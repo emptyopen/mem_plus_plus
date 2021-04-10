@@ -33,7 +33,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
   }
 
   toggleMode(int i) {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     encryptStates[i] = !encryptStates[i];
     setState(() {});
   }
@@ -152,55 +152,57 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              i != 0 ? encryptStates[i]
-                  ? GestureDetector(
-                      onTap: () => toggleMode(i),
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
+              i != 0
+                  ? encryptStates[i]
+                      ? GestureDetector(
+                          onTap: () => toggleMode(i),
+                          child: Stack(
+                            children: <Widget>[
+                              Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                    color: Colors.blue[400],
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.lock,
+                                    color: backgroundColor,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                child: Text(
+                                  'SAFE',
+                                  style: TextStyle(
+                                    fontFamily: 'Viga',
+                                    fontSize: 11,
+                                    color: backgroundHighlightColor,
+                                  ),
+                                ),
+                                left: 2,
+                                bottom: 6,
+                              )
+                            ],
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () => toggleMode(i),
+                          child: Container(
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
-                                color: Colors.blue[400],
+                                color: Colors.grey[200],
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
                               child: Icon(
-                                Icons.lock,
-                                color: backgroundColor,
+                                Icons.lock_open,
+                                color: Colors.black,
                               ),
                             ),
                           ),
-                          Positioned(
-                            child: Text(
-                              'SAFE',
-                              style: TextStyle(
-                                fontFamily: 'Viga',
-                                fontSize: 11,
-                                color: backgroundHighlightColor,
-                              ),
-                            ),
-                            left: 2,
-                            bottom: 6,
-                          )
-                        ],
-                      ),
-                    )
-                  : GestureDetector(
-                      onTap: () => toggleMode(i),
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Center(
-                          child: Icon(
-                            Icons.lock_open,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ) : Container(),
+                        )
+                  : Container(),
               SizedBox(
                 width: 10,
               ),
@@ -337,11 +339,12 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
     };
     widget.memoryFields.asMap().forEach((i, nonPrimaryMemoryField) {
       if (nonPrimaryMemoryField.inputType == 'other') {
-        map[nonPrimaryMemoryField.mapKey + 'Field'] = nonPrimaryMemoryField.fieldController.text;
+        map[nonPrimaryMemoryField.mapKey + 'Field'] =
+            nonPrimaryMemoryField.fieldController.text;
         if (encryptStates[i]) {
           map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = true;
-          map[nonPrimaryMemoryField.mapKey] = Password.hash(
-              nonPrimaryMemoryField.controller.text, PBKDF2());
+          map[nonPrimaryMemoryField.mapKey] =
+              Password.hash(nonPrimaryMemoryField.controller.text, PBKDF2());
         } else {
           map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = false;
           map[nonPrimaryMemoryField.mapKey] =
@@ -350,8 +353,8 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       } else {
         if (encryptStates[i]) {
           map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = true;
-          map[nonPrimaryMemoryField.mapKey] = Password.hash(
-              nonPrimaryMemoryField.controller.text, PBKDF2());
+          map[nonPrimaryMemoryField.mapKey] =
+              Password.hash(nonPrimaryMemoryField.controller.text, PBKDF2());
         } else {
           map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = false;
           map[nonPrimaryMemoryField.mapKey] =
@@ -425,17 +428,19 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
           }).toList(),
         ),
         getErrors(),
-        encrypting ? BasicFlatButton(
-          text: 'Encrypting',
-          onPressed: null,
-          fontSize: 18,
-          color: Colors.yellow,
-        ) : BasicFlatButton(
-          text: 'Start',
-          onPressed: addMemory,
-          fontSize: 18,
-          color: colorCustomMemoryStandard,
-        ),
+        encrypting
+            ? BasicFlatButton(
+                text: 'Encrypting',
+                onPressed: null,
+                fontSize: 18,
+                color: Colors.yellow,
+              )
+            : BasicFlatButton(
+                text: 'Start',
+                onPressed: addMemory,
+                fontSize: 18,
+                color: colorCustomMemoryStandard,
+              ),
       ],
     );
   }

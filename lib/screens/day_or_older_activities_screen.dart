@@ -76,10 +76,9 @@ class _DayOrOlderActivitiesScreenState
   }
 
   cancelActivity(String activity, int index) async {
-
     switch (activity) {
       case singleDigitTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
         await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
@@ -88,7 +87,7 @@ class _DayOrOlderActivitiesScreenState
         }
         break;
       case singleDigitTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
         await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
@@ -97,7 +96,7 @@ class _DayOrOlderActivitiesScreenState
         }
         break;
       case alphabetTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(alphabetTimedTestKey, 'review');
         await prefs.updateActivityVisible(alphabetTimedTestKey, false);
         await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
@@ -106,7 +105,7 @@ class _DayOrOlderActivitiesScreenState
         }
         break;
       case paoTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(paoTimedTestKey, 'review');
         await prefs.updateActivityVisible(paoTimedTestKey, false);
         await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
@@ -115,7 +114,7 @@ class _DayOrOlderActivitiesScreenState
         }
         break;
       case deckTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(deckTimedTestKey, 'review');
         await prefs.updateActivityVisible(deckTimedTestKey, false);
         await prefs.updateActivityVisible(deckTimedTestPrepKey, true);

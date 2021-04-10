@@ -231,14 +231,15 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
         ),
         Text(
-          '\n    dish soap / TV:',
+          '\n    dish soap / bed:',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
         SizedBox(
           height: 5,
         ),
         Text(
-          '    Every time you change the channel, the TV squirts dish soap at you! Rude! And it\'s squirting wayyyy too much.',
+          '    You go to lie down in your comfy bed to get away from the craziness, but unfortunately it\'s soaked with dish detergent. '
+          'Luckily you are actually a plate, so now you\'re going to be squeaky clean!',
           style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
         ),
         Text(

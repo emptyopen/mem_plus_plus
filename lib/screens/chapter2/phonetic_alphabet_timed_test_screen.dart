@@ -109,7 +109,7 @@ class _PhoneticAlphabetTimedTestScreenState
       showError3 = false;
       showError5 = false;
     });
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     if (text1Controller.text == '') {
       setState(() {
         showError1 = true;
@@ -187,6 +187,10 @@ class _PhoneticAlphabetTimedTestScreenState
       await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
       await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
       await prefs.setBool(morseGameAvailableKey, true);
+      if (await prefs.getBool(morseGameFirstViewKey) == null) {
+        await prefs.setBool(newGamesAvailableKey, true);
+        await prefs.setBool(morseGameFirstViewKey, true);
+      }
       if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
         await prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
         await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
@@ -211,8 +215,7 @@ class _PhoneticAlphabetTimedTestScreenState
           );
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
-            snackBarText:
-                'Congratulations! You\'ve unlocked the Morse game!',
+            snackBarText: 'Congratulations! You\'ve unlocked the Morse game!',
             textColor: Colors.white,
             backgroundColor: colorGamesDarker,
             durationSeconds: 3,
@@ -251,7 +254,7 @@ class _PhoneticAlphabetTimedTestScreenState
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
     await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
     await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
@@ -277,7 +280,11 @@ class _PhoneticAlphabetTimedTestScreenState
     });
     return Text(
       morseString,
-      style: TextStyle(fontSize: 24, fontFamily: 'SpaceMono', color: backgroundHighlightColor,),
+      style: TextStyle(
+        fontSize: 24,
+        fontFamily: 'SpaceMono',
+        color: backgroundHighlightColor,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -295,7 +302,7 @@ class _PhoneticAlphabetTimedTestScreenState
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

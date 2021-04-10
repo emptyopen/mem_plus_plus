@@ -105,7 +105,7 @@ class _PAOMultipleChoiceTestScreenState
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
-              HapticFeedback.heavyImpact();
+              HapticFeedback.lightImpact();
               Navigator.of(context).pop();
             },
           ),
@@ -114,7 +114,7 @@ class _PAOMultipleChoiceTestScreenState
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

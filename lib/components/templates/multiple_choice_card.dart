@@ -128,32 +128,41 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
           return isValueToProperty
               ? Center(child: getDeckCard(widget.entry.digitSuit, 'small'))
               : Center(
-            child: Text(
-              isValueToProperty ? widget.entry.digits : widget.entry.person,
-              style: TextStyle(fontSize: 40, color: backgroundHighlightColor),
-              textAlign: TextAlign.center,
-            ),
-          );
+                  child: Text(
+                    isValueToProperty
+                        ? widget.entry.digits
+                        : widget.entry.person,
+                    style: TextStyle(
+                        fontSize: 40, color: backgroundHighlightColor),
+                    textAlign: TextAlign.center,
+                  ),
+                );
         case 'action':
           return isValueToProperty
               ? Center(child: getDeckCard(widget.entry.digitSuit, 'small'))
               : Center(
-            child: Text(
-              isValueToProperty ? widget.entry.digits : widget.entry.action,
-              style: TextStyle(fontSize: 34, color: backgroundHighlightColor),
-              textAlign: TextAlign.center,
-            ),
-          );
+                  child: Text(
+                    isValueToProperty
+                        ? widget.entry.digits
+                        : widget.entry.action,
+                    style: TextStyle(
+                        fontSize: 34, color: backgroundHighlightColor),
+                    textAlign: TextAlign.center,
+                  ),
+                );
         case 'object':
           return isValueToProperty
               ? Center(child: getDeckCard(widget.entry.digitSuit, 'small'))
               : Center(
-            child: Text(
-              isValueToProperty ? widget.entry.digits : widget.entry.object,
-              style: TextStyle(fontSize: 34, color: backgroundHighlightColor),
-              textAlign: TextAlign.center,
-            ),
-          );
+                  child: Text(
+                    isValueToProperty
+                        ? widget.entry.digits
+                        : widget.entry.object,
+                    style: TextStyle(
+                        fontSize: 34, color: backgroundHighlightColor),
+                    textAlign: TextAlign.center,
+                  ),
+                );
       }
     }
     return isValueToProperty
@@ -220,21 +229,21 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               onPressed: () => checkResult(index),
             )
           : FlatButton(
-                  color: colorDeckStandard,
-                  splashColor: colorDeckDarker,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    HapticFeedback.heavyImpact();
-                    checkResult(index);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      side: BorderSide()),
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: getDeckCard(widget.shuffledChoices[attempts][index].digitSuit, 'small'),
-                  ),
-                );
+              color: colorDeckStandard,
+              splashColor: colorDeckDarker,
+              highlightColor: Colors.transparent,
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                checkResult(index);
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5), side: BorderSide()),
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: getDeckCard(
+                    widget.shuffledChoices[attempts][index].digitSuit, 'small'),
+              ),
+            );
     }
     return BasicFlatButton(
       splashColor: colorSingleDigitDarker,
@@ -358,7 +367,8 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               Center(
                 child: Text(
                   getTitleType(),
-                  style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
+                  style:
+                      TextStyle(fontSize: 26, color: backgroundHighlightColor),
                   textAlign: TextAlign.center,
                 ),
               ),

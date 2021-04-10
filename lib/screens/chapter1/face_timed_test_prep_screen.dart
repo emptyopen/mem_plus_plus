@@ -14,7 +14,8 @@ class FaceTimedTestPrepScreen extends StatefulWidget {
   FaceTimedTestPrepScreen({Key key, this.callback}) : super(key: key);
 
   @override
-  _FaceTimedTestPrepScreenState createState() => _FaceTimedTestPrepScreenState();
+  _FaceTimedTestPrepScreenState createState() =>
+      _FaceTimedTestPrepScreenState();
 }
 
 class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
@@ -37,54 +38,54 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
     await prefs.checkFirstTime(
         context, faceTimedTestPrepFirstHelpKey, FacesTimedTestPrepScreenHelp());
     bool faceTestIsActive = await prefs.getBool(faceTestActiveKey);
-      if (faceTestIsActive == null || !faceTestIsActive) {
-        print('no active test, setting new values');
-        var random = new Random();
-        var gender1IsMale = random.nextBool();
-        var gender2IsMale = random.nextBool();
-        String faceIndex1 = (random.nextInt(23) + 1).toString();
-        String faceIndex2 = (random.nextInt(23) + 1).toString();
-        while (faceIndex2 == faceIndex1) {
-          faceIndex2 = (random.nextInt(23) + 1).toString();
-        }
-        if (gender1IsMale) {
-          face1 = 'men/man$faceIndex1.jpg';
-          String firstName = menNames[random.nextInt(menNames.length)];
-          name1 = firstName;
-          //String lastName = lastNames[random.nextInt(menNames.length)];
-          // name1 = '$firstName $lastName';
-        } else {
-          face1 = 'women/woman$faceIndex1.jpg';
-          String firstName = womenNames[random.nextInt(menNames.length)];
-          name1 = firstName;
-          // String lastName = lastNames[random.nextInt(menNames.length)];
-          // name1 = '$firstName $lastName';
-        }
-        if (gender2IsMale) {
-          face2 = 'men/man$faceIndex2.jpg';
-          String firstName = menNames[random.nextInt(menNames.length)];
-          name2 = firstName;
-          // String lastName = lastNames[random.nextInt(menNames.length)];
-          // name2 = '$firstName $lastName';
-        } else {
-          face2 = 'women/woman$faceIndex2.jpg';
-          String firstName = womenNames[random.nextInt(menNames.length)];
-          name2 = firstName;
-          // String lastName = lastNames[random.nextInt(menNames.length)];
-          // name2 = '$firstName $lastName';
-        }
-        prefs.setString('face1', face1);
-        prefs.setString('face2', face2);
-        prefs.setString('name1', name1);
-        prefs.setString('name2', name2);
-        prefs.setBool(faceTestActiveKey, true);
-      } else {
-        print('found active test, restoring values');
-        face1 = await prefs.getString('face1');
-        face2 = await prefs.getString('face2');
-        name1 = await prefs.getString('name1');
-        name2 = await prefs.getString('name2');
+    if (faceTestIsActive == null || !faceTestIsActive) {
+      print('no active test, setting new values');
+      var random = new Random();
+      var gender1IsMale = random.nextBool();
+      var gender2IsMale = random.nextBool();
+      String faceIndex1 = (random.nextInt(23) + 1).toString();
+      String faceIndex2 = (random.nextInt(23) + 1).toString();
+      while (faceIndex2 == faceIndex1) {
+        faceIndex2 = (random.nextInt(23) + 1).toString();
       }
+      if (gender1IsMale) {
+        face1 = 'men/man$faceIndex1.jpg';
+        String firstName = menNames[random.nextInt(menNames.length)];
+        name1 = firstName;
+        //String lastName = lastNames[random.nextInt(menNames.length)];
+        // name1 = '$firstName $lastName';
+      } else {
+        face1 = 'women/woman$faceIndex1.jpg';
+        String firstName = womenNames[random.nextInt(menNames.length)];
+        name1 = firstName;
+        // String lastName = lastNames[random.nextInt(menNames.length)];
+        // name1 = '$firstName $lastName';
+      }
+      if (gender2IsMale) {
+        face2 = 'men/man$faceIndex2.jpg';
+        String firstName = menNames[random.nextInt(menNames.length)];
+        name2 = firstName;
+        // String lastName = lastNames[random.nextInt(menNames.length)];
+        // name2 = '$firstName $lastName';
+      } else {
+        face2 = 'women/woman$faceIndex2.jpg';
+        String firstName = womenNames[random.nextInt(menNames.length)];
+        name2 = firstName;
+        // String lastName = lastNames[random.nextInt(menNames.length)];
+        // name2 = '$firstName $lastName';
+      }
+      prefs.setString('face1', face1);
+      prefs.setString('face2', face2);
+      prefs.setString('name1', name1);
+      prefs.setString('name2', name2);
+      prefs.setBool(faceTestActiveKey, true);
+    } else {
+      print('found active test, restoring values');
+      face1 = await prefs.getString('face1');
+      face2 = await prefs.getString('face2');
+      name1 = await prefs.getString('name1');
+      name2 = await prefs.getString('name2');
+    }
     setState(() {
       ready = true;
     });
@@ -99,7 +100,8 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
     await prefs.updateActivityVisibleAfter(
         faceTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Timed test (face) is ready!', 'Good luck!', faceTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (face) is ready!', 'Good luck!',
+        faceTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }
@@ -116,7 +118,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
-                  HapticFeedback.heavyImpact();
+                  HapticFeedback.lightImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -133,62 +135,72 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                 SizedBox(
                   height: 60,
                 ),
-                ready ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(border: Border.all(color: backgroundSemiHighlightColor), borderRadius: BorderRadius.circular(20)),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(19),
-                            child: Image(
-                              height: 200,
-                              image: AssetImage(
-                                'assets/images/$face1',
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          name1,
-                          style: TextStyle(
-                              fontSize: 22, color: backgroundHighlightColor),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(border: Border.all(color: backgroundSemiHighlightColor), borderRadius: BorderRadius.circular(20)),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(19),
-                            child: Image(
-                                height: 200,
-                                image: AssetImage(
-                                  'assets/images/$face2',
+                ready
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: backgroundSemiHighlightColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(19),
+                                  child: Image(
+                                    height: 200,
+                                    image: AssetImage(
+                                      'assets/images/$face1',
+                                    ),
+                                  ),
                                 ),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                name1,
+                                style: TextStyle(
+                                    fontSize: 22,
+                                    color: backgroundHighlightColor),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          name2,
-                          style: TextStyle(
-                              fontSize: 22, color: backgroundHighlightColor),
-                        )
-                      ],
-                    )
-                  ],
-                ) : Container(),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: backgroundSemiHighlightColor),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(19),
+                                  child: Image(
+                                    height: 200,
+                                    image: AssetImage(
+                                      'assets/images/$face2',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                name2,
+                                style: TextStyle(
+                                    fontSize: 22,
+                                    color: backgroundHighlightColor),
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    : Container(),
                 SizedBox(
                   height: 40,
                 ),
@@ -215,7 +227,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                       TextStyle(fontSize: 18, color: backgroundHighlightColor),
                 ),
               ],
-            ), 
+            ),
           ),
         ));
   }
@@ -224,23 +236,23 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
 class FacesTimedTestPrepScreenHelp extends StatelessWidget {
   final List<String> information = [
     '    Let\'s start with something practical, memorizing names! '
-    'The best way to do this is to identify a permanent(ish) feature of the person, and link some scene '
-    'to that feature. A deep voice, high cheekbones, green eyes, a distinctive mole, or something else unique! '
-    'Never, ever, EVER (under any circumstances!) tell people their identifying feature!',
+        'The best way to do this is to identify a permanent(ish) feature of the person, and link some scene '
+        'to that feature. A deep voice, high cheekbones, green eyes, a distinctive mole, or something else unique! '
+        'Never, ever, EVER (under any circumstances!) tell people their identifying feature!',
     '    For example, let\'s imagine someone named Fred. Maybe his nose is a little more squished than '
-    'the average person, and he has prominent cheekbones. The name Fred might remind you of Fred Flintstone, so you could '
-    'imagine Fred Flintstone flinging some rocks with prominent ridges at poor Fred. \n    All the rocks kept smashing '
-    'his nose in! His cheekbones are prominent and strong, and deflected all stones from Fred Flintstone.',
+        'the average person, and he has prominent cheekbones. The name Fred might remind you of Fred Flintstone, so you could '
+        'imagine Fred Flintstone flinging some rocks with prominent ridges at poor Fred. \n    All the rocks kept smashing '
+        'his nose in! His cheekbones are prominent and strong, and deflected all stones from Fred Flintstone.',
     '    Or maybe you\'re at a party, and your friend Cassie introduces you to her friend Henry. Henry, Henry... sounds like a '
-    'king\'s name. You imagine someone putting a big crown on his big head, and he sits down on a golden throne. Clutching his '
-    'staff, he bellows to his peasants, spit flying everywhere: \n    "WE SHALL BEHEAD OUR ENEMIES!!"\n\n    And maybe now you '
-    'won\'t have to ask Henry\'s name again when you\'re talking by the fridge in ten minutes.',
+        'king\'s name. You imagine someone putting a big crown on his big head, and he sits down on a golden throne. Clutching his '
+        'staff, he bellows to his peasants, spit flying everywhere: \n    "WE SHALL BEHEAD OUR ENEMIES!!"\n\n    And maybe now you '
+        'won\'t have to ask Henry\'s name again when you\'re talking by the fridge in ten minutes.',
     '    If their name is in a language foreign to yours, imagine something that has a similar sound to their name. '
-    'You can also break up the name into parts if the whole name is too difficult! '
-    '\n    For example, \'Sifiso\' could be remembered with \'Sci-fi sew(ing)\', and a visualization for \'Anatoliy\' could '
-    'include a scene with \'a Natalie (Portman)\'.'
-    '\n    I know that this seems like it it would take a long time to think of scenes like the example, but you '
-    'will get better and faster at it! '
+        'You can also break up the name into parts if the whole name is too difficult! '
+        '\n    For example, \'Sifiso\' could be remembered with \'Sci-fi sew(ing)\', and a visualization for \'Anatoliy\' could '
+        'include a scene with \'a Natalie (Portman)\'.'
+        '\n    I know that this seems like it it would take a long time to think of scenes like the example, but you '
+        'will get better and faster at it! '
   ];
 
   @override

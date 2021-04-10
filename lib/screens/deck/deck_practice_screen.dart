@@ -30,8 +30,8 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, deckPracticeFirstHelpKey,
-        DeckPracticeScreenHelp());
+    prefs.checkFirstTime(
+        context, deckPracticeFirstHelpKey, DeckPracticeScreenHelp());
     deckData = await prefs.getSharedPrefs(deckKey);
     bool allComplete = true;
     for (int i = 0; i < deckData.length; i++) {
@@ -67,25 +67,25 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
-        appBar: AppBar(
-            title: Text('Deck: practice'),
-            backgroundColor: colorDeckStandard,
-            actions: <Widget>[
-              // action button
-              IconButton(
-                icon: Icon(Icons.info),
-                onPressed: () {
-                  HapticFeedback.heavyImpact();
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) {
-                        return DeckPracticeScreenHelp();
-                      }));
-                },
-              ),
-            ]),
-        body: dataReady
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+          title: Text('Deck: practice'),
+          backgroundColor: colorDeckStandard,
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return DeckPracticeScreenHelp();
+                    }));
+              },
+            ),
+          ]),
+      body: dataReady
           ? CardTestScreen(
               cardData: deckData,
               cardType: 'FlashCard',
@@ -97,7 +97,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
               familiarityTotal: 5200,
             )
           : Container(),
-        );
+    );
   }
 }
 

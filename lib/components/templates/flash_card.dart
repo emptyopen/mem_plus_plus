@@ -84,7 +84,7 @@ class _FlashCardState extends State<FlashCard> {
   }
 
   void gotIt() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     bool levelUp = false;
     List<dynamic> data = await prefs.getSharedPrefs(widget.systemKey);
     int currIndex = widget.entry.index;
@@ -159,7 +159,7 @@ class _FlashCardState extends State<FlashCard> {
   }
 
   void didntGotIt() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     List<dynamic> dataList = await prefs.getSharedPrefs(widget.systemKey);
     int currIndex = widget.entry.index;
     dynamic updatedEntry = dataList[currIndex];

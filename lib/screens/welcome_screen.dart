@@ -147,7 +147,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   }
 
   void goToMainMenu(BuildContext context) async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     if (widget.firstTime) {
       var prefs = PrefsUpdater();
       await prefs.setBool(firstTimeAppKey, false);

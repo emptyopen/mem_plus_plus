@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mem_plus_plus/screens/games/fade_game_screen.dart';
@@ -8,6 +9,7 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/components/standard.dart';
 
 import '../../constants/keys.dart';
 import 'fade_game_screen.dart';
@@ -49,6 +51,8 @@ class _GamesScreenState extends State<GamesScreen> {
             MdiIcons.shoePrint,
             size: 40,
           ),
+          firstViewKey: fadeGameFirstViewKey,
+          firstView: await prefs.getBool(fadeGameFirstViewKey) == true,
         ),
       );
     }
@@ -63,6 +67,8 @@ class _GamesScreenState extends State<GamesScreen> {
             MdiIcons.accessPoint,
             size: 40,
           ),
+          firstViewKey: morseGameFirstViewKey,
+          firstView: await prefs.getBool(morseGameFirstViewKey) == true,
         ),
       );
     }
@@ -77,6 +83,8 @@ class _GamesScreenState extends State<GamesScreen> {
             MdiIcons.pi,
             size: 40,
           ),
+          firstViewKey: irrationalGameFirstViewKey,
+          firstView: await prefs.getBool(irrationalGameFirstViewKey) == true,
         ),
       );
     }
@@ -97,7 +105,7 @@ class _GamesScreenState extends State<GamesScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -136,34 +144,58 @@ class GameTile extends StatelessWidget {
   final String subtitle;
   final Icon icon;
   final GlobalKey scaffoldKey;
+  final bool firstView;
+  final String firstViewKey;
 
-  GameTile({this.game, this.title, this.subtitle, this.icon, this.scaffoldKey});
+  GameTile(
+      {this.game,
+      this.title,
+      this.subtitle,
+      this.icon,
+      this.scaffoldKey,
+      this.firstView,
+      this.firstViewKey});
+
+  checkFirstView() async {
+    var prefs = PrefsUpdater();
+    if (await prefs.getBool(firstViewKey) == true) {
+      await prefs.setBool(firstViewKey, false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        HapticFeedback.heavyImpact();
+        checkFirstView();
+        HapticFeedback.lightImpact();
         showDialog(
           context: context,
-          child: MyDialogContent(
-            scaffoldKey: scaffoldKey,
-            game: game,
-          ),
+          builder: (BuildContext context) {
+            return MyDialogContent(
+              scaffoldKey: scaffoldKey,
+              game: game,
+            );
+          },
         );
       },
-      child: Card(
-        color: colorGamesLighter,
-        child: ListTile(
-          leading: icon,
-          title: Text(
-            title,
-            style: TextStyle(
-              fontSize: 26,
+      child: Stack(
+        children: <Widget>[
+          Card(
+            color: colorGamesLighter,
+            child: ListTile(
+              leading: icon,
+              title: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 26,
+                ),
+              ),
+              subtitle: Text(subtitle),
             ),
           ),
-          subtitle: Text(subtitle),
-        ),
+          this.firstView ? NewTag(left: 10, top: 10) : Container(),
+        ],
       ),
     );
   }
@@ -301,7 +333,7 @@ class MyDialogContent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             DifficultySelection(
-              text: '200 digits of PI',
+              text: '200 digits of π',
               color: Colors.lightBlue[200],
               function: () => goToScreen(context, 0),
               completeKey: 'irrational0Complete',
@@ -309,7 +341,7 @@ class MyDialogContent extends StatelessWidget {
               globalKey: scaffoldKey,
             ),
             DifficultySelection(
-              text: '500 digits of PI',
+              text: '500 digits of π',
               color: Colors.lightBlue[300],
               function: () => goToScreen(context, 1),
               completeKey: 'irrational1Complete',
@@ -317,7 +349,7 @@ class MyDialogContent extends StatelessWidget {
               globalKey: scaffoldKey,
             ),
             DifficultySelection(
-              text: '1000 digits of PI',
+              text: '1000 digits of π',
               color: Colors.lightBlue[400],
               function: () => goToScreen(context, 2),
               completeKey: 'irrational2Complete',
@@ -325,7 +357,7 @@ class MyDialogContent extends StatelessWidget {
               globalKey: scaffoldKey,
             ),
             DifficultySelection(
-              text: '200 digits of E',
+              text: '200 digits of e',
               color: Colors.lightBlue[200],
               function: () => goToScreen(context, 3),
               completeKey: 'irrational3Complete',
@@ -333,7 +365,7 @@ class MyDialogContent extends StatelessWidget {
               globalKey: scaffoldKey,
             ),
             DifficultySelection(
-              text: '500 digits of E',
+              text: '500 digits of e',
               color: Colors.lightBlue[300],
               function: () => goToScreen(context, 4),
               completeKey: 'irrational4Complete',
@@ -341,7 +373,7 @@ class MyDialogContent extends StatelessWidget {
               globalKey: scaffoldKey,
             ),
             DifficultySelection(
-              text: '1000 digits of E',
+              text: '1000 digits of e',
               color: Colors.lightBlue[400],
               function: () => goToScreen(context, 5),
               completeKey: 'irrational5Complete',
@@ -441,7 +473,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
             highlightColor: Colors.transparent,
             onPressed: isAvailable
                 ? () {
-                    HapticFeedback.heavyImpact();
+                    HapticFeedback.lightImpact();
                     widget.globalKey.currentState.hideCurrentSnackBar();
                     widget.function();
                   }
@@ -455,7 +487,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
             ),
             child: Padding(
               padding: EdgeInsets.all(10),
-              child: Text(
+              child: AutoSizeText(
                 widget.text,
                 style: TextStyle(
                   fontSize: 20,

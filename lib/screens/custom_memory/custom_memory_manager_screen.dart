@@ -90,7 +90,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
-                  HapticFeedback.heavyImpact();
+                  HapticFeedback.lightImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -126,7 +126,9 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                             padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                             child: Column(
                               children: <Widget>[
-                                SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 Text(
                                   'Some ideas for custom memories: ',
                                   style: TextStyle(
@@ -200,13 +202,14 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                   child: BigButton(
                     title: 'Add Memory',
                     function: () {
-                      HapticFeedback.heavyImpact();
+                      HapticFeedback.lightImpact();
                       showDialog(
-                        context: context,
-                        child: MyDialogContent(
-                          callback: callback,
-                        ),
-                      );
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MyDialogContent(
+                              callback: callback,
+                            );
+                          });
                     },
                     color1: Colors.purpleAccent,
                     color2: Colors.purple,
@@ -236,7 +239,7 @@ class CustomMemoryTile extends StatelessWidget {
   }
 
   confirmViewCustomMemory(BuildContext context) async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -260,7 +263,7 @@ class CustomMemoryTile extends StatelessWidget {
               text: 'Cancel',
               color: Colors.grey[300],
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).pop();
               },
             ),
@@ -268,7 +271,7 @@ class CustomMemoryTile extends StatelessWidget {
               text: 'Confirm',
               color: colorCustomMemoryStandard,
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).pop();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
@@ -448,7 +451,7 @@ class CustomMemoryTile extends StatelessWidget {
   }
 
   resetCustomMemory(BuildContext context) async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     Map customMemories = await prefs.getSharedPrefs(customMemoriesKey);
     customMemories[customMemory['title']]['spacedRepetitionLevel'] = 0;
     var spacedRepetitionType =

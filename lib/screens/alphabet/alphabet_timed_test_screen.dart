@@ -60,7 +60,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   void checkAnswer() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     if (textController1.text.toLowerCase().trim() ==
             '$char1$char2$char3$char4'.toLowerCase() &&
         textController2.text.toLowerCase().trim() ==
@@ -115,7 +115,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(alphabetTimedTestKey, 'review');
     await prefs.updateActivityVisible(alphabetTimedTestKey, false);
     await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
@@ -124,7 +124,8 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'It was: $char1$char2$char3$char4 $char5$char6$char7$char8. Try the timed test again to unlock the next system.',
+      snackBarText:
+          'It was: $char1$char2$char3$char4 $char5$char6$char7$char8. Try the timed test again to unlock the next system.',
       textColor: Colors.black,
       backgroundColor: colorIncorrect,
       durationSeconds: 3,
@@ -145,7 +146,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

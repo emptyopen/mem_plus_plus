@@ -175,7 +175,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                 ? Colors.lightBlue[500]
                 : backgroundColor,
             onLongPress: () {
-              HapticFeedback.heavyImpact();
+              HapticFeedback.lightImpact();
               updateActiveRow(tempRowRow);
             },
             onPressed: null,
@@ -221,20 +221,21 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         SizedBox(
-          height: 20,
+          height: 30,
         ),
         Text(
-          '(Long press a row to save your position!)',
+          'Long press a row to save your position!',
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 14,
+            color: backgroundHighlightColor,
           ),
         ),
-        SizedBox(height: 10),
         Text(
           intro,
           style: TextStyle(
             fontSize: 40,
             fontFamily: 'SpaceMono',
+            color: backgroundHighlightColor,
           ),
         ),
         SizedBox(height: 10),
@@ -453,11 +454,10 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
           title: Text('Irrational Game'),
           backgroundColor: colorGamesDarker,
           actions: <Widget>[
-            // action button
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(
                   PageRouteBuilder(
                     opaque: false,

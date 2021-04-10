@@ -30,8 +30,8 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, alphabetWrittenTestFirstHelpKey, AlphabetWrittenTestScreenHelp());
+    prefs.checkFirstTime(context, alphabetWrittenTestFirstHelpKey,
+        AlphabetWrittenTestScreenHelp());
     alphabetData = await prefs.getSharedPrefs(alphabetKey);
     alphabetData = shuffle(alphabetData);
     dataReady = true;
@@ -53,25 +53,25 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
-        appBar: AppBar(
-            title: Text('Alphabet: written test'),
-            backgroundColor: Colors.blue[200],
-            actions: <Widget>[
-              // action button
-              IconButton(
-                icon: Icon(Icons.info),
-                onPressed: () {
-                  HapticFeedback.heavyImpact();
-                  Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) {
-                        return AlphabetWrittenTestScreenHelp();
-                      }));
-                },
-              ),
-            ]),
-        body: dataReady
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+          title: Text('Alphabet: written test'),
+          backgroundColor: Colors.blue[200],
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return AlphabetWrittenTestScreenHelp();
+                    }));
+              },
+            ),
+          ]),
+      body: dataReady
           ? CardTestScreen(
               cardData: alphabetData,
               cardType: 'WrittenCard',
@@ -83,7 +83,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
               familiarityTotal: 2600,
             )
           : Container(),
-        );
+    );
   }
 }
 

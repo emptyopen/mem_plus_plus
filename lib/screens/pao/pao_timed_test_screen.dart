@@ -13,8 +13,7 @@ class PAOTimedTestScreen extends StatefulWidget {
   PAOTimedTestScreen({this.callback, this.globalKey});
 
   @override
-  _PAOTimedTestScreenState createState() =>
-      _PAOTimedTestScreenState();
+  _PAOTimedTestScreenState createState() => _PAOTimedTestScreenState();
 }
 
 class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
@@ -48,7 +47,8 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, 'PAOTimedTestFirstHelp', PAOTimedTestScreenHelp());
+    prefs.checkFirstTime(
+        context, 'PAOTimedTestFirstHelp', PAOTimedTestScreenHelp());
     // grab the digits
     digits1 = await prefs.getString('paoTestDigits1');
     digits2 = await prefs.getString('paoTestDigits2');
@@ -59,12 +59,13 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     digits7 = await prefs.getString('paoTestDigits7');
     digits8 = await prefs.getString('paoTestDigits8');
     digits9 = await prefs.getString('paoTestDigits9');
-    print('real answer: $digits1$digits2$digits3 $digits4$digits5$digits6 $digits7$digits8$digits9');
+    print(
+        'real answer: $digits1$digits2$digits3 $digits4$digits5$digits6 $digits7$digits8$digits9');
     setState(() {});
   }
 
   void checkAnswer() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     if (textController1.text.trim() == '$digits1$digits2$digits3' &&
         textController2.text.trim() == '$digits4$digits5$digits6' &&
         textController3.text.trim() == '$digits7$digits8$digits9') {
@@ -102,7 +103,8 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
-        snackBarText: 'Incorrect. Keep trying to remember, or give up and try again!',
+        snackBarText:
+            'Incorrect. Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
         backgroundColor: colorPAODarkest,
         durationSeconds: 3,
@@ -116,7 +118,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(paoTimedTestKey, 'review');
     await prefs.updateActivityVisible(paoTimedTestKey, false);
     await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
@@ -124,11 +126,11 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       await prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
     }
     showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
-      snackBarText: 'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
-      backgroundColor: colorPAODarkest,
-      durationSeconds: 12
-    );
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText:
+            'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
+        backgroundColor: colorPAODarkest,
+        durationSeconds: 12);
     Navigator.pop(context);
     widget.callback();
   }
@@ -136,36 +138,40 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
-      appBar: AppBar(title: Text('PAO: timed test'),
-        backgroundColor: colorPAOStandard,
-        actions: <Widget>[
-        // action button
-        IconButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            HapticFeedback.heavyImpact();
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return PAOTimedTestScreenHelp();
-                }));
-          },
-        ),
-      ]),
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+          title: Text('PAO: timed test'),
+          backgroundColor: colorPAOStandard,
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return PAOTimedTestScreenHelp();
+                    }));
+              },
+            ),
+          ]),
       body: Container(
         constraints: BoxConstraints.expand(),
-          decoration: BoxDecoration(color: backgroundColor),
+        decoration: BoxDecoration(color: backgroundColor),
         child: SingleChildScrollView(
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 25,),
+                SizedBox(
+                  height: 25,
+                ),
                 Container(
                   child: Text(
                     'Enter the digits: ',
-                    style: TextStyle(fontSize: 30, color: backgroundHighlightColor),
+                    style: TextStyle(
+                        fontSize: 30, color: backgroundHighlightColor),
                   ),
                 ),
                 SizedBox(height: 25),
@@ -176,10 +182,16 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                   child: TextFormField(
                     controller: textController1,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'SpaceMono',
+                        color: backgroundHighlightColor),
                     decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: backgroundHighlightColor)),
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                         hintText: 'XXXXXX',
@@ -194,10 +206,16 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                   child: TextFormField(
                     controller: textController2,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'SpaceMono',
+                        color: backgroundHighlightColor),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: backgroundHighlightColor)),
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(),
                         hintText: 'XXXXXX',
@@ -208,18 +226,24 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                 Container(
                   width: 200,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
                   child: TextFormField(
                     controller: textController3,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontFamily: 'SpaceMono', color: backgroundHighlightColor),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'SpaceMono',
+                        color: backgroundHighlightColor),
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: backgroundHighlightColor)),
-                      contentPadding: EdgeInsets.all(5),
-                      border: OutlineInputBorder(),
-                      hintText: 'XXXXXX',
-                      hintStyle: TextStyle(fontSize: 30, color: Colors.grey)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: backgroundHighlightColor)),
+                        contentPadding: EdgeInsets.all(5),
+                        border: OutlineInputBorder(),
+                        hintText: 'XXXXXX',
+                        hintStyle: TextStyle(fontSize: 30, color: Colors.grey)),
                   ),
                 ),
                 SizedBox(height: 50),
@@ -234,7 +258,9 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                       padding: 10,
                       fontSize: 24,
                     ),
-                    SizedBox(width: 25,),
+                    SizedBox(
+                      width: 25,
+                    ),
                     BasicFlatButton(
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
@@ -245,7 +271,9 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 50,)
+                SizedBox(
+                  height: 50,
+                )
               ],
             ),
           ),
@@ -260,8 +288,10 @@ class PAOTimedTestScreenHelp extends StatelessWidget {
   Widget build(BuildContext context) {
     return HelpScreen(
       title: 'PAO Timed Test',
-      information: ['    Time to recall your story! If you recall this correctly, you\'ll '
-        'unlock the next system! Good luck!'],
+      information: [
+        '    Time to recall your story! If you recall this correctly, you\'ll '
+            'unlock the next system! Good luck!'
+      ],
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,
       firstHelpKey: paoTimedTestFirstHelpKey,

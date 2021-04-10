@@ -27,8 +27,30 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
   String card7 = '';
   String card8 = '';
   String card9 = '';
-  List<String> dropdownDigit = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'];
-  List<String> dropdownSuit = ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'];
+  List<String> dropdownDigit = [
+    'A',
+    'A',
+    'A',
+    'A',
+    'A',
+    'A',
+    'A',
+    'A',
+    'A',
+    'A'
+  ];
+  List<String> dropdownSuit = [
+    'S',
+    'S',
+    'S',
+    'S',
+    'S',
+    'S',
+    'S',
+    'S',
+    'S',
+    'S'
+  ];
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -57,16 +79,16 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
   }
 
   void checkAnswer() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     if (dropdownDigit[0] + dropdownSuit[0] == '$card1' &&
-    dropdownDigit[1] + dropdownSuit[1] == '$card2' &&
-    dropdownDigit[2] + dropdownSuit[2] == '$card3' &&
-    dropdownDigit[3] + dropdownSuit[3] == '$card4' &&
-    dropdownDigit[4] + dropdownSuit[4] == '$card5' &&
-    dropdownDigit[5] + dropdownSuit[5] == '$card6' &&
-    dropdownDigit[6] + dropdownSuit[6] == '$card7' &&
-    dropdownDigit[7] + dropdownSuit[7] == '$card8' &&
-    dropdownDigit[8] + dropdownSuit[8] == '$card9') {
+        dropdownDigit[1] + dropdownSuit[1] == '$card2' &&
+        dropdownDigit[2] + dropdownSuit[2] == '$card3' &&
+        dropdownDigit[3] + dropdownSuit[3] == '$card4' &&
+        dropdownDigit[4] + dropdownSuit[4] == '$card5' &&
+        dropdownDigit[5] + dropdownSuit[5] == '$card6' &&
+        dropdownDigit[6] + dropdownSuit[6] == '$card7' &&
+        dropdownDigit[7] + dropdownSuit[7] == '$card8' &&
+        dropdownDigit[8] + dropdownSuit[8] == '$card9') {
       await prefs.updateActivityVisible(deckTimedTestKey, false);
       await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
       if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
@@ -84,8 +106,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
       } else {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText:
-              'Nice! Now go practice on an entire real deck! ',
+          snackBarText: 'Nice! Now go practice on an entire real deck! ',
           textColor: Colors.black,
           backgroundColor: colorDeckStandard,
           durationSeconds: 2,
@@ -106,7 +127,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(deckTimedTestKey, 'review');
     await prefs.updateActivityVisible(deckTimedTestKey, false);
     await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
@@ -128,7 +149,10 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     return Container(
       height: 120,
       width: 80,
-      decoration: BoxDecoration(color: Colors.white, border: Border.all(), borderRadius: BorderRadius.circular(5)),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(),
+          borderRadius: BorderRadius.circular(5)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -245,7 +269,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -275,31 +299,47 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     dropDownPair(0),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     dropDownPair(1),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     dropDownPair(2),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     dropDownPair(3),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     dropDownPair(4),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     dropDownPair(5),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     dropDownPair(6),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     dropDownPair(7),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     dropDownPair(8),
                   ],
                 ),

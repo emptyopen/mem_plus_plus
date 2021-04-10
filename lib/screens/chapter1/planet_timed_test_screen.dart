@@ -78,7 +78,8 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     while (notAllowed.contains(planet4)) {
       planet4 = planets[random.nextInt(planets.length)];
     }
-    print('${planetPositionSize[planet1][0]} ${planetPositionSize[planet2][0]} ${planetPositionSize[planet3][1]} ${planetPositionSize[planet4][1]}');
+    print(
+        '${planetPositionSize[planet1][0]} ${planetPositionSize[planet2][0]} ${planetPositionSize[planet3][1]} ${planetPositionSize[planet4][1]}');
     setState(() {});
   }
 
@@ -89,7 +90,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
       showError3 = false;
       showError4 = false;
     });
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     bool hasError = false;
     if (guess1Controller.text == '') {
       hasError = true;
@@ -118,10 +119,14 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     if (hasError) {
       return;
     }
-    if (guess1Controller.text.trim() == planetPositionSize[planet1][0].toString() &&
-        guess2Controller.text.trim() == planetPositionSize[planet2][0].toString() &&
-        guess3Controller.text.trim() == planetPositionSize[planet3][1].toString() &&
-        guess4Controller.text.trim() == planetPositionSize[planet4][1].toString()) {
+    if (guess1Controller.text.trim() ==
+            planetPositionSize[planet1][0].toString() &&
+        guess2Controller.text.trim() ==
+            planetPositionSize[planet2][0].toString() &&
+        guess3Controller.text.trim() ==
+            planetPositionSize[planet3][1].toString() &&
+        guess4Controller.text.trim() ==
+            planetPositionSize[planet4][1].toString()) {
       await prefs.updateActivityVisible(planetTimedTestKey, false);
       await prefs.updateActivityVisible(planetTimedTestPrepKey, true);
       if (await prefs.getBool(planetTimedTestCompleteKey) == null) {
@@ -176,7 +181,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(planetTimedTestKey, 'review');
     await prefs.updateActivityVisible(planetTimedTestKey, false);
     await prefs.updateActivityVisible(planetTimedTestPrepKey, true);
@@ -233,7 +238,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -283,8 +288,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         ],
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.grey)),
+                              borderSide: BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -317,8 +321,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 Container(
                   child: Text(
                     '(closest = 1, furthest = 8)',
-                    style: TextStyle(
-                        fontSize: 16, color: Colors.grey),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -367,8 +370,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         ],
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.grey)),
+                              borderSide: BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -413,8 +415,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 Container(
                   child: Text(
                     '--------------------------',
-                    style: TextStyle(
-                        fontSize: 20, color: Colors.grey),
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -449,8 +450,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         ],
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.grey)),
+                              borderSide: BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -480,8 +480,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 Container(
                   child: Text(
                     '(smallest = 1, largest = 8)',
-                    style: TextStyle(
-                        fontSize: 16, color: Colors.grey),
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -530,8 +529,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                         ],
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.grey)),
+                              borderSide: BorderSide(color: Colors.grey)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: backgroundHighlightColor)),
@@ -616,10 +614,10 @@ class PlanetTimedTestScreenHelp extends StatelessWidget {
       title: 'Planet Timed Test',
       information: [
         '    Time to recall your story! Hopefully you anchored your story well! Did it start from the sun? '
-        'From a burning inferno? \n    If you need to figure out which planet is 5th biggest, just try and remember where '
-        'your object for the number 5 appears in your story! For me, that would be a SNAKE floating all alone in the OCEAN '
-        '(snake = 5, ocean = Poseidon/Neptune, god of the ocean). The snake is shivering, by the way. It feels very sad '
-        'that it\'s all alone out there. Poor little snake. '
+            'From a burning inferno? \n    If you need to figure out which planet is 5th biggest, just try and remember where '
+            'your object for the number 5 appears in your story! For me, that would be a SNAKE floating all alone in the OCEAN '
+            '(snake = 5, ocean = Poseidon/Neptune, god of the ocean). The snake is shivering, by the way. It feels very sad '
+            'that it\'s all alone out there. Poor little snake. '
       ],
       buttonColor: colorChapter1Standard,
       buttonSplashColor: colorChapter1Darker,

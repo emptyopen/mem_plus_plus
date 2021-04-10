@@ -108,7 +108,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
             IconButton(
               icon: Icon(Icons.arrow_downward),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -119,7 +119,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -191,12 +191,15 @@ class _CSVImporterState extends State<CSVImporter> {
                               textAlign: TextAlign.left,
                               style: TextStyle(fontSize: 16),
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             BasicFlatButton(
                               text: 'Google docs link!',
                               color: colorPAODarker,
                               textColor: Colors.white,
-                              onPressed: () => launch('https://docs.google.com/spreadsheets/d/1p_jBU9aQeTfZOVnuhMnBoie8gI5HWNn3g-_kBlr0V8c/edit?usp=sharing'),
+                              onPressed: () => launch(
+                                  'https://docs.google.com/spreadsheets/d/1p_jBU9aQeTfZOVnuhMnBoie8gI5HWNn3g-_kBlr0V8c/edit?usp=sharing'),
                             ),
                           ],
                         ),
@@ -243,7 +246,7 @@ class _CSVImporterState extends State<CSVImporter> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           onPressed: () {
-                            HapticFeedback.heavyImpact();
+                            HapticFeedback.lightImpact();
                             Navigator.pop(context);
                           },
                           padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -262,7 +265,7 @@ class _CSVImporterState extends State<CSVImporter> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           onPressed: () {
-                            HapticFeedback.heavyImpact();
+                            HapticFeedback.lightImpact();
                             var csvConverter = CsvToListConverter();
                             var l = csvConverter.convert(textController.text,
                                 eol: '\n');
@@ -314,7 +317,7 @@ class PAOEditScreenHelp extends StatelessWidget {
         'You can assign any person, action, and object to any digit, but it\'s a good idea at first '
         'to follow some kind of pattern. ',
     '    This will take some time to set up! It took me a few days to put together the list, and another few weeks to '
-    'start becoming "number fluent", to the point where I could instantly translate any numbers to scenes. But TRUST me, it\'ll be worth it. \n\n'
+        'start becoming "number fluent", to the point where I could instantly translate any numbers to scenes. But TRUST me, it\'ll be worth it. \n\n'
         '    The person should be associated to its corresponding action and object, '
         'and no two persons, actions, or objects should be too similar (also avoid overlap with '
         'your single digit and alphabet systems!). As a starter pattern, we recommend '
@@ -327,9 +330,9 @@ class PAOEditScreenHelp extends StatelessWidget {
     '    This system allows us to memorize sequences of numbers very efficiently. Passport/license IDs, '
         'phone numbers, order numbers, almost anything. The way it works is we break long sequences of numbers '
         'into groups of 6, or three pairs of two digits, each pair corresponding to a person, action, and object.\n\n'
-        '    For example:\n\n    154825 -> \n    (15 person)\n    (48 action)\n    (25 object)',
-    '    For example, for the number 154825 we\'d break it down into 15-48-25, '
-        'which under my personal system corresponds to 15 (person) = AE = Albert Einstein, 48 (action) = DH (dwight howard) = slam dunking, '
+        '    For example:\n\n    154825 -> 15-48-25\n    (15 person)\n    (48 action)\n    (25 object)',
+    '    So with 15-48-25, '
+        'which under my personal system corresponds to 15 (person) = AE = Albert Einstein, 48 (action) = DH (Dwight Howard) = slam dunking, '
         '25 (object) = quarters. \n    So my visualized scene would be ALBERT EINSTEIN who jumps into the air and SLAM DUNKS his '
         'fistfuls of shiny QUARTERS. What a sight that would be! Hear the cacaphony of quarters hit the ground as the absolute legend finally drops to the ground.',
     '    This system should take a good amount of time setting up before you start trying to master it. Update '

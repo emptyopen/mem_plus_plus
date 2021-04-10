@@ -70,7 +70,6 @@ class _EditCardState extends State<EditCard> {
 
     dialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      //this right here
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -116,6 +115,10 @@ class _EditCardState extends State<EditCard> {
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(),
                               hintText: '${widget.entry.person}',
+                              hintStyle: TextStyle(
+                                color:
+                                    backgroundSemiHighlightColor.withAlpha(100),
+                              ),
                             ),
                           ),
                         ),
@@ -136,15 +139,20 @@ class _EditCardState extends State<EditCard> {
                             textAlign: TextAlign.center,
                             controller: actionTextController,
                             decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: backgroundSemiHighlightColor)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: backgroundHighlightColor)),
-                                contentPadding: EdgeInsets.all(5),
-                                border: OutlineInputBorder(),
-                                hintText: '${widget.entry.action}'),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: backgroundSemiHighlightColor)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: backgroundHighlightColor)),
+                              contentPadding: EdgeInsets.all(5),
+                              border: OutlineInputBorder(),
+                              hintText: '${widget.entry.action}',
+                              hintStyle: TextStyle(
+                                color:
+                                    backgroundSemiHighlightColor.withAlpha(100),
+                              ),
+                            ),
                           ),
                         )
                       ],
@@ -166,22 +174,38 @@ class _EditCardState extends State<EditCard> {
                   textAlign: TextAlign.center,
                   controller: objectTextController,
                   decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: backgroundSemiHighlightColor)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: backgroundHighlightColor)),
-                      contentPadding: EdgeInsets.all(5),
-                      border: OutlineInputBorder(),
-                      hintText: '${widget.entry.object}'),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundSemiHighlightColor)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundHighlightColor)),
+                    contentPadding: EdgeInsets.all(5),
+                    border: OutlineInputBorder(),
+                    hintText: '${widget.entry.object}',
+                    hintStyle: TextStyle(
+                      color: backgroundSemiHighlightColor.withAlpha(100),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 10),
-              widget.activityKey == singleDigitKey ? 
-              Text(singleDigitSuggestions[widget.entry.index], style: TextStyle(color: Colors.grey,),) : Container(),
-              widget.activityKey == alphabetKey ? 
-              Text(alphabetSuggestions[widget.entry.index], style: TextStyle(color: Colors.grey,),) : Container(),
+              widget.activityKey == singleDigitKey
+                  ? Text(
+                      singleDigitSuggestions[widget.entry.index],
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    )
+                  : Container(),
+              widget.activityKey == alphabetKey
+                  ? Text(
+                      alphabetSuggestions[widget.entry.index],
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    )
+                  : Container(),
               SizedBox(height: 10),
               BasicFlatButton(
                 text: 'Save',
@@ -249,7 +273,11 @@ class _EditCardState extends State<EditCard> {
             text: 'Edit',
             color: Colors.grey[300],
             onPressed: () {
-              showDialog(context: context, child: dialog);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return dialog;
+                  });
             },
             fontSize: 18,
           )),

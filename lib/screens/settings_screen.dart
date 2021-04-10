@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
@@ -141,36 +142,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onPressed: () {
                       print('wow');
                       showConfirmDialog(
-                        context: context,
-                        function: widget.resetAll,
-                        confirmColor: Colors.red,
-                        confirmText: "Are you sure you want to reset everything? All data will be lost! There\'s no recovery!!"
-                      );
+                          context: context,
+                          function: widget.resetAll,
+                          confirmColor: Colors.red,
+                          confirmText:
+                              "Are you sure you want to reset everything? All data will be lost! There\'s no recovery!!");
                     },
                     text: 'Reset everything!',
                   ),
-                  debugModeEnabled ? Column(
-                    children: <Widget>[
-                      BasicFlatButton(
-                        onPressed: () {
-                          widget.maxOutKeys(2);
-                        },
-                        text: 'complete chapter 2',
-                      ),
-                      BasicFlatButton(
-                        onPressed: () {
-                          widget.maxOutKeys(3);
-                        },
-                        text: 'complete chapter 3',
-                      ),
-                      BasicFlatButton(
-                        onPressed: () {
-                          widget.maxOutKeys(5);
-                        },
-                        text: 'max out everything',
-                      ),
-                    ],
-                  ) : Container(),
+                  debugModeEnabled
+                      ? Column(
+                          children: <Widget>[
+                            BasicFlatButton(
+                              onPressed: () {
+                                widget.maxOutKeys(2);
+                              },
+                              text: 'complete chapter 2',
+                            ),
+                            BasicFlatButton(
+                              onPressed: () {
+                                widget.maxOutKeys(3);
+                              },
+                              text: 'complete chapter 3',
+                            ),
+                            BasicFlatButton(
+                              onPressed: () {
+                                widget.maxOutKeys(5);
+                              },
+                              text: 'max out everything',
+                            ),
+                          ],
+                        )
+                      : Container(),
                 ],
               ),
             ),
@@ -199,40 +202,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     Text(
                       '    Matt has a cute dog called Aki. They live in LA and are always having a a good time with friends and family. ',
-                      // '\n\n    The ios store has informed Matt that he cannot say that he will provide '
-                      // 'any extra digital content as a result of donations, but they are appreciated!',
                       style: TextStyle(color: backgroundHighlightColor),
                     ),
                     SizedBox(
                       height: 30,
                     ),
-                    // Container(
-                    //   height: 40,
-                    //   width: 140,
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(5),
-                    //     border: Border.all(color: backgroundHighlightColor),
-                    //     gradient: LinearGradient(
-                    //       begin: Alignment.topLeft,
-                    //       end: Alignment.bottomRight,
-                    //       colors: [
-                    //         Colors.yellow[200],
-                    //         Colors.yellow[700],
-                    //       ], // whitish to gray
-                    //       tileMode: TileMode
-                    //           .repeated, // repeats the gradient over the canvas
-                    //     ),
-                    //   ),
-                    //   child: Center(
-                    //     child: InkWell(
-                    //       child: Text(
-                    //         'Give Matt beer!',
-                    //         style: TextStyle(color: Colors.black),
-                    //       ),
-                    //       onTap: () => launch('http://paypal.me/takaomatt'),
-                    //     ),
-                    //   ),
-                    // ),
+                    Container(
+                      height: 40,
+                      width: 190,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: backgroundHighlightColor),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.yellow[200],
+                            Colors.yellow[700],
+                          ], // whitish to gray
+                          tileMode: TileMode
+                              .repeated, // repeats the gradient over the canvas
+                        ),
+                      ),
+                      child: Center(
+                        child: InkWell(
+                          child: AutoSizeText(
+                            'Give Matt coffee money!',
+                            maxLines: 1,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          onTap: () => launch('http://paypal.me/takaomatt'),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Donating does not unlock any\nadditional features or functionality.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),

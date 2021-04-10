@@ -48,7 +48,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     setState(() {
       showError = false;
     });
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     if (textController.text.replaceAll(' ', '').length != 100) {
       setState(() {
         showError = true;
@@ -59,6 +59,10 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       await prefs.updateActivityVisible(piTimedTestKey, false);
       await prefs.updateActivityVisible(piTimedTestPrepKey, true);
       await prefs.setBool(irrationalGameAvailableKey, true);
+      if (await prefs.getBool(irrationalGameFirstViewKey) == null) {
+        await prefs.setBool(newGamesAvailableKey, true);
+        await prefs.setBool(irrationalGameFirstViewKey, true);
+      }
       if (await prefs.getBool(piTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(piTimedTestKey, 'review');
         await prefs.setBool(piTimedTestCompleteKey, true);
@@ -109,8 +113,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       setState(() {});
       showSnackBar(
         scaffoldState: _scaffoldKey.currentState,
-        snackBarText:
-            'Incorrect. You have $lives lives left!',
+        snackBarText: 'Incorrect. You have $lives lives left!',
         textColor: Colors.black,
         backgroundColor: colorIncorrect,
         durationSeconds: 3,
@@ -131,7 +134,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(piTimedTestKey, 'review');
     await prefs.updateActivityVisible(piTimedTestKey, false);
     await prefs.updateActivityVisible(piTimedTestPrepKey, true);
@@ -161,7 +164,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -189,6 +192,13 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                SizedBox(height: 10),
+                Text(
+                  '${textController.text.length} / 100 digits entered',
+                  style: TextStyle(
+                      fontSize: 16, color: backgroundSemiHighlightColor),
+                  textAlign: TextAlign.center,
+                ),
                 SizedBox(height: 25),
                 Container(
                   width: screenWidth * 0.8,
@@ -205,6 +215,9 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                     minLines: 10,
                     maxLines: 12,
                     keyboardType: TextInputType.phone,
+                    onChanged: (String s) {
+                      setState(() {});
+                    },
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey)),
@@ -276,8 +289,14 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                           ),
                   ],
                 ),
-                SizedBox(height: 10,),
-                Text('$lives lives remaining!', style: TextStyle(fontSize: 20, color: backgroundHighlightColor),),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '$lives lives remaining!',
+                  style:
+                      TextStyle(fontSize: 20, color: backgroundHighlightColor),
+                ),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

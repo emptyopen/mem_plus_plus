@@ -35,7 +35,7 @@ class BasicFlatButton extends StatelessWidget {
       splashColor: splashColor,
       highlightColor: Colors.transparent,
       onPressed: () {
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         onPressed();
       },
       shape: RoundedRectangleBorder(
@@ -80,7 +80,7 @@ class BigButton extends StatelessWidget {
       ),
       child: FlatButton(
         onPressed: () {
-          HapticFeedback.heavyImpact();
+          HapticFeedback.lightImpact();
           function();
         },
         shape: RoundedRectangleBorder(
@@ -147,7 +147,7 @@ class MainMenuOption extends StatelessWidget {
     // TODO: consolidate this
     switch (activity.name) {
       case singleDigitTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
         await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
@@ -156,7 +156,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case faceTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(faceTimedTestKey, 'review');
         await prefs.updateActivityVisible(faceTimedTestKey, false);
         await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
@@ -165,7 +165,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case planetTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(planetTimedTestKey, 'review');
         await prefs.updateActivityVisible(planetTimedTestKey, false);
         await prefs.updateActivityVisible(planetTimedTestPrepKey, true);
@@ -174,7 +174,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case alphabetTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(alphabetTimedTestKey, 'review');
         await prefs.updateActivityVisible(alphabetTimedTestKey, false);
         await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
@@ -183,7 +183,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case phoneticAlphabetTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
         await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
         await prefs.updateActivityVisible(
@@ -194,7 +194,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case airportTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(airportTimedTestKey, 'review');
         await prefs.updateActivityVisible(airportTimedTestKey, false);
         await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
@@ -203,7 +203,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case paoTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(paoTimedTestKey, 'review');
         await prefs.updateActivityVisible(paoTimedTestKey, false);
         await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
@@ -212,7 +212,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case face2TimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(face2TimedTestKey, 'review');
         await prefs.updateActivityVisible(face2TimedTestKey, false);
         await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
@@ -221,7 +221,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case piTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(piTimedTestKey, 'review');
         await prefs.updateActivityVisible(piTimedTestKey, false);
         await prefs.updateActivityVisible(piTimedTestPrepKey, true);
@@ -230,7 +230,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
       case deckTimedTestKey:
-        HapticFeedback.heavyImpact();
+        HapticFeedback.lightImpact();
         await prefs.updateActivityState(deckTimedTestKey, 'review');
         await prefs.updateActivityVisible(deckTimedTestKey, false);
         await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
@@ -306,7 +306,7 @@ class MainMenuOption extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
               onPressed: () async {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 globalKey.currentState.hideCurrentSnackBar();
                 if (activity.visibleAfterTime.compareTo(DateTime.now()) > 0) {
                   return null;
@@ -657,7 +657,7 @@ class CondensedMenuButton extends StatelessWidget {
         child: icon,
         onPressed: testPrepAvailable
             ? () async {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.push(
                   context,
                   PageRouteBuilder(
@@ -909,7 +909,7 @@ class _MorseTestState extends State<MorseTest> {
           children: <Widget>[
             Listener(
               onPointerUp: (details) {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 resetMorseGuess();
               },
               child: Container(
@@ -935,7 +935,7 @@ class _MorseTestState extends State<MorseTest> {
                 _increaseCounterWhilePressed();
               },
               onPointerUp: (details) {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 buttonPressed = false;
                 if (morseButtonCounter > dashThreshold) {
                   morseGuess += '-';
@@ -1019,6 +1019,41 @@ class _RawKeyboardListenerState extends State<KeyboardListener> {
         controller: _controller,
         focusNode: _textNode,
       ),
+    );
+  }
+}
+
+class NewTag extends StatelessWidget {
+  final double left;
+  final double top;
+
+  NewTag({this.left = 10, this.top = 5});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      child: Container(
+        width: 50,
+        height: 25,
+        decoration: BoxDecoration(
+          border: Border.all(width: 1),
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          //color: Color.fromRGBO(255, 105, 180, 1),
+          color: Color.fromRGBO(255, 255, 255, 0.85),
+        ),
+        child: Shimmer.fromColors(
+          period: Duration(seconds: 3),
+          baseColor: Colors.black,
+          highlightColor: Colors.greenAccent,
+          child: Center(
+              child: Text(
+            'new!',
+            style: TextStyle(fontSize: 14, color: Colors.red),
+          )),
+        ),
+      ),
+      left: left,
+      top: top,
     );
   }
 }

@@ -78,7 +78,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   }
 
   void checkAnswer() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     Levenshtein d = new Levenshtein();
     String name1Answer = name1.toLowerCase().trim();
     String name1Guess = name1Controller.text.toLowerCase().trim();
@@ -156,7 +156,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   }
 
   void giveUp() async {
-    HapticFeedback.heavyImpact();
+    HapticFeedback.lightImpact();
     await prefs.updateActivityState(face2TimedTestKey, 'review');
     await prefs.updateActivityVisible(face2TimedTestKey, false);
     await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
@@ -186,7 +186,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

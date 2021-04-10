@@ -13,12 +13,10 @@ class PiTimedTestPrepScreen extends StatefulWidget {
   PiTimedTestPrepScreen({this.callback});
 
   @override
-  _PiTimedTestPrepScreenState createState() =>
-      _PiTimedTestPrepScreenState();
+  _PiTimedTestPrepScreenState createState() => _PiTimedTestPrepScreenState();
 }
 
-class _PiTimedTestPrepScreenState
-    extends State<PiTimedTestPrepScreen> {
+class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
   PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration =
       debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 6);
@@ -30,8 +28,8 @@ class _PiTimedTestPrepScreenState
   }
 
   getSharedPrefs() async {
-    prefs.checkFirstTime(context, piTimedTestPrepFirstHelpKey,
-        PiTimedTestPrepScreenHelp());
+    prefs.checkFirstTime(
+        context, piTimedTestPrepFirstHelpKey, PiTimedTestPrepScreenHelp());
   }
 
   void updateStatus() async {
@@ -44,7 +42,8 @@ class _PiTimedTestPrepScreenState
     await prefs.updateActivityVisibleAfter(
         piTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Timed test (pi) is ready!', 'Good luck!', piTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (pi) is ready!', 'Good luck!',
+        piTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }
@@ -52,7 +51,7 @@ class _PiTimedTestPrepScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Pi: timed test prep'),
           backgroundColor: colorChapter3Standard,
@@ -61,7 +60,7 @@ class _PiTimedTestPrepScreenState
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -90,18 +89,48 @@ class _PiTimedTestPrepScreenState
             SizedBox(
               height: 5,
             ),
-            Text('141592 653589 793238', style: TextStyle(fontSize: 24, 
-                    color: backgroundHighlightColor,),),
-            Text('462643 383279 502884', style: TextStyle(fontSize: 24, 
-                    color: backgroundHighlightColor,),),
-            Text('197169 399375 105820', style: TextStyle(fontSize: 24,
-                    color: backgroundHighlightColor,),),
-            Text('974944 592307 816406', style: TextStyle(fontSize: 24,
-                    color: backgroundHighlightColor,),),
-            Text('286208 998628 034825', style: TextStyle(fontSize: 24,
-                    color: backgroundHighlightColor,),),
-            Text('342117 0679', style: TextStyle(fontSize: 24,
-                    color: backgroundHighlightColor,),),
+            Text(
+              '141592 653589 793238',
+              style: TextStyle(
+                fontSize: 24,
+                color: backgroundHighlightColor,
+              ),
+            ),
+            Text(
+              '462643 383279 502884',
+              style: TextStyle(
+                fontSize: 24,
+                color: backgroundHighlightColor,
+              ),
+            ),
+            Text(
+              '197169 399375 105820',
+              style: TextStyle(
+                fontSize: 24,
+                color: backgroundHighlightColor,
+              ),
+            ),
+            Text(
+              '974944 592307 816406',
+              style: TextStyle(
+                fontSize: 24,
+                color: backgroundHighlightColor,
+              ),
+            ),
+            Text(
+              '286208 998628 034825',
+              style: TextStyle(
+                fontSize: 24,
+                color: backgroundHighlightColor,
+              ),
+            ),
+            Text(
+              '342117 0679',
+              style: TextStyle(
+                fontSize: 24,
+                color: backgroundHighlightColor,
+              ),
+            ),
             SizedBox(
               height: 60,
             ),
@@ -135,16 +164,15 @@ class _PiTimedTestPrepScreenState
 }
 
 class PiTimedTestPrepScreenHelp extends StatelessWidget {
-
   final List<String> information = [
     '    Welcome, welcome. We\'re going to really make you a nerd now... '
-    'you\'re about to break your record for the longest number you\'ve ever memorized! '
-    'Here you are going to memorize 100 digits of pi. Why, you ask? Because you can! \n    It will also '
-    'continue to improve your capacity and speed for memorizing shorter, more reasonable and useful numbers. ',
+        'you\'re about to break your record for the longest number you\'ve ever memorized! '
+        'Here you are going to memorize 100 digits of pi. Why, you ask? Because you can! \n    It will also '
+        'continue to improve your capacity and speed for memorizing shorter, more reasonable and useful numbers. ',
     '    I\'ll separate the digits into segments of 6 so that you have an easier time breaking the number into '
-    'scenes. Really make sure that your transitions/connections between scenes are strong!\n    If this '
-    'is your first time memorizing something this long, it might take you a few sessions to put together all the '
-    'scenes and link them up. No rush! ',
+        'scenes. Really make sure that your transitions/connections between scenes are strong!\n    If this '
+        'is your first time memorizing something this long, it might take you a few sessions to put together all the '
+        'scenes and link them up. No rush! ',
   ];
 
   @override

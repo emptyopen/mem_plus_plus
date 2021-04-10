@@ -94,14 +94,13 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
       flightCode = airline + '-' + (random.nextInt(9399) + 600).toString();
 
       departureTime =
-          '${(random.nextInt(18) + 6).toString().padLeft(2, '0')}:${(random.nextInt(12) * 5).toString().padLeft(2, '0')}';
+          '${(random.nextInt(18) + 6).toString().padLeft(2, '0')}:${(random.nextInt(4) * 15).toString().padLeft(2, '0')}';
 
       seatNumber = random.nextInt(65).toString() +
           seatingLetters[random.nextInt(seatingLetters.length)];
 
-
       gateNumber = random.nextInt(20).toString();
-      if (random.nextInt(5) == 0) { 
+      if (random.nextInt(5) == 0) {
         gateNumber = random.nextInt(60).toString();
       }
 
@@ -126,7 +125,6 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
       await prefs.setString('airportArrivingTerminal', arrivingTerminal);
       await prefs.setBool(airportTestActiveKey, true);
     } else {
-      print('found active test, restoring values');
       airline = await prefs.getString('airportAirline');
       departingTerminal = await prefs.getString('airportDepartingTerminal');
       flightCode = await prefs.getString('airportFlightCode');
@@ -169,7 +167,7 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -325,7 +323,8 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                         child: Text(
-                          'Leaving at / from gate number:',
+                          // 'Leaving at / from gate number:',
+                          'Leaving at:',
                           style: TextStyle(
                             fontSize: 18,
                             color: backgroundHighlightColor,
@@ -344,7 +343,8 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
                           child: Text(
-                            '$departureTime / $gateNumber',
+                            // '$departureTime / $gateNumber',
+                            '$departureTime',
                             style: TextStyle(
                               fontSize: 26,
                               color: backgroundHighlightColor,
@@ -366,7 +366,8 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                         child: Text(
-                          'Flight code / seat number:',
+                          // 'Flight code / seat number:',
+                          'Flight code:',
                           style: TextStyle(
                             fontSize: 18,
                             color: backgroundHighlightColor,
@@ -385,7 +386,8 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
                           child: Text(
-                            '$flightCode / $seatNumber',
+                            // '$flightCode / $seatNumber',
+                            '$flightCode',
                             style: TextStyle(
                               fontSize: 26,
                               color: backgroundHighlightColor,
@@ -399,47 +401,47 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
                       begin: 0.3,
                       end: 0.8,
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Text(
-                          'Arriving at terminal:',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: backgroundHighlightColor,
-                            fontFamily: airportFont,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    StaggerAnimationSideways(
-                      widget: Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                          child: Text(
-                            arrivingTerminal,
-                            style: TextStyle(
-                              fontSize: 26,
-                              color: backgroundHighlightColor,
-                              fontFamily: airportFont,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ),
-                      controller: animationController,
-                      begin: 0.4,
-                      end: 0.9,
-                    ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                    //     child: Text(
+                    //       'Arriving at terminal:',
+                    //       style: TextStyle(
+                    //         fontSize: 18,
+                    //         color: backgroundHighlightColor,
+                    //         fontFamily: airportFont,
+                    //       ),
+                    //       textAlign: TextAlign.left,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
+                    // StaggerAnimationSideways(
+                    //   widget: Align(
+                    //     alignment: Alignment.centerRight,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
+                    //       child: Text(
+                    //         arrivingTerminal,
+                    //         style: TextStyle(
+                    //           fontSize: 26,
+                    //           color: backgroundHighlightColor,
+                    //           fontFamily: airportFont,
+                    //         ),
+                    //         textAlign: TextAlign.left,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   controller: animationController,
+                    //   begin: 0.4,
+                    //   end: 0.9,
+                    // ),
                     SizedBox(
                       height: 40,
                     ),
@@ -479,7 +481,6 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
 }
 
 class AirportTimedTestPrepScreenHelp extends StatelessWidget {
-
   final Function callback;
 
   AirportTimedTestPrepScreenHelp({this.callback});
@@ -494,16 +495,17 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
         'searching through your email to find the confirmation code. Walk up confidently to the check-in '
         'kiosk and pull the code straight from your brain!',
     '    Remember to attach your scenes to something that will help you remember what it represents. '
-        'If my seat is 47E, my PAO system would translate that into Dexter Morgan and elephant. I might see '
+        'If my seat is 47E, my two-digit system (which you will learn soon!) would translate that into Dexter Morgan (47) and elephant (E). I might see '
         'Dexter sitting in that airplane seat with that trademark smile... handsome but creepy! Maybe I see a glint of '
         'a knife... or maybe it\'s just the seatbelt?\n    It doesn\'t matter, he\'s simply trying to distract us '
         'from his elephant trunk and tusks! How did '
-        'we miss that the first time around? An ENORMOUS elephant trunk protruding out of Dexter Morgan\'s face, wow!',
+        'we miss that the first time around? An enormous ELEPHANT trunk protruding out of DEXTER MORGAN\'s face, wow!',
     '    If you can handle this, you\'re ready for anything :) It might take a while your first time to get '
         'everything memorized. Trust me, it gets easier and easier to build these scenes and make them wacky. '
-        '\n    While it might take you ten or twenty minutes to memorize all this information the first time, once you master the PAO system '
+        '\n    This might take you ten or twenty minutes to memorize all this information since you are equipped only with '
+        'a single digit system. But once you master the next system '
         'and keep practicing, you\'ll eventually be able to fully memorize all of this in just a couple '
-        'minutes or less!',
+        'minutes or less! Definitely come back and revisit this test in the future!',
   ];
 
   @override

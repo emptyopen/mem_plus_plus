@@ -6,6 +6,8 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
 
+import '../../constants/keys.dart';
+
 class SingleDigitTimedTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
@@ -52,11 +54,15 @@ class _SingleDigitTimedTestScreenState
   }
 
   void checkAnswer() async {
-    if (textController.text == '$digit1$digit2$digit3$digit4') { 
+    if (textController.text == '$digit1$digit2$digit3$digit4') {
       await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
       await prefs.updateActivityVisible(lesson1Key, true);
       await prefs.setBool(gamesAvailableKey, true);
+      if (await prefs.getBool(fadeGameFirstViewKey) == null) {
+        await prefs.setBool(newGamesAvailableKey, true);
+        await prefs.setBool(fadeGameFirstViewKey, true);
+      }
       await prefs.setBool(fadeGameAvailableKey, true);
       if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
         await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
@@ -72,8 +78,7 @@ class _SingleDigitTimedTestScreenState
         );
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText:
-              'Congratulations! You\'ve unlocked Mini-Games!',
+          snackBarText: 'Congratulations! You\'ve unlocked Mini-Games!',
           textColor: Colors.white,
           backgroundColor: colorGamesDarker,
           durationSeconds: 3,
@@ -90,8 +95,7 @@ class _SingleDigitTimedTestScreenState
       } else {
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
-          snackBarText:
-              'Congratulations! You aced it!',
+          snackBarText: 'Congratulations! You aced it!',
           textColor: Colors.black,
           backgroundColor: colorSingleDigitStandard,
           durationSeconds: 2,
@@ -140,7 +144,7 @@ class _SingleDigitTimedTestScreenState
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

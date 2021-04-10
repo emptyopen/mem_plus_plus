@@ -34,12 +34,10 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     prefs.checkFirstTime(
         context, singleDigitEditFirstHelpKey, SingleDigitEditScreenHelp());
     if (await prefs.getString(singleDigitKey) == null) {
-      print('pulling from default');
       singleDigitData =
           debugModeEnabled ? defaultSingleDigitData3 : defaultSingleDigitData1;
       await prefs.setString(singleDigitKey, json.encode(singleDigitData));
     } else {
-      print('already have, updating singleDigitdata in sharedprefs');
       singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
     }
     setState(() {});
@@ -47,11 +45,9 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
 
   callback(newSingleDigitData) async {
     // check if all data is complete
-    print('running callback with new data');
     await prefs.writeSharedPrefs(singleDigitKey, newSingleDigitData);
     setState(() {
       singleDigitData = newSingleDigitData;
-      print('after update: ${singleDigitData.map((entry) {return entry.object;})}');
     });
     bool entriesComplete = true;
     for (int i = 0; i < singleDigitData.length; i++) {
@@ -103,7 +99,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {

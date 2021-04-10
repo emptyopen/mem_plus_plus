@@ -32,8 +32,8 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, paoPracticeFirstHelpKey,
-        PAOPracticeScreenHelp());
+    prefs.checkFirstTime(
+        context, paoPracticeFirstHelpKey, PAOPracticeScreenHelp());
     paoData = await prefs.getSharedPrefs(paoKey);
     bool allComplete = true;
     for (int i = 0; i < paoData.length; i++) {
@@ -69,7 +69,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor,
         appBar: AppBar(
             title: Text('PAO: practice'),
             backgroundColor: colorPAOStandard,
@@ -78,7 +78,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
               IconButton(
                 icon: Icon(Icons.info),
                 onPressed: () {
-                  HapticFeedback.heavyImpact();
+                  HapticFeedback.lightImpact();
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
@@ -87,16 +87,18 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
                 },
               ),
             ]),
-        body: dataReady? CardTestScreen(
-          cardData: paoData,
-          cardType: 'FlashCard',
-          globalKey: widget.globalKey,
-          nextActivity: nextActivity,
-          systemKey: paoKey,
-          color: colorPAOStandard,
-          lighterColor: colorPAOLighter,
-          familiarityTotal: 10000,
-        ) : Container());
+        body: dataReady
+            ? CardTestScreen(
+                cardData: paoData,
+                cardType: 'FlashCard',
+                globalKey: widget.globalKey,
+                nextActivity: nextActivity,
+                systemKey: paoKey,
+                color: colorPAOStandard,
+                lighterColor: colorPAOLighter,
+                familiarityTotal: 10000,
+              )
+            : Container());
   }
 }
 

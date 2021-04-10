@@ -52,14 +52,15 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double photoHeight = screenWidth / 0.3397435897; // ratio is 265 x 780 = 0.3397435897
+    double photoHeight =
+        screenWidth / 0.3397435897; // ratio is 265 x 780 = 0.3397435897
     //print(photoHeight); // 1211
     double availableHeight = photoHeight - 414;
 
     // photo is determined by width
     // 30 + 34 + 30 + 30 * 8 + 80 = 414
-    // 1211 - 414 = available space 
-    
+    // 1211 - 414 = available space
+
     SizedBox sizedBoxHeight2 = SizedBox(height: availableHeight * 0.049);
     // planets
     SizedBox sizedBoxHeight3 = SizedBox(height: availableHeight * 0.04);
@@ -83,7 +84,7 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -106,7 +107,9 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
             ),
             Column(
               children: <Widget>[
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 // 34?
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -152,23 +155,50 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
                     ),
                     Column(
                       children: <Widget>[
-                        PlanetText(text: 'Size:', width: 75,),
+                        PlanetText(
+                          text: 'Size:',
+                          width: 75,
+                        ),
                         sizedBoxHeight3,
-                        PlanetText(text: '1', width: 30,),
+                        PlanetText(
+                          text: '1',
+                          width: 30,
+                        ),
                         sizedBoxHeight4,
-                        PlanetText(text: '3', width: 30,),
+                        PlanetText(
+                          text: '3',
+                          width: 30,
+                        ),
                         sizedBoxHeight5,
-                        PlanetText(text: '4', width: 30,),
+                        PlanetText(
+                          text: '4',
+                          width: 30,
+                        ),
                         sizedBoxHeight6,
-                        PlanetText(text: '2', width: 30,),
+                        PlanetText(
+                          text: '2',
+                          width: 30,
+                        ),
                         sizedBoxHeight7,
-                        PlanetText(text: '8', width: 30,),
+                        PlanetText(
+                          text: '8',
+                          width: 30,
+                        ),
                         sizedBoxHeight8,
-                        PlanetText(text: '7', width: 30,),
+                        PlanetText(
+                          text: '7',
+                          width: 30,
+                        ),
                         sizedBoxHeight9,
-                        PlanetText(text: '6', width: 30,),
+                        PlanetText(
+                          text: '6',
+                          width: 30,
+                        ),
                         sizedBoxHeight10,
-                        PlanetText(text: '5', width: 30,),
+                        PlanetText(
+                          text: '5',
+                          width: 30,
+                        ),
                       ],
                     ),
                   ],

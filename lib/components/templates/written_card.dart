@@ -82,7 +82,7 @@ class _WrittenCardState extends State<WrittenCard> {
           backgroundColor: colorCorrect,
           durationSeconds: 1);
       widget.callback(true);
-    } else if (d.distance(answer, guess) == 1) {
+    } else if (d.distance(answer, guess) == 1 && answer.length > 3) {
       showSnackBar(
           scaffoldState: Scaffold.of(context),
           snackBarText: 'Close enough!',

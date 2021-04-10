@@ -122,11 +122,13 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityVisible(alphabetTimedTestPrepKey, false);
     await prefs.updateActivityState(alphabetTimedTestKey, 'todo');
     await prefs.updateActivityVisible(alphabetTimedTestKey, true);
-    Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 2);
+    Duration testDuration =
+        debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 2);
     await prefs.updateActivityVisibleAfter(
         alphabetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Timed test (alphabet) is ready!', 'Good luck!', alphabetTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (alphabet) is ready!',
+        'Good luck!', alphabetTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }
@@ -134,7 +136,7 @@ class _AlphabetTimedTestPrepScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
           title: Text('Alphabet: timed test prep'),
           backgroundColor: Colors.blue[200],
@@ -143,7 +145,7 @@ class _AlphabetTimedTestPrepScreenState
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-              HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -284,11 +286,11 @@ class _AlphabetTimedTestPrepScreenState
               color: colorAlphabetLighter,
               splashColor: colorAlphabetStandard,
               onPressed: () => showConfirmDialog(
-                context: context,
-                function: updateStatus,
-                confirmText: 'Are you sure you\'d like to start this test? The sequences will no longer be available to view!',
-                confirmColor: colorAlphabetStandard
-              ),
+                  context: context,
+                  function: updateStatus,
+                  confirmText:
+                      'Are you sure you\'d like to start this test? The sequences will no longer be available to view!',
+                  confirmColor: colorAlphabetStandard),
               fontSize: 30,
               padding: 10,
             ),
@@ -334,7 +336,7 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
             'spots! Many parking garages or lots have designations like "A2" or "E9". \n    You can imagine an APPLE (my "A") being ferociously being '
             'eaten in the back seat of your car by an enourmous PIDGEON (my #2), or an ELEPHANT (my "E") stomping all over your car, with BALLOONS (my #9) being '
             'released from the car with every stomp. A million red balloons! Don\'t forget to really make these scenes wild.',
-            '    Be sure not to confuse zero with the letter O! Zero will have a dot in the character.\n\n    Remember, WILD stories with LOTS of details!'
+        '    Be sure not to confuse zero with the letter O! Zero will have a dot in the character.\n\n    Remember, WILD stories with LOTS of details!'
       ],
       buttonColor: Colors.blue[100],
       buttonSplashColor: Colors.blue[300],

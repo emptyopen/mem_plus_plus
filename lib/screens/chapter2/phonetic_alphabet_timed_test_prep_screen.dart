@@ -105,7 +105,7 @@ class _PhoneticAlphabetTimedTestPrepScreenState
             IconButton(
               icon: Icon(Icons.info),
               onPressed: () {
-                HapticFeedback.heavyImpact();
+                HapticFeedback.lightImpact();
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
@@ -181,7 +181,7 @@ class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
         'old apartment. Start at your front door, and move along a wall around your apartment, visiting different '
         'rooms or objects. ',
     '    Before you really get started, make sure to pace yourself! You\'re going to want to fit 26 sublocations here, so if it\'s a smaller apartment, '
-    'count out 26 sublocations before you start.\n\n    Maybe it\'s the front door, the fridge in your kitchen, the sink, the kitchen table, the '
+        'count out 26 sublocations before you start.\n\n    Maybe it\'s the front door, the fridge in your kitchen, the sink, the kitchen table, the '
         'living room sofa, the stairs to the second floor, your younger brother\'s bedroom, the hallway closet, '
         'your bedroom, on and on.',
     '    Now assign the phonetic word for A ("Alpha") and the Morse code '

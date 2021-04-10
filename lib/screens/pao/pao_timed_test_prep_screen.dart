@@ -28,7 +28,8 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   String digits8 = '';
   String digits9 = '';
   PrefsUpdater prefs = PrefsUpdater();
-  Duration testDuration = debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 4);
+  Duration testDuration =
+      debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 4);
   List<String> possibleValues = [
     '00',
     '01',
@@ -140,7 +141,8 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
 
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
-    prefs.checkFirstTime(context, paoTimedTestPrepFirstHelpKey, PAOTimedTestPrepScreenHelp());
+    prefs.checkFirstTime(
+        context, paoTimedTestPrepFirstHelpKey, PAOTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for paoTest
     bool sdTestIsActive = await prefs.getBool(paoTestActiveKey);
@@ -190,7 +192,8 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     await prefs.updateActivityVisibleAfter(
         paoTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
-    notifyDuration(testDuration, 'Timed test (PAO) is ready!', 'Good luck!', paoTimedTestKey);
+    notifyDuration(testDuration, 'Timed test (PAO) is ready!', 'Good luck!',
+        paoTimedTestKey);
     widget.callback();
     Navigator.pop(context);
   }
@@ -198,23 +201,24 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: backgroundColor,
-      appBar: AppBar(title: Text('PAO: timed test prep'),
-        backgroundColor: colorPAOStandard,
-        actions: <Widget>[
-        // action button
-        IconButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            HapticFeedback.heavyImpact();
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return PAOTimedTestPrepScreenHelp();
-                }));
-          },
-        ),
-      ]),
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+          title: Text('PAO: timed test prep'),
+          backgroundColor: colorPAOStandard,
+          actions: <Widget>[
+            // action button
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                Navigator.of(context).push(PageRouteBuilder(
+                    opaque: false,
+                    pageBuilder: (BuildContext context, _, __) {
+                      return PAOTimedTestPrepScreenHelp();
+                    }));
+              },
+            ),
+          ]),
       body: Container(
         decoration: BoxDecoration(color: backgroundColor),
         child: Column(
@@ -280,11 +284,11 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
               color: colorPAOLighter,
               splashColor: colorPAOStandard,
               onPressed: () => showConfirmDialog(
-                context: context,
-                function: updateStatus,
-                confirmText: 'Are you sure you\'d like to start this test? The sequences will no longer be available to view!',
-                confirmColor: colorPAOStandard
-              ),
+                  context: context,
+                  function: updateStatus,
+                  confirmText:
+                      'Are you sure you\'d like to start this test? The sequences will no longer be available to view!',
+                  confirmColor: colorPAOStandard),
               fontSize: 30,
               padding: 10,
             ),
