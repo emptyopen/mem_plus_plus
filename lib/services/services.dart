@@ -461,7 +461,7 @@ initializeNotificationsScheduler() async {
   tz.TZDateTime _nextInstanceOfLunch() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 2);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 12);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
