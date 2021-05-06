@@ -26,18 +26,25 @@ dependencies:
   url_launcher: ^6.0.3
   random_words: ^1.0.2
   password: ^1.0.0
+  flutter_native_timezone: ^1.0.10
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_automation:
-  flutter_launcher_icons: ^0.7.0
+  # flutter_launcher_icons: ^0.7.0
+  flutter_launcher_icons:
+    git:
+      url: https://github.com/knyghtryda/flutter_launcher_icons
+      ref: scaling
 
 flutter_icons:
   ios: true
   android: false
-  image_path_ios: "assets/launcher/icon.png"
-  image_path_android: "assets/launcher/icon.png"
+  # image_path_ios: "assets/launcher/icon.png"
+  # image_path_android: "assets/launcher/icon.png"
+  image_path: "assets/launcher/icon.png"
+  adaptive_icon_foreground_scale_factor: 0.66
 
 flutter:
   uses-material-design: true

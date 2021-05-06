@@ -199,7 +199,7 @@ class _CSVImporterState extends State<CSVImporter> {
                               color: colorPAODarker,
                               textColor: Colors.white,
                               onPressed: () => launch(
-                                  'https://docs.google.com/spreadsheets/d/1p_jBU9aQeTfZOVnuhMnBoie8gI5HWNn3g-_kBlr0V8c/edit?usp=sharing'),
+                                  'https://docs.google.com/spreadsheets/d/17Cl4EfZTNo_FdmLUkSYzz6SXnjm1Gi5u00aD4d_zMCU/edit?usp=sharing'),
                             ),
                           ],
                         ),
@@ -272,12 +272,15 @@ class _CSVImporterState extends State<CSVImporter> {
                             if (l.length == 100) {
                               List<PAOData> paoDataList = [];
                               l.asMap().forEach((k, v) {
+                                String person = v[0].toString();
+                                String action = v[1].toString();
+                                String object = v[2].toString();
                                 paoDataList.add(PAOData(
                                     k,
                                     defaultPAOData1[k].digits,
-                                    v[0],
-                                    v[1],
-                                    v[2],
+                                    person,
+                                    action,
+                                    object,
                                     0));
                               });
                               updatePAOData(paoDataList);

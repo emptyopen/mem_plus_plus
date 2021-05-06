@@ -495,14 +495,15 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
         'searching through your email to find the confirmation code. Walk up confidently to the check-in '
         'kiosk and pull the code straight from your brain!',
     '    Remember to attach your scenes to something that will help you remember what it represents. '
-        'If my seat is 47E, my two-digit system (which you will learn soon!) would translate that into Dexter Morgan (47) and elephant (E). I might see '
-        'Dexter sitting in that airplane seat with that trademark smile... handsome but creepy! Maybe I see a glint of '
-        'a knife... or maybe it\'s just the seatbelt?\n    It doesn\'t matter, he\'s simply trying to distract us '
-        'from his elephant trunk and tusks! How did '
-        'we miss that the first time around? An enormous ELEPHANT trunk protruding out of DEXTER MORGAN\'s face, wow!',
+        'If my seat is 54E, my one-digit system would translate that into snake (5), sailboat (4) and elephant (E). I might imagine '
+        'me settling down in my seat for the flight, turn on the infotainment system and... "SNAKES on a SAILBOAT 3"! '
+        'My favorite trilogy is finally complete! And who is the new protagonist? An enormous African elephant, that makes perfect sense! '
+        'I see the elephant clumsily navigating the fragile but beautiful sailboat through the whole movie.',
+    'You can similarly attach scenes in different parts of the airport. A scene at the check-in counter, a scene at the gate, followed '
+        'by a crazy event marking the time of departure. ',
     '    If you can handle this, you\'re ready for anything :) It might take a while your first time to get '
         'everything memorized. Trust me, it gets easier and easier to build these scenes and make them wacky. '
-        '\n    This might take you ten or twenty minutes to memorize all this information since you are equipped only with '
+        '\n    This might take you a while to memorize all this information since, currently, you are equipped only with '
         'a single digit system. But once you master the next system '
         'and keep practicing, you\'ll eventually be able to fully memorize all of this in just a couple '
         'minutes or less! Definitely come back and revisit this test in the future!',

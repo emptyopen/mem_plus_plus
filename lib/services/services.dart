@@ -12,6 +12,9 @@ import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/services.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 import '../constants/keys.dart';
 
@@ -391,7 +394,7 @@ initializeNotificationsScheduler() async {
   var prefs = PrefsUpdater();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  const androidPlatformChannelSpecifics = AndroidNotificationDetails(
     dailyReminderIdKey,
     dailyReminderKey,
     'Daily reminder',
@@ -399,7 +402,7 @@ initializeNotificationsScheduler() async {
     priority: Priority.high,
     ticker: 'ticker',
   );
-  var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+  const iOSPlatformChannelSpecifics = IOSNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,
     iOS: iOSPlatformChannelSpecifics,
@@ -421,13 +424,19 @@ initializeNotificationsScheduler() async {
   bool deckComplete = await prefs.getBool(deckTimedTestCompleteKey) != null;
 
   var random = Random();
-  int basicMessage = random.nextInt(2);
+  int basicMessageIndex = random.nextInt(6);
   String title = 'Have you improved your memory today?';
   String subtitle = 'Click here to check your todo list!';
-  if (basicMessage == 1) {
+  if (basicMessageIndex == 1) {
     title = 'Looking for something to do?';
-  } else if (basicMessage == 2) {
+  } else if (basicMessageIndex == 2) {
     title = 'Bored? Let\'s self-improve!';
+  } else if (basicMessageIndex == 3) {
+    title = 'Time to improve your memory!';
+  } else if (basicMessageIndex == 4) {
+    title = 'Get on in here! Memory time!';
+  } else if (basicMessageIndex == 5) {
+    title = 'C\'mon, let\'s improve your memory!';
   }
   if (!singleDigitComplete) {
     subtitle = 'Continue developing your Single Digit skills!';
@@ -444,23 +453,32 @@ initializeNotificationsScheduler() async {
   } else if (!deckComplete) {
     subtitle = 'Continue familiarizing your Deck System!';
   }
-  var time = Time(12, 30, 0);
-  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-      random.nextInt(1000),
-      title,
-      subtitle,
-      Day.tuesday,
-      time,
-      platformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-      random.nextInt(1000),
-      title,
-      subtitle,
-      Day.saturday,
-      time,
-      platformChannelSpecifics);
-  print(
-      'initialized weekly notification $title / $subtitle:  (MWFSu) @ ${time.hour}:${time.minute}:${time.second}');
+
+  tz.initializeTimeZones();
+  final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(currentTimeZone));
+
+  tz.TZDateTime _nextInstanceOfLunch() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 2);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  await flutterLocalNotificationsPlugin.zonedSchedule(
+    0,
+    title,
+    subtitle,
+    _nextInstanceOfLunch(),
+    platformChannelSpecifics,
+    androidAllowWhileIdle: true,
+    uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+    matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+  );
 }
 
 getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {

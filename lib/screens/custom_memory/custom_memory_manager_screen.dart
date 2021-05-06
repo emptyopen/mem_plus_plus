@@ -184,7 +184,8 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                                   'be stored anywhere in plain text!\n    You can specify if you\'d like something '
                                   'cryptographically secured when storing the memory by toggling the SAFE symbol for that field. '
                                   'Keep in mind that if you do that, you won\'t be able to view it later even if you '
-                                  'forget it, because only the hash value will be stored!',
+                                  'forget it, because only the hash value will be stored!\n    In general, this app does '
+                                  'not communicate at all with any server, so all data is stored locally and never leaves.',
                                   textAlign: TextAlign.left,
                                 ),
                               ],

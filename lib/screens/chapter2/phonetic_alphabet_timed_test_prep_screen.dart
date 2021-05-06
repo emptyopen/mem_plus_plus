@@ -196,8 +196,8 @@ class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
     '    Really mash the scene and your real life sublocation together!\n\n    Is blood spurting out of the '
         'faucets? So gross! Billowing flames when you open the bathroom door? Close your eyes and feel the searing flames on your face! '
         'Smell the stench of the rotting zombies chasing you down the hallway! \n    Really let your imagination run wild!',
-    '        Don\'t worry about having to imagine these uncomfortably weird scenes forever. Like everything else you memorize, eventually these zany images '
-        'will fade into the background as the words, dots, and dashes become second nature.',
+    '        Don\'t worry about having to imagine these uncomfortably weird scenes forever. If you practice enough, '
+        'eventually these zany images will fade into the background as the words, dots, and dashes become second nature.',
   ];
 
   @override

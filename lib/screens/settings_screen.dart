@@ -171,6 +171,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               },
                               text: 'max out everything',
                             ),
+                            BasicFlatButton(
+                              onPressed: () {
+                                notify();
+                              },
+                              text: 'test notification',
+                            ),
                           ],
                         )
                       : Container(),
