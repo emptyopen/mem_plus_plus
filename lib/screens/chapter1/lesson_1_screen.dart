@@ -71,8 +71,8 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
     ),
     Text(
       '    My favorite way to get people invested into their memories is memorizing '
-      'a deck of cards in ten minutes. Or memorizing 20 digits in 5 minutes, '
-      'or reciting 100 digits of pi. This stuff is crazy, but they are just party tricks.\n\n'
+      'a whole deck of cards. Or memorizing 20 digits in a few minutes and repeating it back several hours later, '
+      'or reciting 500 digits of pi (people usually lose interest after about 100 digits). This stuff is crazy, but they are just party tricks.\n\n'
       '    The real benefit is the incredible quality-of-'
       'life improvement, and I wanted to share it with the world. Imagine effortlessly recalling your checking account and routing numbers. '
       'Licences and passports. Names and passwords. Grocery lists, recipes. Security code combinations. '
@@ -151,7 +151,6 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
 
   @override
   Widget build(BuildContext context) {
-
     return LessonScreen(
       title: 'Lesson 1',
       colorStandard: colorChapter1Standard,

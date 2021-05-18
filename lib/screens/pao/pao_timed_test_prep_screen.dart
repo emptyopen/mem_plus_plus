@@ -317,10 +317,15 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
         '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '
             'and link the scenes together. Remember, person-action-object, and really create a connection '
             'between scenes. ',
-        '    If the first scene is Galileo fervently cooking with a paintbrush, and the second scene '
-            'is Sandra Bullock slam-dunking some poker chips, maybe Galileo finishes cooking the dish (full of paint), '
-            'and Sandra takes a big gulp of it, now paint is all around her mouth! What a messy eater Sandra is. '
-            'Now she\'s mad about the paint so she\'s going to go dunk some poker chips to cool off.'
+        '    Say your first scene is (1) Galileo fervently (2) cooking with a (3) paintbrush, and your second scene '
+            'is (4) Sandra Bullock (5) slam-dunking some (6) poker chips. To thread the scenes, we simply connect '
+            'something from the first scene to the beginning of the second scene.\n\n    Maybe Galileo (with a chef\'s hat) finishes cooking the dish (full of hot pink paint), '
+            'Sandra takes a big gulp of it, and now paint is all around her mouth! What a messy eater Sandra is. ',
+        '    Close your eyes if you have to, but really picture in your mind\'s eye Sandra Bullock giving you a big smile with PINK PAINT all around her mouth. Freaky!'
+            '\n\n    And of course the only way Sandra Bullock knows how to celebrate her favorite pink paint soup is to grab her hot pink poker chips, '
+            'jump out the window, and dunk the poker chips out in the driveway.\n\nSMASH!!! Some of the poker chips start rolling away, to the foot of your next character!',
+        '    And I know sound like a broken record, but I promise that as you practice this process you will get really, really fast at putting stories together and finding creative '
+            'ways to link the crazy scenes.'
       ],
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,

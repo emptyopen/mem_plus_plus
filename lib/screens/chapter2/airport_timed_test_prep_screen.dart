@@ -503,7 +503,7 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
         'by a crazy event marking the time of departure. ',
     '    If you can handle this, you\'re ready for anything :) It might take a while your first time to get '
         'everything memorized. Trust me, it gets easier and easier to build these scenes and make them wacky. '
-        '\n    This might take you a while to memorize all this information since, currently, you are equipped only with '
+        '\n    Currently, you\'re only equipped with '
         'a single digit system. But once you master the next system '
         'and keep practicing, you\'ll eventually be able to fully memorize all of this in just a couple '
         'minutes or less! Definitely come back and revisit this test in the future!',

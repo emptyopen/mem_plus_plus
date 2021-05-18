@@ -221,6 +221,9 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
         'you up in the clouds, about to take this test. A huge timer clock is above you... ah, '
         'yes, this is the place to take a timed test. And the first thing that happens is you '
         'drop your pencil, and it rockets towards the earth, skewering that swan...',
+    '    Yes, I know this is ridiculous, and time consuming. You can probably remember this 4 digit number without this dumb system, right?\n    '
+        'Well, this is still going to be useful, both as a template for learning more complex systems, and as a necessary part of '
+        'compound memorization techniques.\n\n    Anyways, just trust me! Start visualizing!'
   ];
 
   @override

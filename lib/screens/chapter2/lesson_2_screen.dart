@@ -93,7 +93,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
     ),
     Text(
       '    The memory palace is extremely powerful only because all of us are so good at remembering the exact '
-      'layout of places we are familiar with. \n    Close your eyes and imagine a recent home or apartment. '
+      'layout of places we are familiar with. \n    Close your eyes and imagine any home or apartment you\'ve lived in, even as a younger child. '
       'Can you remember where your bedroom was compared to the kitchen? Of course! You remember where the fridge '
       'was in relation to the dishwasher and the microwave! You even remember the orientation of the toilet in the bathroom. '
       '\n    It doesn\'t even have to be a home! Maybe it\'s a train line that you\'ve taken every day of your life. '

@@ -252,7 +252,9 @@ class FacesTimedTestPrepScreenHelp extends StatelessWidget {
         '\n    For example, \'Sifiso\' could be remembered with \'Sci-fi sew(ing)\', and a visualization for \'Anatoliy\' could '
         'include a scene with \'a Natalie (Portman)\'.'
         '\n    I know that this seems like it it would take a long time to think of scenes like the example, but you '
-        'will get better and faster at it! '
+        'will get better and faster at it! ',
+    '    Two final tips: attach the scene you concoct to some permanent feature of their face, not their clothing.\n\n    And never, ever '
+        'explain the attachment feature to the person themself! They may be self-conscious of that feature, and it would be awkward, so just never do it.'
   ];
 
   @override

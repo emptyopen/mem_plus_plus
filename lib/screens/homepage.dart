@@ -169,7 +169,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
     getSharedPrefs();
     initializeActivityMenuButtonMap();
-    initializeNotificationsScheduler();
     new Timer.periodic(
       Duration(milliseconds: 100),
       (Timer t) => setState(() {}),

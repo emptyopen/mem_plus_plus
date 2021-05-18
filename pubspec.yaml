@@ -27,6 +27,7 @@ dependencies:
   random_words: ^1.0.2
   password: ^1.0.0
   flutter_native_timezone: ^1.0.10
+  simple_animations: ^2.5.1
 
 dev_dependencies:
   flutter_test:

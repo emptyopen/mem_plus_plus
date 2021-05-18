@@ -129,7 +129,7 @@ class AlphabetEditScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Alphabet View/Edit',
       information: [
-        '    OK! Welcome to the 2nd system here at Takao Studios :)\n    I\'m getting very excited for you! '
+        '    OK! Welcome to the 2nd system, the Alphabet system! I\'m getting very excited for you!\n    '
             'What we\'re going to do here is just like last time, except now with letters of '
             'the alphabet!\n    Remember, we want to attach objects that are unique, and easy to attach to stories!'
       ],

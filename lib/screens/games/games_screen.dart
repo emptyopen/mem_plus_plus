@@ -93,7 +93,6 @@ class _GamesScreenState extends State<GamesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: backgroundColor,
@@ -469,7 +468,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
         Container(
           height: 40,
           child: FlatButton(
-            color: widget.color,
+            color: isAvailable ? widget.color : Colors.grey,
             highlightColor: Colors.transparent,
             onPressed: isAvailable
                 ? () {
@@ -477,7 +476,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
                     widget.globalKey.currentState.hideCurrentSnackBar();
                     widget.function();
                   }
-                : null,
+                : () {},
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
               side: BorderSide(

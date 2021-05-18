@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/pao_data.dart';
+import 'package:mem_plus_plus/components/info_box.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -10,6 +11,7 @@ import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:flutter/services.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PAOEditScreen extends StatefulWidget {
@@ -105,16 +107,21 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
           title: Text('PAO: view/edit'),
           backgroundColor: colorPAOStandard,
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_downward),
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return CSVImporter(callback: callback);
-                    }));
-              },
+            Shimmer.fromColors(
+              period: Duration(seconds: 3),
+              baseColor: Colors.black,
+              highlightColor: Colors.greenAccent,
+              child: IconButton(
+                icon: Icon(Icons.arrow_downward),
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return CSVImporter(callback: callback);
+                      }));
+                },
+              ),
             ),
             IconButton(
               icon: Icon(Icons.info),
@@ -128,12 +135,23 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
               },
             ),
           ]),
-      body: Container(
-        decoration: BoxDecoration(color: backgroundColor),
-        child: Center(
-            child: ListView(
-          children: getPAOEditCards(),
-        )),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(color: backgroundColor),
+            child: Center(
+                child: ListView(
+              children: getPAOEditCards(),
+            )),
+          ),
+          Positioned(
+            top: 4,
+            right: 50,
+            child: InfoBox(
+                text: 'Start your PAO journey here!',
+                infoKey: 'accountSection'),
+          ),
+        ],
       ),
     );
   }
@@ -314,7 +332,7 @@ class _CSVImporterState extends State<CSVImporter> {
 
 class PAOEditScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    Welcome to the 3rd system here at Takao Studios :) \n'
+    '    Welcome to the 3rd system, the Double Digit / PAO System! :) \n'
         '    PAO stands for Person Action Object. What this means is that for every digit '
         '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. '
         'You can assign any person, action, and object to any digit, but it\'s a good idea at first '
@@ -323,7 +341,7 @@ class PAOEditScreenHelp extends StatelessWidget {
         'start becoming "number fluent", to the point where I could instantly translate any numbers to scenes. But TRUST me, it\'ll be worth it. \n\n'
         '    The person should be associated to its corresponding action and object, '
         'and no two persons, actions, or objects should be too similar (also avoid overlap with '
-        'your single digit and alphabet systems!). As a starter pattern, we recommend '
+        'your single digit and alphabet systems!). As a starter pattern, I recommend '
         'using an initials pattern. ',
     '    The initials pattern proposed in "Remember It!" by Nelson Dellis has '
         '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Fs, and Is are '
@@ -337,13 +355,13 @@ class PAOEditScreenHelp extends StatelessWidget {
     '    So with 15-48-25, '
         'which under my personal system corresponds to 15 (person) = AE = Albert Einstein, 48 (action) = DH (Dwight Howard) = slam dunking, '
         '25 (object) = quarters. \n    So my visualized scene would be ALBERT EINSTEIN who jumps into the air and SLAM DUNKS his '
-        'fistfuls of shiny QUARTERS. What a sight that would be! Hear the cacaphony of quarters hit the ground as the absolute legend finally drops to the ground.',
+        'fistfuls of shiny QUARTERS. What a sight that would be! Hear the cacaphony of quarters hit the ground as the absolute legend finally drops to the ground, shaking out his wild gray hair.',
     '    This system should take a good amount of time setting up before you start trying to master it. Update '
         'the PAO values for your digits until you\'re really happy with the list.\n\n    Use people you know in real life, '
         'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '
         'because overlap will make decoding more difficult. ',
     '    As a final note, it\'s possible to upload an entire PAO system through the CSV upload method available in '
-        'the top right of the screen. I would highly, highly recommend storing your PAO data in a google doc. '
+        'the top right of the screen.\n\n    I would highly, highly recommend storing your PAO data in a google doc. '
         'More details on how to do that is available in the upload section.'
   ];
 
