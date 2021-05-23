@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
@@ -209,46 +210,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       '    Matt has a cute dog called Aki. They live in LA and are always having a a good time with friends and family. ',
                       style: TextStyle(color: backgroundHighlightColor),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      height: 40,
-                      width: 190,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: backgroundHighlightColor),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.yellow[200],
-                            Colors.yellow[700],
-                          ], // whitish to gray
-                          tileMode: TileMode
-                              .repeated, // repeats the gradient over the canvas
-                        ),
-                      ),
-                      child: Center(
-                        child: InkWell(
-                          child: AutoSizeText(
-                            'Give Matt coffee money!',
-                            maxLines: 1,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          onTap: () => launch('http://paypal.me/takaomatt'),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Donating does not unlock any\nadditional features or functionality.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
-                      ),
-                    ),
+                    defaultTargetPlatform == TargetPlatform.android
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                height: 40,
+                                width: 190,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                      color: backgroundHighlightColor),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Colors.yellow[200],
+                                      Colors.yellow[700],
+                                    ], // whitish to gray
+                                    tileMode: TileMode
+                                        .repeated, // repeats the gradient over the canvas
+                                  ),
+                                ),
+                                child: Center(
+                                  child: InkWell(
+                                    child: AutoSizeText(
+                                      'Give Matt coffee money!',
+                                      maxLines: 1,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    onTap: () =>
+                                        launch('http://paypal.me/takaomatt'),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                'Donating does not unlock any\nadditional features or functionality.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(),
                   ],
                 ),
               ),
