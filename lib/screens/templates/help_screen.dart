@@ -42,6 +42,14 @@ class _HelpScreenState extends State<HelpScreen> {
       informationList.add(Column(
         children: <Widget>[
           Text(
+            widget.title,
+            style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
             widget.information[0],
             style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
             textAlign: TextAlign.left,
@@ -64,10 +72,22 @@ class _HelpScreenState extends State<HelpScreen> {
         ));
       });
     } else {
-      informationList.add(Text(
-        widget.information[0],
-        style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-        textAlign: TextAlign.left,
+      informationList.add(Column(
+        children: [
+          Text(
+            widget.title,
+            style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            widget.information[0],
+            style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+            textAlign: TextAlign.left,
+          ),
+        ],
       ));
     }
   }
@@ -113,22 +133,6 @@ class _HelpScreenState extends State<HelpScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        slideIndex == 0
-                            ? Column(
-                                children: <Widget>[
-                                  Text(
-                                    widget.title,
-                                    style: TextStyle(
-                                        fontSize: 28,
-                                        color: backgroundHighlightColor),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              )
-                            : Container(),
                         ParallaxContainer(
                           child: informationList[info.index],
                           position: info.position,
@@ -183,14 +187,17 @@ class _HelpScreenState extends State<HelpScreen> {
                     height: 15,
                   ),
                   (firstHelp && slideIndex == widget.information.length - 1) ||
-                          debugModeEnabled || !firstHelp
+                          debugModeEnabled ||
+                          !firstHelp
                       ? HelpOKButton(
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,
                           firstHelpKey: widget.firstHelpKey,
                           callback: widget.callback,
                         )
-                      : SizedBox(height: 50,),
+                      : SizedBox(
+                          height: 50,
+                        ),
                 ],
               ),
             ),
@@ -206,7 +213,11 @@ class HelpOKButton extends StatelessWidget {
   final prefs = PrefsUpdater();
   final Function callback;
 
-  HelpOKButton({this.buttonColor, this.buttonSplashColor, this.firstHelpKey, this.callback});
+  HelpOKButton(
+      {this.buttonColor,
+      this.buttonSplashColor,
+      this.firstHelpKey,
+      this.callback});
 
   updateFirstHelp() async {
     await prefs.setBool(firstHelpKey, false);

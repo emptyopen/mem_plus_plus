@@ -168,6 +168,7 @@ class CSVImporter extends StatefulWidget {
 
 class _CSVImporterState extends State<CSVImporter> {
   final textController = TextEditingController();
+  String errorMessage = '';
 
   updatePAOData(List<PAOData> paoDataList) async {
     var prefs = PrefsUpdater();
@@ -228,7 +229,7 @@ class _CSVImporterState extends State<CSVImporter> {
                     ),
                     Container(
                       width: 350,
-                      padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5)),
@@ -238,16 +239,36 @@ class _CSVImporterState extends State<CSVImporter> {
                             'Input below: ',
                             style: TextStyle(fontSize: 20),
                           ),
+                          SizedBox(height: 10),
                           TextField(
                             maxLines: 4,
+                            onChanged: (s) {
+                              errorMessage = '';
+                              setState(() {});
+                            },
                             decoration: InputDecoration(
-                                hintText:
-                                    'Ozzy Osbourne,rocking out a concert,rock guitar\n'
-                                    'Orlando Bloom,walking the plank,eyepatch\n'
-                                    '...',
-                                hintStyle: TextStyle(fontSize: 15)),
+                              border: OutlineInputBorder(),
+                              hintText:
+                                  'Ozzy Osbourne,rocking out a concert,rock guitar\n'
+                                  'Orlando Bloom,walking the plank,eyepatch\n'
+                                  '...',
+                              hintStyle: TextStyle(fontSize: 15),
+                            ),
                             controller: textController,
                           ),
+                          errorMessage != ''
+                              ? Column(
+                                  children: [
+                                    SizedBox(height: 10),
+                                    Text(
+                                      errorMessage,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
@@ -285,9 +306,36 @@ class _CSVImporterState extends State<CSVImporter> {
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             var csvConverter = CsvToListConverter();
-                            var l = csvConverter.convert(textController.text,
-                                eol: '\n');
-                            if (l.length == 100) {
+                            String cleanedText = textController.text;
+                            cleanedText = cleanedText.trim();
+                            if (cleanedText.startsWith("\"")) {
+                              cleanedText = cleanedText.substring(1);
+                            }
+                            if (cleanedText.endsWith("\"")) {
+                              cleanedText = cleanedText.substring(
+                                  0, cleanedText.length - 1);
+                            }
+                            var l = csvConverter.convert(cleanedText, eol: '|');
+                            bool inputIsValid = true;
+                            errorMessage = 'Incorrectly formatted!';
+                            if (l.length != 100) {
+                              inputIsValid = false;
+                              errorMessage +=
+                                  '\n${l.length} lines detected (need 100).';
+                            }
+                            bool columnsValid = true;
+                            l.asMap().forEach((k, v) {
+                              if (v.length != 3) {
+                                columnsValid = false;
+                              }
+                            });
+                            if (!columnsValid) {
+                              inputIsValid = false;
+                              errorMessage +=
+                                  '\nFound at least one row with invalid number of columns. Make sure you aren\'t using any extra commas!';
+                            }
+                            if (inputIsValid) {
+                              errorMessage = '';
                               List<PAOData> paoDataList = [];
                               l.asMap().forEach((k, v) {
                                 String person = v[0].toString();
@@ -304,7 +352,7 @@ class _CSVImporterState extends State<CSVImporter> {
                               updatePAOData(paoDataList);
                               Navigator.pop(context);
                             }
-                            //Navigator.pop(context);
+                            setState(() {});
                           },
                           padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(

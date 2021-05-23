@@ -22,16 +22,14 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
   String face1 = '';
   String name1 = '';
   String job1 = '';
-  String age1 = '';
   String hometown1 = '';
   String face2 = '';
   String name2 = '';
   String job2 = '';
-  String age2 = '';
   String hometown2 = '';
   var prefs = PrefsUpdater();
   Duration testDuration =
-      debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 3);
+      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 3);
 
   @override
   void initState() {
@@ -79,20 +77,16 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
         String lastName = lastNames[random.nextInt(menNames.length)];
         name2 = '$firstName $lastName';
       }
-      age1 = (random.nextInt(20) + 18).toString();
-      age2 = (random.nextInt(20) + 18).toString();
       job1 = jobs[random.nextInt(jobs.length)];
       job2 = jobs[random.nextInt(jobs.length)];
       hometown1 = cities[random.nextInt(cities.length)];
       hometown2 = cities[random.nextInt(cities.length)];
       prefs.setString('face2Face1', face1);
       prefs.setString('face2Name1', name1);
-      prefs.setString('face2Age1', age1);
       prefs.setString('face2Job1', job1);
       prefs.setString('face2Hometown1', hometown1);
       prefs.setString('face2Face2', face2);
       prefs.setString('face2Name2', name2);
-      prefs.setString('face2Age2', age2);
       prefs.setString('face2Job2', job2);
       prefs.setString('face2Hometown2', hometown2);
       prefs.setBool(face2TestActiveKey, true);
@@ -100,12 +94,10 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
       print('found active test, restoring values');
       face1 = await prefs.getString('face2Face1');
       name1 = await prefs.getString('face2Name1');
-      age1 = await prefs.getString('face2Age1');
       job1 = await prefs.getString('face2Job1');
       hometown1 = await prefs.getString('face2Hometown1');
       face2 = await prefs.getString('face2Face2');
       name2 = await prefs.getString('face2Name2');
-      age2 = await prefs.getString('face2Age2');
       job2 = await prefs.getString('face2Job2');
       hometown2 = await prefs.getString('face2Hometown2');
     }
@@ -188,14 +180,6 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                           height: 10,
                         ),
                         Text(
-                          'Age: $age1',
-                          style: TextStyle(
-                              fontSize: 22, color: backgroundHighlightColor),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
                           'Job: $job1',
                           style: TextStyle(
                               fontSize: 20, color: backgroundHighlightColor),
@@ -240,11 +224,6 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                         ),
                         SizedBox(
                           height: 10,
-                        ),
-                        Text(
-                          'Age: $age2',
-                          style: TextStyle(
-                              fontSize: 22, color: backgroundHighlightColor),
                         ),
                         SizedBox(
                           height: 10,
@@ -302,8 +281,13 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
 
 class Face2TimedTestPrepScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    Welcome to hell-mode of the Faces test! Now, in addition to just a first name, we\'re '
-        'going to memorize a last name, age, job, and hometown. Wow!'
+    '    Welcome to the next level of the Faces test! Now, in addition to just a first name, we\'re '
+        'going to memorize a last name, job, and hometown. Wow!',
+    '    Remember the basics - generate vivid scenes based on their attributes! If they are an accountant, '
+        'picture a comically huge pair of thick-rimmed glasses that they put on before sitting before their piles of numbers. '
+        '\n\nIf they are from NYC, imagine them in a lively discussion with Serena Van der Woodsen in an Upper East Side cafe!',
+    '    Their last name is "Woodsley", you say? That\'s a "wooden sleigh". Last name "Miyamoto"? Mario says that\'s "a-my-ah motor!" '
+        'Last name "King-Smithly-Gerard"? Well, I believe in you.'
   ];
 
   @override

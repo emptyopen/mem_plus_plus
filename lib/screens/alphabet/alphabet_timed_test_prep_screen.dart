@@ -122,8 +122,9 @@ class _AlphabetTimedTestPrepScreenState
     await prefs.updateActivityVisible(alphabetTimedTestPrepKey, false);
     await prefs.updateActivityState(alphabetTimedTestKey, 'todo');
     await prefs.updateActivityVisible(alphabetTimedTestKey, true);
-    Duration testDuration =
-        debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 2);
+    Duration testDuration = debugModeEnabled
+        ? Duration(seconds: debugTestTime)
+        : Duration(hours: 2);
     await prefs.updateActivityVisibleAfter(
         alphabetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);

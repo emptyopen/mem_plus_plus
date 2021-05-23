@@ -140,7 +140,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     fontSize: 20,
                     padding: 10,
                     onPressed: () {
-                      print('wow');
                       showConfirmDialog(
                           context: context,
                           function: widget.resetAll,

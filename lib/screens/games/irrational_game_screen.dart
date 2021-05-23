@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -37,6 +39,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
   Color stateColor = Colors.green;
   var textController = TextEditingController();
   var prefs = PrefsUpdater();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
@@ -175,7 +178,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                 ? Colors.lightBlue[500]
                 : backgroundColor,
             onLongPress: () {
-              HapticFeedback.lightImpact();
+              HapticFeedback.mediumImpact();
               updateActiveRow(tempRowRow);
             },
             onPressed: null,
@@ -188,7 +191,9 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                   tempRow.substring(0, 6),
                   style: TextStyle(
                     fontSize: 20,
-                    color: backgroundHighlightColor,
+                    color: tempRowRow == position
+                        ? Colors.white
+                        : backgroundHighlightColor,
                     fontFamily: 'SpaceMono',
                   ),
                 ),
@@ -196,7 +201,9 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                   tempRow.substring(6, 12),
                   style: TextStyle(
                     fontSize: 20,
-                    color: backgroundHighlightColor,
+                    color: tempRowRow == position
+                        ? Colors.white
+                        : backgroundHighlightColor,
                     fontFamily: 'SpaceMono',
                   ),
                 ),
@@ -204,7 +211,9 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                   tempRow.substring(12, 18),
                   style: TextStyle(
                     fontSize: 20,
-                    color: backgroundHighlightColor,
+                    color: tempRowRow == position
+                        ? Colors.white
+                        : backgroundHighlightColor,
                     fontFamily: 'SpaceMono',
                   ),
                 ),
@@ -288,7 +297,6 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
       });
     }
     // check if value is complete
-    print('${textController.text.length} == ${correctSequence.length}');
     if (textController.text.length == correctSequence.length) {
       complete = true;
       FocusScope.of(context).unfocus();
@@ -403,7 +411,8 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
             controller: textController,
             keyboardType: TextInputType.phone,
             onChanged: (text) => updateValues(text),
-            autofocus: true,
+            // autofocus: true,
+            focusNode: focusNode,
           ),
         ),
         SizedBox(
@@ -441,7 +450,32 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                   ),
                 ],
               )
-            : Container(),
+            : Text(
+                '${textController.text.length}/${correctSequence.length} entered',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),
+              ),
+        MediaQuery.of(context).viewInsets.bottom > 10
+            ? Container()
+            : Column(
+                children: [
+                  SizedBox(height: 20),
+                  BasicFlatButton(
+                    color: Colors.pink[200],
+                    text: 'Keyboard ran away? Tap here to show it.',
+                    fontSize: 12,
+                    textColor: Colors.black,
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      Timer(const Duration(milliseconds: 1), () {
+                        FocusScope.of(context).requestFocus(focusNode);
+                      });
+                    },
+                  ),
+                ],
+              ),
       ],
     );
   }

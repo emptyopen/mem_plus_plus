@@ -96,7 +96,8 @@ class MyHomePage extends StatefulWidget {
 // done:
 
 // next up:
-// add more possibilities for notification message besides "looking for something to do?"
+// figure out local notifications once and for all
+// show irrational test animation for completion
 // make dialog for edit static, non scrollable
 // add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
 // custom memory can't always submit answer? check if wrong
@@ -941,6 +942,8 @@ class _MyHomePageState extends State<MyHomePage> {
     consolidateDeck = false;
 
     setUnlockedActivities();
+
+    Navigator.of(context).pop();
 
     setState(() {});
   }

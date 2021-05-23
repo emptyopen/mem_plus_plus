@@ -19,7 +19,7 @@ class PiTimedTestPrepScreen extends StatefulWidget {
 class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
   PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration =
-      debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 6);
+      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 6);
 
   @override
   void initState() {

@@ -21,20 +21,16 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   String face1 = '';
   String name1 = '';
   String job1 = '';
-  String age1 = '';
   String hometown1 = '';
   String face2 = '';
   String name2 = '';
   String job2 = '';
-  String age2 = '';
   String hometown2 = '';
   final name1Controller = TextEditingController();
   final job1Controller = TextEditingController();
-  final age1Controller = TextEditingController();
   final hometown1Controller = TextEditingController();
   final name2Controller = TextEditingController();
   final job2Controller = TextEditingController();
-  final age2Controller = TextEditingController();
   final hometown2Controller = TextEditingController();
   bool isLoaded = false;
   PrefsUpdater prefs = PrefsUpdater();
@@ -43,11 +39,9 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   void dispose() {
     name1Controller.dispose();
     job1Controller.dispose();
-    age1Controller.dispose();
     hometown1Controller.dispose();
     name2Controller.dispose();
     job2Controller.dispose();
-    age2Controller.dispose();
     hometown2Controller.dispose();
     super.dispose();
   }
@@ -63,17 +57,14 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
         context, face2TimedTestFirstHelpKey, Face2TimedTestScreenHelp());
     face1 = await prefs.getString('face2Face1');
     name1 = await prefs.getString('face2Name1');
-    age1 = await prefs.getString('face2Age1');
     job1 = await prefs.getString('face2Job1');
     hometown1 = await prefs.getString('face2Hometown1');
     face2 = await prefs.getString('face2Face2');
     name2 = await prefs.getString('face2Name2');
-    age2 = await prefs.getString('face2Age2');
     job2 = await prefs.getString('face2Job2');
     hometown2 = await prefs.getString('face2Hometown2');
     isLoaded = true;
-    print(
-        'real answer: $name1 $age1 $job1 $hometown1 || $name2 $age2 $job2 $hometown2');
+    print('real answer: $name1 $job1 $hometown1 || $name2 $job2 $hometown2');
     setState(() {});
   }
 
@@ -94,8 +85,6 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     String hometown2Guess = hometown2Controller.text.toLowerCase().trim();
     if (d.distance(name1Answer, name1Guess) <= 2 &&
         d.distance(name2Answer, name2Guess) <= 2 &&
-        age1 == age1Controller.text.trim() &&
-        age2 == age2Controller.text.trim() &&
         d.distance(job1Answer, job1Guess) <= 4 &&
         d.distance(job2Answer, job2Guess) <= 4 &&
         d.distance(hometown1Answer, hometown1Guess) <= 2 &&
@@ -144,11 +133,9 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
       );
     }
     name1Controller.text = '';
-    age1Controller.text = '';
     job1Controller.text = '';
     hometown1Controller.text = '';
     name2Controller.text = '';
-    age2Controller.text = '';
     job2Controller.text = '';
     hometown2Controller.text = '';
     widget.callback();
@@ -166,8 +153,8 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
-            'The correct information was: \n$name1, $age1, $job1, $hometown1 \n'
-            '$name2, $age2, $job2, $hometown2\nTry the timed test again to unlock the next system.',
+            'The correct information was: \n$name1, $job1, $hometown1 \n'
+            '$name2, $job2, $hometown2\nTry the timed test again to unlock the next system.',
         backgroundColor: colorIncorrect,
         durationSeconds: 6);
     Navigator.pop(context);
@@ -233,13 +220,6 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
                         hintText: '______   ______',
                       ),
                       InputPair(
-                        textController: age1Controller,
-                        title: 'Age:',
-                        keyboardType: TextInputType.number,
-                        width: 80,
-                        hintText: '__',
-                      ),
-                      InputPair(
                         textController: job1Controller,
                         title: 'Job:',
                       ),
@@ -267,13 +247,6 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
                         title: 'Name:',
                         width: 270,
                         hintText: '______   ______',
-                      ),
-                      InputPair(
-                        textController: age2Controller,
-                        title: 'Age:',
-                        keyboardType: TextInputType.number,
-                        width: 80,
-                        hintText: '__',
                       ),
                       InputPair(
                         textController: job2Controller,

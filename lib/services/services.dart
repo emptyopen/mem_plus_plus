@@ -370,10 +370,9 @@ notifyDuration(
     android: androidPlatformChannelSpecifics,
     iOS: iOSPlatformChannelSpecifics,
   );
-  print(
-      'setting notification $scheduledNotificationDateTime ||| $title ||| $subtitle');
+  Random random = Random();
   await flutterLocalNotificationsPlugin.schedule(
-    0,
+    random.nextInt(100000) + 10,
     title,
     subtitle,
     scheduledNotificationDateTime,
@@ -468,6 +467,16 @@ initializeNotificationsScheduler() async {
     return scheduledDate;
   }
 
+  // debug
+  List<PendingNotificationRequest> pendingNotificationRequests =
+      await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+  pendingNotificationRequests.forEach((p) async {
+    print('previous ${p.body} | ${p.id} | ${p.payload} | ${p.title}');
+    if (p.id < 10) {
+      await flutterLocalNotificationsPlugin.cancel(p.id);
+    }
+  });
+
   await flutterLocalNotificationsPlugin.zonedSchedule(
     0,
     title,
@@ -479,6 +488,13 @@ initializeNotificationsScheduler() async {
         UILocalNotificationDateInterpretation.absoluteTime,
     matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
   );
+
+  // more debug
+  pendingNotificationRequests =
+      await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+  pendingNotificationRequests.forEach((p) {
+    print('after ${p.body} | ${p.id} | ${p.payload} | ${p.title}');
+  });
 }
 
 getSlideCircles(int numCircles, int currentCircleIndex, Color highlightColor) {

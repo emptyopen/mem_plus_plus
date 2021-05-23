@@ -21,7 +21,7 @@ class _PhoneticAlphabetTimedTestPrepScreenState
     extends State<PhoneticAlphabetTimedTestPrepScreen> {
   PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration =
-      debugModeEnabled ? Duration(seconds: 5) : Duration(hours: 3);
+      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 3);
 
   @override
   void initState() {
