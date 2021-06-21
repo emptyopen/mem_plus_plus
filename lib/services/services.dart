@@ -1,3 +1,4 @@
+import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/components/data/single_digit_data.dart';
@@ -79,6 +80,11 @@ class PrefsUpdater {
             .map((i) => DeckData.fromJson(i))
             .toList();
         return singleDigitData;
+      case tripleDigitKey:
+        var tripleDigitData = (json.decode(prefs.getString(key)) as List)
+            .map((i) => TripleDigitData.fromJson(i))
+            .toList();
+        return tripleDigitData;
       case customMemoriesKey:
         return json.decode(prefs.getString(key));
     }
@@ -107,6 +113,9 @@ class PrefsUpdater {
       case deckKey:
         prefs.setString(key, json.encode(object));
         break;
+      case tripleDigitKey:
+        prefs.setString(key, json.encode(object));
+        break;
       case customMemoriesKey:
         prefs.setString(key, json.encode(object));
         break;
@@ -127,6 +136,10 @@ class PrefsUpdater {
     print('setting $activityName state to $state');
     Map<String, Activity> activityStates =
         await getSharedPrefs(activityStatesKey);
+    activityStates.forEach((k, v) {
+      print('$k || $v');
+    });
+    print('looking for $activityName');
     Activity activity = activityStates[activityName];
     activity.state = state;
     activityStates[activityName] = activity;
@@ -142,6 +155,9 @@ class PrefsUpdater {
   Future<bool> getActivityVisible(String activityName) async {
     Map<String, Activity> activityStates =
         await getSharedPrefs(activityStatesKey);
+    if (activityStates[activityName] == null) {
+      return false;
+    }
     return activityStates[activityName].visible;
   }
 

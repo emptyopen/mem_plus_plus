@@ -62,6 +62,16 @@ class _EditCardState extends State<EditCard> {
         objectTextController.text = widget.entry.object;
         isThreeItems = true;
         break;
+      case tripleDigitKey:
+        leading = Text(
+          '${widget.entry.digits}',
+          style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
+        );
+        personTextController.text = widget.entry.person;
+        actionTextController.text = widget.entry.action;
+        objectTextController.text = widget.entry.object;
+        isThreeItems = true;
+        break;
     }
   }
 
@@ -76,7 +86,7 @@ class _EditCardState extends State<EditCard> {
           border: Border.all(color: backgroundHighlightColor),
           borderRadius: BorderRadius.circular(5),
         ),
-        height: isThreeItems ? 320.0 : 240,
+        // height: isThreeItems ? 320.0 : 240,
         width: 300.0,
         child: SingleChildScrollView(
           child: Column(
@@ -242,6 +252,11 @@ class _EditCardState extends State<EditCard> {
         'Card: ${widget.entry.digitSuit}',
         style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
       );
+    } else if (widget.activityKey == tripleDigitKey) {
+      return Text(
+        'Card: ${widget.entry.digits}',
+        style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
+      );
     }
   }
 
@@ -309,6 +324,25 @@ class _EditCardState extends State<EditCard> {
       data[currIndex] = updatedEntry;
       await prefs.writeSharedPrefs(widget.activityKey, data);
     } else if (widget.activityKey == deckKey) {
+      bool resetFamiliarity = false;
+      if (personTextController.text != '') {
+        updatedEntry.person = personTextController.text.trim();
+        resetFamiliarity = true;
+      }
+      if (actionTextController.text != '') {
+        updatedEntry.action = actionTextController.text.trim();
+        resetFamiliarity = true;
+      }
+      if (objectTextController.text != '') {
+        updatedEntry.object = objectTextController.text.trim();
+        resetFamiliarity = true;
+      }
+      if (resetFamiliarity) {
+        updatedEntry.familiarity = 0;
+      }
+      data[currIndex] = updatedEntry;
+      await prefs.writeSharedPrefs(widget.activityKey, data);
+    } else if (widget.activityKey == tripleDigitKey) {
       bool resetFamiliarity = false;
       if (personTextController.text != '') {
         updatedEntry.person = personTextController.text.trim();

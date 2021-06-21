@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/data/pao_data.dart';
+import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/components/info_box.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,18 +14,18 @@ import 'package:flutter/services.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PAOEditScreen extends StatefulWidget {
+class TripleDigitEditScreen extends StatefulWidget {
   final Function callback;
 
-  PAOEditScreen({Key key, this.callback}) : super(key: key);
+  TripleDigitEditScreen({Key key, this.callback}) : super(key: key);
 
   @override
-  _PAOEditScreenState createState() => _PAOEditScreenState();
+  _TripleDigitEditScreenState createState() => _TripleDigitEditScreenState();
 }
 
-class _PAOEditScreenState extends State<PAOEditScreen> {
+class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   SharedPreferences sharedPreferences;
-  List<PAOData> paoData;
+  List<TripleDigitData> tripleDigitData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
 
@@ -36,39 +36,42 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
-    if (await prefs.getString(paoKey) == null) {
-      paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
-      await prefs.setString(paoKey, json.encode(paoData));
+    prefs.checkFirstTime(
+        context, tripleDigitEditFirstHelpKey, TripleDigitEditScreenHelp());
+    if (await prefs.getString(tripleDigitKey) == null) {
+      tripleDigitData = [];
+      await prefs.setString(tripleDigitKey, json.encode(tripleDigitData));
     } else {
-      paoData = await prefs.getSharedPrefs(paoKey);
+      tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
     }
     setState(() {});
   }
 
-  callback(newPaoData) async {
+  callback(newTripleDigitData) async {
     setState(() {
-      paoData = newPaoData;
+      tripleDigitData = newTripleDigitData;
     });
     // check if all data is complete
     bool entriesComplete = true;
-    for (int i = 0; i < paoData.length; i++) {
-      if (paoData[i].person == '') {
+    for (int i = 0; i < tripleDigitData.length; i++) {
+      if (tripleDigitData[i].person == '') {
         entriesComplete = false;
       }
-      if (paoData[i].action == '') {
+      if (tripleDigitData[i].action == '') {
         entriesComplete = false;
       }
-      if (paoData[i].object == '') {
+      if (tripleDigitData[i].object == '') {
         entriesComplete = false;
       }
     }
 
+    print('entries complete: $entriesComplete');
+
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityVisible(paoPracticeKey);
+    bool completedOnce = await prefs.getActivityVisible(tripleDigitPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityVisible(paoPracticeKey, true);
-      await prefs.updateActivityState(paoEditKey, 'review');
+      await prefs.updateActivityVisible(tripleDigitPracticeKey, true);
+      await prefs.updateActivityState(tripleDigitEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -76,27 +79,57 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
               color: Colors.white, fontFamily: 'CabinSketch', fontSize: 18),
         ),
         duration: Duration(seconds: 5),
-        backgroundColor: colorPAODarker,
+        backgroundColor: colorTripleDigitDarker,
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
       widget.callback();
     }
   }
 
-  List<EditCard> getPAOEditCards() {
-    List<EditCard> paoEditCards = [];
-    if (paoData != null) {
-      for (int i = 0; i < paoData.length; i++) {
-        EditCard paoEditCard = EditCard(
-          entry: PAOData(paoData[i].index, paoData[i].digits, paoData[i].person,
-              paoData[i].action, paoData[i].object, paoData[i].familiarity),
+  List<EditCard> getTripleDigitEditCards() {
+    List<EditCard> tripleDigitEditCards = [];
+    if (tripleDigitData != null) {
+      for (int i = 0; i < tripleDigitData.length; i++) {
+        EditCard tripleDigitEditCard = EditCard(
+          entry: TripleDigitData(
+              tripleDigitData[i].index,
+              tripleDigitData[i].digits,
+              tripleDigitData[i].person,
+              tripleDigitData[i].action,
+              tripleDigitData[i].object,
+              tripleDigitData[i].familiarity),
           callback: callback,
-          activityKey: 'PAO',
+          activityKey: 'TripleDigit',
         );
-        paoEditCards.add(paoEditCard);
+        tripleDigitEditCards.add(tripleDigitEditCard);
       }
     }
-    return paoEditCards;
+    // this is so hacky but whatever
+    if (tripleDigitEditCards.isEmpty) {
+      // generate default empty cards
+      tripleDigitEditCards = generateDefaultTripleDigitEditCards();
+    }
+    return tripleDigitEditCards;
+  }
+
+  generateDefaultTripleDigitData() {
+    List<TripleDigitData> data = [];
+    for (int i = 0; i < 1000; i++) {
+      data.add(TripleDigitData(i, i.toString().padLeft(3, '0'), '', '', '', 0));
+    }
+    return data;
+  }
+
+  generateDefaultTripleDigitEditCards() {
+    List<EditCard> defaultCards = [];
+    for (int i = 0; i < 1000; i++) {
+      defaultCards.add(EditCard(
+        entry: TripleDigitData(i, i.toString().padLeft(3, '0'), '', '', '', 0),
+        callback: callback,
+        activityKey: 'TripleDigit',
+      ));
+    }
+    return defaultCards;
   }
 
   @override
@@ -104,8 +137,8 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-          title: Text('PAO: view/edit'),
-          backgroundColor: colorPAOStandard,
+          title: Text('Triple Digit: view/edit'),
+          backgroundColor: colorTripleDigitStandard,
           actions: <Widget>[
             Shimmer.fromColors(
               period: Duration(seconds: 3),
@@ -130,7 +163,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PAOEditScreenHelp();
+                      return TripleDigitEditScreenHelp();
                     }));
               },
             ),
@@ -141,15 +174,15 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
             decoration: BoxDecoration(color: backgroundColor),
             child: Center(
                 child: ListView(
-              children: getPAOEditCards(),
+              children: getTripleDigitEditCards(),
             )),
           ),
           Positioned(
             top: 4,
             right: 50,
             child: InfoBox(
-                text: 'Start your PAO journey here!',
-                infoKey: 'accountSection'),
+                text: 'Start your Triple Digit journey here!',
+                infoKey: 'tripleDigit'),
           ),
         ],
       ),
@@ -170,10 +203,14 @@ class _CSVImporterState extends State<CSVImporter> {
   final textController = TextEditingController();
   String errorMessage = '';
 
-  updatePAOData(List<PAOData> paoDataList) async {
+  updateTripleDigitData(List<TripleDigitData> tripleDigitDataList) async {
     var prefs = PrefsUpdater();
-    prefs.writeSharedPrefs(paoKey, paoDataList);
-    widget.callback(paoDataList);
+    await prefs.writeSharedPrefs(tripleDigitKey, tripleDigitDataList);
+    widget.callback(tripleDigitDataList);
+  }
+
+  paddedNum(k) {
+    return k.toString().padLeft(3, '0');
   }
 
   @override
@@ -204,9 +241,9 @@ class _CSVImporterState extends State<CSVImporter> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              '    Here you can upload CSV text to quickly update your PAO values!\n'
+                              '    Here you can upload CSV text to quickly update your TripleDigit values!\n'
                               '    Click below to save a copy of the template! I\'d recommend working primarily in your google doc as '
-                              'you develop your PAO system, and come back to paste it here when you\'ve completed it.',
+                              'you develop your TripleDigit system, and come back to paste it here when you\'ve completed it.',
                               textAlign: TextAlign.left,
                               style: TextStyle(fontSize: 16),
                             ),
@@ -215,10 +252,10 @@ class _CSVImporterState extends State<CSVImporter> {
                             ),
                             BasicFlatButton(
                               text: 'Google docs link!',
-                              color: colorPAODarker,
+                              color: colorTripleDigitDarker,
                               textColor: Colors.white,
                               onPressed: () => launch(
-                                  'https://docs.google.com/spreadsheets/d/17Cl4EfZTNo_FdmLUkSYzz6SXnjm1Gi5u00aD4d_zMCU/edit?usp=sharing'),
+                                  'https://docs.google.com/spreadsheets/d/1cBqw5IfRBUltVsZ2yEfQUb0E1-eA7volnOlJM4X1_dU/edit?usp=sharing'),
                             ),
                           ],
                         ),
@@ -295,7 +332,7 @@ class _CSVImporterState extends State<CSVImporter> {
                           width: 25,
                         ),
                         FlatButton(
-                          color: colorPAOStandard,
+                          color: colorTripleDigitStandard,
                           shape: RoundedRectangleBorder(
                             side: BorderSide(),
                             borderRadius: BorderRadius.circular(5),
@@ -315,10 +352,10 @@ class _CSVImporterState extends State<CSVImporter> {
                             var l = csvConverter.convert(cleanedText, eol: '|');
                             bool inputIsValid = true;
                             errorMessage = 'Incorrectly formatted!';
-                            if (l.length != 100) {
+                            if (l.length != 1000) {
                               inputIsValid = false;
                               errorMessage +=
-                                  '\n${l.length} lines detected (need 100).';
+                                  '\n${l.length} lines detected (need 1000).';
                             }
                             bool columnsValid = true;
                             l.asMap().forEach((k, v) {
@@ -333,20 +370,21 @@ class _CSVImporterState extends State<CSVImporter> {
                             }
                             if (inputIsValid) {
                               errorMessage = '';
-                              List<PAOData> paoDataList = [];
+                              List<TripleDigitData> tripleDigitDataList = [];
                               l.asMap().forEach((k, v) {
                                 String person = v[0].toString();
                                 String action = v[1].toString();
                                 String object = v[2].toString();
-                                paoDataList.add(PAOData(
-                                    k,
-                                    defaultPAOData1[k].digits,
-                                    person,
-                                    action,
-                                    object,
-                                    0));
+                                tripleDigitDataList.add(TripleDigitData(
+                                  k,
+                                  paddedNum(k),
+                                  person,
+                                  action,
+                                  object,
+                                  0,
+                                ));
                               });
-                              updatePAOData(paoDataList);
+                              updateTripleDigitData(tripleDigitDataList);
                               Navigator.pop(context);
                             }
                             setState(() {});
@@ -375,49 +413,22 @@ class _CSVImporterState extends State<CSVImporter> {
   }
 }
 
-class PAOEditScreenHelp extends StatelessWidget {
+class TripleDigitEditScreenHelp extends StatelessWidget {
   final List<String> information = [
-    '    Welcome to the 3rd system, the Double Digit / PAO System! :) \n'
-        '    PAO stands for Person Action Object. What this means is that for every digit '
-        '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. '
-        'You can assign any person, action, and object to any digit, but it\'s a good idea at first '
-        'to follow some kind of pattern. ',
-    '    This will take some time to set up! It took me a few days to put together the list, and another few weeks to '
-        'start becoming "number fluent", to the point where I could instantly translate any numbers to scenes. But TRUST me, it\'ll be worth it. \n\n'
-        '    The person should be associated to its corresponding action and object, '
-        'and no two persons, actions, or objects should be too similar (also avoid overlap with '
-        'your single digit and alphabet systems!). As a starter pattern, I recommend '
-        'using an initials pattern. ',
-    '    The initials pattern proposed in "Remember It!" by Nelson Dellis has '
-        '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Fs, and Is are '
-        'pretty rare in names; zeros look like Os, and (S)ix and (N)ine are more common letters in initials.\n'
-        '     Using this pattern it becomes '
-        'much easier to find famous people/fictional characters with initials, i.e. 12=AB=Antonio Banderas.',
-    '    This system allows us to memorize sequences of numbers very efficiently. Passport/license IDs, '
-        'phone numbers, order numbers, almost anything. The way it works is we break long sequences of numbers '
-        'into groups of 6, or three pairs of two digits, each pair corresponding to a person, action, and object.\n\n'
-        '    For example:\n\n    154825 -> 15-48-25\n    (15 person)\n    (48 action)\n    (25 object)',
-    '    So with 15-48-25, '
-        'which under my personal system corresponds to 15 (person) = AE = Albert Einstein, 48 (action) = DH (Dwight Howard) = slam dunking, '
-        '25 (object) = quarters. \n    So my visualized scene would be ALBERT EINSTEIN who jumps into the air and SLAM DUNKS his '
-        'fistfuls of shiny QUARTERS. What a sight that would be! Hear the cacaphony of quarters hit the ground as the absolute legend finally drops to the ground, shaking out his wild gray hair.',
-    '    This system should take a good amount of time setting up before you start trying to master it. Update '
-        'the PAO values for your digits until you\'re really happy with the list.\n\n    Use people you know in real life, '
-        'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '
-        'because overlap will make decoding more difficult. ',
-    '    As a final note, it\'s possible to upload an entire PAO system through the CSV upload method available in '
-        'the top right of the screen.\n\n    I would highly, highly recommend storing your PAO data in a google doc. '
-        'More details on how to do that is available in the upload section.'
+    '    Welcome to the 5th system, the Triple Digit System! :) \n'
+        '    If you conquer this system, you\'ll be able to memorize numbers with absolute ease. '
+        'One telephone number? One scene. Credit card numbers fit in two scenes. '
+        'It takes a long time to set up (it took me weeks), but I\'m having fun with it. ',
   ];
 
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
-      title: 'PAO Edit/View',
+      title: 'Triple Digit Edit/View',
       information: information,
-      buttonColor: colorPAOStandard,
-      buttonSplashColor: colorPAODarker,
-      firstHelpKey: paoEditFirstHelpKey,
+      buttonColor: colorTripleDigitStandard,
+      buttonSplashColor: colorTripleDigitDarker,
+      firstHelpKey: tripleDigitEditFirstHelpKey,
     );
   }
 }

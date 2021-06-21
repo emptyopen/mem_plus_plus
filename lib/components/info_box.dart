@@ -86,7 +86,7 @@ class _InfoBoxState extends State<InfoBox> {
                           ),
                         ),
                         Text(
-                          '(tap to never see again)',
+                          '(tap this info to never see again)',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 12,

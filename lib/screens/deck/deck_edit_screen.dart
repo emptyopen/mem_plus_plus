@@ -69,10 +69,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
           style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'CabinSketch',
-            fontSize: 18
-          ),
+              color: Colors.white, fontFamily: 'CabinSketch', fontSize: 18),
         ),
         duration: Duration(seconds: 5),
         backgroundColor: colorDeckDarker,
@@ -197,12 +194,15 @@ class _CSVImporterState extends State<CSVImporter> {
                               textAlign: TextAlign.left,
                               style: TextStyle(fontSize: 16),
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             BasicFlatButton(
                               text: 'Google docs link!',
                               color: colorDeckDarker,
                               textColor: Colors.white,
-                              onPressed: () => launch('https://docs.google.com/spreadsheets/d/1clgeu8oeKb6e7D-J7-pGrYyS7_O4sc-9sPqPBohZpBk/edit?usp=sharing'),
+                              onPressed: () => launch(
+                                  'https://docs.google.com/spreadsheets/d/11qs3Uv0Nxwe12vHtR0qJSadZLj_5uhQm3-HvGVDIvK0/edit?usp=sharing'),
                             ),
                           ],
                         ),
@@ -223,7 +223,9 @@ class _CSVImporterState extends State<CSVImporter> {
                             'Input below: ',
                             style: TextStyle(fontSize: 20),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             'Ace through King, in order of Spades, Hearts, Clubs, Diamonds',
                             style: TextStyle(fontSize: 14),
@@ -231,9 +233,7 @@ class _CSVImporterState extends State<CSVImporter> {
                           TextField(
                             maxLines: 4,
                             decoration: InputDecoration(
-                                hintText:
-                                    'Ariel,singing underwater,mermaid fin\n'
-                                    '...',
+                                hintText: 'Copy the G12 cell here!',
                                 hintStyle: TextStyle(fontSize: 15)),
                             controller: textController,
                           ),
@@ -280,7 +280,12 @@ class _CSVImporterState extends State<CSVImporter> {
                               List<DeckData> deckDataList = [];
                               l.asMap().forEach((k, v) {
                                 deckDataList.add(DeckData(
-                                    k, defaultDeckData1[k].digitSuit, v[0], v[1], v[2], 0));
+                                    k,
+                                    defaultDeckData1[k].digitSuit,
+                                    v[0],
+                                    v[1],
+                                    v[2],
+                                    0));
                               });
                               updateDeckData(deckDataList);
                               Navigator.pop(context);
@@ -294,7 +299,9 @@ class _CSVImporterState extends State<CSVImporter> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -314,10 +321,10 @@ class DeckEditScreenHelp extends StatelessWidget {
         '    Here we are going to use the same idea as the PAO system, only now for each of the 52 cards! '
         'Feel free to re-use People, Actions, and Objects from your 2-digit PAO system, unless you\'re planning '
         'on being in a position where you\'ll have to remember combinations of digits and cards.',
-        '    One tip I\'d give from my personal system is to break up the people into categories based on suit. '
+    '    One tip I\'d give from my personal system is to break up the people into categories based on suit. '
         'In my system, Spades are fictional characters, Hearts are people I know personally, Clubs are athletes and '
         'performers, and Diamonds are rich people or other celebrities. But feel free to memorize however you want!',
-        '    Once again, I\'d also highly recommend storing this data in a google sheet and importing it! A lot '
+    '    Once again, I\'d also highly recommend storing this data in a google sheet and importing it! A lot '
         'easier than having to type everything out on your phone, and you can always reuse it in case you '
         'get a new phone. '
   ];

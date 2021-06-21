@@ -144,7 +144,7 @@ class MainMenuOption extends StatelessWidget {
   }
 
   cancelActivity() async {
-    // TODO: consolidate this
+    print('canceling ${activity.name}');
     switch (activity.name) {
       case singleDigitTimedTestKey:
         HapticFeedback.lightImpact();
@@ -236,6 +236,15 @@ class MainMenuOption extends StatelessWidget {
         await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
         if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
           await prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
+        }
+        break;
+      case tripleDigitTimedTestKey:
+        HapticFeedback.lightImpact();
+        await prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
+        await prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
+        await prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
+        if (await prefs.getBool(tripleDigitTimedTestCompleteKey) == null) {
+          await prefs.updateActivityState(tripleDigitTimedTestPrepKey, 'todo');
         }
         break;
     }

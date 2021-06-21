@@ -72,7 +72,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
     Text(
       '    My favorite way to get people invested into their memories is memorizing '
       'a whole deck of cards. Or memorizing 20 digits in a few minutes and repeating it back several hours later, '
-      'or reciting 500 digits of pi (people usually lose interest after about 100 digits). This stuff is crazy, but they are just party tricks.\n\n'
+      'or reciting 1000 digits of pi (people usually lose interest after about 100 digits). This stuff is fun, but ultimately are just party tricks.\n\n'
       '    The real benefit is the incredible quality-of-'
       'life improvement, and I wanted to share it with the world. Imagine effortlessly recalling your checking account and routing numbers. '
       'Licences and passports. Names and passwords. Grocery lists, recipes. Security code combinations. '

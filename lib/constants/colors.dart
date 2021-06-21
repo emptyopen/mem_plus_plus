@@ -28,8 +28,8 @@ var colorChapter1Darkest = Colors.lime[600];
 
 var colorAlphabetLighter = Colors.blue[100];
 var colorAlphabetStandard = Colors.blue[200];
-var colorAlphabetDarker= Colors.blue[400];
-var colorAlphabetDarkest= Colors.blue[600];
+var colorAlphabetDarker = Colors.blue[400];
+var colorAlphabetDarkest = Colors.blue[600];
 
 var colorChapter2Lighter = Colors.indigo[100];
 var colorChapter2Standard = Colors.indigo[200];
@@ -54,3 +54,8 @@ var colorDeckLighter = Colors.teal[100];
 var colorDeckStandard = Colors.teal[200];
 var colorDeckDarker = Colors.teal[400];
 var colorDeckDarkest = Colors.teal[600];
+
+var colorTripleDigitLighter = Colors.deepOrange[100];
+var colorTripleDigitStandard = Colors.deepOrange[200];
+var colorTripleDigitDarker = Colors.deepOrange[400];
+var colorTripleDigitDarkest = Colors.deepOrange[600];

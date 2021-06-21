@@ -244,6 +244,29 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
                     widget.shuffledChoices[attempts][index].digitSuit, 'small'),
               ),
             );
+    } else if (widget.systemKey == tripleDigitKey) {
+      String text;
+      switch (paoChoice) {
+        case 'person':
+          text = widget.shuffledChoices[attempts][index].person;
+          break;
+        case 'action':
+          text = widget.shuffledChoices[attempts][index].action;
+          break;
+        case 'object':
+          text = widget.shuffledChoices[attempts][index].object;
+          break;
+      }
+      return BasicFlatButton(
+        splashColor: colorTripleDigitDarker,
+        color: colorTripleDigitStandard,
+        text: isValueToProperty
+            ? text
+            : widget.shuffledChoices[attempts][index].digits,
+        fontSize: 30,
+        padding: 5,
+        onPressed: () => checkResult(index),
+      );
     }
     return BasicFlatButton(
       splashColor: colorSingleDigitDarker,

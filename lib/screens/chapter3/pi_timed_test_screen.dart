@@ -94,6 +94,16 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
             durationSeconds: 3,
             isSuper: true,
           );
+          await prefs.updateActivityVisible(tripleDigitEditKey, true);
+          showSnackBar(
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Congratulations! You\'ve unlocked the Triple Digit system!',
+            textColor: Colors.white,
+            backgroundColor: colorTripleDigitDarker,
+            durationSeconds: 3,
+            isSuper: true,
+          );
         }
         textController.text = '';
         Navigator.pop(context);

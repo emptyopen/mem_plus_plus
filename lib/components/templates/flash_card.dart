@@ -3,6 +3,7 @@ import 'package:mem_plus_plus/components/data/single_digit_data.dart';
 import 'package:mem_plus_plus/components/data/alphabet_data.dart';
 import 'package:mem_plus_plus/components/data/pao_data.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
+import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
@@ -80,6 +81,14 @@ class _FlashCardState extends State<FlashCard> {
         valueWidget = getDeckCard(value, 'big');
         digitLetter = 'card';
         break;
+      case (tripleDigitKey):
+        value = (widget.entry as TripleDigitData).digits;
+        valueWidget = Text(
+          value,
+          style: TextStyle(fontSize: 50),
+        );
+        digitLetter = 'digit';
+        break;
     }
   }
 
@@ -112,7 +121,8 @@ class _FlashCardState extends State<FlashCard> {
       for (dynamic entry in data) {
         familiaritySum += entry.familiarity;
       }
-      if (familiaritySum == widget.familiarityTotal) {
+      if (familiaritySum == widget.familiarityTotal ||
+          (debugModeEnabled && familiaritySum > 500)) {
         levelUp = true;
         widget.nextActivityCallback();
       }
@@ -140,18 +150,17 @@ class _FlashCardState extends State<FlashCard> {
       }
       if (familiaritySum == widget.familiarityTotal) {
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
-          snackBarText:
-              'Great job! Come back any time!',
-          backgroundColor: widget.color,
-          durationSeconds: 3);
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText: 'Great job! Come back any time!',
+            backgroundColor: widget.color,
+            durationSeconds: 3);
       } else {
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
-          snackBarText:
-              'Great job! You still have some items for which you need to increase familiarity, pop back here any time!',
-          backgroundColor: widget.color,
-          durationSeconds: 3);
+            scaffoldState: widget.globalKey.currentState,
+            snackBarText:
+                'Great job! You still have some items for which you need to increase familiarity, pop back here any time!',
+            backgroundColor: widget.color,
+            durationSeconds: 3);
       }
       Navigator.pop(context);
     }
@@ -217,8 +226,7 @@ class _FlashCardState extends State<FlashCard> {
                   SizedBox(height: 30),
                   Text(
                     '(Tap to flip!)',
-                    style: TextStyle(
-                        fontSize: 20, color: Colors.grey[500]),
+                    style: TextStyle(fontSize: 20, color: Colors.grey[500]),
                   )
                 ],
               ),
@@ -234,10 +242,10 @@ class _FlashCardState extends State<FlashCard> {
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: Center(
                       child: widget.systemKey == paoKey ||
-                              widget.systemKey == deckKey
+                              widget.systemKey == deckKey ||
+                              widget.systemKey == tripleDigitKey
                           ? Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Container(
                                   child: Text(
@@ -281,8 +289,7 @@ class _FlashCardState extends State<FlashCard> {
                         child: Center(
                             child: Text(
                           'Next time!',
-                          style: TextStyle(
-                              fontSize: 17, color: Colors.black),
+                          style: TextStyle(fontSize: 17, color: Colors.black),
                         )),
                       ),
                     ),
@@ -302,8 +309,7 @@ class _FlashCardState extends State<FlashCard> {
                         child: Center(
                             child: Text(
                           'Got it!',
-                          style: TextStyle(
-                              fontSize: 20, color: Colors.black),
+                          style: TextStyle(fontSize: 20, color: Colors.black),
                         )),
                       ),
                     ),

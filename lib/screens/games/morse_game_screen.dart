@@ -178,25 +178,21 @@ class _MorseGameScreenState extends State<MorseGameScreen>
     guesses[2] = sanitizeString(guesses[2]);
     guesses[3] = sanitizeString(guesses[3]);
     if (guesses[0] != stringToMorse(morseQuiz[clues[0]], false)) {
-      print('1 incorrect');
       difficultyName = 'Easy';
       correct = false;
     }
     if (widget.difficulty == 1 &&
         guesses[1] != stringToMorse(morseQuiz[clues[1]], false)) {
-      print('2 incorrect');
       difficultyName = 'Medium';
       correct = false;
     }
     if (widget.difficulty == 2 &&
         guesses[2] != stringToMorse(morseQuiz[clues[2]], false)) {
-      print('3 incorrect');
       difficultyName = 'Expert';
       correct = false;
     }
     if (widget.difficulty == 3 &&
         guesses[3] != stringToMorse(morseQuiz[clues[3]], false)) {
-      print('4 incorrect');
       difficultyName = 'Ancient God';
       correct = false;
     }

@@ -168,6 +168,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               onPressed: () {
                                 widget.maxOutKeys(5);
                               },
+                              text: 'complete chapter 4',
+                            ),
+                            BasicFlatButton(
+                              onPressed: () {
+                                widget.maxOutKeys(5);
+                              },
                               text: 'max out everything',
                             ),
                             BasicFlatButton(

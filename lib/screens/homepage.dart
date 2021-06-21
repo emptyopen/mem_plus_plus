@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/screens/triple_digit/triple_digit_edit_screen.dart';
+import 'package:mem_plus_plus/screens/triple_digit/triple_digit_multiple_choice_test_screen.dart';
+import 'package:mem_plus_plus/screens/triple_digit/triple_digit_practice_screen.dart';
+import 'package:mem_plus_plus/screens/triple_digit/triple_digit_timed_test_prep_screen.dart';
+import 'package:mem_plus_plus/screens/triple_digit/triple_digit_timed_test_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -94,11 +99,14 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
+// add 3 digit system
 
 // next up:
+// triple digit test is only storing 4 digits
+// remove "new" from triple digit
 // figure out local notifications once and for all
 // show irrational test animation for completion
-// make dialog for edit static, non scrollable
+// make dialog for edit half screen / static, non scrollable
 // add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
 // custom memory can't always submit answer? check if wrong
 // when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
@@ -161,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool consolidatePAO = false;
   bool consolidateChapter3 = false;
   bool consolidateDeck = false;
+  bool consolidateTripleDigit = false;
   var prefs = PrefsUpdater();
 
   @override
@@ -265,6 +274,14 @@ class _MyHomePageState extends State<MyHomePage> {
       customMemories = await prefs.getSharedPrefs(customMemoriesKey);
     }
 
+    // backwards compatibility:
+    // if deck is available, make triple digit available
+    if (await prefs.getActivityVisible(deckEditKey) &&
+        !(await prefs.getActivityVisible(tripleDigitEditKey))) {
+      await prefs.updateActivityState(tripleDigitEditKey, 'todo');
+      await prefs.updateActivityVisible(tripleDigitEditKey, true);
+    }
+
     // iterate through all activity states, add activities if they are visible
     availableActivities = [];
     activityStates = await prefs.getSharedPrefs(activityStatesKey);
@@ -299,6 +316,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if (await prefs.getBool(deckTimedTestCompleteKey) != null) {
       consolidateDeck = true;
+    }
+    if (await prefs.getBool(tripleDigitTimedTestCompleteKey) != null) {
+      consolidateTripleDigit = true;
     }
 
     setState(() {});
@@ -347,7 +367,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   callback() {
     setUnlockedActivities();
-    // print(activityStates.map((k, v) => MapEntry(k, '${v.state} | ${v.visible} | ${v.firstView}')));
   }
 
   List<Widget> getTodo() {
@@ -545,6 +564,9 @@ class _MyHomePageState extends State<MyHomePage> {
           consolidated = true;
         }
         if (activity.contains(deckKey) && consolidateDeck) {
+          consolidated = true;
+        }
+        if (activity.contains(tripleDigitKey) && consolidateTripleDigit) {
           consolidated = true;
         }
         if (!consolidated) {
@@ -748,6 +770,35 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             timedTestPrepActivity: activityStates[deckTimedTestPrepKey],
             timedTestPrepRoute: DeckTimedTestPrepScreen(
+              callback: callback,
+            ),
+          ),
+        );
+      }
+      if (activity == tripleDigitEditKey && consolidateTripleDigit) {
+        mainMenuOptions.add(
+          CondensedMainMenuButtons(
+            text: 'Triple Digit System',
+            backgroundColor: colorTripleDigitStandard,
+            buttonColor: colorTripleDigitDarker,
+            buttonSplashColor: colorTripleDigitDarkest,
+            editActivity: activityStates[tripleDigitEditKey],
+            editRoute: TripleDigitEditScreen(
+              callback: callback,
+            ),
+            practiceActivity: activityStates[tripleDigitPracticeKey],
+            practiceRoute: TripleDigitPracticeScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            testActivity: activityStates[tripleDigitMultipleChoiceTestKey],
+            testIcon: multipleChoiceTestIcon,
+            testRoute: TripleDigitMultipleChoiceTestScreen(
+              callback: callback,
+              globalKey: globalKey,
+            ),
+            timedTestPrepActivity: activityStates[tripleDigitTimedTestPrepKey],
+            timedTestPrepRoute: TripleDigitTimedTestPrepScreen(
               callback: callback,
             ),
           ),
@@ -991,6 +1042,11 @@ class _MyHomePageState extends State<MyHomePage> {
       await prefs.setBool(irrationalGameAvailableKey, true);
     }
     if (maxTo >= 4) {
+      await prefs.setBool(deckTimedTestCompleteKey, true);
+      await prefs.writeSharedPrefs(
+          activityStatesKey, defaultActivityStatesAllDone);
+    }
+    if (maxTo >= 5) {
       await prefs.setBool(deckTimedTestCompleteKey, true);
       await prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesAllDone);
@@ -1343,6 +1399,54 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: timedTestIcon,
         color: colorDeckLighter,
         splashColor: colorDeckDarker,
+      ),
+      tripleDigitEditKey: ActivityMenuButton(
+        text: 'Triple Digit [View/Edit]',
+        route: TripleDigitEditScreen(
+          callback: callback,
+        ),
+        icon: editIcon,
+        color: colorTripleDigitLighter,
+        splashColor: colorTripleDigitDarker,
+      ),
+      tripleDigitPracticeKey: ActivityMenuButton(
+        text: 'Triple Digit [Practice]',
+        route: TripleDigitPracticeScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: practiceIcon,
+        color: colorTripleDigitLighter,
+        splashColor: colorTripleDigitDarker,
+      ),
+      tripleDigitMultipleChoiceTestKey: ActivityMenuButton(
+        text: 'Triple Digit [MC Test]',
+        route: TripleDigitMultipleChoiceTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: multipleChoiceTestIcon,
+        color: colorTripleDigitLighter,
+        splashColor: colorTripleDigitDarker,
+      ),
+      tripleDigitTimedTestPrepKey: ActivityMenuButton(
+        text: 'Triple Digit [Test Prep]',
+        route: TripleDigitTimedTestPrepScreen(
+          callback: callback,
+        ),
+        icon: timedTestPrepIcon,
+        color: colorTripleDigitLighter,
+        splashColor: colorTripleDigitDarker,
+      ),
+      tripleDigitTimedTestKey: ActivityMenuButton(
+        text: 'Triple Digit [Timed Test]',
+        route: TripleDigitTimedTestScreen(
+          callback: callback,
+          globalKey: globalKey,
+        ),
+        icon: timedTestIcon,
+        color: colorTripleDigitLighter,
+        splashColor: colorTripleDigitDarker,
       ),
     };
   }

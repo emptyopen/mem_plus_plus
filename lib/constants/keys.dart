@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = true;
-const int debugTestTime = 30;
+const bool debugModeEnabled = false;
+const int debugTestTime = 5;
 
 const String usernameKey = 'Username';
 
@@ -196,6 +196,23 @@ const String deckMultipleChoiceTestFirstHelpKey =
 const String deckTimedTestPrepFirstHelpKey = 'DeckTimedTestPrepFirstHelp';
 const String deckTimedTestFirstHelpKey = 'DeckTimedTestFirstHelp';
 const String deckTimedTestCompleteKey = 'DeckTimedTestComplete';
+
+// Triple Digit
+const String tripleDigitKey = 'TripleDigit';
+const String tripleDigitEditKey = 'TripleDigitEdit';
+const String tripleDigitPracticeKey = 'TripleDigitPractice';
+const String tripleDigitMultipleChoiceTestKey = 'TripleDigitMultipleChoice';
+const String tripleDigitTimedTestPrepKey = 'TripleDigitTimedTestPrep';
+const String tripleDigitTimedTestKey = 'TripleDigitTimedTest';
+const String tripleDigitTestActiveKey = 'TripleDigitTimedTestActive';
+const String tripleDigitEditFirstHelpKey = 'TripleDigitEditFirstHelp';
+const String tripleDigitPracticeFirstHelpKey = 'TripleDigitPracticeFirstHelp';
+const String tripleDigitMultipleChoiceTestFirstHelpKey =
+    'TripleDigitMultipleChoiceTestFirstHelp';
+const String tripleDigitTimedTestPrepFirstHelpKey =
+    'TripleDigitTimedTestPrepFirstHelp';
+const String tripleDigitTimedTestFirstHelpKey = 'TripleDigitTimedTestFirstHelp';
+const String tripleDigitTimedTestCompleteKey = 'TripleDigitTimedTestComplete';
 
 var editIcon = Icon(Icons.edit);
 var practiceIcon = Icon(Icons.flip);
