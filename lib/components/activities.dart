@@ -254,7 +254,7 @@ var defaultActivityStatesChapter3Done = {
       Activity(piTimedTestPrepKey, 'review', true, DateTime.now(), false),
   piTimedTestKey:
       Activity(piTimedTestKey, 'review', false, DateTime.now(), false),
-  deckEditKey: Activity(deckEditKey, 'todo', false, DateTime.now(), true),
+  deckEditKey: Activity(deckEditKey, 'todo', true, DateTime.now(), true),
   deckPracticeKey:
       Activity(deckPracticeKey, 'todo', false, DateTime.now(), true),
   deckMultipleChoiceTestKey:
@@ -264,15 +264,15 @@ var defaultActivityStatesChapter3Done = {
   deckTimedTestKey:
       Activity(deckTimedTestKey, 'todo', false, DateTime.now(), true),
   tripleDigitEditKey:
-      Activity(deckEditKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitEditKey, 'todo', true, DateTime.now(), true),
   tripleDigitPracticeKey:
-      Activity(deckPracticeKey, 'todo', false, DateTime.now(), true),
-  tripleDigitMultipleChoiceTestKey:
-      Activity(deckMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
-  tripleDigitTimedTestPrepKey:
-      Activity(deckTimedTestPrepKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitPracticeKey, 'todo', false, DateTime.now(), true),
+  tripleDigitMultipleChoiceTestKey: Activity(
+      tripleDigitMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
+  tripleDigitTimedTestPrepKey: Activity(
+      tripleDigitTimedTestPrepKey, 'todo', false, DateTime.now(), true),
   tripleDigitTimedTestKey:
-      Activity(deckTimedTestKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitTimedTestKey, 'todo', false, DateTime.now(), true),
 };
 
 var defaultActivityStatesAllDone = {
@@ -343,13 +343,13 @@ var defaultActivityStatesAllDone = {
   deckTimedTestKey:
       Activity(deckTimedTestKey, 'review', false, DateTime.now(), false),
   tripleDigitEditKey:
-      Activity(deckEditKey, 'review', true, DateTime.now(), false),
+      Activity(tripleDigitEditKey, 'review', true, DateTime.now(), false),
   tripleDigitPracticeKey:
-      Activity(deckPracticeKey, 'review', true, DateTime.now(), false),
+      Activity(tripleDigitPracticeKey, 'review', true, DateTime.now(), false),
   tripleDigitMultipleChoiceTestKey: Activity(
-      deckMultipleChoiceTestKey, 'review', true, DateTime.now(), false),
-  tripleDigitTimedTestPrepKey:
-      Activity(deckTimedTestPrepKey, 'review', true, DateTime.now(), false),
+      tripleDigitMultipleChoiceTestKey, 'review', true, DateTime.now(), false),
+  tripleDigitTimedTestPrepKey: Activity(
+      tripleDigitTimedTestPrepKey, 'review', true, DateTime.now(), false),
   tripleDigitTimedTestKey:
-      Activity(deckTimedTestKey, 'review', false, DateTime.now(), false),
+      Activity(tripleDigitTimedTestKey, 'review', false, DateTime.now(), false),
 };

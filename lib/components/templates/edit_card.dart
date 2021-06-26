@@ -30,6 +30,8 @@ class _EditCardState extends State<EditCard> {
     super.initState();
     getSharedPrefs();
 
+    print('yo ${widget.entry.person}');
+
     switch (widget.activityKey) {
       case singleDigitKey:
         leading = Text(

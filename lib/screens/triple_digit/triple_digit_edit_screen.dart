@@ -38,8 +38,10 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, tripleDigitEditFirstHelpKey, TripleDigitEditScreenHelp());
-    if (await prefs.getString(tripleDigitKey) == null) {
-      tripleDigitData = [];
+    List<TripleDigitData> existingData =
+        await prefs.getSharedPrefs(tripleDigitKey);
+    if (existingData == null || existingData.length != 1000) {
+      tripleDigitData = generateEmptyTripleDigitData();
       await prefs.setString(tripleDigitKey, json.encode(tripleDigitData));
     } else {
       tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
@@ -47,13 +49,23 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
     setState(() {});
   }
 
-  callback(newTripleDigitData) async {
-    setState(() {
-      tripleDigitData = newTripleDigitData;
-    });
-    // check if all data is complete
+  generateEmptyTripleDigitData() {
+    List<TripleDigitData> data = [];
+    for (int i = 0; i < 1000; i++) {
+      data.add(TripleDigitData(i, i.toString().padLeft(3, '0'), '', '', '', 0));
+    }
+    return data;
+  }
+
+  updateTripleDigitData(newTripleDigitData, {isCSV = false}) async {
     bool entriesComplete = true;
-    for (int i = 0; i < tripleDigitData.length; i++) {
+    for (int i = 0; i < newTripleDigitData.length; i++) {
+      if (tripleDigitData[i].person != newTripleDigitData[i].person ||
+          tripleDigitData[i].action != newTripleDigitData[i].action ||
+          tripleDigitData[i].object != newTripleDigitData[i].object) {
+        tripleDigitData[i] = newTripleDigitData[i];
+      }
+      // check if incomplete
       if (tripleDigitData[i].person == '') {
         entriesComplete = false;
       }
@@ -65,7 +77,22 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
       }
     }
 
-    print('entries complete: $entriesComplete');
+    var prefs = PrefsUpdater();
+    await prefs.writeSharedPrefs(tripleDigitKey, tripleDigitData);
+
+    // check if upload was success
+    if (isCSV) {
+      final snackBar = SnackBar(
+        content: Text(
+          'Upload success!',
+          style: TextStyle(
+              color: Colors.black, fontFamily: 'CabinSketch', fontSize: 18),
+        ),
+        duration: Duration(seconds: 2),
+        backgroundColor: colorTripleDigitStandard,
+      );
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
 
     // check if information is filled out for the first time
     bool completedOnce = await prefs.getActivityVisible(tripleDigitPracticeKey);
@@ -84,30 +111,19 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
       _scaffoldKey.currentState.showSnackBar(snackBar);
       widget.callback();
     }
+
+    setState(() {});
   }
 
   List<EditCard> getTripleDigitEditCards() {
     List<EditCard> tripleDigitEditCards = [];
-    if (tripleDigitData != null) {
-      for (int i = 0; i < tripleDigitData.length; i++) {
-        EditCard tripleDigitEditCard = EditCard(
-          entry: TripleDigitData(
-              tripleDigitData[i].index,
-              tripleDigitData[i].digits,
-              tripleDigitData[i].person,
-              tripleDigitData[i].action,
-              tripleDigitData[i].object,
-              tripleDigitData[i].familiarity),
-          callback: callback,
-          activityKey: 'TripleDigit',
-        );
-        tripleDigitEditCards.add(tripleDigitEditCard);
-      }
-    }
-    // this is so hacky but whatever
-    if (tripleDigitEditCards.isEmpty) {
-      // generate default empty cards
-      tripleDigitEditCards = generateDefaultTripleDigitEditCards();
+    for (int i = 0; i < tripleDigitData.length; i++) {
+      EditCard tripleDigitEditCard = EditCard(
+        entry: tripleDigitData[i],
+        callback: updateTripleDigitData,
+        activityKey: 'TripleDigit',
+      );
+      tripleDigitEditCards.add(tripleDigitEditCard);
     }
     return tripleDigitEditCards;
   }
@@ -118,18 +134,6 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
       data.add(TripleDigitData(i, i.toString().padLeft(3, '0'), '', '', '', 0));
     }
     return data;
-  }
-
-  generateDefaultTripleDigitEditCards() {
-    List<EditCard> defaultCards = [];
-    for (int i = 0; i < 1000; i++) {
-      defaultCards.add(EditCard(
-        entry: TripleDigitData(i, i.toString().padLeft(3, '0'), '', '', '', 0),
-        callback: callback,
-        activityKey: 'TripleDigit',
-      ));
-    }
-    return defaultCards;
   }
 
   @override
@@ -151,7 +155,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return CSVImporter(callback: callback);
+                        return CSVImporter(callback: updateTripleDigitData);
                       }));
                 },
               ),
@@ -203,12 +207,6 @@ class _CSVImporterState extends State<CSVImporter> {
   final textController = TextEditingController();
   String errorMessage = '';
 
-  updateTripleDigitData(List<TripleDigitData> tripleDigitDataList) async {
-    var prefs = PrefsUpdater();
-    await prefs.writeSharedPrefs(tripleDigitKey, tripleDigitDataList);
-    widget.callback(tripleDigitDataList);
-  }
-
   paddedNum(k) {
     return k.toString().padLeft(3, '0');
   }
@@ -241,9 +239,9 @@ class _CSVImporterState extends State<CSVImporter> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              '    Here you can upload CSV text to quickly update your TripleDigit values!\n'
+                              '    Here you can upload CSV text to quickly update your Triple Digit values!\n'
                               '    Click below to save a copy of the template! I\'d recommend working primarily in your google doc as '
-                              'you develop your TripleDigit system, and come back to paste it here when you\'ve completed it.',
+                              'you develop your Triple Digit system, and come back to paste it here when you\'ve completed it.',
                               textAlign: TextAlign.left,
                               style: TextStyle(fontSize: 16),
                             ),
@@ -384,7 +382,7 @@ class _CSVImporterState extends State<CSVImporter> {
                                   0,
                                 ));
                               });
-                              updateTripleDigitData(tripleDigitDataList);
+                              widget.callback(tripleDigitDataList, isCSV: true);
                               Navigator.pop(context);
                             }
                             setState(() {});

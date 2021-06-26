@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -30,6 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Column customMemoriesColumn = Column();
   List<bool> isSelected = [true, false];
   var prefs = PrefsUpdater();
+  var scaffoldKey;
 
   @override
   void initState() {
@@ -53,12 +56,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await prefs.setBool(darkModeKey, setDarkMode);
   }
 
+  resetNotifications(BuildContext context) {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.cancelAll();
+    final snackBar = SnackBar(
+      content: Text(
+        'Notifications nuked!',
+        style: TextStyle(
+            color: Colors.black, fontFamily: 'CabinSketch', fontSize: 18),
+      ),
+      duration: Duration(seconds: 2),
+      backgroundColor: Colors.orange,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         backgroundColor: backgroundColor,
+        key: scaffoldKey,
         appBar: AppBar(
             title: Text('Tinker Tools'),
             backgroundColor: Colors.grey[300],
@@ -94,6 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     selectedColor: Colors.greenAccent,
                     color: backgroundHighlightColor,
                     onPressed: (int index) {
+                      HapticFeedback.lightImpact();
                       setState(() {
                         for (int buttonIndex = 0;
                             buttonIndex < isSelected.length;
@@ -132,15 +153,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(
                         fontSize: 18, color: backgroundHighlightColor),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 10),
                   BasicFlatButton(
-                    color: Colors.red[400],
-                    textColor: Colors.black,
+                    color: Colors.orange[400],
+                    textColor: Colors.white,
                     fontSize: 20,
                     padding: 10,
                     onPressed: () {
+                      HapticFeedback.lightImpact();
+                      resetNotifications(context);
+                    },
+                    text: 'Nuke notifications',
+                  ),
+                  BasicFlatButton(
+                    color: Colors.red[400],
+                    textColor: Colors.white,
+                    fontSize: 20,
+                    padding: 10,
+                    onPressed: () {
+                      HapticFeedback.lightImpact();
                       showConfirmDialog(
                           context: context,
                           function: widget.resetAll,
@@ -167,7 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             BasicFlatButton(
                               onPressed: () {
-                                widget.maxOutKeys(5);
+                                widget.maxOutKeys(4);
                               },
                               text: 'complete chapter 4',
                             ),

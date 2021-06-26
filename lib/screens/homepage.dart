@@ -99,14 +99,10 @@ class MyHomePage extends StatefulWidget {
 // - periodic table
 
 // done:
-// add 3 digit system
 
 // next up:
-// triple digit test is only storing 4 digits
-// remove "new" from triple digit
 // figure out local notifications once and for all
 // show irrational test animation for completion
-// make dialog for edit half screen / static, non scrollable
 // add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
 // custom memory can't always submit answer? check if wrong
 // when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
@@ -1040,14 +1036,14 @@ class _MyHomePageState extends State<MyHomePage> {
       await prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesChapter3Done);
       await prefs.setBool(irrationalGameAvailableKey, true);
+      await prefs.setBool(deckEditKey, true);
     }
     if (maxTo >= 4) {
       await prefs.setBool(deckTimedTestCompleteKey, true);
       await prefs.writeSharedPrefs(
-          activityStatesKey, defaultActivityStatesAllDone);
+          activityStatesKey, defaultActivityStatesChapter3Done);
     }
     if (maxTo >= 5) {
-      await prefs.setBool(deckTimedTestCompleteKey, true);
       await prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesAllDone);
     }

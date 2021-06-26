@@ -100,8 +100,6 @@ class PrefsUpdater {
             json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
         break;
       case singleDigitKey:
-        List<SingleDigitData> thing = object;
-        print('SERVICES: writing ${thing[2].object} | ${thing[3].object}');
         prefs.setString(key, json.encode(object));
         break;
       case alphabetKey:
@@ -136,10 +134,6 @@ class PrefsUpdater {
     print('setting $activityName state to $state');
     Map<String, Activity> activityStates =
         await getSharedPrefs(activityStatesKey);
-    activityStates.forEach((k, v) {
-      print('$k || $v');
-    });
-    print('looking for $activityName');
     Activity activity = activityStates[activityName];
     activity.state = state;
     activityStates[activityName] = activity;
