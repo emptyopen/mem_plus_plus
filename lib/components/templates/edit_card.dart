@@ -22,15 +22,12 @@ class _EditCardState extends State<EditCard> {
   final prefs = PrefsUpdater();
   bool isThreeItems = false;
   Widget leading = Container();
-  Dialog dialog;
   List<dynamic> data;
 
   @override
   void initState() {
     super.initState();
     getSharedPrefs();
-
-    print('yo ${widget.entry.person}');
 
     switch (widget.activityKey) {
       case singleDigitKey:
@@ -79,158 +76,6 @@ class _EditCardState extends State<EditCard> {
 
   getSharedPrefs() async {
     data = await prefs.getSharedPrefs(widget.activityKey);
-
-    dialog = Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          border: Border.all(color: backgroundHighlightColor),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        // height: isThreeItems ? 320.0 : 240,
-        width: 300.0,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 20),
-              getTitle(),
-              SizedBox(height: 10),
-              isThreeItems
-                  ? Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            'Person',
-                            style: TextStyle(
-                                fontSize: 20, color: backgroundHighlightColor),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(color: backgroundColor),
-                          height: 40,
-                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          child: TextField(
-                            style: TextStyle(color: backgroundHighlightColor),
-                            textAlign: TextAlign.center,
-                            controller: personTextController,
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: backgroundSemiHighlightColor)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: backgroundHighlightColor)),
-                              contentPadding: EdgeInsets.all(5),
-                              border: OutlineInputBorder(),
-                              hintText: '${widget.entry.person}',
-                              hintStyle: TextStyle(
-                                color:
-                                    backgroundSemiHighlightColor.withAlpha(100),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            'Action',
-                            style: TextStyle(
-                                fontSize: 20, color: backgroundHighlightColor),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(color: backgroundColor),
-                          height: 40,
-                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          child: TextField(
-                            style: TextStyle(color: backgroundHighlightColor),
-                            textAlign: TextAlign.center,
-                            controller: actionTextController,
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: backgroundSemiHighlightColor)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: backgroundHighlightColor)),
-                              contentPadding: EdgeInsets.all(5),
-                              border: OutlineInputBorder(),
-                              hintText: '${widget.entry.action}',
-                              hintStyle: TextStyle(
-                                color:
-                                    backgroundSemiHighlightColor.withAlpha(100),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  : Container(),
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Text(
-                  'Object',
-                  style:
-                      TextStyle(fontSize: 20, color: backgroundHighlightColor),
-                ),
-              ),
-              Container(
-                height: 40,
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: TextField(
-                  style: TextStyle(color: backgroundHighlightColor),
-                  textAlign: TextAlign.center,
-                  controller: objectTextController,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: backgroundSemiHighlightColor)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: backgroundHighlightColor)),
-                    contentPadding: EdgeInsets.all(5),
-                    border: OutlineInputBorder(),
-                    hintText: '${widget.entry.object}',
-                    hintStyle: TextStyle(
-                      color: backgroundSemiHighlightColor.withAlpha(100),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              widget.activityKey == singleDigitKey
-                  ? Text(
-                      singleDigitSuggestions[widget.entry.index],
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    )
-                  : Container(),
-              widget.activityKey == alphabetKey
-                  ? Text(
-                      alphabetSuggestions[widget.entry.index],
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    )
-                  : Container(),
-              SizedBox(height: 10),
-              BasicFlatButton(
-                text: 'Save',
-                fontSize: 18,
-                onPressed: () => saveItem(),
-                color: Colors.grey[200],
-              ),
-              SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   getTitle() {
@@ -293,7 +138,186 @@ class _EditCardState extends State<EditCard> {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return dialog;
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: backgroundColor,
+                          border: Border.all(color: backgroundHighlightColor),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        // height: isThreeItems ? 320.0 : 240,
+                        width: 300.0,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(height: 20),
+                              getTitle(),
+                              SizedBox(height: 10),
+                              isThreeItems
+                                  ? Column(
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.all(5),
+                                          child: Text(
+                                            'Person',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color:
+                                                    backgroundHighlightColor),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: backgroundColor),
+                                          height: 40,
+                                          padding:
+                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          child: TextField(
+                                            style: TextStyle(
+                                                color:
+                                                    backgroundHighlightColor),
+                                            textAlign: TextAlign.center,
+                                            controller: personTextController,
+                                            decoration: InputDecoration(
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          backgroundSemiHighlightColor)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          backgroundHighlightColor)),
+                                              contentPadding: EdgeInsets.all(5),
+                                              border: OutlineInputBorder(),
+                                              hintText:
+                                                  '${widget.entry.person}',
+                                              hintStyle: TextStyle(
+                                                color:
+                                                    backgroundSemiHighlightColor
+                                                        .withAlpha(100),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(5),
+                                          child: Text(
+                                            'Action',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color:
+                                                    backgroundHighlightColor),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: backgroundColor),
+                                          height: 40,
+                                          padding:
+                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          child: TextField(
+                                            style: TextStyle(
+                                                color:
+                                                    backgroundHighlightColor),
+                                            textAlign: TextAlign.center,
+                                            controller: actionTextController,
+                                            decoration: InputDecoration(
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          backgroundSemiHighlightColor)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          backgroundHighlightColor)),
+                                              contentPadding: EdgeInsets.all(5),
+                                              border: OutlineInputBorder(),
+                                              hintText:
+                                                  '${widget.entry.action}',
+                                              hintStyle: TextStyle(
+                                                color:
+                                                    backgroundSemiHighlightColor
+                                                        .withAlpha(100),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : Container(),
+                              Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  'Object',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: backgroundHighlightColor),
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: TextField(
+                                  style: TextStyle(
+                                      color: backgroundHighlightColor),
+                                  textAlign: TextAlign.center,
+                                  controller: objectTextController,
+                                  onSubmitted: (s) {
+                                    saveItem();
+                                  },
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color:
+                                                backgroundSemiHighlightColor)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: backgroundHighlightColor)),
+                                    contentPadding: EdgeInsets.all(5),
+                                    border: OutlineInputBorder(),
+                                    hintText: '${widget.entry.object}',
+                                    hintStyle: TextStyle(
+                                      color: backgroundSemiHighlightColor
+                                          .withAlpha(100),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              widget.activityKey == singleDigitKey
+                                  ? Text(
+                                      singleDigitSuggestions[
+                                          widget.entry.index],
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : Container(),
+                              widget.activityKey == alphabetKey
+                                  ? Text(
+                                      alphabetSuggestions[widget.entry.index],
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : Container(),
+                              SizedBox(height: 10),
+                              BasicFlatButton(
+                                text: 'Save',
+                                fontSize: 18,
+                                onPressed: () => saveItem(),
+                                color: Colors.grey[200],
+                              ),
+                              SizedBox(height: 20),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
                   });
             },
             fontSize: 18,

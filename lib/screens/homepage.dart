@@ -103,11 +103,11 @@ class MyHomePage extends StatefulWidget {
 // next up:
 // figure out local notifications once and for all
 // show irrational test animation for completion
-// add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
 // custom memory can't always submit answer? check if wrong
 // when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
 
 // horizon:
+// add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
 // add FIND THE CARD game, memory show all cards for some amount of time, then flip over
 // BIG: add date & recipe system
 // welcome animation, second page still visible until swipe? (and other swiping pages only first page)
@@ -147,6 +147,7 @@ class MyHomePage extends StatefulWidget {
 // TODO:  Brain by Arjun Adamson from the Noun Project
 // https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
 // Icons made by <a href="https://www.flaticon.com/authors/dimitry-miroliubov" title="Dimitry Miroliubov">Dimitry Miroliubov</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   List<String> availableActivities = [];

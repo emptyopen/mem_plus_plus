@@ -28,6 +28,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   List<TripleDigitData> tripleDigitData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
+  bool loading = true;
 
   @override
   void initState() {
@@ -38,14 +39,13 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, tripleDigitEditFirstHelpKey, TripleDigitEditScreenHelp());
-    List<TripleDigitData> existingData =
-        await prefs.getSharedPrefs(tripleDigitKey);
-    if (existingData == null || existingData.length != 1000) {
+    if (await prefs.getString(tripleDigitKey) == null) {
       tripleDigitData = generateEmptyTripleDigitData();
       await prefs.setString(tripleDigitKey, json.encode(tripleDigitData));
     } else {
       tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
     }
+    loading = false;
     setState(() {});
   }
 
@@ -174,13 +174,15 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
           ]),
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(color: backgroundColor),
-            child: Center(
-                child: ListView(
-              children: getTripleDigitEditCards(),
-            )),
-          ),
+          loading
+              ? Container()
+              : Container(
+                  decoration: BoxDecoration(color: backgroundColor),
+                  child: Center(
+                      child: ListView(
+                    children: getTripleDigitEditCards(),
+                  )),
+                ),
           Positioned(
             top: 4,
             right: 50,
@@ -209,6 +211,57 @@ class _CSVImporterState extends State<CSVImporter> {
 
   paddedNum(k) {
     return k.toString().padLeft(3, '0');
+  }
+
+  submitCSV() {
+    HapticFeedback.lightImpact();
+    var csvConverter = CsvToListConverter();
+    String cleanedText = textController.text;
+    cleanedText = cleanedText.trim();
+    if (cleanedText.startsWith("\"")) {
+      cleanedText = cleanedText.substring(1);
+    }
+    if (cleanedText.endsWith("\"")) {
+      cleanedText = cleanedText.substring(0, cleanedText.length - 1);
+    }
+    var l = csvConverter.convert(cleanedText, eol: '|');
+    bool inputIsValid = true;
+    errorMessage = 'Incorrectly formatted!';
+    if (l.length != 1000) {
+      inputIsValid = false;
+      errorMessage += '\n${l.length} lines detected (need 1000).';
+    }
+    bool columnsValid = true;
+    l.asMap().forEach((k, v) {
+      if (v.length != 3) {
+        columnsValid = false;
+      }
+    });
+    if (!columnsValid) {
+      inputIsValid = false;
+      errorMessage +=
+          '\nFound at least one row with invalid number of columns. Make sure you aren\'t using any extra commas!';
+    }
+    if (inputIsValid) {
+      errorMessage = '';
+      List<TripleDigitData> tripleDigitDataList = [];
+      l.asMap().forEach((k, v) {
+        String person = v[0].toString();
+        String action = v[1].toString();
+        String object = v[2].toString();
+        tripleDigitDataList.add(TripleDigitData(
+          k,
+          paddedNum(k),
+          person,
+          action,
+          object,
+          0,
+        ));
+      });
+      widget.callback(tripleDigitDataList, isCSV: true);
+      Navigator.pop(context);
+    }
+    setState(() {});
   }
 
   @override
@@ -281,6 +334,10 @@ class _CSVImporterState extends State<CSVImporter> {
                               errorMessage = '';
                               setState(() {});
                             },
+                            onSubmitted: (s) {
+                              submitCSV();
+                            },
+                            textInputAction: TextInputAction.go,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Copy the G12 cell here!',
@@ -336,56 +393,7 @@ class _CSVImporterState extends State<CSVImporter> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           onPressed: () {
-                            HapticFeedback.lightImpact();
-                            var csvConverter = CsvToListConverter();
-                            String cleanedText = textController.text;
-                            cleanedText = cleanedText.trim();
-                            if (cleanedText.startsWith("\"")) {
-                              cleanedText = cleanedText.substring(1);
-                            }
-                            if (cleanedText.endsWith("\"")) {
-                              cleanedText = cleanedText.substring(
-                                  0, cleanedText.length - 1);
-                            }
-                            var l = csvConverter.convert(cleanedText, eol: '|');
-                            bool inputIsValid = true;
-                            errorMessage = 'Incorrectly formatted!';
-                            if (l.length != 1000) {
-                              inputIsValid = false;
-                              errorMessage +=
-                                  '\n${l.length} lines detected (need 1000).';
-                            }
-                            bool columnsValid = true;
-                            l.asMap().forEach((k, v) {
-                              if (v.length != 3) {
-                                columnsValid = false;
-                              }
-                            });
-                            if (!columnsValid) {
-                              inputIsValid = false;
-                              errorMessage +=
-                                  '\nFound at least one row with invalid number of columns. Make sure you aren\'t using any extra commas!';
-                            }
-                            if (inputIsValid) {
-                              errorMessage = '';
-                              List<TripleDigitData> tripleDigitDataList = [];
-                              l.asMap().forEach((k, v) {
-                                String person = v[0].toString();
-                                String action = v[1].toString();
-                                String object = v[2].toString();
-                                tripleDigitDataList.add(TripleDigitData(
-                                  k,
-                                  paddedNum(k),
-                                  person,
-                                  action,
-                                  object,
-                                  0,
-                                ));
-                              });
-                              widget.callback(tripleDigitDataList, isCSV: true);
-                              Navigator.pop(context);
-                            }
-                            setState(() {});
+                            submitCSV();
                           },
                           padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(

@@ -111,30 +111,67 @@ class _FlashCardState extends State<FlashCard> {
     Color snackBarColor = colorCorrect;
     String snackBarText =
         'Familiarity for $digitLetter $value increased, now at ${updatedEntry.familiarity}%';
-    if (previousFamiliarity < 100 && updatedEntry.familiarity == 100) {
-      snackBarText =
-          'Familiarity for $digitLetter $value maxed out! Great job!';
-      snackBarColor = colorCorrect;
 
-      // Check for level up!!
-      int familiaritySum = 0;
-      for (dynamic entry in data) {
-        familiaritySum += entry.familiarity;
+    // need to fix this so that current % shown largely in special case
+
+    if (updatedEntry.familiarity < 100) {
+      final snackBar = SnackBar(
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$digitLetter $value - ${[
+                alphabetKey,
+                singleDigitKey
+              ].contains(widget.systemKey) ? updatedEntry.object : updatedEntry.person}',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontFamily: 'CabinSketch',
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'now ${updatedEntry.familiarity}% familiar',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 26,
+                fontFamily: 'CabinSketch',
+              ),
+            ),
+          ],
+        ),
+        duration: Duration(seconds: 2),
+        backgroundColor: colorCorrect,
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    } else {
+      if (previousFamiliarity < 100 && updatedEntry.familiarity == 100) {
+        snackBarText =
+            'Familiarity for $digitLetter $value maxed out! Great job!';
+        snackBarColor = colorCorrect;
+
+        // Check for level up!!
+        int familiaritySum = 0;
+        for (dynamic entry in data) {
+          familiaritySum += entry.familiarity;
+        }
+        if (familiaritySum == widget.familiarityTotal ||
+            (debugModeEnabled && familiaritySum > 500)) {
+          levelUp = true;
+          widget.nextActivityCallback();
+        }
+      } else if (updatedEntry.familiarity == 100) {
+        snackBarText = 'Familiarity for $digitLetter $value maxed out!';
+        snackBarColor = colorCorrect;
       }
-      if (familiaritySum == widget.familiarityTotal ||
-          (debugModeEnabled && familiaritySum > 500)) {
-        levelUp = true;
-        widget.nextActivityCallback();
-      }
-    } else if (updatedEntry.familiarity == 100) {
-      snackBarText = 'Familiarity for $digitLetter $value maxed out!';
-      snackBarColor = colorCorrect;
+      showSnackBar(
+          scaffoldState: Scaffold.of(context),
+          snackBarText: snackBarText,
+          backgroundColor: snackBarColor,
+          durationSeconds: 1);
     }
-    showSnackBar(
-        scaffoldState: Scaffold.of(context),
-        snackBarText: snackBarText,
-        backgroundColor: snackBarColor,
-        durationSeconds: 1);
     if (levelUp) {
       showSnackBar(
           scaffoldState: widget.globalKey.currentState,
@@ -181,16 +218,38 @@ class _FlashCardState extends State<FlashCard> {
     prefs.setString(widget.systemKey, json.encode(dataList));
 
     // Snackbar
-    String snackBarText =
-        'Familiarity for $digitLetter $value decreased by $familiarityDecrease to ${updatedEntry.familiarity}!';
-    if (updatedEntry.familiarity == 0) {
-      snackBarText = 'Familiarity for $digitLetter $value can\'t go lower!';
-    }
-    showSnackBar(
-        scaffoldState: Scaffold.of(context),
-        snackBarText: snackBarText,
-        backgroundColor: colorIncorrect,
-        durationSeconds: 2);
+    final snackBar = SnackBar(
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$digitLetter $value - ${[
+              alphabetKey,
+              singleDigitKey
+            ].contains(widget.systemKey) ? updatedEntry.object : updatedEntry.person}',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'CabinSketch',
+            ),
+          ),
+          SizedBox(height: 5),
+          Text(
+            'now ${updatedEntry.familiarity}% familiar',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 26,
+              fontFamily: 'CabinSketch',
+            ),
+          ),
+        ],
+      ),
+      duration: Duration(seconds: 2),
+      backgroundColor: colorIncorrect,
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
+
     if (widget.isLastCard) {
       showSnackBar(
           scaffoldState: widget.globalKey.currentState,

@@ -277,7 +277,7 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
         'From there we go to Mercury. Maybe a big vat of silver liquid mercury getting boiled by the sun will do the trick! '
         '\n    Now we want to attach the digit '
         'representing how small the planet is, the number 1! My object for number 1 is a stick, so I\'ll '
-        'just imagine that I\'m stir the vat of MERCURY with a giant STICK until something emerges. ',
+        'just imagine that I\'m stirring the vat of MERCURY with a giant STICK until something emerges. ',
     '    Next is Venus, what might we think of for that? The Roman goddess '
         'of beauty? The shaving razor? Let\'s go with the goddess of beauty.\n    So we stir the shimmering liquid mercury, '
         'until a smoking hot babe emerges. Wow, how can someone be that attractive? '

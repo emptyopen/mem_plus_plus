@@ -72,18 +72,18 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
     Text(
       '    My favorite way to get people invested into their memories is memorizing '
       'a whole deck of cards. Or memorizing 20 digits in a few minutes and repeating it back several hours later, '
-      'or reciting 1000 digits of pi (people usually lose interest after about 100 digits). This stuff is fun, but ultimately are just party tricks.\n\n'
+      'or reciting 1000 digits of pi (people usually lose interest after about 100 digits). And those are just party tricks.\n\n'
       '    The real benefit is the incredible quality-of-'
-      'life improvement, and I wanted to share it with the world. Imagine effortlessly recalling your checking account and routing numbers. '
-      'Licences and passports. Names and passwords. Grocery lists, recipes. Security code combinations. '
-      '\n    I no longer have to painfully search through ancient emails or text threads for obscure information. '
+      'life improvement, and I wanted to share it with the world. Imagine effortlessly recalling your checking account and routing numbers. Names at a party. '
+      'Licences, passports, and passwords. Grocery lists, recipes. Security code combinations. '
+      '\n\n    I no longer have to painfully search through ancient emails or text threads for obscure information. '
       'I don\'t forget things when I go shopping, and I always remember exactly where I parked my car. The list '
       'goes on, and on, and on. Memory is a part of everything we do!',
       style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
     ),
     Text(
       '    For a long time, I thought memory was about retrieval skills. How wrong I was. '
-      'It turns out, the most important aspect of memory is about how you STORE it in the first place! '
+      'It turns out, the most important aspect of memory is about how you STORE memories in the first place! '
       'When we store a file on our computer, do we just put everything on the desktop in a '
       'chaotic mess? No, of course not, it would be impossible to find anything!'
       '\n\n    In general, I would break down the process of remembering ANYTHING into these steps:'
@@ -108,8 +108,8 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       '    Finally, the most imporant advice I can give you is to not give up. We all still forget things, '
       'but when that happens don\'t blame your amazing, awesome brain. \n'
       '    As I went through this learning process, I would still forget things. I still forget things. '
-      'But for the first time, I understood that the reason I forgot something was because '
-      'I didn\'t try hard enough to remember it. \n    I just didn\'t anchor the memory well '
+      'But for the first time, I understood that the reason I forgot something was only because '
+      'I didn\'t try hard enough to remember it. \n    I didn\'t anchor the memory well '
       'enough, or I didn\'t visualize the scenes in enough detail, or I didn\'t test myself on the '
       'memory sufficiently. I did better next time, and forgot less.',
       style: TextStyle(fontSize: 20, color: backgroundHighlightColor),

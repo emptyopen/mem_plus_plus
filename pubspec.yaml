@@ -1,7 +1,7 @@
 name: mem_plus_plus
 description: Memory improvement app.
 
-version: 2.2.2+44
+version: 2.2.3+45
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -33,19 +33,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_automation:
-  # flutter_launcher_icons: ^0.7.0
-  flutter_launcher_icons:
-    git:
-      url: https://github.com/knyghtryda/flutter_launcher_icons
-      ref: scaling
+  flutter_launcher_icons: ^0.7.0
+  # flutter_launcher_icons:
+  #   git:
+  #     url: https://github.com/knyghtryda/flutter_launcher_icons
+  #     ref: scaling
 
 flutter_icons:
   ios: true
-  android: false
-  # image_path_ios: "assets/launcher/icon.png"
-  # image_path_android: "assets/launcher/icon.png"
-  image_path: "assets/launcher/icon.png"
-  adaptive_icon_foreground_scale_factor: 0.66
+  android: true
+  image_path: "assets/launcher/mempp_combined.png"
+  adaptive_icon_background: "assets/launcher/mempp_back_white.png"
+  adaptive_icon_foreground: "assets/launcher/mempp_brain.png"
+  # image_path: "assets/launcher/icon.png"
+  # adaptive_icon_foreground_scale_factor: 0.66
 
 flutter:
   uses-material-design: true

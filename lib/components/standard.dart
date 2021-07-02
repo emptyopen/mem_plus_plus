@@ -315,15 +315,13 @@ class MainMenuOption extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
               onPressed: () async {
-                HapticFeedback.lightImpact();
-                globalKey.currentState.hideCurrentSnackBar();
                 if (activity.visibleAfterTime.compareTo(DateTime.now()) > 0) {
                   return null;
                 }
-                if (activity.firstView) {
-                  await prefs.updateActivityFirstView(activity.name, false);
-                  callback();
-                }
+                HapticFeedback.lightImpact();
+                globalKey.currentState.hideCurrentSnackBar();
+                await prefs.updateActivityFirstView(activity.name, false);
+                callback();
                 slideTransition(context, route);
               },
               child: Row(
