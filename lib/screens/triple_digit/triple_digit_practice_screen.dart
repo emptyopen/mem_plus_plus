@@ -99,7 +99,7 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
               systemKey: tripleDigitKey,
               color: colorTripleDigitStandard,
               lighterColor: colorTripleDigitLighter,
-              familiarityTotal: 10000,
+              familiarityTotal: 100000,
             )
           : Container(),
     );
