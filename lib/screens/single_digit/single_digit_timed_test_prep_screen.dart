@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
@@ -36,9 +36,7 @@ class _SingleDigitTimedTestPrepScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var prefss = PrefsUpdater();
-    prefss.checkFirstTime(context, singleDigitTimedTestPrepFirstHelpKey,
+    prefs.checkFirstTime(context, singleDigitTimedTestPrepFirstHelpKey,
         SingleDigitTimedTestPrepScreenHelp());
     setState(() {
       // if digits are null, randomize values and store them,
@@ -67,13 +65,13 @@ class _SingleDigitTimedTestPrepScreenState
   }
 
   void updateStatus() async {
-    await prefs.setBool(singleDigitTestActiveKey, false);
-    await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, false);
-    await prefs.updateActivityState(singleDigitTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(singleDigitTimedTestKey, true);
-    await prefs.updateActivityFirstView(singleDigitTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(singleDigitTestActiveKey, false);
+    prefs.updateActivityState(singleDigitTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(singleDigitTimedTestPrepKey, false);
+    prefs.updateActivityState(singleDigitTimedTestKey, 'todo');
+    prefs.updateActivityVisible(singleDigitTimedTestKey, true);
+    prefs.updateActivityFirstView(singleDigitTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         singleDigitTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (single digit) is ready!',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -27,7 +28,7 @@ class _TripleDigitMultipleChoiceTestScreenState
   List<Widget> tripleDigitCards = [];
   bool dataReady = false;
   late List<TripleDigitData> shuffledChoices;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _TripleDigitMultipleChoiceTestScreenState
     prefs.checkFirstTime(context, tripleDigitMultipleChoiceTestFirstHelpKey,
         TripleDigitMultipleChoiceScreenHelp());
     tripleDigitData =
-        await prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
+        prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
     tripleDigitData = shuffle(tripleDigitData);
 
     tripleDigitData.forEach((entry) {
@@ -88,11 +89,9 @@ class _TripleDigitMultipleChoiceTestScreenState
   }
 
   void nextActivity() async {
-    if (await prefs.getActivityState(tripleDigitMultipleChoiceTestKey) ==
-        'todo') {
-      await prefs.updateActivityState(
-          tripleDigitMultipleChoiceTestKey, 'review');
-      await prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
+    if (prefs.getActivityState(tripleDigitMultipleChoiceTestKey) == 'todo') {
+      prefs.updateActivityState(tripleDigitMultipleChoiceTestKey, 'review');
+      prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
     }
     widget.callback();
   }

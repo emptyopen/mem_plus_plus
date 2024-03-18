@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -56,17 +57,17 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       return;
     }
     if (textController.text.replaceAll(' ', '') == '$piString') {
-      await prefs.updateActivityVisible(piTimedTestKey, false);
-      await prefs.updateActivityVisible(piTimedTestPrepKey, true);
-      await prefs.setBool(irrationalGameAvailableKey, true);
-      if (await prefs.getBool(irrationalGameFirstViewKey) == null) {
-        await prefs.setBool(newGamesAvailableKey, true);
-        await prefs.setBool(irrationalGameFirstViewKey, true);
+      prefs.updateActivityVisible(piTimedTestKey, false);
+      prefs.updateActivityVisible(piTimedTestPrepKey, true);
+      prefs.setBool(irrationalGameAvailableKey, true);
+      if (prefs.getBool(irrationalGameFirstViewKey) == null) {
+        prefs.setBool(newGamesAvailableKey, true);
+        prefs.setBool(irrationalGameFirstViewKey, true);
       }
-      if (await prefs.getBool(piTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(piTimedTestKey, 'review');
-        await prefs.setBool(piTimedTestCompleteKey, true);
-        if (await prefs.getBool(face2TimedTestCompleteKey) == null) {
+      if (prefs.getBool(piTimedTestCompleteKey) == null) {
+        prefs.updateActivityState(piTimedTestKey, 'review');
+        prefs.setBool(piTimedTestCompleteKey, true);
+        if (prefs.getBool(face2TimedTestCompleteKey) == null) {
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -85,7 +86,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
             isSuper: true,
           );
         } else {
-          await prefs.updateActivityVisible(deckEditKey, true);
+          prefs.updateActivityVisible(deckEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
@@ -94,7 +95,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
             durationSeconds: 3,
             isSuper: true,
           );
-          await prefs.updateActivityVisible(tripleDigitEditKey, true);
+          prefs.updateActivityVisible(tripleDigitEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -145,11 +146,11 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(piTimedTestKey, 'review');
-    await prefs.updateActivityVisible(piTimedTestKey, false);
-    await prefs.updateActivityVisible(piTimedTestPrepKey, true);
-    if (await prefs.getBool(piTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(piTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(piTimedTestKey, 'review');
+    prefs.updateActivityVisible(piTimedTestKey, false);
+    prefs.updateActivityVisible(piTimedTestPrepKey, true);
+    if (prefs.getBool(piTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(piTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -29,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Map customMemories = {};
   Column customMemoriesColumn = Column();
   List<bool> isSelected = [true, false];
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   var scaffoldKey;
 
   @override
@@ -39,10 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
-
-    if (await prefs.getBool(darkModeKey) == null ||
-        !(await prefs.getBool(darkModeKey))!) {
+    if (prefs.getBool(darkModeKey) == null || !(prefs.getBool(darkModeKey))!) {
       isSelected = [true, false];
     } else {
       isSelected = [false, true];
@@ -50,8 +48,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {});
   }
 
-  setDarkMode(bool setDarkMode) async {
-    await prefs.setBool(darkModeKey, setDarkMode);
+  setDarkMode(bool setDarkMode) {
+    prefs.setBool(darkModeKey, setDarkMode);
   }
 
   resetNotifications(BuildContext context) {

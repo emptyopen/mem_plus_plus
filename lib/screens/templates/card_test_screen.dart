@@ -14,18 +14,18 @@ class CardTestScreen extends StatefulWidget {
   final int familiarityTotal;
   final Color color;
   final Color lighterColor;
-  final List<dynamic> shuffledChoices;
+  final List<dynamic>? shuffledChoices;
 
   CardTestScreen({
-    this.cardData,
+    required this.cardData,
     this.shuffledChoices,
-    this.cardType,
-    this.globalKey,
-    this.nextActivity,
-    this.systemKey,
-    this.familiarityTotal,
-    this.color,
-    this.lighterColor,
+    required this.cardType,
+    required this.globalKey,
+    required this.nextActivity,
+    required this.systemKey,
+    required this.familiarityTotal,
+    required this.color,
+    required this.lighterColor,
   });
 
   @override
@@ -35,7 +35,7 @@ class CardTestScreen extends StatefulWidget {
 class _CardTestScreenState extends State<CardTestScreen> {
   int numCards = 0;
   int attempts = 0;
-  List<bool> results = [];
+  List<bool?> results = [];
 
   @override
   void initState() {

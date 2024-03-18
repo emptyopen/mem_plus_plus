@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -185,17 +186,17 @@ class _PhoneticAlphabetTimedTestScreenState
         thirdCorrect &&
         fourthCorrect &&
         fifthCorrect) {
-      await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
-      await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
-      await prefs.setBool(morseGameAvailableKey, true);
-      if (await prefs.getBool(morseGameFirstViewKey) == null) {
-        await prefs.setBool(newGamesAvailableKey, true);
-        await prefs.setBool(morseGameFirstViewKey, true);
+      prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
+      prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
+      prefs.setBool(morseGameAvailableKey, true);
+      if (prefs.getBool(morseGameFirstViewKey) == null) {
+        prefs.setBool(newGamesAvailableKey, true);
+        prefs.setBool(morseGameFirstViewKey, true);
       }
-      if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
-        await prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
-        await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
-        if (await prefs.getBool(airportTimedTestCompleteKey) == null) {
+      if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
+        prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
+        prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
+        if (prefs.getBool(airportTimedTestCompleteKey) == null) {
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -205,7 +206,7 @@ class _PhoneticAlphabetTimedTestScreenState
             durationSeconds: 3,
           );
         } else {
-          await prefs.updateActivityVisible(paoEditKey, true);
+          prefs.updateActivityVisible(paoEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
@@ -256,11 +257,11 @@ class _PhoneticAlphabetTimedTestScreenState
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
-    await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
-    await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
-    if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
+    prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
+    prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
+    if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

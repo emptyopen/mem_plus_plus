@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
@@ -11,7 +12,7 @@ class TripleDigitPracticeScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  TripleDigitPracticeScreen({this.callback, this.globalKey});
+  TripleDigitPracticeScreen({required this.callback, required this.globalKey});
 
   @override
   _TripleDigitPracticeScreenState createState() =>
@@ -22,7 +23,7 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
   List<TripleDigitData> tripleDigitData = [];
   List<Widget> tripleDigitCards = [];
   bool dataReady = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -33,7 +34,8 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, tripleDigitPracticeFirstHelpKey,
         TripleDigitPracticeScreenHelp());
-    tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
+    tripleDigitData =
+        prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
     bool allComplete = true;
     for (int i = 0; i < tripleDigitData.length; i++) {
       if (tripleDigitData[i].familiarity < 100) {
@@ -60,8 +62,8 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
   }
 
   void nextActivity() async {
-    await prefs.updateActivityState(tripleDigitPracticeKey, 'review');
-    await prefs.updateActivityVisible(tripleDigitMultipleChoiceTestKey, true);
+    prefs.updateActivityState(tripleDigitPracticeKey, 'review');
+    prefs.updateActivityVisible(tripleDigitMultipleChoiceTestKey, true);
     widget.callback();
   }
 

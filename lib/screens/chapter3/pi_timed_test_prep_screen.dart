@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -33,13 +34,13 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
   }
 
   void updateStatus() async {
-    await prefs.setBool(piTestActiveKey, false);
-    await prefs.updateActivityState(piTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(piTimedTestPrepKey, false);
-    await prefs.updateActivityState(piTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(piTimedTestKey, true);
-    await prefs.updateActivityFirstView(piTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(piTestActiveKey, false);
+    prefs.updateActivityState(piTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(piTimedTestPrepKey, false);
+    prefs.updateActivityState(piTimedTestKey, 'todo');
+    prefs.updateActivityVisible(piTimedTestKey, true);
+    prefs.updateActivityFirstView(piTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         piTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (pi) is ready!', 'Good luck!',

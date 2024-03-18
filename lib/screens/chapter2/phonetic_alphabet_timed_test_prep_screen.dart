@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -35,13 +36,13 @@ class _PhoneticAlphabetTimedTestPrepScreenState
   }
 
   void updateStatus() async {
-    await prefs.setBool(phoneticAlphabetTestActiveKey, false);
-    await prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, false);
-    await prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, true);
-    await prefs.updateActivityFirstView(phoneticAlphabetTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(phoneticAlphabetTestActiveKey, false);
+    prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, false);
+    prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'todo');
+    prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, true);
+    prefs.updateActivityFirstView(phoneticAlphabetTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         phoneticAlphabetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (phonetic alphabet) is ready!',

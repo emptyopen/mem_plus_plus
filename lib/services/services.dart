@@ -1,10 +1,4 @@
-import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:mem_plus_plus/components/data/single_digit_data.dart';
-import 'package:mem_plus_plus/components/data/alphabet_data.dart';
-import 'package:mem_plus_plus/components/data/pao_data.dart';
-import 'package:mem_plus_plus/components/data/deck_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:flutter/material.dart';
@@ -20,22 +14,22 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 handleAppUpdate() async {
   print('handling app update...');
 
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   // new games for old devices:
-  if (await prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
-    await prefs.setBool(gamesAvailableKey, true);
-    await prefs.setBool(fadeGameAvailableKey, true);
+  if (prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
+    prefs.setBool(gamesAvailableKey, true);
+    prefs.setBool(fadeGameAvailableKey, true);
   }
-  if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null) {
-    await prefs.setBool(morseGameAvailableKey, true);
+  if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null) {
+    prefs.setBool(morseGameAvailableKey, true);
   }
-  if (await prefs.getBool(piTimedTestCompleteKey) != null) {
-    await prefs.setBool(irrationalGameAvailableKey, true);
+  if (prefs.getBool(piTimedTestCompleteKey) != null) {
+    prefs.setBool(irrationalGameAvailableKey, true);
   }
 
   Map<String, Activity> activityStates =
-      await prefs.getSharedPrefs(activityStatesKey);
+      prefs.getSharedPrefs(activityStatesKey) as Map<String, Activity>;
 
   defaultActivityStatesInitial.forEach((k, v) {
     if (!activityStates.keys.contains(k)) {
@@ -43,183 +37,7 @@ handleAppUpdate() async {
       activityStates[k] = v;
     }
   });
-  await prefs.writeSharedPrefs(activityStatesKey, activityStates);
-}
-
-class PrefsUpdater {
-  Future<Object> getSharedPrefs(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    switch (key) {
-      case activityStatesKey:
-        String? activityStatesString = prefs.getString(activityStatesKey);
-        if (activityStatesString == null) {
-          return defaultActivityStatesInitial;
-        }
-        Map<String, dynamic> rawMap =
-            json.decode(activityStatesString) as Map<String, dynamic>;
-        return rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
-      case singleDigitKey:
-        var singleDigitData = (json.decode(prefs.getString(key)) as List)
-            .map((i) => SingleDigitData.fromJson(i))
-            .toList();
-        return singleDigitData;
-      case alphabetKey:
-        var singleDigitData = (json.decode(prefs.getString(key)) as List)
-            .map((i) => AlphabetData.fromJson(i))
-            .toList();
-        return singleDigitData;
-      case paoKey:
-        var singleDigitData = (json.decode(prefs.getString(key)) as List)
-            .map((i) => PAOData.fromJson(i))
-            .toList();
-        return singleDigitData;
-      case deckKey:
-        var singleDigitData = (json.decode(prefs.getString(key)) as List)
-            .map((i) => DeckData.fromJson(i))
-            .toList();
-        return singleDigitData;
-      case tripleDigitKey:
-        var tripleDigitData = (json.decode(prefs.getString(key)) as List)
-            .map((i) => TripleDigitData.fromJson(i))
-            .toList();
-        return tripleDigitData;
-      case customMemoriesKey:
-        return json.decode(prefs.getString(key));
-    }
-    return null;
-  }
-
-  Future<void> writeSharedPrefs(String key, Object object) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    switch (key) {
-      case activityStatesKey:
-        Map<String, Activity> activityStates = object;
-        prefs.setString(activityStatesKey,
-            json.encode(activityStates.map((k, v) => MapEntry(k, v.toJson()))));
-        break;
-      case singleDigitKey:
-        prefs.setString(key, json.encode(object));
-        break;
-      case alphabetKey:
-        prefs.setString(key, json.encode(object));
-        break;
-      case paoKey:
-        prefs.setString(key, json.encode(object));
-        break;
-      case deckKey:
-        prefs.setString(key, json.encode(object));
-        break;
-      case tripleDigitKey:
-        prefs.setString(key, json.encode(object));
-        break;
-      case customMemoriesKey:
-        prefs.setString(key, json.encode(object));
-        break;
-    }
-  }
-
-  updateActivityFirstView(String activityName, bool isNew) async {
-    print('setting $activityName first view to $isNew');
-    Map<String, Activity> activityStates =
-        await getSharedPrefs(activityStatesKey);
-    Activity activity = activityStates[activityName];
-    activity.firstView = isNew;
-    activityStates[activityName] = activity;
-    await writeSharedPrefs(activityStatesKey, activityStates);
-  }
-
-  updateActivityState(String activityName, String state) async {
-    print('setting $activityName state to $state');
-    Map<String, Activity> activityStates =
-        await getSharedPrefs(activityStatesKey);
-    Activity activity = activityStates[activityName];
-    activity.state = state;
-    activityStates[activityName] = activity;
-    await writeSharedPrefs(activityStatesKey, activityStates);
-  }
-
-  Future<String> getActivityState(String activityName) async {
-    Map<String, Activity> activityStates =
-        await getSharedPrefs(activityStatesKey);
-    return activityStates[activityName]!.state;
-  }
-
-  Future<bool> getActivityVisible(String activityName) async {
-    Map<String, Activity> activityStates =
-        await getSharedPrefs(activityStatesKey);
-    if (activityStates[activityName] == null) {
-      return false;
-    }
-    return activityStates[activityName]!.visible;
-  }
-
-  updateActivityVisible(String activityName, bool visible) async {
-    print('setting $activityName visible to $visible');
-    Map<String, Activity> activityStates =
-        await getSharedPrefs(activityStatesKey);
-    Activity activity = activityStates[activityName]!;
-    activity.visible = visible;
-    activityStates[activityName] = activity;
-    await writeSharedPrefs(activityStatesKey, activityStates);
-  }
-
-  updateActivityVisibleAfter(String activityName, DateTime visibleAfter) async {
-    print('setting $activityName visibleAfter to $visibleAfter');
-    Map<String, Activity> activityStates =
-        await getSharedPrefs(activityStatesKey);
-    Activity activity = activityStates[activityName];
-    activity.visibleAfterTime = visibleAfter;
-    activityStates[activityName] = activity;
-    await writeSharedPrefs(activityStatesKey, activityStates);
-  }
-
-  Future<void> setBool(String key, bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(key, value);
-  }
-
-  Future<bool?> getBool(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(key);
-  }
-
-  Future<void> setString(String key, String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, value);
-  }
-
-  Future<String?> getString(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key);
-  }
-
-  Future<Set<String>> getKeys() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getKeys();
-  }
-
-  Future<void> remove(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove(key);
-  }
-
-  Future<void> clear() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
-  }
-
-  checkFirstTime(
-      BuildContext context, String firstHelpKey, Widget helpScreen) async {
-    var prefs = PrefsUpdater();
-    if (await prefs.getBool(firstHelpKey) == null) {
-      Navigator.of(context).push(PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (BuildContext context, _, __) {
-            return helpScreen;
-          }));
-      //await prefs.setBool(firstHelpKey, true);
-    }
-  }
+  prefs.writeSharedPrefs(activityStatesKey, activityStates);
 }
 
 List shuffle(List items) {
@@ -393,7 +211,7 @@ String datetimeToDateString(String datetimeString) {
 }
 
 initializeNotificationsScheduler() async {
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -411,19 +229,16 @@ initializeNotificationsScheduler() async {
   );
 
   bool singleDigitComplete =
-      await prefs.getBool(singleDigitTimedTestCompleteKey) != null;
-  bool chapter1Complete =
-      await prefs.getBool(faceTimedTestCompleteKey) != null &&
-          await prefs.getBool(planetTimedTestCompleteKey) != null;
-  bool alphabetComplete =
-      await prefs.getBool(alphabetTimedTestCompleteKey) != null;
-  bool chapter2Complete =
-      await prefs.getBool(airportTimedTestCompleteKey) != null &&
-          await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null;
-  bool paoComplete = await prefs.getBool(paoTimedTestCompleteKey) != null;
-  bool chapter3Complete = await prefs.getBool(piTimedTestCompleteKey) != null &&
-      await prefs.getBool(face2TimedTestCompleteKey) != null;
-  bool deckComplete = await prefs.getBool(deckTimedTestCompleteKey) != null;
+      prefs.getBool(singleDigitTimedTestCompleteKey) != null;
+  bool chapter1Complete = prefs.getBool(faceTimedTestCompleteKey) != null &&
+      prefs.getBool(planetTimedTestCompleteKey) != null;
+  bool alphabetComplete = prefs.getBool(alphabetTimedTestCompleteKey) != null;
+  bool chapter2Complete = prefs.getBool(airportTimedTestCompleteKey) != null &&
+      prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null;
+  bool paoComplete = prefs.getBool(paoTimedTestCompleteKey) != null;
+  bool chapter3Complete = prefs.getBool(piTimedTestCompleteKey) != null &&
+      prefs.getBool(face2TimedTestCompleteKey) != null;
+  bool deckComplete = prefs.getBool(deckTimedTestCompleteKey) != null;
 
   var random = Random();
   int basicMessageIndex = random.nextInt(6);

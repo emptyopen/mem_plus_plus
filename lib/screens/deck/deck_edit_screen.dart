@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
-import 'package:mem_plus_plus/services/services.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -23,7 +23,7 @@ class DeckEditScreen extends StatefulWidget {
 class _DeckEditScreenState extends State<DeckEditScreen> {
   late List<DeckData> deckData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -33,11 +33,11 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, deckEditFirstHelpKey, DeckEditScreenHelp());
-    if (await prefs.getString(deckKey) == null) {
+    if (prefs.getString(deckKey) == null) {
       deckData = debugModeEnabled ? defaultDeckData2 : defaultDeckData1;
-      await prefs.setString(deckKey, json.encode(deckData));
+      prefs.setString(deckKey, json.encode(deckData));
     } else {
-      deckData = await prefs.getSharedPrefs(deckKey) as List<DeckData>;
+      deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
     }
     setState(() {});
   }
@@ -61,10 +61,10 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityVisible(deckPracticeKey);
+    bool completedOnce = prefs.getActivityVisible(deckPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityVisible(deckPracticeKey, true);
-      await prefs.updateActivityState(deckEditKey, 'review');
+      prefs.updateActivityVisible(deckPracticeKey, true);
+      prefs.updateActivityState(deckEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -153,7 +153,7 @@ class _CSVImporterState extends State<CSVImporter> {
   final textController = TextEditingController();
 
   updateDeckData(List<DeckData> deckDataList) async {
-    var prefs = PrefsUpdater();
+    PrefsUpdater prefs = PrefsUpdater();
     prefs.writeSharedPrefs(deckKey, deckDataList);
     widget.callback(deckDataList);
   }

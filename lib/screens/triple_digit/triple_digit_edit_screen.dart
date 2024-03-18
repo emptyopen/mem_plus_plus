@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/components/info_box.dart';
-import 'package:mem_plus_plus/components/standard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:csv/csv.dart';
-import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -17,17 +14,16 @@ import 'package:url_launcher/url_launcher.dart';
 class TripleDigitEditScreen extends StatefulWidget {
   final Function callback;
 
-  TripleDigitEditScreen({Key key, this.callback}) : super(key: key);
+  TripleDigitEditScreen({Key? key, required this.callback}) : super(key: key);
 
   @override
   _TripleDigitEditScreenState createState() => _TripleDigitEditScreenState();
 }
 
 class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
-  SharedPreferences sharedPreferences;
-  List<TripleDigitData> tripleDigitData;
+  late List<TripleDigitData> tripleDigitData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   bool loading = true;
 
   @override
@@ -39,7 +35,8 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, tripleDigitEditFirstHelpKey, TripleDigitEditScreenHelp());
-    tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
+    tripleDigitData =
+        prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
     loading = false;
     setState(() {});
   }
@@ -72,8 +69,8 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
       }
     }
 
-    var prefs = PrefsUpdater();
-    await prefs.writeSharedPrefs(tripleDigitKey, tripleDigitData);
+    PrefsUpdater prefs = PrefsUpdater();
+    prefs.writeSharedPrefs(tripleDigitKey, tripleDigitData);
 
     // check if upload was success
     if (isCSV) {
@@ -90,10 +87,10 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityVisible(tripleDigitPracticeKey);
+    bool completedOnce = prefs.getActivityVisible(tripleDigitPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityVisible(tripleDigitPracticeKey, true);
-      await prefs.updateActivityState(tripleDigitEditKey, 'review');
+      prefs.updateActivityVisible(tripleDigitPracticeKey, true);
+      prefs.updateActivityState(tripleDigitEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',

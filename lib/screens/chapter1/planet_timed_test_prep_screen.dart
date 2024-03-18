@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -35,13 +36,13 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
   }
 
   void updateStatus() async {
-    await prefs.setBool(planetTestActiveKey, false);
-    await prefs.updateActivityState(planetTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(planetTimedTestPrepKey, false);
-    await prefs.updateActivityState(planetTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(planetTimedTestKey, true);
-    await prefs.updateActivityFirstView(planetTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(planetTestActiveKey, false);
+    prefs.updateActivityState(planetTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(planetTimedTestPrepKey, false);
+    prefs.updateActivityState(planetTimedTestKey, 'todo');
+    prefs.updateActivityVisible(planetTimedTestKey, true);
+    prefs.updateActivityFirstView(planetTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         planetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (planet) is ready!', 'Good luck!',

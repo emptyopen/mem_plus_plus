@@ -4,6 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mem_plus_plus/screens/games/fade_game_screen.dart';
 import 'package:mem_plus_plus/screens/games/morse_game_screen.dart';
 import 'package:mem_plus_plus/screens/games/irrational_game_screen.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class GamesScreen extends StatefulWidget {
 class _GamesScreenState extends State<GamesScreen> {
   List<Widget> availableGameTiles = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _GamesScreenState extends State<GamesScreen> {
     availableGameTiles.add(SizedBox(
       height: 10,
     ));
-    if (await prefs.getBool(fadeGameAvailableKey) != null) {
+    if (prefs.getBool(fadeGameAvailableKey) != null) {
       availableGameTiles.add(
         GameTile(
           game: 'fade',
@@ -49,11 +50,11 @@ class _GamesScreenState extends State<GamesScreen> {
             size: 40,
           ),
           firstViewKey: fadeGameFirstViewKey,
-          firstView: await prefs.getBool(fadeGameFirstViewKey) == true,
+          firstView: prefs.getBool(fadeGameFirstViewKey) == true,
         ),
       );
     }
-    if (await prefs.getBool(morseGameAvailableKey) != null) {
+    if (prefs.getBool(morseGameAvailableKey) != null) {
       availableGameTiles.add(
         GameTile(
           game: 'morse',
@@ -65,11 +66,11 @@ class _GamesScreenState extends State<GamesScreen> {
             size: 40,
           ),
           firstViewKey: morseGameFirstViewKey,
-          firstView: await prefs.getBool(morseGameFirstViewKey) == true,
+          firstView: prefs.getBool(morseGameFirstViewKey) == true,
         ),
       );
     }
-    if (await prefs.getBool(irrationalGameAvailableKey) != null) {
+    if (prefs.getBool(irrationalGameAvailableKey) != null) {
       availableGameTiles.add(
         GameTile(
           game: 'irrational',
@@ -81,7 +82,7 @@ class _GamesScreenState extends State<GamesScreen> {
             size: 40,
           ),
           firstViewKey: irrationalGameFirstViewKey,
-          firstView: await prefs.getBool(irrationalGameFirstViewKey) == true,
+          firstView: prefs.getBool(irrationalGameFirstViewKey) == true,
         ),
       );
     }
@@ -153,9 +154,9 @@ class GameTile extends StatelessWidget {
       required this.firstViewKey});
 
   checkFirstView() async {
-    var prefs = PrefsUpdater();
-    if (await prefs.getBool(firstViewKey) == true) {
-      await prefs.setBool(firstViewKey, false);
+    PrefsUpdater prefs = PrefsUpdater();
+    if (prefs.getBool(firstViewKey) == true) {
+      prefs.setBool(firstViewKey, false);
     }
   }
 
@@ -416,7 +417,7 @@ class DifficultySelection extends StatefulWidget {
 }
 
 class _DifficultySelectionState extends State<DifficultySelection> {
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   bool isComplete = false;
   bool isAvailable = false;
 
@@ -427,12 +428,12 @@ class _DifficultySelectionState extends State<DifficultySelection> {
   }
 
   getPrefs() async {
-    if (await prefs.getBool(widget.completeKey) != null) {
+    if (prefs.getBool(widget.completeKey) != null) {
       setState(() {
         isComplete = true;
       });
     }
-    if (await prefs.getBool(widget.availableKey) != null) {
+    if (prefs.getBool(widget.availableKey) != null) {
       setState(() {
         isAvailable = true;
       });

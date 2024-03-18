@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -24,7 +25,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
   String name1 = '';
   String name2 = '';
   bool ready = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration = debugModeEnabled
       ? Duration(seconds: debugTestTime)
       : Duration(minutes: 30);
@@ -38,7 +39,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
   Future<Null> getSharedPrefs() async {
     await prefs.checkFirstTime(
         context, faceTimedTestPrepFirstHelpKey, FacesTimedTestPrepScreenHelp());
-    bool faceTestIsActive = (await prefs.getBool(faceTestActiveKey))!;
+    bool faceTestIsActive = (prefs.getBool(faceTestActiveKey))!;
     if (!faceTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -82,10 +83,10 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
       prefs.setBool(faceTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      face1 = (await prefs.getString('face1'))!;
-      face2 = (await prefs.getString('face2'))!;
-      name1 = (await prefs.getString('name1'))!;
-      name2 = (await prefs.getString('name2'))!;
+      face1 = (prefs.getString('face1'))!;
+      face2 = (prefs.getString('face2'))!;
+      name1 = (prefs.getString('name1'))!;
+      name2 = (prefs.getString('name2'))!;
     }
     setState(() {
       ready = true;
@@ -93,12 +94,12 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
   }
 
   void updateStatus() async {
-    await prefs.setBool(faceTestActiveKey, false);
-    await prefs.updateActivityState(faceTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(faceTimedTestPrepKey, false);
-    await prefs.updateActivityState(faceTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(faceTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(faceTestActiveKey, false);
+    prefs.updateActivityState(faceTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(faceTimedTestPrepKey, false);
+    prefs.updateActivityState(faceTimedTestKey, 'todo');
+    prefs.updateActivityVisible(faceTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         faceTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (face) is ready!', 'Good luck!',

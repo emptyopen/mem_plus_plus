@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/custom_memory/custom_memory_template.dart';
+import 'package:mem_plus_plus/components/data/memory_field.dart';
 
 class IDCardInput extends StatefulWidget {
   final Function() callback;

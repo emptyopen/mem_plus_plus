@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/pao_data.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -12,18 +12,17 @@ class PAOPracticeScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  PAOPracticeScreen({this.callback, this.globalKey});
+  PAOPracticeScreen({required this.callback, required this.globalKey});
 
   @override
   _PAOPracticeScreenState createState() => _PAOPracticeScreenState();
 }
 
 class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
-  SharedPreferences sharedPreferences;
   List<PAOData> paoData = [];
   List<Widget> paoCards = [];
   bool dataReady = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, paoPracticeFirstHelpKey, PAOPracticeScreenHelp());
-    paoData = await prefs.getSharedPrefs(paoKey);
+    paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
     bool allComplete = true;
     for (int i = 0; i < paoData.length; i++) {
       if (paoData[i].familiarity < 100) {
@@ -61,8 +60,8 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   }
 
   void nextActivity() async {
-    await prefs.updateActivityState(paoPracticeKey, 'review');
-    await prefs.updateActivityVisible(paoMultipleChoiceTestKey, true);
+    prefs.updateActivityState(paoPracticeKey, 'review');
+    prefs.updateActivityVisible(paoMultipleChoiceTestKey, true);
     widget.callback();
   }
 

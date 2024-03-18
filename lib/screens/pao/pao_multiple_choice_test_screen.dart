@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/pao_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -12,7 +13,8 @@ class PAOMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  PAOMultipleChoiceTestScreen({this.callback, this.globalKey});
+  PAOMultipleChoiceTestScreen(
+      {required this.callback, required this.globalKey});
 
   @override
   _PAOMultipleChoiceTestScreenState createState() =>
@@ -24,7 +26,7 @@ class _PAOMultipleChoiceTestScreenState
   List<PAOData> paoData = [];
   List<Widget> paoCards = [];
   bool dataReady = false;
-  List<PAOData> shuffledChoices;
+  late List<PAOData> shuffledChoices;
   List fakeData = [];
 
   PrefsUpdater prefs = PrefsUpdater();
@@ -38,13 +40,13 @@ class _PAOMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, paoMultipleChoiceTestFirstHelpKey,
         PAOMultipleChoiceScreenHelp());
-    paoData = await prefs.getSharedPrefs(paoKey);
+    paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
     paoData = shuffle(paoData);
 
     paoData.forEach((entry) {
-      PAOData fakeChoice1;
-      PAOData fakeChoice2;
-      PAOData fakeChoice3;
+      PAOData? fakeChoice1;
+      PAOData? fakeChoice2;
+      PAOData? fakeChoice3;
 
       List<String> notAllowed = [entry.object];
       while (fakeChoice1 == null) {
@@ -84,9 +86,9 @@ class _PAOMultipleChoiceTestScreenState
   }
 
   void nextActivity() async {
-    if (await prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
-      await prefs.updateActivityState(paoMultipleChoiceTestKey, 'review');
-      await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+    if (prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
+      prefs.updateActivityState(paoMultipleChoiceTestKey, 'review');
+      prefs.updateActivityVisible(paoTimedTestPrepKey, true);
     }
     widget.callback();
   }

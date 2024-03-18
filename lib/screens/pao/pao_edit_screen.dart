@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/pao_data.dart';
 import 'package:mem_plus_plus/components/info_box.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
@@ -17,7 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 class PAOEditScreen extends StatefulWidget {
   final Function callback;
 
-  PAOEditScreen({Key key, this.callback}) : super(key: key);
+  PAOEditScreen({Key? key, required this.callback}) : super(key: key);
 
   @override
   _PAOEditScreenState createState() => _PAOEditScreenState();
@@ -27,7 +28,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   late SharedPreferences sharedPreferences;
   late List<PAOData>? paoData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -37,11 +38,11 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
-    if (await prefs.getString(paoKey) == null) {
+    if (prefs.getString(paoKey) == null) {
       paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
-      await prefs.setString(paoKey, json.encode(paoData));
+      prefs.setString(paoKey, json.encode(paoData));
     } else {
-      paoData = await prefs.getSharedPrefs(paoKey) as List<PAOData>;
+      paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
     }
     setState(() {});
   }
@@ -52,23 +53,23 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     });
     // check if all data is complete
     bool entriesComplete = true;
-    for (int i = 0; i < paoData.length; i++) {
-      if (paoData[i].person == '') {
+    for (int i = 0; i < paoData!.length; i++) {
+      if (paoData![i].person == '') {
         entriesComplete = false;
       }
-      if (paoData[i].action == '') {
+      if (paoData![i].action == '') {
         entriesComplete = false;
       }
-      if (paoData[i].object == '') {
+      if (paoData![i].object == '') {
         entriesComplete = false;
       }
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityVisible(paoPracticeKey);
+    bool completedOnce = prefs.getActivityVisible(paoPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityVisible(paoPracticeKey, true);
-      await prefs.updateActivityState(paoEditKey, 'review');
+      prefs.updateActivityVisible(paoPracticeKey, true);
+      prefs.updateActivityState(paoEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
@@ -88,8 +89,13 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     if (paoData != null) {
       for (int i = 0; i < paoData!.length; i++) {
         EditCard paoEditCard = EditCard(
-          entry: PAOData(paoData[i].index, paoData[i].digits, paoData[i].person,
-              paoData[i].action, paoData[i].object, paoData[i].familiarity),
+          entry: PAOData(
+              paoData![i].index,
+              paoData![i].digits,
+              paoData![i].person,
+              paoData![i].action,
+              paoData![i].object,
+              paoData![i].familiarity),
           callback: callback,
           activityKey: 'PAO',
         );
@@ -171,7 +177,7 @@ class _CSVImporterState extends State<CSVImporter> {
   String errorMessage = '';
 
   updatePAOData(List<PAOData> paoDataList) async {
-    var prefs = PrefsUpdater();
+    PrefsUpdater prefs = PrefsUpdater();
     prefs.writeSharedPrefs(paoKey, paoDataList);
     widget.callback(paoDataList);
   }
@@ -276,6 +282,10 @@ class _CSVImporterState extends State<CSVImporter> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
+                          onPressed: () {
+                            HapticFeedback.lightImpact();
+                            Navigator.pop(context);
+                          },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey[300],
                               shape: RoundedRectangleBorder(

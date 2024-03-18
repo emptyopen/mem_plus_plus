@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -51,15 +52,15 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
+    PrefsUpdater prefs = PrefsUpdater();
 
-    customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
+    customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
 
     setState(() {});
   }
 
   checkResult(memory, success) async {
-    var prefs = PrefsUpdater();
+    PrefsUpdater prefs = PrefsUpdater();
     if (success) {
       // check if beat the last level
       if (memory['spacedRepetitionLevel'] + 1 ==
@@ -97,7 +98,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
             homepageKey);
         Navigator.pop(context);
       }
-      await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
+      prefs.writeSharedPrefs(customMemoriesKey, customMemories);
       widget.callback();
     } else {
       final snackBar = SnackBar(

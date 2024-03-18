@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/data/memory_field.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -27,7 +29,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
   Set errors = Set();
   late List<bool> encryptStates;
   bool encrypting = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -311,19 +313,19 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       }
       if (memoryField.inputType == 'other' &&
           memoryField.controller.text == '' &&
-          memoryField.fieldController.text != '') {
+          memoryField.fieldController!.text != '') {
         errors.add('${memoryField.text} value required.');
       }
       if (memoryField.inputType == 'other' &&
           memoryField.controller.text != '' &&
-          memoryField.fieldController.text == '') {
+          memoryField.fieldController!.text == '') {
         errors.add('${memoryField.text} title required.');
       }
     });
     encrypting = true;
     setState(() {});
     // check if we already have the memory
-    var customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
+    var customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
     if (customMemories.containsKey(primaryKey)) {
       errors.add('Already have a memory with that name.');
     }
@@ -343,7 +345,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
     widget.memoryFields.asMap().forEach((i, nonPrimaryMemoryField) {
       if (nonPrimaryMemoryField.inputType == 'other') {
         map[nonPrimaryMemoryField.mapKey + 'Field'] =
-            nonPrimaryMemoryField.fieldController.text;
+            nonPrimaryMemoryField.fieldController!.text;
         if (encryptStates[i]) {
           map[nonPrimaryMemoryField.mapKey + 'Encrypt'] = true;
           map[nonPrimaryMemoryField.mapKey] =
@@ -366,7 +368,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       }
     });
     customMemories[primaryKey] = map;
-    await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
+    prefs.writeSharedPrefs(customMemoriesKey, customMemories);
     notifyDuration(
         firstSpacedRepetitionDuration,
         'Ready to be tested on your \'$primaryKey\' memory?',
@@ -447,21 +449,4 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       ],
     );
   }
-}
-
-class MemoryField {
-  String text;
-  String mapKey;
-  TextEditingController controller;
-  TextEditingController fieldController;
-  bool required;
-  String inputType;
-
-  MemoryField(
-      {required this.text,
-      required this.mapKey,
-      required this.controller,
-      required this.fieldController,
-      required this.required,
-      required this.inputType});
 }

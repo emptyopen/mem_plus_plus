@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/lesson_screen.dart';
@@ -16,7 +17,7 @@ class Lesson3Screen extends StatefulWidget {
 
 class _Lesson3ScreenState extends State<Lesson3Screen> {
   bool alreadyComplete = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   final List<Widget> headers = [
     Text(
@@ -101,16 +102,16 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
   }
 
   getSharedPrefs() async {
-    alreadyComplete = await prefs.getBool(lesson3CompleteKey) != null;
+    alreadyComplete = prefs.getBool(lesson3CompleteKey) != null;
   }
 
   completeLesson() async {
-    await prefs.updateActivityVisible(piTimedTestPrepKey, true);
-    await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
-    await prefs.updateActivityState(lesson3Key, 'review');
-    await prefs.setBool(customMemoryManagerAvailableKey, true);
+    prefs.updateActivityVisible(piTimedTestPrepKey, true);
+    prefs.updateActivityVisible(face2TimedTestPrepKey, true);
+    prefs.updateActivityState(lesson3Key, 'review');
+    prefs.setBool(customMemoryManagerAvailableKey, true);
     if (!alreadyComplete) {
-      await prefs.setBool(customMemoryManagerFirstHelpKey, true);
+      prefs.setBool(customMemoryManagerFirstHelpKey, true);
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
@@ -136,7 +137,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
         durationSeconds: 3,
         isSuper: true,
       );
-      await prefs.setBool(lesson3CompleteKey, true);
+      prefs.setBool(lesson3CompleteKey, true);
     }
     widget.callback();
     Navigator.pop(context);

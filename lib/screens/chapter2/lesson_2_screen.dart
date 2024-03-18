@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/lesson_screen.dart';
@@ -15,7 +16,7 @@ class Lesson2Screen extends StatefulWidget {
 }
 
 class _Lesson2ScreenState extends State<Lesson2Screen> {
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   final List<Widget> headers = [
     Text(
@@ -265,9 +266,9 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
   ];
 
   completeLesson() async {
-    await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
-    await prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
-    if (await prefs.getBool(lesson1CompleteKey) == null) {
+    prefs.updateActivityVisible(airportTimedTestPrepKey, true);
+    prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
+    if (prefs.getBool(lesson1CompleteKey) == null) {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Congratulations! You\'ve unlocked the NATO/Morse test!',
@@ -284,9 +285,9 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
         durationSeconds: 3,
         isSuper: true,
       );
-      await prefs.setBool(lesson2CompleteKey, true);
+      prefs.setBool(lesson2CompleteKey, true);
     }
-    await prefs.updateActivityState(lesson2Key, 'review');
+    prefs.updateActivityState(lesson2Key, 'review');
     widget.callback();
     Navigator.pop(context);
   }

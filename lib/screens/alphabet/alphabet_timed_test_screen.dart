@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -47,14 +48,14 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     prefs.checkFirstTime(
         context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
     // grab the digits
-    char1 = (await prefs.getString('alphabetTestChar1'))!;
-    char2 = (await prefs.getString('alphabetTestChar2'))!;
-    char3 = (await prefs.getString('alphabetTestChar3'))!;
-    char4 = (await prefs.getString('alphabetTestChar4'))!;
-    char5 = (await prefs.getString('alphabetTestChar5'))!;
-    char6 = (await prefs.getString('alphabetTestChar6'))!;
-    char7 = (await prefs.getString('alphabetTestChar7'))!;
-    char8 = (await prefs.getString('alphabetTestChar8'))!;
+    char1 = (prefs.getString('alphabetTestChar1'))!;
+    char2 = (prefs.getString('alphabetTestChar2'))!;
+    char3 = (prefs.getString('alphabetTestChar3'))!;
+    char4 = (prefs.getString('alphabetTestChar4'))!;
+    char5 = (prefs.getString('alphabetTestChar5'))!;
+    char6 = (prefs.getString('alphabetTestChar6'))!;
+    char7 = (prefs.getString('alphabetTestChar7'))!;
+    char8 = (prefs.getString('alphabetTestChar8'))!;
     print('real answer: $char1$char2$char3$char4 $char5$char6$char7$char8');
     setState(() {});
   }
@@ -66,12 +67,12 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         textController2.text.toLowerCase().trim() ==
             '$char5$char6$char7$char8'.toLowerCase()) {
       print('success');
-      await prefs.updateActivityVisible(alphabetTimedTestKey, false);
-      await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(lesson2Key, true);
-      if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(alphabetTimedTestKey, 'review');
-        await prefs.setBool(alphabetTimedTestCompleteKey, true);
+      prefs.updateActivityVisible(alphabetTimedTestKey, false);
+      prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+      prefs.updateActivityVisible(lesson2Key, true);
+      if (prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+        prefs.updateActivityState(alphabetTimedTestKey, 'review');
+        prefs.setBool(alphabetTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
@@ -116,11 +117,11 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(alphabetTimedTestKey, 'review');
-    await prefs.updateActivityVisible(alphabetTimedTestKey, false);
-    await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-    if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(alphabetTimedTestKey, 'review');
+    prefs.updateActivityVisible(alphabetTimedTestKey, false);
+    prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+    if (prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
     }
     showSnackBar(
       scaffoldState: widget.globalKey.currentState,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -60,19 +61,18 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(
         context, deckTimedTestFirstHelpKey, DeckTimedTestScreenHelp());
     // grab the digits
-    card1 = (await prefs.getString('deckTestDigits1'))!;
-    card2 = (await prefs.getString('deckTestDigits2'))!;
-    card3 = (await prefs.getString('deckTestDigits3'))!;
-    card4 = (await prefs.getString('deckTestDigits4'))!;
-    card5 = (await prefs.getString('deckTestDigits5'))!;
-    card6 = (await prefs.getString('deckTestDigits6'))!;
-    card7 = (await prefs.getString('deckTestDigits7'))!;
-    card8 = (await prefs.getString('deckTestDigits8'))!;
-    card9 = (await prefs.getString('deckTestDigits9'))!;
+    card1 = (prefs.getString('deckTestDigits1'))!;
+    card2 = (prefs.getString('deckTestDigits2'))!;
+    card3 = (prefs.getString('deckTestDigits3'))!;
+    card4 = (prefs.getString('deckTestDigits4'))!;
+    card5 = (prefs.getString('deckTestDigits5'))!;
+    card6 = (prefs.getString('deckTestDigits6'))!;
+    card7 = (prefs.getString('deckTestDigits7'))!;
+    card8 = (prefs.getString('deckTestDigits8'))!;
+    card9 = (prefs.getString('deckTestDigits9'))!;
     print(
         'real answer: $card1$card2$card3 $card4$card5$card6 $card7$card8$card9');
     setState(() {});
@@ -89,11 +89,11 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
         dropdownDigit[6] + dropdownSuit[6] == '$card7' &&
         dropdownDigit[7] + dropdownSuit[7] == '$card8' &&
         dropdownDigit[8] + dropdownSuit[8] == '$card9') {
-      await prefs.updateActivityVisible(deckTimedTestKey, false);
-      await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-      if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(deckTimedTestKey, 'review');
-        await prefs.setBool(deckTimedTestCompleteKey, true);
+      prefs.updateActivityVisible(deckTimedTestKey, false);
+      prefs.updateActivityVisible(deckTimedTestPrepKey, true);
+      if (prefs.getBool(deckTimedTestCompleteKey) == null) {
+        prefs.updateActivityState(deckTimedTestKey, 'review');
+        prefs.setBool(deckTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
@@ -128,11 +128,11 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(deckTimedTestKey, 'review');
-    await prefs.updateActivityVisible(deckTimedTestKey, false);
-    await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-    if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(deckTimedTestKey, 'review');
+    prefs.updateActivityVisible(deckTimedTestKey, false);
+    prefs.updateActivityVisible(deckTimedTestPrepKey, true);
+    if (prefs.getBool(deckTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

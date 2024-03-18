@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/animations.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -14,7 +15,14 @@ class LessonScreen extends StatefulWidget {
   final Color colorStandard;
   final Color colorDarker;
 
-  LessonScreen({this.title, this.headers, this.information, this.completeLesson, this.colorStandard, this.colorDarker});
+  LessonScreen({
+    required this.title,
+    required this.headers,
+    required this.information,
+    required this.completeLesson,
+    required this.colorStandard,
+    required this.colorDarker,
+  });
 
   @override
   _LessonScreenState createState() => _LessonScreenState();
@@ -22,10 +30,10 @@ class LessonScreen extends StatefulWidget {
 
 class _LessonScreenState extends State<LessonScreen>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
   int slideIndex = 0;
   final IndexController indexController = IndexController();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -140,8 +148,8 @@ class _LessonScreenState extends State<LessonScreen>
                 Align(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                    child: getSlideCircles(
-                        widget.information.length, slideIndex, widget.colorDarker),
+                    child: getSlideCircles(widget.information.length,
+                        slideIndex, widget.colorDarker),
                   ),
                   alignment: Alignment.bottomCenter,
                 )

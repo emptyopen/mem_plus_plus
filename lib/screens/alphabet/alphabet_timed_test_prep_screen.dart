@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
@@ -11,7 +12,7 @@ import 'package:flutter/services.dart';
 class AlphabetTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  AlphabetTimedTestPrepScreen({this.callback});
+  AlphabetTimedTestPrepScreen({required this.callback});
 
   @override
   _AlphabetTimedTestPrepScreenState createState() =>
@@ -76,12 +77,11 @@ class _AlphabetTimedTestPrepScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'AlphabetTimedTestPrepFirstHelp',
         AlphabetTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for alphabetTest
-    bool? sdTestIsActive = await prefs.getBool(alphabetTestActiveKey);
+    bool? sdTestIsActive = prefs.getBool(alphabetTestActiveKey);
     if (sdTestIsActive == null || !sdTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -93,39 +93,39 @@ class _AlphabetTimedTestPrepScreenState
       char6 = possibleValues[random.nextInt(possibleValues.length)];
       char7 = possibleValues[random.nextInt(possibleValues.length)];
       char8 = possibleValues[random.nextInt(possibleValues.length)];
-      await prefs.setString('alphabetTestChar1', char1);
-      await prefs.setString('alphabetTestChar2', char2);
-      await prefs.setString('alphabetTestChar3', char3);
-      await prefs.setString('alphabetTestChar4', char4);
-      await prefs.setString('alphabetTestChar5', char5);
-      await prefs.setString('alphabetTestChar6', char6);
-      await prefs.setString('alphabetTestChar7', char7);
-      await prefs.setString('alphabetTestChar8', char8);
-      await prefs.setBool(alphabetTestActiveKey, true);
+      prefs.setString('alphabetTestChar1', char1);
+      prefs.setString('alphabetTestChar2', char2);
+      prefs.setString('alphabetTestChar3', char3);
+      prefs.setString('alphabetTestChar4', char4);
+      prefs.setString('alphabetTestChar5', char5);
+      prefs.setString('alphabetTestChar6', char6);
+      prefs.setString('alphabetTestChar7', char7);
+      prefs.setString('alphabetTestChar8', char8);
+      prefs.setBool(alphabetTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      char1 = (await prefs.getString('alphabetTestChar1'))!;
-      char2 = (await prefs.getString('alphabetTestChar2'))!;
-      char3 = (await prefs.getString('alphabetTestChar3'))!;
-      char4 = (await prefs.getString('alphabetTestChar4'))!;
-      char5 = (await prefs.getString('alphabetTestChar5'))!;
-      char6 = (await prefs.getString('alphabetTestChar6'))!;
-      char7 = (await prefs.getString('alphabetTestChar7'))!;
-      char8 = (await prefs.getString('alphabetTestChar8'))!;
+      char1 = (prefs.getString('alphabetTestChar1'))!;
+      char2 = (prefs.getString('alphabetTestChar2'))!;
+      char3 = (prefs.getString('alphabetTestChar3'))!;
+      char4 = (prefs.getString('alphabetTestChar4'))!;
+      char5 = (prefs.getString('alphabetTestChar5'))!;
+      char6 = (prefs.getString('alphabetTestChar6'))!;
+      char7 = (prefs.getString('alphabetTestChar7'))!;
+      char8 = (prefs.getString('alphabetTestChar8'))!;
     }
     setState(() {});
   }
 
   void updateStatus() async {
-    await prefs.setBool(alphabetTestActiveKey, false);
-    await prefs.updateActivityState(alphabetTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(alphabetTimedTestPrepKey, false);
-    await prefs.updateActivityState(alphabetTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(alphabetTimedTestKey, true);
+    prefs.setBool(alphabetTestActiveKey, false);
+    prefs.updateActivityState(alphabetTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(alphabetTimedTestPrepKey, false);
+    prefs.updateActivityState(alphabetTimedTestKey, 'todo');
+    prefs.updateActivityVisible(alphabetTimedTestKey, true);
     Duration testDuration = debugModeEnabled
         ? Duration(seconds: debugTestTime)
         : Duration(hours: 2);
-    await prefs.updateActivityVisibleAfter(
+    prefs.updateActivityVisibleAfter(
         alphabetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (alphabet) is ready!',

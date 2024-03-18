@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -127,12 +128,12 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
             planetPositionSize[planet3][1].toString() &&
         guess4Controller.text.trim() ==
             planetPositionSize[planet4][1].toString()) {
-      await prefs.updateActivityVisible(planetTimedTestKey, false);
-      await prefs.updateActivityVisible(planetTimedTestPrepKey, true);
-      if (await prefs.getBool(planetTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(planetTimedTestKey, 'review');
-        await prefs.setBool(planetTimedTestCompleteKey, true);
-        if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
+      prefs.updateActivityVisible(planetTimedTestKey, false);
+      prefs.updateActivityVisible(planetTimedTestPrepKey, true);
+      if (prefs.getBool(planetTimedTestCompleteKey) == null) {
+        prefs.updateActivityState(planetTimedTestKey, 'review');
+        prefs.setBool(planetTimedTestCompleteKey, true);
+        if (prefs.getBool(faceTimedTestCompleteKey) == null) {
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -142,7 +143,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
             durationSeconds: 3,
           );
         } else {
-          await prefs.updateActivityVisible(alphabetEditKey, true);
+          prefs.updateActivityVisible(alphabetEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -182,11 +183,11 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(planetTimedTestKey, 'review');
-    await prefs.updateActivityVisible(planetTimedTestKey, false);
-    await prefs.updateActivityVisible(planetTimedTestPrepKey, true);
-    if (await prefs.getBool(planetTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(planetTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(planetTimedTestKey, 'review');
+    prefs.updateActivityVisible(planetTimedTestKey, false);
+    prefs.updateActivityVisible(planetTimedTestPrepKey, true);
+    if (prefs.getBool(planetTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(planetTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

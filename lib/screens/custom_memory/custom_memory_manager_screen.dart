@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +26,7 @@ class CustomMemoryManagerScreen extends StatefulWidget {
 class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
   Map customMemories = {};
   Column customMemoriesColumn = Column();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -43,14 +44,13 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     prefs.checkFirstTime(context, customMemoryManagerFirstHelpKey,
         CustomMemoryManagerScreenHelp());
 
-    customMemories = json.decode((await prefs.getString(customMemoriesKey))!);
+    customMemories = json.decode((prefs.getString(customMemoriesKey))!);
 
     setState(() {});
   }
 
   void callback() async {
-    var prefs = PrefsUpdater();
-    customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
+    customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
     setState(() {});
     widget.callback();
   }
@@ -229,7 +229,7 @@ class CustomMemoryTile extends StatelessWidget {
   CustomMemoryTile({required this.customMemory, required this.callback});
 
   deleteCustomMemory() async {
-    Map customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
+    Map customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
     customMemories.remove(customMemory['title']);
     prefs.writeSharedPrefs(customMemoriesKey, customMemories);
     callback();
@@ -449,7 +449,7 @@ class CustomMemoryTile extends StatelessWidget {
 
   resetCustomMemory(BuildContext context) async {
     HapticFeedback.lightImpact();
-    Map customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
+    Map customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
     customMemories[customMemory['title']]['spacedRepetitionLevel'] = 0;
     var spacedRepetitionType =
         customMemories[customMemory['title']]['spacedRepetitionType'];
@@ -457,7 +457,7 @@ class CustomMemoryTile extends StatelessWidget {
         termDurationsMap[spacedRepetitionType][0];
     customMemories[customMemory['title']]['nextDatetime'] =
         DateTime.now().add(firstSpacedRepetitionDuration).toIso8601String();
-    await prefs.writeSharedPrefs(customMemoriesKey, customMemories);
+    prefs.writeSharedPrefs(customMemoriesKey, customMemories);
     callback();
     Navigator.of(context).pop();
   }
@@ -608,7 +608,6 @@ class _MyDialogContentState extends State<MyDialogContent> {
         return ContactInput(
           callback: callback,
         );
-        break;
       case idCardString:
         return IDCardInput(
           callback: callback,
@@ -617,7 +616,6 @@ class _MyDialogContentState extends State<MyDialogContent> {
         return OtherInput(
           callback: callback,
         );
-        break;
       default:
         return OtherInput(
           callback: callback,

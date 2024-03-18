@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
@@ -11,7 +12,7 @@ import 'package:flutter/services.dart';
 class TripleDigitTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  TripleDigitTimedTestPrepScreen({this.callback});
+  TripleDigitTimedTestPrepScreen({required this.callback});
 
   @override
   _TripleDigitTimedTestPrepScreenState createState() =>
@@ -43,12 +44,12 @@ class _TripleDigitTimedTestPrepScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
+    PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(context, tripleDigitTimedTestPrepFirstHelpKey,
         TripleDigitTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for tripleDigitTest
-    bool sdTestIsActive = await prefs.getBool(tripleDigitTestActiveKey);
+    bool? sdTestIsActive = prefs.getBool(tripleDigitTestActiveKey);
     if (sdTestIsActive == null || !sdTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -64,44 +65,44 @@ class _TripleDigitTimedTestPrepScreenState
       digits10 = random.nextInt(1000).toString().padLeft(3, '0');
       digits11 = random.nextInt(1000).toString().padLeft(3, '0');
       digits12 = random.nextInt(1000).toString().padLeft(3, '0');
-      await prefs.setString('tripleDigitTestDigit1', digits1);
-      await prefs.setString('tripleDigitTestDigit2', digits2);
-      await prefs.setString('tripleDigitTestDigit3', digits3);
-      await prefs.setString('tripleDigitTestDigit4', digits4);
-      await prefs.setString('tripleDigitTestDigit5', digits5);
-      await prefs.setString('tripleDigitTestDigit6', digits6);
-      await prefs.setString('tripleDigitTestDigit7', digits7);
-      await prefs.setString('tripleDigitTestDigit8', digits8);
-      await prefs.setString('tripleDigitTestDigit9', digits9);
-      await prefs.setString('tripleDigitTestDigit10', digits10);
-      await prefs.setString('tripleDigitTestDigit11', digits11);
-      await prefs.setString('tripleDigitTestDigit12', digits12);
-      await prefs.setBool(tripleDigitTestActiveKey, true);
+      prefs.setString('tripleDigitTestDigit1', digits1);
+      prefs.setString('tripleDigitTestDigit2', digits2);
+      prefs.setString('tripleDigitTestDigit3', digits3);
+      prefs.setString('tripleDigitTestDigit4', digits4);
+      prefs.setString('tripleDigitTestDigit5', digits5);
+      prefs.setString('tripleDigitTestDigit6', digits6);
+      prefs.setString('tripleDigitTestDigit7', digits7);
+      prefs.setString('tripleDigitTestDigit8', digits8);
+      prefs.setString('tripleDigitTestDigit9', digits9);
+      prefs.setString('tripleDigitTestDigit10', digits10);
+      prefs.setString('tripleDigitTestDigit11', digits11);
+      prefs.setString('tripleDigitTestDigit12', digits12);
+      prefs.setBool(tripleDigitTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      digits1 = await prefs.getString('tripleDigitTestDigit1');
-      digits2 = await prefs.getString('tripleDigitTestDigit2');
-      digits3 = await prefs.getString('tripleDigitTestDigit3');
-      digits4 = await prefs.getString('tripleDigitTestDigit4');
-      digits5 = await prefs.getString('tripleDigitTestDigit5');
-      digits6 = await prefs.getString('tripleDigitTestDigit6');
-      digits7 = await prefs.getString('tripleDigitTestDigit7');
-      digits8 = await prefs.getString('tripleDigitTestDigit8');
-      digits9 = await prefs.getString('tripleDigitTestDigit9');
-      digits10 = await prefs.getString('tripleDigitTestDigit10');
-      digits11 = await prefs.getString('tripleDigitTestDigit11');
-      digits12 = await prefs.getString('tripleDigitTestDigit12');
+      digits1 = prefs.getString('tripleDigitTestDigit1')!;
+      digits2 = prefs.getString('tripleDigitTestDigit2')!;
+      digits3 = prefs.getString('tripleDigitTestDigit3')!;
+      digits4 = prefs.getString('tripleDigitTestDigit4')!;
+      digits5 = prefs.getString('tripleDigitTestDigit5')!;
+      digits6 = prefs.getString('tripleDigitTestDigit6')!;
+      digits7 = prefs.getString('tripleDigitTestDigit7')!;
+      digits8 = prefs.getString('tripleDigitTestDigit8')!;
+      digits9 = prefs.getString('tripleDigitTestDigit9')!;
+      digits10 = prefs.getString('tripleDigitTestDigit10')!;
+      digits11 = prefs.getString('tripleDigitTestDigit11')!;
+      digits12 = prefs.getString('tripleDigitTestDigit12')!;
     }
     setState(() {});
   }
 
   void updateStatus() async {
-    await prefs.setBool(tripleDigitTestActiveKey, false);
-    await prefs.updateActivityState(tripleDigitTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, false);
-    await prefs.updateActivityState(tripleDigitTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(tripleDigitTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(tripleDigitTestActiveKey, false);
+    prefs.updateActivityState(tripleDigitTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, false);
+    prefs.updateActivityState(tripleDigitTimedTestKey, 'todo');
+    prefs.updateActivityVisible(tripleDigitTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         tripleDigitTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (Triple Digit) is ready!',
@@ -147,60 +148,60 @@ class _TripleDigitTimedTestPrepScreenState
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TimedTestPrepRowContainer(
                 digits: digits1,
-                color: Colors.deepOrange[50],
+                color: Colors.deepOrange[50]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits2,
-                color: Colors.deepOrange[100],
+                color: Colors.deepOrange[100]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits3,
-                color: Colors.deepOrange[200],
+                color: Colors.deepOrange[200]!,
               ),
             ]),
             SizedBox(height: 25),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TimedTestPrepRowContainer(
                 digits: digits4,
-                color: Colors.deepOrange[50],
+                color: Colors.deepOrange[50]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits5,
-                color: Colors.deepOrange[100],
+                color: Colors.deepOrange[100]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits6,
-                color: Colors.deepOrange[200],
+                color: Colors.deepOrange[200]!,
               ),
             ]),
             SizedBox(height: 25),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TimedTestPrepRowContainer(
                 digits: digits7,
-                color: Colors.deepOrange[50],
+                color: Colors.deepOrange[50]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits8,
-                color: Colors.deepOrange[100],
+                color: Colors.deepOrange[100]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits9,
-                color: Colors.deepOrange[200],
+                color: Colors.deepOrange[200]!,
               ),
             ]),
             SizedBox(height: 25),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TimedTestPrepRowContainer(
                 digits: digits10,
-                color: Colors.deepOrange[50],
+                color: Colors.deepOrange[50]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits11,
-                color: Colors.deepOrange[100],
+                color: Colors.deepOrange[100]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits12,
-                color: Colors.deepOrange[200],
+                color: Colors.deepOrange[200]!,
               ),
             ]),
             SizedBox(
@@ -209,7 +210,6 @@ class _TripleDigitTimedTestPrepScreenState
             BasicFlatButton(
               text: 'I\'m ready!',
               color: colorTripleDigitLighter,
-              splashColor: colorTripleDigitStandard,
               onPressed: () => showConfirmDialog(
                   context: context,
                   function: updateStatus,
@@ -256,7 +256,7 @@ class TimedTestPrepRowContainer extends StatelessWidget {
   final String digits;
   final Color color;
 
-  TimedTestPrepRowContainer({this.digits, this.color});
+  TimedTestPrepRowContainer({required this.digits, required this.color});
 
   @override
   Widget build(BuildContext context) {

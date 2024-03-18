@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/single_digit_data.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -27,7 +28,7 @@ class _SingleDigitMultipleChoiceTestScreenState
   List<Widget> singleDigitCards = [];
   bool dataReady = false;
   late List<SingleDigitData> shuffledChoices;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _SingleDigitMultipleChoiceTestScreenState
     prefs.checkFirstTime(context, singleDigitMultipleChoiceTestFirstHelpKey,
         SingleDigitMultipleChoiceScreenHelp());
     singleDigitData =
-        await prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
+        prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
     singleDigitData = shuffle(singleDigitData);
 
     singleDigitData.forEach((entry) {
@@ -88,11 +89,9 @@ class _SingleDigitMultipleChoiceTestScreenState
   }
 
   void nextActivity() async {
-    if (await prefs.getActivityState(singleDigitMultipleChoiceTestKey) ==
-        'todo') {
-      await prefs.updateActivityState(
-          singleDigitMultipleChoiceTestKey, 'review');
-      await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+    if (prefs.getActivityState(singleDigitMultipleChoiceTestKey) == 'todo') {
+      prefs.updateActivityState(singleDigitMultipleChoiceTestKey, 'review');
+      prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
     }
     widget.callback();
   }

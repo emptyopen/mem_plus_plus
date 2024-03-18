@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -21,7 +22,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   late List<DeckData> deckData;
   List<Widget> deckCards = [];
   bool dataReady = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, deckPracticeFirstHelpKey, DeckPracticeScreenHelp());
-    deckData = await prefs.getSharedPrefs(deckKey) as List<DeckData>;
+    deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
     bool allComplete = true;
     for (int i = 0; i < deckData.length; i++) {
       if (deckData[i].familiarity < 100) {
@@ -59,8 +60,8 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   }
 
   void nextActivity() async {
-    await prefs.updateActivityState(deckPracticeKey, 'review');
-    await prefs.updateActivityVisible(deckMultipleChoiceTestKey, true);
+    prefs.updateActivityState(deckPracticeKey, 'review');
+    prefs.updateActivityVisible(deckMultipleChoiceTestKey, true);
     widget.callback();
   }
 

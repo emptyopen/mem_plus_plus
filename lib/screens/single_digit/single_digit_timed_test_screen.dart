@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -39,32 +40,31 @@ class _SingleDigitTimedTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp',
         SingleDigitTimedTestScreenHelp());
     // grab the digits
-    digit1 = (await prefs.getString('singleDigitTestDigit1'))!;
-    digit2 = (await prefs.getString('singleDigitTestDigit2'))!;
-    digit3 = (await prefs.getString('singleDigitTestDigit3'))!;
-    digit4 = (await prefs.getString('singleDigitTestDigit4'))!;
+    digit1 = (prefs.getString('singleDigitTestDigit1'))!;
+    digit2 = (prefs.getString('singleDigitTestDigit2'))!;
+    digit3 = (prefs.getString('singleDigitTestDigit3'))!;
+    digit4 = (prefs.getString('singleDigitTestDigit4'))!;
     print('real answer: $digit1$digit2$digit3$digit4');
     setState(() {});
   }
 
   void checkAnswer() async {
     if (textController.text == '$digit1$digit2$digit3$digit4') {
-      await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
-      await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(lesson1Key, true);
-      await prefs.setBool(gamesAvailableKey, true);
-      if (await prefs.getBool(fadeGameFirstViewKey) == null) {
-        await prefs.setBool(newGamesAvailableKey, true);
-        await prefs.setBool(fadeGameFirstViewKey, true);
+      prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+      prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+      prefs.updateActivityVisible(lesson1Key, true);
+      prefs.setBool(gamesAvailableKey, true);
+      if (prefs.getBool(fadeGameFirstViewKey) == null) {
+        prefs.setBool(newGamesAvailableKey, true);
+        prefs.setBool(fadeGameFirstViewKey, true);
       }
-      await prefs.setBool(fadeGameAvailableKey, true);
-      if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
-        await prefs.setBool(singleDigitTimedTestCompleteKey, true);
+      prefs.setBool(fadeGameAvailableKey, true);
+      if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+        prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        prefs.setBool(singleDigitTimedTestCompleteKey, true);
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText:
@@ -114,11 +114,11 @@ class _SingleDigitTimedTestScreenState
   }
 
   void giveUp() async {
-    await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
-    await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
-    await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-    if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+    prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+    prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+    if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -82,7 +83,7 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
     prefs.checkFirstTime(context, airportTimedTestPrepFirstHelpKey,
         AirportTimedTestPrepScreenHelp(callback: callback));
 
-    bool airportTestIsActive = (await prefs.getBool(airportTestActiveKey))!;
+    bool airportTestIsActive = (prefs.getBool(airportTestActiveKey))!;
     if (!airportTestIsActive) {
       print('no active test, setting new values');
       var random = Random();
@@ -115,37 +116,37 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
         arrivingTerminal +=
             terminalLetters[random.nextInt(terminalLetters.length)];
       }
-      await prefs.setString('airportAirline', airline);
-      await prefs.setString('airportDepartingTerminal', departingTerminal);
-      await prefs.setString('airportFlightCode', flightCode);
-      await prefs.setString('airportFlightTime', departureTime);
-      await prefs.setString('airportConfirmationCode', confirmationCode);
-      await prefs.setString('airportSeatNumber', seatNumber);
-      await prefs.setString('airportGateNumber', gateNumber);
-      await prefs.setString('airportArrivingTerminal', arrivingTerminal);
-      await prefs.setBool(airportTestActiveKey, true);
+      prefs.setString('airportAirline', airline);
+      prefs.setString('airportDepartingTerminal', departingTerminal);
+      prefs.setString('airportFlightCode', flightCode);
+      prefs.setString('airportFlightTime', departureTime);
+      prefs.setString('airportConfirmationCode', confirmationCode);
+      prefs.setString('airportSeatNumber', seatNumber);
+      prefs.setString('airportGateNumber', gateNumber);
+      prefs.setString('airportArrivingTerminal', arrivingTerminal);
+      prefs.setBool(airportTestActiveKey, true);
     } else {
-      airline = (await prefs.getString('airportAirline'))!;
-      departingTerminal = (await prefs.getString('airportDepartingTerminal'))!;
-      flightCode = (await prefs.getString('airportFlightCode'))!;
-      departureTime = (await prefs.getString('airportFlightTime'))!;
-      confirmationCode = (await prefs.getString('airportConfirmationCode'))!;
-      seatNumber = (await prefs.getString('airportSeatNumber'))!;
-      gateNumber = (await prefs.getString('airportGateNumber'))!;
-      arrivingTerminal = (await prefs.getString('airportArrivingTerminal'))!;
+      airline = (prefs.getString('airportAirline'))!;
+      departingTerminal = (prefs.getString('airportDepartingTerminal'))!;
+      flightCode = (prefs.getString('airportFlightCode'))!;
+      departureTime = (prefs.getString('airportFlightTime'))!;
+      confirmationCode = (prefs.getString('airportConfirmationCode'))!;
+      seatNumber = (prefs.getString('airportSeatNumber'))!;
+      gateNumber = (prefs.getString('airportGateNumber'))!;
+      arrivingTerminal = (prefs.getString('airportArrivingTerminal'))!;
     }
     isLoaded = true;
     setState(() {});
   }
 
   void updateStatus() async {
-    await prefs.setBool(airportTestActiveKey, false);
-    await prefs.updateActivityState(airportTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(airportTimedTestPrepKey, false);
-    await prefs.updateActivityState(airportTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(airportTimedTestKey, true);
-    await prefs.updateActivityFirstView(airportTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(airportTestActiveKey, false);
+    prefs.updateActivityState(airportTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(airportTimedTestPrepKey, false);
+    prefs.updateActivityState(airportTimedTestKey, 'todo');
+    prefs.updateActivityVisible(airportTimedTestKey, true);
+    prefs.updateActivityFirstView(airportTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         airportTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (airport) is ready!', 'Good luck!',

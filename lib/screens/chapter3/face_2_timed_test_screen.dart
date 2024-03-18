@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -55,14 +56,14 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, face2TimedTestFirstHelpKey, Face2TimedTestScreenHelp());
-    face1 = (await prefs.getString('face2Face1'))!;
-    name1 = (await prefs.getString('face2Name1'))!;
-    job1 = (await prefs.getString('face2Job1'))!;
-    hometown1 = (await prefs.getString('face2Hometown1'))!;
-    face2 = (await prefs.getString('face2Face2'))!;
-    name2 = (await prefs.getString('face2Name2'))!;
-    job2 = (await prefs.getString('face2Job2'))!;
-    hometown2 = (await prefs.getString('face2Hometown2'))!;
+    face1 = (prefs.getString('face2Face1'))!;
+    name1 = (prefs.getString('face2Name1'))!;
+    job1 = (prefs.getString('face2Job1'))!;
+    hometown1 = (prefs.getString('face2Hometown1'))!;
+    face2 = (prefs.getString('face2Face2'))!;
+    name2 = (prefs.getString('face2Name2'))!;
+    job2 = (prefs.getString('face2Job2'))!;
+    hometown2 = (prefs.getString('face2Hometown2'))!;
     isLoaded = true;
     print('real answer: $name1 $job1 $hometown1 || $name2 $job2 $hometown2');
     setState(() {});
@@ -89,12 +90,12 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
         d.distance(job2Answer, job2Guess) <= 4 &&
         d.distance(hometown1Answer, hometown1Guess) <= 2 &&
         d.distance(hometown2Answer, hometown2Guess) <= 2) {
-      await prefs.updateActivityVisible(face2TimedTestKey, false);
-      await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
-      if (await prefs.getBool(face2TimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(face2TimedTestKey, 'review');
-        await prefs.setBool(face2TimedTestCompleteKey, true);
-        if (await prefs.getBool(piTimedTestCompleteKey) == null) {
+      prefs.updateActivityVisible(face2TimedTestKey, false);
+      prefs.updateActivityVisible(face2TimedTestPrepKey, true);
+      if (prefs.getBool(face2TimedTestCompleteKey) == null) {
+        prefs.updateActivityState(face2TimedTestKey, 'review');
+        prefs.setBool(face2TimedTestCompleteKey, true);
+        if (prefs.getBool(piTimedTestCompleteKey) == null) {
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -104,7 +105,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
             durationSeconds: 3,
           );
         } else {
-          await prefs.updateActivityVisible(deckEditKey, true);
+          prefs.updateActivityVisible(deckEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
@@ -113,7 +114,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
             durationSeconds: 3,
             isSuper: true,
           );
-          await prefs.updateActivityVisible(tripleDigitEditKey, true);
+          prefs.updateActivityVisible(tripleDigitEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -154,11 +155,11 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(face2TimedTestKey, 'review');
-    await prefs.updateActivityVisible(face2TimedTestKey, false);
-    await prefs.updateActivityVisible(face2TimedTestPrepKey, true);
-    if (await prefs.getBool(face2TimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(face2TimedTestPrepKey, 'todo');
+    prefs.updateActivityState(face2TimedTestKey, 'review');
+    prefs.updateActivityVisible(face2TimedTestKey, false);
+    prefs.updateActivityVisible(face2TimedTestPrepKey, true);
+    if (prefs.getBool(face2TimedTestCompleteKey) == null) {
+      prefs.updateActivityState(face2TimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

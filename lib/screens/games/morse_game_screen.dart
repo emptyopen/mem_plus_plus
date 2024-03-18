@@ -4,18 +4,17 @@ import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'dart:async';
 
 import 'package:mem_plus_plus/services/services.dart';
 
-import '../../constants/colors.dart';
-
 class MorseGameScreen extends StatefulWidget {
   final int difficulty; // 0, 1, 2, 3 - beginner, medium, expert, ancient god
   final scaffoldKey;
 
-  MorseGameScreen({Key key, this.difficulty, this.scaffoldKey})
+  MorseGameScreen({Key? key, required this.difficulty, this.scaffoldKey})
       : super(key: key);
 
   @override
@@ -70,15 +69,15 @@ class _MorseGameScreenState extends State<MorseGameScreen>
     '',
     '',
   ];
-  Timer timer;
+  late Timer timer;
   int countdown = 300;
   int duration = 5;
   bool loaded = false;
   bool started = false;
   String difficultyName = '';
   var textController = TextEditingController();
-  AnimationController animationController;
-  var prefs = PrefsUpdater();
+  late AnimationController animationController;
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -90,9 +89,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
   void dispose() {
     textController.dispose();
     animationController.dispose();
-    if (timer != null) {
-      timer.cancel();
-    }
+    timer.cancel();
     super.dispose();
   }
 
@@ -197,7 +194,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
       correct = false;
     }
     if (correct) {
-      if (await prefs.getBool('morse${widget.difficulty}Complete') == null) {
+      if (prefs.getBool('morse${widget.difficulty}Complete') == null) {
         showSnackBar(
           scaffoldState: widget.scaffoldKey.currentState,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',
@@ -213,7 +210,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
           textColor: Colors.white,
         );
       }
-      await prefs.setBool("morse${widget.difficulty}Complete", true);
+      prefs.setBool("morse${widget.difficulty}Complete", true);
     } else {
       showSnackBar(
         scaffoldState: widget.scaffoldKey.currentState,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/animations.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -25,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   late AnimationController animationController;
   int slideIndex = 0;
   final IndexController indexController = IndexController();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   final List<Widget> headers = [
     Text(
@@ -151,8 +152,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void goToMainMenu(BuildContext context) async {
     HapticFeedback.lightImpact();
     if (widget.firstTime) {
-      var prefs = PrefsUpdater();
-      await prefs.setBool(firstTimeAppKey, false);
+      prefs.setBool(firstTimeAppKey, false);
       widget.callback();
       widget.mainMenuFirstTimeCallback();
     }

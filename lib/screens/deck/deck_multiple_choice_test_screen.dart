@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -38,7 +39,7 @@ class _DeckMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, deckMultipleChoiceTestFirstHelpKey,
         DeckMultipleChoiceScreenHelp());
-    deckData = await prefs.getSharedPrefs(deckKey) as List<DeckData>;
+    deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
     deckData = shuffle(deckData);
 
     deckData.forEach((entry) {
@@ -84,9 +85,9 @@ class _DeckMultipleChoiceTestScreenState
   }
 
   void nextActivity() async {
-    if (await prefs.getActivityState(deckMultipleChoiceTestKey) == 'todo') {
-      await prefs.updateActivityState(deckMultipleChoiceTestKey, 'review');
-      await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
+    if (prefs.getActivityState(deckMultipleChoiceTestKey) == 'todo') {
+      prefs.updateActivityState(deckMultipleChoiceTestKey, 'review');
+      prefs.updateActivityVisible(deckTimedTestPrepKey, true);
     }
     widget.callback();
   }

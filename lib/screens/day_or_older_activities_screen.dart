@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +29,7 @@ class DayOrOlderActivitiesScreen extends StatefulWidget {
 
 class _DayOrOlderActivitiesScreenState
     extends State<DayOrOlderActivitiesScreen> {
-  final prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   List<Widget> getActivities() {
     List<Widget> activityTileList = [];
@@ -79,47 +80,47 @@ class _DayOrOlderActivitiesScreenState
     switch (activity) {
       case singleDigitTimedTestKey:
         HapticFeedback.lightImpact();
-        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
-        await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
-        await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-        if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-          await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
+        prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+        prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+        if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+          prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
         }
         break;
       case singleDigitTimedTestKey:
         HapticFeedback.lightImpact();
-        await prefs.updateActivityState(singleDigitTimedTestKey, 'review');
-        await prefs.updateActivityVisible(singleDigitTimedTestKey, false);
-        await prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-        if (await prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
-          await prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
+        prefs.updateActivityState(singleDigitTimedTestKey, 'review');
+        prefs.updateActivityVisible(singleDigitTimedTestKey, false);
+        prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
+        if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+          prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
         }
         break;
       case alphabetTimedTestKey:
         HapticFeedback.lightImpact();
-        await prefs.updateActivityState(alphabetTimedTestKey, 'review');
-        await prefs.updateActivityVisible(alphabetTimedTestKey, false);
-        await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-        if (await prefs.getBool(alphabetTimedTestCompleteKey) == null) {
-          await prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
+        prefs.updateActivityState(alphabetTimedTestKey, 'review');
+        prefs.updateActivityVisible(alphabetTimedTestKey, false);
+        prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+        if (prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+          prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
         }
         break;
       case paoTimedTestKey:
         HapticFeedback.lightImpact();
-        await prefs.updateActivityState(paoTimedTestKey, 'review');
-        await prefs.updateActivityVisible(paoTimedTestKey, false);
-        await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-        if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
-          await prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
+        prefs.updateActivityState(paoTimedTestKey, 'review');
+        prefs.updateActivityVisible(paoTimedTestKey, false);
+        prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+        if (prefs.getBool(paoTimedTestCompleteKey) == null) {
+          prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
         }
         break;
       case deckTimedTestKey:
         HapticFeedback.lightImpact();
-        await prefs.updateActivityState(deckTimedTestKey, 'review');
-        await prefs.updateActivityVisible(deckTimedTestKey, false);
-        await prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-        if (await prefs.getBool(deckTimedTestCompleteKey) == null) {
-          await prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
+        prefs.updateActivityState(deckTimedTestKey, 'review');
+        prefs.updateActivityVisible(deckTimedTestKey, false);
+        prefs.updateActivityVisible(deckTimedTestPrepKey, true);
+        if (prefs.getBool(deckTimedTestCompleteKey) == null) {
+          prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
         }
         break;
     }

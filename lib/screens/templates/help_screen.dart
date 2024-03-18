@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/services/services.dart';
@@ -10,14 +11,14 @@ class HelpScreen extends StatefulWidget {
   final Color buttonColor;
   final Color buttonSplashColor;
   final String firstHelpKey;
-  final Function callback;
+  final Function? callback;
 
   HelpScreen({
     this.title = '',
-    this.information,
-    this.buttonColor,
-    this.buttonSplashColor,
-    this.firstHelpKey,
+    required this.information,
+    required this.buttonColor,
+    required this.buttonSplashColor,
+    required this.firstHelpKey,
     this.callback,
   });
 
@@ -93,8 +94,8 @@ class _HelpScreenState extends State<HelpScreen> {
   }
 
   checkFirstHelp() async {
-    var prefs = PrefsUpdater();
-    firstHelp = await prefs.getBool(widget.firstHelpKey) == null;
+    PrefsUpdater prefs = PrefsUpdater();
+    firstHelp = prefs.getBool(widget.firstHelpKey) == null;
     setState(() {});
   }
 
@@ -210,32 +211,29 @@ class HelpOKButton extends StatelessWidget {
   final Color buttonColor;
   final Color buttonSplashColor;
   final String firstHelpKey;
-  final prefs = PrefsUpdater();
+  final PrefsUpdater prefs = PrefsUpdater();
   final Function callback;
 
   HelpOKButton(
-      {this.buttonColor,
-      this.buttonSplashColor,
-      this.firstHelpKey,
-      this.callback});
+      {required this.buttonColor,
+      required this.buttonSplashColor,
+      required this.firstHelpKey,
+      required this.callback});
 
-  updateFirstHelp() async {
-    await prefs.setBool(firstHelpKey, false);
+  updateFirstHelp() {
+    prefs.setBool(firstHelpKey, false);
   }
 
   @override
   Widget build(BuildContext context) {
     return BasicFlatButton(
       onPressed: () {
-        if (callback != null) {
-          callback();
-        }
+        callback();
         updateFirstHelp();
         Navigator.pop(context);
       },
       text: 'OK',
       color: buttonColor,
-      splashColor: buttonSplashColor,
       fontSize: 20,
       padding: 10,
     );

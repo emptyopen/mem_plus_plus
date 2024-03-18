@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/alphabet_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -22,7 +22,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   late SharedPreferences sharedPreferences;
   late List<AlphabetData> alphabetData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -33,13 +33,12 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   Future<Null> getSharedPrefs() async {
     await prefs.checkFirstTime(
         context, alphabetEditFirstHelpKey, AlphabetEditScreenHelp());
-    if (await prefs.getString(alphabetKey) == null) {
+    if (prefs.getString(alphabetKey) == null) {
       alphabetData =
           debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
       prefs.setString(alphabetKey, json.encode(alphabetData));
     } else {
-      alphabetData =
-          await prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
+      alphabetData = prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     }
     setState(() {});
   }
@@ -57,10 +56,10 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityVisible(alphabetPracticeKey);
+    bool completedOnce = prefs.getActivityVisible(alphabetPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityVisible(alphabetPracticeKey, true);
-      await prefs.updateActivityState(alphabetEditKey, 'review');
+      prefs.updateActivityVisible(alphabetPracticeKey, true);
+      prefs.updateActivityState(alphabetEditKey, 'review');
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',

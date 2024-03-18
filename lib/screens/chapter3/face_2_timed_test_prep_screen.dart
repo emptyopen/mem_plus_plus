@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -28,7 +29,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
   String name2 = '';
   String job2 = '';
   String hometown2 = '';
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration =
       debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 3);
 
@@ -41,7 +42,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
   Future<Null> getSharedPrefs() async {
     await prefs.checkFirstTime(context, face2TimedTestPrepFirstHelpKey,
         Face2TimedTestPrepScreenHelp());
-    bool? face2TestIsActive = await prefs.getBool(face2TestActiveKey);
+    bool? face2TestIsActive = prefs.getBool(face2TestActiveKey);
     if (face2TestIsActive == null || !face2TestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -93,25 +94,25 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
       prefs.setBool(face2TestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      face1 = (await prefs.getString('face2Face1'))!;
-      name1 = (await prefs.getString('face2Name1'))!;
-      job1 = (await prefs.getString('face2Job1'))!;
-      hometown1 = (await prefs.getString('face2Hometown1'))!;
-      face2 = (await prefs.getString('face2Face2'))!;
-      name2 = (await prefs.getString('face2Name2'))!;
-      job2 = (await prefs.getString('face2Job2'))!;
-      hometown2 = (await prefs.getString('face2Hometown2'))!;
+      face1 = (prefs.getString('face2Face1'))!;
+      name1 = (prefs.getString('face2Name1'))!;
+      job1 = (prefs.getString('face2Job1'))!;
+      hometown1 = (prefs.getString('face2Hometown1'))!;
+      face2 = (prefs.getString('face2Face2'))!;
+      name2 = (prefs.getString('face2Name2'))!;
+      job2 = (prefs.getString('face2Job2'))!;
+      hometown2 = (prefs.getString('face2Hometown2'))!;
     }
     setState(() {});
   }
 
   void updateStatus() async {
-    await prefs.setBool(face2TestActiveKey, false);
-    await prefs.updateActivityState(face2TimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(face2TimedTestPrepKey, false);
-    await prefs.updateActivityState(face2TimedTestKey, 'todo');
-    await prefs.updateActivityVisible(face2TimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(face2TestActiveKey, false);
+    prefs.updateActivityState(face2TimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(face2TimedTestPrepKey, false);
+    prefs.updateActivityState(face2TimedTestKey, 'todo');
+    prefs.updateActivityVisible(face2TimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         face2TimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Faces test (difficult) is ready!',

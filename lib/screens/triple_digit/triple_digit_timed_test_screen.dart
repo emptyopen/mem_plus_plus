@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -47,22 +48,22 @@ class _TripleDigitTimedTestScreenState
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
+    PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'TripleDigitTimedTestFirstHelp',
         TripleDigitTimedTestScreenHelp());
     // grab the digits
-    digit1 = await prefs.getString('tripleDigitTestDigit1');
-    digit2 = await prefs.getString('tripleDigitTestDigit2');
-    digit3 = await prefs.getString('tripleDigitTestDigit3');
-    digit4 = await prefs.getString('tripleDigitTestDigit4');
-    digit5 = await prefs.getString('tripleDigitTestDigit5');
-    digit6 = await prefs.getString('tripleDigitTestDigit6');
-    digit7 = await prefs.getString('tripleDigitTestDigit7');
-    digit8 = await prefs.getString('tripleDigitTestDigit8');
-    digit9 = await prefs.getString('tripleDigitTestDigit9');
-    digit10 = await prefs.getString('tripleDigitTestDigit10');
-    digit11 = await prefs.getString('tripleDigitTestDigit11');
-    digit12 = await prefs.getString('tripleDigitTestDigit12');
+    digit1 = prefs.getString('tripleDigitTestDigit1')!;
+    digit2 = prefs.getString('tripleDigitTestDigit2')!;
+    digit3 = prefs.getString('tripleDigitTestDigit3')!;
+    digit4 = prefs.getString('tripleDigitTestDigit4')!;
+    digit5 = prefs.getString('tripleDigitTestDigit5')!;
+    digit6 = prefs.getString('tripleDigitTestDigit6')!;
+    digit7 = prefs.getString('tripleDigitTestDigit7')!;
+    digit8 = prefs.getString('tripleDigitTestDigit8')!;
+    digit9 = prefs.getString('tripleDigitTestDigit9')!;
+    digit10 = prefs.getString('tripleDigitTestDigit10')!;
+    digit11 = prefs.getString('tripleDigitTestDigit11')!;
+    digit12 = prefs.getString('tripleDigitTestDigit12')!;
     print(
         'real answer: $digit1$digit2$digit3$digit4 $digit5$digit6$digit7$digit8 $digit9$digit10$digit11$digit12');
     setState(() {});
@@ -71,11 +72,11 @@ class _TripleDigitTimedTestScreenState
   void checkAnswer() async {
     if (cleanString(textController.text) ==
         '$digit1$digit2$digit3$digit4$digit5$digit6$digit7$digit8$digit9$digit10$digit11$digit12') {
-      await prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
-      await prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(lesson1Key, true);
-      await prefs.setBool(gamesAvailableKey, true);
-      await prefs.setBool(fadeGameAvailableKey, true);
+      prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
+      prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
+      prefs.updateActivityVisible(lesson1Key, true);
+      prefs.setBool(gamesAvailableKey, true);
+      prefs.setBool(fadeGameAvailableKey, true);
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText: 'Congratulations! You aced it!',
@@ -98,9 +99,9 @@ class _TripleDigitTimedTestScreenState
   }
 
   void giveUp() async {
-    await prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
-    await prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
-    await prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
+    prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
+    prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
+    prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
@@ -203,7 +204,6 @@ class _TripleDigitTimedTestScreenState
                     text: 'Give up',
                     fontSize: 24,
                     color: Colors.grey[200]!,
-                    splashColor: colorTripleDigitStandard,
                     onPressed: () => giveUp(),
                     padding: 10,
                   ),
@@ -214,7 +214,6 @@ class _TripleDigitTimedTestScreenState
                     text: 'Submit',
                     fontSize: 24,
                     color: colorTripleDigitLighter,
-                    splashColor: colorTripleDigitStandard,
                     onPressed: () => checkAnswer(),
                     padding: 10,
                   ),

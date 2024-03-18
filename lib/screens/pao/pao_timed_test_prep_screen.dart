@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
@@ -11,7 +12,7 @@ import 'package:flutter/services.dart';
 class PAOTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  PAOTimedTestPrepScreen({this.callback});
+  PAOTimedTestPrepScreen({required this.callback});
 
   @override
   _PAOTimedTestPrepScreenState createState() => _PAOTimedTestPrepScreenState();
@@ -140,12 +141,11 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(
         context, paoTimedTestPrepFirstHelpKey, PAOTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for paoTest
-    bool sdTestIsActive = await prefs.getBool(paoTestActiveKey);
+    bool? sdTestIsActive = prefs.getBool(paoTestActiveKey);
     if (sdTestIsActive == null || !sdTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -158,38 +158,38 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
       digits7 = possibleValues[random.nextInt(possibleValues.length)];
       digits8 = possibleValues[random.nextInt(possibleValues.length)];
       digits9 = possibleValues[random.nextInt(possibleValues.length)];
-      await prefs.setString('paoTestDigits1', digits1);
-      await prefs.setString('paoTestDigits2', digits2);
-      await prefs.setString('paoTestDigits3', digits3);
-      await prefs.setString('paoTestDigits4', digits4);
-      await prefs.setString('paoTestDigits5', digits5);
-      await prefs.setString('paoTestDigits6', digits6);
-      await prefs.setString('paoTestDigits7', digits7);
-      await prefs.setString('paoTestDigits8', digits8);
-      await prefs.setString('paoTestDigits9', digits9);
-      await prefs.setBool(paoTestActiveKey, true);
+      prefs.setString('paoTestDigits1', digits1);
+      prefs.setString('paoTestDigits2', digits2);
+      prefs.setString('paoTestDigits3', digits3);
+      prefs.setString('paoTestDigits4', digits4);
+      prefs.setString('paoTestDigits5', digits5);
+      prefs.setString('paoTestDigits6', digits6);
+      prefs.setString('paoTestDigits7', digits7);
+      prefs.setString('paoTestDigits8', digits8);
+      prefs.setString('paoTestDigits9', digits9);
+      prefs.setBool(paoTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      digits1 = await prefs.getString('paoTestDigits1');
-      digits2 = await prefs.getString('paoTestDigits2');
-      digits3 = await prefs.getString('paoTestDigits3');
-      digits4 = await prefs.getString('paoTestDigits4');
-      digits5 = await prefs.getString('paoTestDigits5');
-      digits6 = await prefs.getString('paoTestDigits6');
-      digits7 = await prefs.getString('paoTestDigits7');
-      digits8 = await prefs.getString('paoTestDigits8');
-      digits9 = await prefs.getString('paoTestDigits9');
+      digits1 = prefs.getString('paoTestDigits1')!;
+      digits2 = prefs.getString('paoTestDigits2')!;
+      digits3 = prefs.getString('paoTestDigits3')!;
+      digits4 = prefs.getString('paoTestDigits4')!;
+      digits5 = prefs.getString('paoTestDigits5')!;
+      digits6 = prefs.getString('paoTestDigits6')!;
+      digits7 = prefs.getString('paoTestDigits7')!;
+      digits8 = prefs.getString('paoTestDigits8')!;
+      digits9 = prefs.getString('paoTestDigits9')!;
     }
     setState(() {});
   }
 
   void updateStatus() async {
-    await prefs.setBool(paoTestActiveKey, false);
-    await prefs.updateActivityState(paoTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(paoTimedTestPrepKey, false);
-    await prefs.updateActivityState(paoTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(paoTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(paoTestActiveKey, false);
+    prefs.updateActivityState(paoTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(paoTimedTestPrepKey, false);
+    prefs.updateActivityState(paoTimedTestKey, 'todo');
+    prefs.updateActivityVisible(paoTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         paoTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (PAO) is ready!', 'Good luck!',
@@ -235,45 +235,45 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TimedTestPrepRowContainer(
                 digits: digits1,
-                color: Colors.pink[50],
+                color: Colors.pink[50]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits2,
-                color: Colors.pink[100],
+                color: Colors.pink[100]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits3,
-                color: Colors.pink[200],
+                color: Colors.pink[200]!,
               ),
             ]),
             SizedBox(height: 25),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TimedTestPrepRowContainer(
                 digits: digits4,
-                color: Colors.pink[50],
+                color: Colors.pink[50]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits5,
-                color: Colors.pink[100],
+                color: Colors.pink[100]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits6,
-                color: Colors.pink[200],
+                color: Colors.pink[200]!,
               ),
             ]),
             SizedBox(height: 25),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TimedTestPrepRowContainer(
                 digits: digits7,
-                color: Colors.pink[50],
+                color: Colors.pink[50]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits8,
-                color: Colors.pink[100],
+                color: Colors.pink[100]!,
               ),
               TimedTestPrepRowContainer(
                 digits: digits9,
-                color: Colors.pink[200],
+                color: Colors.pink[200]!,
               ),
             ]),
             SizedBox(
@@ -282,7 +282,6 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
             BasicFlatButton(
               text: 'I\'m ready!',
               color: colorPAOLighter,
-              splashColor: colorPAOStandard,
               onPressed: () => showConfirmDialog(
                   context: context,
                   function: updateStatus,
@@ -338,7 +337,7 @@ class TimedTestPrepRowContainer extends StatelessWidget {
   final String digits;
   final Color color;
 
-  TimedTestPrepRowContainer({this.digits, this.color});
+  TimedTestPrepRowContainer({required this.digits, required this.color});
 
   @override
   Widget build(BuildContext context) {

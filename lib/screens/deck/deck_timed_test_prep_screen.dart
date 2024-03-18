@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
@@ -12,7 +13,7 @@ import 'package:flutter/services.dart';
 class DeckTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  DeckTimedTestPrepScreen({this.callback});
+  DeckTimedTestPrepScreen({required this.callback});
 
   @override
   _DeckTimedTestPrepScreenState createState() =>
@@ -95,10 +96,9 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
     prefs.checkFirstTime(
         context, deckTimedTestPrepFirstHelpKey, DeckTimedTestPrepScreenHelp());
-    bool? sdTestIsActive = await prefs.getBool(deckTestActiveKey);
+    bool? sdTestIsActive = prefs.getBool(deckTestActiveKey);
     if (sdTestIsActive == null || !sdTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -123,38 +123,38 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
       print(possibleValues.length);
       digits9 = possibleValues[random.nextInt(possibleValues.length)];
       possibleValues.remove(digits9);
-      await prefs.setString('deckTestDigits1', digits1);
-      await prefs.setString('deckTestDigits2', digits2);
-      await prefs.setString('deckTestDigits3', digits3);
-      await prefs.setString('deckTestDigits4', digits4);
-      await prefs.setString('deckTestDigits5', digits5);
-      await prefs.setString('deckTestDigits6', digits6);
-      await prefs.setString('deckTestDigits7', digits7);
-      await prefs.setString('deckTestDigits8', digits8);
-      await prefs.setString('deckTestDigits9', digits9);
-      await prefs.setBool(deckTestActiveKey, true);
+      prefs.setString('deckTestDigits1', digits1);
+      prefs.setString('deckTestDigits2', digits2);
+      prefs.setString('deckTestDigits3', digits3);
+      prefs.setString('deckTestDigits4', digits4);
+      prefs.setString('deckTestDigits5', digits5);
+      prefs.setString('deckTestDigits6', digits6);
+      prefs.setString('deckTestDigits7', digits7);
+      prefs.setString('deckTestDigits8', digits8);
+      prefs.setString('deckTestDigits9', digits9);
+      prefs.setBool(deckTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      digits1 = (await prefs.getString('deckTestDigits1'))!;
-      digits2 = (await prefs.getString('deckTestDigits2'))!;
-      digits3 = (await prefs.getString('deckTestDigits3'))!;
-      digits4 = (await prefs.getString('deckTestDigits4'))!;
-      digits5 = (await prefs.getString('deckTestDigits5'))!;
-      digits6 = (await prefs.getString('deckTestDigits6'))!;
-      digits7 = (await prefs.getString('deckTestDigits7'))!;
-      digits8 = (await prefs.getString('deckTestDigits8'))!;
-      digits9 = (await prefs.getString('deckTestDigits9'))!;
+      digits1 = (prefs.getString('deckTestDigits1'))!;
+      digits2 = (prefs.getString('deckTestDigits2'))!;
+      digits3 = (prefs.getString('deckTestDigits3'))!;
+      digits4 = (prefs.getString('deckTestDigits4'))!;
+      digits5 = (prefs.getString('deckTestDigits5'))!;
+      digits6 = (prefs.getString('deckTestDigits6'))!;
+      digits7 = (prefs.getString('deckTestDigits7'))!;
+      digits8 = (prefs.getString('deckTestDigits8'))!;
+      digits9 = (prefs.getString('deckTestDigits9'))!;
     }
     setState(() {});
   }
 
   void updateStatus() async {
-    await prefs.setBool(deckTestActiveKey, false);
-    await prefs.updateActivityState(deckTimedTestPrepKey, 'review');
-    await prefs.updateActivityVisible(deckTimedTestPrepKey, false);
-    await prefs.updateActivityState(deckTimedTestKey, 'todo');
-    await prefs.updateActivityVisible(deckTimedTestKey, true);
-    await prefs.updateActivityVisibleAfter(
+    prefs.setBool(deckTestActiveKey, false);
+    prefs.updateActivityState(deckTimedTestPrepKey, 'review');
+    prefs.updateActivityVisible(deckTimedTestPrepKey, false);
+    prefs.updateActivityState(deckTimedTestKey, 'todo');
+    prefs.updateActivityVisible(deckTimedTestKey, true);
+    prefs.updateActivityVisibleAfter(
         deckTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
     notifyDuration(testDuration, 'Timed test (Deck) is ready!', 'Good luck!',

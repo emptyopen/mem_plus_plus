@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -44,10 +45,10 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     prefs.checkFirstTime(
         context, faceTimedTestFirstHelpKey, FaceTimedTestScreenHelp());
     // grab the digits
-    face1 = (await prefs.getString('face1'))!;
-    face2 = (await prefs.getString('face2'))!;
-    name1 = (await prefs.getString('name1'))!;
-    name2 = (await prefs.getString('name2'))!;
+    face1 = (prefs.getString('face1'))!;
+    face2 = (prefs.getString('face2'))!;
+    name1 = (prefs.getString('name1'))!;
+    name2 = (prefs.getString('name2'))!;
     isLoaded = true;
     print('real answer: $name1 $name2');
     setState(() {});
@@ -68,12 +69,12 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
         print('success');
       }
       // every time
-      await prefs.updateActivityVisible(faceTimedTestKey, false);
-      await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-      if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(faceTimedTestKey, 'review');
-        await prefs.setBool(faceTimedTestCompleteKey, true);
-        if (await prefs.getBool(planetTimedTestCompleteKey) == null) {
+      prefs.updateActivityVisible(faceTimedTestKey, false);
+      prefs.updateActivityVisible(faceTimedTestPrepKey, true);
+      if (prefs.getBool(faceTimedTestCompleteKey) == null) {
+        prefs.updateActivityState(faceTimedTestKey, 'review');
+        prefs.setBool(faceTimedTestCompleteKey, true);
+        if (prefs.getBool(planetTimedTestCompleteKey) == null) {
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -83,7 +84,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
             durationSeconds: 3,
           );
         } else {
-          await prefs.updateActivityVisible(alphabetEditKey, true);
+          prefs.updateActivityVisible(alphabetEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -120,11 +121,11 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(faceTimedTestKey, 'review');
-    await prefs.updateActivityVisible(faceTimedTestKey, false);
-    await prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-    if (await prefs.getBool(faceTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(faceTimedTestKey, 'review');
+    prefs.updateActivityVisible(faceTimedTestKey, false);
+    prefs.updateActivityVisible(faceTimedTestPrepKey, true);
+    if (prefs.getBool(faceTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

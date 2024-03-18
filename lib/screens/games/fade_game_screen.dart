@@ -5,17 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/components/animations.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 
 import 'package:mem_plus_plus/services/services.dart';
-
-import '../../constants/colors.dart';
 
 class FadeGameScreen extends StatefulWidget {
   final int difficulty; // 0, 1, 2, 3, 4
   final scaffoldKey;
 
-  FadeGameScreen({Key key, this.difficulty, this.scaffoldKey})
+  FadeGameScreen({Key? key, required this.difficulty, this.scaffoldKey})
       : super(key: key);
 
   @override
@@ -33,10 +32,9 @@ class _FadeGameScreenState extends State<FadeGameScreen>
   int count = 0;
   bool started = false;
   bool complete = false;
-  Widget widgetRows;
   var textController = TextEditingController();
-  AnimationController animationController;
-  var prefs = PrefsUpdater();
+  late AnimationController animationController;
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -163,7 +161,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
 
   checkAnswer(BuildContext context) async {
     if (textController.text.trim() == randomSequence) {
-      if (await prefs.getBool('fade${widget.difficulty}Complete') == null) {
+      if (prefs.getBool('fade${widget.difficulty}Complete') == null) {
         showSnackBar(
           scaffoldState: widget.scaffoldKey.currentState,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',
@@ -179,7 +177,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
           textColor: Colors.white,
         );
       }
-      await prefs.setBool("fade${widget.difficulty}Complete", true);
+      prefs.setBool("fade${widget.difficulty}Complete", true);
     } else {
       showSnackBar(
         scaffoldState: widget.scaffoldKey.currentState,

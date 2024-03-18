@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -58,13 +59,13 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     prefs.checkFirstTime(
         context, airportTimedTestFirstHelpKey, AirportTimedTestScreenHelp());
     // grab the digits
-    departingTerminal = (await prefs.getString('airportDepartingTerminal'))!;
-    flightCode = (await prefs.getString('airportFlightCode'))!;
-    departureTime = (await prefs.getString('airportFlightTime'))!;
-    confirmationCode = (await prefs.getString('airportConfirmationCode'))!;
-    seatNumber = (await prefs.getString('airportSeatNumber'))!;
-    gateNumber = (await prefs.getString('airportGateNumber'))!;
-    arrivingTerminal = (await prefs.getString('airportArrivingTerminal'))!;
+    departingTerminal = (prefs.getString('airportDepartingTerminal'))!;
+    flightCode = (prefs.getString('airportFlightCode'))!;
+    departureTime = (prefs.getString('airportFlightTime'))!;
+    confirmationCode = (prefs.getString('airportConfirmationCode'))!;
+    seatNumber = (prefs.getString('airportSeatNumber'))!;
+    gateNumber = (prefs.getString('airportGateNumber'))!;
+    arrivingTerminal = (prefs.getString('airportArrivingTerminal'))!;
     print(
         'real answer: $departingTerminal $confirmationCode $departureTime $gateNumber  $flightCode $seatNumber $arrivingTerminal');
     isLoaded = true;
@@ -120,12 +121,12 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
       //         .toLowerCase()
       //         .replaceAll(' ', '') ==
       //     arrivingTerminal.toLowerCase()) {
-      await prefs.updateActivityVisible(airportTimedTestKey, false);
-      await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
-      if (await prefs.getBool(airportTimedTestCompleteKey) == null) {
-        await prefs.setBool(airportTimedTestCompleteKey, true);
-        await prefs.updateActivityState(airportTimedTestKey, 'review');
-        if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
+      prefs.updateActivityVisible(airportTimedTestKey, false);
+      prefs.updateActivityVisible(airportTimedTestPrepKey, true);
+      if (prefs.getBool(airportTimedTestCompleteKey) == null) {
+        prefs.setBool(airportTimedTestCompleteKey, true);
+        prefs.updateActivityState(airportTimedTestKey, 'review');
+        if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText:
@@ -135,7 +136,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
             durationSeconds: 3,
           );
         } else {
-          await prefs.updateActivityVisible(paoEditKey, true);
+          prefs.updateActivityVisible(paoEditKey, true);
           showSnackBar(
             scaffoldState: widget.globalKey.currentState,
             snackBarText: 'Congratulations! You\'ve unlocked the PAO system!',
@@ -176,11 +177,11 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(airportTimedTestKey, 'review');
-    await prefs.updateActivityVisible(airportTimedTestKey, false);
-    await prefs.updateActivityVisible(airportTimedTestPrepKey, true);
-    if (await prefs.getBool(airportTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(airportTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(airportTimedTestKey, 'review');
+    prefs.updateActivityVisible(airportTimedTestKey, false);
+    prefs.updateActivityVisible(airportTimedTestPrepKey, true);
+    if (prefs.getBool(airportTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(airportTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,

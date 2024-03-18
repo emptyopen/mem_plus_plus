@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/alphabet_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -21,7 +22,7 @@ class AlphabetWrittenTestScreen extends StatefulWidget {
 class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   late List<AlphabetData> alphabetData;
   bool dataReady = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -32,17 +33,16 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, alphabetWrittenTestFirstHelpKey,
         AlphabetWrittenTestScreenHelp());
-    alphabetData =
-        await prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
+    alphabetData = prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     alphabetData = shuffle(alphabetData);
     dataReady = true;
     setState(() {});
   }
 
   void nextActivity() async {
-    if (await prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
-      await prefs.updateActivityState(alphabetWrittenTestKey, 'review');
-      await prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+    if (prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
+      prefs.updateActivityState(alphabetWrittenTestKey, 'review');
+      prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
     }
     widget.callback();
   }

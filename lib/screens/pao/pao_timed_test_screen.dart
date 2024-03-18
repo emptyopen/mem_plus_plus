@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/standard.dart';
@@ -10,7 +11,7 @@ class PAOTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  PAOTimedTestScreen({this.callback, this.globalKey});
+  PAOTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _PAOTimedTestScreenState createState() => _PAOTimedTestScreenState();
@@ -46,19 +47,19 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    var prefs = PrefsUpdater();
+    PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(
         context, 'PAOTimedTestFirstHelp', PAOTimedTestScreenHelp());
     // grab the digits
-    digits1 = await prefs.getString('paoTestDigits1');
-    digits2 = await prefs.getString('paoTestDigits2');
-    digits3 = await prefs.getString('paoTestDigits3');
-    digits4 = await prefs.getString('paoTestDigits4');
-    digits5 = await prefs.getString('paoTestDigits5');
-    digits6 = await prefs.getString('paoTestDigits6');
-    digits7 = await prefs.getString('paoTestDigits7');
-    digits8 = await prefs.getString('paoTestDigits8');
-    digits9 = await prefs.getString('paoTestDigits9');
+    digits1 = prefs.getString('paoTestDigits1')!;
+    digits2 = prefs.getString('paoTestDigits2')!;
+    digits3 = prefs.getString('paoTestDigits3')!;
+    digits4 = prefs.getString('paoTestDigits4')!;
+    digits5 = prefs.getString('paoTestDigits5')!;
+    digits6 = prefs.getString('paoTestDigits6')!;
+    digits7 = prefs.getString('paoTestDigits7')!;
+    digits8 = prefs.getString('paoTestDigits8')!;
+    digits9 = prefs.getString('paoTestDigits9')!;
     print(
         'real answer: $digits1$digits2$digits3 $digits4$digits5$digits6 $digits7$digits8$digits9');
     setState(() {});
@@ -69,12 +70,12 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     if (textController1.text.trim() == '$digits1$digits2$digits3' &&
         textController2.text.trim() == '$digits4$digits5$digits6' &&
         textController3.text.trim() == '$digits7$digits8$digits9') {
-      await prefs.updateActivityVisible(paoTimedTestKey, false);
-      await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-      await prefs.updateActivityVisible(lesson3Key, true);
-      if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
-        await prefs.setBool(paoTimedTestCompleteKey, true);
-        await prefs.updateActivityState(paoTimedTestKey, 'review');
+      prefs.updateActivityVisible(paoTimedTestKey, false);
+      prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+      prefs.updateActivityVisible(lesson3Key, true);
+      if (prefs.getBool(paoTimedTestCompleteKey) == null) {
+        prefs.setBool(paoTimedTestCompleteKey, true);
+        prefs.updateActivityState(paoTimedTestKey, 'review');
         showSnackBar(
           scaffoldState: widget.globalKey.currentState,
           snackBarText: 'Congratulations! You\'ve mastered the PAO system!',
@@ -119,11 +120,11 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
 
   void giveUp() async {
     HapticFeedback.lightImpact();
-    await prefs.updateActivityState(paoTimedTestKey, 'review');
-    await prefs.updateActivityVisible(paoTimedTestKey, false);
-    await prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-    if (await prefs.getBool(paoTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
+    prefs.updateActivityState(paoTimedTestKey, 'review');
+    prefs.updateActivityVisible(paoTimedTestKey, false);
+    prefs.updateActivityVisible(paoTimedTestPrepKey, true);
+    if (prefs.getBool(paoTimedTestCompleteKey) == null) {
+      prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
     }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -253,8 +254,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Give up',
                       onPressed: () => giveUp(),
-                      color: Colors.grey[200],
-                      splashColor: Colors.grey,
+                      color: Colors.grey[200]!,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -265,7 +265,6 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorPAOStandard,
-                      splashColor: colorPAODarker,
                       padding: 10,
                       fontSize: 24,
                     ),

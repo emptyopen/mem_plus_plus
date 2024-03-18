@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/screens/triple_digit/triple_digit_multiple_choice_
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_practice_screen.dart';
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_timed_test_screen.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -151,9 +152,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   List<String> availableActivities = [];
-  Map? customMemories;
-  Map? activityMenuButtonMap;
-  bool? firstTimeOpeningApp;
+  late Map customMemories;
+  late Map activityMenuButtonMap;
+  late bool firstTimeOpeningApp;
   bool customMemoryManagerAvailable = false;
   bool customMemoryManagerFirstView = false;
   bool gamesAvailable = false;
@@ -167,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool consolidateChapter3 = false;
   bool consolidateDeck = false;
   bool consolidateTripleDigit = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -223,8 +224,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void setUnlockedActivities() async {
     // if first time opening app, welcome
-    if (await prefs.getBool(firstTimeAppKey) == null ||
-        await prefs.getBool(firstTimeAppKey)) {
+    if (prefs.getBool(firstTimeAppKey) == null ||
+        prefs.getBool(firstTimeAppKey)) {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -238,51 +239,51 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // check if games are available, and firstView
-    if (await prefs.getBool(gamesAvailableKey) == null) {
+    if (prefs.getBool(gamesAvailableKey) == null) {
       gamesAvailable = false;
     } else {
       gamesAvailable = true;
     }
-    if (await prefs.getBool(newGamesAvailableKey) == null ||
-        await prefs.getBool(newGamesAvailableKey) == false) {
+    if (prefs.getBool(newGamesAvailableKey) == null ||
+        prefs.getBool(newGamesAvailableKey) == false) {
       gamesFirstView = false;
     } else {
       gamesFirstView = true;
     }
 
     // check if customManager is available, and firstView
-    if (await prefs.getBool(customMemoryManagerAvailableKey) == null) {
+    if (prefs.getBool(customMemoryManagerAvailableKey) == null) {
       customMemoryManagerAvailable = false;
     } else {
       customMemoryManagerAvailable = true;
     }
-    if (await prefs.getBool(customMemoryManagerFirstHelpKey) == null ||
-        await prefs.getBool(customMemoryManagerFirstHelpKey) == false) {
+    if (prefs.getBool(customMemoryManagerFirstHelpKey) == null ||
+        prefs.getBool(customMemoryManagerFirstHelpKey) == false) {
       customMemoryManagerFirstView = false;
     } else {
       customMemoryManagerFirstView = true;
     }
 
     // get custom memories
-    if (await prefs.getString(customMemoriesKey) == null) {
+    if (prefs.getString(customMemoriesKey) == null) {
       customMemories = {};
-      await prefs.writeSharedPrefs(customMemoriesKey, {});
+      prefs.writeSharedPrefs(customMemoriesKey, {});
     } else {
-      customMemories = (await prefs.getSharedPrefs(customMemoriesKey) as Map);
+      customMemories = (prefs.getSharedPrefs(customMemoriesKey) as Map);
     }
 
     // backwards compatibility:
     // if deck is available, make triple digit available
-    if (await prefs.getActivityVisible(deckEditKey) &&
-        !(await prefs.getActivityVisible(tripleDigitEditKey))) {
-      await prefs.updateActivityState(tripleDigitEditKey, 'todo');
-      await prefs.updateActivityVisible(tripleDigitEditKey, true);
+    if (prefs.getActivityVisible(deckEditKey) &&
+        !(prefs.getActivityVisible(tripleDigitEditKey))) {
+      prefs.updateActivityState(tripleDigitEditKey, 'todo');
+      prefs.updateActivityVisible(tripleDigitEditKey, true);
     }
 
     // iterate through all activity states, add activities if they are visible
     availableActivities = [];
     activityStates =
-        await prefs.getSharedPrefs(activityStatesKey) as Map<String, Activity>;
+        prefs.getSharedPrefs(activityStatesKey) as Map<String, Activity>;
 
     for (String activityName in activityStates.keys) {
       if (activityStates[activityName]!.visible) {
@@ -291,31 +292,31 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // consolidate menu buttons
-    if (await prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
+    if (prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
       consolidateSingleDigit = true;
     }
-    if (await prefs.getBool(planetTimedTestCompleteKey) != null &&
-        await prefs.getBool(faceTimedTestCompleteKey) != null) {
+    if (prefs.getBool(planetTimedTestCompleteKey) != null &&
+        prefs.getBool(faceTimedTestCompleteKey) != null) {
       consolidateChapter1 = true;
     }
-    if (await prefs.getBool(alphabetTimedTestCompleteKey) != null) {
+    if (prefs.getBool(alphabetTimedTestCompleteKey) != null) {
       consolidateAlphabet = true;
     }
-    if (await prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null &&
-        await prefs.getBool(airportTimedTestCompleteKey) != null) {
+    if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null &&
+        prefs.getBool(airportTimedTestCompleteKey) != null) {
       consolidateChapter2 = true;
     }
-    if (await prefs.getBool(paoTimedTestCompleteKey) != null) {
+    if (prefs.getBool(paoTimedTestCompleteKey) != null) {
       consolidatePAO = true;
     }
-    if (await prefs.getBool(piTimedTestCompleteKey) != null &&
-        await prefs.getBool(face2TimedTestCompleteKey) != null) {
+    if (prefs.getBool(piTimedTestCompleteKey) != null &&
+        prefs.getBool(face2TimedTestCompleteKey) != null) {
       consolidateChapter3 = true;
     }
-    if (await prefs.getBool(deckTimedTestCompleteKey) != null) {
+    if (prefs.getBool(deckTimedTestCompleteKey) != null) {
       consolidateDeck = true;
     }
-    if (await prefs.getBool(tripleDigitTimedTestCompleteKey) != null) {
+    if (prefs.getBool(tripleDigitTimedTestCompleteKey) != null) {
       consolidateTripleDigit = true;
     }
 
@@ -325,22 +326,22 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkFirstTime() async {
-    if (await prefs.getBool(homepageFirstHelpKey) == null) {
+    if (prefs.getBool(homepageFirstHelpKey) == null) {
       Navigator.of(context).push(PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
             return HomepageHelp();
           }));
-      await prefs.setBool(homepageFirstHelpKey, true);
+      prefs.setBool(homepageFirstHelpKey, true);
     }
   }
 
   checkGamesFirstTime() async {
-    if (await prefs.getBool(newGamesAvailableKey) == true) {
+    if (prefs.getBool(newGamesAvailableKey) == true) {
       setState(() {
         gamesFirstView = false;
       });
-      await prefs.setBool(newGamesAvailableKey, false);
+      prefs.setBool(newGamesAvailableKey, false);
     }
     slideTransition(
       context,
@@ -351,11 +352,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkCustomMemoryManagerFirstTime() async {
-    if (await prefs.getBool(customMemoryManagerFirstHelpKey) == true) {
+    if (prefs.getBool(customMemoryManagerFirstHelpKey) == true) {
       setState(() {
         customMemoryManagerFirstView = false;
       });
-      await prefs.setBool(customMemoryManagerFirstHelpKey, false);
+      prefs.setBool(customMemoryManagerFirstHelpKey, false);
     }
     slideTransition(
       context,
@@ -402,8 +403,8 @@ class _MyHomePageState extends State<MyHomePage> {
               globalKey: globalKey,
             ),
             callback: callback,
-            color: Colors.purple[400],
-            splashColor: Colors.purple[500],
+            color: Colors.purple[400]!,
+            splashColor: Colors.purple[500]!,
             globalKey: globalKey,
             isCustomTest: true,
           ),
@@ -414,26 +415,26 @@ class _MyHomePageState extends State<MyHomePage> {
     // regular activities
     for (String activity in availableActivities) {
       if (activityStates[activity] != null &&
-          activityStates[activity].state == 'todo') {
-        if (activityStates[activity]
+          activityStates[activity]!.state == 'todo') {
+        if (activityStates[activity]!
                 .visibleAfterTime
                 .compareTo(DateTime.now()) >
             0) {
-          availableNowActivities.add(activityStates[activity]);
+          availableNowActivities.add(activityStates[activity]!);
         }
-        if (activityStates[activity]
+        if (activityStates[activity]!
                 .visibleAfterTime
                 .difference(DateTime.now()) >
             Duration(days: 1)) {
-          names.add(activityStates[activity].name);
-          availableTimes.add(activityStates[activity].visibleAfterTime);
+          names.add(activityStates[activity]!.name);
+          availableTimes.add(activityStates[activity]!.visibleAfterTime);
           icons.add(activityMenuButtonMap[activity].icon.icon);
-          nameKeys.add(activityStates[activity].name);
+          nameKeys.add(activityStates[activity]!.name);
         } else {
           mainMenuOptions.add(
             MainMenuOption(
               callback: callback,
-              activity: activityStates[activity],
+              activity: activityStates[activity]!,
               text: activityMenuButtonMap[activity].text,
               route: activityMenuButtonMap[activity].route,
               icon: activityMenuButtonMap[activity].icon,
@@ -571,7 +572,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainMenuOptions.add(
             MainMenuOption(
               callback: callback,
-              activity: activityStates[activity],
+              activity: activityStates[activity]!,
               text: activityMenuButtonMap[activity].text,
               route: activityMenuButtonMap[activity].route,
               icon: activityMenuButtonMap[activity].icon,
@@ -589,22 +590,22 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: colorSingleDigitStandard,
             buttonColor: colorSingleDigitDarker,
             buttonSplashColor: colorSingleDigitDarkest,
-            editActivity: activityStates[singleDigitEditKey],
+            editActivity: activityStates[singleDigitEditKey]!,
             editRoute: SingleDigitEditScreen(
               callback: callback,
             ),
-            practiceActivity: activityStates[singleDigitPracticeKey],
+            practiceActivity: activityStates[singleDigitPracticeKey]!,
             practiceRoute: SingleDigitPracticeScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            testActivity: activityStates[singleDigitMultipleChoiceTestKey],
+            testActivity: activityStates[singleDigitMultipleChoiceTestKey]!,
             testIcon: multipleChoiceTestIcon,
             testRoute: SingleDigitMultipleChoiceTestScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            timedTestPrepActivity: activityStates[singleDigitTimedTestPrepKey],
+            timedTestPrepActivity: activityStates[singleDigitTimedTestPrepKey]!,
             timedTestPrepRoute: SingleDigitTimedTestPrepScreen(
               callback: callback,
             ),
@@ -617,17 +618,17 @@ class _MyHomePageState extends State<MyHomePage> {
             text: 'Chapter 1: The Basics',
             standardColor: colorChapter1Lighter,
             darkerColor: colorChapter1Darker,
-            lesson: activityStates[lesson1Key],
+            lesson: activityStates[lesson1Key]!,
             lessonRoute: Lesson1Screen(
               callback: callback,
               globalKey: globalKey,
             ),
-            activity1: activityStates[faceTimedTestPrepKey],
+            activity1: activityStates[faceTimedTestPrepKey]!,
             activity1Icon: faceIcon,
             activity1Route: FaceTimedTestPrepScreen(
               callback: callback,
             ),
-            activity2: activityStates[planetTimedTestPrepKey],
+            activity2: activityStates[planetTimedTestPrepKey]!,
             activity2Icon: planetIcon,
             activity2Route: PlanetTimedTestPrepScreen(
               callback: callback,
@@ -643,22 +644,22 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: colorAlphabetStandard,
             buttonColor: colorAlphabetDarker,
             buttonSplashColor: colorAlphabetDarkest,
-            editActivity: activityStates[alphabetEditKey],
+            editActivity: activityStates[alphabetEditKey]!,
             editRoute: AlphabetEditScreen(
               callback: callback,
             ),
-            practiceActivity: activityStates[alphabetPracticeKey],
+            practiceActivity: activityStates[alphabetPracticeKey]!,
             practiceRoute: AlphabetPracticeScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            testActivity: activityStates[alphabetWrittenTestKey],
+            testActivity: activityStates[alphabetWrittenTestKey]!,
             testIcon: writtenTestIcon,
             testRoute: AlphabetWrittenTestScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            timedTestPrepActivity: activityStates[alphabetTimedTestPrepKey],
+            timedTestPrepActivity: activityStates[alphabetTimedTestPrepKey]!,
             timedTestPrepRoute: AlphabetTimedTestPrepScreen(
               callback: callback,
             ),
@@ -671,17 +672,17 @@ class _MyHomePageState extends State<MyHomePage> {
             text: 'Chapter 2: Memory Palace',
             standardColor: colorChapter2Lighter,
             darkerColor: colorChapter2Darker,
-            lesson: activityStates[lesson2Key],
+            lesson: activityStates[lesson2Key]!,
             lessonRoute: Lesson2Screen(
               callback: callback,
               globalKey: globalKey,
             ),
-            activity1: activityStates[phoneticAlphabetTimedTestPrepKey],
+            activity1: activityStates[phoneticAlphabetTimedTestPrepKey]!,
             activity1Icon: phoneticIcon,
             activity1Route: PhoneticAlphabetTimedTestPrepScreen(
               callback: callback,
             ),
-            activity2: activityStates[airportTimedTestPrepKey],
+            activity2: activityStates[airportTimedTestPrepKey]!,
             activity2Icon: airportIcon,
             activity2Route: AirportTimedTestPrepScreen(
               callback: callback,
@@ -697,22 +698,22 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: colorPAOStandard,
             buttonColor: colorPAODarker,
             buttonSplashColor: colorPAODarkest,
-            editActivity: activityStates[paoEditKey],
+            editActivity: activityStates[paoEditKey]!,
             editRoute: PAOEditScreen(
               callback: callback,
             ),
-            practiceActivity: activityStates[paoPracticeKey],
+            practiceActivity: activityStates[paoPracticeKey]!,
             practiceRoute: PAOPracticeScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            testActivity: activityStates[paoMultipleChoiceTestKey],
+            testActivity: activityStates[paoMultipleChoiceTestKey]!,
             testIcon: multipleChoiceTestIcon,
             testRoute: PAOMultipleChoiceTestScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            timedTestPrepActivity: activityStates[paoTimedTestPrepKey],
+            timedTestPrepActivity: activityStates[paoTimedTestPrepKey]!,
             timedTestPrepRoute: PAOTimedTestPrepScreen(
               callback: callback,
             ),
@@ -725,17 +726,17 @@ class _MyHomePageState extends State<MyHomePage> {
             text: 'Chapter 3: Spaced Repetition',
             standardColor: colorChapter3Lighter,
             darkerColor: colorChapter3Darker,
-            lesson: activityStates[lesson3Key],
+            lesson: activityStates[lesson3Key]!,
             lessonRoute: Lesson3Screen(
               callback: callback,
               globalKey: globalKey,
             ),
-            activity1: activityStates[face2TimedTestPrepKey],
+            activity1: activityStates[face2TimedTestPrepKey]!,
             activity1Icon: face2Icon,
             activity1Route: Face2TimedTestPrepScreen(
               callback: callback,
             ),
-            activity2: activityStates[piTimedTestPrepKey],
+            activity2: activityStates[piTimedTestPrepKey]!,
             activity2Icon: piIcon,
             activity2Route: PiTimedTestPrepScreen(
               callback: callback,
@@ -751,22 +752,22 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: colorDeckStandard,
             buttonColor: colorDeckDarker,
             buttonSplashColor: colorDeckDarkest,
-            editActivity: activityStates[deckEditKey],
+            editActivity: activityStates[deckEditKey]!,
             editRoute: DeckEditScreen(
               callback: callback,
             ),
-            practiceActivity: activityStates[deckPracticeKey],
+            practiceActivity: activityStates[deckPracticeKey]!,
             practiceRoute: DeckPracticeScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            testActivity: activityStates[deckMultipleChoiceTestKey],
+            testActivity: activityStates[deckMultipleChoiceTestKey]!,
             testIcon: multipleChoiceTestIcon,
             testRoute: DeckMultipleChoiceTestScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            timedTestPrepActivity: activityStates[deckTimedTestPrepKey],
+            timedTestPrepActivity: activityStates[deckTimedTestPrepKey]!,
             timedTestPrepRoute: DeckTimedTestPrepScreen(
               callback: callback,
             ),
@@ -780,22 +781,22 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: colorTripleDigitStandard,
             buttonColor: colorTripleDigitDarker,
             buttonSplashColor: colorTripleDigitDarkest,
-            editActivity: activityStates[tripleDigitEditKey],
+            editActivity: activityStates[tripleDigitEditKey]!,
             editRoute: TripleDigitEditScreen(
               callback: callback,
             ),
-            practiceActivity: activityStates[tripleDigitPracticeKey],
+            practiceActivity: activityStates[tripleDigitPracticeKey]!,
             practiceRoute: TripleDigitPracticeScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            testActivity: activityStates[tripleDigitMultipleChoiceTestKey],
+            testActivity: activityStates[tripleDigitMultipleChoiceTestKey]!,
             testIcon: multipleChoiceTestIcon,
             testRoute: TripleDigitMultipleChoiceTestScreen(
               callback: callback,
               globalKey: globalKey,
             ),
-            timedTestPrepActivity: activityStates[tripleDigitTimedTestPrepKey],
+            timedTestPrepActivity: activityStates[tripleDigitTimedTestPrepKey]!,
             timedTestPrepRoute: TripleDigitTimedTestPrepScreen(
               callback: callback,
             ),
@@ -937,7 +938,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 title: 'Games',
                                 function: checkGamesFirstTime,
                                 color1: Colors.lightBlueAccent,
-                                color2: Colors.lightBlue[700],
+                                color2: Colors.lightBlue[700]!,
                               ),
                               gamesFirstView ? NewTag(top: 10) : Container()
                             ],
@@ -972,7 +973,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   resetAll() async {
-    await prefs.clear();
+    prefs.clear();
 
     var clearTo = defaultActivityStatesInitial;
 
@@ -980,8 +981,8 @@ class _MyHomePageState extends State<MyHomePage> {
       activityStates = clearTo;
       customMemories = {};
     });
-    await prefs.writeSharedPrefs(activityStatesKey, clearTo);
-    await prefs.writeSharedPrefs(customMemoriesKey, {});
+    prefs.writeSharedPrefs(activityStatesKey, clearTo);
+    prefs.writeSharedPrefs(customMemoriesKey, {});
 
     consolidateSingleDigit = false;
     consolidateChapter1 = false;
@@ -1004,50 +1005,49 @@ class _MyHomePageState extends State<MyHomePage> {
       activityStates = clearTo;
       customMemories = {};
     });
-    await prefs.writeSharedPrefs(activityStatesKey, clearTo);
+    prefs.writeSharedPrefs(activityStatesKey, clearTo);
 
     setUnlockedActivities();
   }
 
   maxOutKeys(int maxTo) async {
-    await prefs.setBool(customMemoryManagerAvailableKey, true);
-    await prefs.setBool(customMemoryManagerFirstHelpKey, true);
+    prefs.setBool(customMemoryManagerAvailableKey, true);
+    prefs.setBool(customMemoryManagerFirstHelpKey, true);
     customMemoryManagerFirstView = true;
     customMemoryManagerAvailable = true;
-    await prefs.setBool(gamesAvailableKey, true);
-    await prefs.setBool(gamesFirstHelpKey, true);
+    prefs.setBool(gamesAvailableKey, true);
+    prefs.setBool(gamesFirstHelpKey, true);
     gamesAvailable = true;
     gamesFirstView = true;
 
     if (maxTo >= 2) {
-      await prefs.setBool(singleDigitTimedTestCompleteKey, true);
-      await prefs.setBool(alphabetTimedTestCompleteKey, true);
-      await prefs.setBool(planetTimedTestCompleteKey, true);
-      await prefs.setBool(faceTimedTestCompleteKey, true);
-      await prefs.setBool(airportTimedTestCompleteKey, true);
-      await prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
-      await prefs.writeSharedPrefs(
+      prefs.setBool(singleDigitTimedTestCompleteKey, true);
+      prefs.setBool(alphabetTimedTestCompleteKey, true);
+      prefs.setBool(planetTimedTestCompleteKey, true);
+      prefs.setBool(faceTimedTestCompleteKey, true);
+      prefs.setBool(airportTimedTestCompleteKey, true);
+      prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
+      prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesChapter2Done);
-      await prefs.setBool(fadeGameAvailableKey, true);
-      await prefs.setBool(morseGameAvailableKey, true);
+      prefs.setBool(fadeGameAvailableKey, true);
+      prefs.setBool(morseGameAvailableKey, true);
     }
     if (maxTo >= 3) {
-      await prefs.setBool(paoTimedTestCompleteKey, true);
-      await prefs.setBool(piTimedTestCompleteKey, true);
-      await prefs.setBool(face2TimedTestCompleteKey, true);
-      await prefs.writeSharedPrefs(
+      prefs.setBool(paoTimedTestCompleteKey, true);
+      prefs.setBool(piTimedTestCompleteKey, true);
+      prefs.setBool(face2TimedTestCompleteKey, true);
+      prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesChapter3Done);
-      await prefs.setBool(irrationalGameAvailableKey, true);
-      await prefs.setBool(deckEditKey, true);
+      prefs.setBool(irrationalGameAvailableKey, true);
+      prefs.setBool(deckEditKey, true);
     }
     if (maxTo >= 4) {
-      await prefs.setBool(deckTimedTestCompleteKey, true);
-      await prefs.writeSharedPrefs(
+      prefs.setBool(deckTimedTestCompleteKey, true);
+      prefs.writeSharedPrefs(
           activityStatesKey, defaultActivityStatesChapter3Done);
     }
     if (maxTo >= 5) {
-      await prefs.writeSharedPrefs(
-          activityStatesKey, defaultActivityStatesAllDone);
+      prefs.writeSharedPrefs(activityStatesKey, defaultActivityStatesAllDone);
     }
 
     setUnlockedActivities();
@@ -1059,8 +1059,8 @@ class _MyHomePageState extends State<MyHomePage> {
         text: 'Welcome',
         route: WelcomeScreen(),
         icon: Icon(Icons.filter),
-        color: Colors.green[200],
-        splashColor: Colors.green[600],
+        color: Colors.green[200]!,
+        splashColor: Colors.green[600]!,
       ),
       singleDigitEditKey: ActivityMenuButton(
         text: 'Single Digit [View/Edit]',

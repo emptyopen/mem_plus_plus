@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 
 import 'package:mem_plus_plus/services/services.dart';
 
@@ -38,7 +39,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
   String shouldHaveBeen = '';
   Color stateColor = Colors.green;
   var textController = TextEditingController();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   FocusNode focusNode = FocusNode();
 
   @override
@@ -107,7 +108,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
         break;
     }
     String savedPositionString =
-        await prefs.getString('irrational${widget.difficulty}SavedPosition');
+        prefs.getString('irrational${widget.difficulty}SavedPosition')!;
     setState(() {
       position = int.parse(savedPositionString);
     });
@@ -121,7 +122,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
   }
 
   updateActiveRow(int newPosition) async {
-    await prefs.setString(
+    prefs.setString(
         'irrational${widget.difficulty}SavedPosition', newPosition.toString());
     setState(() {
       position = newPosition;
@@ -130,8 +131,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
 
   checkAnswer(BuildContext context) async {
     if (textController.text.trim() == correctSequence) {
-      if (await prefs.getBool('irrational${widget.difficulty}Complete') ==
-          null) {
+      if (prefs.getBool('irrational${widget.difficulty}Complete') == null) {
         showSnackBar(
           scaffoldState: widget.scaffoldKey.currentState,
           snackBarText: 'Congrats! You\'ve memorized $stageName!',
@@ -147,7 +147,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
           textColor: Colors.white,
         );
       }
-      await prefs.setBool('irrational${widget.difficulty}Complete', true);
+      prefs.setBool('irrational${widget.difficulty}Complete', true);
     } else {
       showSnackBar(
         scaffoldState: widget.scaffoldKey.currentState,
@@ -438,8 +438,8 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                     fontSize: 24,
                     padding: 10,
                     color: stateColor == Colors.red
-                        ? Colors.red[100]
-                        : Colors.green[100],
+                        ? Colors.red[100]!
+                        : Colors.green[100]!,
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -459,7 +459,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                 children: [
                   SizedBox(height: 20),
                   BasicFlatButton(
-                    color: Colors.pink[200],
+                    color: Colors.pink[200]!,
                     text: 'Keyboard ran away? Tap here to show it.',
                     fontSize: 12,
                     textColor: Colors.black,

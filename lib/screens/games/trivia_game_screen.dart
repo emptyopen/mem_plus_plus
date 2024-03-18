@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/components/animations.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 
 import 'package:mem_plus_plus/services/services.dart';
@@ -18,7 +19,10 @@ class TriviaGameScreen extends StatefulWidget {
   final scaffoldKey;
 
   TriviaGameScreen(
-      {Key key, this.triviaType, this.difficulty, this.scaffoldKey})
+      {Key? key,
+      required this.triviaType,
+      required this.difficulty,
+      this.scaffoldKey})
       : super(key: key);
 
   @override
@@ -46,8 +50,8 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
   var guess3 = TextEditingController();
   var guess4 = TextEditingController();
   var guess5 = TextEditingController();
-  AnimationController animationController;
-  var prefs = PrefsUpdater();
+  late AnimationController animationController;
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -109,20 +113,13 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
     }
   }
 
-  setPresidentQuestion(
-    String question,
-    String answer,
-  ) {
-    var random = new Random();
-  }
-
   checkAnswers(BuildContext context) async {
     if (guess1.text.trim() == answer1 &&
         guess2.text.trim() == answer2 &&
         guess3.text.trim() == answer3 &&
         guess4.text.trim() == answer4 &&
         guess5.text.trim() == answer5) {
-      if (await prefs.getBool('fade${widget.difficulty}Complete') == null) {
+      if (prefs.getBool('fade${widget.difficulty}Complete') == null) {
         showSnackBar(
           scaffoldState: widget.scaffoldKey.currentState,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',
@@ -138,7 +135,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
           textColor: Colors.white,
         );
       }
-      await prefs.setBool("fade${widget.difficulty}Complete", true);
+      prefs.setBool("fade${widget.difficulty}Complete", true);
     } else {
       showSnackBar(
         scaffoldState: widget.scaffoldKey.currentState,

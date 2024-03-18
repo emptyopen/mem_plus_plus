@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/alphabet_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -23,7 +24,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   late List<AlphabetData> alphabetData;
   List<Widget> alphabetCards = [];
   bool dataReady = false;
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -32,8 +33,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    alphabetData =
-        await prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
+    alphabetData = prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     bool allComplete = true;
     for (int i = 0; i < alphabetData.length; i++) {
       if (alphabetData[i].familiarity < 100) {
@@ -60,8 +60,8 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   }
 
   void nextActivity() async {
-    await prefs.updateActivityState(alphabetPracticeKey, 'review');
-    await prefs.updateActivityVisible(alphabetWrittenTestKey, true);
+    prefs.updateActivityState(alphabetPracticeKey, 'review');
+    prefs.updateActivityVisible(alphabetWrittenTestKey, true);
     widget.callback();
   }
 

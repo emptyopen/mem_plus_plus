@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/single_digit_data.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
@@ -22,7 +23,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   late SharedPreferences sharedPreferences;
   late List<SingleDigitData> singleDigitData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  var prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -33,20 +34,20 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, singleDigitEditFirstHelpKey, SingleDigitEditScreenHelp());
-    if (await prefs.getString(singleDigitKey) == null) {
+    if (prefs.getString(singleDigitKey) == null) {
       singleDigitData =
           debugModeEnabled ? defaultSingleDigitData3 : defaultSingleDigitData1;
-      await prefs.setString(singleDigitKey, json.encode(singleDigitData));
+      prefs.setString(singleDigitKey, json.encode(singleDigitData));
     } else {
       singleDigitData =
-          await prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
+          prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
     }
     setState(() {});
   }
 
   callback(newSingleDigitData) async {
     // check if all data is complete
-    await prefs.writeSharedPrefs(singleDigitKey, newSingleDigitData);
+    prefs.writeSharedPrefs(singleDigitKey, newSingleDigitData);
     setState(() {
       singleDigitData = newSingleDigitData;
     });
@@ -58,10 +59,10 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     }
 
     // check if information is filled out for the first time
-    bool completedOnce = await prefs.getActivityVisible(singleDigitPracticeKey);
+    bool completedOnce = prefs.getActivityVisible(singleDigitPracticeKey);
     if (entriesComplete && !completedOnce) {
-      await prefs.updateActivityVisible(singleDigitPracticeKey, true);
-      await prefs.updateActivityState(singleDigitEditKey, 'review');
+      prefs.updateActivityVisible(singleDigitPracticeKey, true);
+      prefs.updateActivityState(singleDigitEditKey, 'review');
       showSnackBar(
           scaffoldState: _scaffoldKey.currentState,
           snackBarText:
