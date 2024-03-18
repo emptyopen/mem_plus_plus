@@ -10,7 +10,7 @@ class AirportTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  AirportTimedTestScreen({this.callback, this.globalKey});
+  AirportTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _AirportTimedTestScreenState createState() => _AirportTimedTestScreenState();
@@ -58,13 +58,13 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     prefs.checkFirstTime(
         context, airportTimedTestFirstHelpKey, AirportTimedTestScreenHelp());
     // grab the digits
-    departingTerminal = await prefs.getString('airportDepartingTerminal');
-    flightCode = await prefs.getString('airportFlightCode');
-    departureTime = await prefs.getString('airportFlightTime');
-    confirmationCode = await prefs.getString('airportConfirmationCode');
-    seatNumber = await prefs.getString('airportSeatNumber');
-    gateNumber = await prefs.getString('airportGateNumber');
-    arrivingTerminal = await prefs.getString('airportArrivingTerminal');
+    departingTerminal = (await prefs.getString('airportDepartingTerminal'))!;
+    flightCode = (await prefs.getString('airportFlightCode'))!;
+    departureTime = (await prefs.getString('airportFlightTime'))!;
+    confirmationCode = (await prefs.getString('airportConfirmationCode'))!;
+    seatNumber = (await prefs.getString('airportSeatNumber'))!;
+    gateNumber = (await prefs.getString('airportGateNumber'))!;
+    arrivingTerminal = (await prefs.getString('airportArrivingTerminal'))!;
     print(
         'real answer: $departingTerminal $confirmationCode $departureTime $gateNumber  $flightCode $seatNumber $arrivingTerminal');
     isLoaded = true;
@@ -621,8 +621,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                         BasicFlatButton(
                           text: 'Give up',
                           fontSize: 24,
-                          color: Colors.grey[200],
-                          splashColor: Colors.blue,
+                          color: Colors.grey[200]!,
                           onPressed: () => giveUp(),
                           padding: 10,
                         ),
@@ -633,7 +632,6 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                           text: 'Submit',
                           fontSize: 24,
                           color: colorChapter2Standard,
-                          splashColor: colorChapter2Darker,
                           onPressed: () => checkAnswer(),
                           padding: 10,
                         ),

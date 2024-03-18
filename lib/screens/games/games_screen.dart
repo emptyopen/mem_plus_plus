@@ -11,13 +11,10 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/components/standard.dart';
 
-import '../../constants/keys.dart';
-import 'fade_game_screen.dart';
-
 class GamesScreen extends StatefulWidget {
   final Function callback;
 
-  GamesScreen({Key key, this.callback}) : super(key: key);
+  GamesScreen({Key? key, required this.callback}) : super(key: key);
 
   @override
   _GamesScreenState createState() => _GamesScreenState();
@@ -147,13 +144,13 @@ class GameTile extends StatelessWidget {
   final String firstViewKey;
 
   GameTile(
-      {this.game,
-      this.title,
-      this.subtitle,
-      this.icon,
-      this.scaffoldKey,
-      this.firstView,
-      this.firstViewKey});
+      {required this.game,
+      required this.title,
+      required this.subtitle,
+      required this.icon,
+      required this.scaffoldKey,
+      required this.firstView,
+      required this.firstViewKey});
 
   checkFirstView() async {
     var prefs = PrefsUpdater();
@@ -164,7 +161,7 @@ class GameTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return ElevatedButton(
       onPressed: () {
         checkFirstView();
         HapticFeedback.lightImpact();
@@ -204,7 +201,7 @@ class MyDialogContent extends StatelessWidget {
   final GlobalKey scaffoldKey;
   final String game;
 
-  MyDialogContent({this.scaffoldKey, this.game});
+  MyDialogContent({required this.scaffoldKey, required this.game});
 
   goToScreen(BuildContext context, int difficulty) {
     Navigator.pop(context);
@@ -247,7 +244,7 @@ class MyDialogContent extends StatelessWidget {
           children: <Widget>[
             DifficultySelection(
               text: 'Easy',
-              color: Colors.lightBlue[100],
+              color: Colors.lightBlue[100]!,
               function: () => goToScreen(context, 0),
               completeKey: 'fade0Complete',
               availableKey: fadeGameAvailableKey,
@@ -255,7 +252,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: 'Medium',
-              color: Colors.lightBlue[200],
+              color: Colors.lightBlue[200]!,
               function: () => goToScreen(context, 1),
               completeKey: 'fade1Complete',
               availableKey: 'fade0Complete',
@@ -263,7 +260,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: 'Difficult',
-              color: Colors.lightBlue[300],
+              color: Colors.lightBlue[300]!,
               function: () => goToScreen(context, 2),
               completeKey: 'fade2Complete',
               availableKey: 'fade1Complete',
@@ -271,7 +268,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: 'Master',
-              color: Colors.lightBlue[400],
+              color: Colors.lightBlue[400]!,
               function: () => goToScreen(context, 3),
               completeKey: 'fade3Complete',
               availableKey: 'fade2Complete',
@@ -279,7 +276,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: 'Ancient God',
-              color: Colors.lightBlue[500],
+              color: Colors.lightBlue[500]!,
               function: () => goToScreen(context, 4),
               completeKey: 'fade4Complete',
               availableKey: 'fade3Complete',
@@ -294,7 +291,7 @@ class MyDialogContent extends StatelessWidget {
           children: <Widget>[
             DifficultySelection(
               text: 'Easy',
-              color: Colors.lightBlue[100],
+              color: Colors.lightBlue[100]!,
               function: () => goToScreen(context, 0),
               completeKey: 'morse0Complete',
               availableKey: morseGameAvailableKey,
@@ -302,7 +299,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: 'Medium',
-              color: Colors.lightBlue[200],
+              color: Colors.lightBlue[200]!,
               function: () => goToScreen(context, 1),
               completeKey: 'morse1Complete',
               availableKey: 'morse0Complete',
@@ -310,7 +307,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: 'Master',
-              color: Colors.lightBlue[300],
+              color: Colors.lightBlue[300]!,
               function: () => goToScreen(context, 2),
               completeKey: 'morse2Complete',
               availableKey: 'morse1Complete',
@@ -318,7 +315,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: 'Ancient God',
-              color: Colors.lightBlue[400],
+              color: Colors.lightBlue[400]!,
               function: () => goToScreen(context, 3),
               completeKey: 'morse3Complete',
               availableKey: 'morse2Complete',
@@ -333,7 +330,7 @@ class MyDialogContent extends StatelessWidget {
           children: <Widget>[
             DifficultySelection(
               text: '200 digits of π',
-              color: Colors.lightBlue[200],
+              color: Colors.lightBlue[200]!,
               function: () => goToScreen(context, 0),
               completeKey: 'irrational0Complete',
               availableKey: irrationalGameAvailableKey,
@@ -341,7 +338,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: '500 digits of π',
-              color: Colors.lightBlue[300],
+              color: Colors.lightBlue[300]!,
               function: () => goToScreen(context, 1),
               completeKey: 'irrational1Complete',
               availableKey: 'irrational0Complete',
@@ -349,7 +346,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: '1000 digits of π',
-              color: Colors.lightBlue[400],
+              color: Colors.lightBlue[400]!,
               function: () => goToScreen(context, 2),
               completeKey: 'irrational2Complete',
               availableKey: 'irrational1Complete',
@@ -357,7 +354,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: '200 digits of e',
-              color: Colors.lightBlue[200],
+              color: Colors.lightBlue[200]!,
               function: () => goToScreen(context, 3),
               completeKey: 'irrational3Complete',
               availableKey: irrationalGameAvailableKey,
@@ -365,7 +362,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: '500 digits of e',
-              color: Colors.lightBlue[300],
+              color: Colors.lightBlue[300]!,
               function: () => goToScreen(context, 4),
               completeKey: 'irrational4Complete',
               availableKey: 'irrational3Complete',
@@ -373,7 +370,7 @@ class MyDialogContent extends StatelessWidget {
             ),
             DifficultySelection(
               text: '1000 digits of e',
-              color: Colors.lightBlue[400],
+              color: Colors.lightBlue[400]!,
               function: () => goToScreen(context, 5),
               completeKey: 'irrational5Complete',
               availableKey: 'irrational4Complete',
@@ -407,12 +404,12 @@ class DifficultySelection extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
 
   DifficultySelection(
-      {this.text,
-      this.color,
-      this.function,
-      this.completeKey,
-      this.availableKey,
-      this.globalKey});
+      {required this.text,
+      required this.color,
+      required this.function,
+      required this.completeKey,
+      required this.availableKey,
+      required this.globalKey});
 
   @override
   _DifficultySelectionState createState() => _DifficultySelectionState();
@@ -467,9 +464,17 @@ class _DifficultySelectionState extends State<DifficultySelection> {
             : Container(),
         Container(
           height: 40,
-          child: FlatButton(
-            color: isAvailable ? widget.color : Colors.grey,
-            highlightColor: Colors.transparent,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: isAvailable ? widget.color : Colors.grey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+                side: BorderSide(
+                  width: isComplete ? 3 : 1,
+                  color: isComplete ? Colors.amberAccent : Colors.black,
+                ),
+              ),
+            ),
             onPressed: isAvailable
                 ? () {
                     HapticFeedback.lightImpact();
@@ -477,13 +482,6 @@ class _DifficultySelectionState extends State<DifficultySelection> {
                     widget.function();
                   }
                 : () {},
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-              side: BorderSide(
-                width: isComplete ? 3 : 1,
-                color: isComplete ? Colors.amberAccent : Colors.black,
-              ),
-            ),
             child: Padding(
               padding: EdgeInsets.all(10),
               child: AutoSizeText(

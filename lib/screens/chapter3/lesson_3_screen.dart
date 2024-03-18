@@ -8,7 +8,7 @@ class Lesson3Screen extends StatefulWidget {
   final Function callback;
   final GlobalKey globalKey;
 
-  Lesson3Screen({this.callback, this.globalKey});
+  Lesson3Screen({required this.callback, required this.globalKey});
 
   @override
   _Lesson3ScreenState createState() => _Lesson3ScreenState();
@@ -144,7 +144,6 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
 
   @override
   Widget build(BuildContext context) {
-
     return LessonScreen(
       title: 'Lesson 3',
       headers: headers,

@@ -4,7 +4,7 @@ import 'package:mem_plus_plus/components/custom_memory/custom_memory_template.da
 class ContactInput extends StatefulWidget {
   final Function() callback;
 
-  ContactInput({this.callback});
+  ContactInput({required this.callback});
 
   @override
   _ContactInputState createState() => _ContactInputState();

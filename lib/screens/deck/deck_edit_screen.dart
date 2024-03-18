@@ -14,14 +14,14 @@ import 'package:url_launcher/url_launcher.dart';
 class DeckEditScreen extends StatefulWidget {
   final Function callback;
 
-  DeckEditScreen({Key key, this.callback}) : super(key: key);
+  DeckEditScreen({Key? key, required this.callback}) : super(key: key);
 
   @override
   _DeckEditScreenState createState() => _DeckEditScreenState();
 }
 
 class _DeckEditScreenState extends State<DeckEditScreen> {
-  List<DeckData> deckData;
+  late List<DeckData> deckData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
 
@@ -37,7 +37,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
       deckData = debugModeEnabled ? defaultDeckData2 : defaultDeckData1;
       await prefs.setString(deckKey, json.encode(deckData));
     } else {
-      deckData = await prefs.getSharedPrefs(deckKey);
+      deckData = await prefs.getSharedPrefs(deckKey) as List<DeckData>;
     }
     setState(() {});
   }
@@ -81,21 +81,19 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
 
   List<EditCard> getDeckEditCards() {
     List<EditCard> deckEditCards = [];
-    if (deckData != null) {
-      for (int i = 0; i < deckData.length; i++) {
-        EditCard deckEditCard = EditCard(
-          entry: DeckData(
-              deckData[i].index,
-              deckData[i].digitSuit,
-              deckData[i].person,
-              deckData[i].action,
-              deckData[i].object,
-              deckData[i].familiarity),
-          callback: callback,
-          activityKey: deckKey,
-        );
-        deckEditCards.add(deckEditCard);
-      }
+    for (int i = 0; i < deckData.length; i++) {
+      EditCard deckEditCard = EditCard(
+        entry: DeckData(
+            deckData[i].index,
+            deckData[i].digitSuit,
+            deckData[i].person,
+            deckData[i].action,
+            deckData[i].object,
+            deckData[i].familiarity),
+        callback: callback,
+        activityKey: deckKey,
+      );
+      deckEditCards.add(deckEditCard);
     }
     return deckEditCards;
   }
@@ -145,7 +143,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
 class CSVImporter extends StatefulWidget {
   final Function callback;
 
-  CSVImporter({this.callback});
+  CSVImporter({required this.callback});
 
   @override
   _CSVImporterState createState() => _CSVImporterState();
@@ -246,17 +244,19 @@ class _CSVImporterState extends State<CSVImporter> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        FlatButton(
-                          color: Colors.grey[300],
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(),
-                            borderRadius: BorderRadius.circular(5),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[300],
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           ),
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             Navigator.pop(context);
                           },
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(
                             'Cancel',
                             style: TextStyle(fontSize: 20),
@@ -265,11 +265,14 @@ class _CSVImporterState extends State<CSVImporter> {
                         SizedBox(
                           width: 25,
                         ),
-                        FlatButton(
-                          color: colorDeckStandard,
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(),
-                            borderRadius: BorderRadius.circular(5),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: colorDeckStandard,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           ),
                           onPressed: () {
                             HapticFeedback.lightImpact();
@@ -291,7 +294,6 @@ class _CSVImporterState extends State<CSVImporter> {
                               Navigator.pop(context);
                             }
                           },
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(
                             'Submit',
                             style: TextStyle(fontSize: 20),

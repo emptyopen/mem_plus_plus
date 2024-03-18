@@ -5,11 +5,9 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:mem_plus_plus/constants/colors.dart';
 
 class BasicFlatButton extends StatelessWidget {
   final Color color;
-  final Color splashColor;
   final String text;
   final double fontSize;
   final Function onPressed;
@@ -19,10 +17,9 @@ class BasicFlatButton extends StatelessWidget {
 
   BasicFlatButton({
     this.color = Colors.white,
-    this.splashColor,
-    this.text,
-    this.fontSize,
-    this.onPressed,
+    required this.text,
+    this.fontSize = 14,
+    required this.onPressed,
     this.padding = 0,
     this.textColor = Colors.black,
     this.fontFamily = 'CabinSketch',
@@ -30,16 +27,12 @@ class BasicFlatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      color: color,
-      splashColor: splashColor,
-      highlightColor: Colors.transparent,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: color),
       onPressed: () {
         HapticFeedback.lightImpact();
         onPressed();
       },
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5), side: BorderSide()),
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: Text(
@@ -62,7 +55,11 @@ class BigButton extends StatelessWidget {
   final Color color1;
   final Color color2;
 
-  BigButton({this.title, this.function, this.color1, this.color2});
+  BigButton(
+      {required this.title,
+      required this.function,
+      required this.color1,
+      required this.color2});
 
   @override
   Widget build(BuildContext context) {
@@ -78,15 +75,11 @@ class BigButton extends StatelessWidget {
           ],
         ),
       ),
-      child: FlatButton(
+      child: ElevatedButton(
         onPressed: () {
           HapticFeedback.lightImpact();
           function();
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-          side: BorderSide(width: 2.5),
-        ),
         child: Padding(
           padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
           child: Text(
@@ -119,15 +112,15 @@ class MainMenuOption extends StatelessWidget {
   final prefs = PrefsUpdater();
 
   MainMenuOption({
-    Key key,
-    this.activity,
-    this.icon,
-    this.text,
-    this.color,
-    this.splashColor,
-    this.route,
-    this.callback,
-    this.globalKey,
+    Key? key,
+    required this.activity,
+    required this.icon,
+    required this.text,
+    required this.color,
+    required this.splashColor,
+    required this.route,
+    required this.callback,
+    required this.globalKey,
     this.isCustomTest = false,
     this.isButton = false,
     this.textColor = Colors.black,
@@ -269,7 +262,7 @@ class MainMenuOption extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5)),
               child: Container(
                 height: 46,
-                child: FlatButton(
+                child: ElevatedButton(
                   onPressed: () {
                     function();
                   },
@@ -307,13 +300,7 @@ class MainMenuOption extends StatelessWidget {
                     TileMode.repeated, // repeats the gradient over the canvas
               ),
             ),
-            child: FlatButton(
-              splashColor: splashColor,
-              highlightColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(),
-                borderRadius: BorderRadius.circular(5),
-              ),
+            child: ElevatedButton(
               onPressed: () async {
                 if (activity.visibleAfterTime.compareTo(DateTime.now()) > 0) {
                   return null;
@@ -448,21 +435,21 @@ class CondensedMainMenuButtons extends StatelessWidget {
   final prefs = PrefsUpdater();
 
   CondensedMainMenuButtons({
-    Key key,
-    this.editActivity,
-    this.practiceActivity,
-    this.testActivity,
-    this.timedTestPrepActivity,
-    this.testIcon,
-    this.text,
-    this.backgroundColor,
-    this.buttonColor,
-    this.buttonSplashColor,
-    this.editRoute,
-    this.practiceRoute,
-    this.testRoute,
-    this.timedTestPrepRoute,
-    this.callback,
+    Key? key,
+    required this.editActivity,
+    required this.practiceActivity,
+    required this.testActivity,
+    required this.timedTestPrepActivity,
+    required this.testIcon,
+    required this.text,
+    required this.backgroundColor,
+    required this.buttonColor,
+    required this.buttonSplashColor,
+    required this.editRoute,
+    required this.practiceRoute,
+    required this.testRoute,
+    required this.timedTestPrepRoute,
+    required this.callback,
   });
   @override
   Widget build(BuildContext context) {
@@ -555,19 +542,19 @@ class CondensedMainMenuChapterButtons extends StatelessWidget {
   final prefs = PrefsUpdater();
 
   CondensedMainMenuChapterButtons({
-    Key key,
-    this.lesson,
-    this.activity1,
-    this.activity2,
-    this.activity1Icon,
-    this.activity2Icon,
-    this.text,
-    this.standardColor,
-    this.darkerColor,
-    this.lessonRoute,
-    this.activity1Route,
-    this.activity2Route,
-    this.callback,
+    Key? key,
+    required this.lesson,
+    required this.activity1,
+    required this.activity2,
+    required this.activity1Icon,
+    required this.activity2Icon,
+    required this.text,
+    required this.standardColor,
+    required this.darkerColor,
+    required this.lessonRoute,
+    required this.activity1Route,
+    required this.activity2Route,
+    required this.callback,
   });
   @override
   Widget build(BuildContext context) {
@@ -648,20 +635,28 @@ class CondensedMenuButton extends StatelessWidget {
   final bool testPrepAvailable;
   final prefs = PrefsUpdater();
 
-  CondensedMenuButton(
-      {this.activity,
-      this.callback,
-      this.route,
-      this.icon,
-      this.color,
-      this.testPrepAvailable = true});
+  CondensedMenuButton({
+    required this.activity,
+    required this.callback,
+    required this.route,
+    required this.icon,
+    required this.color,
+    this.testPrepAvailable = true,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ButtonTheme(
       minWidth: 10,
-      child: RaisedButton(
+      child: ElevatedButton(
         child: icon,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+            side: BorderSide(),
+          ),
+        ),
         onPressed: testPrepAvailable
             ? () async {
                 HapticFeedback.lightImpact();
@@ -691,11 +686,6 @@ class CondensedMenuButton extends StatelessWidget {
                 );
               }
             : null,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-          side: BorderSide(),
-        ),
-        color: color,
       ),
     );
   }
@@ -706,7 +696,7 @@ class OKPopButton extends StatelessWidget {
   final Color splashColor;
 
   OKPopButton(
-      {Key key, this.color = Colors.white, this.splashColor = Colors.grey});
+      {Key? key, this.color = Colors.white, this.splashColor = Colors.grey});
 
   @override
   Widget build(BuildContext context) {
@@ -716,7 +706,6 @@ class OKPopButton extends StatelessWidget {
       },
       text: 'OK',
       color: color,
-      splashColor: splashColor,
       fontSize: 20,
       padding: 10,
     );
@@ -728,7 +717,8 @@ class MorseTest extends StatefulWidget {
   final String morseAnswer;
   final Color color;
 
-  MorseTest({this.callback, this.morseAnswer, this.color});
+  MorseTest(
+      {required this.callback, required this.morseAnswer, required this.color});
 
   @override
   _MorseTestState createState() => _MorseTestState();

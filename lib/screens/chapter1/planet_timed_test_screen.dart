@@ -11,7 +11,7 @@ class PlanetTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  PlanetTimedTestScreen({this.callback, this.globalKey});
+  PlanetTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _PlanetTimedTestScreenState createState() => _PlanetTimedTestScreenState();
@@ -577,8 +577,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Give up',
                       onPressed: () => giveUp(),
-                      color: Colors.grey[200],
-                      splashColor: Colors.grey,
+                      color: Colors.grey[200]!,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -589,7 +588,6 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorChapter1Standard,
-                      splashColor: colorChapter1Darker,
                       padding: 10,
                       fontSize: 24,
                     ),

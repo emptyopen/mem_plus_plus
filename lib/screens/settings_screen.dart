@@ -10,17 +10,15 @@ import 'package:mem_plus_plus/components/standard.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final Function callback;
   final Function resetAll;
   final Function resetActivities;
   final Function maxOutKeys;
 
   SettingsScreen(
-      {Key key,
-      this.callback,
-      this.resetAll,
-      this.resetActivities,
-      this.maxOutKeys})
+      {Key? key,
+      required this.resetAll,
+      required this.resetActivities,
+      required this.maxOutKeys})
       : super(key: key);
 
   @override
@@ -44,7 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var prefs = PrefsUpdater();
 
     if (await prefs.getBool(darkModeKey) == null ||
-        !(await prefs.getBool(darkModeKey))) {
+        !(await prefs.getBool(darkModeKey))!) {
       isSelected = [true, false];
     } else {
       isSelected = [false, true];
@@ -155,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   SizedBox(height: 10),
                   BasicFlatButton(
-                    color: Colors.orange[400],
+                    color: Colors.orange[400]!,
                     textColor: Colors.white,
                     fontSize: 20,
                     padding: 10,
@@ -166,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     text: 'Nuke notifications',
                   ),
                   BasicFlatButton(
-                    color: Colors.red[400],
+                    color: Colors.red[400]!,
                     textColor: Colors.white,
                     fontSize: 20,
                     padding: 10,
@@ -264,8 +262,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                     colors: [
-                                      Colors.yellow[200],
-                                      Colors.yellow[700],
+                                      Colors.yellow[200]!,
+                                      Colors.yellow[700]!,
                                     ], // whitish to gray
                                     tileMode: TileMode
                                         .repeated, // repeats the gradient over the canvas

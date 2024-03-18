@@ -16,7 +16,7 @@ class IrrationalGameScreen extends StatefulWidget {
   final int difficulty; // 0, 1, 2, 3, 4, 5 (3 levels for PI, 3 levels for e)
   final scaffoldKey;
 
-  IrrationalGameScreen({Key key, this.difficulty, this.scaffoldKey})
+  IrrationalGameScreen({Key? key, required this.difficulty, this.scaffoldKey})
       : super(key: key);
 
   @override
@@ -108,13 +108,9 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
     }
     String savedPositionString =
         await prefs.getString('irrational${widget.difficulty}SavedPosition');
-    if (savedPositionString == null) {
-      position = 0;
-    } else {
-      setState(() {
-        position = int.parse(savedPositionString);
-      });
-    }
+    setState(() {
+      position = int.parse(savedPositionString);
+    });
   }
 
   String fillToMultiple(String s, int multiple) {
@@ -173,17 +169,17 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
       if (count % 18 == 0) {
         int tempRowRow = count ~/ 18;
         rows.add(
-          FlatButton(
-            color: tempRowRow == position
-                ? Colors.lightBlue[500]
-                : backgroundColor,
+          ElevatedButton(
             onLongPress: () {
               HapticFeedback.mediumImpact();
               updateActiveRow(tempRowRow);
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: tempRowRow == position
+                  ? Colors.lightBlue[500]
+                  : backgroundColor,
+            ),
             onPressed: null,
-            highlightColor: Colors.lightBlue[100],
-            splashColor: Color.fromRGBO(255, 0, 0, 0.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[

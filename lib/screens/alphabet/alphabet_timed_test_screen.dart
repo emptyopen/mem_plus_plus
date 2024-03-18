@@ -10,7 +10,7 @@ class AlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  AlphabetTimedTestScreen({this.callback, this.globalKey});
+  AlphabetTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _AlphabetTimedTestScreenState createState() =>
@@ -47,14 +47,14 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     prefs.checkFirstTime(
         context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
     // grab the digits
-    char1 = await prefs.getString('alphabetTestChar1');
-    char2 = await prefs.getString('alphabetTestChar2');
-    char3 = await prefs.getString('alphabetTestChar3');
-    char4 = await prefs.getString('alphabetTestChar4');
-    char5 = await prefs.getString('alphabetTestChar5');
-    char6 = await prefs.getString('alphabetTestChar6');
-    char7 = await prefs.getString('alphabetTestChar7');
-    char8 = await prefs.getString('alphabetTestChar8');
+    char1 = (await prefs.getString('alphabetTestChar1'))!;
+    char2 = (await prefs.getString('alphabetTestChar2'))!;
+    char3 = (await prefs.getString('alphabetTestChar3'))!;
+    char4 = (await prefs.getString('alphabetTestChar4'))!;
+    char5 = (await prefs.getString('alphabetTestChar5'))!;
+    char6 = (await prefs.getString('alphabetTestChar6'))!;
+    char7 = (await prefs.getString('alphabetTestChar7'))!;
+    char8 = (await prefs.getString('alphabetTestChar8'))!;
     print('real answer: $char1$char2$char3$char4 $char5$char6$char7$char8');
     setState(() {});
   }
@@ -244,8 +244,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Give up',
                       fontSize: 24,
-                      color: Colors.grey[200],
-                      splashColor: Colors.blue,
+                      color: Colors.grey[200]!,
                       onPressed: () => giveUp(),
                       padding: 10,
                     ),
@@ -255,8 +254,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Submit',
                       fontSize: 24,
-                      color: Colors.blue[200],
-                      splashColor: Colors.blue,
+                      color: Colors.blue[200]!,
                       onPressed: () => checkAnswer(),
                       padding: 10,
                     ),
@@ -283,8 +281,8 @@ class AlphabetTimedTestScreenHelp extends StatelessWidget {
         '    Time to recall your story! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!'
       ],
-      buttonColor: Colors.blue[100],
-      buttonSplashColor: Colors.blue[300],
+      buttonColor: Colors.blue[100]!,
+      buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetTimedTestFirstHelpKey,
     );
   }

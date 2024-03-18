@@ -6,13 +6,11 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
 
-import '../../constants/keys.dart';
-
 class TripleDigitTimedTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  TripleDigitTimedTestScreen({this.callback, this.globalKey});
+  TripleDigitTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _TripleDigitTimedTestScreenState createState() =>
@@ -77,32 +75,14 @@ class _TripleDigitTimedTestScreenState
       await prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
       await prefs.updateActivityVisible(lesson1Key, true);
       await prefs.setBool(gamesAvailableKey, true);
-      if (await prefs.getBool(fadeGameFirstViewKey) == null) {
-        await prefs.setBool(newGamesAvailableKey, true);
-        await prefs.setBool(fadeGameFirstViewKey, true);
-      }
       await prefs.setBool(fadeGameAvailableKey, true);
-      if (await prefs.getBool(tripleDigitTimedTestCompleteKey) == null) {
-        await prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
-        await prefs.setBool(tripleDigitTimedTestCompleteKey, true);
-        showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
-          snackBarText:
-              'Congratulations! You\'ve completed the Triple Digit system!',
-          textColor: Colors.black,
-          backgroundColor: colorTripleDigitDarker,
-          durationSeconds: 3,
-          isSuper: true,
-        );
-      } else {
-        showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
-          snackBarText: 'Congratulations! You aced it!',
-          textColor: Colors.black,
-          backgroundColor: colorTripleDigitStandard,
-          durationSeconds: 2,
-        );
-      }
+      showSnackBar(
+        scaffoldState: widget.globalKey.currentState,
+        snackBarText: 'Congratulations! You aced it!',
+        textColor: Colors.black,
+        backgroundColor: colorTripleDigitStandard,
+        durationSeconds: 2,
+      );
     } else {
       showSnackBar(
         scaffoldState: widget.globalKey.currentState,
@@ -121,9 +101,6 @@ class _TripleDigitTimedTestScreenState
     await prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
     await prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
     await prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
-    if (await prefs.getBool(tripleDigitTimedTestCompleteKey) == null) {
-      await prefs.updateActivityState(tripleDigitTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         scaffoldState: widget.globalKey.currentState,
         snackBarText:
@@ -225,7 +202,7 @@ class _TripleDigitTimedTestScreenState
                   BasicFlatButton(
                     text: 'Give up',
                     fontSize: 24,
-                    color: Colors.grey[200],
+                    color: Colors.grey[200]!,
                     splashColor: colorTripleDigitStandard,
                     onPressed: () => giveUp(),
                     padding: 10,
@@ -257,8 +234,8 @@ class TripleDigitTimedTestScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Triple Digit Timed Test',
       information: ['    Good luck! You rock!'],
-      buttonColor: Colors.amber[100],
-      buttonSplashColor: Colors.amber[300],
+      buttonColor: Colors.amber[100]!,
+      buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: tripleDigitTimedTestFirstHelpKey,
     );
   }

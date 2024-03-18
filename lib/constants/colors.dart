@@ -1,61 +1,61 @@
 import 'package:flutter/material.dart';
 
-var colorCorrect = Colors.greenAccent[200];
-var colorCorrectDarker = Colors.greenAccent[300];
+Color colorCorrect = Colors.greenAccent[200]!;
+Color colorCorrectDarker = Colors.greenAccent[300]!;
 
-var colorIncorrect = Colors.redAccent[200];
-var colorIncorrectDarker = Colors.redAccent[300];
+Color colorIncorrect = Colors.redAccent[200]!;
+Color colorIncorrectDarker = Colors.redAccent[300]!;
 
-var colorGamesLighter = Colors.lightBlue[100];
-var colorGamesStandard = Colors.lightBlue[200];
-var colorGamesDarker = Colors.lightBlue[400];
-var colorGamesDarkest = Colors.lightBlue[600];
+Color colorGamesLighter = Colors.lightBlue[100]!;
+Color colorGamesStandard = Colors.lightBlue[200]!;
+Color colorGamesDarker = Colors.lightBlue[400]!;
+Color colorGamesDarkest = Colors.lightBlue[600]!;
 
-var colorCustomMemoryLighter = Colors.purple[100];
-var colorCustomMemoryStandard = Colors.purple[200];
-var colorCustomMemoryDarker = Colors.purple[400];
-var colorCustomMemoryDarkest = Colors.purple[600];
+Color colorCustomMemoryLighter = Colors.purple[100]!;
+Color colorCustomMemoryStandard = Colors.purple[200]!;
+Color colorCustomMemoryDarker = Colors.purple[400]!;
+Color colorCustomMemoryDarkest = Colors.purple[600]!;
 
-var colorSingleDigitLighter = Colors.amber[100];
-var colorSingleDigitStandard = Colors.amber[200];
-var colorSingleDigitDarker = Colors.amber[400];
-var colorSingleDigitDarkest = Colors.amber[600];
+Color colorSingleDigitLighter = Colors.amber[100]!;
+Color colorSingleDigitStandard = Colors.amber[200]!;
+Color colorSingleDigitDarker = Colors.amber[400]!;
+Color colorSingleDigitDarkest = Colors.amber[600]!;
 
-var colorChapter1Lighter = Colors.lime[100];
-var colorChapter1Standard = Colors.lime[200];
-var colorChapter1Darker = Colors.lime[400];
-var colorChapter1Darkest = Colors.lime[600];
+Color colorChapter1Lighter = Colors.lime[100]!;
+Color colorChapter1Standard = Colors.lime[200]!;
+Color colorChapter1Darker = Colors.lime[400]!;
+Color colorChapter1Darkest = Colors.lime[600]!;
 
-var colorAlphabetLighter = Colors.blue[100];
-var colorAlphabetStandard = Colors.blue[200];
-var colorAlphabetDarker = Colors.blue[400];
-var colorAlphabetDarkest = Colors.blue[600];
+Color colorAlphabetLighter = Colors.blue[100]!;
+Color colorAlphabetStandard = Colors.blue[200]!;
+Color colorAlphabetDarker = Colors.blue[400]!;
+Color colorAlphabetDarkest = Colors.blue[600]!;
 
-var colorChapter2Lighter = Colors.indigo[100];
-var colorChapter2Standard = Colors.indigo[200];
-var colorChapter2Darker = Colors.indigo[400];
-var colorChapter2Darkest = Colors.indigo[600];
+Color colorChapter2Lighter = Colors.indigo[100]!;
+Color colorChapter2Standard = Colors.indigo[200]!;
+Color colorChapter2Darker = Colors.indigo[400]!;
+Color colorChapter2Darkest = Colors.indigo[600]!;
 
-var colorPAOLighter = Colors.pink[100];
-var colorPAOStandard = Colors.pink[200];
-var colorPAODarker = Colors.pink[400];
-var colorPAODarkest = Colors.pink[600];
+Color colorPAOLighter = Colors.pink[100]!;
+Color colorPAOStandard = Colors.pink[200]!;
+Color colorPAODarker = Colors.pink[400]!;
+Color colorPAODarkest = Colors.pink[600]!;
 
-var colorChapter3Lighter = Colors.orangeAccent[100];
-var colorChapter3Standard = Colors.orangeAccent[200];
-var colorChapter3Darker = Colors.orangeAccent[400];
-var colorChapter3Darkest = Colors.orangeAccent[600];
+Color colorChapter3Lighter = Colors.orangeAccent[100]!;
+Color colorChapter3Standard = Colors.orangeAccent[200]!;
+Color colorChapter3Darker = Colors.orangeAccent[400]!;
+Color colorChapter3Darkest = Colors.orangeAccent[600]!;
 
-var colorFaceStandard = Colors.lime[200];
-var colorFaceDarker = Colors.lime[400];
-var colorFaceDarkest = Colors.lime[600];
+Color colorFaceStandard = Colors.lime[200]!;
+Color colorFaceDarker = Colors.lime[400]!;
+Color colorFaceDarkest = Colors.lime[600]!;
 
-var colorDeckLighter = Colors.teal[100];
-var colorDeckStandard = Colors.teal[200];
-var colorDeckDarker = Colors.teal[400];
-var colorDeckDarkest = Colors.teal[600];
+Color colorDeckLighter = Colors.teal[100]!;
+Color colorDeckStandard = Colors.teal[200]!;
+Color colorDeckDarker = Colors.teal[400]!;
+Color colorDeckDarkest = Colors.teal[600]!;
 
-var colorTripleDigitLighter = Colors.deepOrange[100];
-var colorTripleDigitStandard = Colors.deepOrange[200];
-var colorTripleDigitDarker = Colors.deepOrange[400];
-var colorTripleDigitDarkest = Colors.deepOrange[600];
+Color colorTripleDigitLighter = Colors.deepOrange[100]!;
+Color colorTripleDigitStandard = Colors.deepOrange[200]!;
+Color colorTripleDigitDarker = Colors.deepOrange[400]!;
+Color colorTripleDigitDarkest = Colors.deepOrange[600]!;

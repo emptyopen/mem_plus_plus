@@ -12,7 +12,8 @@ class DeckMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  DeckMultipleChoiceTestScreen({this.callback, this.globalKey});
+  DeckMultipleChoiceTestScreen(
+      {required this.callback, required this.globalKey});
 
   @override
   _DeckMultipleChoiceTestScreenState createState() =>
@@ -25,7 +26,7 @@ class _DeckMultipleChoiceTestScreenState
   List fakeData = [];
   List<Widget> deckCards = [];
   bool dataReady = false;
-  List<DeckData> shuffledChoices;
+  late List<DeckData> shuffledChoices;
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -37,13 +38,13 @@ class _DeckMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, deckMultipleChoiceTestFirstHelpKey,
         DeckMultipleChoiceScreenHelp());
-    deckData = await prefs.getSharedPrefs(deckKey);
+    deckData = await prefs.getSharedPrefs(deckKey) as List<DeckData>;
     deckData = shuffle(deckData);
 
     deckData.forEach((entry) {
-      DeckData fakeChoice1;
-      DeckData fakeChoice2;
-      DeckData fakeChoice3;
+      DeckData? fakeChoice1;
+      DeckData? fakeChoice2;
+      DeckData? fakeChoice3;
 
       List<int> notAllowed = [entry.index];
       while (fakeChoice1 == null) {

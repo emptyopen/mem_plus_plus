@@ -12,7 +12,10 @@ class CustomMemoryInput extends StatefulWidget {
   final List<MemoryField> memoryFields;
   final String memoryType;
 
-  CustomMemoryInput({this.callback, this.memoryFields, this.memoryType});
+  CustomMemoryInput(
+      {required this.callback,
+      required this.memoryFields,
+      required this.memoryType});
 
   @override
   _CustomMemoryInputState createState() => _CustomMemoryInputState();
@@ -22,7 +25,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
   // todo: generalize these
   String spacedRepetitionType = longTerm;
   Set errors = Set();
-  List<bool> encryptStates;
+  late List<bool> encryptStates;
   bool encrypting = false;
   var prefs = PrefsUpdater();
 
@@ -244,7 +247,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
       } else if (memoryField.inputType == 'date') {
         fieldsList.add(
           BasicFlatButton(
-            color: Colors.purple[50],
+            color: Colors.purple[50]!,
             onPressed: () {
               DatePicker.showDatePicker(
                 context,
@@ -411,9 +414,9 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
             height: 2,
             color: colorCustomMemoryStandard,
           ),
-          onChanged: (String newValue) {
+          onChanged: (String? newValue) {
             setState(() {
-              spacedRepetitionType = newValue;
+              spacedRepetitionType = newValue!;
             });
           },
           items: <String>[shortTerm, mediumTerm, longTerm, extraLongTerm]
@@ -431,7 +434,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
         encrypting
             ? BasicFlatButton(
                 text: 'Encrypting',
-                onPressed: null,
+                onPressed: () {},
                 fontSize: 18,
                 color: Colors.yellow,
               )
@@ -455,10 +458,10 @@ class MemoryField {
   String inputType;
 
   MemoryField(
-      {this.text,
-      this.mapKey,
-      this.controller,
-      this.fieldController,
-      this.required,
-      this.inputType});
+      {required this.text,
+      required this.mapKey,
+      required this.controller,
+      required this.fieldController,
+      required this.required,
+      required this.inputType});
 }

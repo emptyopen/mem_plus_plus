@@ -8,7 +8,7 @@ class Lesson1Screen extends StatefulWidget {
   final Function callback;
   final GlobalKey globalKey;
 
-  Lesson1Screen({this.callback, this.globalKey});
+  Lesson1Screen({required this.callback, required this.globalKey});
 
   @override
   _Lesson1ScreenState createState() => _Lesson1ScreenState();

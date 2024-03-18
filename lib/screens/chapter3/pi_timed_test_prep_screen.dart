@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 class PiTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  PiTimedTestPrepScreen({this.callback});
+  PiTimedTestPrepScreen({required this.callback});
 
   @override
   _PiTimedTestPrepScreenState createState() => _PiTimedTestPrepScreenState();
@@ -137,7 +137,6 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
             BasicFlatButton(
               text: 'I\'m ready!',
               color: colorChapter3Darker,
-              splashColor: colorChapter3Standard,
               onPressed: () => showConfirmDialog(
                   context: context,
                   function: updateStatus,

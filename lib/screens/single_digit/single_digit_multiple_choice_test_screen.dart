@@ -12,7 +12,8 @@ class SingleDigitMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  SingleDigitMultipleChoiceTestScreen({this.callback, this.globalKey});
+  SingleDigitMultipleChoiceTestScreen(
+      {required this.callback, required this.globalKey});
 
   @override
   _SingleDigitMultipleChoiceTestScreenState createState() =>
@@ -25,7 +26,7 @@ class _SingleDigitMultipleChoiceTestScreenState
   List fakeData = [];
   List<Widget> singleDigitCards = [];
   bool dataReady = false;
-  List<SingleDigitData> shuffledChoices;
+  late List<SingleDigitData> shuffledChoices;
   var prefs = PrefsUpdater();
 
   @override
@@ -37,13 +38,14 @@ class _SingleDigitMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, singleDigitMultipleChoiceTestFirstHelpKey,
         SingleDigitMultipleChoiceScreenHelp());
-    singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
+    singleDigitData =
+        await prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
     singleDigitData = shuffle(singleDigitData);
 
     singleDigitData.forEach((entry) {
-      SingleDigitData fakeChoice1;
-      SingleDigitData fakeChoice2;
-      SingleDigitData fakeChoice3;
+      SingleDigitData? fakeChoice1;
+      SingleDigitData? fakeChoice2;
+      SingleDigitData? fakeChoice3;
 
       List<int> notAllowed = [entry.index];
       while (fakeChoice1 == null) {
@@ -155,8 +157,8 @@ class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
             'and you simply have to choose the correct digit or object. If you get a perfect score, the next test will be unlocked! '
             '\n    Good luck!'
       ],
-      buttonColor: Colors.amber[100],
-      buttonSplashColor: Colors.amber[300],
+      buttonColor: Colors.amber[100]!,
+      buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitMultipleChoiceTestFirstHelpKey,
     );
   }

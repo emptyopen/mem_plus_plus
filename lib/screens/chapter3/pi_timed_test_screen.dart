@@ -11,7 +11,7 @@ class PiTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  PiTimedTestScreen({this.callback, this.globalKey});
+  PiTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _PiTimedTestScreenState createState() => _PiTimedTestScreenState();
@@ -314,8 +314,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Give up',
                       onPressed: () => giveUp(),
-                      color: Colors.grey[200],
-                      splashColor: Colors.grey,
+                      color: Colors.grey[200]!,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -326,7 +325,6 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorChapter3Standard,
-                      splashColor: colorChapter3Darker,
                       padding: 10,
                       fontSize: 24,
                     ),

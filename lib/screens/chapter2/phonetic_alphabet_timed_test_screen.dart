@@ -12,7 +12,8 @@ class PhoneticAlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  PhoneticAlphabetTimedTestScreen({this.callback, this.globalKey});
+  PhoneticAlphabetTimedTestScreen(
+      {required this.callback, required this.globalKey});
 
   @override
   _PhoneticAlphabetTimedTestScreenState createState() =>
@@ -25,9 +26,9 @@ class _PhoneticAlphabetTimedTestScreenState
   final text2Controller = TextEditingController();
   final text3Controller = TextEditingController();
   final text4Controller = TextEditingController();
-  String randomLetter1;
-  String randomLetter2;
-  String randomLetter3;
+  late String randomLetter1;
+  late String randomLetter2;
+  late String randomLetter3;
   String encodeWord = '';
   String decodeWord = '';
   String morseGuess = '';
@@ -472,8 +473,7 @@ class _PhoneticAlphabetTimedTestScreenState
                     BasicFlatButton(
                       text: 'Give up',
                       onPressed: () => giveUp(),
-                      color: Colors.grey[200],
-                      splashColor: Colors.grey,
+                      color: Colors.grey[200]!,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -484,7 +484,6 @@ class _PhoneticAlphabetTimedTestScreenState
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorChapter2Standard,
-                      splashColor: colorChapter2Darker,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -520,7 +519,8 @@ class PhoneticWordGuess extends StatelessWidget {
   final String letter;
   final TextEditingController textEditingController;
 
-  PhoneticWordGuess({this.letter, this.textEditingController});
+  PhoneticWordGuess(
+      {required this.letter, required this.textEditingController});
 
   @override
   Widget build(BuildContext context) {

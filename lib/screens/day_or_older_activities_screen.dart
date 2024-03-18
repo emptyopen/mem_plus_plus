@@ -13,12 +13,12 @@ class DayOrOlderActivitiesScreen extends StatefulWidget {
   final Function callback;
 
   DayOrOlderActivitiesScreen(
-      {Key key,
-      this.names,
-      this.availableTimes,
-      this.icons,
-      this.nameKeys,
-      this.callback})
+      {Key? key,
+      required this.names,
+      required this.availableTimes,
+      required this.icons,
+      required this.nameKeys,
+      required this.callback})
       : super(key: key);
 
   @override

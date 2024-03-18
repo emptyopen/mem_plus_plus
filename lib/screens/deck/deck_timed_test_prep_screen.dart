@@ -98,7 +98,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
     var prefs = PrefsUpdater();
     prefs.checkFirstTime(
         context, deckTimedTestPrepFirstHelpKey, DeckTimedTestPrepScreenHelp());
-    bool sdTestIsActive = await prefs.getBool(deckTestActiveKey);
+    bool? sdTestIsActive = await prefs.getBool(deckTestActiveKey);
     if (sdTestIsActive == null || !sdTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -135,15 +135,15 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
       await prefs.setBool(deckTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      digits1 = await prefs.getString('deckTestDigits1');
-      digits2 = await prefs.getString('deckTestDigits2');
-      digits3 = await prefs.getString('deckTestDigits3');
-      digits4 = await prefs.getString('deckTestDigits4');
-      digits5 = await prefs.getString('deckTestDigits5');
-      digits6 = await prefs.getString('deckTestDigits6');
-      digits7 = await prefs.getString('deckTestDigits7');
-      digits8 = await prefs.getString('deckTestDigits8');
-      digits9 = await prefs.getString('deckTestDigits9');
+      digits1 = (await prefs.getString('deckTestDigits1'))!;
+      digits2 = (await prefs.getString('deckTestDigits2'))!;
+      digits3 = (await prefs.getString('deckTestDigits3'))!;
+      digits4 = (await prefs.getString('deckTestDigits4'))!;
+      digits5 = (await prefs.getString('deckTestDigits5'))!;
+      digits6 = (await prefs.getString('deckTestDigits6'))!;
+      digits7 = (await prefs.getString('deckTestDigits7'))!;
+      digits8 = (await prefs.getString('deckTestDigits8'))!;
+      digits9 = (await prefs.getString('deckTestDigits9'))!;
     }
     setState(() {});
   }
@@ -299,7 +299,6 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
             BasicFlatButton(
               text: 'I\'m ready!',
               color: colorDeckStandard,
-              splashColor: colorDeckDarker,
               onPressed: () => showConfirmDialog(
                   context: context,
                   function: updateStatus,
@@ -345,7 +344,7 @@ class TimedTestPrepRowContainer extends StatelessWidget {
   final String digits;
   final Color color;
 
-  TimedTestPrepRowContainer({this.digits, this.color});
+  TimedTestPrepRowContainer({required this.digits, required this.color});
 
   @override
   Widget build(BuildContext context) {

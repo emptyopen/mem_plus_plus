@@ -11,7 +11,7 @@ class SingleDigitPracticeScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  SingleDigitPracticeScreen({this.callback, this.globalKey});
+  SingleDigitPracticeScreen({required this.callback, required this.globalKey});
 
   @override
   _SingleDigitPracticeScreenState createState() =>
@@ -33,7 +33,8 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, singleDigitPracticeFirstHelpKey,
         SingleDigitPracticeScreenHelp());
-    singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
+    singleDigitData =
+        await prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
     bool allComplete = true;
     for (int i = 0; i < singleDigitData.length; i++) {
       if (singleDigitData[i].familiarity < 100) {
@@ -122,8 +123,8 @@ class SingleDigitPracticeScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Single Digit Practice',
       information: information,
-      buttonColor: Colors.amber[100],
-      buttonSplashColor: Colors.amber[300],
+      buttonColor: Colors.amber[100]!,
+      buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitPracticeFirstHelpKey,
     );
   }

@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 class PlanetTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  PlanetTimedTestPrepScreen({this.callback});
+  PlanetTimedTestPrepScreen({required this.callback});
 
   @override
   _PlanetTimedTestPrepScreenState createState() =>
@@ -208,7 +208,6 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
                 BasicFlatButton(
                   text: 'My story is ready!',
                   color: colorChapter1Darker,
-                  splashColor: colorChapter1Standard,
                   onPressed: () => showConfirmDialog(
                       context: context,
                       function: updateStatus,
@@ -239,7 +238,7 @@ class PlanetText extends StatelessWidget {
   final String text;
   final double width;
 
-  PlanetText({this.text, this.width = 110});
+  PlanetText({required this.text, this.width = 110});
 
   @override
   Widget build(BuildContext context) {

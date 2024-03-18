@@ -12,7 +12,8 @@ class TripleDigitMultipleChoiceTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  TripleDigitMultipleChoiceTestScreen({this.callback, this.globalKey});
+  TripleDigitMultipleChoiceTestScreen(
+      {required this.callback, required this.globalKey});
 
   @override
   _TripleDigitMultipleChoiceTestScreenState createState() =>
@@ -25,7 +26,7 @@ class _TripleDigitMultipleChoiceTestScreenState
   List fakeData = [];
   List<Widget> tripleDigitCards = [];
   bool dataReady = false;
-  List<TripleDigitData> shuffledChoices;
+  late List<TripleDigitData> shuffledChoices;
   var prefs = PrefsUpdater();
 
   @override
@@ -37,13 +38,14 @@ class _TripleDigitMultipleChoiceTestScreenState
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, tripleDigitMultipleChoiceTestFirstHelpKey,
         TripleDigitMultipleChoiceScreenHelp());
-    tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
+    tripleDigitData =
+        await prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
     tripleDigitData = shuffle(tripleDigitData);
 
     tripleDigitData.forEach((entry) {
-      TripleDigitData fakeChoice1;
-      TripleDigitData fakeChoice2;
-      TripleDigitData fakeChoice3;
+      TripleDigitData? fakeChoice1;
+      TripleDigitData? fakeChoice2;
+      TripleDigitData? fakeChoice3;
 
       List<int> notAllowed = [entry.index];
       while (fakeChoice1 == null) {
@@ -152,8 +154,8 @@ class TripleDigitMultipleChoiceScreenHelp extends StatelessWidget {
       information: [
         '    You\'re standing on top of a mountain. Let\'s lock this skill down.'
       ],
-      buttonColor: Colors.amber[100],
-      buttonSplashColor: Colors.amber[300],
+      buttonColor: Colors.amber[100]!,
+      buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: tripleDigitMultipleChoiceTestFirstHelpKey,
     );
   }

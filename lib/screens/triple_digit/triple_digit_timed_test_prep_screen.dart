@@ -73,9 +73,9 @@ class _TripleDigitTimedTestPrepScreenState
       await prefs.setString('tripleDigitTestDigit7', digits7);
       await prefs.setString('tripleDigitTestDigit8', digits8);
       await prefs.setString('tripleDigitTestDigit9', digits9);
-      await prefs.setString('tripleDigitTestDigit10', digits7);
-      await prefs.setString('tripleDigitTestDigit11', digits8);
-      await prefs.setString('tripleDigitTestDigit12', digits9);
+      await prefs.setString('tripleDigitTestDigit10', digits10);
+      await prefs.setString('tripleDigitTestDigit11', digits11);
+      await prefs.setString('tripleDigitTestDigit12', digits12);
       await prefs.setBool(tripleDigitTestActiveKey, true);
     } else {
       print('found active test, restoring values');
@@ -88,9 +88,9 @@ class _TripleDigitTimedTestPrepScreenState
       digits7 = await prefs.getString('tripleDigitTestDigit7');
       digits8 = await prefs.getString('tripleDigitTestDigit8');
       digits9 = await prefs.getString('tripleDigitTestDigit9');
-      digits7 = await prefs.getString('tripleDigitTestDigit10');
-      digits8 = await prefs.getString('tripleDigitTestDigit11');
-      digits9 = await prefs.getString('tripleDigitTestDigit12');
+      digits10 = await prefs.getString('tripleDigitTestDigit10');
+      digits11 = await prefs.getString('tripleDigitTestDigit11');
+      digits12 = await prefs.getString('tripleDigitTestDigit12');
     }
     setState(() {});
   }
@@ -239,7 +239,7 @@ class TripleDigitTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpScreen(
-      title: 'TripleDigit Timed Test Preparation',
+      title: 'Triple Digit Timed Test Preparation',
       information: [
         '    Very proud of you for coming this far. I myself have only achieved basic proficiency in this system recently.\n\n'
             '    If you haven\'t already, definitely start memorizing information that could be important! Phone numbers of your SO, '

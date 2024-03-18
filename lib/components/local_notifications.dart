@@ -79,8 +79,8 @@ NotificationDetails get _ongoing {
 
 Future showOngoingNotification(
   FlutterLocalNotificationsPlugin notifications, {
-  @required String title,
-  @required String body,
+  required String title,
+  required String body,
   int id = 0,
 }) =>
     _showNotification(notifications,
@@ -88,9 +88,9 @@ Future showOngoingNotification(
 
 Future _showNotification(
   FlutterLocalNotificationsPlugin notifications, {
-  @required String title,
-  @required String body,
-  @required NotificationDetails type,
+  required String title,
+  required String body,
+  required NotificationDetails type,
   int id = 0,
 }) =>
     notifications.show(id, title, body, type);

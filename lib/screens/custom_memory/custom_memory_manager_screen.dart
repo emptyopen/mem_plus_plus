@@ -14,7 +14,8 @@ import 'package:mem_plus_plus/components/standard.dart';
 class CustomMemoryManagerScreen extends StatefulWidget {
   final Function callback;
 
-  CustomMemoryManagerScreen({Key key, this.callback}) : super(key: key);
+  CustomMemoryManagerScreen({Key? key, required this.callback})
+      : super(key: key);
 
   @override
   _CustomMemoryManagerScreenState createState() =>
@@ -42,19 +43,14 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     prefs.checkFirstTime(context, customMemoryManagerFirstHelpKey,
         CustomMemoryManagerScreenHelp());
 
-    if (prefs.getString(customMemoriesKey) == null) {
-      customMemories = {};
-      prefs.setString(customMemoriesKey, json.encode({}));
-    } else {
-      customMemories = json.decode(await prefs.getString(customMemoriesKey));
-    }
+    customMemories = json.decode((await prefs.getString(customMemoriesKey))!);
 
     setState(() {});
   }
 
   void callback() async {
     var prefs = PrefsUpdater();
-    customMemories = await prefs.getSharedPrefs(customMemoriesKey);
+    customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
     setState(() {});
     widget.callback();
   }
@@ -230,10 +226,10 @@ class CustomMemoryTile extends StatelessWidget {
   final Function callback;
   final prefs = PrefsUpdater();
 
-  CustomMemoryTile({this.customMemory, this.callback});
+  CustomMemoryTile({required this.customMemory, required this.callback});
 
   deleteCustomMemory() async {
-    Map customMemories = await prefs.getSharedPrefs(customMemoriesKey);
+    Map customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
     customMemories.remove(customMemory['title']);
     prefs.writeSharedPrefs(customMemoriesKey, customMemories);
     callback();
@@ -262,7 +258,7 @@ class CustomMemoryTile extends StatelessWidget {
           actions: <Widget>[
             BasicFlatButton(
               text: 'Cancel',
-              color: Colors.grey[300],
+              color: Colors.grey[300]!,
               onPressed: () {
                 HapticFeedback.lightImpact();
                 Navigator.of(context).pop();
@@ -453,7 +449,7 @@ class CustomMemoryTile extends StatelessWidget {
 
   resetCustomMemory(BuildContext context) async {
     HapticFeedback.lightImpact();
-    Map customMemories = await prefs.getSharedPrefs(customMemoriesKey);
+    Map customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
     customMemories[customMemory['title']]['spacedRepetitionLevel'] = 0;
     var spacedRepetitionType =
         customMemories[customMemory['title']]['spacedRepetitionType'];
@@ -495,7 +491,7 @@ class CustomMemoryTile extends StatelessWidget {
           children: <Widget>[
             Container(
               width: 50,
-              child: FlatButton(
+              child: ElevatedButton(
                 child:
                     Icon(Icons.remove_red_eye, color: colorCustomMemoryDarker),
                 onPressed: () => confirmViewCustomMemory(context),
@@ -503,7 +499,7 @@ class CustomMemoryTile extends StatelessWidget {
             ),
             Container(
               width: 50,
-              child: FlatButton(
+              child: ElevatedButton(
                 child: Icon(
                   Icons.delete,
                   color: Colors.red,
@@ -526,7 +522,10 @@ class CustomMemoryViewPair extends StatelessWidget {
   final String subHeading;
   final bool encrypted;
 
-  CustomMemoryViewPair({this.heading, this.subHeading, this.encrypted = false});
+  CustomMemoryViewPair(
+      {required this.heading,
+      required this.subHeading,
+      this.encrypted = false});
 
   @override
   Widget build(BuildContext context) {
@@ -585,7 +584,7 @@ class CustomMemoryViewPair extends StatelessWidget {
 class MyDialogContent extends StatefulWidget {
   final Function() callback;
 
-  MyDialogContent({Key key, this.callback});
+  MyDialogContent({Key? key, required this.callback});
 
   @override
   _MyDialogContentState createState() => new _MyDialogContentState();
@@ -652,9 +651,9 @@ class _MyDialogContentState extends State<MyDialogContent> {
                     height: 2,
                     color: colorCustomMemoryStandard,
                   ),
-                  onChanged: (String newValue) {
+                  onChanged: (String? newValue) {
                     setState(() {
-                      dropdownValue = newValue;
+                      dropdownValue = newValue!;
                     });
                   },
                   items: <String>[idCardString, contactString, otherString]

@@ -12,7 +12,7 @@ import 'package:flutter/services.dart';
 class SingleDigitTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  SingleDigitTimedTestPrepScreen({this.callback});
+  SingleDigitTimedTestPrepScreen({required this.callback});
 
   @override
   _SingleDigitTimedTestPrepScreenState createState() =>
@@ -43,7 +43,7 @@ class _SingleDigitTimedTestPrepScreenState
     setState(() {
       // if digits are null, randomize values and store them,
       // then update DateTime available for singleDigitTest
-      bool sdTestIsActive = prefs.getBool(singleDigitTestActiveKey);
+      bool? sdTestIsActive = prefs.getBool(singleDigitTestActiveKey);
       if (sdTestIsActive == null || !sdTestIsActive) {
         print('no active test, setting new values');
         var random = new Random();
@@ -58,10 +58,10 @@ class _SingleDigitTimedTestPrepScreenState
         prefs.setBool(singleDigitTestActiveKey, true);
       } else {
         print('found active test, restoring values');
-        digit1 = prefs.getString('singleDigitTestDigit1');
-        digit2 = prefs.getString('singleDigitTestDigit2');
-        digit3 = prefs.getString('singleDigitTestDigit3');
-        digit4 = prefs.getString('singleDigitTestDigit4');
+        digit1 = (prefs.getString('singleDigitTestDigit1'))!;
+        digit2 = (prefs.getString('singleDigitTestDigit2'))!;
+        digit3 = (prefs.getString('singleDigitTestDigit3'))!;
+        digit4 = (prefs.getString('singleDigitTestDigit4'))!;
       }
     });
   }
@@ -176,7 +176,6 @@ class _SingleDigitTimedTestPrepScreenState
             BasicFlatButton(
               text: 'I\'m ready!',
               color: colorSingleDigitLighter,
-              splashColor: colorSingleDigitStandard,
               onPressed: () => showConfirmDialog(
                   context: context,
                   function: updateStatus,
@@ -231,8 +230,8 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Single Digit Timed Test Preparation',
       information: information,
-      buttonColor: Colors.amber[100],
-      buttonSplashColor: Colors.amber[300],
+      buttonColor: Colors.amber[100]!,
+      buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitTimedTestPrepFirstHelpKey,
     );
   }

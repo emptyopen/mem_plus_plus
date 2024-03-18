@@ -17,8 +17,6 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
-import '../constants/keys.dart';
-
 handleAppUpdate() async {
   print('handling app update...');
 
@@ -53,7 +51,7 @@ class PrefsUpdater {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     switch (key) {
       case activityStatesKey:
-        String activityStatesString = prefs.getString(activityStatesKey);
+        String? activityStatesString = prefs.getString(activityStatesKey);
         if (activityStatesString == null) {
           return defaultActivityStatesInitial;
         }
@@ -143,7 +141,7 @@ class PrefsUpdater {
   Future<String> getActivityState(String activityName) async {
     Map<String, Activity> activityStates =
         await getSharedPrefs(activityStatesKey);
-    return activityStates[activityName].state;
+    return activityStates[activityName]!.state;
   }
 
   Future<bool> getActivityVisible(String activityName) async {
@@ -152,19 +150,14 @@ class PrefsUpdater {
     if (activityStates[activityName] == null) {
       return false;
     }
-    return activityStates[activityName].visible;
+    return activityStates[activityName]!.visible;
   }
 
   updateActivityVisible(String activityName, bool visible) async {
     print('setting $activityName visible to $visible');
     Map<String, Activity> activityStates =
         await getSharedPrefs(activityStatesKey);
-    Activity activity = activityStates[activityName];
-    if (activity == null) {
-      print('hey, activity.visible was null. defaulting...');
-      activityStates[activityName] = defaultActivityStatesAllDone[activityName];
-      activity = activityStates[activityName];
-    }
+    Activity activity = activityStates[activityName]!;
     activity.visible = visible;
     activityStates[activityName] = activity;
     await writeSharedPrefs(activityStatesKey, activityStates);
@@ -185,7 +178,7 @@ class PrefsUpdater {
     prefs.setBool(key, value);
   }
 
-  Future<bool> getBool(String key) async {
+  Future<bool?> getBool(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool(key);
   }
@@ -195,7 +188,7 @@ class PrefsUpdater {
     prefs.setString(key, value);
   }
 
-  Future<String> getString(String key) async {
+  Future<String?> getString(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
@@ -241,10 +234,10 @@ List shuffle(List items) {
 }
 
 void showSnackBar(
-    {ScaffoldState scaffoldState,
-    String snackBarText,
+    {ScaffoldState? scaffoldState,
+    required String snackBarText,
     Color textColor = Colors.black,
-    Color backgroundColor,
+    Color? backgroundColor,
     int durationSeconds = 3,
     bool isSuper = false}) {
   final snackBar = SnackBar(
@@ -268,9 +261,9 @@ void showSnackBar(
 }
 
 void showConfirmDialog(
-    {BuildContext context,
-    Function function,
-    String confirmText,
+    {required BuildContext context,
+    required Function function,
+    required String confirmText,
     Color confirmColor = Colors.redAccent,
     bool isRoute = false}) {
   showDialog(
@@ -293,7 +286,7 @@ void showConfirmDialog(
         actions: <Widget>[
           BasicFlatButton(
             text: 'Cancel',
-            color: Colors.grey[300],
+            color: Colors.grey[300]!,
             onPressed: () {
               HapticFeedback.lightImpact();
               Navigator.of(context).pop();

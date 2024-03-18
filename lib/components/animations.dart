@@ -3,7 +3,11 @@ import 'package:mem_plus_plus/constants/keys.dart';
 
 class StaggerAnimation extends StatelessWidget {
   StaggerAnimation(
-      {Key key, this.widget, this.controller, this.begin, this.end})
+      {Key? key,
+      required this.widget,
+      required this.controller,
+      required this.begin,
+      required this.end})
       : opacity = Tween<double>(
           begin: 0,
           end: 1,
@@ -57,7 +61,11 @@ class StaggerAnimation extends StatelessWidget {
 
 class FadeAwayAnimation extends StatelessWidget {
   FadeAwayAnimation(
-      {Key key, this.widget, this.controller, this.begin, this.end})
+      {Key? key,
+      required this.widget,
+      required this.controller,
+      required this.begin,
+      required this.end})
       : opacityIn = Tween<double>(
           begin: 0,
           end: 1,
@@ -123,8 +131,10 @@ class FadeAwayAnimation extends StatelessWidget {
 
   Widget _buildAnimation(BuildContext context, Widget child) {
     return Container(
-      padding: EdgeInsets.fromLTRB(50 - paddingIn.value + paddingOut.value, 0, paddingIn.value - paddingOut.value, 0),
-      child: Opacity(opacity: opacityIn.value + opacityOut.value, child: widget),
+      padding: EdgeInsets.fromLTRB(50 - paddingIn.value + paddingOut.value, 0,
+          paddingIn.value - paddingOut.value, 0),
+      child:
+          Opacity(opacity: opacityIn.value + opacityOut.value, child: widget),
     );
   }
 
@@ -138,9 +148,13 @@ class FadeAwayAnimation extends StatelessWidget {
 }
 
 class StaggerAnimationSideways extends StatelessWidget {
-  StaggerAnimationSideways(
-      {Key key, this.widget, this.controller, this.begin, this.end})
-      : opacity = Tween<double>(
+  StaggerAnimationSideways({
+    Key? key,
+    required this.widget,
+    required this.controller,
+    required this.begin,
+    required this.end,
+  })  : opacity = Tween<double>(
           begin: 0,
           end: 1,
         ).animate(
@@ -192,9 +206,15 @@ class StaggerAnimationSideways extends StatelessWidget {
 }
 
 class PercentageAnimation extends StatelessWidget {
-  PercentageAnimation(
-      {Key key, this.widget, this.controller, this.color, this.size, this.begin, this.end})
-      : height = Tween<double>(
+  PercentageAnimation({
+    Key? key,
+    required this.widget,
+    required this.controller,
+    required this.color,
+    required this.size,
+    required this.begin,
+    required this.end,
+  })  : height = Tween<double>(
           begin: size,
           end: 0,
         ).animate(
@@ -219,16 +239,17 @@ class PercentageAnimation extends StatelessWidget {
 
   Widget _buildAnimation(BuildContext context, Widget child) {
     return Container(
-      decoration: BoxDecoration(gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  color,
-                  backgroundColor,
-                ], // whitish to gray
-                tileMode:
-                    TileMode.repeated, // repeats the gradient over the canvas
-              ),),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            color,
+            backgroundColor,
+          ], // whitish to gray
+          tileMode: TileMode.repeated, // repeats the gradient over the canvas
+        ),
+      ),
       width: 40,
       height: height.value,
     );
@@ -244,7 +265,12 @@ class PercentageAnimation extends StatelessWidget {
 }
 
 class MenuAnimation extends StatelessWidget {
-  MenuAnimation({Key key, this.widget, this.controller, this.begin, this.end})
+  MenuAnimation(
+      {Key? key,
+      required this.widget,
+      required this.controller,
+      required this.begin,
+      required this.end})
       : opacity = Tween<double>(
           begin: 0,
           end: 1,

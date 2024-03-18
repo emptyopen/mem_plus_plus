@@ -12,7 +12,9 @@ class WelcomeScreen extends StatefulWidget {
   final Function mainMenuFirstTimeCallback;
 
   WelcomeScreen(
-      {this.firstTime = false, this.callback, this.mainMenuFirstTimeCallback});
+      {this.firstTime = false,
+      required this.callback,
+      required this.mainMenuFirstTimeCallback});
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -20,7 +22,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
   int slideIndex = 0;
   final IndexController indexController = IndexController();
   var prefs = PrefsUpdater();
@@ -233,8 +235,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             ? ParallaxContainer(
                                 child: BasicFlatButton(
                                   text: 'Main Menu',
-                                  color: Colors.green[200],
-                                  splashColor: Colors.green[300],
+                                  color: Colors.green[200]!,
                                   onPressed: () => goToMainMenu(context),
                                   padding: 10,
                                   fontSize: 28,
@@ -248,8 +249,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             : ParallaxContainer(
                                 child: BasicFlatButton(
                                   text: 'Main Menu',
-                                  color: Colors.green[200],
-                                  splashColor: Colors.green[300],
+                                  color: Colors.green[200]!,
                                   onPressed: () => goToMainMenu(context),
                                   padding: 10,
                                   fontSize: 28,
@@ -266,7 +266,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
                   child: getSlideCircles(
-                      information.length, slideIndex, Colors.green[300]),
+                      information.length, slideIndex, Colors.green[300]!),
                 ),
                 alignment: Alignment.bottomCenter,
               )

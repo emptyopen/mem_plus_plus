@@ -151,9 +151,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   List<String> availableActivities = [];
-  Map customMemories;
-  Map activityMenuButtonMap;
-  bool firstTimeOpeningApp;
+  Map? customMemories;
+  Map? activityMenuButtonMap;
+  bool? firstTimeOpeningApp;
   bool customMemoryManagerAvailable = false;
   bool customMemoryManagerFirstView = false;
   bool gamesAvailable = false;
@@ -185,23 +185,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<Null> getSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (prefs.getBool(darkModeKey) == null || !(prefs.getBool(darkModeKey))) {
+    if (prefs.getBool(darkModeKey) == null || !(prefs.getBool(darkModeKey))!) {
       backgroundColor = Colors.white;
       backgroundHighlightColor = Colors.black;
-      backgroundSemiColor = Colors.grey[200];
-      backgroundSemiHighlightColor = Colors.grey[800];
+      backgroundSemiColor = Colors.grey[200]!;
+      backgroundSemiHighlightColor = Colors.grey[800]!;
     } else {
-      backgroundColor = Colors.grey[800];
+      backgroundColor = Colors.grey[800]!;
       backgroundHighlightColor = Colors.white;
-      backgroundSemiColor = Colors.grey[600];
-      backgroundSemiHighlightColor = Colors.grey[200];
+      backgroundSemiColor = Colors.grey[600]!;
+      backgroundSemiHighlightColor = Colors.grey[200]!;
     }
     setState(() {});
 
     // activity states, and unlockedActivities
     if (prefs.getKeys().contains(activityStatesKey)) {
       setState(() {
-        var rawMap = json.decode(prefs.getString(activityStatesKey))
+        var rawMap = json.decode(prefs.getString(activityStatesKey)!)
             as Map<String, dynamic>;
         activityStates =
             rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
@@ -268,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
       customMemories = {};
       await prefs.writeSharedPrefs(customMemoriesKey, {});
     } else {
-      customMemories = await prefs.getSharedPrefs(customMemoriesKey);
+      customMemories = (await prefs.getSharedPrefs(customMemoriesKey) as Map);
     }
 
     // backwards compatibility:
@@ -281,10 +281,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // iterate through all activity states, add activities if they are visible
     availableActivities = [];
-    activityStates = await prefs.getSharedPrefs(activityStatesKey);
+    activityStates =
+        await prefs.getSharedPrefs(activityStatesKey) as Map<String, Activity>;
 
     for (String activityName in activityStates.keys) {
-      if (activityStates[activityName].visible) {
+      if (activityStates[activityName]!.visible) {
         availableActivities.add(activityName);
       }
     }

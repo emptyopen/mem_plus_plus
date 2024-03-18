@@ -11,7 +11,7 @@ class FaceTimedTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  FaceTimedTestScreen({this.callback, this.globalKey});
+  FaceTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _FaceTimedTestScreenState createState() => _FaceTimedTestScreenState();
@@ -44,10 +44,10 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     prefs.checkFirstTime(
         context, faceTimedTestFirstHelpKey, FaceTimedTestScreenHelp());
     // grab the digits
-    face1 = await prefs.getString('face1');
-    face2 = await prefs.getString('face2');
-    name1 = await prefs.getString('name1');
-    name2 = await prefs.getString('name2');
+    face1 = (await prefs.getString('face1'))!;
+    face2 = (await prefs.getString('face2'))!;
+    name1 = (await prefs.getString('name1'))!;
+    name2 = (await prefs.getString('name2'))!;
     isLoaded = true;
     print('real answer: $name1 $name2');
     setState(() {});
@@ -274,8 +274,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
                           BasicFlatButton(
                             text: 'Give up',
                             fontSize: 24,
-                            color: Colors.grey[200],
-                            splashColor: Colors.grey[400],
+                            color: Colors.grey[200]!,
                             onPressed: () => giveUp(),
                             padding: 10,
                           ),
@@ -286,7 +285,6 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
                             text: 'Submit',
                             fontSize: 24,
                             color: colorChapter1Standard,
-                            splashColor: colorChapter1Darker,
                             onPressed: () => checkAnswer(),
                             padding: 10,
                           ),

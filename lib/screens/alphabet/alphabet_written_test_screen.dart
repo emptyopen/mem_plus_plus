@@ -11,7 +11,7 @@ class AlphabetWrittenTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  AlphabetWrittenTestScreen({this.callback, this.globalKey});
+  AlphabetWrittenTestScreen({required this.callback, required this.globalKey});
 
   @override
   _AlphabetWrittenTestScreenState createState() =>
@@ -19,7 +19,7 @@ class AlphabetWrittenTestScreen extends StatefulWidget {
 }
 
 class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
-  List<AlphabetData> alphabetData;
+  late List<AlphabetData> alphabetData;
   bool dataReady = false;
   var prefs = PrefsUpdater();
 
@@ -32,7 +32,8 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, alphabetWrittenTestFirstHelpKey,
         AlphabetWrittenTestScreenHelp());
-    alphabetData = await prefs.getSharedPrefs(alphabetKey);
+    alphabetData =
+        await prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     alphabetData = shuffle(alphabetData);
     dataReady = true;
     setState(() {});
@@ -98,8 +99,8 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
             'and you simply have to write in the correct object. If you get a perfect score, '
             'the next test will be unlocked! Good luck!\n\n    Small typos are allowed!'
       ],
-      buttonColor: Colors.blue[100],
-      buttonSplashColor: Colors.blue[300],
+      buttonColor: Colors.blue[100]!,
+      buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetWrittenTestFirstHelpKey,
     );
   }

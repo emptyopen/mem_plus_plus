@@ -12,15 +12,15 @@ import 'package:flutter/services.dart';
 class AlphabetEditScreen extends StatefulWidget {
   final Function callback;
 
-  AlphabetEditScreen({Key key, this.callback}) : super(key: key);
+  AlphabetEditScreen({Key? key, required this.callback}) : super(key: key);
 
   @override
   _AlphabetEditScreenState createState() => _AlphabetEditScreenState();
 }
 
 class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
-  SharedPreferences sharedPreferences;
-  List<AlphabetData> alphabetData;
+  late SharedPreferences sharedPreferences;
+  late List<AlphabetData> alphabetData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
 
@@ -38,7 +38,8 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
           debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
       prefs.setString(alphabetKey, json.encode(alphabetData));
     } else {
-      alphabetData = await prefs.getSharedPrefs(alphabetKey);
+      alphabetData =
+          await prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     }
     setState(() {});
   }
@@ -76,16 +77,14 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
 
   List<EditCard> getAlphabetEditCards() {
     List<EditCard> alphabetViews = [];
-    if (alphabetData != null) {
-      for (int i = 0; i < alphabetData.length; i++) {
-        EditCard alphabetEditCard = EditCard(
-          entry: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
-              alphabetData[i].object, alphabetData[i].familiarity),
-          callback: callback,
-          activityKey: alphabetKey,
-        );
-        alphabetViews.add(alphabetEditCard);
-      }
+    for (int i = 0; i < alphabetData.length; i++) {
+      EditCard alphabetEditCard = EditCard(
+        entry: AlphabetData(alphabetData[i].index, alphabetData[i].letter,
+            alphabetData[i].object, alphabetData[i].familiarity),
+        callback: callback,
+        activityKey: alphabetKey,
+      );
+      alphabetViews.add(alphabetEditCard);
     }
     return alphabetViews;
   }
@@ -133,8 +132,8 @@ class AlphabetEditScreenHelp extends StatelessWidget {
             'What we\'re going to do here is just like last time, except now with letters of '
             'the alphabet!\n    Remember, we want to attach objects that are unique, and easy to attach to stories!'
       ],
-      buttonColor: Colors.blue[100],
-      buttonSplashColor: Colors.blue[300],
+      buttonColor: Colors.blue[100]!,
+      buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetEditFirstHelpKey,
     );
   }

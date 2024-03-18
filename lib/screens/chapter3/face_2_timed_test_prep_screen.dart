@@ -11,7 +11,8 @@ import 'package:flutter/services.dart';
 class Face2TimedTestPrepScreen extends StatefulWidget {
   final Function callback;
 
-  Face2TimedTestPrepScreen({Key key, this.callback}) : super(key: key);
+  Face2TimedTestPrepScreen({Key? key, required this.callback})
+      : super(key: key);
 
   @override
   _Face2TimedTestPrepScreenState createState() =>
@@ -40,7 +41,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
   Future<Null> getSharedPrefs() async {
     await prefs.checkFirstTime(context, face2TimedTestPrepFirstHelpKey,
         Face2TimedTestPrepScreenHelp());
-    bool face2TestIsActive = await prefs.getBool(face2TestActiveKey);
+    bool? face2TestIsActive = await prefs.getBool(face2TestActiveKey);
     if (face2TestIsActive == null || !face2TestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -92,14 +93,14 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
       prefs.setBool(face2TestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      face1 = await prefs.getString('face2Face1');
-      name1 = await prefs.getString('face2Name1');
-      job1 = await prefs.getString('face2Job1');
-      hometown1 = await prefs.getString('face2Hometown1');
-      face2 = await prefs.getString('face2Face2');
-      name2 = await prefs.getString('face2Name2');
-      job2 = await prefs.getString('face2Job2');
-      hometown2 = await prefs.getString('face2Hometown2');
+      face1 = (await prefs.getString('face2Face1'))!;
+      name1 = (await prefs.getString('face2Name1'))!;
+      job1 = (await prefs.getString('face2Job1'))!;
+      hometown1 = (await prefs.getString('face2Hometown1'))!;
+      face2 = (await prefs.getString('face2Face2'))!;
+      name2 = (await prefs.getString('face2Name2'))!;
+      job2 = (await prefs.getString('face2Job2'))!;
+      hometown2 = (await prefs.getString('face2Hometown2'))!;
     }
     setState(() {});
   }
@@ -251,7 +252,6 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                 BasicFlatButton(
                   text: 'I\'m ready!',
                   color: colorChapter3Standard,
-                  splashColor: colorChapter3Darker,
                   onPressed: () => showConfirmDialog(
                       context: context,
                       function: updateStatus,

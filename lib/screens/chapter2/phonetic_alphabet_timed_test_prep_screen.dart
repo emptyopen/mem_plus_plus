@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 class PhoneticAlphabetTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  PhoneticAlphabetTimedTestPrepScreen({this.callback});
+  PhoneticAlphabetTimedTestPrepScreen({required this.callback});
 
   @override
   _PhoneticAlphabetTimedTestPrepScreenState createState() =>
@@ -142,7 +142,6 @@ class _PhoneticAlphabetTimedTestPrepScreenState
               BasicFlatButton(
                 text: 'I\'m ready!',
                 color: colorChapter2Darker,
-                splashColor: colorChapter2Standard,
                 onPressed: () => showConfirmDialog(
                     context: context,
                     function: updateStatus,

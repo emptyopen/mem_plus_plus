@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 const int debugTestTime = 5;
 
 const String usernameKey = 'Username';
 
 // dark mode colors
-Color darkBackgroundColorPermanent = Colors.grey[800];
+Color darkBackgroundColorPermanent = Colors.grey[800]!;
 Color darkBackgroundHighlightColorPermanent = Colors.white;
-Color darkBackgroundSemiColorPermanent = Colors.grey[600];
-Color darkBackgroundSemiHighlightColorPermanent = Colors.grey[200];
+Color darkBackgroundSemiColorPermanent = Colors.grey[600]!;
+Color darkBackgroundSemiHighlightColorPermanent = Colors.grey[200]!;
 Color lightBackgroundColorPermanent = Colors.white;
 Color lightBackgroundHighlightColorPermanent = Colors.black;
-Color lightBackgroundSemiColorPermanent = Colors.grey[400];
-Color lightBackgroundSemiHighlightColorPermanent = Colors.grey[600];
+Color lightBackgroundSemiColorPermanent = Colors.grey[400]!;
+Color lightBackgroundSemiHighlightColorPermanent = Colors.grey[600]!;
 Color backgroundColor = darkBackgroundColorPermanent;
 Color backgroundSemiColor = darkBackgroundSemiColorPermanent;
 Color backgroundHighlightColor = darkBackgroundHighlightColorPermanent;
@@ -222,7 +222,7 @@ var timedTestIcon = Icon(Icons.access_alarm);
 var writtenTestIcon = Icon(Icons.text_format);
 var lessonIcon = Icon(MdiIcons.brain);
 var planetIcon = Icon(MdiIcons.earth);
-var faceIcon = Icon(MdiIcons.face);
+var faceIcon = Icon(MdiIcons.faceMan);
 var face2Icon = Icon(MdiIcons.faceRecognition);
 var piIcon = Icon(MdiIcons.pi);
 var airportIcon = Icon(MdiIcons.airplaneTakeoff);

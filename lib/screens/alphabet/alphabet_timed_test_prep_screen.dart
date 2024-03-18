@@ -81,7 +81,7 @@ class _AlphabetTimedTestPrepScreenState
         AlphabetTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for alphabetTest
-    bool sdTestIsActive = await prefs.getBool(alphabetTestActiveKey);
+    bool? sdTestIsActive = await prefs.getBool(alphabetTestActiveKey);
     if (sdTestIsActive == null || !sdTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
@@ -104,14 +104,14 @@ class _AlphabetTimedTestPrepScreenState
       await prefs.setBool(alphabetTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      char1 = await prefs.getString('alphabetTestChar1');
-      char2 = await prefs.getString('alphabetTestChar2');
-      char3 = await prefs.getString('alphabetTestChar3');
-      char4 = await prefs.getString('alphabetTestChar4');
-      char5 = await prefs.getString('alphabetTestChar5');
-      char6 = await prefs.getString('alphabetTestChar6');
-      char7 = await prefs.getString('alphabetTestChar7');
-      char8 = await prefs.getString('alphabetTestChar8');
+      char1 = (await prefs.getString('alphabetTestChar1'))!;
+      char2 = (await prefs.getString('alphabetTestChar2'))!;
+      char3 = (await prefs.getString('alphabetTestChar3'))!;
+      char4 = (await prefs.getString('alphabetTestChar4'))!;
+      char5 = (await prefs.getString('alphabetTestChar5'))!;
+      char6 = (await prefs.getString('alphabetTestChar6'))!;
+      char7 = (await prefs.getString('alphabetTestChar7'))!;
+      char8 = (await prefs.getString('alphabetTestChar8'))!;
     }
     setState(() {});
   }
@@ -285,7 +285,6 @@ class _AlphabetTimedTestPrepScreenState
             BasicFlatButton(
               text: 'I\'m ready!',
               color: colorAlphabetLighter,
-              splashColor: colorAlphabetStandard,
               onPressed: () => showConfirmDialog(
                   context: context,
                   function: updateStatus,
@@ -339,8 +338,8 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
             'released from the car with every stomp. A million red balloons! Don\'t forget to really make these scenes wild.',
         '    Be sure not to confuse zero with the letter O! Zero will have a dot in the character.\n\n    Remember, WILD stories with LOTS of details!'
       ],
-      buttonColor: Colors.blue[100],
-      buttonSplashColor: Colors.blue[300],
+      buttonColor: Colors.blue[100]!,
+      buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetTimedTestPrepFirstHelpKey,
     );
   }

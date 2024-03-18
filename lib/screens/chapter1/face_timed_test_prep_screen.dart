@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 class FaceTimedTestPrepScreen extends StatefulWidget {
   final Function callback;
 
-  FaceTimedTestPrepScreen({Key key, this.callback}) : super(key: key);
+  FaceTimedTestPrepScreen({Key? key, required this.callback}) : super(key: key);
 
   @override
   _FaceTimedTestPrepScreenState createState() =>
@@ -38,8 +38,8 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
   Future<Null> getSharedPrefs() async {
     await prefs.checkFirstTime(
         context, faceTimedTestPrepFirstHelpKey, FacesTimedTestPrepScreenHelp());
-    bool faceTestIsActive = await prefs.getBool(faceTestActiveKey);
-    if (faceTestIsActive == null || !faceTestIsActive) {
+    bool faceTestIsActive = (await prefs.getBool(faceTestActiveKey))!;
+    if (!faceTestIsActive) {
       print('no active test, setting new values');
       var random = new Random();
       var gender1IsMale = random.nextBool();
@@ -82,10 +82,10 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
       prefs.setBool(faceTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      face1 = await prefs.getString('face1');
-      face2 = await prefs.getString('face2');
-      name1 = await prefs.getString('name1');
-      name2 = await prefs.getString('name2');
+      face1 = (await prefs.getString('face1'))!;
+      face2 = (await prefs.getString('face2'))!;
+      name1 = (await prefs.getString('name1'))!;
+      name2 = (await prefs.getString('name2'))!;
     }
     setState(() {
       ready = true;
@@ -208,7 +208,6 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                 BasicFlatButton(
                   text: 'I\'m ready!',
                   color: colorChapter1Standard,
-                  splashColor: colorChapter1Darker,
                   onPressed: () => showConfirmDialog(
                       context: context,
                       function: updateStatus,

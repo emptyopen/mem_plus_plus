@@ -24,8 +24,8 @@ class PAOEditScreen extends StatefulWidget {
 }
 
 class _PAOEditScreenState extends State<PAOEditScreen> {
-  SharedPreferences sharedPreferences;
-  List<PAOData> paoData;
+  late SharedPreferences sharedPreferences;
+  late List<PAOData>? paoData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
 
@@ -41,7 +41,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
       paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
       await prefs.setString(paoKey, json.encode(paoData));
     } else {
-      paoData = await prefs.getSharedPrefs(paoKey);
+      paoData = await prefs.getSharedPrefs(paoKey) as List<PAOData>;
     }
     setState(() {});
   }
@@ -86,7 +86,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   List<EditCard> getPAOEditCards() {
     List<EditCard> paoEditCards = [];
     if (paoData != null) {
-      for (int i = 0; i < paoData.length; i++) {
+      for (int i = 0; i < paoData!.length; i++) {
         EditCard paoEditCard = EditCard(
           entry: PAOData(paoData[i].index, paoData[i].digits, paoData[i].person,
               paoData[i].action, paoData[i].object, paoData[i].familiarity),
@@ -160,7 +160,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
 class CSVImporter extends StatefulWidget {
   final Function callback;
 
-  CSVImporter({this.callback});
+  CSVImporter({required this.callback});
 
   @override
   _CSVImporterState createState() => _CSVImporterState();
@@ -275,17 +275,14 @@ class _CSVImporterState extends State<CSVImporter> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        FlatButton(
-                          color: Colors.grey[300],
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          onPressed: () {
-                            HapticFeedback.lightImpact();
-                            Navigator.pop(context);
-                          },
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey[300],
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
                           child: Text(
                             'Cancel',
                             style: TextStyle(fontSize: 20),
@@ -294,12 +291,14 @@ class _CSVImporterState extends State<CSVImporter> {
                         SizedBox(
                           width: 25,
                         ),
-                        FlatButton(
-                          color: colorPAOStandard,
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: colorPAOStandard,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             var csvConverter = CsvToListConverter();
@@ -351,7 +350,6 @@ class _CSVImporterState extends State<CSVImporter> {
                             }
                             setState(() {});
                           },
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(
                             'Submit',
                             style: TextStyle(fontSize: 20),

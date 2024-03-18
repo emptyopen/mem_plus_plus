@@ -11,8 +11,8 @@ class InfoBox extends StatefulWidget {
   final List<String> dependentInfoKeys;
 
   InfoBox({
-    this.text,
-    this.infoKey,
+    required this.text,
+    required this.infoKey,
     this.dependentInfoKeys = const [],
   });
 

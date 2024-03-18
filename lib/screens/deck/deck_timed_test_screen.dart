@@ -11,7 +11,7 @@ class DeckTimedTestScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  DeckTimedTestScreen({this.callback, this.globalKey});
+  DeckTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _DeckTimedTestScreenState createState() => _DeckTimedTestScreenState();
@@ -64,15 +64,15 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     prefs.checkFirstTime(
         context, deckTimedTestFirstHelpKey, DeckTimedTestScreenHelp());
     // grab the digits
-    card1 = await prefs.getString('deckTestDigits1');
-    card2 = await prefs.getString('deckTestDigits2');
-    card3 = await prefs.getString('deckTestDigits3');
-    card4 = await prefs.getString('deckTestDigits4');
-    card5 = await prefs.getString('deckTestDigits5');
-    card6 = await prefs.getString('deckTestDigits6');
-    card7 = await prefs.getString('deckTestDigits7');
-    card8 = await prefs.getString('deckTestDigits8');
-    card9 = await prefs.getString('deckTestDigits9');
+    card1 = (await prefs.getString('deckTestDigits1'))!;
+    card2 = (await prefs.getString('deckTestDigits2'))!;
+    card3 = (await prefs.getString('deckTestDigits3'))!;
+    card4 = (await prefs.getString('deckTestDigits4'))!;
+    card5 = (await prefs.getString('deckTestDigits5'))!;
+    card6 = (await prefs.getString('deckTestDigits6'))!;
+    card7 = (await prefs.getString('deckTestDigits7'))!;
+    card8 = (await prefs.getString('deckTestDigits8'))!;
+    card9 = (await prefs.getString('deckTestDigits9'))!;
     print(
         'real answer: $card1$card2$card3 $card4$card5$card6 $card7$card8$card9');
     setState(() {});
@@ -169,9 +169,9 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                 height: 2,
                 color: colorDeckStandard,
               ),
-              onChanged: (String newValue) {
+              onChanged: (String? newValue) {
                 setState(() {
-                  dropdownDigit[index] = newValue;
+                  dropdownDigit[index] = newValue!;
                 });
               },
               items: <String>[
@@ -212,9 +212,9 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                 height: 2,
                 color: colorDeckStandard,
               ),
-              onChanged: (String newValue) {
+              onChanged: (String? newValue) {
                 setState(() {
-                  dropdownSuit[index] = newValue;
+                  dropdownSuit[index] = newValue!;
                 });
               },
               items: <String>[
@@ -350,8 +350,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                     BasicFlatButton(
                       text: 'Give up',
                       onPressed: () => giveUp(),
-                      color: Colors.grey[200],
-                      splashColor: Colors.grey,
+                      color: Colors.grey[200]!,
                       padding: 10,
                       fontSize: 24,
                     ),
@@ -362,7 +361,6 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorDeckStandard,
-                      splashColor: colorDeckDarker,
                       padding: 10,
                       fontSize: 24,
                     ),

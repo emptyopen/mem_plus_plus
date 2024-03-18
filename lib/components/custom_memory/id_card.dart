@@ -4,7 +4,7 @@ import 'package:mem_plus_plus/components/custom_memory/custom_memory_template.da
 class IDCardInput extends StatefulWidget {
   final Function() callback;
 
-  IDCardInput({this.callback});
+  IDCardInput({required this.callback});
 
   @override
   _IDCardInputState createState() => _IDCardInputState();

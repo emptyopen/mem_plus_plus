@@ -14,7 +14,10 @@ class CustomMemoryTestScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
 
   CustomMemoryTestScreen(
-      {Key key, this.callback, this.customMemory, this.globalKey})
+      {Key? key,
+      required this.callback,
+      required this.customMemory,
+      required this.globalKey})
       : super(key: key);
 
   @override
@@ -50,7 +53,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
   Future<Null> getSharedPrefs() async {
     var prefs = PrefsUpdater();
 
-    customMemories = await prefs.getSharedPrefs(customMemoriesKey);
+    customMemories = await prefs.getSharedPrefs(customMemoriesKey) as Map;
 
     setState(() {});
   }
@@ -352,8 +355,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                 text: 'Submit',
                 fontSize: 20,
                 onPressed: () => checkAnswer(),
-                color: Colors.purple[100],
-                splashColor: Colors.purple[300],
+                color: Colors.purple[100]!,
                 padding: 10,
               ),
               SizedBox(
@@ -454,8 +456,8 @@ class CustomMemoryTestScreenHelp extends StatelessWidget {
       information: [
         '    This is a custom memory test! Hope you put those scenes somewhere accessible!'
       ],
-      buttonColor: Colors.purple[100],
-      buttonSplashColor: Colors.purple[300],
+      buttonColor: Colors.purple[100]!,
+      buttonSplashColor: Colors.purple[300]!,
       firstHelpKey: customMemoryTestFirstHelpKey,
     );
   }

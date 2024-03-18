@@ -343,7 +343,7 @@ class _FlashCardState extends State<FlashCard> {
                           border: Border.all(color: Colors.grey),
                           color: colorIncorrect,
                           borderRadius: BorderRadius.circular(20)),
-                      child: FlatButton(
+                      child: ElevatedButton(
                         onPressed: () => didntGotIt(),
                         child: Center(
                             child: Text(
@@ -363,7 +363,7 @@ class _FlashCardState extends State<FlashCard> {
                           border: Border.all(color: Colors.grey),
                           color: colorCorrect,
                           borderRadius: BorderRadius.circular(20)),
-                      child: FlatButton(
+                      child: ElevatedButton(
                         onPressed: () => gotIt(),
                         child: Center(
                             child: Text(

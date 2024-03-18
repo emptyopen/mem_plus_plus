@@ -39,12 +39,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, tripleDigitEditFirstHelpKey, TripleDigitEditScreenHelp());
-    if (await prefs.getString(tripleDigitKey) == null) {
-      tripleDigitData = generateEmptyTripleDigitData();
-      await prefs.setString(tripleDigitKey, json.encode(tripleDigitData));
-    } else {
-      tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
-    }
+    tripleDigitData = await prefs.getSharedPrefs(tripleDigitKey);
     loading = false;
     setState(() {});
   }
@@ -199,7 +194,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
 class CSVImporter extends StatefulWidget {
   final Function callback;
 
-  CSVImporter({this.callback});
+  CSVImporter({required this.callback});
 
   @override
   _CSVImporterState createState() => _CSVImporterState();
@@ -301,12 +296,16 @@ class _CSVImporterState extends State<CSVImporter> {
                             SizedBox(
                               height: 10,
                             ),
-                            BasicFlatButton(
-                              text: 'Google docs link!',
-                              color: colorTripleDigitDarker,
-                              textColor: Colors.white,
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: colorTripleDigitStandard,
+                              ),
                               onPressed: () => launch(
                                   'https://docs.google.com/spreadsheets/d/1cBqw5IfRBUltVsZ2yEfQUb0E1-eA7volnOlJM4X1_dU/edit?usp=sharing'),
+                              child: Text(
+                                'Google docs link!',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ],
                         ),
@@ -367,17 +366,18 @@ class _CSVImporterState extends State<CSVImporter> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        FlatButton(
-                          color: Colors.grey[300],
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey[300],
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             Navigator.pop(context);
                           },
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(
                             'Cancel',
                             style: TextStyle(fontSize: 20),
@@ -386,16 +386,17 @@ class _CSVImporterState extends State<CSVImporter> {
                         SizedBox(
                           width: 25,
                         ),
-                        FlatButton(
-                          color: colorTripleDigitStandard,
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: colorTripleDigitStandard,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
                           onPressed: () {
                             submitCSV();
                           },
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                           child: Text(
                             'Submit',
                             style: TextStyle(fontSize: 20),

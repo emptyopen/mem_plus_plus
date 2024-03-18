@@ -12,15 +12,15 @@ import 'package:flutter/services.dart';
 class SingleDigitEditScreen extends StatefulWidget {
   final Function callback;
 
-  SingleDigitEditScreen({Key key, this.callback}) : super(key: key);
+  SingleDigitEditScreen({Key? key, required this.callback}) : super(key: key);
 
   @override
   _SingleDigitEditScreenState createState() => _SingleDigitEditScreenState();
 }
 
 class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
-  SharedPreferences sharedPreferences;
-  List<SingleDigitData> singleDigitData;
+  late SharedPreferences sharedPreferences;
+  late List<SingleDigitData> singleDigitData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var prefs = PrefsUpdater();
 
@@ -38,7 +38,8 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
           debugModeEnabled ? defaultSingleDigitData3 : defaultSingleDigitData1;
       await prefs.setString(singleDigitKey, json.encode(singleDigitData));
     } else {
-      singleDigitData = await prefs.getSharedPrefs(singleDigitKey);
+      singleDigitData =
+          await prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
     }
     setState(() {});
   }
@@ -73,15 +74,13 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
 
   List<EditCard> getSingleDigitEditCards() {
     List<EditCard> singleDigitViews = [];
-    if (singleDigitData != null) {
-      for (int i = 0; i < singleDigitData.length; i++) {
-        EditCard singleDigitEditCard = EditCard(
-          entry: singleDigitData[i],
-          callback: callback,
-          activityKey: singleDigitKey,
-        );
-        singleDigitViews.add(singleDigitEditCard);
-      }
+    for (int i = 0; i < singleDigitData.length; i++) {
+      EditCard singleDigitEditCard = EditCard(
+        entry: singleDigitData[i],
+        callback: callback,
+        activityKey: singleDigitKey,
+      );
+      singleDigitViews.add(singleDigitEditCard);
     }
     return singleDigitViews;
   }
@@ -147,8 +146,8 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
     return HelpScreen(
       title: 'Single Digit Edit/View',
       information: information,
-      buttonColor: Colors.amber[100],
-      buttonSplashColor: Colors.amber[300],
+      buttonColor: Colors.amber[100]!,
+      buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitEditFirstHelpKey,
     );
   }

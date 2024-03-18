@@ -12,15 +12,15 @@ class AlphabetPracticeScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  AlphabetPracticeScreen({this.callback, this.globalKey});
+  AlphabetPracticeScreen({required this.callback, required this.globalKey});
 
   @override
   _AlphabetPracticeScreenState createState() => _AlphabetPracticeScreenState();
 }
 
 class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
-  SharedPreferences sharedPreferences;
-  List<AlphabetData> alphabetData;
+  late SharedPreferences sharedPreferences;
+  late List<AlphabetData> alphabetData;
   List<Widget> alphabetCards = [];
   bool dataReady = false;
   var prefs = PrefsUpdater();
@@ -32,7 +32,8 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    alphabetData = await prefs.getSharedPrefs(alphabetKey);
+    alphabetData =
+        await prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     bool allComplete = true;
     for (int i = 0; i < alphabetData.length; i++) {
       if (alphabetData[i].familiarity < 100) {
@@ -118,8 +119,8 @@ class AlphabetPracticeScreenHelp extends StatelessWidget {
             'bubbling up in your mind, consider using one of those words instead! \n    You can always go back to the edit page and update your '
             'letters :) ',
       ],
-      buttonColor: Colors.blue[100],
-      buttonSplashColor: Colors.blue[300],
+      buttonColor: Colors.blue[100]!,
+      buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetPracticeFirstHelpKey,
     );
   }

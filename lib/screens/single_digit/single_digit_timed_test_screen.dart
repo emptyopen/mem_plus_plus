@@ -6,13 +6,11 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
 
-import '../../constants/keys.dart';
-
 class SingleDigitTimedTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  SingleDigitTimedTestScreen({this.callback, this.globalKey});
+  SingleDigitTimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _SingleDigitTimedTestScreenState createState() =>
@@ -45,10 +43,10 @@ class _SingleDigitTimedTestScreenState
     prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp',
         SingleDigitTimedTestScreenHelp());
     // grab the digits
-    digit1 = await prefs.getString('singleDigitTestDigit1');
-    digit2 = await prefs.getString('singleDigitTestDigit2');
-    digit3 = await prefs.getString('singleDigitTestDigit3');
-    digit4 = await prefs.getString('singleDigitTestDigit4');
+    digit1 = (await prefs.getString('singleDigitTestDigit1'))!;
+    digit2 = (await prefs.getString('singleDigitTestDigit2'))!;
+    digit3 = (await prefs.getString('singleDigitTestDigit3'))!;
+    digit4 = (await prefs.getString('singleDigitTestDigit4'))!;
     print('real answer: $digit1$digit2$digit3$digit4');
     setState(() {});
   }
@@ -200,8 +198,7 @@ class _SingleDigitTimedTestScreenState
                   BasicFlatButton(
                     text: 'Give up',
                     fontSize: 24,
-                    color: Colors.grey[200],
-                    splashColor: Colors.amber,
+                    color: Colors.grey[200]!,
                     onPressed: () => giveUp(),
                     padding: 10,
                   ),
@@ -211,8 +208,7 @@ class _SingleDigitTimedTestScreenState
                   BasicFlatButton(
                     text: 'Submit',
                     fontSize: 24,
-                    color: Colors.amber[200],
-                    splashColor: Colors.amber,
+                    color: Colors.amber[200]!,
                     onPressed: () => checkAnswer(),
                     padding: 10,
                   ),
@@ -235,8 +231,8 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
         '    Time to remember your story! If you recall this correctly, you\'ll '
             'unlock the next chapter! Good luck!'
       ],
-      buttonColor: Colors.amber[100],
-      buttonSplashColor: Colors.amber[300],
+      buttonColor: Colors.amber[100]!,
+      buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitTimedTestFirstHelpKey,
     );
   }

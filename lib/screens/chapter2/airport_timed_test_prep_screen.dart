@@ -12,7 +12,7 @@ import 'dart:math';
 class AirportTimedTestPrepScreen extends StatefulWidget {
   final Function() callback;
 
-  AirportTimedTestPrepScreen({this.callback});
+  AirportTimedTestPrepScreen({required this.callback});
 
   @override
   _AirportTimedTestPrepScreenState createState() =>
@@ -50,7 +50,7 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
   String airportFont = 'Quicksand';
   PrefsUpdater prefs = PrefsUpdater();
   bool isLoaded = false;
-  AnimationController animationController;
+  late AnimationController animationController;
   Duration testDuration =
       debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 6);
 
@@ -82,8 +82,8 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
     prefs.checkFirstTime(context, airportTimedTestPrepFirstHelpKey,
         AirportTimedTestPrepScreenHelp(callback: callback));
 
-    bool airportTestIsActive = await prefs.getBool(airportTestActiveKey);
-    if (airportTestIsActive == null || !airportTestIsActive) {
+    bool airportTestIsActive = (await prefs.getBool(airportTestActiveKey))!;
+    if (!airportTestIsActive) {
       print('no active test, setting new values');
       var random = Random();
       confirmationCode = '';
@@ -125,14 +125,14 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
       await prefs.setString('airportArrivingTerminal', arrivingTerminal);
       await prefs.setBool(airportTestActiveKey, true);
     } else {
-      airline = await prefs.getString('airportAirline');
-      departingTerminal = await prefs.getString('airportDepartingTerminal');
-      flightCode = await prefs.getString('airportFlightCode');
-      departureTime = await prefs.getString('airportFlightTime');
-      confirmationCode = await prefs.getString('airportConfirmationCode');
-      seatNumber = await prefs.getString('airportSeatNumber');
-      gateNumber = await prefs.getString('airportGateNumber');
-      arrivingTerminal = await prefs.getString('airportArrivingTerminal');
+      airline = (await prefs.getString('airportAirline'))!;
+      departingTerminal = (await prefs.getString('airportDepartingTerminal'))!;
+      flightCode = (await prefs.getString('airportFlightCode'))!;
+      departureTime = (await prefs.getString('airportFlightTime'))!;
+      confirmationCode = (await prefs.getString('airportConfirmationCode'))!;
+      seatNumber = (await prefs.getString('airportSeatNumber'))!;
+      gateNumber = (await prefs.getString('airportGateNumber'))!;
+      arrivingTerminal = (await prefs.getString('airportArrivingTerminal'))!;
     }
     isLoaded = true;
     setState(() {});
@@ -448,7 +448,6 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
                     BasicFlatButton(
                       text: 'I\'m ready!',
                       color: colorChapter2Darker,
-                      splashColor: colorChapter2Standard,
                       onPressed: () => showConfirmDialog(
                           context: context,
                           function: updateStatus,
@@ -483,7 +482,7 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
 class AirportTimedTestPrepScreenHelp extends StatelessWidget {
   final Function callback;
 
-  AirportTimedTestPrepScreenHelp({this.callback});
+  AirportTimedTestPrepScreenHelp({required this.callback});
 
   helpCallback() {
     callback();

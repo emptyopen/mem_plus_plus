@@ -11,7 +11,7 @@ class Face2TimedTestScreen extends StatefulWidget {
   final Function callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  Face2TimedTestScreen({this.callback, this.globalKey});
+  Face2TimedTestScreen({required this.callback, required this.globalKey});
 
   @override
   _Face2TimedTestScreenState createState() => _Face2TimedTestScreenState();
@@ -55,14 +55,14 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, face2TimedTestFirstHelpKey, Face2TimedTestScreenHelp());
-    face1 = await prefs.getString('face2Face1');
-    name1 = await prefs.getString('face2Name1');
-    job1 = await prefs.getString('face2Job1');
-    hometown1 = await prefs.getString('face2Hometown1');
-    face2 = await prefs.getString('face2Face2');
-    name2 = await prefs.getString('face2Name2');
-    job2 = await prefs.getString('face2Job2');
-    hometown2 = await prefs.getString('face2Hometown2');
+    face1 = (await prefs.getString('face2Face1'))!;
+    name1 = (await prefs.getString('face2Name1'))!;
+    job1 = (await prefs.getString('face2Job1'))!;
+    hometown1 = (await prefs.getString('face2Hometown1'))!;
+    face2 = (await prefs.getString('face2Face2'))!;
+    name2 = (await prefs.getString('face2Name2'))!;
+    job2 = (await prefs.getString('face2Job2'))!;
+    hometown2 = (await prefs.getString('face2Hometown2'))!;
     isLoaded = true;
     print('real answer: $name1 $job1 $hometown1 || $name2 $job2 $hometown2');
     setState(() {});
@@ -273,8 +273,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
                           BasicFlatButton(
                             text: 'Give up',
                             fontSize: 24,
-                            color: Colors.grey[200],
-                            splashColor: Colors.grey[400],
+                            color: Colors.grey[200]!,
                             onPressed: () => giveUp(),
                             padding: 10,
                           ),
@@ -285,7 +284,6 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
                             text: 'Submit',
                             fontSize: 24,
                             color: colorChapter3Standard,
-                            splashColor: colorChapter3Darker,
                             onPressed: () => checkAnswer(),
                             padding: 10,
                           ),
@@ -312,8 +310,8 @@ class InputPair extends StatelessWidget {
   final String hintText;
 
   InputPair(
-      {this.textController,
-      this.title,
+      {required this.textController,
+      required this.title,
       this.keyboardType = TextInputType.text,
       this.width = 220,
       this.hintText = '________'});

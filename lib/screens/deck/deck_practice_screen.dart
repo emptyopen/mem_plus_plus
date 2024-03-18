@@ -11,14 +11,14 @@ class DeckPracticeScreen extends StatefulWidget {
   final Function() callback;
   final GlobalKey<ScaffoldState> globalKey;
 
-  DeckPracticeScreen({this.callback, this.globalKey});
+  DeckPracticeScreen({required this.callback, required this.globalKey});
 
   @override
   _DeckPracticeScreenState createState() => _DeckPracticeScreenState();
 }
 
 class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
-  List<DeckData> deckData;
+  late List<DeckData> deckData;
   List<Widget> deckCards = [];
   bool dataReady = false;
   var prefs = PrefsUpdater();
@@ -32,7 +32,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, deckPracticeFirstHelpKey, DeckPracticeScreenHelp());
-    deckData = await prefs.getSharedPrefs(deckKey);
+    deckData = await prefs.getSharedPrefs(deckKey) as List<DeckData>;
     bool allComplete = true;
     for (int i = 0; i < deckData.length; i++) {
       if (deckData[i].familiarity < 100) {

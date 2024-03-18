@@ -228,16 +228,18 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               padding: 5,
               onPressed: () => checkResult(index),
             )
-          : FlatButton(
-              color: colorDeckStandard,
-              splashColor: colorDeckDarker,
-              highlightColor: Colors.transparent,
+          : ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: colorDeckStandard,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  side: BorderSide(),
+                ),
+              ),
               onPressed: () {
                 HapticFeedback.lightImpact();
                 checkResult(index);
               },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5), side: BorderSide()),
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: getDeckCard(
