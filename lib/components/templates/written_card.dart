@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/levenshtein.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
-
-import 'package:edit_distance/edit_distance.dart';
 
 class WrittenCard extends StatefulWidget {
   final Key key;
   final String systemKey;
   final dynamic entry;
-  final Function(bool) callback;
-  final Function() nextActivityCallback;
+  final Function callback;
+  final Function nextActivityCallback;
   final Color color;
   final Color lighterColor;
   final bool isLastCard;
-  final GlobalKey<ScaffoldState> globalKey;
   final List results;
 
   WrittenCard({
@@ -26,7 +25,6 @@ class WrittenCard extends StatefulWidget {
     required this.nextActivityCallback,
     required this.color,
     required this.lighterColor,
-    required this.globalKey,
     this.isLastCard = false,
     required this.results,
   });
@@ -67,7 +65,6 @@ class _WrittenCardState extends State<WrittenCard> {
   }
 
   void checkResult() {
-    Levenshtein d = new Levenshtein();
     String answer = widget.entry.object.toLowerCase();
     String guess = textController.text.toLowerCase().trim();
     if (textController.text == '') {
@@ -76,14 +73,14 @@ class _WrittenCardState extends State<WrittenCard> {
       });
       return;
     }
-    if (d.distance(answer, guess) == 0) {
+    if (levenshtein(answer, guess) == 0) {
       showSnackBar(
           context: context,
           snackBarText: 'Correct!',
           backgroundColor: colorCorrect,
           durationSeconds: 1);
       widget.callback(true);
-    } else if (d.distance(answer, guess) == 1 && answer.length > 3) {
+    } else if (levenshtein(answer, guess) == 1 && answer.length > 3) {
       showSnackBar(
           context: context,
           snackBarText: 'Close enough!',

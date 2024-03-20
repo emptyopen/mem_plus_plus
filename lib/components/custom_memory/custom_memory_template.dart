@@ -4,11 +4,12 @@ import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/password/password.dart';
+import 'package:mem_plus_plus/services/password/pbkdf2.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:password/password.dart';
 
 class CustomMemoryInput extends StatefulWidget {
   final Function() callback;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+import 'package:mem_plus_plus/services/levenshtein.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:edit_distance/edit_distance.dart';
 import 'package:flutter/services.dart';
 
 class Face2TimedTestScreen extends StatefulWidget {
@@ -72,7 +72,6 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
 
   void checkAnswer() async {
     HapticFeedback.lightImpact();
-    Levenshtein d = new Levenshtein();
     String name1Answer = name1.toLowerCase().trim();
     String name1Guess = name1Controller.text.toLowerCase().trim();
     String name2Answer = name2.toLowerCase().trim();
@@ -85,12 +84,12 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     String hometown1Guess = hometown1Controller.text.toLowerCase().trim();
     String hometown2Answer = hometown2.toLowerCase().trim();
     String hometown2Guess = hometown2Controller.text.toLowerCase().trim();
-    if (d.distance(name1Answer, name1Guess) <= 2 &&
-        d.distance(name2Answer, name2Guess) <= 2 &&
-        d.distance(job1Answer, job1Guess) <= 4 &&
-        d.distance(job2Answer, job2Guess) <= 4 &&
-        d.distance(hometown1Answer, hometown1Guess) <= 2 &&
-        d.distance(hometown2Answer, hometown2Guess) <= 2) {
+    if (levenshtein(name1Answer, name1Guess) <= 2 &&
+        levenshtein(name2Answer, name2Guess) <= 2 &&
+        levenshtein(job1Answer, job1Guess) <= 4 &&
+        levenshtein(job2Answer, job2Guess) <= 4 &&
+        levenshtein(hometown1Answer, hometown1Guess) <= 2 &&
+        levenshtein(hometown2Answer, hometown2Guess) <= 2) {
       prefs.updateActivityVisible(face2TimedTestKey, false);
       prefs.updateActivityVisible(face2TimedTestPrepKey, true);
       if (prefs.getBool(face2TimedTestCompleteKey) == null) {

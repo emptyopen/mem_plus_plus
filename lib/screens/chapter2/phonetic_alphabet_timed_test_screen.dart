@@ -9,7 +9,8 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
-import 'package:random_words/random_words.dart';
+
+import 'package:word_generator/word_generator.dart';
 
 class PhoneticAlphabetTimedTestScreen extends StatefulWidget {
   final Function() callback;
@@ -77,23 +78,16 @@ class _PhoneticAlphabetTimedTestScreenState
     }
 
     // generate random word
-    generateNoun(maxSyllables: 3).take(1).forEach((word) {
-      encodeWord = word.asLowerCase;
-    });
+    final wordGenerator = WordGenerator();
+    encodeWord = wordGenerator.randomNoun().toLowerCase();
     while (encodeWord.length > 8) {
-      generateNoun(maxSyllables: 3).take(1).forEach((word) {
-        encodeWord = word.asLowerCase;
-      });
+      encodeWord = wordGenerator.randomNoun().toLowerCase();
     }
 
     // generate random word, convert it to morse code
-    generateNoun(maxSyllables: 3).take(1).forEach((word) {
-      decodeWord = word.asLowerCase;
-    });
+    decodeWord = wordGenerator.randomNoun().toLowerCase();
     while (decodeWord.length > 8) {
-      generateNoun(maxSyllables: 3).take(1).forEach((word) {
-        decodeWord = word.asLowerCase;
-      });
+      decodeWord = wordGenerator.randomNoun().toLowerCase();
     }
 
     setState(() {});

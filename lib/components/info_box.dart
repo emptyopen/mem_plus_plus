@@ -4,8 +4,6 @@ import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../services/services.dart';
-
 class InfoBox extends StatefulWidget {
   final String text;
   final String infoKey;

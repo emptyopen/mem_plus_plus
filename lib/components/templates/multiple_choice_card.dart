@@ -14,13 +14,12 @@ class MultipleChoiceCard extends StatefulWidget {
   final String systemKey;
   final dynamic entry;
   final List<dynamic> shuffledChoices;
-  final Function(bool) callback;
-  final Function() nextActivityCallback;
+  final Function callback;
+  final Function nextActivityCallback;
   final int familiarityTotal;
   final Color color;
   final Color lighterColor;
   final bool isLastCard;
-  final GlobalKey<ScaffoldState> globalKey;
   final List results;
 
   MultipleChoiceCard({
@@ -33,7 +32,6 @@ class MultipleChoiceCard extends StatefulWidget {
     required this.familiarityTotal,
     required this.color,
     required this.lighterColor,
-    required this.globalKey,
     this.isLastCard = false,
     required this.results,
   });

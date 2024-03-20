@@ -490,6 +490,7 @@ class _MyHomePageState extends State<MyHomePage> {
             'You have ${names.length} upcoming tests in more than a day! Click here to view.',
         isButton: true,
         textColor: Colors.white,
+        splashColor: Colors.black,
         color: Color.fromRGBO(0, 0, 0, 0.85),
         function: () => Navigator.push(
           context,
@@ -533,7 +534,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (String activity in availableActivities) {
       // only look at activities in review
       if (activityStates[activity] != null &&
-          activityStates[activity].state == 'review') {
+          activityStates[activity]!.state == 'review') {
         bool consolidated = false;
         if (activity.contains(singleDigitKey) && consolidateSingleDigit) {
           consolidated = true;
@@ -611,6 +612,7 @@ class _MyHomePageState extends State<MyHomePage> {
             timedTestPrepRoute: SingleDigitTimedTestPrepScreen(
               callback: callback,
             ),
+            callback: () {},
           ),
         );
       }
@@ -665,6 +667,7 @@ class _MyHomePageState extends State<MyHomePage> {
             timedTestPrepRoute: AlphabetTimedTestPrepScreen(
               callback: callback,
             ),
+            callback: () {},
           ),
         );
       }
@@ -719,6 +722,7 @@ class _MyHomePageState extends State<MyHomePage> {
             timedTestPrepRoute: PAOTimedTestPrepScreen(
               callback: callback,
             ),
+            callback: () {},
           ),
         );
       }
@@ -1465,6 +1469,7 @@ class HomepageHelp extends StatelessWidget {
       ],
       buttonColor: Colors.grey[200]!,
       buttonSplashColor: Colors.grey[300]!,
+      firstHelpKey: 'homepageFirstHelpKey',
     );
   }
 }

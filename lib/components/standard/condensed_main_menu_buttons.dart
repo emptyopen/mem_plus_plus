@@ -19,7 +19,7 @@ class CondensedMainMenuButtons extends StatelessWidget {
   final Widget practiceRoute;
   final Widget testRoute;
   final Widget timedTestPrepRoute;
-  final Function? callback;
+  final Function callback;
   final PrefsUpdater prefs = PrefsUpdater();
 
   CondensedMainMenuButtons({
@@ -37,7 +37,7 @@ class CondensedMainMenuButtons extends StatelessWidget {
     required this.practiceRoute,
     required this.testRoute,
     required this.timedTestPrepRoute,
-    this.callback,
+    required this.callback,
   });
   @override
   Widget build(BuildContext context) {

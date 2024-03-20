@@ -16,7 +16,6 @@ class MainMenuOption extends StatelessWidget {
   final Color splashColor;
   final Widget route;
   final Function() callback;
-  final GlobalKey<ScaffoldState> globalKey;
   final bool isCustomTest;
   final bool isButton;
   final function;
@@ -32,7 +31,6 @@ class MainMenuOption extends StatelessWidget {
     required this.splashColor,
     required this.route,
     required this.callback,
-    required this.globalKey,
     this.isCustomTest = false,
     this.isButton = false,
     this.textColor = Colors.black,
@@ -216,7 +214,7 @@ class MainMenuOption extends StatelessWidget {
                   return null;
                 }
                 HapticFeedback.lightImpact();
-                globalKey.currentState.hideCurrentSnackBar();
+                // TODO (2024): hide snackbar
                 prefs.updateActivityFirstView(activity.name, false);
                 callback();
                 slideTransition(context, route);

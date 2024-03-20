@@ -14,11 +14,11 @@ class CardTestScreen extends StatefulWidget {
   final int familiarityTotal;
   final Color color;
   final Color lighterColor;
-  final List<dynamic>? shuffledChoices;
+  final List<dynamic> shuffledChoices;
 
   CardTestScreen({
     required this.cardData,
-    this.shuffledChoices,
+    this.shuffledChoices = const [],
     required this.cardType,
     required this.globalKey,
     required this.nextActivity,
@@ -62,7 +62,6 @@ class _CardTestScreenState extends State<CardTestScreen> {
         key: UniqueKey(),
         entry: widget.cardData[attempts],
         callback: callback,
-        globalKey: widget.globalKey,
         systemKey: widget.systemKey,
         nextActivityCallback: widget.nextActivity,
         familiarityTotal: widget.familiarityTotal,
@@ -75,7 +74,6 @@ class _CardTestScreenState extends State<CardTestScreen> {
         key: UniqueKey(),
         entry: widget.cardData[attempts],
         callback: callback,
-        globalKey: widget.globalKey,
         systemKey: widget.systemKey,
         nextActivityCallback: widget.nextActivity,
         familiarityTotal: widget.familiarityTotal,
@@ -90,7 +88,6 @@ class _CardTestScreenState extends State<CardTestScreen> {
         key: UniqueKey(),
         entry: widget.cardData[attempts],
         callback: callback,
-        globalKey: widget.globalKey,
         systemKey: widget.systemKey,
         nextActivityCallback: widget.nextActivity,
         color: widget.color,

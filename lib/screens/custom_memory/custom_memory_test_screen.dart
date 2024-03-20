@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+import 'package:mem_plus_plus/services/password/password.dart';
+import 'package:mem_plus_plus/services/password/pbkdf2.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -8,7 +10,6 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/services.dart';
-import 'package:password/password.dart';
 
 class CustomMemoryTestScreen extends StatefulWidget {
   final Function callback;
@@ -102,20 +103,12 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
       prefs.writeSharedPrefs(customMemoriesKey, customMemories);
       widget.callback();
     } else {
-      final snackBar = SnackBar(
-        content: Text(
-          'Incorrect. Try again!',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'CabinSketch',
-            color: Colors.black,
-          ),
-        ),
-        duration: Duration(seconds: 2),
+      showSnackBar(
+        context: context,
+        snackBarText: 'Incorrect. Try again!',
         backgroundColor: colorIncorrect,
+        durationSeconds: 2,
       );
-      globalKey.currentState.showSnackBar(snackBar);
     }
   }
 

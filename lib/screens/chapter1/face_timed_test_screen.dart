@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+import 'package:mem_plus_plus/services/levenshtein.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:edit_distance/edit_distance.dart';
 import 'package:flutter/services.dart';
 
 class FaceTimedTestScreen extends StatefulWidget {
@@ -56,14 +56,14 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
 
   void checkAnswer() async {
     HapticFeedback.lightImpact();
-    Levenshtein d = new Levenshtein();
     String answer1 = name1.toLowerCase().trim();
     String guess1 = textController1.text.toLowerCase().trim();
     String answer2 = name2.toLowerCase().trim();
     String guess2 = textController2.text.toLowerCase().trim();
-    if (d.distance(answer1, guess1) <= 2 && d.distance(answer2, guess2) <= 2) {
-      if (d.distance(answer1, guess1) == 1 ||
-          d.distance(answer1, guess1) == 1) {
+    if (levenshtein(answer1, guess1) <= 2 &&
+        levenshtein(answer2, guess2) <= 2) {
+      if (levenshtein(answer1, guess1) == 1 ||
+          levenshtein(answer2, guess2) == 1) {
         print('close enough');
       } else {
         print('success');

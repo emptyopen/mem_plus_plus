@@ -16,13 +16,12 @@ class FlashCard extends StatefulWidget {
   final Key key;
   final String systemKey;
   final dynamic entry;
-  final Function(bool) callback;
-  final Function() nextActivityCallback;
+  final Function callback;
+  final Function nextActivityCallback;
   final int familiarityTotal;
   final Color color;
   final Color lighterColor;
   final bool isLastCard;
-  final GlobalKey<ScaffoldState> globalKey;
 
   FlashCard({
     required this.key,
@@ -33,7 +32,6 @@ class FlashCard extends StatefulWidget {
     required this.familiarityTotal,
     required this.color,
     required this.lighterColor,
-    required this.globalKey,
     this.isLastCard = false,
   });
 
@@ -146,7 +144,7 @@ class _FlashCardState extends State<FlashCard> {
         duration: Duration(seconds: 2),
         backgroundColor: colorCorrect,
       );
-      Scaffold.of(context).showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {
       if (previousFamiliarity < 100 && updatedEntry.familiarity == 100) {
         snackBarText =
@@ -156,7 +154,7 @@ class _FlashCardState extends State<FlashCard> {
         // Check for level up!!
         int familiaritySum = 0;
         for (dynamic entry in data) {
-          familiaritySum += entry.familiarity;
+          familiaritySum += entry.familiarity as int;
         }
         if (familiaritySum == widget.familiarityTotal ||
             (debugModeEnabled && familiaritySum > 500)) {
@@ -184,7 +182,7 @@ class _FlashCardState extends State<FlashCard> {
     } else if (widget.isLastCard) {
       int familiaritySum = 0;
       for (dynamic entry in data) {
-        familiaritySum += entry.familiarity;
+        familiaritySum += entry.familiarity as int;
       }
       if (familiaritySum == widget.familiarityTotal) {
         showSnackBar(
@@ -249,7 +247,7 @@ class _FlashCardState extends State<FlashCard> {
       duration: Duration(seconds: 2),
       backgroundColor: colorIncorrect,
     );
-    Scaffold.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
     if (widget.isLastCard) {
       showSnackBar(

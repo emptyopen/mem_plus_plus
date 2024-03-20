@@ -43,7 +43,7 @@ class StaggerAnimation extends StatelessWidget {
   final Animation<double> opacity;
   final Animation<EdgeInsets> padding;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Container(
       padding: padding.value,
       child: Opacity(opacity: opacity.value, child: widget),
@@ -129,7 +129,7 @@ class FadeAwayAnimation extends StatelessWidget {
   final Animation<double> paddingIn;
   final Animation<double> paddingOut;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Container(
       padding: EdgeInsets.fromLTRB(50 - paddingIn.value + paddingOut.value, 0,
           paddingIn.value - paddingOut.value, 0),
@@ -189,7 +189,7 @@ class StaggerAnimationSideways extends StatelessWidget {
   final Animation<double> opacity;
   final Animation<EdgeInsets> padding;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Container(
       padding: padding.value,
       child: Opacity(opacity: opacity.value, child: widget),
@@ -237,7 +237,7 @@ class PercentageAnimation extends StatelessWidget {
   final Animation<double> controller;
   final Animation<double> height;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -292,7 +292,7 @@ class MenuAnimation extends StatelessWidget {
   final Animation<double> controller;
   final Animation<double> opacity;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Container(
       padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
       child: Opacity(opacity: opacity.value, child: widget),
