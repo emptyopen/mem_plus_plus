@@ -270,7 +270,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
     prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
     if (prefs.getBool(lesson1CompleteKey) == null) {
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the NATO/Morse test!',
         textColor: Colors.black,
         backgroundColor: colorChapter2Darker,
@@ -278,7 +278,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
         isSuper: true,
       );
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the Airport test!',
         textColor: Colors.black,
         backgroundColor: colorChapter2Darker,

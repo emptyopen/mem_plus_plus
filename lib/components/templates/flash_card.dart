@@ -5,6 +5,7 @@ import 'package:mem_plus_plus/components/data/pao_data.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -24,15 +25,15 @@ class FlashCard extends StatefulWidget {
   final GlobalKey<ScaffoldState> globalKey;
 
   FlashCard({
-    this.key,
-    this.systemKey,
-    this.entry,
-    this.callback,
-    this.nextActivityCallback,
-    this.familiarityTotal,
-    this.color,
-    this.lighterColor,
-    this.globalKey,
+    required this.key,
+    required this.systemKey,
+    required this.entry,
+    required this.callback,
+    required this.nextActivityCallback,
+    required this.familiarityTotal,
+    required this.color,
+    required this.lighterColor,
+    required this.globalKey,
     this.isLastCard = false,
   });
 
@@ -46,7 +47,7 @@ class _FlashCardState extends State<FlashCard> {
   String digitLetter = '';
   String value = '';
   Widget valueWidget = Container();
-  final prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -95,7 +96,7 @@ class _FlashCardState extends State<FlashCard> {
   void gotIt() async {
     HapticFeedback.lightImpact();
     bool levelUp = false;
-    List<dynamic> data = await prefs.getSharedPrefs(widget.systemKey);
+    List<dynamic> data = prefs.getSharedPrefs(widget.systemKey) as List;
     int currIndex = widget.entry.index;
     dynamic updatedEntry = data[currIndex];
     int previousFamiliarity = data[currIndex].familiarity;
@@ -167,14 +168,14 @@ class _FlashCardState extends State<FlashCard> {
         snackBarColor = colorCorrect;
       }
       showSnackBar(
-          scaffoldState: Scaffold.of(context),
+          context: context,
           snackBarText: snackBarText,
           backgroundColor: snackBarColor,
           durationSeconds: 1);
     }
     if (levelUp) {
       showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText:
               'Congratulations, you\'ve maxed out all familiarities! Next up is a test!',
           backgroundColor: widget.color,
@@ -187,13 +188,13 @@ class _FlashCardState extends State<FlashCard> {
       }
       if (familiaritySum == widget.familiarityTotal) {
         showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText: 'Great job! Come back any time!',
             backgroundColor: widget.color,
             durationSeconds: 3);
       } else {
         showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Great job! You still have some items for which you need to increase familiarity, pop back here any time!',
             backgroundColor: widget.color,
@@ -206,7 +207,7 @@ class _FlashCardState extends State<FlashCard> {
 
   void didntGotIt() async {
     HapticFeedback.lightImpact();
-    List<dynamic> dataList = await prefs.getSharedPrefs(widget.systemKey);
+    List<dynamic> dataList = prefs.getSharedPrefs(widget.systemKey) as List;
     int currIndex = widget.entry.index;
     dynamic updatedEntry = dataList[currIndex];
     if (updatedEntry.familiarity - familiarityDecrease >= 0) {
@@ -252,7 +253,7 @@ class _FlashCardState extends State<FlashCard> {
 
     if (widget.isLastCard) {
       showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText:
               'Great job! You still have some items you need to increase familiarity for, pop back to practice any time!',
           backgroundColor: widget.color,

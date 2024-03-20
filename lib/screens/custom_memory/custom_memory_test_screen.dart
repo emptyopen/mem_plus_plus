@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -67,7 +68,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
           termDurationsMap[memory['spacedRepetitionType']].length) {
         customMemories.remove(memory['title']);
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText:
               'You\'ve completed this memory! Congratulations, you\'ve burned ${memory['title']} into your memory!',
           textColor: Colors.white,
@@ -84,7 +85,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
             DateTime.now().add(nextDuration).toIso8601String();
         customMemories[memory['title']] = memory;
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText:
               'Correct! Another test is coming in ${durationToString(nextDuration)}!',
           textColor: Colors.black,
@@ -369,8 +370,8 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
 }
 
 class PromptPair extends StatefulWidget {
-  final String inputType;
-  final String mapKey;
+  final String? inputType;
+  final String? mapKey;
   final String title;
   final TextEditingController textController;
   final double containerWidth;
@@ -378,8 +379,8 @@ class PromptPair extends StatefulWidget {
   PromptPair(
       {this.inputType,
       this.mapKey,
-      this.title,
-      this.textController,
+      required this.title,
+      required this.textController,
       this.containerWidth = 250});
 
   @override

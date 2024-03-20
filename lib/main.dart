@@ -22,10 +22,10 @@ class ReceivedNotification {
   final String payload;
 
   ReceivedNotification(
-      {@required this.id,
-      @required this.title,
-      @required this.body,
-      @required this.payload});
+      {required this.id,
+      required this.title,
+      required this.body,
+      required this.payload});
 }
 
 Future<void> main() async {
@@ -51,9 +51,7 @@ Future<void> main() async {
   );
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
+    debugPrint('notification payload: ' + payload);
     selectNotificationSubject.add(payload);
   });
   initializeNotificationsScheduler();
@@ -71,8 +69,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Colors.grey[300],
-          accentColor: Colors.amber[200],
-          fontFamily: 'CabinSketch'),
+          fontFamily: 'CabinSketch',
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.amber[200])),
       home: MyHomePage(),
     );
   }

@@ -113,7 +113,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
     if (!alreadyComplete) {
       prefs.setBool(customMemoryManagerFirstHelpKey, true);
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'Congratulations! You\'ve unlocked the Custom Memory Manager!',
         textColor: Colors.white,
@@ -122,7 +122,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
         isSuper: true,
       );
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the Face (hard) test!',
         textColor: Colors.black,
         backgroundColor: colorChapter3Darker,
@@ -130,7 +130,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
         isSuper: true,
       );
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the Pi test!',
         textColor: Colors.black,
         backgroundColor: colorChapter3Darker,

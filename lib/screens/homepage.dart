@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/condensed_main_menu_buttons.dart';
+import 'package:mem_plus_plus/components/standard/condensed_main_menu_chapter_buttons.dart';
+import 'package:mem_plus_plus/components/standard/main_menu_option.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_edit_screen.dart';
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_multiple_choice_test_screen.dart';
@@ -13,7 +16,6 @@ import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:flutter/services.dart';
 
-import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/screens/day_or_older_activities_screen.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -1461,8 +1463,8 @@ class HomepageHelp extends StatelessWidget {
             'info icon in the top right corner! Also check out the preferences, where you can toggle '
             'dark mode! '
       ],
-      buttonColor: Colors.grey[200],
-      buttonSplashColor: Colors.grey[300],
+      buttonColor: Colors.grey[200]!,
+      buttonSplashColor: Colors.grey[300]!,
     );
   }
 }

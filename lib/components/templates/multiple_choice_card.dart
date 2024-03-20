@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:mem_plus_plus/components/data/deck_data.dart';
 import 'dart:math';
 import 'package:flutter/services.dart';
@@ -22,18 +24,18 @@ class MultipleChoiceCard extends StatefulWidget {
   final List results;
 
   MultipleChoiceCard({
-    this.key,
-    this.systemKey,
-    this.entry,
-    this.shuffledChoices,
-    this.callback,
-    this.nextActivityCallback,
-    this.familiarityTotal,
-    this.color,
-    this.lighterColor,
-    this.globalKey,
+    required this.key,
+    required this.systemKey,
+    required this.entry,
+    required this.shuffledChoices,
+    required this.callback,
+    required this.nextActivityCallback,
+    required this.familiarityTotal,
+    required this.color,
+    required this.lighterColor,
+    required this.globalKey,
     this.isLastCard = false,
-    this.results,
+    required this.results,
   });
 
   @override
@@ -49,7 +51,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
     'action',
     'object',
   ];
-  final prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
 
   @override
   void initState() {
@@ -184,7 +186,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
 
   Widget getChoice(int index) {
     if (widget.systemKey == paoKey) {
-      String text;
+      String text = '';
       switch (paoChoice) {
         case 'person':
           text = widget.shuffledChoices[attempts][index].person;
@@ -197,7 +199,6 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
           break;
       }
       return BasicFlatButton(
-        splashColor: colorPAODarker,
         color: colorPAOStandard,
         text: isValueToProperty
             ? text
@@ -207,7 +208,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
         onPressed: () => checkResult(index),
       );
     } else if (widget.systemKey == deckKey) {
-      String text;
+      String text = '';
       switch (paoChoice) {
         case 'person':
           text = widget.shuffledChoices[attempts][index].person;
@@ -221,7 +222,6 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
       }
       return isValueToProperty
           ? BasicFlatButton(
-              splashColor: colorDeckDarker,
               color: colorDeckStandard,
               text: text,
               fontSize: 30,
@@ -247,7 +247,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               ),
             );
     } else if (widget.systemKey == tripleDigitKey) {
-      String text;
+      String text = '';
       switch (paoChoice) {
         case 'person':
           text = widget.shuffledChoices[attempts][index].person;
@@ -260,7 +260,6 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
           break;
       }
       return BasicFlatButton(
-        splashColor: colorTripleDigitDarker,
         color: colorTripleDigitStandard,
         text: isValueToProperty
             ? text
@@ -271,7 +270,6 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
       );
     }
     return BasicFlatButton(
-      splashColor: colorSingleDigitDarker,
       color: colorSingleDigitStandard,
       text: isValueToProperty
           ? widget.shuffledChoices[attempts][index].object
@@ -285,15 +283,15 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
   void checkResult(int index) {
     if (widget.shuffledChoices[attempts][index].index == widget.entry.index) {
       showSnackBar(
-          scaffoldState: Scaffold.of(context),
+          context: context,
           snackBarText: 'Correct!',
           backgroundColor: colorCorrect,
           durationSeconds: 1);
       widget.callback(true);
       setState(() {});
     } else {
-      String value;
-      String property;
+      String value = '';
+      String property = '';
       switch (widget.systemKey) {
         case singleDigitKey:
           value = widget.entry.digits;
@@ -329,7 +327,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
           break;
       }
       showSnackBar(
-          scaffoldState: Scaffold.of(context),
+          context: context,
           snackBarText: 'Incorrect!   $value = $property',
           backgroundColor: colorIncorrect,
           durationSeconds: 2);
@@ -338,7 +336,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
     }
     if (debugModeEnabled && attempts >= 2) {
       showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText:
               'Debug: Congratulations, you aced it! Next up is a timed test!',
           backgroundColor: widget.color,
@@ -355,7 +353,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
       });
       if (score == widget.results.length) {
         showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Congratulations, you aced it! Next up is a timed test!',
             backgroundColor: widget.color,
@@ -364,7 +362,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
         Navigator.pop(context);
       } else {
         showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Try again! You got this. Score: $score/${widget.results.length}',
             backgroundColor: colorIncorrect,

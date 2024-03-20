@@ -128,7 +128,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
     prefs.updateActivityVisible(planetTimedTestPrepKey, true);
     if (prefs.getBool(lesson1CompleteKey) == null) {
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
         textColor: Colors.black,
         backgroundColor: colorChapter1Darker,
@@ -136,7 +136,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
         isSuper: true,
       );
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the Planet test!',
         textColor: Colors.black,
         backgroundColor: colorChapter1Darker,

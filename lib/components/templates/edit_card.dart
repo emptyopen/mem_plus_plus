@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
+
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
 
@@ -9,7 +10,8 @@ class EditCard extends StatefulWidget {
   final String activityKey;
   final Function callback;
 
-  EditCard({this.entry, this.activityKey, this.callback});
+  EditCard(
+      {required this.entry, required this.activityKey, required this.callback});
 
   @override
   _EditCardState createState() => _EditCardState();
@@ -19,15 +21,14 @@ class _EditCardState extends State<EditCard> {
   final personTextController = TextEditingController();
   final actionTextController = TextEditingController();
   final objectTextController = TextEditingController();
-  final prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   bool isThreeItems = false;
   Widget leading = Container();
-  List<dynamic> data;
+  late List<dynamic> data;
 
   @override
   void initState() {
     super.initState();
-    getSharedPrefs();
 
     switch (widget.activityKey) {
       case singleDigitKey:
@@ -72,10 +73,6 @@ class _EditCardState extends State<EditCard> {
         isThreeItems = true;
         break;
     }
-  }
-
-  getSharedPrefs() async {
-    data = await prefs.getSharedPrefs(widget.activityKey);
   }
 
   getTitle() {
@@ -133,7 +130,7 @@ class _EditCardState extends State<EditCard> {
           width: 100,
           child: BasicFlatButton(
             text: 'Edit',
-            color: Colors.grey[300],
+            color: Colors.grey[300]!,
             onPressed: () {
               showDialog(
                   context: context,
@@ -310,7 +307,7 @@ class _EditCardState extends State<EditCard> {
                                 text: 'Save',
                                 fontSize: 18,
                                 onPressed: () => saveItem(),
-                                color: Colors.grey[200],
+                                color: Colors.grey[200]!,
                               ),
                               SizedBox(height: 20),
                             ],
@@ -326,7 +323,7 @@ class _EditCardState extends State<EditCard> {
   }
 
   void saveItem() async {
-    data = await prefs.getSharedPrefs(widget.activityKey);
+    data = prefs.getSharedPrefs(widget.activityKey) as List;
     int currIndex = widget.entry.index;
     dynamic updatedEntry = data[currIndex];
 
@@ -348,7 +345,7 @@ class _EditCardState extends State<EditCard> {
         updatedEntry.familiarity = 0;
       }
       data[currIndex] = updatedEntry;
-      await prefs.writeSharedPrefs(widget.activityKey, data);
+      prefs.writeSharedPrefs(widget.activityKey, data);
     } else if (widget.activityKey == deckKey) {
       bool resetFamiliarity = false;
       if (personTextController.text != '') {
@@ -367,7 +364,7 @@ class _EditCardState extends State<EditCard> {
         updatedEntry.familiarity = 0;
       }
       data[currIndex] = updatedEntry;
-      await prefs.writeSharedPrefs(widget.activityKey, data);
+      prefs.writeSharedPrefs(widget.activityKey, data);
     } else if (widget.activityKey == tripleDigitKey) {
       bool resetFamiliarity = false;
       if (personTextController.text != '') {
@@ -386,14 +383,14 @@ class _EditCardState extends State<EditCard> {
         updatedEntry.familiarity = 0;
       }
       data[currIndex] = updatedEntry;
-      await prefs.writeSharedPrefs(widget.activityKey, data);
+      prefs.writeSharedPrefs(widget.activityKey, data);
     } else {
       if (objectTextController.text != '') {
         updatedEntry.object = objectTextController.text.trim();
         updatedEntry.familiarity = 0;
       }
       data[currIndex] = updatedEntry;
-      await prefs.writeSharedPrefs(widget.activityKey, data);
+      prefs.writeSharedPrefs(widget.activityKey, data);
     }
     widget.callback(data);
     Navigator.of(context).pop();

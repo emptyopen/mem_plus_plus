@@ -1,8 +1,9 @@
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:shimmer/shimmer.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -51,13 +52,14 @@ List shuffle(List items) {
   return items;
 }
 
-void showSnackBar(
-    {ScaffoldState? scaffoldState,
-    required String snackBarText,
-    Color textColor = Colors.black,
-    Color? backgroundColor,
-    int durationSeconds = 3,
-    bool isSuper = false}) {
+void showSnackBar({
+  required BuildContext context,
+  required String snackBarText,
+  Color textColor = Colors.black,
+  Color? backgroundColor,
+  int durationSeconds = 3,
+  bool isSuper = false,
+}) {
   final snackBar = SnackBar(
     content: Shimmer.fromColors(
       period: Duration(seconds: 3),
@@ -75,15 +77,16 @@ void showSnackBar(
     duration: Duration(seconds: durationSeconds),
     backgroundColor: backgroundColor,
   );
-  scaffoldState.showSnackBar(snackBar);
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
-void showConfirmDialog(
-    {required BuildContext context,
-    required Function function,
-    required String confirmText,
-    Color confirmColor = Colors.redAccent,
-    bool isRoute = false}) {
+void showConfirmDialog({
+  required BuildContext context,
+  required Function function,
+  required String confirmText,
+  Color confirmColor = Colors.redAccent,
+  bool isRoute = false,
+}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {

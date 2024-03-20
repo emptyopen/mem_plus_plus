@@ -41,7 +41,7 @@ class _TripleDigitMultipleChoiceTestScreenState
         TripleDigitMultipleChoiceScreenHelp());
     tripleDigitData =
         prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
-    tripleDigitData = shuffle(tripleDigitData);
+    tripleDigitData = shuffle(tripleDigitData) as List<TripleDigitData>;
 
     tripleDigitData.forEach((entry) {
       TripleDigitData? fakeChoice1;
@@ -80,7 +80,7 @@ class _TripleDigitMultipleChoiceTestScreenState
         fakeChoice2,
         fakeChoice3,
       ];
-      shuffledChoices = shuffle(shuffledChoices);
+      shuffledChoices = shuffle(shuffledChoices) as List<TripleDigitData>;
       fakeData.add(shuffledChoices);
     });
 

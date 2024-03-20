@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +25,6 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
   String piString =
       '1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679';
   bool showError = false;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -69,7 +69,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
         prefs.setBool(piTimedTestCompleteKey, true);
         if (prefs.getBool(face2TimedTestCompleteKey) == null) {
           showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Awesome job! Complete the Face (hard) test to unlock the next system!',
             textColor: Colors.black,
@@ -77,7 +77,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
             durationSeconds: 3,
           );
           showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Congratulations! You\'ve unlocked the Irra/ional game!',
             textColor: Colors.white,
@@ -88,7 +88,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
         } else {
           prefs.updateActivityVisible(deckEditKey, true);
           showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
             textColor: Colors.white,
             backgroundColor: colorDeckDarker,
@@ -97,7 +97,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
           );
           prefs.updateActivityVisible(tripleDigitEditKey, true);
           showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Congratulations! You\'ve unlocked the Triple Digit system!',
             textColor: Colors.white,
@@ -110,7 +110,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
         Navigator.pop(context);
       } else {
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You aced it!',
           textColor: Colors.black,
           backgroundColor: colorChapter3Standard,
@@ -123,7 +123,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       lives -= 1;
       setState(() {});
       showSnackBar(
-        scaffoldState: _scaffoldKey.currentState,
+        context: context,
         snackBarText: 'Incorrect. You have $lives lives left!',
         textColor: Colors.black,
         backgroundColor: colorIncorrect,
@@ -131,7 +131,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       );
     } else {
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'Incorrect. Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
@@ -153,7 +153,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       prefs.updateActivityState(piTimedTestPrepKey, 'todo');
     }
     showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText: 'Head back to test prep to study up!',
         backgroundColor: colorIncorrect,
         durationSeconds: 3);
@@ -166,7 +166,6 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: backgroundColor,
-      key: _scaffoldKey,
       appBar: AppBar(
           title: Text('Pi: timed test'),
           backgroundColor: colorChapter3Standard,

@@ -50,7 +50,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
       });
     }
     setState(() {
-      paoData = shuffle(paoData);
+      paoData = shuffle(paoData) as List<PAOData>;
       dataReady = true;
     });
   }

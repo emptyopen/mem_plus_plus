@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+import 'package:mem_plus_plus/components/standard/morse_test.dart';
+import 'package:mem_plus_plus/components/standard/screen_divider.dart';
+
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -196,7 +199,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
     if (correct) {
       if (prefs.getBool('morse${widget.difficulty}Complete') == null) {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -204,7 +207,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
         );
       } else {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Congrats! You\'re a beast!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -213,7 +216,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
       prefs.setBool("morse${widget.difficulty}Complete", true);
     } else {
       showSnackBar(
-        scaffoldState: widget.scaffoldKey.currentState,
+        context: context,
         snackBarText: failureMessage,
         backgroundColor: colorIncorrect,
         textColor: Colors.black,
@@ -408,7 +411,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
   checkTimer() {
     if (countdown == 0) {
       showSnackBar(
-        scaffoldState: widget.scaffoldKey.currentState,
+        context: context,
         snackBarText: 'Out of time! ' + failureMessage,
         backgroundColor: colorIncorrect,
         textColor: Colors.black,
@@ -522,8 +525,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                                     started = false;
                                     Navigator.pop(context);
                                     showSnackBar(
-                                      scaffoldState:
-                                          widget.scaffoldKey.currentState,
+                                      context: context,
                                       snackBarText: failureMessage,
                                       backgroundColor: colorIncorrect,
                                     );

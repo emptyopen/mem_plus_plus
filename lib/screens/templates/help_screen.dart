@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:mem_plus_plus/services/services.dart';
 
 class HelpScreen extends StatefulWidget {

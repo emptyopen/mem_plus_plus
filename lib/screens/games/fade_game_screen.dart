@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -12,10 +13,8 @@ import 'package:mem_plus_plus/services/services.dart';
 
 class FadeGameScreen extends StatefulWidget {
   final int difficulty; // 0, 1, 2, 3, 4
-  final scaffoldKey;
 
-  FadeGameScreen({Key? key, required this.difficulty, this.scaffoldKey})
-      : super(key: key);
+  FadeGameScreen({Key? key, required this.difficulty}) : super(key: key);
 
   @override
   _FadeGameScreenState createState() => _FadeGameScreenState();
@@ -163,7 +162,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
     if (textController.text.trim() == randomSequence) {
       if (prefs.getBool('fade${widget.difficulty}Complete') == null) {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -171,7 +170,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
         );
       } else {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Congrats! You\'re a beast!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -180,7 +179,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
       prefs.setBool("fade${widget.difficulty}Complete", true);
     } else {
       showSnackBar(
-        scaffoldState: widget.scaffoldKey.currentState,
+        context: context,
         snackBarText: 'Incorrect. Try again sometime!',
         backgroundColor: colorIncorrect,
         textColor: Colors.black,
@@ -307,8 +306,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
                                   complete = false;
                                   Navigator.pop(context);
                                   showSnackBar(
-                                    scaffoldState:
-                                        widget.scaffoldKey.currentState,
+                                    context: context,
                                     snackBarText: 'Try again!',
                                     backgroundColor: colorIncorrect,
                                   );

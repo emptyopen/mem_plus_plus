@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:mem_plus_plus/components/animations.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'dart:math';
 
 import 'package:mem_plus_plus/services/services.dart';
-
-import '../../constants/colors.dart';
 
 class TriviaGameScreen extends StatefulWidget {
   final String
@@ -121,7 +116,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
         guess5.text.trim() == answer5) {
       if (prefs.getBool('fade${widget.difficulty}Complete') == null) {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -129,7 +124,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
         );
       } else {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Congrats! You\'re a beast!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -138,7 +133,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
       prefs.setBool("fade${widget.difficulty}Complete", true);
     } else {
       showSnackBar(
-        scaffoldState: widget.scaffoldKey.currentState,
+        context: context,
         snackBarText: 'Incorrect. Try again sometime!',
         backgroundColor: colorIncorrect,
         textColor: Colors.black,

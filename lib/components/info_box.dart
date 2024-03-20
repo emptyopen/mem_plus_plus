@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -21,7 +22,7 @@ class InfoBox extends StatefulWidget {
 }
 
 class _InfoBoxState extends State<InfoBox> {
-  final prefs = PrefsUpdater();
+  PrefsUpdater prefs = PrefsUpdater();
   bool infoKeyExists = true;
 
   @override
@@ -31,11 +32,11 @@ class _InfoBoxState extends State<InfoBox> {
   }
 
   getInfoKey() async {
-    infoKeyExists = await prefs.getBool(widget.infoKey) ?? false;
+    infoKeyExists = prefs.getBool(widget.infoKey) ?? false;
   }
 
   setInfoKey() async {
-    await prefs.setBool(widget.infoKey, true);
+    prefs.setBool(widget.infoKey, true);
     infoKeyExists = true;
     setState(() {});
   }

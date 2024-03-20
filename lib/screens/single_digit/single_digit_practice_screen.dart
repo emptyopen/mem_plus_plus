@@ -52,7 +52,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
       });
     }
     setState(() {
-      singleDigitData = shuffle(singleDigitData);
+      singleDigitData = shuffle(singleDigitData) as List<SingleDigitData>;
       dataReady = true;
     });
   }

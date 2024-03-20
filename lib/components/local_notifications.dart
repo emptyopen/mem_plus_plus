@@ -18,7 +18,7 @@ class _LocalNotificationsState extends State<LocalNotifications> {
     final settingsAndroid = AndroidInitializationSettings('app_icon');
     final settingsIOS = IOSInitializationSettings(
         onDidReceiveLocalNotification: (id, title, body, payload) =>
-            onSelectNotification(payload));
+            onSelectNotification(payload!));
 
     notifications.initialize(
       InitializationSettings(android: settingsAndroid, iOS: settingsIOS),

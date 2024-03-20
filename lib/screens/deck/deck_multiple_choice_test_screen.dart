@@ -40,7 +40,7 @@ class _DeckMultipleChoiceTestScreenState
     prefs.checkFirstTime(context, deckMultipleChoiceTestFirstHelpKey,
         DeckMultipleChoiceScreenHelp());
     deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
-    deckData = shuffle(deckData);
+    deckData = shuffle(deckData) as List<DeckData>;
 
     deckData.forEach((entry) {
       DeckData? fakeChoice1;
@@ -76,7 +76,7 @@ class _DeckMultipleChoiceTestScreenState
         fakeChoice2,
         fakeChoice3,
       ];
-      shuffledChoices = shuffle(shuffledChoices);
+      shuffledChoices = shuffle(shuffledChoices) as List<DeckData>;
       fakeData.add(shuffledChoices);
     });
 

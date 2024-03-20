@@ -3,11 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -31,7 +32,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Column customMemoriesColumn = Column();
   List<bool> isSelected = [true, false];
   PrefsUpdater prefs = PrefsUpdater();
-  var scaffoldKey;
 
   @override
   void initState() {
@@ -74,7 +74,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       length: 2,
       child: Scaffold(
         backgroundColor: backgroundColor,
-        key: scaffoldKey,
         appBar: AppBar(
             title: Text('Tinker Tools'),
             backgroundColor: Colors.grey[300],

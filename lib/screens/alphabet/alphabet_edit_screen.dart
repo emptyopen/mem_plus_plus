@@ -21,7 +21,6 @@ class AlphabetEditScreen extends StatefulWidget {
 class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   late SharedPreferences sharedPreferences;
   late List<AlphabetData> alphabetData;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -69,7 +68,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
         duration: Duration(seconds: 5),
         backgroundColor: colorAlphabetDarker,
       );
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       widget.callback();
     }
   }
@@ -92,7 +91,6 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      key: _scaffoldKey,
       appBar: AppBar(
           title: Text('Alphabet: view/edit'),
           backgroundColor: Colors.blue[200],

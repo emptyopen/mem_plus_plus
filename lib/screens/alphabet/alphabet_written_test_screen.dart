@@ -34,7 +34,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
     prefs.checkFirstTime(context, alphabetWrittenTestFirstHelpKey,
         AlphabetWrittenTestScreenHelp());
     alphabetData = prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
-    alphabetData = shuffle(alphabetData);
+    alphabetData = shuffle(alphabetData) as List<AlphabetData>;
     dataReady = true;
     setState(() {});
   }

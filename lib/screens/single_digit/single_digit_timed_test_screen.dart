@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
@@ -66,7 +67,7 @@ class _SingleDigitTimedTestScreenState
         prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         prefs.setBool(singleDigitTimedTestCompleteKey, true);
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText:
               'Congratulations! You\'ve completed the Single Digit system!',
           textColor: Colors.black,
@@ -75,7 +76,7 @@ class _SingleDigitTimedTestScreenState
           isSuper: true,
         );
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You\'ve unlocked Mini-Games!',
           textColor: Colors.white,
           backgroundColor: colorGamesDarker,
@@ -83,7 +84,7 @@ class _SingleDigitTimedTestScreenState
           isSuper: true,
         );
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You\'ve unlocked Chapter 1!',
           textColor: Colors.black,
           backgroundColor: colorChapter1Darker,
@@ -92,7 +93,7 @@ class _SingleDigitTimedTestScreenState
         );
       } else {
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You aced it!',
           textColor: Colors.black,
           backgroundColor: colorSingleDigitStandard,
@@ -101,7 +102,7 @@ class _SingleDigitTimedTestScreenState
       }
     } else {
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'Incorrect. Keep trying to remember, or give up and try again!',
         backgroundColor: colorSingleDigitDarkest,
@@ -121,7 +122,7 @@ class _SingleDigitTimedTestScreenState
       prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
     }
     showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'The correct answer was: $digit1$digit2$digit3$digit4\nTry the timed test again to unlock the next system.',
         backgroundColor: colorSingleDigitDarkest,

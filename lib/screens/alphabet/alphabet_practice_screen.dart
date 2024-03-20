@@ -50,7 +50,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
       });
     }
     setState(() {
-      alphabetData = shuffle(alphabetData);
+      alphabetData = shuffle(alphabetData) as List<AlphabetData>;
       dataReady = true;
     });
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
@@ -6,7 +7,7 @@ import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:flutter/services.dart';
 
 class Face2TimedTestPrepScreen extends StatefulWidget {
@@ -114,7 +115,9 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
     prefs.updateActivityVisible(face2TimedTestKey, true);
     prefs.updateActivityVisibleAfter(
         face2TimedTestKey, DateTime.now().add(testDuration));
-    Timer(testDuration, widget.callback);
+    Timer(testDuration, () {
+      widget.callback();
+    });
     notifyDuration(testDuration, 'Faces test (difficult) is ready!',
         'Good luck!', face2TimedTestKey);
     widget.callback();

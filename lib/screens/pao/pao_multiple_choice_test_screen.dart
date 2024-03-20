@@ -41,7 +41,7 @@ class _PAOMultipleChoiceTestScreenState
     prefs.checkFirstTime(context, paoMultipleChoiceTestFirstHelpKey,
         PAOMultipleChoiceScreenHelp());
     paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
-    paoData = shuffle(paoData);
+    paoData = shuffle(paoData) as List<PAOData>;
 
     paoData.forEach((entry) {
       PAOData? fakeChoice1;
@@ -76,7 +76,7 @@ class _PAOMultipleChoiceTestScreenState
         fakeChoice2,
         fakeChoice3,
       ];
-      shuffledChoices = shuffle(shuffledChoices);
+      shuffledChoices = shuffle(shuffledChoices) as List<PAOData>;
       fakeData.add(shuffledChoices);
     });
 

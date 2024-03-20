@@ -52,7 +52,7 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
       });
     }
     setState(() {
-      tripleDigitData = shuffle(tripleDigitData);
+      tripleDigitData = shuffle(tripleDigitData) as List<TripleDigitData>;
       dataReady = true;
     });
   }

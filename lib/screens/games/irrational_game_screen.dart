@@ -1,17 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-
 import 'package:mem_plus_plus/services/services.dart';
-
-import '../../constants/colors.dart';
 
 class IrrationalGameScreen extends StatefulWidget {
   final int difficulty; // 0, 1, 2, 3, 4, 5 (3 levels for PI, 3 levels for e)
@@ -133,7 +130,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
     if (textController.text.trim() == correctSequence) {
       if (prefs.getBool('irrational${widget.difficulty}Complete') == null) {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Congrats! You\'ve memorized $stageName!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -141,7 +138,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
         );
       } else {
         showSnackBar(
-          scaffoldState: widget.scaffoldKey.currentState,
+          context: context,
           snackBarText: 'Awesome! You\'re amazing!',
           backgroundColor: colorGamesDarker,
           textColor: Colors.white,
@@ -150,7 +147,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
       prefs.setBool('irrational${widget.difficulty}Complete', true);
     } else {
       showSnackBar(
-        scaffoldState: widget.scaffoldKey.currentState,
+        context: context,
         snackBarText: 'Incorrect. Try again sometime!',
         backgroundColor: colorIncorrect,
         textColor: Colors.black,

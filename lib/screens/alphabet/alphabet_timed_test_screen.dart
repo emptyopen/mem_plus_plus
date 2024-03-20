@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
@@ -74,7 +74,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         prefs.updateActivityState(alphabetTimedTestKey, 'review');
         prefs.setBool(alphabetTimedTestCompleteKey, true);
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText:
               'Congratulations! You\'ve mastered the Alphabet system!',
           textColor: Colors.white,
@@ -83,7 +83,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
           isSuper: true,
         );
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You\'ve unlocked Chapter 2!',
           textColor: Colors.black,
           backgroundColor: colorChapter2Darker,
@@ -92,7 +92,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         );
       } else {
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You aced it!',
           textColor: Colors.black,
           backgroundColor: colorAlphabetStandard,
@@ -101,7 +101,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       }
     } else {
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'Incorrect. Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
@@ -124,7 +124,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
     }
     showSnackBar(
-      scaffoldState: widget.globalKey.currentState,
+      context: context,
       snackBarText:
           'It was: $char1$char2$char3$char4 $char5$char6$char7$char8. Try the timed test again to unlock the next system.',
       textColor: Colors.black,

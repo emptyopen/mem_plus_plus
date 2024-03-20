@@ -50,7 +50,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
       });
     }
     setState(() {
-      deckData = shuffle(deckData);
+      deckData = shuffle(deckData) as List<DeckData>;
       dataReady = true;
     });
   }

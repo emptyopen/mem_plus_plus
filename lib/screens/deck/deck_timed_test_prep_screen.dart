@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
@@ -7,7 +8,7 @@ import 'dart:async';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:flutter/services.dart';
 
 class DeckTimedTestPrepScreen extends StatefulWidget {

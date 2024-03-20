@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:edit_distance/edit_distance.dart';
@@ -97,7 +98,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
         prefs.setBool(face2TimedTestCompleteKey, true);
         if (prefs.getBool(piTimedTestCompleteKey) == null) {
           showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Awesome job! Complete the Pi test to unlock the next system!',
             textColor: Colors.black,
@@ -107,7 +108,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
         } else {
           prefs.updateActivityVisible(deckEditKey, true);
           showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText: 'Congratulations! You\'ve unlocked the Deck system!',
             textColor: Colors.white,
             backgroundColor: colorDeckDarker,
@@ -116,7 +117,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
           );
           prefs.updateActivityVisible(tripleDigitEditKey, true);
           showSnackBar(
-            scaffoldState: widget.globalKey.currentState,
+            context: context,
             snackBarText:
                 'Congratulations! You\'ve unlocked the Triple Digit system!',
             textColor: Colors.white,
@@ -127,7 +128,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
         }
       } else {
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You aced it!',
           textColor: Colors.black,
           backgroundColor: colorChapter3Darker,
@@ -136,7 +137,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
       }
     } else {
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'Incorrect. Keep trying to remember, or give up and try again!',
         backgroundColor: colorIncorrect,
@@ -162,7 +163,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
       prefs.updateActivityState(face2TimedTestPrepKey, 'todo');
     }
     showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'The correct information was: \n$name1, $job1, $hometown1 \n'
             '$name2, $job2, $hometown2\nTry the timed test again to unlock the next system.',

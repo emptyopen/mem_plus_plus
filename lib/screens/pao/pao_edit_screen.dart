@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/pao_data.dart';
 import 'package:mem_plus_plus/components/info_box.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';

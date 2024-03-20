@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/deck_data.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:flutter/services.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class DeckEditScreen extends StatefulWidget {
@@ -22,7 +23,6 @@ class DeckEditScreen extends StatefulWidget {
 
 class _DeckEditScreenState extends State<DeckEditScreen> {
   late List<DeckData> deckData;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PrefsUpdater prefs = PrefsUpdater();
 
   @override
@@ -74,7 +74,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
         duration: Duration(seconds: 5),
         backgroundColor: colorDeckDarker,
       );
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       widget.callback();
     }
   }
@@ -101,7 +101,6 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
           title: Text('Deck: view/edit'),
           backgroundColor: colorDeckStandard,

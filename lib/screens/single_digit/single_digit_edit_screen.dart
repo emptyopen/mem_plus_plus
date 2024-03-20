@@ -64,7 +64,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
       prefs.updateActivityVisible(singleDigitPracticeKey, true);
       prefs.updateActivityState(singleDigitEditKey, 'review');
       showSnackBar(
-          scaffoldState: _scaffoldKey.currentState,
+          context: context,
           snackBarText:
               'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
           backgroundColor: colorSingleDigitDarker,

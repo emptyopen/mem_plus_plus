@@ -22,7 +22,6 @@ class TripleDigitEditScreen extends StatefulWidget {
 
 class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   late List<TripleDigitData> tripleDigitData;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   PrefsUpdater prefs = PrefsUpdater();
   bool loading = true;
 
@@ -83,7 +82,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
         duration: Duration(seconds: 2),
         backgroundColor: colorTripleDigitStandard,
       );
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
     // check if information is filled out for the first time
@@ -100,7 +99,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
         duration: Duration(seconds: 5),
         backgroundColor: colorTripleDigitDarker,
       );
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       widget.callback();
     }
 
@@ -131,7 +130,6 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
           title: Text('Triple Digit: view/edit'),
           backgroundColor: colorTripleDigitStandard,

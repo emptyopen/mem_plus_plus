@@ -41,7 +41,7 @@ class _SingleDigitMultipleChoiceTestScreenState
         SingleDigitMultipleChoiceScreenHelp());
     singleDigitData =
         prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
-    singleDigitData = shuffle(singleDigitData);
+    singleDigitData = shuffle(singleDigitData) as List<SingleDigitData>;
 
     singleDigitData.forEach((entry) {
       SingleDigitData? fakeChoice1;
@@ -80,7 +80,7 @@ class _SingleDigitMultipleChoiceTestScreenState
         fakeChoice2,
         fakeChoice3,
       ];
-      shuffledChoices = shuffle(shuffledChoices);
+      shuffledChoices = shuffle(shuffledChoices) as List<SingleDigitData>;
       fakeData.add(shuffledChoices);
     });
 

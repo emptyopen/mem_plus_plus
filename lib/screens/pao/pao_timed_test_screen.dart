@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/screens/templates/help_screen.dart';
-import 'package:mem_plus_plus/components/standard.dart';
+
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
@@ -77,7 +78,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         prefs.setBool(paoTimedTestCompleteKey, true);
         prefs.updateActivityState(paoTimedTestKey, 'review');
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You\'ve mastered the PAO system!',
           textColor: Colors.white,
           backgroundColor: colorPAODarker,
@@ -85,7 +86,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
           isSuper: true,
         );
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You\'ve unlocked Chapter 3!',
           textColor: Colors.white,
           backgroundColor: colorChapter3Darker,
@@ -94,7 +95,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         );
       } else {
         showSnackBar(
-          scaffoldState: widget.globalKey.currentState,
+          context: context,
           snackBarText: 'Congratulations! You aced it!',
           textColor: Colors.black,
           backgroundColor: colorPAOStandard,
@@ -103,7 +104,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       }
     } else {
       showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'Incorrect. Keep trying to remember, or give up and try again!',
         textColor: Colors.black,
@@ -127,7 +128,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
     }
     showSnackBar(
-        scaffoldState: widget.globalKey.currentState,
+        context: context,
         snackBarText:
             'The correct answers were: \n$digits1$digits2$digits3\n$digits4$digits5$digits6\n$digits7$digits8$digits9\nTry the timed test again to unlock the next system.',
         backgroundColor: colorPAODarkest,
