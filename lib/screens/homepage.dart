@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/standard/big_button.dart';
 import 'package:mem_plus_plus/components/standard/condensed_main_menu_buttons.dart';
 import 'package:mem_plus_plus/components/standard/condensed_main_menu_chapter_buttons.dart';
 import 'package:mem_plus_plus/components/standard/main_menu_option.dart';
+import 'package:mem_plus_plus/components/standard/new_tag.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_edit_screen.dart';
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_multiple_choice_test_screen.dart';
@@ -60,10 +62,8 @@ import 'package:mem_plus_plus/screens/chapter1/lesson_1_screen.dart';
 import 'package:mem_plus_plus/screens/chapter2/lesson_2_screen.dart';
 import 'package:mem_plus_plus/screens/chapter3/lesson_3_screen.dart';
 
-import '../constants/keys.dart';
-
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -227,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void setUnlockedActivities() async {
     // if first time opening app, welcome
     if (prefs.getBool(firstTimeAppKey) == null ||
-        prefs.getBool(firstTimeAppKey)) {
+        prefs.getBool(firstTimeAppKey)!) {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -407,7 +407,6 @@ class _MyHomePageState extends State<MyHomePage> {
             callback: callback,
             color: Colors.purple[400]!,
             splashColor: Colors.purple[500]!,
-            globalKey: globalKey,
             isCustomTest: true,
           ),
         );
@@ -442,7 +441,6 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: activityMenuButtonMap[activity].icon,
               color: activityMenuButtonMap[activity].color,
               splashColor: activityMenuButtonMap[activity].splashColor,
-              globalKey: globalKey,
             ),
           );
         }
@@ -464,7 +462,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Animation<double> animation,
               Animation<double> secondaryAnimation,
             ) =>
-                CustomMemoryManagerScreen(),
+                CustomMemoryManagerScreen(
+              callback: () {
+                print('idkkkk');
+              },
+            ),
             transitionsBuilder: (
               BuildContext context,
               Animation<double> animation,
@@ -581,7 +583,6 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: activityMenuButtonMap[activity].icon,
               color: activityMenuButtonMap[activity].color,
               splashColor: activityMenuButtonMap[activity].splashColor,
-              globalKey: globalKey,
             ),
           );
         }
@@ -777,6 +778,7 @@ class _MyHomePageState extends State<MyHomePage> {
             timedTestPrepRoute: DeckTimedTestPrepScreen(
               callback: callback,
             ),
+            callback: () {},
           ),
         );
       }
@@ -806,6 +808,7 @@ class _MyHomePageState extends State<MyHomePage> {
             timedTestPrepRoute: TripleDigitTimedTestPrepScreen(
               callback: callback,
             ),
+            callback: () {},
           ),
         );
       }
@@ -1063,7 +1066,14 @@ class _MyHomePageState extends State<MyHomePage> {
     activityMenuButtonMap = {
       welcomeKey: ActivityMenuButton(
         text: 'Welcome',
-        route: WelcomeScreen(),
+        route: WelcomeScreen(
+          callback: () {
+            print('welcome screen callback');
+          },
+          mainMenuFirstTimeCallback: () {
+            print('main menu first time callback');
+          },
+        ),
         icon: Icon(Icons.filter),
         color: Colors.green[200]!,
         splashColor: Colors.green[600]!,

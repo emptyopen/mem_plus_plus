@@ -17,10 +17,8 @@ class _RawKeyboardListenerState extends State<KeyboardListener> {
     super.initState();
   }
 
-  handleKey(RawKeyEventDataAndroid key) {
-    print('KeyCode: ${key.keyCode}, CodePoint: ${key.codePoint}, '
-        'Flags: ${key.flags}, MetaState: ${key.metaState}, '
-        'ScanCode: ${key.scanCode}');
+  handleKey(RawKeyEventData key) {
+    print('handling key ${key.keyLabel}');
   }
 
   @override

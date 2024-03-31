@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
-
-import 'package:mem_plus_plus/services/services.dart';
 
 class HelpScreen extends StatefulWidget {
   final String title;
@@ -29,7 +26,6 @@ class HelpScreen extends StatefulWidget {
 
 class _HelpScreenState extends State<HelpScreen> {
   int slideIndex = 0;
-  final IndexController indexController = IndexController();
   List<Widget> informationList = [];
   bool firstHelp = true;
 
@@ -105,65 +101,65 @@ class _HelpScreenState extends State<HelpScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    TransformerPageView transformerPageView = TransformerPageView(
-      pageSnapping: true,
-      onPageChanged: (index) {
-        setState(() {
-          slideIndex = index;
-        });
-      },
-      loop: false,
-      controller: indexController,
-      transformer:
-          PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
-        return Container(
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(5)),
-          alignment: Alignment.center,
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ParallaxContainer(
-                          child: informationList[info.index],
-                          position: info.position,
-                          translationFactor: 100,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              widget.information.length > 1
-                  ? Padding(
-                      padding: const EdgeInsets.all(13),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: getSlideCircles(widget.information.length,
-                            slideIndex, widget.buttonColor),
-                      ),
-                    )
-                  : Container(),
-            ],
-          ),
-        );
-      }),
-      itemCount: widget.information.length,
-    );
+    // TransformerPageView transformerPageView = TransformerPageView(
+    //   pageSnapping: true,
+    //   onPageChanged: (index) {
+    //     setState(() {
+    //       slideIndex = index;
+    //     });
+    //   },
+    //   loop: false,
+    //   controller: indexController,
+    //   transformer:
+    //       PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
+    //     return Container(
+    //       margin: EdgeInsets.all(10),
+    //       decoration: BoxDecoration(
+    //           border: Border.all(color: Colors.grey),
+    //           borderRadius: BorderRadius.circular(5)),
+    //       alignment: Alignment.center,
+    //       child: Stack(
+    //         children: <Widget>[
+    //           Center(
+    //             child: Padding(
+    //               padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+    //               child: SingleChildScrollView(
+    //                 child: Column(
+    //                   mainAxisAlignment: MainAxisAlignment.center,
+    //                   crossAxisAlignment: CrossAxisAlignment.center,
+    //                   children: <Widget>[
+    //                     SizedBox(
+    //                       height: 10,
+    //                     ),
+    //                     ParallaxContainer(
+    //                       child: informationList[info.index],
+    //                       position: info.position,
+    //                       translationFactor: 100,
+    //                     ),
+    //                     SizedBox(
+    //                       height: 10,
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //           widget.information.length > 1
+    //               ? Padding(
+    //                   padding: const EdgeInsets.all(13),
+    //                   child: Align(
+    //                     alignment: Alignment.bottomCenter,
+    //                     child: getSlideCircles(widget.information.length,
+    //                         slideIndex, widget.buttonColor),
+    //                   ),
+    //                 )
+    //               : Container(),
+    //         ],
+    //       ),
+    //     );
+    //   }),
+    //   itemCount: widget.information.length,
+    // );
 
     return Material(
         color: Color.fromRGBO(0, 0, 0, 0.7),
@@ -183,7 +179,8 @@ class _HelpScreenState extends State<HelpScreen> {
                     decoration: BoxDecoration(
                         color: backgroundColor,
                         borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: transformerPageView,
+                    // child: transformerPageView,
+                    child: Text('transformer was here'),
                   ),
                   SizedBox(
                     height: 15,
@@ -195,7 +192,7 @@ class _HelpScreenState extends State<HelpScreen> {
                           buttonColor: widget.buttonColor,
                           buttonSplashColor: widget.buttonSplashColor,
                           firstHelpKey: widget.firstHelpKey,
-                          callback: widget.callback,
+                          callback: widget.callback!,
                         )
                       : SizedBox(
                           height: 50,

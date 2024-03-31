@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:transformer_page_view/transformer_page_view.dart';
-import 'package:mem_plus_plus/components/animations.dart';
-
-import 'package:mem_plus_plus/services/services.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 
@@ -26,7 +21,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   int slideIndex = 0;
-  final IndexController indexController = IndexController();
   PrefsUpdater prefs = PrefsUpdater();
 
   final List<Widget> headers = [
@@ -162,124 +156,124 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    TransformerPageView transformerPageView = TransformerPageView(
-        pageSnapping: true,
-        onPageChanged: (index) {
-          setState(() {
-            slideIndex = index;
-          });
-        },
-        loop: false,
-        controller: indexController,
-        transformer:
-            PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
-          return Stack(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(color: backgroundColor),
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        ParallaxContainer(
-                          child: info.index == 0
-                              ? StaggerAnimation(
-                                  widget: headers[info.index],
-                                  controller: animationController,
-                                  begin: 0,
-                                  end: 1,
-                                )
-                              : headers[info.index],
-                          position: info.position,
-                          translationFactor: 200,
-                        ),
-                        info.index == 0
-                            ? SizedBox(
-                                height: 10,
-                              )
-                            : SizedBox(
-                                height: 10,
-                              ),
-//                        ParallaxContainer(
-//                          child: icons[info.index],
-//                          position: info.position,
-//                          translationFactor: 50,
-//                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ParallaxContainer(
-                          child: info.index == 0
-                              ? StaggerAnimation(
-                                  widget: information[info.index],
-                                  controller: animationController,
-                                  begin: 0.3,
-                                  end: 1,
-                                )
-                              : information[info.index],
-                          position: info.position,
-                          translationFactor: 100,
-                        ),
-                        info.index != headers.length - 1
-                            ? Container()
-                            : SizedBox(
-                                height: 10,
-                              ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        debugModeEnabled && info.index == 0
-                            ? ParallaxContainer(
-                                child: BasicFlatButton(
-                                  text: 'Main Menu',
-                                  color: Colors.green[200]!,
-                                  onPressed: () => goToMainMenu(context),
-                                  padding: 10,
-                                  fontSize: 28,
-                                ),
-                                position: info.position,
-                                translationFactor: 300,
-                              )
-                            : Container(),
-                        info.index != headers.length - 1
-                            ? Container()
-                            : ParallaxContainer(
-                                child: BasicFlatButton(
-                                  text: 'Main Menu',
-                                  color: Colors.green[200]!,
-                                  onPressed: () => goToMainMenu(context),
-                                  padding: 10,
-                                  fontSize: 28,
-                                ),
-                                position: info.position,
-                                translationFactor: 300,
-                              ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                  child: getSlideCircles(
-                      information.length, slideIndex, Colors.green[300]!),
-                ),
-                alignment: Alignment.bottomCenter,
-              )
-            ],
-          );
-        }),
-        itemCount: headers.length);
+//     TransformerPageView transformerPageView = TransformerPageView(
+//         pageSnapping: true,
+//         onPageChanged: (index) {
+//           setState(() {
+//             slideIndex = index;
+//           });
+//         },
+//         loop: false,
+//         controller: indexController,
+//         transformer:
+//             PageTransformerBuilder(builder: (Widget child, TransformInfo info) {
+//           return Stack(
+//             children: <Widget>[
+//               Container(
+//                 decoration: BoxDecoration(color: backgroundColor),
+//                 alignment: Alignment.center,
+//                 child: Padding(
+//                   padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
+//                   child: SingleChildScrollView(
+//                     child: Column(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       crossAxisAlignment: CrossAxisAlignment.center,
+//                       children: <Widget>[
+//                         ParallaxContainer(
+//                           child: info.index == 0
+//                               ? StaggerAnimation(
+//                                   widget: headers[info.index],
+//                                   controller: animationController,
+//                                   begin: 0,
+//                                   end: 1,
+//                                 )
+//                               : headers[info.index],
+//                           position: info.position,
+//                           translationFactor: 200,
+//                         ),
+//                         info.index == 0
+//                             ? SizedBox(
+//                                 height: 10,
+//                               )
+//                             : SizedBox(
+//                                 height: 10,
+//                               ),
+// //                        ParallaxContainer(
+// //                          child: icons[info.index],
+// //                          position: info.position,
+// //                          translationFactor: 50,
+// //                        ),
+//                         SizedBox(
+//                           height: 10,
+//                         ),
+//                         ParallaxContainer(
+//                           child: info.index == 0
+//                               ? StaggerAnimation(
+//                                   widget: information[info.index],
+//                                   controller: animationController,
+//                                   begin: 0.3,
+//                                   end: 1,
+//                                 )
+//                               : information[info.index],
+//                           position: info.position,
+//                           translationFactor: 100,
+//                         ),
+//                         info.index != headers.length - 1
+//                             ? Container()
+//                             : SizedBox(
+//                                 height: 10,
+//                               ),
+//                         SizedBox(
+//                           height: 20,
+//                         ),
+//                         debugModeEnabled && info.index == 0
+//                             ? ParallaxContainer(
+//                                 child: BasicFlatButton(
+//                                   text: 'Main Menu',
+//                                   color: Colors.green[200]!,
+//                                   onPressed: () => goToMainMenu(context),
+//                                   padding: 10,
+//                                   fontSize: 28,
+//                                 ),
+//                                 position: info.position,
+//                                 translationFactor: 300,
+//                               )
+//                             : Container(),
+//                         info.index != headers.length - 1
+//                             ? Container()
+//                             : ParallaxContainer(
+//                                 child: BasicFlatButton(
+//                                   text: 'Main Menu',
+//                                   color: Colors.green[200]!,
+//                                   onPressed: () => goToMainMenu(context),
+//                                   padding: 10,
+//                                   fontSize: 28,
+//                                 ),
+//                                 position: info.position,
+//                                 translationFactor: 300,
+//                               ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               Align(
+//                 child: Padding(
+//                   padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+//                   child: getSlideCircles(
+//                       information.length, slideIndex, Colors.green[300]!),
+//                 ),
+//                 alignment: Alignment.bottomCenter,
+//               )
+//             ],
+//           );
+//         }),
+//         itemCount: headers.length);
 
     return widget.firstTime
         ? Scaffold(
             backgroundColor: backgroundColor,
-            body: transformerPageView,
+            body: Text('transformer was here'),
           )
         : Scaffold(
             backgroundColor: backgroundColor,
@@ -287,7 +281,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               title: Text('Welcome'),
               backgroundColor: Colors.green[200],
             ),
-            body: transformerPageView,
+            body: Text('transformer was here'),
           );
   }
 }

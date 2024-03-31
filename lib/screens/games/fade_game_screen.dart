@@ -151,6 +151,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
               size: 64 * randomSequence.length.toDouble(),
               begin: 0,
               end: 0.95,
+              widget: Text('test text'),
             ),
           ),
         ),

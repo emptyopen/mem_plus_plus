@@ -17,9 +17,9 @@ final BehaviorSubject<String> selectNotificationSubject =
 
 class ReceivedNotification {
   final int id;
-  final String title;
-  final String body;
-  final String payload;
+  final String? title;
+  final String? body;
+  final String? payload;
 
   ReceivedNotification(
       {required this.id,
@@ -41,7 +41,7 @@ Future<void> main() async {
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   var initializationSettingsIOS = IOSInitializationSettings(
       onDidReceiveLocalNotification:
-          (int id, String title, String body, String payload) async {
+          (int id, String? title, String? body, String? payload) async {
     didReceiveLocalNotificationSubject.add(ReceivedNotification(
         id: id, title: title, body: body, payload: payload));
   });
@@ -50,8 +50,8 @@ Future<void> main() async {
     iOS: initializationSettingsIOS,
   );
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String payload) async {
-    debugPrint('notification payload: ' + payload);
+      onSelectNotification: (String? payload) async {
+    debugPrint('notification payload: ' + payload!);
     selectNotificationSubject.add(payload);
   });
   initializeNotificationsScheduler();

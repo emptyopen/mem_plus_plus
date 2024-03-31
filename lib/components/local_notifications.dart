@@ -49,7 +49,7 @@ class _LocalNotificationsState extends State<LocalNotifications> {
     );
   }
 
-  Future onSelectNotification(String payload) async => await Navigator.push(
+  Future onSelectNotification(String? payload) async => await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MyHomePage()),
       );

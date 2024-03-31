@@ -8,14 +8,15 @@ import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:shimmer/shimmer.dart';
 
+// TODO: separate isbutton as separate widget
 class MainMenuOption extends StatelessWidget {
-  final Activity activity;
-  final Icon icon;
+  final Activity? activity;
+  final Icon? icon;
   final String text;
   final Color color;
-  final Color splashColor;
-  final Widget route;
-  final Function() callback;
+  final Color? splashColor;
+  final Widget? route;
+  final Function? callback;
   final bool isCustomTest;
   final bool isButton;
   final function;
@@ -24,13 +25,13 @@ class MainMenuOption extends StatelessWidget {
 
   MainMenuOption({
     Key? key,
-    required this.activity,
-    required this.icon,
     required this.text,
     required this.color,
-    required this.splashColor,
-    required this.route,
-    required this.callback,
+    this.activity,
+    this.icon,
+    this.splashColor,
+    this.route,
+    this.callback,
     this.isCustomTest = false,
     this.isButton = false,
     this.textColor = Colors.black,
@@ -39,7 +40,7 @@ class MainMenuOption extends StatelessWidget {
 
   String generateTimeRemaining() {
     return durationToString(
-        activity.visibleAfterTime.difference(DateTime.now()));
+        activity!.visibleAfterTime.difference(DateTime.now()));
   }
 
   String getActivityName() {
@@ -47,8 +48,8 @@ class MainMenuOption extends StatelessWidget {
   }
 
   cancelActivity() async {
-    print('canceling ${activity.name}');
-    switch (activity.name) {
+    print('canceling ${activity!.name}');
+    switch (activity!.name) {
       case singleDigitTimedTestKey:
         HapticFeedback.lightImpact();
         prefs.updateActivityState(singleDigitTimedTestKey, 'review');
@@ -149,7 +150,7 @@ class MainMenuOption extends StatelessWidget {
         }
         break;
     }
-    callback();
+    callback!();
   }
 
   @override
@@ -202,7 +203,7 @@ class MainMenuOption extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [
                   color,
-                  splashColor,
+                  splashColor!,
                 ], // whitish to gray
                 tileMode:
                     TileMode.repeated, // repeats the gradient over the canvas
@@ -210,19 +211,19 @@ class MainMenuOption extends StatelessWidget {
             ),
             child: ElevatedButton(
               onPressed: () async {
-                if (activity.visibleAfterTime.compareTo(DateTime.now()) > 0) {
+                if (activity!.visibleAfterTime.compareTo(DateTime.now()) > 0) {
                   return null;
                 }
                 HapticFeedback.lightImpact();
                 // TODO (2024): hide snackbar
-                prefs.updateActivityFirstView(activity.name, false);
-                callback();
-                slideTransition(context, route);
+                prefs.updateActivityFirstView(activity!.name, false);
+                callback!();
+                slideTransition(context, route!);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  icon,
+                  icon!,
                   ConstrainedBox(
                       constraints: BoxConstraints(
                         minWidth: screenWidth * .65,
@@ -246,7 +247,7 @@ class MainMenuOption extends StatelessWidget {
               ),
             ),
           ),
-          activity.firstView
+          activity!.firstView
               ? Positioned(
                   child: Container(
                     width: 40,
@@ -270,7 +271,7 @@ class MainMenuOption extends StatelessWidget {
                   left: 3,
                   top: 4)
               : Container(),
-          activity.visibleAfterTime.compareTo(DateTime.now()) < 0
+          activity!.visibleAfterTime.compareTo(DateTime.now()) < 0
               ? Container()
               : Container(
                   width: screenWidth * 0.85,
@@ -310,7 +311,7 @@ class MainMenuOption extends StatelessWidget {
                                   function: cancelActivity,
                                   confirmText:
                                       'Are you sure you want to give up?',
-                                  confirmColor: splashColor,
+                                  confirmColor: splashColor!,
                                 ),
                                 textColor: Colors.white,
                                 color: Color.fromRGBO(0, 0, 0, 0.5),
