@@ -4,7 +4,7 @@ import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 
@@ -311,7 +311,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
 class PAOTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'PAO Timed Test Preparation',
       information: [
         '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '

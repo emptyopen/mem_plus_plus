@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -654,7 +654,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
 class AirportTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Airport Timed Test',
       information: [
         '    Time to recall your scenes! Remember how you anchored and/or linked your scenes first! Good luck!'

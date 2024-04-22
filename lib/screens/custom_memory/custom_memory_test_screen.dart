@@ -4,11 +4,11 @@ import 'package:mem_plus_plus/services/password/password.dart';
 import 'package:mem_plus_plus/services/password/pbkdf2.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter/services.dart';
 
 class CustomMemoryTestScreen extends StatefulWidget {
@@ -446,7 +446,7 @@ class _PromptPairState extends State<PromptPair> {
 class CustomMemoryTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Custom Memory Manager',
       information: [
         '    This is a custom memory test! Hope you put those scenes somewhere accessible!'

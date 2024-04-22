@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -382,7 +382,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
 class DeckTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Deck Timed Test',
       information: [
         '    Time to recall your story! If you recall this correctly, you\'ll '

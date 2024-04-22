@@ -3,7 +3,7 @@ import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/components/standard/morse_test.dart';
 import 'package:mem_plus_plus/components/standard/screen_divider.dart';
 
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -567,7 +567,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
 class MorseGameScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Morse Survival Game',
       information: [
         '    Oh no! If you don\'t decode the Morse message and do what it says, the world is going to end! '

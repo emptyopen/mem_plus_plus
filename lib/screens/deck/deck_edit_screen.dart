@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -332,7 +332,7 @@ class DeckEditScreenHelp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Deck Edit/View',
       information: information,
       buttonColor: colorDeckStandard,

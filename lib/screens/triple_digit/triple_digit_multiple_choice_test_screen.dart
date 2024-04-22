@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -148,7 +148,7 @@ class _TripleDigitMultipleChoiceTestScreenState
 class TripleDigitMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Triple Digit Multiple Choice Test',
       information: [
         '    You\'re standing on top of a mountain. Let\'s lock this skill down.'

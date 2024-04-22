@@ -4,7 +4,7 @@ import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:flutter/services.dart';
@@ -313,7 +313,7 @@ class _AlphabetTimedTestPrepScreenState
 class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Alphabet Timed Test Preparation',
       information: [
         '    You guessed it! Two sequences this time. And we\'re throwing numbers into the mix as well!\n'

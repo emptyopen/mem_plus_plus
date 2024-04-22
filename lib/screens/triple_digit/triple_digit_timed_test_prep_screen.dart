@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 
@@ -239,7 +239,7 @@ class _TripleDigitTimedTestPrepScreenState
 class TripleDigitTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Triple Digit Timed Test Preparation',
       information: [
         '    Very proud of you for coming this far. I myself have only achieved basic proficiency in this system recently.\n\n'

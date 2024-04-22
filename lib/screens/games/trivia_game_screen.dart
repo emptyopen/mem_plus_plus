@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -200,7 +200,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
 class PresidentsTriviaGameScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Presidents Trivia',
       information: [
         '    EASY mode: memorize the first 15 presidents, their face, and the first year of their presidency.\n'
@@ -217,7 +217,7 @@ class PresidentsTriviaGameScreenHelp extends StatelessWidget {
 class ElementsTriviaGameScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Elements Trivia',
       information: [
         '    EASY mode: memorize the first 40 elements: their abbreviation, and atomic number.\n'
@@ -234,7 +234,7 @@ class ElementsTriviaGameScreenHelp extends StatelessWidget {
 class CountriesTriviaGameScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Countries Trivia',
       information: [
         '    EASY mode: memorize the biggest 50 countries (by population) and their flags.\n'

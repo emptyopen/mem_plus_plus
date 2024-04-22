@@ -3,7 +3,7 @@ import 'package:mem_plus_plus/components/data/alphabet_data.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
@@ -112,7 +112,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
 class AlphabetPracticeScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Alphabet Practice',
       information: [
         '    If you find that you can\'t remember your word because other words starting with that letter keep '

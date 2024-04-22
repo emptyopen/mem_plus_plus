@@ -6,7 +6,7 @@ import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'dart:math';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 
 import 'package:flutter/services.dart';
 
@@ -296,7 +296,7 @@ class Face2TimedTestPrepScreenHelp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Faces (Difficult) Timed Test Prep',
       information: information,
       buttonColor: colorChapter3Standard,

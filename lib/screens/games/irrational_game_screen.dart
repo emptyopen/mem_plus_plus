@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -515,7 +515,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
 class IrrationalGameScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Irrational Game',
       information: [
         '    This is the IRRATIONAL game! This is an arena to really test the limits of how long a sequence you can memorize.\n\n'

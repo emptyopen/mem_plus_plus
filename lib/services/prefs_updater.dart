@@ -11,15 +11,9 @@ import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsUpdater {
-  late SharedPreferences prefs;
-
-  PrefsUpdater() {
-    asyncInit();
-  }
-
-  asyncInit() async {
-    prefs = await SharedPreferences.getInstance();
-  }
+  static late SharedPreferences prefs;
+  static Future<SharedPreferences> init() async =>
+      prefs = await SharedPreferences.getInstance();
 
   Object? getSharedPrefs(String key) {
     switch (key) {

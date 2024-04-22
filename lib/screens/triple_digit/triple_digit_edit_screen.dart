@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/components/info_box.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:csv/csv.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -425,7 +425,7 @@ class TripleDigitEditScreenHelp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Triple Digit Edit/View',
       information: information,
       buttonColor: colorTripleDigitStandard,

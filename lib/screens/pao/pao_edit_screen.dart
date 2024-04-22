@@ -7,7 +7,7 @@ import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
@@ -420,7 +420,7 @@ class PAOEditScreenHelp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'PAO Edit/View',
       information: information,
       buttonColor: colorPAOStandard,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mem_plus_plus/screens/games/game_tile.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -111,7 +111,7 @@ class _GamesScreenState extends State<GamesScreen> {
 class GamesScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Games',
       information: [
         '    Welcome, welcome. Are you ready to push yourself to the limit?\n\n    Here you can play games that you will '

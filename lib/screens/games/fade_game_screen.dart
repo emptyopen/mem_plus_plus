@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -343,7 +343,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
 class FadeGameScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Fade Game',
       information: [
         '    This is the FADE game! When you\'re mentally ready, hit the GO button! A code will appear and '

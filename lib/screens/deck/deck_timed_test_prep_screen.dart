@@ -5,7 +5,7 @@ import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'dart:math';
 import 'package:mem_plus_plus/services/services.dart';
 import 'dart:async';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 
@@ -328,7 +328,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
 class DeckTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Deck Timed Test Preparation',
       information: [
         '    OK! Now you\'re going to convert these nine cards into three scenes, and link the scenes together. '

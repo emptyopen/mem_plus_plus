@@ -20,7 +20,7 @@ import 'package:flutter/services.dart';
 
 import 'package:mem_plus_plus/components/activities.dart';
 import 'package:mem_plus_plus/screens/day_or_older_activities_screen.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/screens/settings_screen.dart';
 import 'package:mem_plus_plus/screens/games/games_screen.dart';
 import 'package:mem_plus_plus/screens/custom_memory/custom_memory_manager_screen.dart';
@@ -154,9 +154,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   List<String> availableActivities = [];
-  late Map customMemories;
-  late Map activityMenuButtonMap;
-  late bool firstTimeOpeningApp;
+  Map customMemories = {};
+  Map activityMenuButtonMap = {};
+  bool firstTimeOpeningApp = true;
   bool customMemoryManagerAvailable = false;
   bool customMemoryManagerFirstView = false;
   bool gamesAvailable = false;
@@ -228,14 +228,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // if first time opening app, welcome
     if (prefs.getBool(firstTimeAppKey) == null ||
         prefs.getBool(firstTimeAppKey)!) {
+      print('first time opening app');
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WelcomeScreen(
-                    firstTime: true,
-                    callback: callback,
-                    mainMenuFirstTimeCallback: checkFirstTime,
-                  )));
+          context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
     } else {
       firstTimeOpeningApp = false;
     }
@@ -323,7 +318,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     setState(() {});
-    //print(activityStates);
     print(availableActivities);
   }
 
@@ -821,164 +815,160 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    return firstTimeOpeningApp == null
-        ? Scaffold()
-        : Scaffold(
-            backgroundColor: backgroundColor,
-            key: globalKey,
-            appBar: AppBar(
-              title: Text('MEM++ Homepage'),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    HapticFeedback.lightImpact();
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (
-                          BuildContext context,
-                          Animation<double> animation,
-                          Animation<double> secondaryAnimation,
-                        ) =>
-                            SettingsScreen(
-                          resetAll: resetAll,
-                          resetActivities: resetActivities,
-                          maxOutKeys: maxOutKeys,
-                        ),
-                        transitionsBuilder: (
-                          BuildContext context,
-                          Animation<double> animation,
-                          Animation<double> secondaryAnimation,
-                          Widget child,
-                        ) =>
-                            SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(1, 0),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          child: child,
-                        ),
-                      ),
-                    );
-                  },
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      key: globalKey,
+      appBar: AppBar(
+        title: Text('MEM++ Homepage'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (
+                    BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                  ) =>
+                      SettingsScreen(
+                    resetAll: resetAll,
+                    resetActivities: resetActivities,
+                    maxOutKeys: maxOutKeys,
+                  ),
+                  transitionsBuilder: (
+                    BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child,
+                  ) =>
+                      SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.info),
-                  onPressed: () {
-                    HapticFeedback.lightImpact();
-                    Navigator.of(context).push(PageRouteBuilder(
-                        opaque: false,
-                        pageBuilder: (BuildContext context, _, __) {
-                          return HomepageHelp();
-                        }));
-                  },
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              Navigator.of(context).push(PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return HomepageHelp();
+                  }));
+            },
+          ),
+        ],
+      ),
+      body: Container(
+        height: screenHeight,
+        width: screenWidth,
+        child: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(color: backgroundColor),
+                padding: EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'To-do:',
+                      style: TextStyle(
+                          fontSize: 30, color: backgroundHighlightColor),
+                    ),
+                    Container(
+                      height: 10,
+                    ),
+                    Column(
+                      children: getTodo(),
+                    ),
+                    Container(
+                      height: 30,
+                    ),
+                    Text(
+                      'Review:',
+                      style: TextStyle(
+                          fontSize: 30, color: backgroundHighlightColor),
+                    ),
+                    Container(
+                      height: 10,
+                    ),
+                    Column(
+                      children: getReview(),
+                    ),
+                    SizedBox(
+                      height: 100,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            body: Container(
-              height: screenHeight,
-              width: screenWidth,
-              child: Stack(
-                children: <Widget>[
-                  SingleChildScrollView(
-                    child: Container(
-                      decoration: BoxDecoration(color: backgroundColor),
-                      padding: EdgeInsets.all(30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'To-do:',
-                            style: TextStyle(
-                                fontSize: 30, color: backgroundHighlightColor),
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Column(
-                            children: getTodo(),
-                          ),
-                          Container(
-                            height: 30,
-                          ),
-                          Text(
-                            'Review:',
-                            style: TextStyle(
-                                fontSize: 30, color: backgroundHighlightColor),
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          Column(
-                            children: getReview(),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  IgnorePointer(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 200,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: FractionalOffset.topCenter,
-                            end: FractionalOffset.bottomCenter,
-                            colors: [
-                              backgroundColor.withOpacity(0.0),
-                              backgroundColor.withOpacity(1),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    child: gamesAvailable
-                        ? Stack(
-                            children: <Widget>[
-                              BigButton(
-                                title: 'Games',
-                                function: checkGamesFirstTime,
-                                color1: Colors.lightBlueAccent,
-                                color2: Colors.lightBlue[700]!,
-                              ),
-                              gamesFirstView ? NewTag(top: 10) : Container()
-                            ],
-                          )
-                        : Container(),
-                    bottom: 25,
-                    left: 25,
-                  ),
-                  Positioned(
-                    child: customMemoryManagerAvailable
-                        ? Stack(
-                            children: <Widget>[
-                              BigButton(
-                                title: 'Memories',
-                                function: checkCustomMemoryManagerFirstTime,
-                                color1: Colors.purpleAccent,
-                                color2: Colors.purple,
-                              ),
-                              customMemoryManagerFirstView
-                                  ? NewTag()
-                                  : Container()
-                            ],
-                          )
-                        : Container(),
-                    bottom: 25,
-                    right: 25,
-                  ),
-                ],
               ),
             ),
-          );
+            IgnorePointer(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 200,
+                  width: screenWidth,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      colors: [
+                        backgroundColor.withOpacity(0.0),
+                        backgroundColor.withOpacity(1),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              child: gamesAvailable
+                  ? Stack(
+                      children: <Widget>[
+                        BigButton(
+                          title: 'Games',
+                          function: checkGamesFirstTime,
+                          color1: Colors.lightBlueAccent,
+                          color2: Colors.lightBlue[700]!,
+                        ),
+                        gamesFirstView ? NewTag(top: 10) : Container()
+                      ],
+                    )
+                  : Container(),
+              bottom: 25,
+              left: 25,
+            ),
+            Positioned(
+              child: customMemoryManagerAvailable
+                  ? Stack(
+                      children: <Widget>[
+                        BigButton(
+                          title: 'Memories',
+                          function: checkCustomMemoryManagerFirstTime,
+                          color1: Colors.purpleAccent,
+                          color2: Colors.purple,
+                        ),
+                        customMemoryManagerFirstView ? NewTag() : Container()
+                      ],
+                    )
+                  : Container(),
+              bottom: 25,
+              right: 25,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   resetAll() async {
@@ -1066,14 +1056,7 @@ class _MyHomePageState extends State<MyHomePage> {
     activityMenuButtonMap = {
       welcomeKey: ActivityMenuButton(
         text: 'Welcome',
-        route: WelcomeScreen(
-          callback: () {
-            print('welcome screen callback');
-          },
-          mainMenuFirstTimeCallback: () {
-            print('main menu first time callback');
-          },
-        ),
+        route: WelcomeScreen(),
         icon: Icon(Icons.filter),
         color: Colors.green[200]!,
         splashColor: Colors.green[600]!,
@@ -1469,7 +1452,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class HomepageHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Homescreen',
       information: [
         '    This is the homescreen! The first time you open any screen, the information '

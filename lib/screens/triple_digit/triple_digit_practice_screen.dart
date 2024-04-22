@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -121,7 +121,7 @@ class TripleDigitPracticeScreenHelp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Triple Digit Practice',
       information: information,
       buttonColor: colorTripleDigitStandard,

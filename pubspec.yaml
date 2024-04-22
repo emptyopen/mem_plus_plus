@@ -18,23 +18,17 @@ dependencies:
   rxdart: ^0.26.0
   path_provider: ^2.0.1
   flip_card: ^0.5.0
-  flutter_datetime_picker: ^1.5.0
+  flutter_datetime_picker_plus: ^2.1.0
   material_design_icons_flutter: ^7.0.7296
   url_launcher: ^6.0.3
-  flutter_native_timezone: ^1.0.10
+  flutter_timezone: ^1.0.8
   word_generator: ^0.4.4
-  # transformer_page_view: ^0.1.6
-  # simple_animations: ^2.5.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_automation:
   flutter_launcher_icons: ^0.13.1
-  # flutter_launcher_icons:
-  #   git:
-  #     url: https://github.com/knyghtryda/flutter_launcher_icons
-  #     ref: scaling
 
 flutter_icons:
   ios: true
@@ -42,8 +36,6 @@ flutter_icons:
   image_path: "assets/launcher/mempp_combined.png"
   adaptive_icon_background: "assets/launcher/mempp_back_white.png"
   adaptive_icon_foreground: "assets/launcher/mempp_brain.png"
-  # image_path: "assets/launcher/icon.png"
-  # adaptive_icon_foreground_scale_factor: 0.66
 
 flutter:
   uses-material-design: true

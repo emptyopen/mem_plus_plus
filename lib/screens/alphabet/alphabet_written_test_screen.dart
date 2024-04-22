@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/alphabet_data.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'package:mem_plus_plus/screens/templates/help_screen.dart';
+import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/screens/templates/card_test_screen.dart';
@@ -91,7 +91,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
 class AlphabetWrittenTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HelpScreen(
+    return HelpDialog(
       title: 'Alphabet Written Test',
       information: [
         '    Welcome to your first written test! In this section, you will be tested on your familiarity with '

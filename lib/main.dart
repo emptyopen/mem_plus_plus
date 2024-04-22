@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/homepage.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
@@ -37,6 +39,8 @@ Future<void> main() async {
   // var notificationAppLaunchDetails =
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   //print(notificationAppLaunchDetails.didNotificationLaunchApp);
+
+  await PrefsUpdater.init();
 
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   var initializationSettingsIOS = IOSInitializationSettings(
