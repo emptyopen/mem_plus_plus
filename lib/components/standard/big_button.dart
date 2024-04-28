@@ -18,6 +18,7 @@ class BigButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(17),
+        border: Border.all(),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -27,8 +28,8 @@ class BigButton extends StatelessWidget {
           ],
         ),
       ),
-      child: ElevatedButton(
-        onPressed: () {
+      child: GestureDetector(
+        onTap: () {
           HapticFeedback.lightImpact();
           function();
         },

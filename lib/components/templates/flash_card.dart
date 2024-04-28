@@ -342,8 +342,8 @@ class _FlashCardState extends State<FlashCard> {
                           border: Border.all(color: Colors.grey),
                           color: colorIncorrect,
                           borderRadius: BorderRadius.circular(20)),
-                      child: ElevatedButton(
-                        onPressed: () => didntGotIt(),
+                      child: GestureDetector(
+                        onTap: () => didntGotIt(),
                         child: Center(
                             child: Text(
                           'Next time!',
@@ -362,8 +362,8 @@ class _FlashCardState extends State<FlashCard> {
                           border: Border.all(color: Colors.grey),
                           color: colorCorrect,
                           borderRadius: BorderRadius.circular(20)),
-                      child: ElevatedButton(
-                        onPressed: () => gotIt(),
+                      child: GestureDetector(
+                        onTap: () => gotIt(),
                         child: Center(
                             child: Text(
                           'Got it!',

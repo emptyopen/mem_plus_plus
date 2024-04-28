@@ -170,11 +170,13 @@ class PrefsUpdater {
   checkFirstTime(BuildContext context, String firstHelpKey, Widget helpScreen) {
     PrefsUpdater prefs = PrefsUpdater();
     if (prefs.getBool(firstHelpKey) == null) {
-      Navigator.of(context).push(PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (BuildContext context, _, __) {
-            return helpScreen;
-          }));
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).push(PageRouteBuilder(
+            opaque: false,
+            pageBuilder: (BuildContext context, _, __) {
+              return helpScreen;
+            }));
+      });
     }
   }
 }

@@ -819,7 +819,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: backgroundColor,
       key: globalKey,
       appBar: AppBar(
-        title: Text('MEM++ Homepage'),
+        title: Text('MEM++'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -1062,7 +1062,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: Colors.green[600]!,
       ),
       singleDigitEditKey: ActivityMenuButton(
-        text: 'Single Digit [View/Edit]',
+        text: 'Single Digit [Edit]',
         route: SingleDigitEditScreen(
           callback: callback,
         ),
@@ -1110,7 +1110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorSingleDigitDarker,
       ),
       lesson1Key: ActivityMenuButton(
-        text: 'Chapter 1 Lesson:',
+        text: 'Chapter 1 Lesson',
         route: Lesson1Screen(
           callback: callback,
           globalKey: globalKey,
@@ -1158,7 +1158,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter1Darker,
       ),
       alphabetEditKey: ActivityMenuButton(
-        text: 'Alphabet [View/Edit]',
+        text: 'Alphabet [Edit]',
         route: AlphabetEditScreen(
           callback: callback,
         ),
@@ -1206,7 +1206,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorAlphabetDarker,
       ),
       lesson2Key: ActivityMenuButton(
-        text: 'Chapter 2 Lesson:',
+        text: 'Chapter 2 Lesson',
         route: Lesson2Screen(
           callback: callback,
           globalKey: globalKey,
@@ -1254,7 +1254,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter2Darker,
       ),
       paoEditKey: ActivityMenuButton(
-        text: 'PAO [View/Edit]',
+        text: 'PAO [Edit]',
         route: PAOEditScreen(
           callback: callback,
         ),
@@ -1302,7 +1302,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorPAODarker,
       ),
       lesson3Key: ActivityMenuButton(
-        text: 'Chapter 3 Lesson:',
+        text: 'Chapter 3 Lesson',
         route: Lesson3Screen(
           callback: callback,
           globalKey: globalKey,
@@ -1350,7 +1350,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter3Darker,
       ),
       deckEditKey: ActivityMenuButton(
-        text: 'Deck [View/Edit]',
+        text: 'Deck [Edit]',
         route: DeckEditScreen(
           callback: callback,
         ),
@@ -1398,7 +1398,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorDeckDarker,
       ),
       tripleDigitEditKey: ActivityMenuButton(
-        text: 'Triple Digit [View/Edit]',
+        text: 'Triple Digit [Edit]',
         route: TripleDigitEditScreen(
           callback: callback,
         ),

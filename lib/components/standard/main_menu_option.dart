@@ -198,6 +198,14 @@ class MainMenuOption extends StatelessWidget {
             decoration: BoxDecoration(
               color: splashColor,
               borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(100),
+                  blurRadius: 2.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                ),
+              ],
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -209,8 +217,8 @@ class MainMenuOption extends StatelessWidget {
                     TileMode.repeated, // repeats the gradient over the canvas
               ),
             ),
-            child: ElevatedButton(
-              onPressed: () async {
+            child: GestureDetector(
+              onTap: () async {
                 if (activity!.visibleAfterTime.compareTo(DateTime.now()) > 0) {
                   return null;
                 }
@@ -221,7 +229,7 @@ class MainMenuOption extends StatelessWidget {
                 slideTransition(context, route!);
               },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   icon!,
                   ConstrainedBox(
@@ -237,7 +245,7 @@ class MainMenuOption extends StatelessWidget {
                         children: <Widget>[
                           AutoSizeText(
                             text,
-                            style: TextStyle(fontSize: 41),
+                            style: TextStyle(fontSize: 20),
                             maxLines: 1,
                             maxFontSize: 24,
                           ),

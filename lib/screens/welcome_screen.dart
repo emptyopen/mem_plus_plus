@@ -17,7 +17,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       content: [
         Text(
           'So glad you could join us. \n\n'
-          'We\'re going to get you a superpower.\n',
+          'We\'re going to get you a superpower. But first, let\'s clear up some common misconceptions about memory.\n',
           style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
           textAlign: TextAlign.center,
         ),
@@ -37,8 +37,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           Text(
             '    Memory champions have become so in less than a year of training - '
-            'and none of them have claimed to have photographic memory '
-            '(something which doesn\'t actually exist). \n'
+            'and none of them have claimed to have "photographic" memory '
+            '(something which doesn\'t actually exist - another common myth). \n'
             '    They are just ordinary people who suddenly understand that they are capable, '
             'and make it their responsibility to improve their memory.',
             style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
@@ -52,7 +52,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             height: 10,
           ),
           Text(
-            '    I can tell you from personal experience that at the ripe old age of 29 '
+            '    I can tell you from personal experience that at the ripe old age of 30 '
             'I was resigned to have a terrible memory for the rest of my life. I had the worst memory '
             'among all my friends. \n'
             '    All I did was encounter these strategies by accident while waiting in line for ramen, '
@@ -70,9 +70,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           Text(
             '    Okay, not totally false. The brain does have a limit, but it is far beyond anyone\'s reach - '
-            'scientists estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
-            'worry about filling your brain with short term data or trivial facts. '
-            'If you store them correctly, vital information won\'t get pushed out of your brain.\n',
+            'researchers estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
+            'worry about filling your brain over capacity with short term data or trivial facts. '
+            'If you store memories correctly, vital information won\'t get pushed out of your brain.\n',
             style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
           ),
         ]),
@@ -98,7 +98,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         backgroundColor: Colors.green[200],
         automaticallyImplyLeading: false,
       ),
-      body: SlidingTiles(tiles: tiles),
+      body: SlidingTiles(tiles: tiles, showButtonEverySlide: true),
     );
   }
 }
