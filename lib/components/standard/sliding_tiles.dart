@@ -63,7 +63,7 @@ class _SlidingTilesState extends State<SlidingTiles> {
                       Text(
                         widget.tiles[index].header,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 28.0),
+                        style: TextStyle(fontSize: 24),
                       ),
                       SizedBox(height: 30),
                       Column(
@@ -76,6 +76,13 @@ class _SlidingTilesState extends State<SlidingTiles> {
             },
           ),
         ),
+        widget.tiles.length > 1
+            ? SlidingTileBubbles(
+                currentIndex: _currentIndex,
+                numTiles: widget.tiles.length,
+              )
+            : Container(),
+        widget.tiles.length > 1 ? SizedBox(height: 10) : Container(),
         _currentIndex == widget.tiles.length - 1 || widget.showButtonEverySlide
             ? SizedBox(
                 height: buttonHeight,
@@ -87,8 +94,38 @@ class _SlidingTilesState extends State<SlidingTiles> {
                   fontSize: 20,
                 ))
             : SizedBox(height: buttonHeight),
-        SizedBox(height: 25),
+        SizedBox(height: 15),
       ],
+    );
+  }
+}
+
+class SlidingTileBubbles extends StatelessWidget {
+  final int currentIndex;
+  final int numTiles;
+  const SlidingTileBubbles(
+      {required this.currentIndex, required this.numTiles, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> bubbles = [];
+    for (int i = 0; i < numTiles; i++) {
+      bubbles.add(Container(
+        margin: const EdgeInsets.symmetric(horizontal: 2.0),
+        width: 10.0,
+        height: 10.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: i == currentIndex
+              ? Colors.green.withAlpha(140)
+              : Colors.grey.withAlpha(100),
+        ),
+      ));
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: bubbles,
     );
   }
 }

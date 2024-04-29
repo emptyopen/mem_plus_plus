@@ -1457,8 +1457,8 @@ class HomepageHelp extends StatelessWidget {
       information: [
         '    This is the homescreen! The first time you open any screen for the first time, information '
             'regarding the screen will pop up. Access the information again at any time by clicking the '
-            'info icon in the top right corner! Also check out the preferences, where you can toggle '
-            'dark mode! '
+            'info icon in the top right corner. Also check out the preferences, where you can toggle '
+            'dark mode.'
       ],
       buttonColor: Colors.grey[200]!,
       buttonSplashColor: Colors.grey[300]!,

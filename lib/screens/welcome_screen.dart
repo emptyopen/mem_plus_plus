@@ -31,7 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     SlidingTileContent(
         header: '"Some people are just born with superior memories."',
         content: [
-          Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
+          Text('FALSE!', style: TextStyle(fontSize: 24, color: Colors.red)),
           SizedBox(
             height: 10,
           ),
@@ -41,13 +41,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             '(something which doesn\'t actually exist - another common myth). \n'
             '    They are just ordinary people who suddenly understand that they are capable, '
             'and make it their responsibility to improve their memory.',
-            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+            style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
           ),
         ]),
     SlidingTileContent(
         header: '"It\'s too late for me, I\'ll never improve my memory."',
         content: [
-          Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
+          Text('FALSE!', style: TextStyle(fontSize: 24, color: Colors.red)),
           SizedBox(
             height: 10,
           ),
@@ -57,15 +57,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             'among all my friends. \n'
             '    All I did was encounter these strategies by accident while waiting in line for ramen, '
             'and within months I was able to rapidly improve my memory beyond all recognition.'
-            '\n\n   If I can do it, so can you. ',
-            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+            '\n   If I can do it, so can you. ',
+            style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
           ),
         ]),
     SlidingTileContent(
         header:
             '"If I learn something new, it pushes something old out of my brain."',
         content: [
-          Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
+          Text('FALSE!', style: TextStyle(fontSize: 24, color: Colors.red)),
           SizedBox(
             height: 10,
           ),
@@ -74,7 +74,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             'researchers estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
             'worry about filling your brain over capacity with short term data or trivial facts. '
             'If you store memories correctly, vital information won\'t get pushed out of your brain.\n',
-            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+            style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
           ),
         ]),
     SlidingTileContent(header: 'How this app works:', content: [
@@ -85,7 +85,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
         'will still be available in the REVIEW section. \n'
         '    Okay, off you go!',
-        style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+        style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
       ),
     ]),
   ];
