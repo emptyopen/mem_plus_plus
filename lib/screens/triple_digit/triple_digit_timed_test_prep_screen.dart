@@ -240,7 +240,7 @@ class TripleDigitTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Triple Digit Timed Test Preparation',
+      title: 'Triple Digit - Timed Test Preparation',
       information: [
         '    Very proud of you for coming this far. I myself have only achieved basic proficiency in this system recently.\n\n'
             '    If you haven\'t already, definitely start memorizing information that could be important! Phone numbers of your SO, '

@@ -113,7 +113,7 @@ class AlphabetPracticeScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Alphabet Practice',
+      title: 'Alphabet - Practice',
       information: [
         '    If you find that you can\'t remember your word because other words starting with that letter keep '
             'bubbling up in your mind, consider using one of those words instead! \n    You can always go back to the edit page and update your '

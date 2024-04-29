@@ -7,7 +7,7 @@ class CondensedMenuButton extends StatelessWidget {
   final Activity activity;
   final Function callback;
   final Widget route;
-  final Icon icon;
+  final IconData icon;
   final Color color;
   final bool testPrepAvailable;
   final PrefsUpdater prefs = PrefsUpdater();
@@ -26,13 +26,13 @@ class CondensedMenuButton extends StatelessWidget {
     return ButtonTheme(
       minWidth: 10,
       child: ElevatedButton(
-        child: icon,
+        child: Icon(icon, color: Colors.black),
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(),
           ),
+          shadowColor: Colors.black.withOpacity(1),
         ),
         onPressed: testPrepAvailable
             ? () async {

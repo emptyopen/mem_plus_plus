@@ -297,7 +297,7 @@ class Face2TimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Faces (Difficult) Timed Test Prep',
+      title: 'Faces (Difficult) - Timed Test Prep',
       information: information,
       buttonColor: colorChapter3Standard,
       buttonSplashColor: colorChapter3Darker,

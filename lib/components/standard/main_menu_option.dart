@@ -11,7 +11,7 @@ import 'package:shimmer/shimmer.dart';
 // TODO: separate isbutton as separate widget
 class MainMenuOption extends StatelessWidget {
   final Activity? activity;
-  final Icon? icon;
+  final IconData? icon;
   final String text;
   final Color color;
   final Color? splashColor;
@@ -203,7 +203,7 @@ class MainMenuOption extends StatelessWidget {
                   color: Colors.black.withAlpha(100),
                   blurRadius: 2.0,
                   spreadRadius: 0.0,
-                  offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                  offset: Offset(2.0, 2.0),
                 ),
               ],
               gradient: LinearGradient(
@@ -231,7 +231,7 @@ class MainMenuOption extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  icon!,
+                  Icon(icon),
                   ConstrainedBox(
                       constraints: BoxConstraints(
                         minWidth: screenWidth * .65,

@@ -391,7 +391,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainMenuOptions.add(
           MainMenuOption(
             activity: activity,
-            icon: Icon(customIcon),
+            icon: customIcon,
             text: '${memory['type']}: $title',
             route: CustomMemoryTestScreen(
               customMemory: memory,
@@ -1057,7 +1057,7 @@ class _MyHomePageState extends State<MyHomePage> {
       welcomeKey: ActivityMenuButton(
         text: 'Welcome',
         route: WelcomeScreen(),
-        icon: Icon(Icons.filter),
+        icon: Icons.filter,
         color: Colors.green[200]!,
         splashColor: Colors.green[600]!,
       ),
@@ -1455,7 +1455,7 @@ class HomepageHelp extends StatelessWidget {
     return HelpDialog(
       title: 'Homescreen',
       information: [
-        '    This is the homescreen! The first time you open any screen, the information '
+        '    This is the homescreen! The first time you open any screen for the first time, information '
             'regarding the screen will pop up. Access the information again at any time by clicking the '
             'info icon in the top right corner! Also check out the preferences, where you can toggle '
             'dark mode! '

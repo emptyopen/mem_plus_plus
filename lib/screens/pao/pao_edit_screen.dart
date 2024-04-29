@@ -421,7 +421,7 @@ class PAOEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'PAO Edit/View',
+      title: 'The PAO System',
       information: information,
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,

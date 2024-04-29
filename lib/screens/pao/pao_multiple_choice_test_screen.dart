@@ -146,7 +146,7 @@ class PAOMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'PAO Multiple Choice Test',
+      title: 'PAO - Multiple Choice Test',
       information: [
         '    Alright! Time for a test on your PAO system. If you get a perfect score, '
             'the next test will be unlocked! Good luck!'

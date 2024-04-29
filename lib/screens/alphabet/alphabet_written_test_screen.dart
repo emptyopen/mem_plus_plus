@@ -92,7 +92,7 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Alphabet Written Test',
+      title: 'Alphabet - Written Test',
       information: [
         '    Welcome to your first written test! In this section, you will be tested on your familiarity with '
             'each letter. Every time you load this page, the letters will be scattered in a random order, '

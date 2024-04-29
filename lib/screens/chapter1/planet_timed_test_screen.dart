@@ -611,7 +611,7 @@ class PlanetTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Planet Timed Test',
+      title: 'Planets - Timed Test',
       information: [
         '    Time to recall your story! Hopefully you anchored your story well! Did it start from the sun? '
             'From a burning inferno? \n    If you need to figure out which planet is 5th biggest, just try and remember where '

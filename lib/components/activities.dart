@@ -33,7 +33,7 @@ class Activity {
 class ActivityMenuButton {
   String text;
   Widget route;
-  Icon icon;
+  IconData icon;
   Color color;
   Color splashColor;
 

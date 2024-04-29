@@ -122,7 +122,7 @@ class TripleDigitPracticeScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Triple Digit Practice',
+      title: 'Triple Digit - Practice',
       information: information,
       buttonColor: colorTripleDigitStandard,
       buttonSplashColor: colorTripleDigitDarker,

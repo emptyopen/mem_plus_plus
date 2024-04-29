@@ -179,7 +179,7 @@ class PiTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Pi Timed Test Preparation',
+      title: 'Pi - Timed Test Preparation',
       information: information,
       buttonColor: colorChapter3Standard,
       buttonSplashColor: colorChapter3Darker,

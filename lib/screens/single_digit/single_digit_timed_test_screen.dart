@@ -227,7 +227,7 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Single Digit Timed Test',
+      title: 'Single Digit - Timed Test',
       information: [
         '    Time to remember your story! If you recall this correctly, you\'ll '
             'unlock the next chapter! Good luck!'

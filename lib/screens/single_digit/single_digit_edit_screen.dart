@@ -145,7 +145,7 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Single Digit Edit/View',
+      title: 'The Single Digit System',
       information: information,
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,

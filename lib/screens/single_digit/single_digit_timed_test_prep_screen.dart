@@ -227,7 +227,7 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Single Digit Timed Test Preparation',
+      title: 'Single Digit - Timed Test Preparation',
       information: information,
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,

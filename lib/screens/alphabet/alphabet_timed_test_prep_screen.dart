@@ -314,7 +314,7 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Alphabet Timed Test Preparation',
+      title: 'Alphabet - Timed Test Preparation',
       information: [
         '    You guessed it! Two sequences this time. And we\'re throwing numbers into the mix as well!\n'
             '    As we start to use longer sequences, start to move the scene around. For example, say we have '

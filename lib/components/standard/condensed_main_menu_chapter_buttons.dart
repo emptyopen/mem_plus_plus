@@ -9,8 +9,8 @@ class CondensedMainMenuChapterButtons extends StatelessWidget {
   final Activity lesson;
   final Activity activity1;
   final Activity activity2;
-  final Icon activity1Icon;
-  final Icon activity2Icon;
+  final IconData activity1Icon;
+  final IconData activity2Icon;
   final String text;
   final Color standardColor;
   final Color darkerColor;

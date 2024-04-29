@@ -329,7 +329,7 @@ class DeckTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Deck Timed Test Preparation',
+      title: 'Deck - Timed Test Preparation',
       information: [
         '    OK! Now you\'re going to convert these nine cards into three scenes, and link the scenes together. '
             'Remember, make it visceral - really add as much detail as you can muster!',

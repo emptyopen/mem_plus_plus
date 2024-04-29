@@ -360,7 +360,7 @@ class Face2TimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Face Timed Test',
+      title: 'Faces (Difficult) - Timed Test',
       information: [
         '    Time to remember the link between face features and similar '
             'sounds! If you recall this correctly, you\'ll '

@@ -31,83 +31,7 @@ class _HelpDialogState extends State<HelpDialog> {
   List<Widget> informationList = [];
   bool firstHelp = true;
   PrefsUpdater prefs = PrefsUpdater();
-  final List<SlidingTileContent> tiles = [
-    SlidingTileContent(
-      header: 'Welcome to MEM++',
-      content: [
-        Text(
-          'So glad you could join us. \n\n'
-          'We\'re going to get you a superpower.\n',
-          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
-          textAlign: TextAlign.center,
-        ),
-        Text(
-          '(Swipe through this walkthrough)',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-          textAlign: TextAlign.center,
-        )
-      ],
-    ),
-    SlidingTileContent(
-        header: '"Some people are just born with superior memories."',
-        content: [
-          Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '    Memory champions have become so in less than a year of training - '
-            'and none of them have claimed to have photographic memory '
-            '(something which doesn\'t actually exist). \n'
-            '    They are just ordinary people who suddenly understand that they are capable, '
-            'and make it their responsibility to improve their memory.',
-            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-          ),
-        ]),
-    SlidingTileContent(
-        header: '"It\'s too late for me, I\'ll never improve my memory."',
-        content: [
-          Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '    I can tell you from personal experience that at the ripe old age of 29 '
-            'I was resigned to have a terrible memory for the rest of my life. I had the worst memory '
-            'among all my friends. \n'
-            '    All I did was encounter these strategies by accident while waiting in line for ramen, '
-            'and within months I was able to rapidly improve my memory beyond all recognition.'
-            '\n\n   If I can do it, so can you. ',
-            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-          ),
-        ]),
-    SlidingTileContent(
-        header: '"The brain can only store so much information."',
-        content: [
-          Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '    Okay, not totally false. The brain does have a limit, but it is far beyond anyone\'s reach - '
-            'scientists estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
-            'worry about filling your brain with short term data or trivial facts. '
-            'If you store them correctly, vital information won\'t get pushed out of your brain.\n',
-            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-          ),
-        ]),
-    SlidingTileContent(header: 'How this app works:', content: [
-      Text(
-        '    We\'ll start with some basic systems, and as you master them, new ones will unlock. Tests '
-        'and lessons will be interspersed between the systems. '
-        'In the main menu, you will be presented with a TO-DO section and a REVIEW section. \n    New '
-        'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
-        'will still be available in the REVIEW section. \n'
-        '    Okay, off you go!\n      - Matt',
-        style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
-      ),
-    ]),
-  ];
+  List<SlidingTileContent> tiles = [];
 
   @override
   void initState() {
@@ -116,58 +40,63 @@ class _HelpDialogState extends State<HelpDialog> {
     // check if this is first time opening the screen
     checkFirstHelp();
 
-    if (widget.information.length > 1) {
-      informationList.add(Column(
-        children: <Widget>[
-          Text(
-            widget.title,
-            style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            widget.information[0],
-            style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-            textAlign: TextAlign.left,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            '(Swipe for more information)',
-            style: TextStyle(fontSize: 16, color: Colors.grey[500]),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ));
-      widget.information.sublist(1).forEach((f) {
-        informationList.add(Text(
-          f,
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-          textAlign: TextAlign.left,
-        ));
-      });
-    } else {
-      informationList.add(Column(
-        children: [
-          Text(
-            widget.title,
-            style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            widget.information[0],
-            style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-            textAlign: TextAlign.left,
-          ),
-        ],
-      ));
-    }
+    widget.information.forEach((String info) {
+      tiles
+          .add(SlidingTileContent(header: widget.title, content: [Text(info)]));
+    });
+
+    // if (widget.information.length > 1) {
+    //   informationList.add(Column(
+    //     children: <Widget>[
+    //       Text(
+    //         widget.title,
+    //         style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
+    //         textAlign: TextAlign.center,
+    //       ),
+    //       SizedBox(
+    //         height: 10,
+    //       ),
+    //       Text(
+    //         widget.information[0],
+    //         style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+    //         textAlign: TextAlign.left,
+    //       ),
+    //       SizedBox(
+    //         height: 20,
+    //       ),
+    //       Text(
+    //         '(Swipe for more information)',
+    //         style: TextStyle(fontSize: 16, color: Colors.grey[500]),
+    //         textAlign: TextAlign.center,
+    //       ),
+    //     ],
+    //   ));
+    //   widget.information.sublist(1).forEach((f) {
+    //     informationList.add(Text(
+    //       f,
+    //       style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+    //       textAlign: TextAlign.left,
+    //     ));
+    //   });
+    // } else {
+    //   informationList.add(Column(
+    //     children: [
+    //       Text(
+    //         widget.title,
+    //         style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
+    //         textAlign: TextAlign.center,
+    //       ),
+    //       SizedBox(
+    //         height: 10,
+    //       ),
+    //       Text(
+    //         widget.information[0],
+    //         style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+    //         textAlign: TextAlign.left,
+    //       ),
+    //     ],
+    //   ));
+    // }
   }
 
   checkFirstHelp() async {
@@ -199,11 +128,13 @@ class _HelpDialogState extends State<HelpDialog> {
                         color: backgroundColor,
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: SlidingTiles(
-                        tiles: tiles,
-                        showButtonEverySlide: (firstHelp &&
-                                slideIndex == widget.information.length - 1) ||
-                            debugModeEnabled ||
-                            !firstHelp),
+                      tiles: tiles,
+                      showButtonEverySlide: (firstHelp &&
+                              slideIndex == widget.information.length - 1) ||
+                          debugModeEnabled ||
+                          !firstHelp,
+                      buttonText: 'Done',
+                    ),
                   ),
                   // SizedBox(
                   //   height: 15,
@@ -218,7 +149,7 @@ class _HelpDialogState extends State<HelpDialog> {
                   //         callback: widget.callback != null
                   //             ? widget.callback!
                   //             : () {},
-                  //       )
+                  //       )2232
                   //     : SizedBox(
                   //         height: 50,
                   //       ),

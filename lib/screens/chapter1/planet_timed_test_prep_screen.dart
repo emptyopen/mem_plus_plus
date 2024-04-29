@@ -301,7 +301,7 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Planet Timed Test Preparation',
+      title: 'Planets - Timed Test Preparation',
       information: information,
       buttonColor: colorChapter1Standard,
       buttonSplashColor: colorChapter1Darker,

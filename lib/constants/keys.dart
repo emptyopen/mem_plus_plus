@@ -214,19 +214,19 @@ const String tripleDigitTimedTestPrepFirstHelpKey =
 const String tripleDigitTimedTestFirstHelpKey = 'TripleDigitTimedTestFirstHelp';
 const String tripleDigitTimedTestCompleteKey = 'TripleDigitTimedTestComplete';
 
-var editIcon = Icon(Icons.edit);
-var practiceIcon = Icon(Icons.flip);
-var multipleChoiceTestIcon = Icon(Icons.list);
-var timedTestPrepIcon = Icon(Icons.add_alarm);
-var timedTestIcon = Icon(Icons.access_alarm);
-var writtenTestIcon = Icon(Icons.text_format);
-var lessonIcon = Icon(MdiIcons.brain);
-var planetIcon = Icon(MdiIcons.earth);
-var faceIcon = Icon(MdiIcons.faceMan);
-var face2Icon = Icon(MdiIcons.faceRecognition);
-var piIcon = Icon(MdiIcons.pi);
-var airportIcon = Icon(MdiIcons.airplaneTakeoff);
-var phoneticIcon = Icon(MdiIcons.sortAlphabeticalAscending);
+IconData editIcon = Icons.edit;
+IconData practiceIcon = Icons.flip;
+IconData multipleChoiceTestIcon = Icons.list;
+IconData timedTestPrepIcon = Icons.add_alarm;
+IconData timedTestIcon = Icons.access_alarm;
+IconData writtenTestIcon = Icons.text_format;
+IconData lessonIcon = MdiIcons.brain;
+IconData planetIcon = MdiIcons.earth;
+IconData faceIcon = MdiIcons.faceMan;
+IconData face2Icon = MdiIcons.faceRecognition;
+IconData piIcon = MdiIcons.pi;
+IconData airportIcon = MdiIcons.airplaneTakeoff;
+IconData phoneticIcon = MdiIcons.sortAlphabeticalAscending;
 
 Map termDurationsMap = {
   shortTerm: debugModeEnabled

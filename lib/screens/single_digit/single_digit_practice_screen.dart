@@ -122,7 +122,7 @@ class SingleDigitPracticeScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Single Digit Practice',
+      title: 'Single Digit - Practice',
       information: information,
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,

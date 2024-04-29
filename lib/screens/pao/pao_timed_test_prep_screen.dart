@@ -312,7 +312,7 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'PAO Timed Test Preparation',
+      title: 'PAO - Timed Test Preparation',
       information: [
         '    Alright! Now you\'re going to convert these three sets of six digits into three scenes, '
             'and link the scenes together. Remember, person-action-object, and really create a connection '

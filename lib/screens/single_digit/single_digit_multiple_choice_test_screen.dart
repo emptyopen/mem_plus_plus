@@ -149,7 +149,7 @@ class SingleDigitMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Single Digit Multiple Choice Test',
+      title: 'Single Digit - Multiple Choice Test',
       information: [
         '    Welcome to your first multiple choice test! In this section, you will be tested on your familiarity with '
             'each digit. \n    Every time you load this page, the digits and objects will be scattered in a random order, '

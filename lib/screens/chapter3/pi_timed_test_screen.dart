@@ -346,7 +346,7 @@ class PiTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Pi Timed Test',
+      title: 'Pi - Timed Test',
       information: [
         '    Time to recall your story! If you recall this correctly, you\'ll '
             'unlock the next system! Good luck!\n\n    You can leave the spaces in if it\'s easier '

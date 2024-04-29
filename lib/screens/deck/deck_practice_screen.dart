@@ -106,7 +106,7 @@ class DeckPracticeScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Deck Practice',
+      title: 'Deck - Practice',
       information: [
         '    Get perfect familiarities for each card and '
             'the first test will be unlocked! Good luck!'

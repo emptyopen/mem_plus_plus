@@ -333,7 +333,7 @@ class DeckEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Deck Edit/View',
+      title: 'The Deck System',
       information: information,
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,

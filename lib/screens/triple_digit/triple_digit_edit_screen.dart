@@ -426,7 +426,7 @@ class TripleDigitEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Triple Digit Edit/View',
+      title: 'The Triple Digit System',
       information: information,
       buttonColor: colorTripleDigitStandard,
       buttonSplashColor: colorTripleDigitDarker,

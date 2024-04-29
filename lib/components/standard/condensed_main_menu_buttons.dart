@@ -10,7 +10,7 @@ class CondensedMainMenuButtons extends StatelessWidget {
   final Activity practiceActivity;
   final Activity testActivity;
   final Activity timedTestPrepActivity;
-  final Icon testIcon;
+  final IconData testIcon;
   final String text;
   final Color backgroundColor;
   final Color buttonColor;

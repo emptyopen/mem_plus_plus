@@ -149,7 +149,7 @@ class TripleDigitMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Triple Digit Multiple Choice Test',
+      title: 'Triple Digit - Multiple Choice Test',
       information: [
         '    You\'re standing on top of a mountain. Let\'s lock this skill down.'
       ],

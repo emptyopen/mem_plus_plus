@@ -123,7 +123,7 @@ class AlphabetEditScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Alphabet View/Edit',
+      title: 'The Alphabet System',
       information: [
         '    OK! Welcome to the 2nd system, the Alphabet system! I\'m getting very excited for you!\n    '
             'What we\'re going to do here is just like last time, except now with letters of '

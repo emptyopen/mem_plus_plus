@@ -8,8 +8,12 @@ import 'package:mem_plus_plus/services/prefs_updater.dart';
 class SlidingTiles extends StatefulWidget {
   final List<SlidingTileContent> tiles;
   final bool showButtonEverySlide;
+  final String buttonText;
   const SlidingTiles(
-      {required this.tiles, required this.showButtonEverySlide, Key? key})
+      {required this.tiles,
+      required this.showButtonEverySlide,
+      required this.buttonText,
+      Key? key})
       : super(key: key);
 
   @override
@@ -76,11 +80,11 @@ class _SlidingTilesState extends State<SlidingTiles> {
             ? SizedBox(
                 height: buttonHeight,
                 child: BasicFlatButton(
-                  text: 'Main Menu',
+                  text: widget.buttonText,
                   color: Colors.green[200]!,
                   onPressed: () => goToMainMenu(context),
                   padding: 10,
-                  fontSize: 15,
+                  fontSize: 20,
                 ))
             : SizedBox(height: buttonHeight),
         SizedBox(height: 25),

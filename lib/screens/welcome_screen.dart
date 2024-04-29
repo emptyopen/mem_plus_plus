@@ -98,7 +98,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         backgroundColor: Colors.green[200],
         automaticallyImplyLeading: false,
       ),
-      body: SlidingTiles(tiles: tiles, showButtonEverySlide: true),
+      body: SlidingTiles(
+        tiles: tiles,
+        showButtonEverySlide: true,
+        buttonText: 'Main Menu',
+      ),
     );
   }
 }

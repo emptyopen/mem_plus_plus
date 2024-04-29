@@ -105,7 +105,7 @@ class PAOPracticeScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'PAO Practice',
+      title: 'PAO - Practice',
       information: [
         '    Get perfect familiarities for each set of digits and '
             'the first test will be unlocked! Good luck!'

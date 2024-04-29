@@ -232,7 +232,7 @@ class TripleDigitTimedTestScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Triple Digit Timed Test',
+      title: 'Triple Digit - Timed Test',
       information: ['    Good luck! You rock!'],
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,

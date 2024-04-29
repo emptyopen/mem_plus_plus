@@ -145,7 +145,7 @@ class DeckMultipleChoiceScreenHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
-      title: 'Deck Multiple Choice Test',
+      title: 'Deck - Multiple Choice Test',
       information: [
         '    Alright! Time for a test on your Deck system. If you get a perfect score, '
             'the next test will be unlocked! Good luck!'
