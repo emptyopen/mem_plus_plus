@@ -1062,7 +1062,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: Colors.green[600]!,
       ),
       singleDigitEditKey: ActivityMenuButton(
-        text: 'Single Digit [Edit]',
+        text: 'Single Digit System - Edit',
         route: SingleDigitEditScreen(
           callback: callback,
         ),
@@ -1071,7 +1071,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorSingleDigitDarker,
       ),
       singleDigitPracticeKey: ActivityMenuButton(
-        text: 'Single Digit [Practice]',
+        text: 'Single Digit System - Practice',
         route: SingleDigitPracticeScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1081,7 +1081,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorSingleDigitDarker,
       ),
       singleDigitMultipleChoiceTestKey: ActivityMenuButton(
-        text: 'Single Digit [MC Test]',
+        text: 'Single Digit System - MC Test',
         route: SingleDigitMultipleChoiceTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1091,7 +1091,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorSingleDigitDarker,
       ),
       singleDigitTimedTestPrepKey: ActivityMenuButton(
-        text: 'Single Digit [Test Prep]',
+        text: 'Single Digit System - Test Prep',
         route: SingleDigitTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1100,7 +1100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorSingleDigitDarker,
       ),
       singleDigitTimedTestKey: ActivityMenuButton(
-        text: 'Single Digit [Timed Test]',
+        text: 'Single Digit System - Timed Test',
         route: SingleDigitTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1120,7 +1120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter1Darker,
       ),
       faceTimedTestPrepKey: ActivityMenuButton(
-        text: 'Faces (Easy) [Test Prep]',
+        text: 'Faces (Easy) - Test Prep',
         route: FaceTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1129,7 +1129,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter1Darker,
       ),
       faceTimedTestKey: ActivityMenuButton(
-        text: 'Faces (Easy) [Timed Test]',
+        text: 'Faces (Easy) - Timed Test',
         route: FaceTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1139,7 +1139,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter1Darker,
       ),
       planetTimedTestPrepKey: ActivityMenuButton(
-        text: 'Planets [Test Prep]',
+        text: 'Planets - Test Prep',
         route: PlanetTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1148,7 +1148,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter1Darker,
       ),
       planetTimedTestKey: ActivityMenuButton(
-        text: 'Planets [Timed Test]',
+        text: 'Planets - Timed Test',
         route: PlanetTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1158,7 +1158,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter1Darker,
       ),
       alphabetEditKey: ActivityMenuButton(
-        text: 'Alphabet [Edit]',
+        text: 'Alphabet System - Edit',
         route: AlphabetEditScreen(
           callback: callback,
         ),
@@ -1167,7 +1167,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorAlphabetDarker,
       ),
       alphabetPracticeKey: ActivityMenuButton(
-        text: 'Alphabet [Practice]',
+        text: 'Alphabet System - Practice',
         route: AlphabetPracticeScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1177,7 +1177,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorAlphabetDarker,
       ),
       alphabetWrittenTestKey: ActivityMenuButton(
-        text: 'Alphabet [Written Test]',
+        text: 'Alphabet System - Written Test',
         route: AlphabetWrittenTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1187,7 +1187,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorAlphabetDarker,
       ),
       alphabetTimedTestPrepKey: ActivityMenuButton(
-        text: 'Alphabet [Test Prep]',
+        text: 'Alphabet System - Test Prep',
         route: AlphabetTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1196,7 +1196,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorAlphabetDarker,
       ),
       alphabetTimedTestKey: ActivityMenuButton(
-        text: 'Alphabet [Timed Test]',
+        text: 'Alphabet System - Timed Test',
         route: AlphabetTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1216,7 +1216,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter2Darker,
       ),
       phoneticAlphabetTimedTestPrepKey: ActivityMenuButton(
-        text: 'Phonetic Alphabet [Test Prep]',
+        text: 'Phonetic Alphabet - Test Prep',
         route: PhoneticAlphabetTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1225,7 +1225,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter2Darker,
       ),
       phoneticAlphabetTimedTestKey: ActivityMenuButton(
-        text: 'Phonetic Alphabet [Timed Test]',
+        text: 'Phonetic Alphabet - Timed Test',
         route: PhoneticAlphabetTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1235,7 +1235,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter2Darker,
       ),
       airportTimedTestPrepKey: ActivityMenuButton(
-        text: 'Airport [Test Prep]',
+        text: 'Airport - Test Prep',
         route: AirportTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1244,7 +1244,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter2Darker,
       ),
       airportTimedTestKey: ActivityMenuButton(
-        text: 'Airport [Timed Test]',
+        text: 'Airport - Timed Test',
         route: AirportTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1254,7 +1254,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter2Darker,
       ),
       paoEditKey: ActivityMenuButton(
-        text: 'PAO [Edit]',
+        text: 'PAO System - Edit',
         route: PAOEditScreen(
           callback: callback,
         ),
@@ -1263,7 +1263,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorPAODarker,
       ),
       paoPracticeKey: ActivityMenuButton(
-        text: 'PAO [Practice]',
+        text: 'PAO System - Practice',
         route: PAOPracticeScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1273,7 +1273,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorPAODarker,
       ),
       paoMultipleChoiceTestKey: ActivityMenuButton(
-        text: 'PAO [MC Test]',
+        text: 'PAO System - MC Test',
         route: PAOMultipleChoiceTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1283,7 +1283,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorPAODarker,
       ),
       paoTimedTestPrepKey: ActivityMenuButton(
-        text: 'PAO [Test Prep]',
+        text: 'PAO System - Test Prep',
         route: PAOTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1292,7 +1292,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorPAODarker,
       ),
       paoTimedTestKey: ActivityMenuButton(
-        text: 'PAO [Timed Test]',
+        text: 'PAO System - Timed Test',
         route: PAOTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1312,7 +1312,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter3Darker,
       ),
       face2TimedTestPrepKey: ActivityMenuButton(
-        text: 'Faces (Hard) [Test Prep]',
+        text: 'Faces (Hard) - Test Prep',
         route: Face2TimedTestPrepScreen(
           callback: callback,
         ),
@@ -1321,7 +1321,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter3Darker,
       ),
       face2TimedTestKey: ActivityMenuButton(
-        text: 'Faces (Hard) [Timed Test]',
+        text: 'Faces (Hard) - Timed Test',
         route: Face2TimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1331,7 +1331,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter3Darker,
       ),
       piTimedTestPrepKey: ActivityMenuButton(
-        text: 'Pi [Test Prep]',
+        text: 'Pi - Test Prep',
         route: PiTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1340,7 +1340,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter3Darker,
       ),
       piTimedTestKey: ActivityMenuButton(
-        text: 'Pi [Timed Test]',
+        text: 'Pi - Timed Test',
         route: PiTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1350,7 +1350,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorChapter3Darker,
       ),
       deckEditKey: ActivityMenuButton(
-        text: 'Deck [Edit]',
+        text: 'Deck System - Edit',
         route: DeckEditScreen(
           callback: callback,
         ),
@@ -1359,7 +1359,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorDeckDarker,
       ),
       deckPracticeKey: ActivityMenuButton(
-        text: 'Deck [Practice]',
+        text: 'Deck System - Practice',
         route: DeckPracticeScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1369,7 +1369,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorDeckDarker,
       ),
       deckMultipleChoiceTestKey: ActivityMenuButton(
-        text: 'Deck [MC Test]',
+        text: 'Deck System - MC Test',
         route: DeckMultipleChoiceTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1379,7 +1379,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorDeckDarker,
       ),
       deckTimedTestPrepKey: ActivityMenuButton(
-        text: 'Deck [Test Prep]',
+        text: 'Deck System - Test Prep',
         route: DeckTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1388,7 +1388,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorDeckDarker,
       ),
       deckTimedTestKey: ActivityMenuButton(
-        text: 'Deck [Timed Test]',
+        text: 'Deck System - Timed Test',
         route: DeckTimedTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1398,7 +1398,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorDeckDarker,
       ),
       tripleDigitEditKey: ActivityMenuButton(
-        text: 'Triple Digit [Edit]',
+        text: 'Triple Digit System - Edit',
         route: TripleDigitEditScreen(
           callback: callback,
         ),
@@ -1407,7 +1407,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorTripleDigitDarker,
       ),
       tripleDigitPracticeKey: ActivityMenuButton(
-        text: 'Triple Digit [Practice]',
+        text: 'Triple Digit System - Practice',
         route: TripleDigitPracticeScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1417,7 +1417,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorTripleDigitDarker,
       ),
       tripleDigitMultipleChoiceTestKey: ActivityMenuButton(
-        text: 'Triple Digit [MC Test]',
+        text: 'Triple Digit System - MC Test',
         route: TripleDigitMultipleChoiceTestScreen(
           callback: callback,
           globalKey: globalKey,
@@ -1427,7 +1427,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorTripleDigitDarker,
       ),
       tripleDigitTimedTestPrepKey: ActivityMenuButton(
-        text: 'Triple Digit [Test Prep]',
+        text: 'Triple Digit System - Test Prep',
         route: TripleDigitTimedTestPrepScreen(
           callback: callback,
         ),
@@ -1436,7 +1436,7 @@ class _MyHomePageState extends State<MyHomePage> {
         splashColor: colorTripleDigitDarker,
       ),
       tripleDigitTimedTestKey: ActivityMenuButton(
-        text: 'Triple Digit [Timed Test]',
+        text: 'Triple Digit System - Timed Test',
         route: TripleDigitTimedTestScreen(
           callback: callback,
           globalKey: globalKey,

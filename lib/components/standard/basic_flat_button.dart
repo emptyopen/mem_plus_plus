@@ -17,7 +17,7 @@ class BasicFlatButton extends StatelessWidget {
     required this.onPressed,
     this.padding = 0,
     this.textColor = Colors.black,
-    this.fontFamily = 'CabinSketch',
+    this.fontFamily = 'Viga',
   });
 
   @override

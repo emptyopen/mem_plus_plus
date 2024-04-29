@@ -127,7 +127,6 @@ class _FlashCardState extends State<FlashCard> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14,
-                fontFamily: 'CabinSketch',
               ),
             ),
             SizedBox(height: 5),
@@ -136,7 +135,6 @@ class _FlashCardState extends State<FlashCard> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 26,
-                fontFamily: 'CabinSketch',
               ),
             ),
           ],
@@ -230,7 +228,6 @@ class _FlashCardState extends State<FlashCard> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 14,
-              fontFamily: 'CabinSketch',
             ),
           ),
           SizedBox(height: 5),
@@ -239,7 +236,6 @@ class _FlashCardState extends State<FlashCard> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 26,
-              fontFamily: 'CabinSketch',
             ),
           ),
         ],

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/components/standard/new_tag.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/screens/games/game_dialog_content.dart';
-import 'package:mem_plus_plus/screens/games/games_screen.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 
 class GameTile extends StatelessWidget {
@@ -31,8 +30,8 @@ class GameTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         checkFirstView();
         HapticFeedback.lightImpact();
         showDialog(
@@ -53,7 +52,7 @@ class GameTile extends StatelessWidget {
               title: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 20,
                 ),
               ),
               subtitle: Text(subtitle),

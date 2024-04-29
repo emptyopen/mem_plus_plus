@@ -62,14 +62,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
         ]),
     SlidingTileContent(
-        header: '"The brain can only store so much information."',
+        header:
+            '"If I learn something new, it pushes something old out of my brain."',
         content: [
           Text('FALSE!', style: TextStyle(fontSize: 28, color: Colors.red)),
           SizedBox(
             height: 10,
           ),
           Text(
-            '    Okay, not totally false. The brain does have a limit, but it is far beyond anyone\'s reach - '
+            '    Okay, not totally false. The brain does have a theoretical information storage limit, but it is far beyond anyone\'s reach - '
             'researchers estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
             'worry about filling your brain over capacity with short term data or trivial facts. '
             'If you store memories correctly, vital information won\'t get pushed out of your brain.\n',
@@ -83,7 +84,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         'In the main menu, you will be presented with a TO-DO section and a REVIEW section. \n    New '
         'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
         'will still be available in the REVIEW section. \n'
-        '    Okay, off you go!\n      - Matt',
+        '    Okay, off you go!',
         style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
       ),
     ]),

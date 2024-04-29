@@ -18,7 +18,14 @@ class BigButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(17),
-        border: Border.all(),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(100),
+            blurRadius: 2.0,
+            spreadRadius: 0.0,
+            offset: Offset(2.0, 2.0),
+          ),
+        ],
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -34,11 +41,11 @@ class BigButton extends StatelessWidget {
           function();
         },
         child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Text(
             title,
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 18,
               color: Colors.white,
             ),
             textAlign: TextAlign.center,

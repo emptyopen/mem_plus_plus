@@ -67,7 +67,7 @@ class _GamesScreenState extends State<GamesScreen> {
         GameTile(
           game: 'irrational',
           title: 'IRRATIONAL!',
-          subtitle: 'Test the outer limits of your memory capacity!',
+          subtitle: 'Test the upper bounds of your memory capacity!',
           icon: Icon(
             MdiIcons.pi,
             size: 40,

@@ -45,10 +45,9 @@ class CondensedMainMenuButtons extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          height: 100,
+          height: 90,
           width: screenWidth * 0.85,
           decoration: BoxDecoration(
-              border: Border.all(),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -64,7 +63,7 @@ class CondensedMainMenuButtons extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Text(text,
-                    style: TextStyle(fontSize: 24), textAlign: TextAlign.start),
+                    style: TextStyle(fontSize: 14), textAlign: TextAlign.start),
               ),
               SizedBox(
                 height: 5,

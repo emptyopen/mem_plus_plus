@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/homepage.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
@@ -73,7 +72,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Colors.grey[300],
-          fontFamily: 'CabinSketch',
+          fontFamily: 'Viga',
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.amber[200])),
       home: MyHomePage(),

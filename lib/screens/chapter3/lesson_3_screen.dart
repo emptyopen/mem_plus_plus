@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mem_plus_plus/components/data/sliding_tile_content.dart';
 import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
@@ -19,35 +20,13 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
   bool alreadyComplete = false;
   PrefsUpdater prefs = PrefsUpdater();
 
-  final List<Widget> headers = [
-    Text(
-      'Chapter 3: Spaced Repetition',
-      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
-      textAlign: TextAlign.center,
-    ),
-    Text(
-      'Spaced Repetition in a Graph',
-      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
-      textAlign: TextAlign.center,
-    ),
-    Text(
-      'Learn it for life',
-      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
-      textAlign: TextAlign.center,
-    ),
-    Text(
-      'Lucky you!',
-      style: TextStyle(fontSize: 32, color: backgroundHighlightColor),
-      textAlign: TextAlign.center,
-    ),
-  ];
-
-  final List<Widget> information = [
-    Column(
-      children: <Widget>[
+  final List<SlidingTileContent> tiles = [
+    SlidingTileContent(
+      header: 'Chapter 3: Spaced Repetition',
+      content: [
         Text(
           '    Spaced Repetition is a really cool concept. It\'s something that is intuitive, but also optimizable. '
-          'Basically, it\'s the idea that you can maximize the speed in learning things by spacing out the '
+          'Basically, it\'s the idea that you can maximize both the longevity and the speed in learning things by spacing out the '
           'reviews in increasing intervals. '
           '\n    I think the quickest way to understand is to look at a graph.',
           style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
@@ -62,8 +41,9 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
         ),
       ],
     ),
-    Column(
-      children: <Widget>[
+    SlidingTileContent(
+      header: 'Spaced Repetition in a Graph',
+      content: [
         Image(
           image: AssetImage(
             'assets/images/spaced_repetition.png',
@@ -79,19 +59,29 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
         ),
       ],
     ),
-    Text(
-      '    You might review just ten minutes after you learn something the first time, quickly replaying '
-      'the scene back over in your head. Then a review an hour after that will probably lock the memory '
-      'in for eight hours. Then two days, two weeks, two months, two years. \n\n'
-      '    If you memorize things efficiently, you can memorize something for life (easily) with less than ten '
-      'reviews! Isn\'t that crazy?',
-      style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+    SlidingTileContent(
+      header: 'Learn it for life',
+      content: [
+        Text(
+          '    You might review just ten minutes after you learn something the first time, quickly replaying '
+          'the scene back over in your head. Then a review an hour after that will probably lock the memory '
+          'in for eight hours. Then two days, two weeks, two months, two years. \n\n'
+          '    If you memorize things efficiently, you can memorize something for life (easily) with less than ten '
+          'reviews! How convenient!',
+          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+        ),
+      ],
     ),
-    Text(
-      '    You are an especially lucky winner, because upon completing this lesson you will unlock the Custom Memory Manager! '
-      'You can create any type of memory you\'d like, and the tool will automatically take care of the spaced '
-      'repetition schedule for you! ',
-      style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+    SlidingTileContent(
+      header: 'Lucky you!',
+      content: [
+        Text(
+          '    You are an especially lucky winner, because upon completing this lesson you will unlock the Custom Memory Manager! '
+          'You can create any type of memory you\'d like, and the tool will automatically take care of the spaced '
+          'repetition schedule for you!\n\n    Check it out in the bottom right of the main menu!',
+          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+        ),
+      ],
     ),
   ];
 
@@ -147,8 +137,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
   Widget build(BuildContext context) {
     return LessonScreen(
       title: 'Lesson 3',
-      headers: headers,
-      information: information,
+      tiles: tiles,
       completeLesson: completeLesson,
       colorDarker: colorChapter3Darker,
       colorStandard: colorChapter3Standard,

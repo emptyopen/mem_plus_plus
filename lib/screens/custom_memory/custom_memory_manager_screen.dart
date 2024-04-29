@@ -80,7 +80,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-            title: Text('Custom memory management'),
+            title: Text('Custom memories'),
             backgroundColor: colorCustomMemoryStandard,
             actions: <Widget>[
               // action button
@@ -661,8 +661,7 @@ class _MyDialogContentState extends State<MyDialogContent> {
                       value: value,
                       child: Text(
                         value,
-                        style:
-                            TextStyle(fontSize: 22, fontFamily: 'CabinSketch'),
+                        style: TextStyle(fontSize: 22, fontFamily: 'Viga'),
                       ),
                     );
                   }).toList(),

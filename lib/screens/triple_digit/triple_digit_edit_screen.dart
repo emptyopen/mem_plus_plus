@@ -76,8 +76,8 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
       final snackBar = SnackBar(
         content: Text(
           'Upload success!',
-          style: TextStyle(
-              color: Colors.black, fontFamily: 'CabinSketch', fontSize: 18),
+          style:
+              TextStyle(color: Colors.black, fontFamily: 'Viga', fontSize: 18),
         ),
         duration: Duration(seconds: 2),
         backgroundColor: colorTripleDigitStandard,
@@ -93,8 +93,8 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
-          style: TextStyle(
-              color: Colors.white, fontFamily: 'CabinSketch', fontSize: 18),
+          style:
+              TextStyle(color: Colors.white, fontFamily: 'Viga', fontSize: 18),
         ),
         duration: Duration(seconds: 5),
         backgroundColor: colorTripleDigitDarker,

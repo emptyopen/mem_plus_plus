@@ -73,8 +73,8 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
       final snackBar = SnackBar(
         content: Text(
           'Great job filling everything out! Head to the main menu to see what you\'ve unlocked!',
-          style: TextStyle(
-              color: Colors.white, fontFamily: 'CabinSketch', fontSize: 18),
+          style:
+              TextStyle(color: Colors.white, fontFamily: 'Viga', fontSize: 18),
         ),
         duration: Duration(seconds: 5),
         backgroundColor: colorPAODarker,

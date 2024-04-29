@@ -59,8 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final snackBar = SnackBar(
       content: Text(
         'Notifications nuked!',
-        style: TextStyle(
-            color: Colors.black, fontFamily: 'CabinSketch', fontSize: 18),
+        style: TextStyle(color: Colors.black, fontFamily: 'Viga', fontSize: 18),
       ),
       duration: Duration(seconds: 2),
       backgroundColor: Colors.orange,
@@ -92,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: <Widget>[
                   Center(
                       child: Text(
-                    'Toggle dark mode',
+                    'Dark mode:',
                     style: TextStyle(
                         color: backgroundHighlightColor, fontSize: 20),
                   )),
@@ -101,12 +100,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   ToggleButtons(
                     children: <Widget>[
-                      Icon(Icons.brightness_5),
+                      Icon(Icons.brightness_7),
                       Icon(Icons.brightness_3),
                     ],
                     borderColor: backgroundHighlightColor,
                     selectedBorderColor: backgroundHighlightColor,
-                    selectedColor: Colors.greenAccent,
+                    selectedColor: Colors.amber,
                     color: backgroundHighlightColor,
                     onPressed: (int index) {
                       HapticFeedback.lightImpact();
@@ -144,22 +143,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 40,
                   ),
                   Text(
-                    'Options:',
+                    'Other options:',
                     style: TextStyle(
                         fontSize: 18, color: backgroundHighlightColor),
                   ),
-                  SizedBox(height: 10),
-                  BasicFlatButton(
-                    color: Colors.orange[400]!,
-                    textColor: Colors.white,
-                    fontSize: 20,
-                    padding: 10,
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      resetNotifications(context);
-                    },
-                    text: 'Nuke notifications',
-                  ),
+                  SizedBox(height: 20),
                   BasicFlatButton(
                     color: Colors.red[400]!,
                     textColor: Colors.white,
@@ -174,11 +162,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           confirmText:
                               "Are you sure you want to reset everything? All data will be lost! There\'s no recovery!!");
                     },
-                    text: 'Reset everything!',
+                    text: 'Reset everything',
                   ),
                   debugModeEnabled
                       ? Column(
                           children: <Widget>[
+                            // BasicFlatButton(
+                            //   onPressed: () {
+                            //     HapticFeedback.lightImpact();
+                            //     resetNotifications(context);
+                            //   },
+                            //   text: 'Nuke notifications',
+                            // ),
                             BasicFlatButton(
                               onPressed: () {
                                 widget.maxOutKeys(2);
@@ -239,7 +234,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       height: 30,
                     ),
                     Text(
-                      '    Matt has a cute dog called Aki. They live in LA and are always having a a good time with friends and family. ',
+                      '    Matt has a cute wife Asya and a cute dog Aki. They all live in LA and are always having a good time.',
                       style: TextStyle(color: backgroundHighlightColor),
                     ),
                     defaultTargetPlatform == TargetPlatform.android

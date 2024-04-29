@@ -70,7 +70,7 @@ void showSnackBar({
         style: TextStyle(
           color: textColor,
           fontSize: isSuper ? 20 : 16,
-          fontFamily: 'CabinSketch',
+          fontFamily: 'Viga',
         ),
       ),
     ),

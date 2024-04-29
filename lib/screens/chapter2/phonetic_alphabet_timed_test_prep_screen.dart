@@ -147,8 +147,7 @@ class _PhoneticAlphabetTimedTestPrepScreenState
                 onPressed: () => showConfirmDialog(
                     context: context,
                     function: updateStatus,
-                    confirmText:
-                        'Are you sure you\'d like to start this test? The number will no longer be available to view! (unless you check online xD)',
+                    confirmText: 'Are you sure you\'d like to start this test?',
                     confirmColor: colorChapter2Standard),
                 fontSize: 30,
                 padding: 10,
