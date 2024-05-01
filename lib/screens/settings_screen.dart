@@ -74,7 +74,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-            title: Text('Tinker Tools'),
             backgroundColor: Colors.grey[300],
             bottom: TabBar(
               tabs: [
