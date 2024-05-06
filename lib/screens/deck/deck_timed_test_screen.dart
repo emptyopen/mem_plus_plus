@@ -65,15 +65,15 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     prefs.checkFirstTime(
         context, deckTimedTestFirstHelpKey, DeckTimedTestScreenHelp());
     // grab the digits
-    card1 = (prefs.getString('deckTestDigits1'))!;
-    card2 = (prefs.getString('deckTestDigits2'))!;
-    card3 = (prefs.getString('deckTestDigits3'))!;
-    card4 = (prefs.getString('deckTestDigits4'))!;
-    card5 = (prefs.getString('deckTestDigits5'))!;
-    card6 = (prefs.getString('deckTestDigits6'))!;
-    card7 = (prefs.getString('deckTestDigits7'))!;
-    card8 = (prefs.getString('deckTestDigits8'))!;
-    card9 = (prefs.getString('deckTestDigits9'))!;
+    card1 = (prefs.getString('deckTestDigits1'));
+    card2 = (prefs.getString('deckTestDigits2'));
+    card3 = (prefs.getString('deckTestDigits3'));
+    card4 = (prefs.getString('deckTestDigits4'));
+    card5 = (prefs.getString('deckTestDigits5'));
+    card6 = (prefs.getString('deckTestDigits6'));
+    card7 = (prefs.getString('deckTestDigits7'));
+    card8 = (prefs.getString('deckTestDigits8'));
+    card9 = (prefs.getString('deckTestDigits9'));
     print(
         'real answer: $card1$card2$card3 $card4$card5$card6 $card7$card8$card9');
     setState(() {});
@@ -92,7 +92,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
         dropdownDigit[8] + dropdownSuit[8] == '$card9') {
       prefs.updateActivityVisible(deckTimedTestKey, false);
       prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-      if (prefs.getBool(deckTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(deckTimedTestCompleteKey)) {
         prefs.updateActivityState(deckTimedTestKey, 'review');
         prefs.setBool(deckTimedTestCompleteKey, true);
         showSnackBar(
@@ -132,7 +132,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     prefs.updateActivityState(deckTimedTestKey, 'review');
     prefs.updateActivityVisible(deckTimedTestKey, false);
     prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-    if (prefs.getBool(deckTimedTestCompleteKey) == null) {
+    if (!prefs.getBool(deckTimedTestCompleteKey)) {
       prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
     }
     showSnackBar(

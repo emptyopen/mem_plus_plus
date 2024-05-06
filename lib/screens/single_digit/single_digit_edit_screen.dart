@@ -34,7 +34,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, singleDigitEditFirstHelpKey, SingleDigitEditScreenHelp());
-    if (prefs.getString(singleDigitKey) == null) {
+    if (prefs.getString(singleDigitKey) == '') {
       singleDigitData =
           debugModeEnabled ? defaultSingleDigitData3 : defaultSingleDigitData1;
       prefs.setString(singleDigitKey, json.encode(singleDigitData));

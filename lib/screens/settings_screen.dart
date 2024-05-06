@@ -40,10 +40,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    if (prefs.getBool(darkModeKey) == null || !(prefs.getBool(darkModeKey))!) {
-      isSelected = [true, false];
-    } else {
+    if (prefs.getBool(darkModeKey)) {
       isSelected = [false, true];
+    } else {
+      isSelected = [true, false];
     }
     setState(() {});
   }

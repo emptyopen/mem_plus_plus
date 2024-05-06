@@ -100,7 +100,7 @@ class _HelpDialogState extends State<HelpDialog> {
   }
 
   checkFirstHelp() async {
-    firstHelp = prefs.getBool(widget.firstHelpKey) == null;
+    firstHelp = !prefs.getBool(widget.firstHelpKey);
     setState(() {});
   }
 

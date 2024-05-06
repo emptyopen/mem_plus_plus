@@ -26,7 +26,7 @@ class _SlidingTilesState extends State<SlidingTiles> {
 
   void goToMainMenu(BuildContext context) async {
     HapticFeedback.lightImpact();
-    if (prefs.getBool(firstTimeAppKey) == null ||
+    if (!prefs.getBool(firstTimeAppKey) ||
         prefs.getBool(firstTimeAppKey) == true) {
       prefs.setBool(firstTimeAppKey, false);
     }
@@ -82,7 +82,7 @@ class _SlidingTilesState extends State<SlidingTiles> {
                 numTiles: widget.tiles.length,
               )
             : Container(),
-        widget.tiles.length > 1 ? SizedBox(height: 10) : Container(),
+        widget.tiles.length > 1 ? SizedBox(height: 30) : Container(),
         _currentIndex == widget.tiles.length - 1 || widget.showButtonEverySlide
             ? SizedBox(
                 height: buttonHeight,

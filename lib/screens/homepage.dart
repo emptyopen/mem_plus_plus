@@ -186,25 +186,23 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Null> getSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getBool(darkModeKey) == null || !(prefs.getBool(darkModeKey))!) {
-      backgroundColor = Colors.white;
-      backgroundHighlightColor = Colors.black;
-      backgroundSemiColor = Colors.grey[200]!;
-      backgroundSemiHighlightColor = Colors.grey[800]!;
-    } else {
+    if (prefs.getBool(darkModeKey)) {
       backgroundColor = Colors.grey[800]!;
       backgroundHighlightColor = Colors.white;
       backgroundSemiColor = Colors.grey[600]!;
       backgroundSemiHighlightColor = Colors.grey[200]!;
+    } else {
+      backgroundColor = Colors.white;
+      backgroundHighlightColor = Colors.black;
+      backgroundSemiColor = Colors.grey[200]!;
+      backgroundSemiHighlightColor = Colors.grey[800]!;
     }
     setState(() {});
 
     // activity states, and unlockedActivities
     if (prefs.getKeys().contains(activityStatesKey)) {
       setState(() {
-        var rawMap = json.decode(prefs.getString(activityStatesKey)!)
+        var rawMap = json.decode(prefs.getString(activityStatesKey))
             as Map<String, dynamic>;
         activityStates =
             rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
@@ -226,8 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void setUnlockedActivities() async {
     // if first time opening app, welcome
-    if (prefs.getBool(firstTimeAppKey) == null ||
-        prefs.getBool(firstTimeAppKey)!) {
+    if (prefs.getBool(firstTimeAppKey)) {
       print('first time opening app');
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
@@ -236,33 +233,30 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // check if games are available, and firstView
-    if (prefs.getBool(gamesAvailableKey) == null) {
-      gamesAvailable = false;
-    } else {
+    if (prefs.getBool(gamesAvailableKey)) {
       gamesAvailable = true;
-    }
-    if (prefs.getBool(newGamesAvailableKey) == null ||
-        prefs.getBool(newGamesAvailableKey) == false) {
-      gamesFirstView = false;
     } else {
-      gamesFirstView = true;
+      gamesAvailable = false;
     }
+    if (prefs.getBool(newGamesAvailableKey)) {
+      gamesFirstView = true;
+      gamesFirstView = false;
+    } else {}
 
     // check if customManager is available, and firstView
-    if (prefs.getBool(customMemoryManagerAvailableKey) == null) {
-      customMemoryManagerAvailable = false;
-    } else {
+    if (prefs.getBool(customMemoryManagerAvailableKey)) {
       customMemoryManagerAvailable = true;
-    }
-    if (prefs.getBool(customMemoryManagerFirstHelpKey) == null ||
-        prefs.getBool(customMemoryManagerFirstHelpKey) == false) {
-      customMemoryManagerFirstView = false;
     } else {
+      customMemoryManagerAvailable = false;
+    }
+    if (prefs.getBool(customMemoryManagerFirstHelpKey)) {
       customMemoryManagerFirstView = true;
+    } else {
+      customMemoryManagerFirstView = false;
     }
 
     // get custom memories
-    if (prefs.getString(customMemoriesKey) == null) {
+    if (prefs.getString(customMemoriesKey) == '') {
       customMemories = {};
       prefs.writeSharedPrefs(customMemoriesKey, {});
     } else {
@@ -289,31 +283,28 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     // consolidate menu buttons
-    if (prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
+    if (prefs.getBool(singleDigitTimedTestCompleteKey)) {
       consolidateSingleDigit = true;
     }
-    if (prefs.getBool(planetTimedTestCompleteKey) != null &&
-        prefs.getBool(faceTimedTestCompleteKey) != null) {
+    if (prefs.getBool(planetTimedTestCompleteKey)) {
       consolidateChapter1 = true;
     }
-    if (prefs.getBool(alphabetTimedTestCompleteKey) != null) {
+    if (prefs.getBool(alphabetTimedTestCompleteKey)) {
       consolidateAlphabet = true;
     }
-    if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null &&
-        prefs.getBool(airportTimedTestCompleteKey) != null) {
+    if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
       consolidateChapter2 = true;
     }
-    if (prefs.getBool(paoTimedTestCompleteKey) != null) {
+    if (prefs.getBool(paoTimedTestCompleteKey)) {
       consolidatePAO = true;
     }
-    if (prefs.getBool(piTimedTestCompleteKey) != null &&
-        prefs.getBool(face2TimedTestCompleteKey) != null) {
+    if (prefs.getBool(piTimedTestCompleteKey)) {
       consolidateChapter3 = true;
     }
-    if (prefs.getBool(deckTimedTestCompleteKey) != null) {
+    if (prefs.getBool(deckTimedTestCompleteKey)) {
       consolidateDeck = true;
     }
-    if (prefs.getBool(tripleDigitTimedTestCompleteKey) != null) {
+    if (prefs.getBool(tripleDigitTimedTestCompleteKey)) {
       consolidateTripleDigit = true;
     }
 
@@ -322,7 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkFirstTime() async {
-    if (prefs.getBool(homepageFirstHelpKey) == null) {
+    if (!prefs.getBool(homepageFirstHelpKey)) {
       Navigator.of(context).push(PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
@@ -333,7 +324,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkGamesFirstTime() async {
-    if (prefs.getBool(newGamesAvailableKey) == true) {
+    if (prefs.getBool(newGamesAvailableKey)) {
       setState(() {
         gamesFirstView = false;
       });

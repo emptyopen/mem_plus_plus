@@ -17,7 +17,6 @@ class Lesson3Screen extends StatefulWidget {
 }
 
 class _Lesson3ScreenState extends State<Lesson3Screen> {
-  bool alreadyComplete = false;
   PrefsUpdater prefs = PrefsUpdater();
 
   final List<SlidingTileContent> tiles = [
@@ -85,22 +84,12 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
     ),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    getSharedPrefs();
-  }
-
-  getSharedPrefs() async {
-    alreadyComplete = prefs.getBool(lesson3CompleteKey) != null;
-  }
-
   completeLesson() async {
     prefs.updateActivityVisible(piTimedTestPrepKey, true);
     prefs.updateActivityVisible(face2TimedTestPrepKey, true);
     prefs.updateActivityState(lesson3Key, 'review');
     prefs.setBool(customMemoryManagerAvailableKey, true);
-    if (!alreadyComplete) {
+    if (!prefs.getBool(lesson3CompleteKey)) {
       prefs.setBool(customMemoryManagerFirstHelpKey, true);
       showSnackBar(
         context: context,

@@ -38,7 +38,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
-    if (prefs.getString(paoKey) == null) {
+    if (prefs.getString(paoKey) == '') {
       paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
       prefs.setString(paoKey, json.encode(paoData));
     } else {

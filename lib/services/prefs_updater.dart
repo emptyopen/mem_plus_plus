@@ -26,29 +26,30 @@ class PrefsUpdater {
             json.decode(activityStatesString) as Map<String, dynamic>;
         return rawMap.map((k, v) => MapEntry(k, Activity.fromJson(v)));
       case singleDigitKey:
-        var singleDigitData = (json.decode(prefs.getString(key)!) as List)
+        var singleDigitData = (json.decode(prefs.getString(key) ?? '') as List)
             .map((i) => SingleDigitData.fromJson(i))
             .toList();
         return singleDigitData;
       case alphabetKey:
-        var singleDigitData = (json.decode(prefs.getString(key)!) as List)
+        var alphabetData = (json.decode(prefs.getString(key) ?? '') as List)
             .map((i) => AlphabetData.fromJson(i))
             .toList();
-        return singleDigitData;
+        return alphabetData;
       case paoKey:
-        var singleDigitData = (json.decode(prefs.getString(key)!) as List)
+        var paoData = (json.decode(prefs.getString(key) ?? '') as List)
             .map((i) => PAOData.fromJson(i))
             .toList();
-        return singleDigitData;
+        return paoData;
       case deckKey:
-        var singleDigitData = (json.decode(prefs.getString(key)!) as List)
+        var deckData = (json.decode(prefs.getString(key) ?? '[]') as List)
             .map((i) => DeckData.fromJson(i))
             .toList();
-        return singleDigitData;
+        return deckData;
       case tripleDigitKey:
-        var tripleDigitData = (json.decode(prefs.getString(key)!) as List)
-            .map((i) => TripleDigitData.fromJson(i))
-            .toList();
+        var tripleDigitData =
+            (json.decode(prefs.getString(key) ?? '[]') as List)
+                .map((i) => TripleDigitData.fromJson(i))
+                .toList();
         return tripleDigitData;
       case customMemoriesKey:
         return json.decode(prefs.getString(key)!);
@@ -143,16 +144,16 @@ class PrefsUpdater {
     prefs.setBool(key, value);
   }
 
-  bool? getBool(String key) {
-    return prefs.getBool(key);
+  bool getBool(String key) {
+    return prefs.getBool(key) ?? false;
   }
 
   void setString(String key, String value) {
     prefs.setString(key, value);
   }
 
-  String? getString(String key) {
-    return prefs.getString(key);
+  String getString(String key) {
+    return prefs.getString(key) ?? '';
   }
 
   Set<String> getKeys() {
@@ -169,14 +170,5 @@ class PrefsUpdater {
 
   checkFirstTime(BuildContext context, String firstHelpKey, Widget helpScreen) {
     PrefsUpdater prefs = PrefsUpdater();
-    if (prefs.getBool(firstHelpKey) == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).push(PageRouteBuilder(
-            opaque: false,
-            pageBuilder: (BuildContext context, _, __) {
-              return helpScreen;
-            }));
-      });
-    }
   }
 }

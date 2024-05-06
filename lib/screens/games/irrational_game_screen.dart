@@ -105,7 +105,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
         break;
     }
     String savedPositionString =
-        prefs.getString('irrational${widget.difficulty}SavedPosition')!;
+        prefs.getString('irrational${widget.difficulty}SavedPosition');
     setState(() {
       position = int.parse(savedPositionString);
     });
@@ -128,7 +128,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
 
   checkAnswer(BuildContext context) async {
     if (textController.text.trim() == correctSequence) {
-      if (prefs.getBool('irrational${widget.difficulty}Complete') == null) {
+      if (!prefs.getBool('irrational${widget.difficulty}Complete')) {
         showSnackBar(
           context: context,
           snackBarText: 'Congrats! You\'ve memorized $stageName!',

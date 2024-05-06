@@ -52,15 +52,15 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     prefs.checkFirstTime(
         context, 'PAOTimedTestFirstHelp', PAOTimedTestScreenHelp());
     // grab the digits
-    digits1 = prefs.getString('paoTestDigits1')!;
-    digits2 = prefs.getString('paoTestDigits2')!;
-    digits3 = prefs.getString('paoTestDigits3')!;
-    digits4 = prefs.getString('paoTestDigits4')!;
-    digits5 = prefs.getString('paoTestDigits5')!;
-    digits6 = prefs.getString('paoTestDigits6')!;
-    digits7 = prefs.getString('paoTestDigits7')!;
-    digits8 = prefs.getString('paoTestDigits8')!;
-    digits9 = prefs.getString('paoTestDigits9')!;
+    digits1 = prefs.getString('paoTestDigits1');
+    digits2 = prefs.getString('paoTestDigits2');
+    digits3 = prefs.getString('paoTestDigits3');
+    digits4 = prefs.getString('paoTestDigits4');
+    digits5 = prefs.getString('paoTestDigits5');
+    digits6 = prefs.getString('paoTestDigits6');
+    digits7 = prefs.getString('paoTestDigits7');
+    digits8 = prefs.getString('paoTestDigits8');
+    digits9 = prefs.getString('paoTestDigits9');
     print(
         'real answer: $digits1$digits2$digits3 $digits4$digits5$digits6 $digits7$digits8$digits9');
     setState(() {});
@@ -74,7 +74,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
       prefs.updateActivityVisible(paoTimedTestKey, false);
       prefs.updateActivityVisible(paoTimedTestPrepKey, true);
       prefs.updateActivityVisible(lesson3Key, true);
-      if (prefs.getBool(paoTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(paoTimedTestCompleteKey)) {
         prefs.setBool(paoTimedTestCompleteKey, true);
         prefs.updateActivityState(paoTimedTestKey, 'review');
         showSnackBar(
@@ -124,7 +124,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     prefs.updateActivityState(paoTimedTestKey, 'review');
     prefs.updateActivityVisible(paoTimedTestKey, false);
     prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-    if (prefs.getBool(paoTimedTestCompleteKey) == null) {
+    if (!prefs.getBool(paoTimedTestCompleteKey)) {
       prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
     }
     showSnackBar(

@@ -60,14 +60,14 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
       prefs.updateActivityVisible(piTimedTestKey, false);
       prefs.updateActivityVisible(piTimedTestPrepKey, true);
       prefs.setBool(irrationalGameAvailableKey, true);
-      if (prefs.getBool(irrationalGameFirstViewKey) == null) {
+      if (!prefs.getBool(irrationalGameFirstViewKey)) {
         prefs.setBool(newGamesAvailableKey, true);
         prefs.setBool(irrationalGameFirstViewKey, true);
       }
-      if (prefs.getBool(piTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(piTimedTestCompleteKey)) {
         prefs.updateActivityState(piTimedTestKey, 'review');
         prefs.setBool(piTimedTestCompleteKey, true);
-        if (prefs.getBool(face2TimedTestCompleteKey) == null) {
+        if (!prefs.getBool(face2TimedTestCompleteKey)) {
           showSnackBar(
             context: context,
             snackBarText:
@@ -149,9 +149,6 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     prefs.updateActivityState(piTimedTestKey, 'review');
     prefs.updateActivityVisible(piTimedTestKey, false);
     prefs.updateActivityVisible(piTimedTestPrepKey, true);
-    if (prefs.getBool(piTimedTestCompleteKey) == null) {
-      prefs.updateActivityState(piTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         context: context,
         snackBarText: 'Head back to test prep to study up!',

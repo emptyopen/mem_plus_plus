@@ -55,7 +55,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         prefs.updateActivityVisible(singleDigitTimedTestKey, false);
         prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-        if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(singleDigitTimedTestCompleteKey)) {
           prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
         }
         break;
@@ -64,7 +64,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(faceTimedTestKey, 'review');
         prefs.updateActivityVisible(faceTimedTestKey, false);
         prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-        if (prefs.getBool(faceTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(faceTimedTestCompleteKey)) {
           prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
         }
         break;
@@ -73,7 +73,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(planetTimedTestKey, 'review');
         prefs.updateActivityVisible(planetTimedTestKey, false);
         prefs.updateActivityVisible(planetTimedTestPrepKey, true);
-        if (prefs.getBool(planetTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(planetTimedTestCompleteKey)) {
           prefs.updateActivityState(planetTimedTestPrepKey, 'todo');
         }
         break;
@@ -82,7 +82,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(alphabetTimedTestKey, 'review');
         prefs.updateActivityVisible(alphabetTimedTestKey, false);
         prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-        if (prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(alphabetTimedTestCompleteKey)) {
           prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
         }
         break;
@@ -91,7 +91,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
         prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
         prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
-        if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
           prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'todo');
         }
         break;
@@ -100,7 +100,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(airportTimedTestKey, 'review');
         prefs.updateActivityVisible(airportTimedTestKey, false);
         prefs.updateActivityVisible(airportTimedTestPrepKey, true);
-        if (prefs.getBool(airportTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(airportTimedTestCompleteKey)) {
           prefs.updateActivityState(airportTimedTestPrepKey, 'todo');
         }
         break;
@@ -109,7 +109,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(paoTimedTestKey, 'review');
         prefs.updateActivityVisible(paoTimedTestKey, false);
         prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-        if (prefs.getBool(paoTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(paoTimedTestCompleteKey)) {
           prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
         }
         break;
@@ -118,7 +118,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(face2TimedTestKey, 'review');
         prefs.updateActivityVisible(face2TimedTestKey, false);
         prefs.updateActivityVisible(face2TimedTestPrepKey, true);
-        if (prefs.getBool(face2TimedTestCompleteKey) == null) {
+        if (!prefs.getBool(face2TimedTestCompleteKey)) {
           prefs.updateActivityState(face2TimedTestPrepKey, 'todo');
         }
         break;
@@ -127,7 +127,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(piTimedTestKey, 'review');
         prefs.updateActivityVisible(piTimedTestKey, false);
         prefs.updateActivityVisible(piTimedTestPrepKey, true);
-        if (prefs.getBool(piTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(piTimedTestCompleteKey)) {
           prefs.updateActivityState(piTimedTestPrepKey, 'todo');
         }
         break;
@@ -136,7 +136,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(deckTimedTestKey, 'review');
         prefs.updateActivityVisible(deckTimedTestKey, false);
         prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-        if (prefs.getBool(deckTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(deckTimedTestCompleteKey)) {
           prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
         }
         break;
@@ -145,7 +145,7 @@ class MainMenuOption extends StatelessWidget {
         prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
         prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
         prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
-        if (prefs.getBool(tripleDigitTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(tripleDigitTimedTestCompleteKey)) {
           prefs.updateActivityState(tripleDigitTimedTestPrepKey, 'todo');
         }
         break;

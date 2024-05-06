@@ -84,7 +84,7 @@ class _DayOrOlderActivitiesScreenState
         prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         prefs.updateActivityVisible(singleDigitTimedTestKey, false);
         prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-        if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(singleDigitTimedTestCompleteKey)) {
           prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
         }
         break;
@@ -93,7 +93,7 @@ class _DayOrOlderActivitiesScreenState
         prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         prefs.updateActivityVisible(singleDigitTimedTestKey, false);
         prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-        if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(singleDigitTimedTestCompleteKey)) {
           prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
         }
         break;
@@ -102,7 +102,7 @@ class _DayOrOlderActivitiesScreenState
         prefs.updateActivityState(alphabetTimedTestKey, 'review');
         prefs.updateActivityVisible(alphabetTimedTestKey, false);
         prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-        if (prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(alphabetTimedTestCompleteKey)) {
           prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
         }
         break;
@@ -111,7 +111,7 @@ class _DayOrOlderActivitiesScreenState
         prefs.updateActivityState(paoTimedTestKey, 'review');
         prefs.updateActivityVisible(paoTimedTestKey, false);
         prefs.updateActivityVisible(paoTimedTestPrepKey, true);
-        if (prefs.getBool(paoTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(paoTimedTestCompleteKey)) {
           prefs.updateActivityState(paoTimedTestPrepKey, 'todo');
         }
         break;
@@ -120,7 +120,7 @@ class _DayOrOlderActivitiesScreenState
         prefs.updateActivityState(deckTimedTestKey, 'review');
         prefs.updateActivityVisible(deckTimedTestKey, false);
         prefs.updateActivityVisible(deckTimedTestPrepKey, true);
-        if (prefs.getBool(deckTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(deckTimedTestCompleteKey)) {
           prefs.updateActivityState(deckTimedTestPrepKey, 'todo');
         }
         break;

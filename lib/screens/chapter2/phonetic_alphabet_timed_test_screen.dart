@@ -185,14 +185,14 @@ class _PhoneticAlphabetTimedTestScreenState
       prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
       prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
       prefs.setBool(morseGameAvailableKey, true);
-      if (prefs.getBool(morseGameFirstViewKey) == null) {
+      if (!prefs.getBool(morseGameFirstViewKey)) {
         prefs.setBool(newGamesAvailableKey, true);
         prefs.setBool(morseGameFirstViewKey, true);
       }
-      if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
         prefs.setBool(phoneticAlphabetTimedTestCompleteKey, true);
         prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
-        if (prefs.getBool(airportTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(airportTimedTestCompleteKey)) {
           showSnackBar(
             context: context,
             snackBarText:
@@ -256,9 +256,6 @@ class _PhoneticAlphabetTimedTestScreenState
     prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
     prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
     prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
-    if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
-      prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         context: context,
         snackBarText: 'Head back to test prep to study up!',

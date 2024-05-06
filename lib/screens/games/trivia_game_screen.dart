@@ -114,7 +114,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
         guess3.text.trim() == answer3 &&
         guess4.text.trim() == answer4 &&
         guess5.text.trim() == answer5) {
-      if (prefs.getBool('fade${widget.difficulty}Complete') == null) {
+      if (!prefs.getBool('fade${widget.difficulty}Complete')) {
         showSnackBar(
           context: context,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',

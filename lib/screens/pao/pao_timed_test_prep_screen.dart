@@ -146,8 +146,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
         context, paoTimedTestPrepFirstHelpKey, PAOTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for paoTest
-    bool? sdTestIsActive = prefs.getBool(paoTestActiveKey);
-    if (sdTestIsActive == null || !sdTestIsActive) {
+    if (!prefs.getBool(paoTestActiveKey)) {
       print('no active test, setting new values');
       var random = new Random();
       digits1 = possibleValues[random.nextInt(possibleValues.length)];
@@ -171,15 +170,15 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
       prefs.setBool(paoTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      digits1 = prefs.getString('paoTestDigits1')!;
-      digits2 = prefs.getString('paoTestDigits2')!;
-      digits3 = prefs.getString('paoTestDigits3')!;
-      digits4 = prefs.getString('paoTestDigits4')!;
-      digits5 = prefs.getString('paoTestDigits5')!;
-      digits6 = prefs.getString('paoTestDigits6')!;
-      digits7 = prefs.getString('paoTestDigits7')!;
-      digits8 = prefs.getString('paoTestDigits8')!;
-      digits9 = prefs.getString('paoTestDigits9')!;
+      digits1 = prefs.getString('paoTestDigits1');
+      digits2 = prefs.getString('paoTestDigits2');
+      digits3 = prefs.getString('paoTestDigits3');
+      digits4 = prefs.getString('paoTestDigits4');
+      digits5 = prefs.getString('paoTestDigits5');
+      digits6 = prefs.getString('paoTestDigits6');
+      digits7 = prefs.getString('paoTestDigits7');
+      digits8 = prefs.getString('paoTestDigits8');
+      digits9 = prefs.getString('paoTestDigits9');
     }
     setState(() {});
   }

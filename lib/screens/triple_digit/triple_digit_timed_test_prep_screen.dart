@@ -50,8 +50,7 @@ class _TripleDigitTimedTestPrepScreenState
         TripleDigitTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for tripleDigitTest
-    bool? sdTestIsActive = prefs.getBool(tripleDigitTestActiveKey);
-    if (sdTestIsActive == null || !sdTestIsActive) {
+    if (!prefs.getBool(tripleDigitTestActiveKey)) {
       print('no active test, setting new values');
       var random = new Random();
       digits1 = random.nextInt(1000).toString().padLeft(3, '0');
@@ -81,18 +80,18 @@ class _TripleDigitTimedTestPrepScreenState
       prefs.setBool(tripleDigitTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      digits1 = prefs.getString('tripleDigitTestDigit1')!;
-      digits2 = prefs.getString('tripleDigitTestDigit2')!;
-      digits3 = prefs.getString('tripleDigitTestDigit3')!;
-      digits4 = prefs.getString('tripleDigitTestDigit4')!;
-      digits5 = prefs.getString('tripleDigitTestDigit5')!;
-      digits6 = prefs.getString('tripleDigitTestDigit6')!;
-      digits7 = prefs.getString('tripleDigitTestDigit7')!;
-      digits8 = prefs.getString('tripleDigitTestDigit8')!;
-      digits9 = prefs.getString('tripleDigitTestDigit9')!;
-      digits10 = prefs.getString('tripleDigitTestDigit10')!;
-      digits11 = prefs.getString('tripleDigitTestDigit11')!;
-      digits12 = prefs.getString('tripleDigitTestDigit12')!;
+      digits1 = prefs.getString('tripleDigitTestDigit1');
+      digits2 = prefs.getString('tripleDigitTestDigit2');
+      digits3 = prefs.getString('tripleDigitTestDigit3');
+      digits4 = prefs.getString('tripleDigitTestDigit4');
+      digits5 = prefs.getString('tripleDigitTestDigit5');
+      digits6 = prefs.getString('tripleDigitTestDigit6');
+      digits7 = prefs.getString('tripleDigitTestDigit7');
+      digits8 = prefs.getString('tripleDigitTestDigit8');
+      digits9 = prefs.getString('tripleDigitTestDigit9');
+      digits10 = prefs.getString('tripleDigitTestDigit10');
+      digits11 = prefs.getString('tripleDigitTestDigit11');
+      digits12 = prefs.getString('tripleDigitTestDigit12');
     }
     setState(() {});
   }

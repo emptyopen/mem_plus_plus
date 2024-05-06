@@ -161,7 +161,7 @@ class _FadeGameScreenState extends State<FadeGameScreen>
 
   checkAnswer(BuildContext context) async {
     if (textController.text.trim() == randomSequence) {
-      if (prefs.getBool('fade${widget.difficulty}Complete') == null) {
+      if (!prefs.getBool('fade${widget.difficulty}Complete')) {
         showSnackBar(
           context: context,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',

@@ -45,10 +45,10 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     prefs.checkFirstTime(
         context, faceTimedTestFirstHelpKey, FaceTimedTestScreenHelp());
     // grab the digits
-    face1 = (prefs.getString('face1'))!;
-    face2 = (prefs.getString('face2'))!;
-    name1 = (prefs.getString('name1'))!;
-    name2 = (prefs.getString('name2'))!;
+    face1 = (prefs.getString('face1'));
+    face2 = (prefs.getString('face2'));
+    name1 = (prefs.getString('name1'));
+    name2 = (prefs.getString('name2'));
     isLoaded = true;
     print('real answer: $name1 $name2');
     setState(() {});
@@ -71,30 +71,19 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
       // every time
       prefs.updateActivityVisible(faceTimedTestKey, false);
       prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-      if (prefs.getBool(faceTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(faceTimedTestCompleteKey)) {
         prefs.updateActivityState(faceTimedTestKey, 'review');
         prefs.setBool(faceTimedTestCompleteKey, true);
-        if (prefs.getBool(planetTimedTestCompleteKey) == null) {
-          showSnackBar(
-            context: context,
-            snackBarText:
-                'Awesome job! Complete the Planet test to unlock the next system!',
-            textColor: Colors.black,
-            backgroundColor: colorChapter1Darker,
-            durationSeconds: 3,
-          );
-        } else {
-          prefs.updateActivityVisible(alphabetEditKey, true);
-          showSnackBar(
-            context: context,
-            snackBarText:
-                'Congratulations! You\'ve unlocked the Alphabet system!',
-            textColor: Colors.white,
-            backgroundColor: colorAlphabetDarker,
-            durationSeconds: 3,
-            isSuper: true,
-          );
-        }
+        prefs.updateActivityVisible(alphabetEditKey, true);
+        showSnackBar(
+          context: context,
+          snackBarText:
+              'Congratulations! You\'ve unlocked the Alphabet system!',
+          textColor: Colors.white,
+          backgroundColor: colorAlphabetDarker,
+          durationSeconds: 3,
+          isSuper: true,
+        );
       } else {
         showSnackBar(
           context: context,
@@ -124,9 +113,6 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     prefs.updateActivityState(faceTimedTestKey, 'review');
     prefs.updateActivityVisible(faceTimedTestKey, false);
     prefs.updateActivityVisible(faceTimedTestPrepKey, true);
-    if (prefs.getBool(faceTimedTestCompleteKey) == null) {
-      prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         context: context,
         snackBarText:

@@ -48,14 +48,14 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     prefs.checkFirstTime(
         context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
     // grab the digits
-    char1 = (prefs.getString('alphabetTestChar1'))!;
-    char2 = (prefs.getString('alphabetTestChar2'))!;
-    char3 = (prefs.getString('alphabetTestChar3'))!;
-    char4 = (prefs.getString('alphabetTestChar4'))!;
-    char5 = (prefs.getString('alphabetTestChar5'))!;
-    char6 = (prefs.getString('alphabetTestChar6'))!;
-    char7 = (prefs.getString('alphabetTestChar7'))!;
-    char8 = (prefs.getString('alphabetTestChar8'))!;
+    char1 = (prefs.getString('alphabetTestChar1'));
+    char2 = (prefs.getString('alphabetTestChar2'));
+    char3 = (prefs.getString('alphabetTestChar3'));
+    char4 = (prefs.getString('alphabetTestChar4'));
+    char5 = (prefs.getString('alphabetTestChar5'));
+    char6 = (prefs.getString('alphabetTestChar6'));
+    char7 = (prefs.getString('alphabetTestChar7'));
+    char8 = (prefs.getString('alphabetTestChar8'));
     print('real answer: $char1$char2$char3$char4 $char5$char6$char7$char8');
     setState(() {});
   }
@@ -70,7 +70,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
       prefs.updateActivityVisible(alphabetTimedTestKey, false);
       prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
       prefs.updateActivityVisible(lesson2Key, true);
-      if (prefs.getBool(alphabetTimedTestCompleteKey) == null) {
+      if (prefs.getBool(alphabetTimedTestCompleteKey)) {
         prefs.updateActivityState(alphabetTimedTestKey, 'review');
         prefs.setBool(alphabetTimedTestCompleteKey, true);
         showSnackBar(
@@ -120,9 +120,6 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     prefs.updateActivityState(alphabetTimedTestKey, 'review');
     prefs.updateActivityVisible(alphabetTimedTestKey, false);
     prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
-    if (prefs.getBool(alphabetTimedTestCompleteKey) == null) {
-      prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
       context: context,
       snackBarText:

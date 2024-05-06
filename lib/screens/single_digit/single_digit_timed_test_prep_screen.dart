@@ -42,8 +42,7 @@ class _SingleDigitTimedTestPrepScreenState
     setState(() {
       // if digits are null, randomize values and store them,
       // then update DateTime available for singleDigitTest
-      bool? sdTestIsActive = prefs.getBool(singleDigitTestActiveKey);
-      if (sdTestIsActive == null || !sdTestIsActive) {
+      if (!prefs.getBool(singleDigitTestActiveKey)) {
         print('no active test, setting new values');
         var random = new Random();
         digit1 = random.nextInt(9).toString();
@@ -57,10 +56,10 @@ class _SingleDigitTimedTestPrepScreenState
         prefs.setBool(singleDigitTestActiveKey, true);
       } else {
         print('found active test, restoring values');
-        digit1 = (prefs.getString('singleDigitTestDigit1'))!;
-        digit2 = (prefs.getString('singleDigitTestDigit2'))!;
-        digit3 = (prefs.getString('singleDigitTestDigit3'))!;
-        digit4 = (prefs.getString('singleDigitTestDigit4'))!;
+        digit1 = (prefs.getString('singleDigitTestDigit1'));
+        digit2 = (prefs.getString('singleDigitTestDigit2'));
+        digit3 = (prefs.getString('singleDigitTestDigit3'));
+        digit4 = (prefs.getString('singleDigitTestDigit4'));
       }
     });
   }

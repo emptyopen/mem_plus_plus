@@ -33,7 +33,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, deckEditFirstHelpKey, DeckEditScreenHelp());
-    if (prefs.getString(deckKey) == null) {
+    if (prefs.getString(deckKey) == '') {
       deckData = debugModeEnabled ? defaultDeckData2 : defaultDeckData1;
       prefs.setString(deckKey, json.encode(deckData));
     } else {

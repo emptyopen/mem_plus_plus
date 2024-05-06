@@ -44,10 +44,10 @@ class _SingleDigitTimedTestScreenState
     prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp',
         SingleDigitTimedTestScreenHelp());
     // grab the digits
-    digit1 = (prefs.getString('singleDigitTestDigit1'))!;
-    digit2 = (prefs.getString('singleDigitTestDigit2'))!;
-    digit3 = (prefs.getString('singleDigitTestDigit3'))!;
-    digit4 = (prefs.getString('singleDigitTestDigit4'))!;
+    digit1 = (prefs.getString('singleDigitTestDigit1'));
+    digit2 = (prefs.getString('singleDigitTestDigit2'));
+    digit3 = (prefs.getString('singleDigitTestDigit3'));
+    digit4 = (prefs.getString('singleDigitTestDigit4'));
     print('real answer: $digit1$digit2$digit3$digit4');
     setState(() {});
   }
@@ -58,12 +58,12 @@ class _SingleDigitTimedTestScreenState
       prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
       prefs.updateActivityVisible(lesson1Key, true);
       prefs.setBool(gamesAvailableKey, true);
-      if (prefs.getBool(fadeGameFirstViewKey) == null) {
+      if (!prefs.getBool(fadeGameFirstViewKey)) {
         prefs.setBool(newGamesAvailableKey, true);
         prefs.setBool(fadeGameFirstViewKey, true);
       }
       prefs.setBool(fadeGameAvailableKey, true);
-      if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(singleDigitTimedTestCompleteKey)) {
         prefs.updateActivityState(singleDigitTimedTestKey, 'review');
         prefs.setBool(singleDigitTimedTestCompleteKey, true);
         showSnackBar(
@@ -118,7 +118,7 @@ class _SingleDigitTimedTestScreenState
     prefs.updateActivityState(singleDigitTimedTestKey, 'review');
     prefs.updateActivityVisible(singleDigitTimedTestKey, false);
     prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
-    if (prefs.getBool(singleDigitTimedTestCompleteKey) == null) {
+    if (!prefs.getBool(singleDigitTimedTestCompleteKey)) {
       prefs.updateActivityState(singleDigitTimedTestPrepKey, 'todo');
     }
     showSnackBar(

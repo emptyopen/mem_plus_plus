@@ -81,8 +81,7 @@ class _AlphabetTimedTestPrepScreenState
         AlphabetTimedTestPrepScreenHelp());
     // if digits are null, randomize values and store them,
     // then update DateTime available for alphabetTest
-    bool? sdTestIsActive = prefs.getBool(alphabetTestActiveKey);
-    if (sdTestIsActive == null || !sdTestIsActive) {
+    if (!prefs.getBool(alphabetTestActiveKey)) {
       print('no active test, setting new values');
       var random = new Random();
       char1 = possibleValues[random.nextInt(possibleValues.length)];
@@ -104,14 +103,14 @@ class _AlphabetTimedTestPrepScreenState
       prefs.setBool(alphabetTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      char1 = (prefs.getString('alphabetTestChar1'))!;
-      char2 = (prefs.getString('alphabetTestChar2'))!;
-      char3 = (prefs.getString('alphabetTestChar3'))!;
-      char4 = (prefs.getString('alphabetTestChar4'))!;
-      char5 = (prefs.getString('alphabetTestChar5'))!;
-      char6 = (prefs.getString('alphabetTestChar6'))!;
-      char7 = (prefs.getString('alphabetTestChar7'))!;
-      char8 = (prefs.getString('alphabetTestChar8'))!;
+      char1 = (prefs.getString('alphabetTestChar1'));
+      char2 = (prefs.getString('alphabetTestChar2'));
+      char3 = (prefs.getString('alphabetTestChar3'));
+      char4 = (prefs.getString('alphabetTestChar4'));
+      char5 = (prefs.getString('alphabetTestChar5'));
+      char6 = (prefs.getString('alphabetTestChar6'));
+      char7 = (prefs.getString('alphabetTestChar7'));
+      char8 = (prefs.getString('alphabetTestChar8'));
     }
     setState(() {});
   }

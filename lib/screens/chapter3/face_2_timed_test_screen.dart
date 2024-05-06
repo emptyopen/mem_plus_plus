@@ -57,14 +57,14 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(
         context, face2TimedTestFirstHelpKey, Face2TimedTestScreenHelp());
-    face1 = (prefs.getString('face2Face1'))!;
-    name1 = (prefs.getString('face2Name1'))!;
-    job1 = (prefs.getString('face2Job1'))!;
-    hometown1 = (prefs.getString('face2Hometown1'))!;
-    face2 = (prefs.getString('face2Face2'))!;
-    name2 = (prefs.getString('face2Name2'))!;
-    job2 = (prefs.getString('face2Job2'))!;
-    hometown2 = (prefs.getString('face2Hometown2'))!;
+    face1 = (prefs.getString('face2Face1'));
+    name1 = (prefs.getString('face2Name1'));
+    job1 = (prefs.getString('face2Job1'));
+    hometown1 = (prefs.getString('face2Hometown1'));
+    face2 = (prefs.getString('face2Face2'));
+    name2 = (prefs.getString('face2Name2'));
+    job2 = (prefs.getString('face2Job2'));
+    hometown2 = (prefs.getString('face2Hometown2'));
     isLoaded = true;
     print('real answer: $name1 $job1 $hometown1 || $name2 $job2 $hometown2');
     setState(() {});
@@ -92,10 +92,10 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
         levenshtein(hometown2Answer, hometown2Guess) <= 2) {
       prefs.updateActivityVisible(face2TimedTestKey, false);
       prefs.updateActivityVisible(face2TimedTestPrepKey, true);
-      if (prefs.getBool(face2TimedTestCompleteKey) == null) {
+      if (!prefs.getBool(face2TimedTestCompleteKey)) {
         prefs.updateActivityState(face2TimedTestKey, 'review');
         prefs.setBool(face2TimedTestCompleteKey, true);
-        if (prefs.getBool(piTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(piTimedTestCompleteKey)) {
           showSnackBar(
             context: context,
             snackBarText:
@@ -158,9 +158,6 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     prefs.updateActivityState(face2TimedTestKey, 'review');
     prefs.updateActivityVisible(face2TimedTestKey, false);
     prefs.updateActivityVisible(face2TimedTestPrepKey, true);
-    if (prefs.getBool(face2TimedTestCompleteKey) == null) {
-      prefs.updateActivityState(face2TimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         context: context,
         snackBarText:

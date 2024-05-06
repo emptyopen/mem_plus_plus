@@ -60,13 +60,13 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     prefs.checkFirstTime(
         context, airportTimedTestFirstHelpKey, AirportTimedTestScreenHelp());
     // grab the digits
-    departingTerminal = (prefs.getString('airportDepartingTerminal'))!;
-    flightCode = (prefs.getString('airportFlightCode'))!;
-    departureTime = (prefs.getString('airportFlightTime'))!;
-    confirmationCode = (prefs.getString('airportConfirmationCode'))!;
-    seatNumber = (prefs.getString('airportSeatNumber'))!;
-    gateNumber = (prefs.getString('airportGateNumber'))!;
-    arrivingTerminal = (prefs.getString('airportArrivingTerminal'))!;
+    departingTerminal = (prefs.getString('airportDepartingTerminal'));
+    flightCode = (prefs.getString('airportFlightCode'));
+    departureTime = (prefs.getString('airportFlightTime'));
+    confirmationCode = (prefs.getString('airportConfirmationCode'));
+    seatNumber = (prefs.getString('airportSeatNumber'));
+    gateNumber = (prefs.getString('airportGateNumber'));
+    arrivingTerminal = (prefs.getString('airportArrivingTerminal'));
     print(
         'real answer: $departingTerminal $confirmationCode $departureTime $gateNumber  $flightCode $seatNumber $arrivingTerminal');
     isLoaded = true;
@@ -124,10 +124,10 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
       //     arrivingTerminal.toLowerCase()) {
       prefs.updateActivityVisible(airportTimedTestKey, false);
       prefs.updateActivityVisible(airportTimedTestPrepKey, true);
-      if (prefs.getBool(airportTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(airportTimedTestCompleteKey)) {
         prefs.setBool(airportTimedTestCompleteKey, true);
         prefs.updateActivityState(airportTimedTestKey, 'review');
-        if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
           showSnackBar(
             context: context,
             snackBarText:
@@ -181,9 +181,6 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     prefs.updateActivityState(airportTimedTestKey, 'review');
     prefs.updateActivityVisible(airportTimedTestKey, false);
     prefs.updateActivityVisible(airportTimedTestPrepKey, true);
-    if (prefs.getBool(airportTimedTestCompleteKey) == null) {
-      prefs.updateActivityState(airportTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         context: context,
         snackBarText: 'Head back to test prep to try again!',

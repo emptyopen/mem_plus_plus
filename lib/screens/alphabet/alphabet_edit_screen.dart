@@ -32,7 +32,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   Future<Null> getSharedPrefs() async {
     await prefs.checkFirstTime(
         context, alphabetEditFirstHelpKey, AlphabetEditScreenHelp());
-    if (prefs.getString(alphabetKey) == null) {
+    if (prefs.getString(alphabetKey) == '') {
       alphabetData =
           debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
       prefs.setString(alphabetKey, json.encode(alphabetData));

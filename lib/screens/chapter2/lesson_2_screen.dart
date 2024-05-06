@@ -263,7 +263,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
   completeLesson() async {
     prefs.updateActivityVisible(airportTimedTestPrepKey, true);
     prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
-    if (prefs.getBool(lesson1CompleteKey) == null) {
+    if (!prefs.getBool(lesson1CompleteKey)) {
       showSnackBar(
         context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the NATO/Morse test!',

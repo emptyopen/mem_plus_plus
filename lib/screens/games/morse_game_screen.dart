@@ -197,7 +197,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
       correct = false;
     }
     if (correct) {
-      if (prefs.getBool('morse${widget.difficulty}Complete') == null) {
+      if (!prefs.getBool('morse${widget.difficulty}Complete')) {
         showSnackBar(
           context: context,
           snackBarText: 'Congrats! You\'ve beaten $difficultyName difficulty!',

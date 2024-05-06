@@ -137,7 +137,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
   completeLesson() async {
     prefs.updateActivityVisible(faceTimedTestPrepKey, true);
     prefs.updateActivityVisible(planetTimedTestPrepKey, true);
-    if (prefs.getBool(lesson1CompleteKey) == null) {
+    if (!prefs.getBool(lesson1CompleteKey)) {
       showSnackBar(
         context: context,
         snackBarText: 'Congratulations! You\'ve unlocked the Face test!',

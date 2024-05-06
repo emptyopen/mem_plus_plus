@@ -131,10 +131,10 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
             planetPositionSize[planet4][1].toString()) {
       prefs.updateActivityVisible(planetTimedTestKey, false);
       prefs.updateActivityVisible(planetTimedTestPrepKey, true);
-      if (prefs.getBool(planetTimedTestCompleteKey) == null) {
+      if (!prefs.getBool(planetTimedTestCompleteKey)) {
         prefs.updateActivityState(planetTimedTestKey, 'review');
         prefs.setBool(planetTimedTestCompleteKey, true);
-        if (prefs.getBool(faceTimedTestCompleteKey) == null) {
+        if (!prefs.getBool(faceTimedTestCompleteKey)) {
           showSnackBar(
             context: context,
             snackBarText:
@@ -187,9 +187,6 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     prefs.updateActivityState(planetTimedTestKey, 'review');
     prefs.updateActivityVisible(planetTimedTestKey, false);
     prefs.updateActivityVisible(planetTimedTestPrepKey, true);
-    if (prefs.getBool(planetTimedTestCompleteKey) == null) {
-      prefs.updateActivityState(planetTimedTestPrepKey, 'todo');
-    }
     showSnackBar(
         context: context,
         snackBarText: 'Head back to test prep to study up!',
