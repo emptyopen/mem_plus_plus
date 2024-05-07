@@ -217,7 +217,6 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
                           'Have you got everything memorized? Got a beautiful, wacky scene with lots of details?',
                       confirmColor: colorChapter1Standard),
                   fontSize: 22,
-                  padding: 10,
                 ),
                 SizedBox(height: 10),
                 Container(

@@ -352,7 +352,6 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                       text: 'Give up',
                       onPressed: () => giveUp(),
                       color: Colors.grey[200]!,
-                      padding: 10,
                       fontSize: 24,
                     ),
                     SizedBox(
@@ -362,7 +361,6 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorDeckStandard,
-                      padding: 10,
                       fontSize: 24,
                     ),
                   ],

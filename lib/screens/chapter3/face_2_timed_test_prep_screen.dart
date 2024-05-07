@@ -263,7 +263,6 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                           'Are you sure you\'d like to start this test? The names will no longer be available to view!',
                       confirmColor: colorChapter3Darker),
                   fontSize: 30,
-                  padding: 10,
                 ),
                 SizedBox(
                   height: 20,

@@ -438,7 +438,6 @@ class CustomMemoryTile extends StatelessWidget {
                   BasicFlatButton(
                     text: 'OK',
                     fontSize: 24,
-                    padding: 10,
                     color: colorCustomMemoryStandard,
                     onPressed: () => resetCustomMemory(context),
                   )

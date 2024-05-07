@@ -151,7 +151,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.red[400]!,
                     textColor: Colors.white,
                     fontSize: 20,
-                    padding: 10,
                     onPressed: () {
                       HapticFeedback.lightImpact();
                       showConfirmDialog(

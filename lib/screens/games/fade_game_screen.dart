@@ -234,7 +234,8 @@ class _FadeGameScreenState extends State<FadeGameScreen>
                                     text: 'GO!',
                                     color: colorGamesLighter,
                                     fontSize: 42,
-                                    padding: 20,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 20),
                                     onPressed: () {
                                       animationController.reset();
                                       animationController.forward();
@@ -300,7 +301,6 @@ class _FadeGameScreenState extends State<FadeGameScreen>
                               text: 'Give up',
                               color: Colors.grey,
                               fontSize: 20,
-                              padding: 10,
                               onPressed: () {
                                 setState(() {
                                   started = false;
@@ -321,7 +321,6 @@ class _FadeGameScreenState extends State<FadeGameScreen>
                               text: 'Submit',
                               color: colorGamesStandard,
                               fontSize: 20,
-                              padding: 10,
                               onPressed: () => checkAnswer(context),
                             ),
                           ],

@@ -256,7 +256,6 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                       text: 'Give up',
                       onPressed: () => giveUp(),
                       color: Colors.grey[200]!,
-                      padding: 10,
                       fontSize: 24,
                     ),
                     SizedBox(
@@ -266,7 +265,6 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorPAOStandard,
-                      padding: 10,
                       fontSize: 24,
                     ),
                   ],

@@ -6,7 +6,7 @@ class BasicFlatButton extends StatelessWidget {
   final String text;
   final double fontSize;
   final Function onPressed;
-  final double padding;
+  final EdgeInsetsGeometry padding;
   final Color textColor;
   final String fontFamily;
 
@@ -15,7 +15,7 @@ class BasicFlatButton extends StatelessWidget {
     required this.text,
     this.fontSize = 14,
     required this.onPressed,
-    this.padding = 0,
+    this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
     this.textColor = Colors.black,
     this.fontFamily = 'Viga',
   });
@@ -43,7 +43,7 @@ class BasicFlatButton extends StatelessWidget {
                 ),
               ],
             ),
-            padding: EdgeInsets.all(padding),
+            padding: padding,
             child: Center(
               child: Text(
                 text,

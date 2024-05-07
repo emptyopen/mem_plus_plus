@@ -270,7 +270,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
                 ? 'Pick Date'
                 : datetimeToDateString(memoryField.controller.text),
             fontSize: 18,
-            padding: 5,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           ),
         );
       } else {

@@ -105,7 +105,6 @@ class _SlidingTilesState extends State<SlidingTiles> {
                   text: widget.buttonText,
                   color: Colors.green[200]!,
                   onPressed: widget.callback ?? () => goToMainMenu(context),
-                  padding: 10,
                   fontSize: 20,
                 ))
             : SizedBox(height: buttonHeight),

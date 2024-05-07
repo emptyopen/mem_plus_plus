@@ -626,7 +626,6 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                           fontSize: 24,
                           color: Colors.grey[200]!,
                           onPressed: () => giveUp(),
-                          padding: 10,
                         ),
                         SizedBox(
                           width: 10,
@@ -636,7 +635,6 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                           fontSize: 24,
                           color: colorChapter2Standard,
                           onPressed: () => checkAnswer(),
-                          padding: 10,
                         ),
                       ],
                     ),

@@ -352,7 +352,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                 fontSize: 20,
                 onPressed: () => checkAnswer(),
                 color: Colors.purple[100]!,
-                padding: 10,
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               ),
               SizedBox(
                 height: 50,
@@ -419,7 +419,7 @@ class _PromptPairState extends State<PromptPair> {
                       ? 'Pick Date'
                       : datetimeToDateString(widget.textController.text),
                   fontSize: 18,
-                  padding: 5,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 )
               : TextField(
                   style:

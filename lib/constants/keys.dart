@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // debug mode - FALSE for production
-const bool debugModeEnabled = false;
+const bool debugModeEnabled = true;
 const int debugTestTime = 5;
 
 const String usernameKey = 'Username';

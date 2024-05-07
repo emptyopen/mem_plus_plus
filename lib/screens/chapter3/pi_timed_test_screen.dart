@@ -312,7 +312,6 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                       text: 'Give up',
                       onPressed: () => giveUp(),
                       color: Colors.grey[200]!,
-                      padding: 10,
                       fontSize: 24,
                     ),
                     SizedBox(
@@ -322,7 +321,6 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                       text: 'Submit',
                       onPressed: () => checkAnswer(),
                       color: colorChapter3Standard,
-                      padding: 10,
                       fontSize: 24,
                     ),
                   ],

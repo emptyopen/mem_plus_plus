@@ -218,7 +218,6 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                           'Are you sure you\'d like to start this test? The names will no longer be available to view!',
                       confirmColor: colorChapter1Darker),
                   fontSize: 30,
-                  padding: 10,
                 ),
                 SizedBox(
                   height: 20,

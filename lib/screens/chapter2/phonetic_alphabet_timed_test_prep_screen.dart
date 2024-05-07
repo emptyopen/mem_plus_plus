@@ -151,7 +151,6 @@ class _PhoneticAlphabetTimedTestPrepScreenState
                     confirmText: 'Are you sure you\'d like to start this test?',
                     confirmColor: colorChapter2Standard),
                 fontSize: 30,
-                padding: 10,
               ),
               SizedBox(
                 height: 20,

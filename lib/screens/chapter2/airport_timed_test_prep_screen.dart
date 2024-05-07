@@ -456,7 +456,6 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
                               'Are you sure you\'d like to start this test? The information will no longer be available to view!',
                           confirmColor: colorChapter2Standard),
                       fontSize: 30,
-                      padding: 10,
                     ),
                     SizedBox(
                       height: 20,

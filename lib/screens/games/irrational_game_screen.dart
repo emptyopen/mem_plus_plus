@@ -253,7 +253,6 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
             BasicFlatButton(
               text: 'Let\'s do this',
               fontSize: 26,
-              padding: 15,
               color: colorGamesStandard,
               onPressed: () {
                 setState(() {
@@ -433,7 +432,6 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
                   BasicFlatButton(
                     text: 'Back to menu',
                     fontSize: 24,
-                    padding: 10,
                     color: stateColor == Colors.red
                         ? Colors.red[100]!
                         : Colors.green[100]!,

@@ -277,7 +277,6 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
                             fontSize: 24,
                             color: Colors.grey[200]!,
                             onPressed: () => giveUp(),
-                            padding: 10,
                           ),
                           SizedBox(
                             width: 10,
@@ -287,7 +286,6 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
                             fontSize: 24,
                             color: colorChapter1Standard,
                             onPressed: () => checkAnswer(),
-                            padding: 10,
                           ),
                         ],
                       ),

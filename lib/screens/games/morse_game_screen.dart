@@ -469,7 +469,6 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                     : BasicFlatButton(
                         text: buttonText,
                         fontSize: 22,
-                        padding: 15,
                         color: colorGamesDarker,
                         textColor: Colors.white,
                         onPressed: () => {
@@ -519,7 +518,6 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                                 text: 'Give up',
                                 color: Colors.grey,
                                 fontSize: 20,
-                                padding: 10,
                                 onPressed: () {
                                   setState(() {
                                     started = false;
@@ -539,7 +537,6 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                                 text: 'Submit',
                                 color: colorGamesStandard,
                                 fontSize: 20,
-                                padding: 10,
                                 onPressed: () => checkAnswer(context),
                               ),
                             ],

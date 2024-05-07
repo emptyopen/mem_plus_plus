@@ -17,7 +17,6 @@ class OKPopButton extends StatelessWidget {
       text: 'OK',
       color: color,
       fontSize: 20,
-      padding: 10,
     );
   }
 }
