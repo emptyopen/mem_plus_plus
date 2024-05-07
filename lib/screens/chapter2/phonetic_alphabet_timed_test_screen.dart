@@ -61,7 +61,7 @@ class _PhoneticAlphabetTimedTestScreenState
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, phoneticAlphabetTimedTestFirstHelpKey,
-        PhoneticAlphabetTimedTestScreenHelp());
+        PhoneticAlphabetTimedTestScreenHelp(callback: widget.callback));
     var random = Random();
     // test on three random letters -> phonetic
     List<String> alreadyHave = [];
@@ -256,6 +256,9 @@ class _PhoneticAlphabetTimedTestScreenState
     prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
     prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);
     prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
+    if (!prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
+      prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         context: context,
         snackBarText: 'Head back to test prep to study up!',
@@ -301,7 +304,8 @@ class _PhoneticAlphabetTimedTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PhoneticAlphabetTimedTestScreenHelp();
+                      return PhoneticAlphabetTimedTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -564,6 +568,9 @@ class PhoneticWordGuess extends StatelessWidget {
 }
 
 class PhoneticAlphabetTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  PhoneticAlphabetTimedTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -582,6 +589,7 @@ class PhoneticAlphabetTimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,
       firstHelpKey: phoneticAlphabetTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

@@ -11,7 +11,6 @@ import 'package:mem_plus_plus/screens/triple_digit/triple_digit_practice_screen.
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_timed_test_prep_screen.dart';
 import 'package:mem_plus_plus/screens/triple_digit/triple_digit_timed_test_screen.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
@@ -317,7 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.of(context).push(PageRouteBuilder(
           opaque: false,
           pageBuilder: (BuildContext context, _, __) {
-            return HomepageHelp();
+            return HomepageHelp(callback: callback);
           }));
       prefs.setBool(homepageFirstHelpKey, true);
     }
@@ -853,7 +852,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
-                    return HomepageHelp();
+                    return HomepageHelp(callback: callback);
                   }));
             },
           ),
@@ -1441,6 +1440,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class HomepageHelp extends StatelessWidget {
+  final Function callback;
+  HomepageHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -1454,6 +1455,7 @@ class HomepageHelp extends StatelessWidget {
       buttonColor: Colors.grey[200]!,
       buttonSplashColor: Colors.grey[300]!,
       firstHelpKey: 'homepageFirstHelpKey',
+      callback: callback,
     );
   }
 }

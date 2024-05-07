@@ -353,6 +353,7 @@ class FadeGameScreenHelp extends StatelessWidget {
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,
       firstHelpKey: fadeGameFirstHelpKey,
+      callback: () {},
     );
   }
 }

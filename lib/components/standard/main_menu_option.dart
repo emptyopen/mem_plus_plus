@@ -300,7 +300,7 @@ class MainMenuOption extends StatelessWidget {
                           children: <Widget>[
                             Center(
                               child: Text(
-                                '${getActivityName().contains('[Timed Test]') ? getActivityName().replaceAll('[Timed Test]', 'Test') : getActivityName()} in ${generateTimeRemaining()}',
+                                '${getActivityName().contains('System - Timed Test') ? getActivityName().replaceAll('System - Timed Test', 'test') : getActivityName()} in ${generateTimeRemaining()}',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 14),
                               ),
@@ -323,6 +323,7 @@ class MainMenuOption extends StatelessWidget {
                                 ),
                                 textColor: Colors.white,
                                 color: Color.fromRGBO(0, 0, 0, 0.5),
+                                fontSize: 13,
                               ),
                             ),
                           ],

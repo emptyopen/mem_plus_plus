@@ -548,6 +548,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                         ],
                       )
                     : Container(),
+                SizedBox(height: 50),
               ],
             ),
           ),
@@ -571,11 +572,12 @@ class MorseGameScreenHelp extends StatelessWidget {
       title: 'Morse Survival Game',
       information: [
         '    Oh no! If you don\'t decode the Morse message and do what it says, the world is going to end! '
-            'It\'s time to be the hero! \n    The > symbol denotes a new word (careful on line wrapping).',
+            'It\'s time to be the hero! \n    The ">" symbol denotes a new word. Be careful with line wrapping!',
       ],
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,
       firstHelpKey: morseGameFirstHelpKey,
+      callback: () {},
     );
   }
 }

@@ -38,7 +38,7 @@ class _SingleDigitTimedTestPrepScreenState
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, singleDigitTimedTestPrepFirstHelpKey,
-        SingleDigitTimedTestPrepScreenHelp());
+        SingleDigitTimedTestPrepScreenHelp(callback: widget.callback));
     setState(() {
       // if digits are null, randomize values and store them,
       // then update DateTime available for singleDigitTest
@@ -96,7 +96,8 @@ class _SingleDigitTimedTestPrepScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitTimedTestPrepScreenHelp();
+                      return SingleDigitTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -200,6 +201,9 @@ class _SingleDigitTimedTestPrepScreenState
 }
 
 class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  SingleDigitTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Great job so far! Now your goal is to memorize a 4 digit number by converting the digits '
         'to their associated objects and imagining a crazy scene where those objects '
@@ -231,6 +235,7 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

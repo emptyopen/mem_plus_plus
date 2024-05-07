@@ -30,8 +30,8 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
   }
 
   getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, piTimedTestPrepFirstHelpKey, PiTimedTestPrepScreenHelp());
+    prefs.checkFirstTime(context, piTimedTestPrepFirstHelpKey,
+        PiTimedTestPrepScreenHelp(callback: widget.callback));
   }
 
   void updateStatus() async {
@@ -66,7 +66,8 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PiTimedTestPrepScreenHelp();
+                      return PiTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -165,6 +166,9 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
 }
 
 class PiTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  PiTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Welcome, welcome. We\'re going to really make you a nerd now... '
         'you\'re about to break your record for the longest number you\'ve ever memorized! '
@@ -184,6 +188,7 @@ class PiTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorChapter3Standard,
       buttonSplashColor: colorChapter3Darker,
       firstHelpKey: piTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

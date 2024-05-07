@@ -51,20 +51,20 @@ class _TripleDigitTimedTestScreenState
   Future<Null> getSharedPrefs() async {
     PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'TripleDigitTimedTestFirstHelp',
-        TripleDigitTimedTestScreenHelp());
+        TripleDigitTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
-    digit1 = prefs.getString('tripleDigitTestDigit1')!;
-    digit2 = prefs.getString('tripleDigitTestDigit2')!;
-    digit3 = prefs.getString('tripleDigitTestDigit3')!;
-    digit4 = prefs.getString('tripleDigitTestDigit4')!;
-    digit5 = prefs.getString('tripleDigitTestDigit5')!;
-    digit6 = prefs.getString('tripleDigitTestDigit6')!;
-    digit7 = prefs.getString('tripleDigitTestDigit7')!;
-    digit8 = prefs.getString('tripleDigitTestDigit8')!;
-    digit9 = prefs.getString('tripleDigitTestDigit9')!;
-    digit10 = prefs.getString('tripleDigitTestDigit10')!;
-    digit11 = prefs.getString('tripleDigitTestDigit11')!;
-    digit12 = prefs.getString('tripleDigitTestDigit12')!;
+    digit1 = prefs.getString('tripleDigitTestDigit1');
+    digit2 = prefs.getString('tripleDigitTestDigit2');
+    digit3 = prefs.getString('tripleDigitTestDigit3');
+    digit4 = prefs.getString('tripleDigitTestDigit4');
+    digit5 = prefs.getString('tripleDigitTestDigit5');
+    digit6 = prefs.getString('tripleDigitTestDigit6');
+    digit7 = prefs.getString('tripleDigitTestDigit7');
+    digit8 = prefs.getString('tripleDigitTestDigit8');
+    digit9 = prefs.getString('tripleDigitTestDigit9');
+    digit10 = prefs.getString('tripleDigitTestDigit10');
+    digit11 = prefs.getString('tripleDigitTestDigit11');
+    digit12 = prefs.getString('tripleDigitTestDigit12');
     print(
         'real answer: $digit1$digit2$digit3$digit4 $digit5$digit6$digit7$digit8 $digit9$digit10$digit11$digit12');
     setState(() {});
@@ -133,7 +133,8 @@ class _TripleDigitTimedTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return TripleDigitTimedTestScreenHelp();
+                      return TripleDigitTimedTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -229,6 +230,9 @@ class _TripleDigitTimedTestScreenState
 }
 
 class TripleDigitTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  TripleDigitTimedTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -237,6 +241,7 @@ class TripleDigitTimedTestScreenHelp extends StatelessWidget {
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: tripleDigitTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

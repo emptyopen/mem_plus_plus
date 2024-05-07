@@ -31,8 +31,8 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, deckPracticeFirstHelpKey, DeckPracticeScreenHelp());
+    prefs.checkFirstTime(context, deckPracticeFirstHelpKey,
+        DeckPracticeScreenHelp(callback: widget.callback));
     deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
     bool allComplete = true;
     for (int i = 0; i < deckData.length; i++) {
@@ -81,7 +81,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return DeckPracticeScreenHelp();
+                      return DeckPracticeScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -103,6 +103,8 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
 }
 
 class DeckPracticeScreenHelp extends StatelessWidget {
+  final Function callback;
+  DeckPracticeScreenHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -114,6 +116,7 @@ class DeckPracticeScreenHelp extends StatelessWidget {
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,
       firstHelpKey: deckPracticeFirstHelpKey,
+      callback: callback,
     );
   }
 }

@@ -32,7 +32,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, alphabetWrittenTestFirstHelpKey,
-        AlphabetWrittenTestScreenHelp());
+        AlphabetWrittenTestScreenHelp(callback: widget.callback));
     alphabetData = prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     alphabetData = shuffle(alphabetData) as List<AlphabetData>;
     dataReady = true;
@@ -67,7 +67,8 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetWrittenTestScreenHelp();
+                      return AlphabetWrittenTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -89,6 +90,9 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
 }
 
 class AlphabetWrittenTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  AlphabetWrittenTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -102,6 +106,7 @@ class AlphabetWrittenTestScreenHelp extends StatelessWidget {
       buttonColor: Colors.blue[100]!,
       buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetWrittenTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

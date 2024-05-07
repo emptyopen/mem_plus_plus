@@ -60,8 +60,8 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, planetTimedTestFirstHelpKey, PlanetTimedTestScreenHelp());
+    prefs.checkFirstTime(context, planetTimedTestFirstHelpKey,
+        PlanetTimedTestScreenHelp(callback: widget.callback));
 
     var random = Random();
     List planets = planetPositionSize.keys.toList();
@@ -187,6 +187,9 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     prefs.updateActivityState(planetTimedTestKey, 'review');
     prefs.updateActivityVisible(planetTimedTestKey, false);
     prefs.updateActivityVisible(planetTimedTestPrepKey, true);
+    if (!prefs.getBool(planetTimedTestCompleteKey)) {
+      prefs.updateActivityState(planetTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         context: context,
         snackBarText: 'Head back to test prep to study up!',
@@ -241,7 +244,8 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PlanetTimedTestScreenHelp();
+                      return PlanetTimedTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -308,7 +312,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 ),
                 Container(
                   child: Text(
-                    'farthest from the sun!',
+                    'furthest from the sun!',
                     style: TextStyle(
                         fontSize: 20, color: backgroundHighlightColor),
                     textAlign: TextAlign.center,
@@ -390,7 +394,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                 ),
                 Container(
                   child: Text(
-                    'farthest from the sun!',
+                    'furthest from the sun!',
                     style: TextStyle(
                         fontSize: 20, color: backgroundHighlightColor),
                     textAlign: TextAlign.center,
@@ -605,6 +609,9 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
 }
 
 class PlanetTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  PlanetTimedTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -619,6 +626,7 @@ class PlanetTimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorChapter1Standard,
       buttonSplashColor: colorChapter1Darker,
       firstHelpKey: planetTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

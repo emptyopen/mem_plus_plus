@@ -33,7 +33,7 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, tripleDigitPracticeFirstHelpKey,
-        TripleDigitPracticeScreenHelp());
+        TripleDigitPracticeScreenHelp(callback: widget.callback));
     tripleDigitData =
         prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
     bool allComplete = true;
@@ -81,7 +81,8 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
-                    return TripleDigitPracticeScreenHelp();
+                    return TripleDigitPracticeScreenHelp(
+                        callback: widget.callback);
                   }));
             },
           ),
@@ -109,6 +110,9 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
 }
 
 class TripleDigitPracticeScreenHelp extends StatelessWidget {
+  final Function callback;
+  TripleDigitPracticeScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Now that you have a complete set of triple digits mapped out, you\'re '
         'ready to get started with practice! \n    Here you will familiarize yourself '
@@ -127,6 +131,7 @@ class TripleDigitPracticeScreenHelp extends StatelessWidget {
       buttonColor: colorTripleDigitStandard,
       buttonSplashColor: colorTripleDigitDarker,
       firstHelpKey: tripleDigitPracticeFirstHelpKey,
+      callback: callback,
     );
   }
 }

@@ -22,23 +22,41 @@ class BasicFlatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: color),
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         HapticFeedback.lightImpact();
         onPressed();
       },
-      child: Padding(
-        padding: EdgeInsets.all(padding),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: fontSize,
-            color: textColor,
-            fontFamily: fontFamily,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                  offset: Offset(0, 1),
+                ),
+              ],
+            ),
+            padding: EdgeInsets.all(padding),
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: fontSize,
+                  color: textColor,
+                  fontFamily: fontFamily,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
+        ],
       ),
     );
   }

@@ -9,10 +9,14 @@ class SlidingTiles extends StatefulWidget {
   final List<SlidingTileContent> tiles;
   final bool showButtonEverySlide;
   final String buttonText;
+  final Function? callback;
+  final bool helpStyle;
   const SlidingTiles(
       {required this.tiles,
       required this.showButtonEverySlide,
       required this.buttonText,
+      this.callback,
+      this.helpStyle = false,
       Key? key})
       : super(key: key);
 
@@ -52,9 +56,9 @@ class _SlidingTilesState extends State<SlidingTiles> {
             },
             itemBuilder: (context, index) {
               return Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
+                margin: EdgeInsets.symmetric(
+                  horizontal: widget.helpStyle ? 20 : 16,
+                  vertical: 8,
                 ),
                 child: Center(
                   child: Column(
@@ -63,9 +67,20 @@ class _SlidingTilesState extends State<SlidingTiles> {
                       Text(
                         widget.tiles[index].header,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(
+                          fontSize: widget.helpStyle ? 16 : 24,
+                          color: widget.helpStyle
+                              ? Colors.grey
+                              : backgroundHighlightColor,
+                        ),
                       ),
-                      SizedBox(height: 30),
+                      Divider(
+                        height: widget.helpStyle ? 30 : 40,
+                        thickness: 1,
+                        indent: 70,
+                        endIndent: 70,
+                        color: Colors.grey,
+                      ),
                       Column(
                         children: widget.tiles[index].content,
                       ),
@@ -89,7 +104,7 @@ class _SlidingTilesState extends State<SlidingTiles> {
                 child: BasicFlatButton(
                   text: widget.buttonText,
                   color: Colors.green[200]!,
-                  onPressed: () => goToMainMenu(context),
+                  onPressed: widget.callback ?? () => goToMainMenu(context),
                   padding: 10,
                   fontSize: 20,
                 ))

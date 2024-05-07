@@ -57,8 +57,8 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, airportTimedTestFirstHelpKey, AirportTimedTestScreenHelp());
+    prefs.checkFirstTime(context, airportTimedTestFirstHelpKey,
+        AirportTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
     departingTerminal = (prefs.getString('airportDepartingTerminal'));
     flightCode = (prefs.getString('airportFlightCode'));
@@ -181,6 +181,9 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     prefs.updateActivityState(airportTimedTestKey, 'review');
     prefs.updateActivityVisible(airportTimedTestKey, false);
     prefs.updateActivityVisible(airportTimedTestPrepKey, true);
+    if (!prefs.getBool(airportTimedTestCompleteKey)) {
+      prefs.updateActivityState(airportTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         context: context,
         snackBarText: 'Head back to test prep to try again!',
@@ -208,7 +211,8 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return AirportTimedTestScreenHelp();
+                      return AirportTimedTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -649,6 +653,9 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
 }
 
 class AirportTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  AirportTimedTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -660,6 +667,7 @@ class AirportTimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,
       firstHelpKey: airportTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

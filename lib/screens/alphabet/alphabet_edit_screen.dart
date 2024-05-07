@@ -30,8 +30,8 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    await prefs.checkFirstTime(
-        context, alphabetEditFirstHelpKey, AlphabetEditScreenHelp());
+    await prefs.checkFirstTime(context, alphabetEditFirstHelpKey,
+        AlphabetEditScreenHelp(callback: widget.callback));
     if (prefs.getString(alphabetKey) == '') {
       alphabetData =
           debugModeEnabled ? defaultAlphabetData3 : defaultAlphabetData1;
@@ -103,7 +103,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetEditScreenHelp();
+                      return AlphabetEditScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -120,6 +120,9 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
 }
 
 class AlphabetEditScreenHelp extends StatelessWidget {
+  final Function callback;
+  AlphabetEditScreenHelp({Key? key, required this.callback}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -132,6 +135,7 @@ class AlphabetEditScreenHelp extends StatelessWidget {
       buttonColor: Colors.blue[100]!,
       buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetEditFirstHelpKey,
+      callback: callback,
     );
   }
 }

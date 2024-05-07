@@ -45,8 +45,8 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, 'AlphabetTimedTestFirstHelp', AlphabetTimedTestScreenHelp());
+    prefs.checkFirstTime(context, 'AlphabetTimedTestFirstHelp',
+        AlphabetTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
     char1 = (prefs.getString('alphabetTestChar1'));
     char2 = (prefs.getString('alphabetTestChar2'));
@@ -120,6 +120,9 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     prefs.updateActivityState(alphabetTimedTestKey, 'review');
     prefs.updateActivityVisible(alphabetTimedTestKey, false);
     prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
+    if (!prefs.getBool(alphabetTimedTestCompleteKey)) {
+      prefs.updateActivityState(alphabetTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
       context: context,
       snackBarText:
@@ -148,7 +151,8 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetTimedTestScreenHelp();
+                      return AlphabetTimedTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -271,6 +275,9 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
 }
 
 class AlphabetTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  AlphabetTimedTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -282,6 +289,7 @@ class AlphabetTimedTestScreenHelp extends StatelessWidget {
       buttonColor: Colors.blue[100]!,
       buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

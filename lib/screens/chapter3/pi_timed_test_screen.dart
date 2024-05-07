@@ -40,8 +40,8 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, piTimedTestFirstHelpKey, PiTimedTestScreenHelp());
+    prefs.checkFirstTime(context, piTimedTestFirstHelpKey,
+        PiTimedTestScreenHelp(callback: widget.callback));
     setState(() {});
   }
 
@@ -175,7 +175,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PiTimedTestScreenHelp();
+                      return PiTimedTestScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -340,6 +340,8 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
 }
 
 class PiTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  PiTimedTestScreenHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -352,6 +354,7 @@ class PiTimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorChapter3Standard,
       buttonSplashColor: colorChapter3Darker,
       firstHelpKey: piTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

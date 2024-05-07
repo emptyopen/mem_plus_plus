@@ -42,7 +42,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
 
   Future<Null> getSharedPrefs() async {
     await prefs.checkFirstTime(context, face2TimedTestPrepFirstHelpKey,
-        Face2TimedTestPrepScreenHelp());
+        Face2TimedTestPrepScreenHelp(callback: widget.callback));
     if (!prefs.getBool(face2TestActiveKey)) {
       print('no active test, setting new values');
       var random = new Random();
@@ -139,7 +139,8 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return Face2TimedTestPrepScreenHelp();
+                        return Face2TimedTestPrepScreenHelp(
+                            callback: widget.callback);
                       }));
                 },
               ),
@@ -283,6 +284,9 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
 }
 
 class Face2TimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  Face2TimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Welcome to the next level of the Faces test! Now, in addition to just a first name, we\'re '
         'going to memorize a last name, job, and hometown. Wow!',
@@ -301,6 +305,7 @@ class Face2TimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorChapter3Standard,
       buttonSplashColor: colorChapter3Darker,
       firstHelpKey: face2TimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

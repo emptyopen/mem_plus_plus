@@ -270,9 +270,18 @@ class _FlashCardState extends State<FlashCard> {
             speed: 700,
             front: Container(
               decoration: BoxDecoration(
-                  color: widget.lighterColor,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(20)),
+                color: widget.lighterColor,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 3,
+                    offset: Offset(3, 4),
+                  ),
+                ],
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -287,9 +296,18 @@ class _FlashCardState extends State<FlashCard> {
             ),
             back: Container(
               decoration: BoxDecoration(
-                  color: widget.lighterColor,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(20)),
+                color: widget.lighterColor,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 3,
+                    offset: Offset(3, 4),
+                  ),
+                ],
+              ),
               child: Stack(
                 children: <Widget>[
                   Padding(
@@ -335,16 +353,26 @@ class _FlashCardState extends State<FlashCard> {
                       height: 60,
                       width: screenWidth * 0.30,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          color: colorIncorrect,
-                          borderRadius: BorderRadius.circular(20)),
+                        // border: Border.all(color: Colors.grey),
+                        color: colorIncorrect,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: Offset(2, 3),
+                          ),
+                        ],
+                      ),
                       child: GestureDetector(
                         onTap: () => didntGotIt(),
                         child: Center(
-                            child: Text(
-                          'Next time!',
-                          style: TextStyle(fontSize: 17, color: Colors.black),
-                        )),
+                          child: Text(
+                            'Next time!',
+                            style: TextStyle(fontSize: 17, color: Colors.black),
+                          ),
+                        ),
                       ),
                     ),
                     bottom: 10,
@@ -355,16 +383,26 @@ class _FlashCardState extends State<FlashCard> {
                       height: 60,
                       width: screenWidth * 0.30,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          color: colorCorrect,
-                          borderRadius: BorderRadius.circular(20)),
+                        border: Border.all(color: Colors.grey),
+                        color: colorCorrect,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: Offset(2, 3),
+                          ),
+                        ],
+                      ),
                       child: GestureDetector(
                         onTap: () => gotIt(),
                         child: Center(
-                            child: Text(
-                          'Got it!',
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                        )),
+                          child: Text(
+                            'Got it!',
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          ),
+                        ),
                       ),
                     ),
                     bottom: 10,

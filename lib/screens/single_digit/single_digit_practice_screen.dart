@@ -33,7 +33,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, singleDigitPracticeFirstHelpKey,
-        SingleDigitPracticeScreenHelp());
+        SingleDigitPracticeScreenHelp(callback: widget.callback));
     singleDigitData =
         prefs.getSharedPrefs(singleDigitKey) as List<SingleDigitData>;
     bool allComplete = true;
@@ -81,7 +81,8 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
-                    return SingleDigitPracticeScreenHelp();
+                    return SingleDigitPracticeScreenHelp(
+                        callback: widget.callback);
                   }));
             },
           ),
@@ -109,6 +110,9 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
 }
 
 class SingleDigitPracticeScreenHelp extends StatelessWidget {
+  final Function callback;
+  SingleDigitPracticeScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Now that you have a complete set of single digits mapped out, you\'re '
         'ready to get started with practice! \n    Here you will familiarize yourself '
@@ -127,6 +131,7 @@ class SingleDigitPracticeScreenHelp extends StatelessWidget {
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitPracticeFirstHelpKey,
+      callback: callback,
     );
   }
 }

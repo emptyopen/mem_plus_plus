@@ -34,12 +34,12 @@ class _DifficultySelectionState extends State<DifficultySelection> {
   }
 
   getPrefs() async {
-    if (prefs.getBool(widget.completeKey) != null) {
+    if (prefs.getBool(widget.completeKey)) {
       setState(() {
         isComplete = true;
       });
     }
-    if (prefs.getBool(widget.availableKey) != null) {
+    if (prefs.getBool(widget.availableKey)) {
       setState(() {
         isAvailable = true;
       });

@@ -33,7 +33,7 @@ class _PhoneticAlphabetTimedTestPrepScreenState
 
   getSharedPrefs() async {
     prefs.checkFirstTime(context, phoneticAlphabetTimedTestPrepFirstHelpKey,
-        PhoneticAlphabetTimedTestPrepScreenHelp());
+        PhoneticAlphabetTimedTestPrepScreenHelp(callback: widget.callback));
   }
 
   void updateStatus() async {
@@ -111,7 +111,8 @@ class _PhoneticAlphabetTimedTestPrepScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PhoneticAlphabetTimedTestPrepScreenHelp();
+                      return PhoneticAlphabetTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -174,6 +175,9 @@ class _PhoneticAlphabetTimedTestPrepScreenState
 }
 
 class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  PhoneticAlphabetTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    OK! Let\'s get right down to using the Memory Palace. We\'re going to memorize the NATO phonetic alphabet and Morse code. '
         'Now if you get stranded on an island and there\'s a Morse code machine there, you can communicate with the world and be the hero!'
@@ -208,6 +212,7 @@ class PhoneticAlphabetTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,
       firstHelpKey: phoneticAlphabetTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

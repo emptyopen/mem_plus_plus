@@ -97,10 +97,9 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, deckTimedTestPrepFirstHelpKey, DeckTimedTestPrepScreenHelp());
-    bool? sdTestIsActive = prefs.getBool(deckTestActiveKey);
-    if (sdTestIsActive == null || !sdTestIsActive) {
+    prefs.checkFirstTime(context, deckTimedTestPrepFirstHelpKey,
+        DeckTimedTestPrepScreenHelp(callback: widget.callback));
+    if (!prefs.getBool(deckTestActiveKey)) {
       print('no active test, setting new values');
       var random = new Random();
 
@@ -136,15 +135,15 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
       prefs.setBool(deckTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      digits1 = (prefs.getString('deckTestDigits1'))!;
-      digits2 = (prefs.getString('deckTestDigits2'))!;
-      digits3 = (prefs.getString('deckTestDigits3'))!;
-      digits4 = (prefs.getString('deckTestDigits4'))!;
-      digits5 = (prefs.getString('deckTestDigits5'))!;
-      digits6 = (prefs.getString('deckTestDigits6'))!;
-      digits7 = (prefs.getString('deckTestDigits7'))!;
-      digits8 = (prefs.getString('deckTestDigits8'))!;
-      digits9 = (prefs.getString('deckTestDigits9'))!;
+      digits1 = (prefs.getString('deckTestDigits1'));
+      digits2 = (prefs.getString('deckTestDigits2'));
+      digits3 = (prefs.getString('deckTestDigits3'));
+      digits4 = (prefs.getString('deckTestDigits4'));
+      digits5 = (prefs.getString('deckTestDigits5'));
+      digits6 = (prefs.getString('deckTestDigits6'));
+      digits7 = (prefs.getString('deckTestDigits7'));
+      digits8 = (prefs.getString('deckTestDigits8'));
+      digits9 = (prefs.getString('deckTestDigits9'));
     }
     setState(() {});
   }
@@ -180,7 +179,8 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return DeckTimedTestPrepScreenHelp();
+                      return DeckTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -326,6 +326,9 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
 }
 
 class DeckTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  DeckTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -337,6 +340,7 @@ class DeckTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,
       firstHelpKey: deckTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

@@ -32,8 +32,8 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, tripleDigitEditFirstHelpKey, TripleDigitEditScreenHelp());
+    prefs.checkFirstTime(context, tripleDigitEditFirstHelpKey,
+        TripleDigitEditScreenHelp(callback: widget.callback));
     tripleDigitData =
         prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
     loading = false;
@@ -157,7 +157,8 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return TripleDigitEditScreenHelp();
+                      return TripleDigitEditScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -416,6 +417,9 @@ class _CSVImporterState extends State<CSVImporter> {
 }
 
 class TripleDigitEditScreenHelp extends StatelessWidget {
+  final Function callback;
+  TripleDigitEditScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Welcome to the 5th system, the Triple Digit System! :) \n'
         '    If you conquer this system, you\'ll be able to memorize numbers with absolute ease. '
@@ -431,6 +435,7 @@ class TripleDigitEditScreenHelp extends StatelessWidget {
       buttonColor: colorTripleDigitStandard,
       buttonSplashColor: colorTripleDigitDarker,
       firstHelpKey: tripleDigitEditFirstHelpKey,
+      callback: callback,
     );
   }
 }

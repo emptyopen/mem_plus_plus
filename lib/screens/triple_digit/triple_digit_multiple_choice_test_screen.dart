@@ -38,7 +38,7 @@ class _TripleDigitMultipleChoiceTestScreenState
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, tripleDigitMultipleChoiceTestFirstHelpKey,
-        TripleDigitMultipleChoiceScreenHelp());
+        TripleDigitMultipleChoiceScreenHelp(callback: widget.callback));
     tripleDigitData =
         prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
     tripleDigitData = shuffle(tripleDigitData) as List<TripleDigitData>;
@@ -123,7 +123,8 @@ class _TripleDigitMultipleChoiceTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return TripleDigitMultipleChoiceScreenHelp();
+                      return TripleDigitMultipleChoiceScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -146,6 +147,9 @@ class _TripleDigitMultipleChoiceTestScreenState
 }
 
 class TripleDigitMultipleChoiceScreenHelp extends StatelessWidget {
+  final Function callback;
+  TripleDigitMultipleChoiceScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -156,6 +160,7 @@ class TripleDigitMultipleChoiceScreenHelp extends StatelessWidget {
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: tripleDigitMultipleChoiceTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

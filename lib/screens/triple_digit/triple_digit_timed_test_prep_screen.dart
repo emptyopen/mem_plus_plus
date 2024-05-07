@@ -47,7 +47,7 @@ class _TripleDigitTimedTestPrepScreenState
   Future<Null> getSharedPrefs() async {
     PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(context, tripleDigitTimedTestPrepFirstHelpKey,
-        TripleDigitTimedTestPrepScreenHelp());
+        TripleDigitTimedTestPrepScreenHelp(callback: widget.callback));
     // if digits are null, randomize values and store them,
     // then update DateTime available for tripleDigitTest
     if (!prefs.getBool(tripleDigitTestActiveKey)) {
@@ -127,7 +127,8 @@ class _TripleDigitTimedTestPrepScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return TripleDigitTimedTestPrepScreenHelp();
+                      return TripleDigitTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -236,6 +237,9 @@ class _TripleDigitTimedTestPrepScreenState
 }
 
 class TripleDigitTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  TripleDigitTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -248,6 +252,7 @@ class TripleDigitTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorTripleDigitStandard,
       buttonSplashColor: colorTripleDigitDarker,
       firstHelpKey: tripleDigitTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

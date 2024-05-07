@@ -142,8 +142,8 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, paoTimedTestPrepFirstHelpKey, PAOTimedTestPrepScreenHelp());
+    prefs.checkFirstTime(context, paoTimedTestPrepFirstHelpKey,
+        PAOTimedTestPrepScreenHelp(callback: widget.callback));
     // if digits are null, randomize values and store them,
     // then update DateTime available for paoTest
     if (!prefs.getBool(paoTestActiveKey)) {
@@ -214,7 +214,8 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PAOTimedTestPrepScreenHelp();
+                      return PAOTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -308,6 +309,9 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
 }
 
 class PAOTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  PAOTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -329,6 +333,7 @@ class PAOTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,
       firstHelpKey: paoTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

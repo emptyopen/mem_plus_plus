@@ -42,7 +42,7 @@ class _SingleDigitTimedTestScreenState
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp',
-        SingleDigitTimedTestScreenHelp());
+        SingleDigitTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
     digit1 = (prefs.getString('singleDigitTestDigit1'));
     digit2 = (prefs.getString('singleDigitTestDigit2'));
@@ -147,7 +147,8 @@ class _SingleDigitTimedTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitTimedTestScreenHelp();
+                      return SingleDigitTimedTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -224,6 +225,9 @@ class _SingleDigitTimedTestScreenState
 }
 
 class SingleDigitTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  SingleDigitTimedTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -235,6 +239,7 @@ class SingleDigitTimedTestScreenHelp extends StatelessWidget {
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

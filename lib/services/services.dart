@@ -18,16 +18,10 @@ handleAppUpdate() async {
   PrefsUpdater prefs = PrefsUpdater();
 
   // new games for old devices:
-  if (prefs.getBool(singleDigitTimedTestCompleteKey) != null) {
-    prefs.setBool(gamesAvailableKey, true);
-    prefs.setBool(fadeGameAvailableKey, true);
-  }
-  if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null) {
-    prefs.setBool(morseGameAvailableKey, true);
-  }
-  if (prefs.getBool(piTimedTestCompleteKey) != null) {
-    prefs.setBool(irrationalGameAvailableKey, true);
-  }
+  prefs.setBool(gamesAvailableKey, true);
+  prefs.setBool(fadeGameAvailableKey, true);
+  prefs.setBool(morseGameAvailableKey, true);
+  prefs.setBool(irrationalGameAvailableKey, true);
 
   Map<String, Activity> activityStates =
       prefs.getSharedPrefs(activityStatesKey) as Map<String, Activity>;
@@ -231,17 +225,16 @@ initializeNotificationsScheduler() async {
     iOS: iOSPlatformChannelSpecifics,
   );
 
-  bool singleDigitComplete =
-      prefs.getBool(singleDigitTimedTestCompleteKey) != null;
-  bool chapter1Complete = prefs.getBool(faceTimedTestCompleteKey) != null &&
-      prefs.getBool(planetTimedTestCompleteKey) != null;
-  bool alphabetComplete = prefs.getBool(alphabetTimedTestCompleteKey) != null;
-  bool chapter2Complete = prefs.getBool(airportTimedTestCompleteKey) != null &&
-      prefs.getBool(phoneticAlphabetTimedTestCompleteKey) != null;
-  bool paoComplete = prefs.getBool(paoTimedTestCompleteKey) != null;
-  bool chapter3Complete = prefs.getBool(piTimedTestCompleteKey) != null &&
-      prefs.getBool(face2TimedTestCompleteKey) != null;
-  bool deckComplete = prefs.getBool(deckTimedTestCompleteKey) != null;
+  bool singleDigitComplete = prefs.getBool(singleDigitTimedTestCompleteKey);
+  bool chapter1Complete = prefs.getBool(faceTimedTestCompleteKey) &&
+      prefs.getBool(planetTimedTestCompleteKey);
+  bool alphabetComplete = prefs.getBool(alphabetTimedTestCompleteKey);
+  bool chapter2Complete = prefs.getBool(airportTimedTestCompleteKey) &&
+      prefs.getBool(phoneticAlphabetTimedTestCompleteKey);
+  bool paoComplete = prefs.getBool(paoTimedTestCompleteKey);
+  bool chapter3Complete = prefs.getBool(piTimedTestCompleteKey) &&
+      prefs.getBool(face2TimedTestCompleteKey);
+  bool deckComplete = prefs.getBool(deckTimedTestCompleteKey);
 
   var random = Random();
   int basicMessageIndex = random.nextInt(6);

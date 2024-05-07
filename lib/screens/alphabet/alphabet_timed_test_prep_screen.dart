@@ -78,7 +78,7 @@ class _AlphabetTimedTestPrepScreenState
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, 'AlphabetTimedTestPrepFirstHelp',
-        AlphabetTimedTestPrepScreenHelp());
+        AlphabetTimedTestPrepScreenHelp(callback: widget.callback));
     // if digits are null, randomize values and store them,
     // then update DateTime available for alphabetTest
     if (!prefs.getBool(alphabetTestActiveKey)) {
@@ -149,7 +149,8 @@ class _AlphabetTimedTestPrepScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return AlphabetTimedTestPrepScreenHelp();
+                      return AlphabetTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -310,6 +311,10 @@ class _AlphabetTimedTestPrepScreenState
 }
 
 class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  AlphabetTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -340,6 +345,7 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: Colors.blue[100]!,
       buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

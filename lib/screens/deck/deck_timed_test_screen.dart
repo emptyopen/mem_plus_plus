@@ -62,8 +62,8 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, deckTimedTestFirstHelpKey, DeckTimedTestScreenHelp());
+    prefs.checkFirstTime(context, deckTimedTestFirstHelpKey,
+        DeckTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
     card1 = (prefs.getString('deckTestDigits1'));
     card2 = (prefs.getString('deckTestDigits2'));
@@ -274,7 +274,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return DeckTimedTestScreenHelp();
+                      return DeckTimedTestScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -380,6 +380,8 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
 }
 
 class DeckTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  DeckTimedTestScreenHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -391,6 +393,7 @@ class DeckTimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,
       firstHelpKey: deckTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

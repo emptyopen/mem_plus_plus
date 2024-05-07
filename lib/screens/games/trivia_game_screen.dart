@@ -210,6 +210,7 @@ class PresidentsTriviaGameScreenHelp extends StatelessWidget {
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,
       firstHelpKey: presidentsTriviaGameFirstHelpKey,
+      callback: () {},
     );
   }
 }
@@ -227,6 +228,7 @@ class ElementsTriviaGameScreenHelp extends StatelessWidget {
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,
       firstHelpKey: elementsTriviaGameFirstHelpKey,
+      callback: () {},
     );
   }
 }
@@ -244,6 +246,7 @@ class CountriesTriviaGameScreenHelp extends StatelessWidget {
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,
       firstHelpKey: countriesTriviaGameFirstHelpKey,
+      callback: () {},
     );
   }
 }

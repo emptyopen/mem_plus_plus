@@ -38,7 +38,7 @@ class _DeckMultipleChoiceTestScreenState
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, deckMultipleChoiceTestFirstHelpKey,
-        DeckMultipleChoiceScreenHelp());
+        DeckMultipleChoiceScreenHelp(callback: widget.callback));
     deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
     deckData = shuffle(deckData) as List<DeckData>;
 
@@ -119,7 +119,8 @@ class _DeckMultipleChoiceTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return DeckMultipleChoiceScreenHelp();
+                      return DeckMultipleChoiceScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -142,6 +143,9 @@ class _DeckMultipleChoiceTestScreenState
 }
 
 class DeckMultipleChoiceScreenHelp extends StatelessWidget {
+  final Function callback;
+  DeckMultipleChoiceScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -153,6 +157,7 @@ class DeckMultipleChoiceScreenHelp extends StatelessWidget {
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,
       firstHelpKey: deckMultipleChoiceTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

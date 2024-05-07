@@ -32,7 +32,8 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, deckEditFirstHelpKey, DeckEditScreenHelp());
+    prefs.checkFirstTime(context, deckEditFirstHelpKey,
+        DeckEditScreenHelp(callback: widget.callback));
     if (prefs.getString(deckKey) == '') {
       deckData = debugModeEnabled ? defaultDeckData2 : defaultDeckData1;
       prefs.setString(deckKey, json.encode(deckData));
@@ -123,7 +124,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return DeckEditScreenHelp();
+                      return DeckEditScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -317,6 +318,8 @@ class _CSVImporterState extends State<CSVImporter> {
 }
 
 class DeckEditScreenHelp extends StatelessWidget {
+  final Function callback;
+  DeckEditScreenHelp({Key? key, required this.callback}) : super(key: key);
   final List<String> information = [
     '    Welcome to the deck system! \n'
         '    Here we are going to use the same idea as the PAO system, only now for each of the 52 cards! '
@@ -338,6 +341,7 @@ class DeckEditScreenHelp extends StatelessWidget {
       buttonColor: colorDeckStandard,
       buttonSplashColor: colorDeckDarker,
       firstHelpKey: deckEditFirstHelpKey,
+      callback: callback,
     );
   }
 }

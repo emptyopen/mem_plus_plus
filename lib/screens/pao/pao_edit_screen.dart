@@ -37,7 +37,12 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(context, paoEditFirstHelpKey, PAOEditScreenHelp());
+    prefs.checkFirstTime(
+        context,
+        paoEditFirstHelpKey,
+        PAOEditScreenHelp(
+          callback: widget.callback,
+        ));
     if (prefs.getString(paoKey) == '') {
       paoData = debugModeEnabled ? defaultPAOData2 : defaultPAOData1;
       prefs.setString(paoKey, json.encode(paoData));
@@ -136,7 +141,9 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PAOEditScreenHelp();
+                      return PAOEditScreenHelp(
+                        callback: widget.callback,
+                      );
                     }));
               },
             ),
@@ -384,6 +391,10 @@ class _CSVImporterState extends State<CSVImporter> {
 }
 
 class PAOEditScreenHelp extends StatelessWidget {
+  final Function callback;
+
+  PAOEditScreenHelp({Key? key, required this.callback}) : super(key: key);
+
   final List<String> information = [
     '    Welcome to the 3rd system, the Double Digit / PAO System! :) \n'
         '    PAO stands for Person Action Object. What this means is that for every digit '
@@ -426,6 +437,7 @@ class PAOEditScreenHelp extends StatelessWidget {
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,
       firstHelpKey: paoEditFirstHelpKey,
+      callback: callback,
     );
   }
 }

@@ -55,8 +55,8 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, face2TimedTestFirstHelpKey, Face2TimedTestScreenHelp());
+    prefs.checkFirstTime(context, face2TimedTestFirstHelpKey,
+        Face2TimedTestScreenHelp(callback: widget.callback));
     face1 = (prefs.getString('face2Face1'));
     name1 = (prefs.getString('face2Name1'));
     job1 = (prefs.getString('face2Job1'));
@@ -185,7 +185,8 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return Face2TimedTestScreenHelp();
+                      return Face2TimedTestScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -354,6 +355,9 @@ class InputPair extends StatelessWidget {
 }
 
 class Face2TimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  Face2TimedTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -366,6 +370,7 @@ class Face2TimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorChapter3Standard,
       buttonSplashColor: colorChapter3Darker,
       firstHelpKey: face2TimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

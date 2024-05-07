@@ -80,7 +80,8 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
-                    return AlphabetPracticeScreenHelp();
+                    return AlphabetPracticeScreenHelp(
+                        callback: widget.callback);
                   }));
             },
           ),
@@ -110,6 +111,10 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
 }
 
 class AlphabetPracticeScreenHelp extends StatelessWidget {
+  final Function callback;
+  AlphabetPracticeScreenHelp({Key? key, required this.callback})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -122,6 +127,7 @@ class AlphabetPracticeScreenHelp extends StatelessWidget {
       buttonColor: Colors.blue[100]!,
       buttonSplashColor: Colors.blue[300]!,
       firstHelpKey: alphabetPracticeFirstHelpKey,
+      callback: callback,
     );
   }
 }

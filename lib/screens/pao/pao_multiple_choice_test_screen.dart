@@ -39,7 +39,7 @@ class _PAOMultipleChoiceTestScreenState
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, paoMultipleChoiceTestFirstHelpKey,
-        PAOMultipleChoiceScreenHelp());
+        PAOMultipleChoiceScreenHelp(callback: widget.callback));
     paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
     paoData = shuffle(paoData) as List<PAOData>;
 
@@ -120,7 +120,8 @@ class _PAOMultipleChoiceTestScreenState
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PAOMultipleChoiceScreenHelp();
+                      return PAOMultipleChoiceScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -143,6 +144,9 @@ class _PAOMultipleChoiceTestScreenState
 }
 
 class PAOMultipleChoiceScreenHelp extends StatelessWidget {
+  final Function callback;
+  PAOMultipleChoiceScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -154,6 +158,7 @@ class PAOMultipleChoiceScreenHelp extends StatelessWidget {
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,
       firstHelpKey: paoMultipleChoiceTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

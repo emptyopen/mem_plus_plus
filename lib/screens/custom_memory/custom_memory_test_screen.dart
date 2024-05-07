@@ -337,7 +337,8 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return CustomMemoryTestScreenHelp();
+                        return CustomMemoryTestScreenHelp(
+                            callback: widget.callback);
                       }));
                 },
               ),
@@ -444,6 +445,9 @@ class _PromptPairState extends State<PromptPair> {
 }
 
 class CustomMemoryTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  CustomMemoryTestScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -454,6 +458,7 @@ class CustomMemoryTestScreenHelp extends StatelessWidget {
       buttonColor: Colors.purple[100]!,
       buttonSplashColor: Colors.purple[300]!,
       firstHelpKey: customMemoryTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

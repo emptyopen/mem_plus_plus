@@ -42,8 +42,8 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, faceTimedTestFirstHelpKey, FaceTimedTestScreenHelp());
+    prefs.checkFirstTime(context, faceTimedTestFirstHelpKey,
+        FaceTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
     face1 = (prefs.getString('face1'));
     face2 = (prefs.getString('face2'));
@@ -74,16 +74,27 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
       if (!prefs.getBool(faceTimedTestCompleteKey)) {
         prefs.updateActivityState(faceTimedTestKey, 'review');
         prefs.setBool(faceTimedTestCompleteKey, true);
-        prefs.updateActivityVisible(alphabetEditKey, true);
-        showSnackBar(
-          context: context,
-          snackBarText:
-              'Congratulations! You\'ve unlocked the Alphabet system!',
-          textColor: Colors.white,
-          backgroundColor: colorAlphabetDarker,
-          durationSeconds: 3,
-          isSuper: true,
-        );
+        if (!prefs.getBool(planetTimedTestCompleteKey)) {
+          showSnackBar(
+            context: context,
+            snackBarText:
+                'Awesome job! Complete the Planet test to unlock the next system!',
+            textColor: Colors.black,
+            backgroundColor: colorChapter1Darker,
+            durationSeconds: 3,
+          );
+        } else {
+          prefs.updateActivityVisible(alphabetEditKey, true);
+          showSnackBar(
+            context: context,
+            snackBarText:
+                'Congratulations! You\'ve unlocked the Alphabet system!',
+            textColor: Colors.white,
+            backgroundColor: colorAlphabetDarker,
+            durationSeconds: 3,
+            isSuper: true,
+          );
+        }
       } else {
         showSnackBar(
           context: context,
@@ -113,6 +124,9 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     prefs.updateActivityState(faceTimedTestKey, 'review');
     prefs.updateActivityVisible(faceTimedTestKey, false);
     prefs.updateActivityVisible(faceTimedTestPrepKey, true);
+    if (!prefs.getBool(faceTimedTestCompleteKey)) {
+      prefs.updateActivityState(faceTimedTestPrepKey, 'todo');
+    }
     showSnackBar(
         context: context,
         snackBarText:
@@ -139,7 +153,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return FaceTimedTestScreenHelp();
+                      return FaceTimedTestScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -291,6 +305,8 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
 }
 
 class FaceTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  FaceTimedTestScreenHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -303,6 +319,7 @@ class FaceTimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorChapter1Standard,
       buttonSplashColor: colorChapter1Darker,
       firstHelpKey: faceTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

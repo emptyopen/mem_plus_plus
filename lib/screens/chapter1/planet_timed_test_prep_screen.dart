@@ -32,7 +32,7 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
 
   getSharedPrefs() async {
     prefs.checkFirstTime(context, planetTimedTestPrepFirstHelpKey,
-        PlanetTimedTestPrepScreenHelp());
+        PlanetTimedTestPrepScreenHelp(callback: widget.callback));
   }
 
   void updateStatus() async {
@@ -90,7 +90,8 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PlanetTimedTestPrepScreenHelp();
+                      return PlanetTimedTestPrepScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -265,6 +266,9 @@ class PlanetText extends StatelessWidget {
 }
 
 class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  PlanetTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Well, you may have the planets memorized already! No problem. Either way, let\'s memorize an additional property '
         'of the planets: the order of their size!\n    If you ever did learn the order of the planets, it was likely '
@@ -306,6 +310,7 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorChapter1Standard,
       buttonSplashColor: colorChapter1Darker,
       firstHelpKey: planetTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

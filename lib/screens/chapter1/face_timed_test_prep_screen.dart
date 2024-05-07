@@ -37,10 +37,9 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    await prefs.checkFirstTime(
-        context, faceTimedTestPrepFirstHelpKey, FacesTimedTestPrepScreenHelp());
-    bool faceTestIsActive = (prefs.getBool(faceTestActiveKey))!;
-    if (!faceTestIsActive) {
+    await prefs.checkFirstTime(context, faceTimedTestPrepFirstHelpKey,
+        FacesTimedTestPrepScreenHelp(callback: widget.callback));
+    if (!prefs.getBool(faceTestActiveKey)) {
       print('no active test, setting new values');
       var random = new Random();
       var gender1IsMale = random.nextBool();
@@ -83,10 +82,10 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
       prefs.setBool(faceTestActiveKey, true);
     } else {
       print('found active test, restoring values');
-      face1 = (prefs.getString('face1'))!;
-      face2 = (prefs.getString('face2'))!;
-      name1 = (prefs.getString('name1'))!;
-      name2 = (prefs.getString('name2'))!;
+      face1 = (prefs.getString('face1'));
+      face2 = (prefs.getString('face2'));
+      name1 = (prefs.getString('name1'));
+      name2 = (prefs.getString('name2'));
     }
     setState(() {
       ready = true;
@@ -126,7 +125,8 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return FacesTimedTestPrepScreenHelp();
+                        return FacesTimedTestPrepScreenHelp(
+                            callback: widget.callback);
                       }));
                 },
               ),
@@ -237,6 +237,9 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
 }
 
 class FacesTimedTestPrepScreenHelp extends StatelessWidget {
+  final Function callback;
+  FacesTimedTestPrepScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final List<String> information = [
     '    Let\'s start with something practical, memorizing names! '
         'The best way to do this is to identify a permanent(ish) feature of the person, and link some scene '
@@ -268,6 +271,7 @@ class FacesTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorChapter1Standard,
       buttonSplashColor: colorChapter1Darker,
       firstHelpKey: faceTimedTestPrepFirstHelpKey,
+      callback: callback,
     );
   }
 }

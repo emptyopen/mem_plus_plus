@@ -27,12 +27,13 @@ class _GamesScreenState extends State<GamesScreen> {
   }
 
   void getGames() async {
-    prefs.checkFirstTime(context, gamesFirstHelpKey, GamesScreenHelp());
+    prefs.checkFirstTime(
+        context, gamesFirstHelpKey, GamesScreenHelp(callback: widget.callback));
     availableGameTiles = [];
     availableGameTiles.add(SizedBox(
       height: 10,
     ));
-    if (prefs.getBool(fadeGameAvailableKey) != null) {
+    if (prefs.getBool(fadeGameAvailableKey)) {
       availableGameTiles.add(
         GameTile(
           game: 'fade',
@@ -47,7 +48,7 @@ class _GamesScreenState extends State<GamesScreen> {
         ),
       );
     }
-    if (prefs.getBool(morseGameAvailableKey) != null) {
+    if (prefs.getBool(morseGameAvailableKey)) {
       availableGameTiles.add(
         GameTile(
           game: 'morse',
@@ -62,7 +63,7 @@ class _GamesScreenState extends State<GamesScreen> {
         ),
       );
     }
-    if (prefs.getBool(irrationalGameAvailableKey) != null) {
+    if (prefs.getBool(irrationalGameAvailableKey)) {
       availableGameTiles.add(
         GameTile(
           game: 'irrational',
@@ -96,7 +97,7 @@ class _GamesScreenState extends State<GamesScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return GamesScreenHelp();
+                      return GamesScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -109,6 +110,8 @@ class _GamesScreenState extends State<GamesScreen> {
 }
 
 class GamesScreenHelp extends StatelessWidget {
+  final Function callback;
+  GamesScreenHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -121,6 +124,7 @@ class GamesScreenHelp extends StatelessWidget {
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,
       firstHelpKey: gamesFirstHelpKey,
+      callback: callback,
     );
   }
 }

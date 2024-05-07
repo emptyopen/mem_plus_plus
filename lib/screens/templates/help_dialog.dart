@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/sliding_tile_content.dart';
-import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/components/standard/sliding_tiles.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
@@ -11,7 +10,7 @@ class HelpDialog extends StatefulWidget {
   final Color buttonColor;
   final Color buttonSplashColor;
   final String firstHelpKey;
-  final Function? callback;
+  final Function callback;
 
   HelpDialog({
     this.title = '',
@@ -19,7 +18,7 @@ class HelpDialog extends StatefulWidget {
     required this.buttonColor,
     required this.buttonSplashColor,
     required this.firstHelpKey,
-    this.callback,
+    required this.callback,
   });
 
   @override
@@ -36,67 +35,12 @@ class _HelpDialogState extends State<HelpDialog> {
   @override
   void initState() {
     super.initState();
-
-    // check if this is first time opening the screen
     checkFirstHelp();
-
     widget.information.forEach((String info) {
-      tiles
-          .add(SlidingTileContent(header: widget.title, content: [Text(info)]));
+      tiles.add(SlidingTileContent(
+          header: widget.title,
+          content: [Text(info, style: TextStyle(fontSize: 17))]));
     });
-
-    // if (widget.information.length > 1) {
-    //   informationList.add(Column(
-    //     children: <Widget>[
-    //       Text(
-    //         widget.title,
-    //         style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
-    //         textAlign: TextAlign.center,
-    //       ),
-    //       SizedBox(
-    //         height: 10,
-    //       ),
-    //       Text(
-    //         widget.information[0],
-    //         style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-    //         textAlign: TextAlign.left,
-    //       ),
-    //       SizedBox(
-    //         height: 20,
-    //       ),
-    //       Text(
-    //         '(Swipe for more information)',
-    //         style: TextStyle(fontSize: 16, color: Colors.grey[500]),
-    //         textAlign: TextAlign.center,
-    //       ),
-    //     ],
-    //   ));
-    //   widget.information.sublist(1).forEach((f) {
-    //     informationList.add(Text(
-    //       f,
-    //       style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-    //       textAlign: TextAlign.left,
-    //     ));
-    //   });
-    // } else {
-    //   informationList.add(Column(
-    //     children: [
-    //       Text(
-    //         widget.title,
-    //         style: TextStyle(fontSize: 28, color: backgroundHighlightColor),
-    //         textAlign: TextAlign.center,
-    //       ),
-    //       SizedBox(
-    //         height: 10,
-    //       ),
-    //       Text(
-    //         widget.information[0],
-    //         style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
-    //         textAlign: TextAlign.left,
-    //       ),
-    //     ],
-    //   ));
-    // }
   }
 
   checkFirstHelp() async {
@@ -110,86 +54,44 @@ class _HelpDialogState extends State<HelpDialog> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Material(
-        color: Color.fromRGBO(0, 0, 0, 0.7),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              constraints: BoxConstraints.expand(),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: screenWidth * 0.9,
-                    height: screenHeight * 0.75,
-                    decoration: BoxDecoration(
-                        color: backgroundColor,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: SlidingTiles(
-                      tiles: tiles,
-                      showButtonEverySlide: (firstHelp &&
-                              slideIndex == widget.information.length - 1) ||
-                          debugModeEnabled ||
-                          !firstHelp,
-                      buttonText: 'Done',
-                    ),
+      color: Color.fromRGBO(0, 0, 0, 0.7),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            color: Colors.transparent,
+            constraints: BoxConstraints.expand(),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: screenWidth * 0.95,
+                  height: screenHeight * 0.75,
+                  decoration: BoxDecoration(
+                      color: backgroundColor,
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  child: SlidingTiles(
+                    tiles: tiles,
+                    showButtonEverySlide: (firstHelp &&
+                            slideIndex == widget.information.length - 1) ||
+                        debugModeEnabled ||
+                        !firstHelp,
+                    buttonText: 'Done',
+                    callback: () {
+                      widget.callback();
+                      // mark help as completed
+                      prefs.setBool(widget.firstHelpKey, true);
+                      Navigator.pop(context);
+                    },
+                    helpStyle: true,
                   ),
-                  // SizedBox(
-                  //   height: 15,
-                  // ),
-                  // (firstHelp && slideIndex == widget.information.length - 1) ||
-                  //         debugModeEnabled ||
-                  //         !firstHelp
-                  //     ? HelpOKButton(
-                  //         buttonColor: widget.buttonColor,
-                  //         buttonSplashColor: widget.buttonSplashColor,
-                  //         firstHelpKey: widget.firstHelpKey,
-                  //         callback: widget.callback != null
-                  //             ? widget.callback!
-                  //             : () {},
-                  //       )2232
-                  //     : SizedBox(
-                  //         height: 50,
-                  //       ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ));
-  }
-}
-
-class HelpOKButton extends StatelessWidget {
-  final Color buttonColor;
-  final Color buttonSplashColor;
-  final String firstHelpKey;
-  final PrefsUpdater prefs = PrefsUpdater();
-  final Function callback;
-
-  HelpOKButton(
-      {required this.buttonColor,
-      required this.buttonSplashColor,
-      required this.firstHelpKey,
-      required this.callback});
-
-  updateFirstHelp() {
-    prefs.setBool(firstHelpKey, false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BasicFlatButton(
-      onPressed: () {
-        callback();
-        updateFirstHelp();
-        Navigator.pop(context);
-      },
-      text: 'OK',
-      color: buttonColor,
-      fontSize: 20,
-      padding: 10,
+          ),
+        ],
+      ),
     );
   }
 }

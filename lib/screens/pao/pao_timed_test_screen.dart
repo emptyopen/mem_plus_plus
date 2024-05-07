@@ -49,8 +49,8 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
 
   Future<Null> getSharedPrefs() async {
     PrefsUpdater prefs = PrefsUpdater();
-    prefs.checkFirstTime(
-        context, 'PAOTimedTestFirstHelp', PAOTimedTestScreenHelp());
+    prefs.checkFirstTime(context, 'PAOTimedTestFirstHelp',
+        PAOTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
     digits1 = prefs.getString('paoTestDigits1');
     digits2 = prefs.getString('paoTestDigits2');
@@ -153,7 +153,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return PAOTimedTestScreenHelp();
+                      return PAOTimedTestScreenHelp(callback: widget.callback);
                     }));
               },
             ),
@@ -284,6 +284,8 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
 }
 
 class PAOTimedTestScreenHelp extends StatelessWidget {
+  final Function callback;
+  PAOTimedTestScreenHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -295,6 +297,7 @@ class PAOTimedTestScreenHelp extends StatelessWidget {
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,
       firstHelpKey: paoTimedTestFirstHelpKey,
+      callback: callback,
     );
   }
 }

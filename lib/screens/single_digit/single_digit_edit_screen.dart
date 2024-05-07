@@ -32,8 +32,8 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, singleDigitEditFirstHelpKey, SingleDigitEditScreenHelp());
+    prefs.checkFirstTime(context, singleDigitEditFirstHelpKey,
+        SingleDigitEditScreenHelp(callback: widget.callback));
     if (prefs.getString(singleDigitKey) == '') {
       singleDigitData =
           debugModeEnabled ? defaultSingleDigitData3 : defaultSingleDigitData1;
@@ -103,7 +103,8 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
                 Navigator.of(context).push(PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitEditScreenHelp();
+                      return SingleDigitEditScreenHelp(
+                          callback: widget.callback);
                     }));
               },
             ),
@@ -121,6 +122,9 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
 }
 
 class SingleDigitEditScreenHelp extends StatelessWidget {
+  final Function callback;
+  SingleDigitEditScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   final information = [
     '    Welcome to your first system, the single digit system! '
         'The idea behind this system is to link the nine digits (0-9) to different objects. \n'
@@ -150,6 +154,7 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
       buttonColor: Colors.amber[100]!,
       buttonSplashColor: Colors.amber[300]!,
       firstHelpKey: singleDigitEditFirstHelpKey,
+      callback: callback,
     );
   }
 }

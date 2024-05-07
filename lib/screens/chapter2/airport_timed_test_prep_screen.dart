@@ -84,8 +84,7 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
     prefs.checkFirstTime(context, airportTimedTestPrepFirstHelpKey,
         AirportTimedTestPrepScreenHelp(callback: callback));
 
-    bool airportTestIsActive = (prefs.getBool(airportTestActiveKey))!;
-    if (!airportTestIsActive) {
+    if (!prefs.getBool(airportTestActiveKey)) {
       print('no active test, setting new values');
       var random = Random();
       confirmationCode = '';
@@ -127,14 +126,14 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
       prefs.setString('airportArrivingTerminal', arrivingTerminal);
       prefs.setBool(airportTestActiveKey, true);
     } else {
-      airline = (prefs.getString('airportAirline'))!;
-      departingTerminal = (prefs.getString('airportDepartingTerminal'))!;
-      flightCode = (prefs.getString('airportFlightCode'))!;
-      departureTime = (prefs.getString('airportFlightTime'))!;
-      confirmationCode = (prefs.getString('airportConfirmationCode'))!;
-      seatNumber = (prefs.getString('airportSeatNumber'))!;
-      gateNumber = (prefs.getString('airportGateNumber'))!;
-      arrivingTerminal = (prefs.getString('airportArrivingTerminal'))!;
+      airline = (prefs.getString('airportAirline'));
+      departingTerminal = (prefs.getString('airportDepartingTerminal'));
+      flightCode = (prefs.getString('airportFlightCode'));
+      departureTime = (prefs.getString('airportFlightTime'));
+      confirmationCode = (prefs.getString('airportConfirmationCode'));
+      seatNumber = (prefs.getString('airportSeatNumber'));
+      gateNumber = (prefs.getString('airportGateNumber'));
+      arrivingTerminal = (prefs.getString('airportArrivingTerminal'));
     }
     isLoaded = true;
     setState(() {});
@@ -486,10 +485,6 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
 
   AirportTimedTestPrepScreenHelp({required this.callback});
 
-  helpCallback() {
-    callback();
-  }
-
   final List<String> information = [
     '    You are a rock star! Let\'s get you some more practical experience you can use in '
         'day to day life - travel plans! The next time you go to the airport, don\'t bother with the hassle of '
@@ -518,7 +513,7 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,
       firstHelpKey: airportTimedTestPrepFirstHelpKey,
-      callback: helpCallback,
+      callback: callback,
     );
   }
 }

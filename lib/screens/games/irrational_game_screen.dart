@@ -524,6 +524,7 @@ class IrrationalGameScreenHelp extends StatelessWidget {
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,
       firstHelpKey: irrationalGameFirstHelpKey,
+      callback: () {},
     );
   }
 }

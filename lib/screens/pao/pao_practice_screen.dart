@@ -31,8 +31,8 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
   }
 
   Future<Null> getSharedPrefs() async {
-    prefs.checkFirstTime(
-        context, paoPracticeFirstHelpKey, PAOPracticeScreenHelp());
+    prefs.checkFirstTime(context, paoPracticeFirstHelpKey,
+        PAOPracticeScreenHelp(callback: widget.callback));
     paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
     bool allComplete = true;
     for (int i = 0; i < paoData.length; i++) {
@@ -81,7 +81,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return PAOPracticeScreenHelp();
+                        return PAOPracticeScreenHelp(callback: widget.callback);
                       }));
                 },
               ),
@@ -102,6 +102,8 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
 }
 
 class PAOPracticeScreenHelp extends StatelessWidget {
+  final Function callback;
+  PAOPracticeScreenHelp({Key? key, required this.callback}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -113,6 +115,7 @@ class PAOPracticeScreenHelp extends StatelessWidget {
       buttonColor: colorPAOStandard,
       buttonSplashColor: colorPAODarker,
       firstHelpKey: paoPracticeFirstHelpKey,
+      callback: callback,
     );
   }
 }

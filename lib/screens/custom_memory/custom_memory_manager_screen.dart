@@ -43,9 +43,9 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
 
   Future<Null> getSharedPrefs() async {
     prefs.checkFirstTime(context, customMemoryManagerFirstHelpKey,
-        CustomMemoryManagerScreenHelp());
+        CustomMemoryManagerScreenHelp(callback: widget.callback));
 
-    customMemories = json.decode((prefs.getString(customMemoriesKey))!);
+    customMemories = json.decode((prefs.getString(customMemoriesKey)));
 
     setState(() {});
   }
@@ -91,7 +91,8 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
                   Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) {
-                        return CustomMemoryManagerScreenHelp();
+                        return CustomMemoryManagerScreenHelp(
+                            callback: widget.callback);
                       }));
                 },
               ),
@@ -686,6 +687,9 @@ class _MyDialogContentState extends State<MyDialogContent> {
 }
 
 class CustomMemoryManagerScreenHelp extends StatelessWidget {
+  final Function callback;
+  CustomMemoryManagerScreenHelp({Key? key, required this.callback})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return HelpDialog(
@@ -701,6 +705,7 @@ class CustomMemoryManagerScreenHelp extends StatelessWidget {
       buttonColor: colorCustomMemoryStandard,
       buttonSplashColor: colorCustomMemoryDarker,
       firstHelpKey: customMemoryManagerFirstHelpKey,
+      callback: callback,
     );
   }
 }
