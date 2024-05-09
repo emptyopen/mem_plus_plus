@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/single_digit_data.dart';
 import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/services/services.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
@@ -20,7 +19,6 @@ class SingleDigitEditScreen extends StatefulWidget {
 }
 
 class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
-  late SharedPreferences sharedPreferences;
   late List<SingleDigitData> singleDigitData;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   PrefsUpdater prefs = PrefsUpdater();
@@ -31,7 +29,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, singleDigitEditFirstHelpKey,
         SingleDigitEditScreenHelp(callback: widget.callback));
     if (prefs.getString(singleDigitKey) == '') {
@@ -45,7 +43,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
     setState(() {});
   }
 
-  callback(newSingleDigitData) async {
+  callback(newSingleDigitData) {
     // check if all data is complete
     prefs.writeSharedPrefs(singleDigitKey, newSingleDigitData);
     setState(() {

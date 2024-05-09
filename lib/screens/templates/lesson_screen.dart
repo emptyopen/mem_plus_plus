@@ -35,6 +35,7 @@ class _LessonScreenState extends State<LessonScreen> {
         tiles: widget.tiles,
         showButtonEverySlide: true,
         buttonText: 'Done',
+        callback: widget.completeLesson,
       ),
     );
   }

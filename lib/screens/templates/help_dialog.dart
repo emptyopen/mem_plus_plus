@@ -39,7 +39,7 @@ class _HelpDialogState extends State<HelpDialog> {
     widget.information.forEach((String info) {
       tiles.add(SlidingTileContent(
           header: widget.title,
-          content: [Text(info, style: TextStyle(fontSize: 17))]));
+          content: [Text(info, style: TextStyle(fontSize: 16))]));
     });
   }
 
@@ -67,7 +67,7 @@ class _HelpDialogState extends State<HelpDialog> {
               children: <Widget>[
                 Container(
                   width: screenWidth * 0.95,
-                  height: screenHeight * 0.75,
+                  height: screenHeight * 0.85,
                   decoration: BoxDecoration(
                       color: backgroundColor,
                       borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -82,6 +82,7 @@ class _HelpDialogState extends State<HelpDialog> {
                       widget.callback();
                       // mark help as completed
                       prefs.setBool(widget.firstHelpKey, true);
+                      print('setting ${widget.firstHelpKey} to true');
                       Navigator.pop(context);
                     },
                     helpStyle: true,

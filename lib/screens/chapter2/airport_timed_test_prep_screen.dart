@@ -491,8 +491,8 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
         'kiosk and pull the code straight from your brain!',
     '    Remember to attach your scenes to something that will help you remember what it represents. '
         'If my seat is 54E, my one-digit system would translate that into snake (5), sailboat (4) and elephant (E). I might imagine '
-        'me settling down in my seat for the flight, turn on the infotainment system and... "SNAKES on a SAILBOAT 3"! '
-        'My favorite trilogy is finally complete! And who is the new protagonist? An enormous African elephant, that makes perfect sense! '
+        'me settling down in my seat for the flight, turn on the infotainment system and... "SNAKES on a SAILBOAT III"! '
+        'My favorite trilogy is finally complete! And who is the new protagonist? An enormous African ELEPHANT, that makes perfect sense! '
         'I see the elephant clumsily navigating the fragile but beautiful sailboat through the whole movie.',
     'You can similarly attach scenes in different parts of the airport. A scene at the check-in counter, a scene at the gate, followed '
         'by a crazy event marking the time of departure. ',

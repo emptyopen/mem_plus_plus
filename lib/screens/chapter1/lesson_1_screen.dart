@@ -73,7 +73,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       header: 'The general process',
       content: [
         Text(
-          '    In general, I would break down the process of remembering anything into these steps:'
+          '    In general, I would break down the process of remembering anything into these steps:\n'
           '\n      1) "Convert" the memory to a story'
           '\n      2) Add "emotional detail" to the story'
           '\n      3) "Anchor" that story'

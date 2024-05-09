@@ -321,17 +321,14 @@ class AlphabetTimedTestPrepScreenHelp extends StatelessWidget {
       information: [
         '    You guessed it! Two sequences this time. And we\'re throwing numbers into the mix as well!\n'
             '    As we start to use longer sequences, start to move the scene around. For example, say we have '
-            'the sequences "GP3D" and "R5ZA". Let\'s say that translates to [GHOST, PANDA, BRA, DINOSAUR], and '
+            'the sequences "GP7D" and "R5ZA". Let\'s say that translates to [GHOST, PANDA, BOOMERANG, DINOSAUR], and '
             '[ROOT, SNAKE, ZIPPER, APPLE]. ',
-        '    [GHOST, PANDA, BRA, DINOSAUR] \n\n    Let\'s avoid starting with a ghost of a panda, because we might forget '
+        '    [GHOST, PANDA, BOOMERANG, DINOSAUR] \n\n    Let\'s avoid starting with a ghost of a panda, because we might forget '
             'which order they come in. \n'
             '    Alright, let\'s get weird with a sample scene! You are a very friendly GHOST, and you always have been. '
-            'Your ghostly self accidentally bumps into a morbidly obese PANDA. The panda is very startled, '
-            'because she is trying on a BRA. The bra is a way too tight, though. \n     Ms. Panda sighs, today is just not her day. '
-            'Suddenly she realizes she\'s late for her meeting with her DINOSAUR friend! And today is Dinosaur Day! He\'s going to be so sad if she doesn\'t '
-            'show up.',
-        '    [ROOT, SNAKE, ZIPPER, APPLE]\n\n    Ms. Panda runs over to see '
-            'Mr. Brontasaurus, and upon seeing each other, ROOTS from the ground come slithering up, binding them both '
+            'Your ghostly self accidentally bumps into a morbidly obese PANDA. The panda stumbles forward, but tactically throws a BOOMERANG right before hitting the ground. '
+            'The boomerang whips around and smacks Mr. DINOSAUR right in the jaw. Ouch!',
+        '    [ROOT, SNAKE, ZIPPER, APPLE]\n\n    The dinosaur roars, and ROOTS from the ground come slithering up, binding everyone '
             'in place. What is this sorcery? Ah, it\'s simply the magical SNAKES using their root-technology who are out to get everyone. Drat! \n    And '
             'upon closer inspection, all of these snakes have ZIPPERS down their bodies. Let\'s pull on them to see what comes '
             'out! Ziiiiiiiip! Oh my word, APPLES keep gushing out! Where do these snakes keep all these apples in their bodies?',

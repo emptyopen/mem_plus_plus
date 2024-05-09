@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/alphabet_data.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/components/templates/edit_card.dart';
@@ -19,7 +18,6 @@ class AlphabetEditScreen extends StatefulWidget {
 }
 
 class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
-  late SharedPreferences sharedPreferences;
   late List<AlphabetData> alphabetData;
   PrefsUpdater prefs = PrefsUpdater();
 
@@ -29,8 +27,8 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
-    await prefs.checkFirstTime(context, alphabetEditFirstHelpKey,
+  getSharedPrefs() {
+    prefs.checkFirstTime(context, alphabetEditFirstHelpKey,
         AlphabetEditScreenHelp(callback: widget.callback));
     if (prefs.getString(alphabetKey) == '') {
       alphabetData =
@@ -42,7 +40,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     setState(() {});
   }
 
-  callback(newAlphabetData) async {
+  callback(newAlphabetData) {
     setState(() {
       alphabetData = newAlphabetData;
     });

@@ -68,94 +68,11 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// Chapter 0
-// welcome
-
-// Chapter 1
-// single digit
-// - quick lesson 1: Don't get discouraged! If you forgot something, it just wasn't anchored correctly, or it wasn't vivid enough.
-// - face test (with age)
-// - planet test
-
-// Chapter 2
-// alphabet
-// - quick lesson 2: Memory palace!!
-// - phonetic alphabet (use memory palace)
-// - airline confirmation code / flight number / departure time / seat number
-
-// Chapter 3
-// pao
-// - quick lesson 3: spaced repetition
-// * custom memory manager
-// - pi test
-// - face test #2: first and last name, occupation, hometown
-
-// ---- paywall -----
-
-// Chapter 4
-// deck
-// - conversion rates
-// - recipes
-// - first aid
-// - doomsday test
-// - periodic table
-
-// done:
-
-// next up:
-// figure out local notifications once and for all
-// show irrational test animation for completion
-// custom memory can't always submit answer? check if wrong
-// when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)
-
-// horizon:
-// add trivia games (order of US presidents, British monarchies?) - unlock first set after planet test
-// add FIND THE CARD game, memory show all cards for some amount of time, then flip over
-// BIG: add date & recipe system
-// welcome animation, second page still visible until swipe? (and other swiping pages only first page)
-// handle bad CSV input
-// figure out how to handle CSV on iphone (doesn't launch google sheets well?) button in CSV to copy text?
-// check callback for adding custom ID vs others?
-// investigate potential slow encrypting
-// add recipe as custom test
-// for small phones, add bottom opacity for scrolling screens (dots overlay), indicator to scroll!!
-// BIG: badge / quest system
-// BIG: once you beat something (like a timed test, it gets harder, up to three levels???) / or choose amount of time for timed tests
-// describe amount of pi correct
-// chapter animation
-// add scroll notification when scrollable: https://medium.com/@diegoveloper/flutter-lets-know-the-scrollcontroller-and-scrollnotification-652b2685a4ac
-// match ages for face (hard)
-// divide photos (file names?) into ethnicities / age / gender buckets? choose characteristics first, then pick photo
-// implement length limits for inputs (like action/object) - maybe 30 characters
-// add conversion rates
-// add doomsday memory rule
-// add first aid system
-// add more faces, make all of them closer to the face
-// alphabet PAO (person action, same object)
-// add symbols
-// add password test
-// add safe viewing area (for toolbar)
-// add global celebration animation whenever there is a level up (or more animation in general, FLARE?)
-// crashlytics for IOS
-// look into possible battery drainage from refreshing screen? emulator seems to run hot
-// add name (first time, and preferences) - use in local notifications
-// add ability for alphabet to contain up to 3 objects (level up system?)
-// make PAO multiple choice tougher with similar digits
-// make vibrations cooler, and more consistent across app?
-// make account, backend, retrieve portfolios
-// delete old memory dict keys for custom memories when you delete the memory
-// BIG: add backend, account recovery (store everything?)
-
-// TODO:  Brain by Arjun Adamson from the Noun Project
-// https://medium.com/@psyanite/how-to-add-app-launcher-icons-in-flutter-bd92b0e0873a
-// Icons made by <a href="https://www.flaticon.com/authors/dimitry-miroliubov" title="Dimitry Miroliubov">Dimitry Miroliubov</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, Activity> activityStates = {};
   List<String> availableActivities = [];
   Map customMemories = {};
   Map activityMenuButtonMap = {};
-  bool firstTimeOpeningApp = true;
   bool customMemoryManagerAvailable = false;
   bool customMemoryManagerFirstView = false;
   bool gamesAvailable = false;
@@ -224,11 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void setUnlockedActivities() async {
     // if first time opening app, welcome
     if (prefs.getBool(firstTimeAppKey)) {
-      print('first time opening app');
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      // });
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
-    } else {
-      firstTimeOpeningApp = false;
     }
 
     // check if games are available, and firstView

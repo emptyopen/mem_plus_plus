@@ -276,7 +276,7 @@ class PlanetTimedTestPrepScreenHelp extends StatelessWidget {
     '    Let\'s try another method. Let\'s create a visual scene using words or concepts that we can strongly tie '
         'to certain planets. And because we have so much power in creating these scenes in our heads, we can very easily attach '
         'our digit-objects for the planet\'s size ranking to the scenes! \n\n    Let\'s look at an example.',
-    '    We start with the Sun, I suppose. Fiery hellfire will be our anchor. '
+    '    We start with the Sun. Fiery hellfire will be our anchor. '
         'From there we go to Mercury. Maybe a big vat of silver liquid mercury getting boiled by the sun will do the trick! '
         '\n    Now we want to attach the digit '
         'representing how small the planet is, the number 1! My object for number 1 is a stick, so I\'ll '

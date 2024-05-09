@@ -119,8 +119,7 @@ class TripleDigitPracticeScreenHelp extends StatelessWidget {
         'with the digit-object mapping until you\'ve maxed out your '
         'familiarity with each digit, after which the first test will be unlocked! ',
     '    We\'ll only show cards that are still ranked less than 100% in familiarity (unless all are at 100% familiarity, '
-        'in which case we\'ll show all of them). \n'
-        '    Try to guess the object before even hitting the reveal button! It\'ll help you once you really get tested ;)'
+        'in which case we\'ll show all of them).'
   ];
 
   @override

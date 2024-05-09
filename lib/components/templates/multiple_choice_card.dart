@@ -202,7 +202,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
             ? text
             : widget.shuffledChoices[attempts][index].digits,
         fontSize: 30,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         onPressed: () => checkResult(index),
       );
     } else if (widget.systemKey == deckKey) {
@@ -223,7 +223,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               color: colorDeckStandard,
               text: text,
               fontSize: 30,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               onPressed: () => checkResult(index),
             )
           : ElevatedButton(
@@ -263,7 +263,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
             ? text
             : widget.shuffledChoices[attempts][index].digits,
         fontSize: 30,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         onPressed: () => checkResult(index),
       );
     }
@@ -273,7 +273,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
           ? widget.shuffledChoices[attempts][index].object
           : widget.shuffledChoices[attempts][index].digits,
       fontSize: 30,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       onPressed: () => checkResult(index),
     );
   }
@@ -382,7 +382,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
         padding: EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Center(

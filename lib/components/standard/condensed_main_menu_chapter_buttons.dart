@@ -44,14 +44,15 @@ class CondensedMainMenuChapterButtons extends StatelessWidget {
           height: 90,
           width: screenWidth * 0.85,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [standardColor, darkerColor], // whitish to gray
-                tileMode:
-                    TileMode.repeated, // repeats the gradient over the canvas
-              ),
-              borderRadius: BorderRadius.circular(5)),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [standardColor, darkerColor], // whitish to gray
+              tileMode:
+                  TileMode.repeated, // repeats the gradient over the canvas
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +100,7 @@ class CondensedMainMenuChapterButtons extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 3,
+          height: 5,
         )
       ],
     );
