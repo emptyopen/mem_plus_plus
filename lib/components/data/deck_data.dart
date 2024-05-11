@@ -77,29 +77,29 @@ Widget getDeckCard(String digitSuit, String size) {
           Icon(MdiIcons.cardsDiamond, size: fontSize, color: Colors.red);
   }
   return Container(
-          height: cardHeight,
-          width: cardWidth,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(size != 'big' ? 5 : 20),
-              border: Border.all(color: Colors.black)),
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                child: Text(
-                  digit,
-                  style: TextStyle(fontSize: fontSize, color: Colors.black),
-                ),
-                left: left,
-                top: top,
-              ),
-              Positioned(
-                child: suitSymbol,
-                right: right,
-                bottom: bottom,
-              ),
-            ],
-          ));
+      height: cardHeight,
+      width: cardWidth,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(size != 'big' ? 5 : 20),
+          border: Border.all(color: Colors.black)),
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            child: Text(
+              digit,
+              style: TextStyle(fontSize: fontSize, color: Colors.black),
+            ),
+            left: left,
+            top: top,
+          ),
+          Positioned(
+            child: suitSymbol,
+            right: right,
+            bottom: bottom,
+          ),
+        ],
+      ));
 }
 
 var defaultDeckData1 = [
@@ -175,7 +175,7 @@ var defaultDeckData2 = [
   DeckData(
       12, 'KS', 'Superman', 'shooting lasers out of eyes', 'hero cape', 100),
   DeckData(13, 'AH', 'Aki', 'barking', 'leash/collar', 100),
-  DeckData(14, '2H', 'Tiffany', 'mixing cocktail', 'cocktail', 100),
+  DeckData(14, '2H', 'Asya', 'bicycling', 'bicycle', 100),
   DeckData(15, '3H', 'Thomas', 'jetskiing', 'jetski', 100),
   DeckData(16, '4H', 'Tim', 'climbing wall', 'bouldering shoes', 100),
   DeckData(17, '5H', 'Jmac', 'playing videogames', 'videogame controller', 100),
@@ -221,7 +221,7 @@ var defaultDeckData2 = [
 ];
 
 String sampleGoogleCSVText = 'Ozzy Osbourne,rocking a concert,rock guitar\n'
-    'Original Angel (Prairie Johnson),stopping a mass shooting,coordinated dance\n'
+    'Original Angel,stopping a mass shooting,coordinated dance\n'
     'Orlando Bloom,walking the plank,pirate sword\n'
     'Thomas Ngyuyenfa (originally from Orange County CA),working at a pharmacy,prescription drugs\n'
     'Oscar De La Hoya,boxing,boxing gloves\n'
@@ -312,7 +312,7 @@ String sampleGoogleCSVText = 'Ozzy Osbourne,rocking a concert,rock guitar\n'
     'Akira,tripping in Tokyo,colorful stickers\n'
     'Nick Offerman,building a canoe,tree trunk\n'
     'Neil Armstrong,landing on the moon,astronaut suit\n'
-    'Nightblue,ganking from the jungle,Nocturne\n'
+    'Asya,bicycling,bicycle\n'
     'Nikki Chen,skydiving,parachute\n'
     'Napolean Dynomite,standing awkwardly at a dance,braces\n'
     'Tom Brady (new england),throwing a touchdown,football\n'

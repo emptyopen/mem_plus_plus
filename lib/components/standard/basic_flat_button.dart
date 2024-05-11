@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +10,7 @@ class BasicFlatButton extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final Color textColor;
   final String fontFamily;
+  final bool useConstrained;
 
   BasicFlatButton({
     this.color = Colors.white,
@@ -18,10 +20,12 @@ class BasicFlatButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
     this.textColor = Colors.black,
     this.fontFamily = 'Viga',
+    this.useConstrained = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
@@ -45,15 +49,28 @@ class BasicFlatButton extends StatelessWidget {
             ),
             padding: padding,
             child: Center(
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: fontSize,
-                  color: textColor,
-                  fontFamily: fontFamily,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              child: useConstrained
+                  ? ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: width * 0.7),
+                      child: AutoSizeText(
+                        text,
+                        style: TextStyle(
+                          fontSize: fontSize,
+                          color: textColor,
+                          fontFamily: fontFamily,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : Text(
+                      text,
+                      style: TextStyle(
+                        fontSize: fontSize,
+                        color: textColor,
+                        fontFamily: fontFamily,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
             ),
           ),
         ],

@@ -139,7 +139,6 @@ class _WrittenCardState extends State<WrittenCard> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    print('rebuilding');
     return Container(
         height: screenHeight,
         decoration: BoxDecoration(

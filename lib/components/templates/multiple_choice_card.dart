@@ -201,9 +201,10 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
         text: isValueToProperty
             ? text
             : widget.shuffledChoices[attempts][index].digits,
-        fontSize: 30,
+        fontSize: 28,
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         onPressed: () => checkResult(index),
+        useConstrained: true,
       );
     } else if (widget.systemKey == deckKey) {
       String text = '';

@@ -496,7 +496,7 @@ class AirportTimedTestPrepScreenHelp extends StatelessWidget {
         'I see the elephant clumsily navigating the fragile but beautiful sailboat through the whole movie.',
     'You can similarly attach scenes in different parts of the airport. A scene at the check-in counter, a scene at the gate, followed '
         'by a crazy event marking the time of departure. ',
-    '    If you can handle this, you\'re ready for anything :) It might take a while your first time to get '
+    '    If you can handle this, you\'re ready for anything! It might take a while your first time to get '
         'everything memorized. Trust me, it gets easier and easier to build these scenes and make them wacky. '
         '\n    Currently, you\'re only equipped with '
         'a single digit system. But once you master the next system '

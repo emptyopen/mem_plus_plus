@@ -224,7 +224,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     setState(() {});
-    print(availableActivities);
   }
 
   checkFirstTime() async {
@@ -363,9 +362,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Animation<double> secondaryAnimation,
             ) =>
                 CustomMemoryManagerScreen(
-              callback: () {
-                print('idkkkk');
-              },
+              callback: () {},
             ),
             transitionsBuilder: (
               BuildContext context,

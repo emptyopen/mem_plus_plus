@@ -28,7 +28,6 @@ handleAppUpdate() async {
 
   defaultActivityStatesInitial.forEach((k, v) {
     if (!activityStates.keys.contains(k)) {
-      print('adding $k!!!!');
       activityStates[k] = v;
     }
   });

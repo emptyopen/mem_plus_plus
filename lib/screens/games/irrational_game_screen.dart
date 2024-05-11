@@ -517,7 +517,7 @@ class IrrationalGameScreenHelp extends StatelessWidget {
       title: 'Irrational Game',
       information: [
         '    This is the IRRATIONAL game! This is an arena to really test the limits of how long a sequence you can memorize.\n\n'
-            '    Take your time and create a wonderfully memorable story! Long press a row to keep track of your progress :)',
+            '    Take your time and create a wonderfully memorable story! Long press a row to keep track of your progress.',
       ],
       buttonColor: colorGamesStandard,
       buttonSplashColor: colorGamesDarker,

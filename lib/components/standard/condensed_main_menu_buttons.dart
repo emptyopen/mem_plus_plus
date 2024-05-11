@@ -106,7 +106,7 @@ class CondensedMainMenuButtons extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 3,
+          height: 5,
         )
       ],
     );

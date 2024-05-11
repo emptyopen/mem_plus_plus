@@ -396,7 +396,7 @@ class PAOEditScreenHelp extends StatelessWidget {
   PAOEditScreenHelp({Key? key, required this.callback}) : super(key: key);
 
   final List<String> information = [
-    '    Welcome to the 3rd system, the Double Digit / PAO System! :) \n'
+    '    Welcome to the 3rd system, the Double Digit / PAO System! \n'
         '    PAO stands for Person Action Object. What this means is that for every digit '
         '00, 01, 02, ..., 98, 99 we are going to assign a person, action, and object. '
         'You can assign any person, action, and object to any digit, but it\'s a good idea at first '
@@ -408,7 +408,7 @@ class PAOEditScreenHelp extends StatelessWidget {
         'your single digit and alphabet systems!). As a starter pattern, I recommend '
         'using an initials pattern. ',
     '    The initials pattern proposed in "Remember It!" by Nelson Dellis has '
-        '0=O, 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Fs, and Is are '
+        '0=O (zero = Oscar), 1=A, 2=B, 3=C, 4=D, 5=E, 6=S, 7=G, 8=H, and 9=N. Zeros, sixes, and nines are an exception because Fs, and Is are '
         'pretty rare in names; zeros look like Os, and (S)ix and (N)ine are more common letters in initials.\n'
         '     Using this pattern it becomes '
         'much easier to find famous people/fictional characters with initials, i.e. 12=AB=Antonio Banderas.',
@@ -425,7 +425,7 @@ class PAOEditScreenHelp extends StatelessWidget {
         'famous celebrities, fictional characters... anyone! Just make sure everything is as unique as possible, '
         'because overlap will make decoding more difficult. ',
     '    As a final note, it\'s possible to upload an entire PAO system through the CSV upload method available in '
-        'the top right of the screen.\n\n    I would highly, highly recommend storing your PAO data in a google doc. '
+        'the top right of the screen.\n\n    I would highly, highly recommend storing your PAO data in a google sheet. '
         'More details on how to do that is available in the upload section.'
   ];
 

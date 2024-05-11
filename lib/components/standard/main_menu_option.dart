@@ -188,149 +188,156 @@ class MainMenuOption extends StatelessWidget {
       );
     }
 
-    return Container(
-      height: 50,
-      width: screenWidth * 0.85,
-      child: Stack(
-        children: <Widget>[
-          Container(
-            height: 46,
-            decoration: BoxDecoration(
-              color: splashColor,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(100),
-                  blurRadius: 2.0,
-                  spreadRadius: 0.0,
-                  offset: Offset(2.0, 2.0),
-                ),
-              ],
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  color,
-                  splashColor!,
-                ], // whitish to gray
-                tileMode:
-                    TileMode.repeated, // repeats the gradient over the canvas
-              ),
-            ),
-            child: GestureDetector(
-              onTap: () async {
-                if (activity!.visibleAfterTime.compareTo(DateTime.now()) > 0) {
-                  return null;
-                }
-                HapticFeedback.lightImpact();
-                // TODO (2024): hide snackbar
-                prefs.updateActivityFirstView(activity!.name, false);
-                callback!();
-                slideTransition(context, route!);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Icon(icon),
-                  ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minWidth: screenWidth * .65,
-                        maxWidth: screenWidth * .65,
-                        minHeight: 46,
-                        maxHeight: 46,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          AutoSizeText(
-                            text,
-                            style: TextStyle(fontSize: 20),
-                            maxLines: 1,
-                            maxFontSize: 24,
-                          ),
-                        ],
-                      )),
-                ],
-              ),
-            ),
-          ),
-          activity!.firstView
-              ? Positioned(
-                  child: Container(
-                    width: 40,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Color.fromRGBO(255, 255, 255, 0.85),
+    return Column(
+      children: [
+        Container(
+          height: 50,
+          width: screenWidth * 0.85,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: 46,
+                decoration: BoxDecoration(
+                  color: splashColor,
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(100),
+                      blurRadius: 2.0,
+                      spreadRadius: 0.0,
+                      offset: Offset(2.0, 2.0),
                     ),
-                    child: Shimmer.fromColors(
-                      period: Duration(seconds: 3),
-                      baseColor: Colors.black,
-                      highlightColor: Colors.greenAccent,
-                      child: Center(
-                          child: Text(
-                        'new!',
-                        style: TextStyle(fontSize: 14, color: Colors.red),
-                      )),
-                    ),
+                  ],
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      color,
+                      splashColor!,
+                    ], // whitish to gray
+                    tileMode: TileMode
+                        .repeated, // repeats the gradient over the canvas
                   ),
-                  left: 3,
-                  top: 4)
-              : Container(),
-          activity!.visibleAfterTime.compareTo(DateTime.now()) < 0
-              ? Container()
-              : Container(
-                  width: screenWidth * 0.85,
-                  height: 46,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(0, 0, 0, 0.85),
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: isCustomTest
-                      ? Center(
-                          child: Text(
-                            '${getActivityName()} in ${generateTimeRemaining()}',
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+                child: GestureDetector(
+                  onTap: () async {
+                    if (activity!.visibleAfterTime.compareTo(DateTime.now()) >
+                        0) {
+                      return null;
+                    }
+                    HapticFeedback.lightImpact();
+                    // TODO (2024): hide snackbar
+                    prefs.updateActivityFirstView(activity!.name, false);
+                    callback!();
+                    slideTransition(context, route!);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Icon(icon),
+                      ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minWidth: screenWidth * .65,
+                            maxWidth: screenWidth * .65,
+                            minHeight: 46,
+                            maxHeight: 46,
                           ),
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              AutoSizeText(
+                                text,
+                                style: TextStyle(fontSize: 20),
+                                maxLines: 1,
+                                maxFontSize: 24,
+                              ),
+                            ],
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+              activity!.firstView
+                  ? Positioned(
+                      child: Container(
+                        width: 40,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: Color.fromRGBO(255, 255, 255, 0.85),
+                        ),
+                        child: Shimmer.fromColors(
+                          period: Duration(seconds: 3),
+                          baseColor: Colors.black,
+                          highlightColor: Colors.greenAccent,
+                          child: Center(
                               child: Text(
-                                '${getActivityName().contains('System - Timed Test') ? getActivityName().replaceAll('System - Timed Test', 'test') : getActivityName()} in ${generateTimeRemaining()}',
+                            'new!',
+                            style: TextStyle(fontSize: 14, color: Colors.red),
+                          )),
+                        ),
+                      ),
+                      left: 3,
+                      top: 4)
+                  : Container(),
+              activity!.visibleAfterTime.compareTo(DateTime.now()) < 0
+                  ? Container()
+                  : Container(
+                      width: screenWidth * 0.85,
+                      height: 46,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(0, 0, 0, 0.85),
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: isCustomTest
+                          ? Center(
+                              child: Text(
+                                '${getActivityName()} in ${generateTimeRemaining()}',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 14),
                               ),
-                            ),
-                            Container(
-                              height: 30,
-                              width: 75,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: BasicFlatButton(
-                                text: 'Cancel',
-                                onPressed: () => showConfirmDialog(
-                                  context: context,
-                                  function: cancelActivity,
-                                  confirmText:
-                                      'Are you sure you want to give up?',
-                                  confirmColor: splashColor!,
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Center(
+                                  child: Text(
+                                    '${getActivityName().contains('System - Timed Test') ? getActivityName().replaceAll('System - Timed Test', 'test') : getActivityName()} in ${generateTimeRemaining()}',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
                                 ),
-                                textColor: Colors.white,
-                                color: Color.fromRGBO(0, 0, 0, 0.5),
-                                fontSize: 13,
-                              ),
+                                Container(
+                                  height: 30,
+                                  width: 75,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: BasicFlatButton(
+                                    text: 'Cancel',
+                                    onPressed: () => showConfirmDialog(
+                                      context: context,
+                                      function: cancelActivity,
+                                      confirmText:
+                                          'Are you sure you want to give up?',
+                                      confirmColor: splashColor!,
+                                    ),
+                                    textColor: Colors.white,
+                                    color: Color.fromRGBO(0, 0, 0, 0.5),
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                ),
-        ],
-      ),
+                    ),
+            ],
+          ),
+        ),
+        SizedBox(height: 2),
+      ],
     );
   }
 }

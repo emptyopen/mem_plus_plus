@@ -82,7 +82,6 @@ class _HelpDialogState extends State<HelpDialog> {
                       widget.callback();
                       // mark help as completed
                       prefs.setBool(widget.firstHelpKey, true);
-                      print('setting ${widget.firstHelpKey} to true');
                       Navigator.pop(context);
                     },
                     helpStyle: true,

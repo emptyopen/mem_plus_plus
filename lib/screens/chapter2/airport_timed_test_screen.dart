@@ -91,37 +91,39 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
       });
       return;
     }
-    if (confirmationCodeController.text
-                .trim()
-                .toLowerCase()
-                .replaceAll(' ', '') ==
-            confirmationCode.toLowerCase() &&
-        flightCodeController.text
-                .trim()
-                .toLowerCase()
-                .replaceAll('-', '')
-                .replaceAll(' ', '') ==
-            flightCode.toLowerCase().replaceAll('-', '') &&
-        // seatNumberController.text.trim().toLowerCase().replaceAll(' ', '') ==
-        //     seatNumber.toLowerCase() &&
-        // gateNumberController.text.trim().toLowerCase().replaceAll(' ', '') ==
-        //     gateNumber.toLowerCase() &&
-        departureTimeController.text
-                .trim()
-                .toLowerCase()
-                .replaceAll(':', '')
-                .replaceAll(' ', '') ==
-            departureTime.toLowerCase().replaceAll(':', '') &&
-        departingTerminalController.text
-                .trim()
-                .toLowerCase()
-                .replaceAll(' ', '') ==
-            departingTerminal.toLowerCase()) {
-      // arrivingTerminalController.text
-      //         .trim()
-      //         .toLowerCase()
-      //         .replaceAll(' ', '') ==
-      //     arrivingTerminal.toLowerCase()) {
+    bool confirmationCodeCorrect = confirmationCodeController.text
+            .trim()
+            .toLowerCase()
+            .replaceAll(' ', '') ==
+        confirmationCode.toLowerCase();
+    bool flightCodeCorrect = flightCodeController.text
+            .trim()
+            .toLowerCase()
+            .replaceAll('-', '')
+            .replaceAll(' ', '') ==
+        flightCode.toLowerCase().replaceAll('-', '');
+    bool departureTimeCorrect =
+        int.parse(departureTimeController.text.replaceAll(RegExp(r'\D'), '')) ==
+            int.parse(departureTime.replaceAll(RegExp(r'\D'), ''));
+    bool departingTerminalCorrect = departingTerminalController.text
+            .trim()
+            .toLowerCase()
+            .replaceAll(' ', '') ==
+        departingTerminal.toLowerCase();
+    // bool seatNumberCorrect = seatNumberController.text.trim().toLowerCase().replaceAll(' ', '') == seatNumber.toLowerCase();
+    // bool gateNumberCorrect = gateNumberController.text.trim().toLowerCase().replaceAll(' ', '') == gateNumber.toLowerCase();
+    // bool arrivingTerminalCorrect = arrivingTerminalController.text
+    //         .trim()
+    //         .toLowerCase()
+    //         .replaceAll(' ', '') ==
+    //     arrivingTerminal.toLowerCase();
+    if (confirmationCodeCorrect &&
+        flightCodeCorrect &&
+        //  seatNumberCorrect &&
+        // gateNumberCorrect &&
+        // arrivingTerminalCorrect &&
+        departureTimeCorrect &&
+        departingTerminalCorrect) {
       prefs.updateActivityVisible(airportTimedTestKey, false);
       prefs.updateActivityVisible(airportTimedTestPrepKey, true);
       if (!prefs.getBool(airportTimedTestCompleteKey)) {

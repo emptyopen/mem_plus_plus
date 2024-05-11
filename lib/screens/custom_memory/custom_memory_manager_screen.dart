@@ -287,9 +287,6 @@ class CustomMemoryTile extends StatelessWidget {
 
   viewCustomMemory(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    customMemory.forEach((k, v) {
-      print('$k | $v');
-    });
     return Material(
         color: Color.fromRGBO(0, 0, 0, 0.7),
         child: Stack(

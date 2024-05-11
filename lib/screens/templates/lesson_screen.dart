@@ -30,6 +30,7 @@ class _LessonScreenState extends State<LessonScreen> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: widget.colorDarker,
+        automaticallyImplyLeading: false,
       ),
       body: SlidingTiles(
         tiles: widget.tiles,

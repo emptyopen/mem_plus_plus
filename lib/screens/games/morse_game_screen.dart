@@ -72,7 +72,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
     '',
     '',
   ];
-  late Timer timer;
+  Timer timer = Timer(Duration(seconds: 1), () {});
   int countdown = 300;
   int duration = 5;
   bool loaded = false;
@@ -475,7 +475,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
                           // start countdown
                           setState(() {
                             started = true;
-                            timer = new Timer.periodic(
+                            timer = Timer.periodic(
                               Duration(seconds: 1),
                               (Timer timer) => setState(
                                 () {

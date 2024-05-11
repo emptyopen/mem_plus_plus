@@ -122,7 +122,7 @@ class AlphabetPracticeScreenHelp extends StatelessWidget {
       information: [
         '    If you find that you can\'t remember your word because other words starting with that letter keep '
             'bubbling up in your mind, consider using one of those words instead! \n    You can always go back to the edit page and update your '
-            'letters :) ',
+            'letters.',
       ],
       buttonColor: Colors.blue[100]!,
       buttonSplashColor: Colors.blue[300]!,

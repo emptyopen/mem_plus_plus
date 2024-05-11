@@ -80,13 +80,13 @@ class _PhoneticAlphabetTimedTestScreenState
     // generate random word
     final wordGenerator = WordGenerator();
     encodeWord = wordGenerator.randomNoun().toLowerCase();
-    while (encodeWord.length > 8) {
+    while (encodeWord.length > 5 || encodeWord.length < 3) {
       encodeWord = wordGenerator.randomNoun().toLowerCase();
     }
 
     // generate random word, convert it to morse code
     decodeWord = wordGenerator.randomNoun().toLowerCase();
-    while (decodeWord.length > 8) {
+    while (decodeWord.length > 5 || encodeWord.length < 3) {
       decodeWord = wordGenerator.randomNoun().toLowerCase();
     }
 
@@ -582,7 +582,7 @@ class PhoneticAlphabetTimedTestScreenHelp extends StatelessWidget {
             '  - The length of a dot is 1 time unit. \n  - A dash is 3 time units.\n'
             '  - The space between symbols (dots and dashes) of the same letter is 1 time unit.\n'
             '  - The space between letters is 3 time units.\n'
-            '  - The space between words is 7 time units.\n\n    Don\'t worry about getting it exactly right! :) '
+            '  - The space between words is 7 time units.\n\n    Don\'t worry about getting it exactly right!'
       ],
       buttonColor: colorChapter2Standard,
       buttonSplashColor: colorChapter2Darker,

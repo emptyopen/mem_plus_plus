@@ -421,7 +421,7 @@ class TripleDigitEditScreenHelp extends StatelessWidget {
   TripleDigitEditScreenHelp({Key? key, required this.callback})
       : super(key: key);
   final List<String> information = [
-    '    Welcome to the 5th system, the Triple Digit System! :) \n'
+    '    Welcome to the 5th system, the Triple Digit System! \n'
         '    If you conquer this system, you\'ll be able to memorize numbers with absolute ease. '
         'One telephone number? One scene. Credit card numbers fit in two scenes. '
         'It takes a long time to set up (it took me weeks), but I\'m having fun with it. ',
