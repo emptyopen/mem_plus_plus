@@ -202,7 +202,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Airport: timed test'),
+          title: Text('Airport: timed test', style: TextStyle(fontSize: 18)),
           backgroundColor: colorChapter2Standard,
           actions: <Widget>[
             // action button

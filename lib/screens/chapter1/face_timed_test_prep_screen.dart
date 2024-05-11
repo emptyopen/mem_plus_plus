@@ -114,7 +114,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-            title: Text('Faces Test Prep'),
+            title: Text('Faces Test Prep', style: TextStyle(fontSize: 18)),
             backgroundColor: colorChapter1Standard,
             actions: <Widget>[
               // action button

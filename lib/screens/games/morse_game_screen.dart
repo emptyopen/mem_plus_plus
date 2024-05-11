@@ -428,7 +428,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Morse Survival'),
+          title: Text('Morse Survival', style: TextStyle(fontSize: 18)),
           backgroundColor: colorGamesDarker,
           actions: <Widget>[
             // action button

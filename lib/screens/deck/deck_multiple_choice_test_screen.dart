@@ -101,7 +101,8 @@ class _DeckMultipleChoiceTestScreenState
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Deck: multiple choice test'),
+          title: Text('Deck: multiple choice test',
+              style: TextStyle(fontSize: 18)),
           backgroundColor: colorDeckStandard,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),

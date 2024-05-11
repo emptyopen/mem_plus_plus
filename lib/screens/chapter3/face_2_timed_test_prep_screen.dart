@@ -40,8 +40,8 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
-    await prefs.checkFirstTime(context, face2TimedTestPrepFirstHelpKey,
+  getSharedPrefs() {
+    prefs.checkFirstTime(context, face2TimedTestPrepFirstHelpKey,
         Face2TimedTestPrepScreenHelp(callback: widget.callback));
     if (!prefs.getBool(face2TestActiveKey)) {
       print('no active test, setting new values');
@@ -128,7 +128,8 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-            title: Text('Faces (Difficult) Test Prep'),
+            title: Text('Faces (Difficult) Test Prep',
+                style: TextStyle(fontSize: 18)),
             backgroundColor: colorChapter3Standard,
             actions: <Widget>[
               // action button

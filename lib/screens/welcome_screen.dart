@@ -95,7 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Welcome'),
+        title: Text('Welcome', style: TextStyle(fontSize: 18)),
         backgroundColor: Colors.green[200],
         automaticallyImplyLeading: false,
       ),

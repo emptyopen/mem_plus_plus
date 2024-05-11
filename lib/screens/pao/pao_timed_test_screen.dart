@@ -142,7 +142,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('PAO: timed test'),
+          title: Text('PAO: timed test', style: TextStyle(fontSize: 18)),
           backgroundColor: colorPAOStandard,
           actions: <Widget>[
             // action button

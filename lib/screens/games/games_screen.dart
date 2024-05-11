@@ -86,7 +86,7 @@ class _GamesScreenState extends State<GamesScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Mini games'),
+          title: Text('Mini games', style: TextStyle(fontSize: 18)),
           backgroundColor: colorGamesDarker,
           actions: <Widget>[
             // action button

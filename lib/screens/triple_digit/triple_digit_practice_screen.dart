@@ -72,7 +72,7 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Triple digit: practice'),
+        title: Text('Triple digit: practice', style: TextStyle(fontSize: 18)),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info),

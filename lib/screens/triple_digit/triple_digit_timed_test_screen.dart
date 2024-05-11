@@ -122,7 +122,8 @@ class _TripleDigitTimedTestScreenState
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Triple digit: timed test'),
+          title:
+              Text('Triple digit: timed test', style: TextStyle(fontSize: 18)),
           backgroundColor: colorTripleDigitStandard,
           actions: <Widget>[
             // action button

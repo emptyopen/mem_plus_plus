@@ -80,7 +80,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
-            title: Text('Custom memories'),
+            title: Text('Custom memories', style: TextStyle(fontSize: 18)),
             backgroundColor: colorCustomMemoryStandard,
             actions: <Widget>[
               // action button

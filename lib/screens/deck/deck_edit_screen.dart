@@ -103,7 +103,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Deck: view/edit'),
+          title: Text('Deck System', style: TextStyle(fontSize: 18)),
           backgroundColor: colorDeckStandard,
           actions: <Widget>[
             IconButton(

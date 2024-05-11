@@ -56,7 +56,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Alphabet: written test'),
+          title: Text('Alphabet: written test', style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.blue[200],
           actions: <Widget>[
             // action button

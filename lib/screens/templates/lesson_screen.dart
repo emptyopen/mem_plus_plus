@@ -28,7 +28,7 @@ class _LessonScreenState extends State<LessonScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title, style: TextStyle(fontSize: 18)),
         backgroundColor: widget.colorDarker,
         automaticallyImplyLeading: false,
       ),

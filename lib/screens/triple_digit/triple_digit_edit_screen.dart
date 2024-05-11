@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/triple_digit_data.dart';
 import 'package:mem_plus_plus/components/info_box.dart';
+import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/screens/templates/help_dialog.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:csv/csv.dart';
@@ -36,6 +37,10 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
         TripleDigitEditScreenHelp(callback: widget.callback));
     tripleDigitData =
         prefs.getSharedPrefs(tripleDigitKey) as List<TripleDigitData>;
+    if (tripleDigitData.isEmpty) {
+      tripleDigitData = generateDefaultTripleDigitData();
+      prefs.writeSharedPrefs(tripleDigitKey, tripleDigitData);
+    }
     loading = false;
     setState(() {});
   }
@@ -131,7 +136,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Triple Digit: view/edit'),
+          title: Text('Triple Digit System', style: TextStyle(fontSize: 18)),
           backgroundColor: colorTripleDigitStandard,
           actions: <Widget>[
             Shimmer.fromColors(
@@ -362,41 +367,25 @@ class _CSVImporterState extends State<CSVImporter> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[300],
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
+                        BasicFlatButton(
+                          text: 'Cancel',
+                          fontSize: 20,
+                          color: Colors.grey[300]!,
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             Navigator.pop(context);
                           },
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(fontSize: 20),
-                          ),
                         ),
                         SizedBox(
                           width: 25,
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: colorTripleDigitStandard,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
+                        BasicFlatButton(
+                          text: 'Submit',
+                          fontSize: 20,
+                          color: colorTripleDigitStandard,
                           onPressed: () {
                             submitCSV();
                           },
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(fontSize: 20),
-                          ),
                         ),
                       ],
                     ),

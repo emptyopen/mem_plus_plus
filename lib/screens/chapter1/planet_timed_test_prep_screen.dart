@@ -79,7 +79,8 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Planet: timed test prep'),
+          title:
+              Text('Planet: timed test prep', style: TextStyle(fontSize: 18)),
           backgroundColor: colorChapter1Standard,
           actions: <Widget>[
             // action button

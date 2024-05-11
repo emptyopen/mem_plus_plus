@@ -138,7 +138,8 @@ class _AlphabetTimedTestPrepScreenState
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Alphabet: timed test prep'),
+          title:
+              Text('Alphabet: timed test prep', style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.blue[200],
           actions: <Widget>[
             // action button

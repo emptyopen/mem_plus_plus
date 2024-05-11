@@ -476,7 +476,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Irrational Game'),
+          title: Text('Irrational Game', style: TextStyle(fontSize: 18)),
           backgroundColor: colorGamesDarker,
           actions: <Widget>[
             IconButton(

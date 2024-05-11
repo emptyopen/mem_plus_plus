@@ -233,7 +233,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Planet: timed test'),
+          title: Text('Planet: timed test', style: TextStyle(fontSize: 18)),
           backgroundColor: colorChapter1Standard,
           actions: <Widget>[
             // action button

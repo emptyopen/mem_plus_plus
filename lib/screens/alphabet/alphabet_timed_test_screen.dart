@@ -66,11 +66,10 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
             '$char1$char2$char3$char4'.toLowerCase() &&
         textController2.text.toLowerCase().trim() ==
             '$char5$char6$char7$char8'.toLowerCase()) {
-      print('success');
       prefs.updateActivityVisible(alphabetTimedTestKey, false);
       prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);
       prefs.updateActivityVisible(lesson2Key, true);
-      if (prefs.getBool(alphabetTimedTestCompleteKey)) {
+      if (!prefs.getBool(alphabetTimedTestCompleteKey)) {
         prefs.updateActivityState(alphabetTimedTestKey, 'review');
         prefs.setBool(alphabetTimedTestCompleteKey, true);
         showSnackBar(
@@ -140,7 +139,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Alphabet: timed test'),
+          title: Text('Alphabet: timed test', style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.blue[200],
           actions: <Widget>[
             // action button

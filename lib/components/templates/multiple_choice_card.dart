@@ -226,6 +226,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               fontSize: 30,
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               onPressed: () => checkResult(index),
+              useConstrained: true,
             )
           : ElevatedButton(
               style: ElevatedButton.styleFrom(

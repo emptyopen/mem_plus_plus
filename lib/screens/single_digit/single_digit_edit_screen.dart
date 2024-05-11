@@ -90,7 +90,7 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
       backgroundColor: backgroundColor,
       key: _scaffoldKey,
       appBar: AppBar(
-          title: Text('Single digit: view/edit'),
+          title: Text('Single Digit System', style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.amber[200],
           actions: <Widget>[
             // action button

@@ -174,7 +174,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Face: timed test'),
+          title: Text('Face: timed test', style: TextStyle(fontSize: 18)),
           backgroundColor: colorChapter3Darker,
           actions: <Widget>[
             // action button

@@ -101,7 +101,8 @@ class _PhoneticAlphabetTimedTestPrepScreenState
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Phonetic alphabet: timed test prep'),
+          title: Text('Phonetic alphabet: timed test prep',
+              style: TextStyle(fontSize: 18)),
           backgroundColor: colorChapter2Darker,
           actions: <Widget>[
             IconButton(

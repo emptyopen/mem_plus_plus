@@ -168,7 +168,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Deck: timed test prep'),
+          title: Text('Deck: timed test prep', style: TextStyle(fontSize: 18)),
           backgroundColor: colorDeckStandard,
           actions: <Widget>[
             // action button

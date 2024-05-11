@@ -90,7 +90,7 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Alphabet: view/edit'),
+          title: Text('Alphabet System', style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.blue[200],
           actions: <Widget>[
             // action button

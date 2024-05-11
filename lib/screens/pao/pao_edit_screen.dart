@@ -115,7 +115,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-          title: Text('PAO: view/edit'),
+          title: Text('PAO System', style: TextStyle(fontSize: 18)),
           backgroundColor: colorPAOStandard,
           actions: <Widget>[
             Shimmer.fromColors(
@@ -288,34 +288,22 @@ class _CSVImporterState extends State<CSVImporter> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
+                        BasicFlatButton(
+                          text: 'Cancel',
+                          color: Colors.grey[300]!,
+                          fontSize: 20,
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             Navigator.pop(context);
                           },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[300],
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(fontSize: 20),
-                          ),
                         ),
                         SizedBox(
                           width: 25,
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: colorPAOStandard,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10)),
+                        BasicFlatButton(
+                          text: 'Submit',
+                          color: colorPAOStandard,
+                          fontSize: 20,
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             var csvConverter = CsvToListConverter();
@@ -367,10 +355,6 @@ class _CSVImporterState extends State<CSVImporter> {
                             }
                             setState(() {});
                           },
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(fontSize: 20),
-                          ),
                         ),
                       ],
                     ),

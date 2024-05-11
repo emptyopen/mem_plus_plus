@@ -105,7 +105,8 @@ class _TripleDigitMultipleChoiceTestScreenState
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Triple digit: multiple choice test'),
+          title: Text('Triple digit: multiple choice test',
+              style: TextStyle(fontSize: 18)),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {

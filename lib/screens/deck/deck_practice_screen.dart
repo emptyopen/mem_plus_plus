@@ -70,7 +70,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Deck: practice'),
+          title: Text('Deck: practice', style: TextStyle(fontSize: 18)),
           backgroundColor: colorDeckStandard,
           actions: <Widget>[
             // action button

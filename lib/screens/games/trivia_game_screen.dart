@@ -155,7 +155,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Fade'),
+          title: Text('Fade', style: TextStyle(fontSize: 18)),
           backgroundColor: colorGamesDarker,
           actions: <Widget>[
             // action button

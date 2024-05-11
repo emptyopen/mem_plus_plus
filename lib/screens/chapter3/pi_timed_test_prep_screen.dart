@@ -55,7 +55,7 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Pi: timed test prep'),
+          title: Text('Pi: timed test prep', style: TextStyle(fontSize: 18)),
           backgroundColor: colorChapter3Standard,
           actions: <Widget>[
             // action button

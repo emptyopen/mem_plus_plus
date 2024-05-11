@@ -136,7 +136,8 @@ class _SingleDigitTimedTestScreenState
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('Single digit: timed test'),
+          title:
+              Text('Single digit: timed test', style: TextStyle(fontSize: 18)),
           backgroundColor: Colors.amber[200],
           actions: <Widget>[
             // action button

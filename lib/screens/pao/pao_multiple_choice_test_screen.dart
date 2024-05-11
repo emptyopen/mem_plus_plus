@@ -102,7 +102,8 @@ class _PAOMultipleChoiceTestScreenState
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-          title: Text('PAO: multiple choice test'),
+          title:
+              Text('PAO: multiple choice test', style: TextStyle(fontSize: 18)),
           backgroundColor: colorPAOStandard,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),

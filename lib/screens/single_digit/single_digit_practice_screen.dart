@@ -72,7 +72,7 @@ class _SingleDigitPracticeScreenState extends State<SingleDigitPracticeScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Single digit: practice'),
+        title: Text('Single digit: practice', style: TextStyle(fontSize: 18)),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info),
