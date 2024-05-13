@@ -30,8 +30,9 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
   String digits8 = '';
   String digits9 = '';
   PrefsUpdater prefs = PrefsUpdater();
-  Duration testDuration =
-      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 4);
+  Duration testDuration = debugModeEnabled
+      ? Duration(seconds: debugTestTimeSeconds)
+      : Duration(hours: 4);
   List<String> possibleValues = [
     '00',
     '01',

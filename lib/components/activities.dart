@@ -8,8 +8,13 @@ class Activity {
   DateTime visibleAfterTime;
   bool firstView;
 
-  Activity(this.name, this.state, this.visible, this.visibleAfterTime,
-      this.firstView);
+  Activity(
+    this.name,
+    this.state,
+    this.visible,
+    this.visibleAfterTime,
+    this.firstView,
+  );
 
   Map<String, dynamic> toJson() => {
         'name': name,

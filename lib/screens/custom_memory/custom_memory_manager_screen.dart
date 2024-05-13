@@ -489,20 +489,20 @@ class CustomMemoryTile extends StatelessWidget {
           children: <Widget>[
             Container(
               width: 50,
-              child: ElevatedButton(
+              child: GestureDetector(
                 child:
                     Icon(Icons.remove_red_eye, color: colorCustomMemoryDarker),
-                onPressed: () => confirmViewCustomMemory(context),
+                onTap: () => confirmViewCustomMemory(context),
               ),
             ),
             Container(
               width: 50,
-              child: ElevatedButton(
+              child: GestureDetector(
                 child: Icon(
                   Icons.delete,
                   color: Colors.red,
                 ),
-                onPressed: () => showConfirmDialog(
+                onTap: () => showConfirmDialog(
                     context: context,
                     function: deleteCustomMemory,
                     confirmText: 'Delete memory: ${customMemory['title']}?'),
@@ -641,7 +641,7 @@ class _MyDialogContentState extends State<MyDialogContent> {
                 child: DropdownButton<String>(
                   value: dropdownValue,
                   elevation: 16,
-                  style: TextStyle(color: colorCustomMemoryStandard),
+                  style: TextStyle(color: Colors.black),
                   iconEnabledColor: backgroundHighlightColor,
                   underline: Container(
                     height: 2,

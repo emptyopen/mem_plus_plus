@@ -31,8 +31,9 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
   String job2 = '';
   String hometown2 = '';
   PrefsUpdater prefs = PrefsUpdater();
-  Duration testDuration =
-      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 3);
+  Duration testDuration = debugModeEnabled
+      ? Duration(seconds: debugTestTimeSeconds)
+      : Duration(hours: 3);
 
   @override
   void initState() {

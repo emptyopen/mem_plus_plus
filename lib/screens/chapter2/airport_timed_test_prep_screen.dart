@@ -53,8 +53,9 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
   PrefsUpdater prefs = PrefsUpdater();
   bool isLoaded = false;
   late AnimationController animationController;
-  Duration testDuration =
-      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 6);
+  Duration testDuration = debugModeEnabled
+      ? Duration(seconds: debugTestTimeSeconds)
+      : Duration(hours: 6);
 
   @override
   void initState() {

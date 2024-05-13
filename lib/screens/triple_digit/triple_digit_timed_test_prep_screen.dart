@@ -35,8 +35,9 @@ class _TripleDigitTimedTestPrepScreenState
   String digits11 = '';
   String digits12 = '';
   PrefsUpdater prefs = PrefsUpdater();
-  Duration testDuration =
-      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 4);
+  Duration testDuration = debugModeEnabled
+      ? Duration(seconds: debugTestTimeSeconds)
+      : Duration(hours: 4);
 
   @override
   void initState() {

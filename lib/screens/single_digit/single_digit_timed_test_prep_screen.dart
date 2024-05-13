@@ -27,8 +27,9 @@ class _SingleDigitTimedTestPrepScreenState
   String digit3 = '';
   String digit4 = '';
   PrefsUpdater prefs = PrefsUpdater();
-  Duration testDuration =
-      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 1);
+  Duration testDuration = debugModeEnabled
+      ? Duration(seconds: debugTestTimeSeconds)
+      : Duration(hours: 1);
 
   @override
   void initState() {

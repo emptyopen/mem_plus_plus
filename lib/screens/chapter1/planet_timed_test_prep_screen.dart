@@ -21,7 +21,7 @@ class PlanetTimedTestPrepScreen extends StatefulWidget {
 class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
   PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration = debugModeEnabled
-      ? Duration(seconds: debugTestTime)
+      ? Duration(seconds: debugTestTimeSeconds)
       : Duration(minutes: 30);
 
   @override

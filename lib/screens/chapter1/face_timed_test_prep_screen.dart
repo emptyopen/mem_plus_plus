@@ -27,7 +27,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
   bool ready = false;
   PrefsUpdater prefs = PrefsUpdater();
   Duration testDuration = debugModeEnabled
-      ? Duration(seconds: debugTestTime)
+      ? Duration(seconds: debugTestTimeSeconds)
       : Duration(minutes: 30);
 
   @override

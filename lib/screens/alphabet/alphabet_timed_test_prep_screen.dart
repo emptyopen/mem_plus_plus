@@ -122,7 +122,7 @@ class _AlphabetTimedTestPrepScreenState
     prefs.updateActivityState(alphabetTimedTestKey, 'todo');
     prefs.updateActivityVisible(alphabetTimedTestKey, true);
     Duration testDuration = debugModeEnabled
-        ? Duration(seconds: debugTestTime)
+        ? Duration(seconds: debugTestTimeSeconds)
         : Duration(hours: 2);
     prefs.updateActivityVisibleAfter(
         alphabetTimedTestKey, DateTime.now().add(testDuration));

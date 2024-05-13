@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mem_plus_plus/components/activities.dart';
-import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
@@ -188,6 +187,11 @@ class MainMenuOption extends StatelessWidget {
       );
     }
 
+    String shorthandTestName = getActivityName()
+        .replaceAll('System - Timed Test', 'test')
+        .replaceAll('- Timed Test', 'test')
+        .replaceAll('Phonetic Alphabet', 'Phonetic');
+
     return Column(
       children: [
         Container(
@@ -227,6 +231,7 @@ class MainMenuOption extends StatelessWidget {
                     }
                     HapticFeedback.lightImpact();
                     // TODO (2024): hide snackbar
+                    print('yo ${activity!.name} clicked');
                     prefs.updateActivityFirstView(activity!.name, false);
                     callback!();
                     slideTransition(context, route!);
@@ -304,30 +309,37 @@ class MainMenuOption extends StatelessWidget {
                               children: <Widget>[
                                 Center(
                                   child: Text(
-                                    '${getActivityName().contains('System - Timed Test') ? getActivityName().replaceAll('System - Timed Test', 'test') : getActivityName()} in ${generateTimeRemaining()}',
+                                    '$shorthandTestName in ${generateTimeRemaining()}',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 14),
                                   ),
                                 ),
-                                Container(
-                                  height: 30,
-                                  width: 75,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(5),
+                                GestureDetector(
+                                  onTap: () => showConfirmDialog(
+                                    context: context,
+                                    function: cancelActivity,
+                                    confirmText:
+                                        'Are you sure you want to give up?',
+                                    confirmColor: splashColor!,
                                   ),
-                                  child: BasicFlatButton(
-                                    text: 'Cancel',
-                                    onPressed: () => showConfirmDialog(
-                                      context: context,
-                                      function: cancelActivity,
-                                      confirmText:
-                                          'Are you sure you want to give up?',
-                                      confirmColor: splashColor!,
+                                  child: Container(
+                                    height: 30,
+                                    width: 75,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.white),
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromRGBO(0, 0, 0, 0.5),
                                     ),
-                                    textColor: Colors.white,
-                                    color: Color.fromRGBO(0, 0, 0, 0.5),
-                                    fontSize: 13,
+                                    child: Center(
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],

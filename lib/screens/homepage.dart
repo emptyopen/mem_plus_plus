@@ -164,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       customMemoryManagerAvailable = false;
     }
-    if (prefs.getBool(customMemoryManagerFirstHelpKey)) {
+    if (!prefs.getBool(customMemoryManagerFirstHelpKey)) {
       customMemoryManagerFirstView = true;
     } else {
       customMemoryManagerFirstView = false;
@@ -253,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkCustomMemoryManagerFirstTime() async {
-    if (prefs.getBool(customMemoryManagerFirstHelpKey) == true) {
+    if (prefs.getBool(customMemoryManagerFirstHelpKey)) {
       setState(() {
         customMemoryManagerFirstView = false;
       });

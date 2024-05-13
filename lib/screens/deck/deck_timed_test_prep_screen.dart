@@ -33,8 +33,9 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
   String digits9 = '';
   var existingCards = [];
   PrefsUpdater prefs = PrefsUpdater();
-  Duration testDuration =
-      debugModeEnabled ? Duration(seconds: debugTestTime) : Duration(hours: 1);
+  Duration testDuration = debugModeEnabled
+      ? Duration(seconds: debugTestTimeSeconds)
+      : Duration(hours: 1);
   List<String> possibleValues = [
     'AS',
     '2S',

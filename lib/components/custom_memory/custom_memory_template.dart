@@ -409,30 +409,36 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
           'How long to remember it?',
           style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
         ),
-        DropdownButton<String>(
-          value: spacedRepetitionType,
-          elevation: 16,
-          style: TextStyle(fontSize: 22, color: colorCustomMemoryStandard),
-          iconEnabledColor: backgroundHighlightColor,
-          underline: Container(
-            height: 2,
-            color: colorCustomMemoryStandard,
+        Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: backgroundColor,
           ),
-          onChanged: (String? newValue) {
-            setState(() {
-              spacedRepetitionType = newValue!;
-            });
-          },
-          items: <String>[shortTerm, mediumTerm, longTerm, extraLongTerm]
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-                style: TextStyle(fontSize: 16, fontFamily: 'Viga'),
-              ),
-            );
-          }).toList(),
+          child: DropdownButton<String>(
+            value: spacedRepetitionType,
+            elevation: 16,
+            style: TextStyle(fontSize: 22, color: colorCustomMemoryStandard),
+            iconEnabledColor: backgroundHighlightColor,
+            underline: Container(
+              height: 2,
+              color: colorCustomMemoryStandard,
+            ),
+            onChanged: (String? newValue) {
+              setState(() {
+                spacedRepetitionType = newValue!;
+              });
+            },
+            items: <String>[shortTerm, mediumTerm, longTerm, extraLongTerm]
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: TextStyle(
+                      fontSize: 16, fontFamily: 'Viga', color: Colors.black),
+                ),
+              );
+            }).toList(),
+          ),
         ),
         getErrors(),
         encrypting
