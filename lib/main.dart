@@ -31,11 +31,8 @@ class ReceivedNotification {
 
 // next up:
 // new tags need clean up - reappearing
-// colors of drop down menu (create custom memory) too crazy
-// first morse test should not have more than one word
 // morse reset should kill timer (new line shouldn't appear)
 // change shopping list to be something in order
-// chapter 1: unlocking planets consolidates before faces is done
 // games unlock all at once?
 // "new" for games not showing up
 // custom memory if has error, gets stuck on "encrypting..."

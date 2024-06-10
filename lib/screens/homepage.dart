@@ -140,11 +140,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void setUnlockedActivities() async {
     // if first time opening app, welcome
-    if (prefs.getBool(firstTimeAppKey)) {
-      // WidgetsBinding.instance.addPostFrameCallback((_) {
-      // });
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+    if (!prefs.getBool(firstTimeAppKey)) {
+      print('first time opening app');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+      });
     }
 
     // check if games are available, and firstView
@@ -155,8 +156,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if (prefs.getBool(newGamesAvailableKey)) {
       gamesFirstView = true;
+    } else {
       gamesFirstView = false;
-    } else {}
+    }
 
     // check if customManager is available, and firstView
     if (prefs.getBool(customMemoryManagerAvailableKey)) {
@@ -201,19 +203,22 @@ class _MyHomePageState extends State<MyHomePage> {
     if (prefs.getBool(singleDigitTimedTestCompleteKey)) {
       consolidateSingleDigit = true;
     }
-    if (prefs.getBool(planetTimedTestCompleteKey)) {
+    if (prefs.getBool(planetTimedTestCompleteKey) &&
+        prefs.getBool(faceTimedTestCompleteKey)) {
       consolidateChapter1 = true;
     }
     if (prefs.getBool(alphabetTimedTestCompleteKey)) {
       consolidateAlphabet = true;
     }
-    if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey)) {
+    if (prefs.getBool(phoneticAlphabetTimedTestCompleteKey) &&
+        prefs.getBool(airportTimedTestCompleteKey)) {
       consolidateChapter2 = true;
     }
     if (prefs.getBool(paoTimedTestCompleteKey)) {
       consolidatePAO = true;
     }
-    if (prefs.getBool(piTimedTestCompleteKey)) {
+    if (prefs.getBool(piTimedTestCompleteKey) &&
+        prefs.getBool(face2TimedTestCompleteKey)) {
       consolidateChapter3 = true;
     }
     if (prefs.getBool(deckTimedTestCompleteKey)) {

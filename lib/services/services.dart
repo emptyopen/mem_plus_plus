@@ -18,10 +18,10 @@ handleAppUpdate() async {
   PrefsUpdater prefs = PrefsUpdater();
 
   // new games for old devices:
-  prefs.setBool(gamesAvailableKey, true);
-  prefs.setBool(fadeGameAvailableKey, true);
-  prefs.setBool(morseGameAvailableKey, true);
-  prefs.setBool(irrationalGameAvailableKey, true);
+  // prefs.setBool(gamesAvailableKey, true);
+  // prefs.setBool(fadeGameAvailableKey, true);
+  // prefs.setBool(morseGameAvailableKey, true);
+  // prefs.setBool(irrationalGameAvailableKey, true);
 
   Map<String, Activity> activityStates =
       prefs.getSharedPrefs(activityStatesKey) as Map<String, Activity>;
@@ -213,7 +213,7 @@ initializeNotificationsScheduler() async {
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
     dailyReminderIdKey,
     dailyReminderKey,
-    'Daily reminder',
+    'Weekly reminder',
     importance: Importance.max,
     priority: Priority.high,
     ticker: 'ticker',
@@ -275,7 +275,7 @@ initializeNotificationsScheduler() async {
     tz.TZDateTime scheduledDate =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, 12);
     if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
+      scheduledDate = scheduledDate.add(const Duration(days: 7));
     }
     return scheduledDate;
   }

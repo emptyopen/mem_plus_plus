@@ -30,9 +30,8 @@ class _SlidingTilesState extends State<SlidingTiles> {
 
   void goToMainMenu(BuildContext context) async {
     HapticFeedback.lightImpact();
-    if (!prefs.getBool(firstTimeAppKey) ||
-        prefs.getBool(firstTimeAppKey) == true) {
-      prefs.setBool(firstTimeAppKey, false);
+    if (!prefs.getBool(firstTimeAppKey)) {
+      prefs.setBool(firstTimeAppKey, true);
     }
     Navigator.pop(context);
   }

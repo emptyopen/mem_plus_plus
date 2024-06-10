@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/sliding_tile_content.dart';
 import 'package:mem_plus_plus/components/standard/sliding_tiles.dart';
 import 'package:mem_plus_plus/constants/keys.dart';
+import 'package:mem_plus_plus/services/prefs_updater.dart';
 
 class WelcomeScreen extends StatefulWidget {
   WelcomeScreen();
@@ -92,6 +93,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    PrefsUpdater prefs = PrefsUpdater();
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -101,7 +103,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
       body: SlidingTiles(
         tiles: tiles,
-        showButtonEverySlide: true,
+        showButtonEverySlide: prefs.getBool(firstTimeAppKey),
         buttonText: 'Main Menu',
       ),
     );
