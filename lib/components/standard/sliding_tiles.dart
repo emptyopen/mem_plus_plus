@@ -38,8 +38,10 @@ class _SlidingTilesState extends State<SlidingTiles> {
 
   @override
   Widget build(BuildContext context) {
-    double buttonHeight = 50;
+    double buttonHeight = widget.helpStyle ? 50 : 65;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Flexible(
           child: PageView.builder(
@@ -60,30 +62,32 @@ class _SlidingTilesState extends State<SlidingTiles> {
                   vertical: 8,
                 ),
                 child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.tiles[index].header,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: widget.helpStyle ? 16 : 24,
-                          color: widget.helpStyle
-                              ? Colors.grey
-                              : backgroundHighlightColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.tiles[index].header,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: widget.helpStyle ? 24 : 28,
+                            color: widget.helpStyle
+                                ? Colors.grey
+                                : backgroundHighlightColor,
+                          ),
                         ),
-                      ),
-                      Divider(
-                        height: widget.helpStyle ? 30 : 40,
-                        thickness: 1,
-                        indent: 70,
-                        endIndent: 70,
-                        color: Colors.grey,
-                      ),
-                      Column(
-                        children: widget.tiles[index].content,
-                      ),
-                    ],
+                        Divider(
+                          height: widget.helpStyle ? 30 : 40,
+                          thickness: 1,
+                          indent: 70,
+                          endIndent: 70,
+                          color: Colors.grey,
+                        ),
+                        Column(
+                          children: widget.tiles[index].content,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -104,7 +108,7 @@ class _SlidingTilesState extends State<SlidingTiles> {
                   text: widget.buttonText,
                   color: Colors.green[200]!,
                   onPressed: widget.callback ?? () => goToMainMenu(context),
-                  fontSize: 20,
+                  fontSize: widget.helpStyle ? 20 : 26,
                 ))
             : SizedBox(height: buttonHeight),
         SizedBox(height: 15),

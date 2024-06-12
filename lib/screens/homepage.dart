@@ -355,9 +355,10 @@ class _MyHomePageState extends State<MyHomePage> {
     if (mainMenuOptions.length == 0 && customMemoryManagerAvailable) {
       mainMenuOptions.add(MainMenuOption(
         text:
-            'You\'ve got nothing to do! Add some memories in the memory manager!',
+            'You\'ve got nothing to do! Tap to add some memories in the memory manager!',
         isButton: true,
         color: colorCustomMemoryLighter,
+        splashColor: colorCustomMemoryLighter,
         function: () => Navigator.push(
           context,
           PageRouteBuilder(

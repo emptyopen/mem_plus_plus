@@ -329,15 +329,18 @@ class _EditCardState extends State<EditCard> {
 
     if (widget.activityKey == paoKey) {
       bool resetFamiliarity = false;
-      if (personTextController.text != '') {
+      if (personTextController.text != '' &&
+          updatedEntry.person != personTextController.text.trim()) {
         updatedEntry.person = personTextController.text.trim();
         resetFamiliarity = true;
       }
-      if (actionTextController.text != '') {
+      if (actionTextController.text != '' &&
+          updatedEntry.action != actionTextController.text.trim()) {
         updatedEntry.action = actionTextController.text.trim();
         resetFamiliarity = true;
       }
-      if (objectTextController.text != '') {
+      if (objectTextController.text != '' &&
+          updatedEntry.object != objectTextController.text.trim()) {
         updatedEntry.object = objectTextController.text.trim();
         resetFamiliarity = true;
       }
@@ -348,15 +351,18 @@ class _EditCardState extends State<EditCard> {
       prefs.writeSharedPrefs(widget.activityKey, data);
     } else if (widget.activityKey == deckKey) {
       bool resetFamiliarity = false;
-      if (personTextController.text != '') {
+      if (personTextController.text != '' &&
+          updatedEntry.person != personTextController.text.trim()) {
         updatedEntry.person = personTextController.text.trim();
         resetFamiliarity = true;
       }
-      if (actionTextController.text != '') {
+      if (actionTextController.text != '' &&
+          updatedEntry.action != actionTextController.text.trim()) {
         updatedEntry.action = actionTextController.text.trim();
         resetFamiliarity = true;
       }
-      if (objectTextController.text != '') {
+      if (objectTextController.text != '' &&
+          updatedEntry.object != objectTextController.text.trim()) {
         updatedEntry.object = objectTextController.text.trim();
         resetFamiliarity = true;
       }
@@ -367,15 +373,18 @@ class _EditCardState extends State<EditCard> {
       prefs.writeSharedPrefs(widget.activityKey, data);
     } else if (widget.activityKey == tripleDigitKey) {
       bool resetFamiliarity = false;
-      if (personTextController.text != '') {
+      if (personTextController.text != '' &&
+          updatedEntry.person != personTextController.text.trim()) {
         updatedEntry.person = personTextController.text.trim();
         resetFamiliarity = true;
       }
-      if (actionTextController.text != '') {
+      if (actionTextController.text != '' &&
+          updatedEntry.action != actionTextController.text.trim()) {
         updatedEntry.action = actionTextController.text.trim();
         resetFamiliarity = true;
       }
-      if (objectTextController.text != '') {
+      if (objectTextController.text != '' &&
+          updatedEntry.object != objectTextController.text.trim()) {
         updatedEntry.object = objectTextController.text.trim();
         resetFamiliarity = true;
       }
@@ -385,7 +394,8 @@ class _EditCardState extends State<EditCard> {
       data[currIndex] = updatedEntry;
       prefs.writeSharedPrefs(widget.activityKey, data);
     } else {
-      if (objectTextController.text != '') {
+      if (objectTextController.text != '' &&
+          updatedEntry.object != objectTextController.text.trim()) {
         updatedEntry.object = objectTextController.text.trim();
         updatedEntry.familiarity = 0;
       }

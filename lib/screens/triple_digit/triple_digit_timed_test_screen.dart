@@ -75,16 +75,36 @@ class _TripleDigitTimedTestScreenState
         '$digit1$digit2$digit3$digit4$digit5$digit6$digit7$digit8$digit9$digit10$digit11$digit12') {
       prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
       prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);
-      prefs.updateActivityVisible(lesson1Key, true);
-      prefs.setBool(gamesAvailableKey, true);
-      prefs.setBool(fadeGameAvailableKey, true);
-      showSnackBar(
-        context: context,
-        snackBarText: 'Congratulations! You aced it!',
-        textColor: Colors.black,
-        backgroundColor: colorTripleDigitStandard,
-        durationSeconds: 2,
-      );
+      if (!prefs.getBool(tripleDigitTimedTestCompleteKey)) {
+        prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
+        prefs.setBool(tripleDigitTimedTestCompleteKey, true);
+        showSnackBar(
+          context: context,
+          snackBarText:
+              'Congratulations! You\'ve completed the Triple Digit system!',
+          textColor: Colors.black,
+          backgroundColor: colorTripleDigitStandard,
+          durationSeconds: 3,
+          isSuper: true,
+        );
+        showSnackBar(
+          context: context,
+          snackBarText:
+              'You\'ve fully unlocked everything in the app, now go conquer the world!',
+          textColor: Colors.black,
+          backgroundColor: colorTripleDigitStandard,
+          durationSeconds: 5,
+          isSuper: true,
+        );
+      } else {
+        showSnackBar(
+          context: context,
+          snackBarText: 'Congratulations! You aced it!',
+          textColor: Colors.black,
+          backgroundColor: colorTripleDigitStandard,
+          durationSeconds: 2,
+        );
+      }
     } else {
       showSnackBar(
         context: context,

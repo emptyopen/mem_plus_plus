@@ -61,7 +61,7 @@ class CondensedMainMenuChapterButtons extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Text(
                   text,
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 18),
                   textAlign: TextAlign.start,
                 ),
               ),

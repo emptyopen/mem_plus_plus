@@ -159,30 +159,35 @@ class MainMenuOption extends StatelessWidget {
     if (isButton) {
       return Container(
         height: 50,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              width: screenWidth * 0.85,
-              height: 46,
-              decoration: BoxDecoration(
-                  color: color,
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(5)),
-              child: Container(
-                height: 46,
-                child: ElevatedButton(
-                  onPressed: () {
-                    function();
-                  },
-                  child: Text(
-                    text,
-                    textAlign: TextAlign.center,
-                    style: (TextStyle(color: textColor)),
-                  ),
-                ),
+        child: Container(
+          width: screenWidth * 0.85,
+          height: 46,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(100),
+                blurRadius: 2.0,
+                spreadRadius: 0.0,
+                offset: Offset(2.0, 2.0),
+              ),
+            ],
+          ),
+          child: Container(
+            height: 46,
+            padding: EdgeInsets.all(5),
+            child: GestureDetector(
+              onTap: () {
+                function();
+              },
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: (TextStyle(color: textColor, fontSize: 14)),
               ),
             ),
-          ],
+          ),
         ),
       );
     }
@@ -231,7 +236,6 @@ class MainMenuOption extends StatelessWidget {
                     }
                     HapticFeedback.lightImpact();
                     // TODO (2024): hide snackbar
-                    print('yo ${activity!.name} clicked');
                     prefs.updateActivityFirstView(activity!.name, false);
                     callback!();
                     slideTransition(context, route!);

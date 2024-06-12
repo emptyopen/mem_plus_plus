@@ -39,7 +39,7 @@ class _HelpDialogState extends State<HelpDialog> {
     widget.information.forEach((String info) {
       tiles.add(SlidingTileContent(
           header: widget.title,
-          content: [Text(info, style: TextStyle(fontSize: 16))]));
+          content: [Text(info, style: TextStyle(fontSize: 20))]));
     });
   }
 
@@ -66,8 +66,8 @@ class _HelpDialogState extends State<HelpDialog> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  width: screenWidth * 0.95,
-                  height: screenHeight * 0.85,
+                  width: screenWidth * 0.90,
+                  height: screenHeight * 0.65,
                   decoration: BoxDecoration(
                       color: backgroundColor,
                       borderRadius: BorderRadius.all(Radius.circular(5))),

@@ -62,7 +62,7 @@ void showSnackBar({
         snackBarText,
         style: TextStyle(
           color: textColor,
-          fontSize: isSuper ? 20 : 16,
+          fontSize: isSuper ? 22 : 18,
           fontFamily: 'Viga',
         ),
       ),
@@ -91,11 +91,11 @@ void showConfirmDialog({
         ),
         title: Text(
           'Confirm',
-          style: TextStyle(color: backgroundHighlightColor),
+          style: TextStyle(color: backgroundHighlightColor, fontSize: 26),
         ),
         content: Text(
           confirmText,
-          style: TextStyle(color: backgroundHighlightColor),
+          style: TextStyle(color: backgroundHighlightColor, fontSize: 20),
         ),
         actions: <Widget>[
           BasicFlatButton(
@@ -105,6 +105,7 @@ void showConfirmDialog({
               HapticFeedback.lightImpact();
               Navigator.of(context).pop();
             },
+            fontSize: 20,
           ),
           BasicFlatButton(
             text: 'Confirm',
@@ -114,6 +115,7 @@ void showConfirmDialog({
               HapticFeedback.lightImpact();
               Navigator.of(context).pop();
             },
+            fontSize: 20,
           ),
         ],
       );
@@ -154,12 +156,12 @@ notify() async {
   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
     'your channel id',
     'your channel name',
-    'your channel description',
+    channelDescription: 'your channel description',
     importance: Importance.max,
     priority: Priority.high,
     ticker: 'ticker',
   );
-  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  var iOSPlatformChannelSpecifics = DarwinNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,
     iOS: iOSPlatformChannelSpecifics,
@@ -171,29 +173,34 @@ notify() async {
 
 notifyDuration(
     Duration duration, String title, String subtitle, String payload) async {
-  var scheduledNotificationDateTime = DateTime.now().add(duration);
+  final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+  var scheduledNotificationDateTime =
+      tz.TZDateTime.from(DateTime.now(), tz.getLocation(currentTimeZone))
+          .add(duration);
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
     testReminderIdKey,
     testReminderKey,
-    'Timed test available',
+    channelDescription: 'Timed test available',
     importance: Importance.max,
     priority: Priority.high,
     ticker: 'ticker',
   );
-  var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  var iOSPlatformChannelSpecifics = DarwinNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,
     iOS: iOSPlatformChannelSpecifics,
   );
   Random random = Random();
-  await flutterLocalNotificationsPlugin.schedule(
+  await flutterLocalNotificationsPlugin.zonedSchedule(
     random.nextInt(100000) + 10,
     title,
     subtitle,
     scheduledNotificationDateTime,
     platformChannelSpecifics,
+    uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
     payload: payload,
   );
 }
@@ -213,12 +220,12 @@ initializeNotificationsScheduler() async {
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
     dailyReminderIdKey,
     dailyReminderKey,
-    'Weekly reminder',
+    channelDescription: 'Weekly reminder',
     importance: Importance.max,
     priority: Priority.high,
     ticker: 'ticker',
   );
-  const iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
   var platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,
     iOS: iOSPlatformChannelSpecifics,
@@ -290,17 +297,17 @@ initializeNotificationsScheduler() async {
     }
   });
 
-  await flutterLocalNotificationsPlugin.zonedSchedule(
-    0,
-    title,
-    subtitle,
-    _nextInstanceOfLunch(),
-    platformChannelSpecifics,
-    androidAllowWhileIdle: true,
-    uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-    matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-  );
+  // await flutterLocalNotificationsPlugin.zonedSchedule(
+  //   0,
+  //   title,
+  //   subtitle,
+  //   _nextInstanceOfLunch(),
+  //   platformChannelSpecifics,
+  //   androidAllowWhileIdle: true,
+  //   uiLocalNotificationDateInterpretation:
+  //       UILocalNotificationDateInterpretation.absoluteTime,
+  //   matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+  // );
 
   // more debug
   pendingNotificationRequests =

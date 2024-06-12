@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mem_plus_plus/components/data/sliding_tile_content.dart';
 import 'package:mem_plus_plus/components/standard/sliding_tiles.dart';
@@ -19,12 +20,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         Text(
           'So glad you could join us. \n\n'
           'We\'re going to get you a superpower. But first, let\'s clear up some common misconceptions about memory.\n',
-          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 26, color: backgroundHighlightColor),
           textAlign: TextAlign.center,
         ),
         Text(
           '(Swipe through this walkthrough)',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
+          style: TextStyle(fontSize: 22, color: Colors.grey),
           textAlign: TextAlign.center,
         )
       ],
@@ -42,7 +43,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             '(something which doesn\'t actually exist - another common myth). \n'
             '    They are just ordinary people who suddenly understand that they are capable, '
             'and make it their responsibility to improve their memory.',
-            style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
           ),
         ]),
     SlidingTileContent(
@@ -52,14 +53,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           SizedBox(
             height: 10,
           ),
-          Text(
+          AutoSizeText(
             '    I can tell you from personal experience that at the ripe old age of 30 '
             'I was resigned to have a terrible memory for the rest of my life. I had the worst memory '
             'among all my friends. \n'
             '    All I did was encounter these strategies by accident while waiting in line for ramen, '
             'and within months I was able to rapidly improve my memory beyond all recognition.'
             '\n   If I can do it, so can you. ',
-            style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
           ),
         ]),
     SlidingTileContent(
@@ -75,7 +76,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             'researchers estimate somewhere between 1 terabyte and 2.5 petabytes. \n    But don\'t '
             'worry about filling your brain over capacity with short term data or trivial facts. '
             'If you store memories correctly, vital information won\'t get pushed out of your brain.\n',
-            style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+            style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
           ),
         ]),
     SlidingTileContent(header: 'How this app works:', content: [
@@ -86,7 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         'systems and tasks will show up in the TO-DO section, and all systems and lessons you have mastered '
         'will still be available in the REVIEW section. \n'
         '    Okay, off you go!',
-        style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+        style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
       ),
     ]),
   ];

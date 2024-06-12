@@ -30,7 +30,10 @@ class ReceivedNotification {
 }
 
 // next up:
+// chapter 1 "done" immediately available?
+// notifications not working
 // new tags need clean up - reappearing
+// definitely test notifications on ios
 // morse reset should kill timer (new line shouldn't appear)
 // change shopping list to be something in order
 // games unlock all at once?
@@ -94,21 +97,21 @@ Future<void> main() async {
 
   await PrefsUpdater.init();
 
-  var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
-  var initializationSettingsIOS = IOSInitializationSettings(
-      onDidReceiveLocalNotification:
+  final initializationSettingsAndroid =
+      AndroidInitializationSettings('app_icon');
+  final DarwinInitializationSettings initializationSettingsDarwin =
+      DarwinInitializationSettings(onDidReceiveLocalNotification:
           (int id, String? title, String? body, String? payload) async {
     didReceiveLocalNotificationSubject.add(ReceivedNotification(
         id: id, title: title, body: body, payload: payload));
   });
   var initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
-    iOS: initializationSettingsIOS,
+    iOS: initializationSettingsDarwin,
   );
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String? payload) async {
-    debugPrint('notification payload: ' + payload!);
-    selectNotificationSubject.add(payload);
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+    print('response: ${response.toString()}');
   });
   initializeNotificationsScheduler();
 

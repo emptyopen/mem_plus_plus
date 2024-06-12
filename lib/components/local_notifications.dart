@@ -16,13 +16,14 @@ class _LocalNotificationsState extends State<LocalNotifications> {
     super.initState();
 
     final settingsAndroid = AndroidInitializationSettings('app_icon');
-    final settingsIOS = IOSInitializationSettings(
-        onDidReceiveLocalNotification: (id, title, body, payload) =>
-            onSelectNotification(payload!));
+    final settingsIOS = DarwinInitializationSettings(
+        onDidReceiveLocalNotification: (id, title, body, payload) {
+      print('received local notification');
+    });
 
     notifications.initialize(
       InitializationSettings(android: settingsAndroid, iOS: settingsIOS),
-      onSelectNotification: onSelectNotification,
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
     );
 
     // --------
@@ -32,10 +33,9 @@ class _LocalNotificationsState extends State<LocalNotifications> {
   scheduledNotifications() async {
     // Show a notification every minute with the first appearance happening a minute after invoking the method
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'repeating channel id',
-        'repeating channel name',
-        'repeating description');
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+        'repeating channel id', 'repeating channel name',
+        channelDescription: 'repeating description');
+    var iOSPlatformChannelSpecifics = new DarwinNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
@@ -49,7 +49,9 @@ class _LocalNotificationsState extends State<LocalNotifications> {
     );
   }
 
-  Future onSelectNotification(String? payload) async => await Navigator.push(
+  Future onDidReceiveNotificationResponse(
+          NotificationResponse? payload) async =>
+      await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MyHomePage()),
       );
@@ -64,13 +66,13 @@ NotificationDetails get _ongoing {
   final androidChannelSpecifics = AndroidNotificationDetails(
     'your channel id',
     'your channel name',
-    'your channel description',
+    channelDescription: 'your channel description',
     importance: Importance.max,
     priority: Priority.high,
     ongoing: true,
     autoCancel: false,
   );
-  final iOSChannelSpecifics = IOSNotificationDetails();
+  final iOSChannelSpecifics = DarwinNotificationDetails();
   return NotificationDetails(
     android: androidChannelSpecifics,
     iOS: iOSChannelSpecifics,

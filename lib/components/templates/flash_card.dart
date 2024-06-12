@@ -267,7 +267,7 @@ class _FlashCardState extends State<FlashCard> {
           height: screenHeight * 0.5,
           width: screenWidth * 0.7,
           child: FlipCard(
-            speed: 700,
+            speed: 500,
             front: Container(
               decoration: BoxDecoration(
                 color: widget.lighterColor,
