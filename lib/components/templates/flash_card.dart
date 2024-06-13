@@ -367,10 +367,14 @@ class _FlashCardState extends State<FlashCard> {
                       ),
                       child: GestureDetector(
                         onTap: () => didntGotIt(),
-                        child: Center(
-                          child: Text(
-                            'Next time!',
-                            style: TextStyle(fontSize: 17, color: Colors.black),
+                        child: Container(
+                          decoration: BoxDecoration(),
+                          child: Center(
+                            child: Text(
+                              'Next time!',
+                              style:
+                                  TextStyle(fontSize: 17, color: Colors.black),
+                            ),
                           ),
                         ),
                       ),
@@ -397,10 +401,14 @@ class _FlashCardState extends State<FlashCard> {
                       ),
                       child: GestureDetector(
                         onTap: () => gotIt(),
-                        child: Center(
-                          child: Text(
-                            'Got it!',
-                            style: TextStyle(fontSize: 20, color: Colors.black),
+                        child: Container(
+                          decoration: BoxDecoration(),
+                          child: Center(
+                            child: Text(
+                              'Got it!',
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            ),
                           ),
                         ),
                       ),
