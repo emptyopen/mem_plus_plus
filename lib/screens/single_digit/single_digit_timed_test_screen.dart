@@ -77,7 +77,7 @@ class _SingleDigitTimedTestScreenState
         );
         showSnackBar(
           context: context,
-          snackBarText: 'Congratulations! You\'ve unlocked Mini-Games!',
+          snackBarText: 'You\'ve unlocked Mini-Games!',
           textColor: Colors.white,
           backgroundColor: colorGamesDarker,
           durationSeconds: 3,
@@ -85,7 +85,7 @@ class _SingleDigitTimedTestScreenState
         );
         showSnackBar(
           context: context,
-          snackBarText: 'Congratulations! You\'ve unlocked Chapter 1!',
+          snackBarText: 'You\'ve unlocked Chapter 1!',
           textColor: Colors.black,
           backgroundColor: colorChapter1Darker,
           durationSeconds: 3,

@@ -27,14 +27,14 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
           '    Welcome to the first Lesson! I\'m going to do my best to condense '
           'information, but there\'s a mountain of it out there. I\'ll also divide up the lessons '
           'so that they are "bite-size". ',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
         SizedBox(
           height: 30,
         ),
         Text(
           '(Swipe through this quick lesson)',
-          style: TextStyle(fontSize: 14, color: Colors.grey),
+          style: TextStyle(fontSize: 18, color: Colors.grey),
           textAlign: TextAlign.center,
         ),
       ],
@@ -51,7 +51,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
           '\n\n    I no longer have to rifle through ancient emails or text threads for obscure information. '
           'I don\'t forget things when I go shopping, and I always remember exactly where I parked my car. The list '
           'goes on, and on, and on. Memory is a part of everything we do!',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -65,7 +65,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
           'No, you put it somewhere where it\'s easy to find again. When you store a file on your computer, do you just dump it on the desktop in a chaotic mess? '
           'Okay, maybe you\'re guilty of that, but then you should also be familiar with the difficulty in finding old documents.\n\n'
           '    Reduce the friction in your recall efforts by making memories easier to access!',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -78,7 +78,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
           '\n      2) Add "emotional detail" to the story'
           '\n      3) "Anchor" that story'
           '\n\n    Don\'t worry, we\'ll go over each of these steps in detail, in time!',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -92,7 +92,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
           '\n\n    For example, when someone introduces themselves and says their name, we\'re not going to just '
           'sit there and let that name just float into and out of our ears. No! '
           'We\'re going to learn how to actively grab a hold of it, and wrestle it into submission.',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -102,7 +102,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
         Text(
           '    The added bonus to all of this is that even being aware of your own memory '
           'will in and of itself improve your memory (it\'s all very meta, I know). Remember to pay attention, remember more!',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 24, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -117,7 +117,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
           'I didn\'t try hard enough to remember it. \n\n    I didn\'t anchor the memory well '
           'enough, or I didn\'t visualize the scenes in enough detail, or I didn\'t test myself on the '
           'memory often enough. I did better next time, and forgot less.',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -140,7 +140,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
     if (!prefs.getBool(lesson1CompleteKey)) {
       showSnackBar(
         context: context,
-        snackBarText: 'Congratulations! You\'ve unlocked the Face test!',
+        snackBarText: 'You\'ve unlocked the Face test!',
         textColor: Colors.black,
         backgroundColor: colorChapter1Darker,
         durationSeconds: 3,
@@ -148,7 +148,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       );
       showSnackBar(
         context: context,
-        snackBarText: 'Congratulations! You\'ve unlocked the Planet test!',
+        snackBarText: 'You\'ve unlocked the Planet test!',
         textColor: Colors.black,
         backgroundColor: colorChapter1Darker,
         durationSeconds: 3,

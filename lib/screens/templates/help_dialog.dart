@@ -67,7 +67,7 @@ class _HelpDialogState extends State<HelpDialog> {
               children: <Widget>[
                 Container(
                   width: screenWidth * 0.90,
-                  height: screenHeight * 0.65,
+                  height: screenHeight * 0.75,
                   decoration: BoxDecoration(
                       color: backgroundColor,
                       borderRadius: BorderRadius.all(Radius.circular(5))),

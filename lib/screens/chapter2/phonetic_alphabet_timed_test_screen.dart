@@ -213,7 +213,7 @@ class _PhoneticAlphabetTimedTestScreenState
           );
           showSnackBar(
             context: context,
-            snackBarText: 'Congratulations! You\'ve unlocked the Morse game!',
+            snackBarText: 'You\'ve unlocked the Morse game!',
             textColor: Colors.white,
             backgroundColor: colorGamesDarker,
             durationSeconds: 3,

@@ -38,7 +38,7 @@ class _SlidingTilesState extends State<SlidingTiles> {
 
   @override
   Widget build(BuildContext context) {
-    double buttonHeight = widget.helpStyle ? 50 : 65;
+    double buttonHeight = widget.helpStyle ? 55 : 65;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
@@ -108,10 +108,11 @@ class _SlidingTilesState extends State<SlidingTiles> {
                   text: widget.buttonText,
                   color: Colors.green[200]!,
                   onPressed: widget.callback ?? () => goToMainMenu(context),
-                  fontSize: widget.helpStyle ? 20 : 26,
-                ))
+                  fontSize: widget.helpStyle ? 24 : 28,
+                ),
+              )
             : SizedBox(height: buttonHeight),
-        SizedBox(height: 15),
+        SizedBox(height: 35),
       ],
     );
   }

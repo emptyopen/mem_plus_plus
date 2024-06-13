@@ -204,42 +204,42 @@ class MainMenuOption extends StatelessWidget {
           width: screenWidth * 0.85,
           child: Stack(
             children: <Widget>[
-              Container(
-                height: 46,
-                decoration: BoxDecoration(
-                  color: splashColor,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withAlpha(100),
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset: Offset(2.0, 2.0),
+              GestureDetector(
+                onTap: () async {
+                  if (activity!.visibleAfterTime.compareTo(DateTime.now()) >
+                      0) {
+                    return null;
+                  }
+                  HapticFeedback.lightImpact();
+                  // TODO (2024): hide snackbar
+                  prefs.updateActivityFirstView(activity!.name, false);
+                  callback!();
+                  slideTransition(context, route!);
+                },
+                child: Container(
+                  height: 46,
+                  decoration: BoxDecoration(
+                    color: splashColor,
+                    borderRadius: BorderRadius.circular(5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(100),
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ],
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        color,
+                        splashColor!,
+                      ], // whitish to gray
+                      tileMode: TileMode
+                          .repeated, // repeats the gradient over the canvas
                     ),
-                  ],
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      color,
-                      splashColor!,
-                    ], // whitish to gray
-                    tileMode: TileMode
-                        .repeated, // repeats the gradient over the canvas
                   ),
-                ),
-                child: GestureDetector(
-                  onTap: () async {
-                    if (activity!.visibleAfterTime.compareTo(DateTime.now()) >
-                        0) {
-                      return null;
-                    }
-                    HapticFeedback.lightImpact();
-                    // TODO (2024): hide snackbar
-                    prefs.updateActivityFirstView(activity!.name, false);
-                    callback!();
-                    slideTransition(context, route!);
-                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[

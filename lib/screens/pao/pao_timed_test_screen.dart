@@ -87,7 +87,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
         );
         showSnackBar(
           context: context,
-          snackBarText: 'Congratulations! You\'ve unlocked Chapter 3!',
+          snackBarText: 'You\'ve unlocked Chapter 3!',
           textColor: Colors.white,
           backgroundColor: colorChapter3Darker,
           durationSeconds: 3,

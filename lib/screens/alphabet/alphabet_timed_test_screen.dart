@@ -83,7 +83,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
         );
         showSnackBar(
           context: context,
-          snackBarText: 'Congratulations! You\'ve unlocked Chapter 2!',
+          snackBarText: 'You\'ve unlocked Chapter 2!',
           textColor: Colors.black,
           backgroundColor: colorChapter2Darker,
           durationSeconds: 3,

@@ -28,14 +28,14 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
           'Basically, it\'s the idea that you can maximize both the longevity and the speed in learning things by spacing out the '
           'reviews in increasing intervals. '
           '\n    I think the quickest way to understand is to look at a graph.',
-          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
         SizedBox(
           height: 30,
         ),
         Text(
           '(Swipe through this quick lesson)',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+          style: TextStyle(fontSize: 18, color: Colors.grey),
           textAlign: TextAlign.center,
         ),
       ],
@@ -54,7 +54,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
         Text(
           '    As you can see in the graph, your ability recall a memory improves each time you review. '
           'Critically, that means we can review in increasingly longer spaced intervals.',
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -67,7 +67,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
           'in for eight hours. Then two days, two weeks, two months, two years. \n\n'
           '    If you memorize things efficiently, you can memorize something for life (easily) with less than ten '
           'reviews! How convenient!',
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -78,7 +78,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
           '    You are an especially lucky winner, because upon completing this lesson you will unlock the Custom Memory Manager! '
           'You can create any type of memory you\'d like, and the tool will automatically take care of the spaced '
           'repetition schedule for you!\n\n    Check it out in the bottom right of the main menu!',
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -93,8 +93,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
       prefs.setBool(customMemoryManagerFirstHelpKey, true);
       showSnackBar(
         context: context,
-        snackBarText:
-            'Congratulations! You\'ve unlocked the Custom Memory Manager!',
+        snackBarText: 'You\'ve unlocked the Custom Memory Manager!',
         textColor: Colors.white,
         backgroundColor: Colors.purple,
         durationSeconds: 3,
@@ -102,7 +101,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
       );
       showSnackBar(
         context: context,
-        snackBarText: 'Congratulations! You\'ve unlocked the Face (hard) test!',
+        snackBarText: 'You\'ve unlocked the Face (hard) test!',
         textColor: Colors.black,
         backgroundColor: colorChapter3Darker,
         durationSeconds: 3,
@@ -110,7 +109,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
       );
       showSnackBar(
         context: context,
-        snackBarText: 'Congratulations! You\'ve unlocked the Pi test!',
+        snackBarText: 'You\'ve unlocked the Pi test!',
         textColor: Colors.black,
         backgroundColor: colorChapter3Darker,
         durationSeconds: 3,

@@ -117,8 +117,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
           prefs.updateActivityVisible(tripleDigitEditKey, true);
           showSnackBar(
             context: context,
-            snackBarText:
-                'Congratulations! You\'ve unlocked the Triple Digit system!',
+            snackBarText: 'You\'ve unlocked the Triple Digit system!',
             textColor: Colors.white,
             backgroundColor: colorTripleDigitDarker,
             durationSeconds: 3,

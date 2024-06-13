@@ -29,14 +29,14 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           '\n\n    The Memory Palace is actually an ancient technique, and has '
           'been around since Ancient Roman times! I\'m not sure why this technique isn\'t taught to all '
           'children, but here we are!',
-          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
         SizedBox(
           height: 30,
         ),
         Text(
           '(Swipe through this quick lesson)',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+          style: TextStyle(fontSize: 18, color: Colors.grey),
           textAlign: TextAlign.center,
         ),
       ],
@@ -49,7 +49,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           'layout of places we are familiar with. \n\n    Close your eyes and imagine any home or apartment you\'ve lived in, even as a younger child. '
           'Can you remember where your bedroom was compared to the kitchen? Of course! You remember where the fridge '
           'was in relation to the dishwasher and the microwave! You even remember the orientation of the toilet in the bathroom.',
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -60,7 +60,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           '    It doesn\'t even have to be a house! Maybe it\'s a train line that you\'ve taken every day of your life. '
           'As long as you can recall all of the stops in perfect order, feel free to use something like that, too!'
           '\n\n    We simply want to encode something hard to remember into something easier to remember. ',
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -74,7 +74,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           '\n\n    Whatever the scene is, we want to "entangle" the memory to that sublocation. We\'ll go over an example in a '
           'moment, don\'t worry! The point is, this method will become a powerful tool for recalling lists of items or '
           'sequences of events.',
-          style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -87,19 +87,19 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
             Text(
               '    Alright! Since we only have the single digit and alphabet system mastered right now, '
               'let\'s take a look at remembering this shopping list: ',
-              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             Text(
               '\n    - 2 gallons of milk\n    - a bunch of toilet paper'
               '\n    - 4 lbs of chicken breast'
               '\n    - some cilantro\n    - dish soap',
-              style: TextStyle(fontSize: 19, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
               textAlign: TextAlign.start,
             ),
             Text(
               '\n    Oh, and on the way home let\'s stop by the cake shop to pick up Margaret\'s birthday cake! '
               'It\'s gonna be a fun party if we\'re getting this much chicken! ',
-              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
           ],
         ),
@@ -113,7 +113,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           'of this example, let\'s imagine a simple apartment.\n\n    A front door entrance leads into a kitchen, which contains a '
           'fridge and a sink. If we keep moving clockwise around the apartment, we might choose the sofa in the living room, '
           'then the TV. The we go to the bedroom which contains our comfy bed, and finally the toilet in the bathroom!',
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -145,11 +145,11 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           children: <Widget>[
             Text(
               '    OK! Now we simply go from sub-location to sub-location, attaching our concocted scenes:\n',
-              style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             Text(
               '    2 gallons of milk / front door:',
-              style: TextStyle(fontSize: 22, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             SizedBox(
               height: 5,
@@ -160,7 +160,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
               'gallons.\n    My go-to objects for 2 are birds, so I might imagine a swan bringing a jug of milk '
               'and splashing the door with the milk. How rude! The swan then looks me square in the eyes and smugly smirks. '
               'Wow! Worst roommate ever. ',
-              style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
           ],
         ),
@@ -173,7 +173,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           children: <Widget>[
             Text(
               '    a bunch of toilet paper / fridge:',
-              style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             SizedBox(
               height: 5,
@@ -182,11 +182,11 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
               '    Now we\'re at the fridge. We open the door, and toilet paper comes exploding outwards! Who put this much '
               'toilet paper in the fridge? It was probably the swan. And - oh GROSS! '
               'The toilet paper is USED! Briefly imagine the stench! You\'re not forgetting that one!',
-              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             Text(
               '\n    4 lbs of chicken breast / sink:',
-              style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             SizedBox(
               height: 5,
@@ -196,7 +196,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
               'themselves feel at home, but that\'s fine. You are an impeccable host.\n    How many chickens did we '
               'need to get again? Let\'s put some of the chickens on a raft or a sailboat in the jacuzzi (for me, 4 = sailboat). '
               'Really picture all the chicken buddies having a good time together.',
-              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
           ],
         ),
@@ -209,7 +209,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           children: <Widget>[
             Text(
               '    cilantro / sofa:',
-              style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             SizedBox(
               height: 5,
@@ -217,11 +217,11 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
             Text(
               '    Cilantro in the sofa cracks! Overflowing with cilantro. You sit down on the sofa and your pants turn green. '
               'Kick your legs up on the ottoman and inhale the pungency of cilantro.',
-              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             Text(
               '\n    dish soap / bed:',
-              style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             SizedBox(
               height: 5,
@@ -229,11 +229,11 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
             Text(
               '    You go to lie down in your comfy bed to get away from the craziness, but unfortunately it\'s soaked with dish detergent. '
               'Luckily you are actually a plate, so now you\'re going to be squeaky clean!',
-              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             Text(
               '\n    birthday cake / toilet:',
-              style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
             SizedBox(
               height: 5,
@@ -241,7 +241,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
             Text(
               '    And finally we walk into the bathroom and what do we see? An edible toilet! Truly amazing, '
               'red velvet on the inside! Really delicious. Happy birthday Margaret!',
-              style: TextStyle(fontSize: 16, color: backgroundHighlightColor),
+              style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
             ),
           ],
         ),
@@ -254,7 +254,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
           '    You\'ll get a chance to practice this right away with the NATO phonetic alphabet and Morse code test! '
           'There are many variations and uses of the Memory Palace, but I think you get the general idea. \n'
           '    Two tests, and then you are onto one of the most exciting and powerful systems! ',
-          style: TextStyle(fontSize: 18, color: backgroundHighlightColor),
+          style: TextStyle(fontSize: 20, color: backgroundHighlightColor),
         ),
       ],
     ),
@@ -266,7 +266,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
     if (!prefs.getBool(lesson1CompleteKey)) {
       showSnackBar(
         context: context,
-        snackBarText: 'Congratulations! You\'ve unlocked the NATO/Morse test!',
+        snackBarText: 'You\'ve unlocked the NATO/Morse test!',
         textColor: Colors.black,
         backgroundColor: colorChapter2Darker,
         durationSeconds: 3,
@@ -274,7 +274,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
       );
       showSnackBar(
         context: context,
-        snackBarText: 'Congratulations! You\'ve unlocked the Airport test!',
+        snackBarText: 'You\'ve unlocked the Airport test!',
         textColor: Colors.black,
         backgroundColor: colorChapter2Darker,
         durationSeconds: 3,

@@ -204,7 +204,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
         fontSize: 28,
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         onPressed: () => checkResult(index),
-        useConstrained: true,
+        fullWidth: true,
       );
     } else if (widget.systemKey == deckKey) {
       String text = '';
@@ -226,7 +226,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
               fontSize: 30,
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               onPressed: () => checkResult(index),
-              useConstrained: true,
+              fullWidth: true,
             )
           : ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -267,6 +267,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
         fontSize: 30,
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         onPressed: () => checkResult(index),
+        fullWidth: true,
       );
     }
     return BasicFlatButton(
@@ -277,6 +278,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
       fontSize: 30,
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       onPressed: () => checkResult(index),
+      fullWidth: true,
     );
   }
 
