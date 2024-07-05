@@ -6,6 +6,7 @@ import 'package:mem_plus_plus/constants/keys.dart';
 class LessonScreen extends StatefulWidget {
   final String title;
   final List<SlidingTileContent> tiles;
+  final bool lessonIsComplete;
   final Function completeLesson;
   final Color colorStandard;
   final Color colorDarker;
@@ -13,6 +14,7 @@ class LessonScreen extends StatefulWidget {
   LessonScreen({
     required this.title,
     required this.tiles,
+    required this.lessonIsComplete,
     required this.completeLesson,
     required this.colorStandard,
     required this.colorDarker,
@@ -34,7 +36,7 @@ class _LessonScreenState extends State<LessonScreen> {
       ),
       body: SlidingTiles(
         tiles: widget.tiles,
-        showButtonEverySlide: true,
+        showButtonEverySlide: widget.lessonIsComplete,
         buttonText: 'Done',
         callback: widget.completeLesson,
       ),

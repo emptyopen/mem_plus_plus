@@ -244,41 +244,29 @@ class _CSVImporterState extends State<CSVImporter> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[300],
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          ),
+                        BasicFlatButton(
+                          text: 'Cancel',
+                          fontSize: 20,
+                          color: Colors.grey[300]!,
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             Navigator.pop(context);
                           },
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(fontSize: 20),
-                          ),
                         ),
                         SizedBox(
                           width: 25,
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: colorDeckStandard,
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          ),
+                        BasicFlatButton(
+                          text: 'Submit',
+                          fontSize: 20,
+                          color: colorDeckStandard,
                           onPressed: () {
+                            print('yo');
                             HapticFeedback.lightImpact();
                             var csvConverter = CsvToListConverter();
                             var l = csvConverter.convert(textController.text,
-                                eol: '\n');
+                                eol: '|');
+                            print(l.length);
                             if (l.length == 52) {
                               List<DeckData> deckDataList = [];
                               l.asMap().forEach((k, v) {
@@ -294,10 +282,6 @@ class _CSVImporterState extends State<CSVImporter> {
                               Navigator.pop(context);
                             }
                           },
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(fontSize: 20),
-                          ),
                         ),
                       ],
                     ),

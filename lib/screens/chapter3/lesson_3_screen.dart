@@ -127,6 +127,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
       title: 'Lesson 3',
       tiles: tiles,
       completeLesson: completeLesson,
+      lessonIsComplete: prefs.getBool(lesson3CompleteKey),
       colorDarker: colorChapter3Darker,
       colorStandard: colorChapter3Standard,
     );

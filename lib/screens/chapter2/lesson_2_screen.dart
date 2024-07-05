@@ -294,6 +294,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
       tiles: tiles,
       colorStandard: colorChapter2Standard,
       colorDarker: colorChapter2Darker,
+      lessonIsComplete: prefs.getBool(lesson2CompleteKey),
       completeLesson: completeLesson,
     );
   }

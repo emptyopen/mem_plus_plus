@@ -168,6 +168,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
       colorStandard: colorChapter1Standard,
       colorDarker: colorChapter1Darker,
       tiles: tiles,
+      lessonIsComplete: prefs.getBool(lesson1CompleteKey),
       completeLesson: completeLesson,
     );
   }

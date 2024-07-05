@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 
@@ -286,12 +287,24 @@ class _EditCardState extends State<EditCard> {
                               ),
                               SizedBox(height: 10),
                               widget.activityKey == singleDigitKey
-                                  ? Text(
-                                      singleDigitSuggestions[
-                                          widget.entry.index],
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          MdiIcons.lightbulbOnOutline,
+                                          size: 18,
+                                          color: Colors.amber.withAlpha(150),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          singleDigitSuggestions[
+                                              widget.entry.index],
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
                                     )
                                   : Container(),
                               widget.activityKey == alphabetKey
