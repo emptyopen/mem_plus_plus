@@ -41,7 +41,6 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
     prefs.updateActivityVisible(piTimedTestPrepKey, false);
     prefs.updateActivityState(piTimedTestKey, 'todo');
     prefs.updateActivityVisible(piTimedTestKey, true);
-    prefs.updateActivityFirstView(piTimedTestKey, true);
     prefs.updateActivityVisibleAfter(
         piTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);

@@ -71,7 +71,6 @@ class _SingleDigitTimedTestPrepScreenState
     prefs.updateActivityVisible(singleDigitTimedTestPrepKey, false);
     prefs.updateActivityState(singleDigitTimedTestKey, 'todo');
     prefs.updateActivityVisible(singleDigitTimedTestKey, true);
-    prefs.updateActivityFirstView(singleDigitTimedTestKey, true);
     prefs.updateActivityVisibleAfter(
         singleDigitTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);

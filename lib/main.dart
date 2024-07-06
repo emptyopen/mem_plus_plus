@@ -30,18 +30,13 @@ class ReceivedNotification {
 }
 
 // next up:
-// chapter 1 "done" immediately available?
-// notifications not working
-// new tags need clean up - reappearing
+// lowercase letters on flipcard (maybe background repeating capital letter)
 // definitely test notifications on ios
 // morse reset should kill timer (new line shouldn't appear)
 // change shopping list to be something in order
-// games unlock all at once?
-// "new" for games not showing up
 // custom memory if has error, gets stuck on "encrypting..."
 
 // horizon:
-// figure out local notifications once and for all
 // show irrational test animation for completion
 // custom memory can't always submit answer? check if wrong
 // when adding alphabet and PAO, check for overlap with existing objects (single digit, alphabet, etc)

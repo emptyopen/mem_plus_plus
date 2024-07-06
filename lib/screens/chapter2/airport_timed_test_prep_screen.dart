@@ -146,7 +146,6 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
     prefs.updateActivityVisible(airportTimedTestPrepKey, false);
     prefs.updateActivityState(airportTimedTestKey, 'todo');
     prefs.updateActivityVisible(airportTimedTestKey, true);
-    prefs.updateActivityFirstView(airportTimedTestKey, true);
     prefs.updateActivityVisibleAfter(
         airportTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);

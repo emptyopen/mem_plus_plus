@@ -43,7 +43,6 @@ class _PhoneticAlphabetTimedTestPrepScreenState
     prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, false);
     prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'todo');
     prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, true);
-    prefs.updateActivityFirstView(phoneticAlphabetTimedTestKey, true);
     prefs.updateActivityVisibleAfter(
         phoneticAlphabetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);

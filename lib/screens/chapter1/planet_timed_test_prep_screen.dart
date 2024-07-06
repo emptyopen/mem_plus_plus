@@ -41,7 +41,6 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
     prefs.updateActivityVisible(planetTimedTestPrepKey, false);
     prefs.updateActivityState(planetTimedTestKey, 'todo');
     prefs.updateActivityVisible(planetTimedTestKey, true);
-    prefs.updateActivityFirstView(planetTimedTestKey, true);
     prefs.updateActivityVisibleAfter(
         planetTimedTestKey, DateTime.now().add(testDuration));
     Timer(testDuration, widget.callback);
