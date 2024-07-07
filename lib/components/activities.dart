@@ -118,15 +118,15 @@ var defaultActivityStatesInitial = {
   deckTimedTestKey:
       Activity(deckTimedTestKey, 'todo', false, DateTime.now(), true),
   tripleDigitEditKey:
-      Activity(deckEditKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitEditKey, 'todo', false, DateTime.now(), true),
   tripleDigitPracticeKey:
-      Activity(deckPracticeKey, 'todo', false, DateTime.now(), true),
-  tripleDigitMultipleChoiceTestKey:
-      Activity(deckMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
-  tripleDigitTimedTestPrepKey:
-      Activity(deckTimedTestPrepKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitPracticeKey, 'todo', false, DateTime.now(), true),
+  tripleDigitMultipleChoiceTestKey: Activity(
+      tripleDigitMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
+  tripleDigitTimedTestPrepKey: Activity(
+      tripleDigitTimedTestPrepKey, 'todo', false, DateTime.now(), true),
   tripleDigitTimedTestKey:
-      Activity(deckTimedTestKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitTimedTestKey, 'todo', false, DateTime.now(), true),
 };
 
 var defaultActivityStatesChapter2Done = {
@@ -195,15 +195,15 @@ var defaultActivityStatesChapter2Done = {
   deckTimedTestKey:
       Activity(deckTimedTestKey, 'todo', false, DateTime.now(), true),
   tripleDigitEditKey:
-      Activity(deckEditKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitEditKey, 'todo', false, DateTime.now(), true),
   tripleDigitPracticeKey:
-      Activity(deckPracticeKey, 'todo', false, DateTime.now(), true),
-  tripleDigitMultipleChoiceTestKey:
-      Activity(deckMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
-  tripleDigitTimedTestPrepKey:
-      Activity(deckTimedTestPrepKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitPracticeKey, 'todo', false, DateTime.now(), true),
+  tripleDigitMultipleChoiceTestKey: Activity(
+      tripleDigitMultipleChoiceTestKey, 'todo', false, DateTime.now(), true),
+  tripleDigitTimedTestPrepKey: Activity(
+      tripleDigitTimedTestPrepKey, 'todo', false, DateTime.now(), true),
   tripleDigitTimedTestKey:
-      Activity(deckTimedTestKey, 'todo', false, DateTime.now(), true),
+      Activity(tripleDigitTimedTestKey, 'todo', false, DateTime.now(), true),
 };
 
 var defaultActivityStatesChapter3Done = {

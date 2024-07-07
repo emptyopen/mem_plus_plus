@@ -5,7 +5,7 @@ import 'package:mem_plus_plus/constants/colors.dart';
 import 'package:mem_plus_plus/screens/games/game_dialog_content.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 
-class GameTile extends StatelessWidget {
+class GameTile extends StatefulWidget {
   final String game;
   final String title;
   final String subtitle;
@@ -21,10 +21,17 @@ class GameTile extends StatelessWidget {
       required this.firstView,
       required this.firstViewKey});
 
+  @override
+  State<GameTile> createState() => _GameTileState();
+}
+
+class _GameTileState extends State<GameTile> {
+  PrefsUpdater prefs = PrefsUpdater();
+
   checkFirstView() async {
-    PrefsUpdater prefs = PrefsUpdater();
-    if (prefs.getBool(firstViewKey) == true) {
-      prefs.setBool(firstViewKey, false);
+    if (prefs.getBool(widget.firstViewKey) == true) {
+      prefs.setBool(widget.firstViewKey, false);
+      setState(() {});
     }
   }
 
@@ -38,7 +45,7 @@ class GameTile extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return GameDialogContent(
-              game: game,
+              game: widget.game,
             );
           },
         );
@@ -48,17 +55,17 @@ class GameTile extends StatelessWidget {
           Card(
             color: colorGamesLighter,
             child: ListTile(
-              leading: icon,
+              leading: widget.icon,
               title: Text(
-                title,
+                widget.title,
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
-              subtitle: Text(subtitle),
+              subtitle: Text(widget.subtitle),
             ),
           ),
-          this.firstView ? NewTag(left: 10, top: 10) : Container(),
+          this.widget.firstView ? NewTag(left: 10, top: 10) : Container(),
         ],
       ),
     );

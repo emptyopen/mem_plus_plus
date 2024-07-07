@@ -59,7 +59,7 @@ class _GamesScreenState extends State<GamesScreen> {
             size: 40,
           ),
           firstViewKey: morseGameFirstViewKey,
-          firstView: prefs.getBool(morseGameFirstViewKey) == true,
+          firstView: prefs.getBool(morseGameFirstViewKey),
         ),
       );
     }
@@ -74,7 +74,7 @@ class _GamesScreenState extends State<GamesScreen> {
             size: 40,
           ),
           firstViewKey: irrationalGameFirstViewKey,
-          firstView: prefs.getBool(irrationalGameFirstViewKey) == true,
+          firstView: prefs.getBool(irrationalGameFirstViewKey),
         ),
       );
     }

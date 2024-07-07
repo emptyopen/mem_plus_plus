@@ -336,6 +336,7 @@ class _MyHomePageState extends State<MyHomePage> {
           icons.add(activityMenuButtonMap[activity].icon.icon);
           nameKeys.add(activityStates[activity]!.name);
         } else {
+          // print('adding $activity to main menu options');
           mainMenuOptions.add(
             MainMenuOption(
               callback: callback,
