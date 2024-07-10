@@ -36,8 +36,8 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
-    await prefs.checkFirstTime(context, faceTimedTestPrepFirstHelpKey,
+  getSharedPrefs() {
+    prefs.checkFirstTime(context, faceTimedTestPrepFirstHelpKey,
         FacesTimedTestPrepScreenHelp(callback: widget.callback));
     if (!prefs.getBool(faceTestActiveKey)) {
       print('no active test, setting new values');
@@ -92,7 +92,7 @@ class _FaceTimedTestPrepScreenState extends State<FaceTimedTestPrepScreen> {
     });
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(faceTestActiveKey, false);
     prefs.updateActivityState(faceTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(faceTimedTestPrepKey, false);

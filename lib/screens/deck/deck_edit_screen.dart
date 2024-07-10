@@ -31,7 +31,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, deckEditFirstHelpKey,
         DeckEditScreenHelp(callback: widget.callback));
     if (prefs.getString(deckKey) == '') {
@@ -43,7 +43,7 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
     setState(() {});
   }
 
-  callback(newDeckData) async {
+  callback(newDeckData) {
     setState(() {
       deckData = newDeckData;
     });
@@ -152,7 +152,7 @@ class CSVImporter extends StatefulWidget {
 class _CSVImporterState extends State<CSVImporter> {
   final textController = TextEditingController();
 
-  updateDeckData(List<DeckData> deckDataList) async {
+  updateDeckData(List<DeckData> deckDataList) {
     PrefsUpdater prefs = PrefsUpdater();
     prefs.writeSharedPrefs(deckKey, deckDataList);
     widget.callback(deckDataList);

@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     if (prefs.getBool(darkModeKey)) {
       backgroundColor = Colors.grey[800]!;
       backgroundHighlightColor = Colors.white;
@@ -138,7 +138,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setUnlockedActivities();
   }
 
-  void setUnlockedActivities() async {
+  void setUnlockedActivities() {
+    print('setting unlocked activities');
     // if first time opening app, welcome
     if (!prefs.getBool(firstTimeAppKey)) {
       print('first time opening app');
@@ -231,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  checkFirstTime() async {
+  checkFirstTime() {
     if (!prefs.getBool(homepageFirstHelpKey)) {
       Navigator.of(context).push(PageRouteBuilder(
           opaque: false,
@@ -242,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  checkGamesFirstTime() async {
+  checkGamesFirstTime() {
     if (prefs.getBool(newGamesAvailableKey)) {
       setState(() {
         gamesFirstView = false;
@@ -257,7 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  checkCustomMemoryManagerFirstTime() async {
+  checkCustomMemoryManagerFirstTime() {
     if (prefs.getBool(customMemoryManagerFirstHelpKey)) {
       setState(() {
         customMemoryManagerFirstView = false;
@@ -881,7 +882,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  resetAll() async {
+  resetAll() {
     prefs.clear();
 
     var clearTo = defaultActivityStatesInitial;
@@ -907,7 +908,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  resetActivities() async {
+  resetActivities() {
     var clearTo = defaultActivityStatesInitial;
 
     setState(() {
@@ -919,7 +920,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setUnlockedActivities();
   }
 
-  maxOutKeys(int maxTo) async {
+  maxOutKeys(int maxTo) {
     prefs.setBool(customMemoryManagerAvailableKey, true);
     prefs.setBool(customMemoryManagerFirstHelpKey, true);
     customMemoryManagerFirstView = true;

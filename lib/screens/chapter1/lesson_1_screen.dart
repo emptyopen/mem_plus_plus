@@ -134,7 +134,7 @@ class _Lesson1ScreenState extends State<Lesson1Screen> {
     ),
   ];
 
-  completeLesson() async {
+  completeLesson() {
     prefs.updateActivityVisible(faceTimedTestPrepKey, true);
     prefs.updateActivityVisible(planetTimedTestPrepKey, true);
     if (!prefs.getBool(lesson1CompleteKey)) {

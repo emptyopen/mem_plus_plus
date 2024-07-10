@@ -54,7 +54,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, face2TimedTestFirstHelpKey,
         Face2TimedTestScreenHelp(callback: widget.callback));
     face1 = (prefs.getString('face2Face1'));
@@ -70,7 +70,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     HapticFeedback.lightImpact();
     String name1Answer = name1.toLowerCase().trim();
     String name1Guess = name1Controller.text.toLowerCase().trim();
@@ -152,7 +152,7 @@ class _Face2TimedTestScreenState extends State<Face2TimedTestScreen> {
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(face2TimedTestKey, 'review');
     prefs.updateActivityVisible(face2TimedTestKey, false);

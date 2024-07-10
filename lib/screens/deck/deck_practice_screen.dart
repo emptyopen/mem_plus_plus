@@ -30,7 +30,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, deckPracticeFirstHelpKey,
         DeckPracticeScreenHelp(callback: widget.callback));
     deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
@@ -59,7 +59,7 @@ class _DeckPracticeScreenState extends State<DeckPracticeScreen> {
     widget.callback();
   }
 
-  void nextActivity() async {
+  nextActivity() {
     prefs.updateActivityState(deckPracticeKey, 'review');
     prefs.updateActivityVisible(deckMultipleChoiceTestKey, true);
     widget.callback();

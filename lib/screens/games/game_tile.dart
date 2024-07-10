@@ -28,7 +28,7 @@ class GameTile extends StatefulWidget {
 class _GameTileState extends State<GameTile> {
   PrefsUpdater prefs = PrefsUpdater();
 
-  checkFirstView() async {
+  checkFirstView() {
     if (prefs.getBool(widget.firstViewKey) == true) {
       prefs.setBool(widget.firstViewKey, false);
       setState(() {});

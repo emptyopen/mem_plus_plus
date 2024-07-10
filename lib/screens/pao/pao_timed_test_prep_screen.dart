@@ -142,7 +142,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, paoTimedTestPrepFirstHelpKey,
         PAOTimedTestPrepScreenHelp(callback: widget.callback));
     // if digits are null, randomize values and store them,
@@ -184,7 +184,7 @@ class _PAOTimedTestPrepScreenState extends State<PAOTimedTestPrepScreen> {
     setState(() {});
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(paoTestActiveKey, false);
     prefs.updateActivityState(paoTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(paoTimedTestPrepKey, false);

@@ -61,7 +61,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, deckTimedTestFirstHelpKey,
         DeckTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
@@ -79,7 +79,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     HapticFeedback.lightImpact();
     if (dropdownDigit[0] + dropdownSuit[0] == '$card1' &&
         dropdownDigit[1] + dropdownSuit[1] == '$card2' &&
@@ -127,7 +127,7 @@ class _DeckTimedTestScreenState extends State<DeckTimedTestScreen> {
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(deckTimedTestKey, 'review');
     prefs.updateActivityVisible(deckTimedTestKey, false);

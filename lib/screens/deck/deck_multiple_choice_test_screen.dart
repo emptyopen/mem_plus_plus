@@ -36,7 +36,7 @@ class _DeckMultipleChoiceTestScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, deckMultipleChoiceTestFirstHelpKey,
         DeckMultipleChoiceScreenHelp(callback: widget.callback));
     deckData = prefs.getSharedPrefs(deckKey) as List<DeckData>;
@@ -84,7 +84,7 @@ class _DeckMultipleChoiceTestScreenState
     setState(() {});
   }
 
-  void nextActivity() async {
+  nextActivity() {
     if (prefs.getActivityState(deckMultipleChoiceTestKey) == 'todo') {
       prefs.updateActivityState(deckMultipleChoiceTestKey, 'review');
       prefs.updateActivityVisible(deckTimedTestPrepKey, true);

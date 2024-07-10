@@ -31,7 +31,7 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, tripleDigitPracticeFirstHelpKey,
         TripleDigitPracticeScreenHelp(callback: widget.callback));
     tripleDigitData =
@@ -61,7 +61,7 @@ class _TripleDigitPracticeScreenState extends State<TripleDigitPracticeScreen> {
     widget.callback();
   }
 
-  void nextActivity() async {
+  nextActivity() {
     prefs.updateActivityState(tripleDigitPracticeKey, 'review');
     prefs.updateActivityVisible(tripleDigitMultipleChoiceTestKey, true);
     widget.callback();

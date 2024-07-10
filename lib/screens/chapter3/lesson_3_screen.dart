@@ -84,7 +84,7 @@ class _Lesson3ScreenState extends State<Lesson3Screen> {
     ),
   ];
 
-  completeLesson() async {
+  completeLesson() {
     prefs.updateActivityVisible(piTimedTestPrepKey, true);
     prefs.updateActivityVisible(face2TimedTestPrepKey, true);
     prefs.updateActivityState(lesson3Key, 'review');

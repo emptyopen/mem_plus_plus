@@ -97,7 +97,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, deckTimedTestPrepFirstHelpKey,
         DeckTimedTestPrepScreenHelp(callback: widget.callback));
     if (!prefs.getBool(deckTestActiveKey)) {
@@ -149,7 +149,7 @@ class _DeckTimedTestPrepScreenState extends State<DeckTimedTestPrepScreen> {
     setState(() {});
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(deckTestActiveKey, false);
     prefs.updateActivityState(deckTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(deckTimedTestPrepKey, false);

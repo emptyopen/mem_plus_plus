@@ -41,7 +41,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, faceTimedTestFirstHelpKey,
         FaceTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
@@ -54,7 +54,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     HapticFeedback.lightImpact();
     String answer1 = name1.toLowerCase().trim();
     String guess1 = textController1.text.toLowerCase().trim();
@@ -119,7 +119,7 @@ class _FaceTimedTestScreenState extends State<FaceTimedTestScreen> {
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(faceTimedTestKey, 'review');
     prefs.updateActivityVisible(faceTimedTestKey, false);

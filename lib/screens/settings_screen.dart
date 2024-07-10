@@ -6,7 +6,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mem_plus_plus/components/standard/basic_flat_button.dart';
 import 'package:mem_plus_plus/services/prefs_updater.dart';
 import 'package:mem_plus_plus/services/services.dart';
-import 'dart:async';
 import 'package:mem_plus_plus/constants/keys.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -39,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     if (prefs.getBool(darkModeKey)) {
       isSelected = [false, true];
     } else {

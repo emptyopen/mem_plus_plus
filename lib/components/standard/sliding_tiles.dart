@@ -28,7 +28,7 @@ class _SlidingTilesState extends State<SlidingTiles> {
   PrefsUpdater prefs = PrefsUpdater();
   int _currentIndex = 0;
 
-  void goToMainMenu(BuildContext context) async {
+  void goToMainMenu(BuildContext context) {
     HapticFeedback.lightImpact();
     if (!prefs.getBool(firstTimeAppKey)) {
       prefs.setBool(firstTimeAppKey, true);

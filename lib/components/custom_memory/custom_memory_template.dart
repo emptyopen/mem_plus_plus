@@ -306,7 +306,7 @@ class _CustomMemoryInputState extends State<CustomMemoryInput> {
     return fieldsList;
   }
 
-  addMemory() async {
+  addMemory() {
     errors = Set();
     String primaryKey = widget.memoryFields[0].controller.text;
     widget.memoryFields.forEach((memoryField) {

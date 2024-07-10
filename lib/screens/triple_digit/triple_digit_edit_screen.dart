@@ -32,7 +32,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, tripleDigitEditFirstHelpKey,
         TripleDigitEditScreenHelp(callback: widget.callback));
     tripleDigitData =
@@ -53,7 +53,7 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
     return data;
   }
 
-  updateTripleDigitData(newTripleDigitData, {isCSV = false}) async {
+  updateTripleDigitData(newTripleDigitData, {isCSV = false}) {
     bool entriesComplete = true;
     for (int i = 0; i < newTripleDigitData.length; i++) {
       if (tripleDigitData[i].person != newTripleDigitData[i].person ||

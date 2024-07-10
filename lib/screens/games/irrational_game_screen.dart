@@ -51,7 +51,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
     super.dispose();
   }
 
-  initializeSequence() async {
+  initializeSequence() {
     prefs.checkFirstTime(
         context, irrationalGameFirstHelpKey, IrrationalGameScreenHelp());
     switch (widget.difficulty) {
@@ -118,7 +118,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
     return s;
   }
 
-  updateActiveRow(int newPosition) async {
+  updateActiveRow(int newPosition) {
     prefs.setString(
         'irrational${widget.difficulty}SavedPosition', newPosition.toString());
     setState(() {
@@ -126,7 +126,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
     });
   }
 
-  checkAnswer(BuildContext context) async {
+  checkAnswer(BuildContext context) {
     if (textController.text.trim() == correctSequence) {
       if (!prefs.getBool('irrational${widget.difficulty}Complete')) {
         showSnackBar(

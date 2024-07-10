@@ -30,7 +30,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, paoPracticeFirstHelpKey,
         PAOPracticeScreenHelp(callback: widget.callback));
     paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
@@ -59,7 +59,7 @@ class _PAOPracticeScreenState extends State<PAOPracticeScreen> {
     widget.callback();
   }
 
-  void nextActivity() async {
+  nextActivity() {
     prefs.updateActivityState(paoPracticeKey, 'review');
     prefs.updateActivityVisible(paoMultipleChoiceTestKey, true);
     widget.callback();

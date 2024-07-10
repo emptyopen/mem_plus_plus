@@ -32,7 +32,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     alphabetData = prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
     bool allComplete = true;
     for (int i = 0; i < alphabetData.length; i++) {
@@ -59,7 +59,7 @@ class _AlphabetPracticeScreenState extends State<AlphabetPracticeScreen> {
     widget.callback();
   }
 
-  void nextActivity() async {
+  void nextActivity() {
     prefs.updateActivityState(alphabetPracticeKey, 'review');
     prefs.updateActivityVisible(alphabetWrittenTestKey, true);
     widget.callback();

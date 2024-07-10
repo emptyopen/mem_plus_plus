@@ -30,7 +30,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, alphabetWrittenTestFirstHelpKey,
         AlphabetWrittenTestScreenHelp(callback: widget.callback));
     alphabetData = prefs.getSharedPrefs(alphabetKey) as List<AlphabetData>;
@@ -39,7 +39,7 @@ class _AlphabetWrittenTestScreenState extends State<AlphabetWrittenTestScreen> {
     setState(() {});
   }
 
-  void nextActivity() async {
+  nextActivity() {
     if (prefs.getActivityState(alphabetWrittenTestKey) == 'todo') {
       prefs.updateActivityState(alphabetWrittenTestKey, 'review');
       prefs.updateActivityVisible(alphabetTimedTestPrepKey, true);

@@ -30,12 +30,12 @@ class _PiTimedTestPrepScreenState extends State<PiTimedTestPrepScreen> {
     getSharedPrefs();
   }
 
-  getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, piTimedTestPrepFirstHelpKey,
         PiTimedTestPrepScreenHelp(callback: widget.callback));
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(piTestActiveKey, false);
     prefs.updateActivityState(piTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(piTimedTestPrepKey, false);

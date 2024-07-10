@@ -36,7 +36,7 @@ class _SingleDigitMultipleChoiceTestScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, singleDigitMultipleChoiceTestFirstHelpKey,
         SingleDigitMultipleChoiceScreenHelp(callback: widget.callback));
     singleDigitData =
@@ -88,7 +88,7 @@ class _SingleDigitMultipleChoiceTestScreenState
     setState(() {});
   }
 
-  void nextActivity() async {
+  nextActivity() {
     if (prefs.getActivityState(singleDigitMultipleChoiceTestKey) == 'todo') {
       prefs.updateActivityState(singleDigitMultipleChoiceTestKey, 'review');
       prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);

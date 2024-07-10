@@ -30,12 +30,12 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
     getSharedPrefs();
   }
 
-  getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, planetTimedTestPrepFirstHelpKey,
         PlanetTimedTestPrepScreenHelp(callback: widget.callback));
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(planetTestActiveKey, false);
     prefs.updateActivityState(planetTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(planetTimedTestPrepKey, false);

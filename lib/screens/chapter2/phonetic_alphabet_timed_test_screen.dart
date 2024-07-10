@@ -59,7 +59,7 @@ class _PhoneticAlphabetTimedTestScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, phoneticAlphabetTimedTestFirstHelpKey,
         PhoneticAlphabetTimedTestScreenHelp(callback: widget.callback));
     var random = Random();
@@ -99,7 +99,7 @@ class _PhoneticAlphabetTimedTestScreenState
     });
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     setState(() {
       showError = false;
       showError1 = false;
@@ -251,7 +251,7 @@ class _PhoneticAlphabetTimedTestScreenState
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(phoneticAlphabetTimedTestKey, 'review');
     prefs.updateActivityVisible(phoneticAlphabetTimedTestKey, false);

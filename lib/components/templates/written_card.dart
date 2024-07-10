@@ -47,7 +47,7 @@ class _WrittenCardState extends State<WrittenCard> {
     getSharedPrefs();
   }
 
-  getSharedPrefs() async {
+  getSharedPrefs() {
     setState(() {
       attempts = 0;
       widget.results.forEach((attempt) {

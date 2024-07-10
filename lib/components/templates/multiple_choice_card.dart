@@ -57,7 +57,7 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
     getSharedPrefs();
   }
 
-  getSharedPrefs() async {
+  getSharedPrefs() {
     var random = Random();
 
     // randomize digit/digitSuit -> object/PAO/card, card/PAO/object -> digit/digitSuit

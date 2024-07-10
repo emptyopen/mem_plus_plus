@@ -37,7 +37,7 @@ class _PAOMultipleChoiceTestScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, paoMultipleChoiceTestFirstHelpKey,
         PAOMultipleChoiceScreenHelp(callback: widget.callback));
     paoData = prefs.getSharedPrefs(paoKey) as List<PAOData>;
@@ -85,7 +85,7 @@ class _PAOMultipleChoiceTestScreenState
     setState(() {});
   }
 
-  void nextActivity() async {
+  nextActivity() {
     if (prefs.getActivityState(paoMultipleChoiceTestKey) == 'todo') {
       prefs.updateActivityState(paoMultipleChoiceTestKey, 'review');
       prefs.updateActivityVisible(paoTimedTestPrepKey, true);

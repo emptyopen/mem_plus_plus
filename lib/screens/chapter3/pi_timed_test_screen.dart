@@ -39,13 +39,13 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, piTimedTestFirstHelpKey,
         PiTimedTestScreenHelp(callback: widget.callback));
     setState(() {});
   }
 
-  void checkAnswer() async {
+  void checkAnswer() {
     setState(() {
       showError = false;
     });
@@ -143,7 +143,7 @@ class _PiTimedTestScreenState extends State<PiTimedTestScreen> {
     widget.callback();
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(piTimedTestKey, 'review');
     prefs.updateActivityVisible(piTimedTestKey, false);

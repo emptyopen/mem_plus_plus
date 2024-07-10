@@ -46,7 +46,7 @@ class MainMenuOption extends StatelessWidget {
     return text;
   }
 
-  cancelActivity() async {
+  cancelActivity() {
     print('canceling ${activity!.name}');
     switch (activity!.name) {
       case singleDigitTimedTestKey:
@@ -205,7 +205,7 @@ class MainMenuOption extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               GestureDetector(
-                onTap: () async {
+                onTap: () {
                   if (activity!.visibleAfterTime.compareTo(DateTime.now()) >
                       0) {
                     return null;

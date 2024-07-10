@@ -108,7 +108,7 @@ class _TriviaGameScreenState extends State<TriviaGameScreen>
     }
   }
 
-  checkAnswers(BuildContext context) async {
+  checkAnswers(BuildContext context) {
     if (guess1.text.trim() == answer1 &&
         guess2.text.trim() == answer2 &&
         guess3.text.trim() == answer3 &&

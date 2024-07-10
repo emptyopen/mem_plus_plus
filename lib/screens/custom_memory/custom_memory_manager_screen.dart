@@ -41,7 +41,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     });
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, customMemoryManagerFirstHelpKey,
         CustomMemoryManagerScreenHelp(callback: widget.callback));
 
@@ -50,7 +50,7 @@ class _CustomMemoryManagerScreenState extends State<CustomMemoryManagerScreen> {
     setState(() {});
   }
 
-  void callback() async {
+  callback() {
     customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
     setState(() {});
     widget.callback();
@@ -230,14 +230,14 @@ class CustomMemoryTile extends StatelessWidget {
 
   CustomMemoryTile({required this.customMemory, required this.callback});
 
-  deleteCustomMemory() async {
+  deleteCustomMemory() {
     Map customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
     customMemories.remove(customMemory['title']);
     prefs.writeSharedPrefs(customMemoriesKey, customMemories);
     callback();
   }
 
-  confirmViewCustomMemory(BuildContext context) async {
+  confirmViewCustomMemory(BuildContext context) {
     HapticFeedback.lightImpact();
     showDialog(
       context: context,
@@ -445,7 +445,7 @@ class CustomMemoryTile extends StatelessWidget {
         ));
   }
 
-  resetCustomMemory(BuildContext context) async {
+  resetCustomMemory(BuildContext context) {
     HapticFeedback.lightImpact();
     Map customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
     customMemories[customMemory['title']]['spacedRepetitionLevel'] = 0;

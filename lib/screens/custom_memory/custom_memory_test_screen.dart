@@ -53,7 +53,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
     super.dispose();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     PrefsUpdater prefs = PrefsUpdater();
 
     customMemories = prefs.getSharedPrefs(customMemoriesKey) as Map;
@@ -61,7 +61,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
     setState(() {});
   }
 
-  checkResult(memory, success) async {
+  checkResult(memory, success) {
     PrefsUpdater prefs = PrefsUpdater();
     if (success) {
       // check if beat the last level
@@ -123,7 +123,7 @@ class _CustomMemoryTestScreenState extends State<CustomMemoryTestScreen> {
     }
   }
 
-  checkAnswer() async {
+  checkAnswer() {
     HapticFeedback.lightImpact();
     var memory = widget.customMemory;
     switch (memory['type']) {

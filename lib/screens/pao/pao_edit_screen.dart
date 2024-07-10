@@ -36,7 +36,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(
         context,
         paoEditFirstHelpKey,
@@ -52,7 +52,7 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
     setState(() {});
   }
 
-  callback(newPaoData) async {
+  callback(newPaoData) {
     setState(() {
       paoData = newPaoData;
     });
@@ -183,7 +183,7 @@ class _CSVImporterState extends State<CSVImporter> {
   final textController = TextEditingController();
   String errorMessage = '';
 
-  updatePAOData(List<PAOData> paoDataList) async {
+  updatePAOData(List<PAOData> paoDataList) {
     PrefsUpdater prefs = PrefsUpdater();
     prefs.writeSharedPrefs(paoKey, paoDataList);
     widget.callback(paoDataList);

@@ -26,7 +26,7 @@ class _GamesScreenState extends State<GamesScreen> {
     getGames();
   }
 
-  void getGames() async {
+  void getGames() {
     prefs.checkFirstTime(
         context, gamesFirstHelpKey, GamesScreenHelp(callback: widget.callback));
     availableGameTiles = [];

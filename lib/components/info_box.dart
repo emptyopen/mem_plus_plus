@@ -29,11 +29,11 @@ class _InfoBoxState extends State<InfoBox> {
     getInfoKey();
   }
 
-  getInfoKey() async {
+  getInfoKey() {
     infoKeyExists = prefs.getBool(widget.infoKey);
   }
 
-  setInfoKey() async {
+  setInfoKey() {
     prefs.setBool(widget.infoKey, true);
     infoKeyExists = true;
     setState(() {});

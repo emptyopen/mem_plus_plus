@@ -48,7 +48,7 @@ class _TripleDigitTimedTestScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'TripleDigitTimedTestFirstHelp',
         TripleDigitTimedTestScreenHelp(callback: widget.callback));
@@ -70,7 +70,7 @@ class _TripleDigitTimedTestScreenState
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     if (cleanString(textController.text) ==
         '$digit1$digit2$digit3$digit4$digit5$digit6$digit7$digit8$digit9$digit10$digit11$digit12') {
       prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
@@ -119,7 +119,7 @@ class _TripleDigitTimedTestScreenState
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     prefs.updateActivityState(tripleDigitTimedTestKey, 'review');
     prefs.updateActivityVisible(tripleDigitTimedTestKey, false);
     prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);

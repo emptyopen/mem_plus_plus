@@ -45,7 +45,7 @@ class _TripleDigitTimedTestPrepScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(context, tripleDigitTimedTestPrepFirstHelpKey,
         TripleDigitTimedTestPrepScreenHelp(callback: widget.callback));
@@ -97,7 +97,7 @@ class _TripleDigitTimedTestPrepScreenState
     setState(() {});
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(tripleDigitTestActiveKey, false);
     prefs.updateActivityState(tripleDigitTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, false);

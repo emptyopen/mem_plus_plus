@@ -81,7 +81,7 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
     animationController.forward();
   }
 
-  getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, airportTimedTestPrepFirstHelpKey,
         AirportTimedTestPrepScreenHelp(callback: callback));
 
@@ -140,7 +140,7 @@ class _AirportTimedTestPrepScreenState extends State<AirportTimedTestPrepScreen>
     setState(() {});
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(airportTestActiveKey, false);
     prefs.updateActivityState(airportTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(airportTimedTestPrepKey, false);

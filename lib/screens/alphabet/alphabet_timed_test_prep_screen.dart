@@ -76,7 +76,7 @@ class _AlphabetTimedTestPrepScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, 'AlphabetTimedTestPrepFirstHelp',
         AlphabetTimedTestPrepScreenHelp(callback: widget.callback));
     // if digits are null, randomize values and store them,
@@ -115,7 +115,7 @@ class _AlphabetTimedTestPrepScreenState
     setState(() {});
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(alphabetTestActiveKey, false);
     prefs.updateActivityState(alphabetTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(alphabetTimedTestPrepKey, false);

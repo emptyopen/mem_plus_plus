@@ -36,7 +36,7 @@ class _TripleDigitMultipleChoiceTestScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, tripleDigitMultipleChoiceTestFirstHelpKey,
         TripleDigitMultipleChoiceScreenHelp(callback: widget.callback));
     tripleDigitData =
@@ -88,7 +88,7 @@ class _TripleDigitMultipleChoiceTestScreenState
     setState(() {});
   }
 
-  void nextActivity() async {
+  nextActivity() {
     if (prefs.getActivityState(tripleDigitMultipleChoiceTestKey) == 'todo') {
       prefs.updateActivityState(tripleDigitMultipleChoiceTestKey, 'review');
       prefs.updateActivityVisible(tripleDigitTimedTestPrepKey, true);

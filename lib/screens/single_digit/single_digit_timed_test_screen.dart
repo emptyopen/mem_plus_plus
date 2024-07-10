@@ -40,7 +40,7 @@ class _SingleDigitTimedTestScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, 'SingleDigitTimedTestFirstHelp',
         SingleDigitTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
@@ -52,7 +52,7 @@ class _SingleDigitTimedTestScreenState
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     if (textController.text == '$digit1$digit2$digit3$digit4') {
       prefs.updateActivityVisible(singleDigitTimedTestKey, false);
       prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);
@@ -114,7 +114,7 @@ class _SingleDigitTimedTestScreenState
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     prefs.updateActivityState(singleDigitTimedTestKey, 'review');
     prefs.updateActivityVisible(singleDigitTimedTestKey, false);
     prefs.updateActivityVisible(singleDigitTimedTestPrepKey, true);

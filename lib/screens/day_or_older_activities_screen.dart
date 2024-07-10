@@ -77,7 +77,7 @@ class _DayOrOlderActivitiesScreenState
     return activityTileList;
   }
 
-  cancelActivity(String activity, int index) async {
+  cancelActivity(String activity, int index) {
     switch (activity) {
       case singleDigitTimedTestKey:
         HapticFeedback.lightImpact();

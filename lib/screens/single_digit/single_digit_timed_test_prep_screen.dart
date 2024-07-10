@@ -37,7 +37,7 @@ class _SingleDigitTimedTestPrepScreenState
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, singleDigitTimedTestPrepFirstHelpKey,
         SingleDigitTimedTestPrepScreenHelp(callback: widget.callback));
     setState(() {
@@ -65,7 +65,7 @@ class _SingleDigitTimedTestPrepScreenState
     });
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(singleDigitTestActiveKey, false);
     prefs.updateActivityState(singleDigitTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(singleDigitTimedTestPrepKey, false);

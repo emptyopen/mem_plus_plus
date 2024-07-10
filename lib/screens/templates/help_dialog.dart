@@ -43,7 +43,7 @@ class _HelpDialogState extends State<HelpDialog> {
     });
   }
 
-  checkFirstHelp() async {
+  checkFirstHelp() {
     firstHelp = !prefs.getBool(widget.firstHelpKey);
     setState(() {});
   }

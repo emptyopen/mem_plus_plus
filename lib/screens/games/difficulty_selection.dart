@@ -33,7 +33,7 @@ class _DifficultySelectionState extends State<DifficultySelection> {
     getPrefs();
   }
 
-  getPrefs() async {
+  getPrefs() {
     if (prefs.getBool(widget.completeKey)) {
       setState(() {
         isComplete = true;

@@ -56,7 +56,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, airportTimedTestFirstHelpKey,
         AirportTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
@@ -73,7 +73,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     setState(() {
       showError = false;
     });
@@ -178,7 +178,7 @@ class _AirportTimedTestScreenState extends State<AirportTimedTestScreen> {
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(airportTimedTestKey, 'review');
     prefs.updateActivityVisible(airportTimedTestKey, false);

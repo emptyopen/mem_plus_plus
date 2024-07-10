@@ -171,7 +171,7 @@ class _MorseGameScreenState extends State<MorseGameScreen>
     return string;
   }
 
-  checkAnswer(BuildContext context) async {
+  checkAnswer(BuildContext context) {
     bool correct = true;
     guesses[0] = sanitizeString(guesses[0]);
     guesses[1] = sanitizeString(guesses[1]);

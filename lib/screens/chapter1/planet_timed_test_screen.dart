@@ -59,7 +59,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, planetTimedTestFirstHelpKey,
         PlanetTimedTestScreenHelp(callback: widget.callback));
 
@@ -85,7 +85,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     setState(() {
       showError1 = false;
       showError2 = false;
@@ -182,7 +182,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(planetTimedTestKey, 'review');
     prefs.updateActivityVisible(planetTimedTestKey, false);

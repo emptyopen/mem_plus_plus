@@ -44,7 +44,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, 'AlphabetTimedTestFirstHelp',
         AlphabetTimedTestScreenHelp(callback: widget.callback));
     // grab the digits
@@ -60,7 +60,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     HapticFeedback.lightImpact();
     if (textController1.text.toLowerCase().trim() ==
             '$char1$char2$char3$char4'.toLowerCase() &&
@@ -114,7 +114,7 @@ class _AlphabetTimedTestScreenState extends State<AlphabetTimedTestScreen> {
     widget.callback();
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(alphabetTimedTestKey, 'review');
     prefs.updateActivityVisible(alphabetTimedTestKey, false);

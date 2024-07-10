@@ -107,7 +107,7 @@ class _Face2TimedTestPrepScreenState extends State<Face2TimedTestPrepScreen> {
     setState(() {});
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(face2TestActiveKey, false);
     prefs.updateActivityState(face2TimedTestPrepKey, 'review');
     prefs.updateActivityVisible(face2TimedTestPrepKey, false);

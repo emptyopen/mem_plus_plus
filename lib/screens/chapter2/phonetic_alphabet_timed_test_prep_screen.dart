@@ -32,12 +32,12 @@ class _PhoneticAlphabetTimedTestPrepScreenState
     getSharedPrefs();
   }
 
-  getSharedPrefs() async {
+  getSharedPrefs() {
     prefs.checkFirstTime(context, phoneticAlphabetTimedTestPrepFirstHelpKey,
         PhoneticAlphabetTimedTestPrepScreenHelp(callback: widget.callback));
   }
 
-  void updateStatus() async {
+  updateStatus() {
     prefs.setBool(phoneticAlphabetTestActiveKey, false);
     prefs.updateActivityState(phoneticAlphabetTimedTestPrepKey, 'review');
     prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, false);

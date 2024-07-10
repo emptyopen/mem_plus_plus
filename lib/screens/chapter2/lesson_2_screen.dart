@@ -260,7 +260,7 @@ class _Lesson2ScreenState extends State<Lesson2Screen> {
     ),
   ];
 
-  completeLesson() async {
+  completeLesson() {
     prefs.updateActivityVisible(airportTimedTestPrepKey, true);
     prefs.updateActivityVisible(phoneticAlphabetTimedTestPrepKey, true);
     if (!prefs.getBool(lesson1CompleteKey)) {

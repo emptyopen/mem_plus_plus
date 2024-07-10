@@ -35,7 +35,7 @@ class CondensedMenuButton extends StatelessWidget {
           shadowColor: Colors.black.withOpacity(1),
         ),
         onPressed: testPrepAvailable
-            ? () async {
+            ? () {
                 HapticFeedback.lightImpact();
                 Navigator.push(
                   context,

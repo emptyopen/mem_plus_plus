@@ -47,7 +47,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     getSharedPrefs();
   }
 
-  Future<Null> getSharedPrefs() async {
+  getSharedPrefs() {
     PrefsUpdater prefs = PrefsUpdater();
     prefs.checkFirstTime(context, 'PAOTimedTestFirstHelp',
         PAOTimedTestScreenHelp(callback: widget.callback));
@@ -66,7 +66,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     setState(() {});
   }
 
-  void checkAnswer() async {
+  checkAnswer() {
     HapticFeedback.lightImpact();
     if (textController1.text.trim() == '$digits1$digits2$digits3' &&
         textController2.text.trim() == '$digits4$digits5$digits6' &&
@@ -119,7 +119,7 @@ class _PAOTimedTestScreenState extends State<PAOTimedTestScreen> {
     Navigator.pop(context);
   }
 
-  void giveUp() async {
+  giveUp() {
     HapticFeedback.lightImpact();
     prefs.updateActivityState(paoTimedTestKey, 'review');
     prefs.updateActivityVisible(paoTimedTestKey, false);
