@@ -28,13 +28,6 @@ class _EditCardState extends State<EditCard> {
   String actionText = '';
 
   @override
-  void dispose() {
-    // TODO: this is disposing on hit of the text box
-    print('disposing...');
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
 
@@ -210,37 +203,35 @@ class _EditCardState extends State<EditCard> {
       return Colors.black;
     }
 
-    return Center(
-      child: Card(
-        color: backgroundSemiColor,
-        child: Stack(
-          children: <Widget>[
-            getListTile(),
-            Positioned(
-              child: Container(
-                child: Center(
-                  child: Text(
-                    '${widget.entry.familiarity}%',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black, fontSize: 12),
-                  ),
+    return Card(
+      color: backgroundSemiColor,
+      child: Stack(
+        children: <Widget>[
+          getListTile(),
+          Positioned(
+            child: Container(
+              child: Center(
+                child: Text(
+                  '${widget.entry.familiarity}%',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  border: Border.all(
-                    color: getColorFromFamiliarity(widget.entry.familiarity),
-                    width: 2,
-                  ),
-                ),
-                height: 25,
-                width: 40,
               ),
-              right: 2,
-              top: 5,
-            )
-          ],
-        ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                border: Border.all(
+                  color: getColorFromFamiliarity(widget.entry.familiarity),
+                  width: 2,
+                ),
+              ),
+              height: 25,
+              width: 40,
+            ),
+            right: 2,
+            top: 5,
+          )
+        ],
       ),
     );
   }

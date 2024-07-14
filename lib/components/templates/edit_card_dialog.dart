@@ -114,6 +114,7 @@ class _EditCardDialogState extends State<EditCardDialog> {
                           child: TextField(
                             style: TextStyle(color: backgroundHighlightColor),
                             textAlign: TextAlign.center,
+                            autofocus: true,
                             controller: personTextController,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(

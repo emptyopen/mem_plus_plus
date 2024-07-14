@@ -90,27 +90,29 @@ class _SingleDigitEditScreenState extends State<SingleDigitEditScreen> {
       backgroundColor: backgroundColor,
       key: _scaffoldKey,
       appBar: AppBar(
-          title: Text('Single Digit System', style: TextStyle(fontSize: 18)),
-          backgroundColor: Colors.amber[200],
-          actions: <Widget>[
-            // action button
-            IconButton(
-              icon: Icon(Icons.info),
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return SingleDigitEditScreenHelp(
-                          callback: widget.callback);
-                    }));
-              },
-            ),
-          ]),
+        title: Text('Single Digit System', style: TextStyle(fontSize: 18)),
+        backgroundColor: Colors.amber[200],
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return SingleDigitEditScreenHelp(callback: widget.callback);
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Container(
         decoration: BoxDecoration(color: backgroundColor),
-        child: Center(
-          child: ListView(
+        child: SingleChildScrollView(
+          child: Column(
             children: getSingleDigitEditCards(),
           ),
         ),
@@ -133,14 +135,14 @@ class SingleDigitEditScreenHelp extends StatelessWidget {
     '    The example values I\'ve inserted here uses the '
         'idea of a "shape" pattern. That is, each object corresponds to what the '
         'actual digit it represents is shaped like. For example, 1 looks like a '
-        'stick, 4 like a sailboat. \n    Another pattern could be "rhyming". 2 could be '
+        'stick, and perhaps 4 looks like a sailboat. \n    Another pattern could be not physical shape, but rhyming. 2 could be '
         'shoe, 5 could be a bee hive. Or maybe you just have a strong association with a certain '
         'object for a particular digit! ',
-    '    You can really assign anything '
-        'to any digit, it just makes it easier to remember (initially) if you have some kind of pattern. '
-        'Make sure that the objects don\'t overlap conceptually, as much as possible! \n    It\'s totally '
-        'ok to change digit associations as you progress, but don\'t forget that '
-        'when you edit a digit it will reset your familiarity for that object back to zero! '
+    '    You can assign anything '
+        'to any digit (in fact, you can assign multiple object to a digit), it just makes it easier to get started if you have some kind of pattern. '
+        'Make sure that the objects don\'t overlap conceptually, as much as possible! \n    It\'s completely '
+        'OK to change digit associations as you progress, but just know that '
+        'when you edit a digit\'s association it will reset your familiarity for that object back to zero! '
         'Familiarity is listed on the right side of the tiles. ',
   ];
 

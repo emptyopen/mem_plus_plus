@@ -98,20 +98,24 @@ class _AlphabetEditScreenState extends State<AlphabetEditScreen> {
               icon: Icon(Icons.info),
               onPressed: () {
                 HapticFeedback.lightImpact();
-                Navigator.of(context).push(PageRouteBuilder(
+                Navigator.of(context).push(
+                  PageRouteBuilder(
                     opaque: false,
                     pageBuilder: (BuildContext context, _, __) {
                       return AlphabetEditScreenHelp(callback: widget.callback);
-                    }));
+                    },
+                  ),
+                );
               },
             ),
           ]),
       body: Container(
         decoration: BoxDecoration(color: backgroundColor),
-        child: Center(
-            child: ListView(
-          children: getAlphabetEditCards(),
-        )),
+        child: SingleChildScrollView(
+          child: Column(
+            children: getAlphabetEditCards(),
+          ),
+        ),
       ),
     );
   }

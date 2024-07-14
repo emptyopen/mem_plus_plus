@@ -103,36 +103,37 @@ class _DeckEditScreenState extends State<DeckEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Deck System', style: TextStyle(fontSize: 18)),
-          backgroundColor: colorDeckStandard,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_downward),
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return CSVImporter(callback: callback);
-                    }));
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.info),
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                Navigator.of(context).push(PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return DeckEditScreenHelp(callback: widget.callback);
-                    }));
-              },
-            ),
-          ]),
+        title: Text('Deck System', style: TextStyle(fontSize: 18)),
+        backgroundColor: colorDeckStandard,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.arrow_downward),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              Navigator.of(context).push(PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return CSVImporter(callback: callback);
+                  }));
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.info),
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              Navigator.of(context).push(PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return DeckEditScreenHelp(callback: widget.callback);
+                  }));
+            },
+          ),
+        ],
+      ),
       body: Container(
         decoration: BoxDecoration(color: backgroundColor),
-        child: Center(
-            child: ListView(
+        child: SingleChildScrollView(
+            child: Column(
           children: getDeckEditCards(),
         )),
       ),

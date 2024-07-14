@@ -152,10 +152,11 @@ class _PAOEditScreenState extends State<PAOEditScreen> {
         children: [
           Container(
             decoration: BoxDecoration(color: backgroundColor),
-            child: Center(
-                child: ListView(
-              children: getPAOEditCards(),
-            )),
+            child: SingleChildScrollView(
+              child: Column(
+                children: getPAOEditCards(),
+              ),
+            ),
           ),
           Positioned(
             top: 4,

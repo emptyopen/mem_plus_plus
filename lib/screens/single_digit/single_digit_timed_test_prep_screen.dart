@@ -209,13 +209,13 @@ class SingleDigitTimedTestPrepScreenHelp extends StatelessWidget {
         'to their associated objects and imagining a crazy scene where those objects '
         'appear in order. \n    Once you feel confident, select "I\'m ready!" and the numbers will become unavailable. '
         'In an hour you will have to decode the scene back into numbers.',
-    '    For example, let\'s look at the number 1234. Let\'s say that translates to STICK, BIRD, BRA, and SAILBOAT. We '
-        'could imagine a STICK falling out of the sky, landing and skewering a BIRD. Ouch! '
+    '    For example, let\'s look at the number 1234. Let\'s say that translates to STICK, BIRD, BRA, and SAILBOAT.\n'
+        '    Imagine a STICK falling out of the sky, landing and skewering a BIRD. Ouch! '
         'The bird is in a lot of pain. Luckily, it finds a BRA and makes a tourniquet out of it. '
         'Now the bird can make it to the fancy dinner party on the SAILBOAT tonight! Phew!',
-    '    Really make that scene vivid! CLOSE your eyes and physically imagine the details in your mind. '
+    '    Really make that scene vivid! Actually close your eyes and intentionally imagine the details in your mind. '
         'Was that STICK an ancient Roman spear? A bayonet? How much does that BIRD squawk when it gets speared out of nowhere? '
-        'I would squawk like crazy. \n    Was the bird a swan? So lucky it had that super sexy BRA. The bra is all bloody '
+        'Personally, I would squawk quite loudly. \n    Was the bird a swan? A falcon? It was so lucky it had that super sexy BRA on hand. The bra is all bloody '
         'but it saved someone\'s life tonight!'
         '\n    Think about all of the swan\'s friends that would be sad if the swan doesn\'t show up to the SAILBOAT party.',
     '    Now let\'s attach that scene to this quiz. It\'s a timed test, so let\'s imagine '

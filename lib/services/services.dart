@@ -202,6 +202,7 @@ notifyDuration(
     uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
     payload: payload,
+    androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
   );
 }
 

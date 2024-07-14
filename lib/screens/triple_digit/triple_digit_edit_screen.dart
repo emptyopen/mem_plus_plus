@@ -174,10 +174,11 @@ class _TripleDigitEditScreenState extends State<TripleDigitEditScreen> {
               ? Container()
               : Container(
                   decoration: BoxDecoration(color: backgroundColor),
-                  child: Center(
-                      child: ListView(
-                    children: getTripleDigitEditCards(),
-                  )),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: getTripleDigitEditCards(),
+                    ),
+                  ),
                 ),
           Positioned(
             top: 4,
