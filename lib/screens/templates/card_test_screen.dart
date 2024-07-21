@@ -99,19 +99,19 @@ class _CardTestScreenState extends State<CardTestScreen> {
     return Container();
   }
 
-  List<Widget> getProgressTiles() {
+  Widget getProgressTiles() {
     attempts = 0;
     var screenWidth = MediaQuery.of(context).size.width;
     var tileWidth = screenWidth / numCards;
     List<Widget> progressTiles = [];
-    results.forEach((e) {
-      if (e == null) {
+    results.forEach((result) {
+      if (result == null) {
         progressTiles.add(Container(
           height: 40,
           width: tileWidth,
           decoration: BoxDecoration(color: Colors.grey[300]),
         ));
-      } else if (e) {
+      } else if (result) {
         attempts += 1;
         progressTiles.add(Container(
           height: 40,
@@ -126,8 +126,55 @@ class _CardTestScreenState extends State<CardTestScreen> {
             decoration: BoxDecoration(color: colorIncorrect)));
       }
     });
-    setState(() {});
-    return progressTiles;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: progressTiles,
+    );
+  }
+
+  Widget getManyProgressTiles() {
+    attempts = 0;
+    var screenWidth = MediaQuery.of(context).size.width;
+    var tileWidth = screenWidth / 100;
+    List<Widget> rows = [];
+    for (int i = 0; i < 10; i++) {
+      List<Widget> progressTiles = [];
+      for (int j = i * 100; j < i * 100 + 100; j++) {
+        if (j >= numCards) {
+          progressTiles.add(Container(
+            height: 4,
+            width: tileWidth,
+            decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
+          ));
+        } else if (results[j] == null) {
+          progressTiles.add(Container(
+            height: 4,
+            width: tileWidth,
+            decoration: BoxDecoration(color: Colors.grey[300]),
+          ));
+        } else if (results[j]!) {
+          attempts += 1;
+          progressTiles.add(Container(
+            height: 4,
+            width: tileWidth,
+            decoration: BoxDecoration(color: colorCorrect),
+          ));
+        } else {
+          attempts += 1;
+          progressTiles.add(Container(
+              height: 4,
+              width: tileWidth,
+              decoration: BoxDecoration(color: colorIncorrect)));
+        }
+      }
+      rows.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: progressTiles,
+      ));
+    }
+    return Column(
+      children: rows,
+    );
   }
 
   @override
@@ -139,10 +186,9 @@ class _CardTestScreenState extends State<CardTestScreen> {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: getProgressTiles(),
-              ),
+              widget.cardData.length > 150
+                  ? getManyProgressTiles()
+                  : getProgressTiles(),
               Positioned.fill(
                   child: Align(
                 alignment: Alignment.bottomCenter,

@@ -104,10 +104,9 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
         updateValues('');
         break;
     }
-    String savedPositionString =
-        prefs.getString('irrational${widget.difficulty}SavedPosition');
+
     setState(() {
-      position = int.parse(savedPositionString);
+      position = prefs.getInt('irrational${widget.difficulty}SavedPosition');
     });
   }
 
@@ -119,8 +118,7 @@ class _IrrationalGameScreenState extends State<IrrationalGameScreen> {
   }
 
   updateActiveRow(int newPosition) {
-    prefs.setString(
-        'irrational${widget.difficulty}SavedPosition', newPosition.toString());
+    prefs.setInt('irrational${widget.difficulty}SavedPosition', newPosition);
     setState(() {
       position = newPosition;
     });

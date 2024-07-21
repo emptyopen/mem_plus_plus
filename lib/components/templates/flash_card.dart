@@ -154,8 +154,9 @@ class _FlashCardState extends State<FlashCard> {
         for (dynamic entry in data) {
           familiaritySum += entry.familiarity as int;
         }
-        if (familiaritySum == widget.familiarityTotal ||
-            (debugModeEnabled && familiaritySum > 500)) {
+        if (familiaritySum == widget.familiarityTotal
+            // || (debugModeEnabled && familiaritySum > 500)
+            ) {
           levelUp = true;
           widget.nextActivityCallback();
         }
@@ -267,7 +268,7 @@ class _FlashCardState extends State<FlashCard> {
           height: screenHeight * 0.5,
           width: screenWidth * 0.7,
           child: FlipCard(
-            speed: 500,
+            speed: 300,
             front: Container(
               decoration: BoxDecoration(
                 color: widget.lighterColor,

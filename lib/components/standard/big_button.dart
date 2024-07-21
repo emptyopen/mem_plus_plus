@@ -15,31 +15,31 @@ class BigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(100),
-            blurRadius: 2.0,
-            spreadRadius: 0.0,
-            offset: Offset(2.0, 2.0),
-          ),
-        ],
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            color1,
-            color2,
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        function();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(17),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(100),
+              blurRadius: 2.0,
+              spreadRadius: 0.0,
+              offset: Offset(2.0, 2.0),
+            ),
           ],
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              color1,
+              color2,
+            ],
+          ),
         ),
-      ),
-      child: GestureDetector(
-        onTap: () {
-          HapticFeedback.lightImpact();
-          function();
-        },
         child: Padding(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           child: Text(

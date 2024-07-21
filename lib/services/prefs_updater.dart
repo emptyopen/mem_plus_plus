@@ -156,6 +156,14 @@ class PrefsUpdater {
     return prefs.getString(key) ?? '';
   }
 
+  void setInt(String key, int value) {
+    prefs.setInt(key, value);
+  }
+
+  int getInt(String key) {
+    return prefs.getInt(key) ?? 0;
+  }
+
   Set<String> getKeys() {
     return prefs.getKeys();
   }

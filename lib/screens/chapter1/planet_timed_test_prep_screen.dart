@@ -73,7 +73,7 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
     SizedBox sizedBoxHeight8 = SizedBox(height: availableHeight * 0.26);
     SizedBox sizedBoxHeight9 = SizedBox(height: availableHeight * 0.19);
     SizedBox sizedBoxHeight10 = SizedBox(height: availableHeight * 0.05);
-    SizedBox sizedBoxHeight11 = SizedBox(height: availableHeight * 0.08);
+    SizedBox sizedBoxHeight11 = SizedBox(height: availableHeight * 0.06);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -129,7 +129,6 @@ class _PlanetTimedTestPrepScreenState extends State<PlanetTimedTestPrepScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    SizedBox(),
                     SizedBox(),
                     SizedBox(),
                     SizedBox(),

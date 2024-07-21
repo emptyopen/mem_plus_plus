@@ -30,7 +30,6 @@ class ReceivedNotification {
 }
 
 // next up:
-// lowercase letters on flipcard (maybe background repeating capital letter)
 // definitely test notifications on ios
 // morse reset should kill timer (new line shouldn't appear)
 // change shopping list to be something in order

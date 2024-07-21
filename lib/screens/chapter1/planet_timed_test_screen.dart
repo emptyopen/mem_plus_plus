@@ -72,10 +72,12 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
     while (notAllowed.contains(planet2)) {
       planet2 = planets[random.nextInt(planets.length)];
     }
+    notAllowed.add(planet2);
     planet3 = planets[random.nextInt(planets.length)];
     while (notAllowed.contains(planet3)) {
       planet3 = planets[random.nextInt(planets.length)];
     }
+    notAllowed.add(planet3);
     planet4 = planets[random.nextInt(planets.length)];
     while (notAllowed.contains(planet4)) {
       planet4 = planets[random.nextInt(planets.length)];
@@ -318,9 +320,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                SizedBox(height: 5),
                 Container(
                   child: Text(
                     '(closest = 1, furthest = 8)',
@@ -328,9 +328,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 showError1
                     ? Text(
                         'Guess cannot be empty!',
@@ -400,9 +398,15 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
-                  height: 10,
+                SizedBox(height: 5),
+                Container(
+                  child: Text(
+                    '(closest = 1, furthest = 8)',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
+                SizedBox(height: 10),
                 showError2
                     ? Text(
                         'Guess cannot be empty!',
@@ -480,6 +484,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                SizedBox(height: 5),
                 Container(
                   child: Text(
                     '(smallest = 1, largest = 8)',
@@ -559,6 +564,14 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                SizedBox(height: 5),
+                Container(
+                  child: Text(
+                    '(smallest = 1, largest = 8)',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 SizedBox(
                   height: 10,
                 ),
@@ -583,9 +596,7 @@ class _PlanetTimedTestScreenState extends State<PlanetTimedTestScreen> {
                       color: Colors.grey[200]!,
                       fontSize: 24,
                     ),
-                    SizedBox(
-                      width: 25,
-                    ),
+                    SizedBox(width: 25),
                     BasicFlatButton(
                       text: 'Submit',
                       onPressed: () => checkAnswer(),

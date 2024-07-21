@@ -244,12 +244,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   checkGamesFirstTime() {
-    if (prefs.getBool(newGamesAvailableKey)) {
-      setState(() {
-        gamesFirstView = false;
-      });
-      prefs.setBool(newGamesAvailableKey, false);
-    }
+    setState(() {
+      gamesFirstView = false;
+    });
+    prefs.setBool(newGamesAvailableKey, false);
     slideTransition(
       context,
       GamesScreen(
