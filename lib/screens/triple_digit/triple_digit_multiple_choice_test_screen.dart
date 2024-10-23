@@ -139,7 +139,7 @@ class _TripleDigitMultipleChoiceTestScreenState
               systemKey: tripleDigitKey,
               color: colorTripleDigitStandard,
               lighterColor: colorTripleDigitLighter,
-              familiarityTotal: 1000,
+              familiarityTotal: 100000,
               shuffledChoices: fakeData,
             )
           : Container(),

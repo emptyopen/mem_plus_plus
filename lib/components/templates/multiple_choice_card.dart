@@ -73,6 +73,10 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
         isValueToProperty = random.nextBool();
         paoChoice = paoChoices[Random().nextInt(paoChoices.length)];
         break;
+      case tripleDigitKey:
+        isValueToProperty = random.nextBool();
+        paoChoice = paoChoices[Random().nextInt(paoChoices.length)];
+        break;
     }
 
     setState(() {
