@@ -90,10 +90,10 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
   }
 
   String getTitleType() {
-    if (widget.systemKey == paoKey) {
-      return isValueToProperty ? 'Digit:' : paoChoice;
+    if (widget.systemKey == paoKey || widget.systemKey == tripleDigitKey) {
+      return isValueToProperty ? 'Digit -> $paoChoice' : paoChoice;
     } else if (widget.systemKey == deckKey) {
-      return isValueToProperty ? 'Card:' : paoChoice;
+      return isValueToProperty ? 'Card -> $paoChoice' : paoChoice;
     }
     return isValueToProperty ? 'Digit' : 'Object:';
   }
@@ -319,6 +319,20 @@ class _MultipleChoiceCardState extends State<MultipleChoiceCard> {
           break;
         case deckKey:
           value = widget.entry.digitSuit;
+          switch (paoChoice) {
+            case 'person':
+              property = widget.entry.person;
+              break;
+            case 'action':
+              property = widget.entry.action;
+              break;
+            case 'object':
+              property = widget.entry.object;
+              break;
+          }
+          break;
+        case tripleDigitKey:
+          value = widget.entry.digits;
           switch (paoChoice) {
             case 'person':
               property = widget.entry.person;
